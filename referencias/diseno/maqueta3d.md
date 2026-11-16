@@ -490,6 +490,25 @@ en `referencias/diseno/vara3d.json`):
 maqueta no traiga `video`) y, con `--hoja`, 6 cuadros de cada mundo para mirarlo. Caso de prueba:
 `video/maqueta/fixture/escena_viva.json`; pruebas: `scripts/pruebas/maqueta_escena.py`.
 
+## La hora: amanecer, día, atardecer y noche (`mundo.hora`)
+
+Usuario, 2026-11-16: «alternar entre día y noche si se debe». Un mundo de cerca puede ir a otra hora **sin cambiar de
+estilo**: `"hora": "amanecer" | "dia" | "atardecer" | "noche"` en el mundo (con tramos, `mundos.<id>.hora`), sobre un
+estilo que declare `horas` en `design/sets3d/estilos.json` (hoy, `dia`). Sin `hora`, es de día.
+
+- **Qué cambia** (lo resuelve `maqueta3d.py` en la configuración del tramo): el cielo (`colores.fondo`, `fondo2`), de
+  dónde viene la luz (`luz.azimut`, `luz.elevacion`), el **tinte** de todo lo que no emite luz (`tinte`, en lineal: el
+  uniforme `uHora` de `GLSL_COMUN`, que aplica `niebla()` a cada superficie), las **luces encendidas** (`noche`) y las
+  estrellas. Con el sol bajo, la sombra de contacto se alarga hacia donde no da la luz.
+- **En un módulo:** `ctx.ES.noche` (o `ctx.noche`) = «las luces están encendidas» (el estilo `noche`, o la hora noche): úsalo
+  para las ventanas, los faros y las pantallas (`luz` de una parte: lo que emite no se tiñe). `ES.modo === 1` queda solo
+  para elegir la paleta del estilo `noche`. `ctx.hora` trae la hora y `ctx.luzDir` la dirección de la luz.
+- **Gates:** una hora que el estilo no tiene es M3D1. En el guion, **C3D19**: una hora distinta de `dia` lleva
+  `hora_razon` (eso pasa a esa hora, o marca el paso del tiempo), y un salto de hora entre escenas de cerca seguidas entra
+  con `transicion: "oscuro"` o lleva `salto_hora` con la frase de la voz que lo dice.
+- **El constructor mira las dos horas:** `maqueta_modulo.py check` dibuja además la hoja de «la otra hora»
+  (`…/otra_hora/hoja_9x16.jpg`).
+
 ## Objetos articulados, estilo `dia` y M3D14 (usuario, 2026-11-16: «más detalle y dinamismo»)
 
 - **Objeto articulado** (`video/maqueta/objetos/<tipo>.js`): las partes con `grupo` se mueven solas con el tiempo. El

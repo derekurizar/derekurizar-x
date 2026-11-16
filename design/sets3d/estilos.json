@@ -274,6 +274,84 @@
     "velo": 0.72,
     "sombra_op": 0.75,
     "vineta_op": 0
+   },
+   "horas": {
+    "amanecer": {
+     "cuando": "la primera luz: la cosecha, el mercado que abre, quien sale a trabajar",
+     "colores": {
+      "fondo": "#8FA9D6",
+      "fondo2": "#F7CFA6"
+     },
+     "tinte": [
+      1.0,
+      0.84,
+      0.7
+     ],
+     "luz": {
+      "azimut": 80,
+      "elevacion": 16,
+      "fuerza": 0.66,
+      "ambiente": 0.5
+     },
+     "sombra_contacto": 0.34,
+     "noche": false,
+     "estrellas": false
+    },
+    "dia": {
+     "cuando": "la luz del día (por defecto)",
+     "colores": {},
+     "tinte": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "luz": {},
+     "noche": false,
+     "estrellas": false
+    },
+    "atardecer": {
+     "cuando": "la última luz: el regreso, el puerto que cierra el día, la espera",
+     "colores": {
+      "fondo": "#5E78B4",
+      "fondo2": "#F4A065"
+     },
+     "tinte": [
+      1.0,
+      0.7,
+      0.5
+     ],
+     "luz": {
+      "azimut": 262,
+      "elevacion": 11,
+      "fuerza": 0.62,
+      "ambiente": 0.46
+     },
+     "sombra_contacto": 0.36,
+     "noche": false,
+     "estrellas": false
+    },
+    "noche": {
+     "cuando": "de noche, cuando eso pasa de noche (un turno, un apagón, una vigilia) o para marcar el paso del tiempo: luces encendidas y estrellas",
+     "colores": {
+      "fondo": "#070D1C",
+      "fondo2": "#1A2A4A",
+      "luces": "#FFD79A"
+     },
+     "tinte": [
+      0.09,
+      0.13,
+      0.27
+     ],
+     "luz": {
+      "azimut": 320,
+      "elevacion": 58,
+      "fuerza": 0.5,
+      "ambiente": 0.5
+     },
+     "sombra_contacto": 0.16,
+     "noche": true,
+     "estrellas": true
+    }
    }
   },
   {

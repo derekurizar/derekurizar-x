@@ -20,7 +20,7 @@
     partes(ctx) {
       const { THREE: T, tonos, lin, COL, ES, hash } = ctx, blanco = new T.Color(1, 1, 1);
       const casco = tonos.linea.clone().lerp(tonos.muro, 0.55), fondo = tonos.mal.clone().lerp(tonos.muro, 0.6), cubierta = tonos.muro.clone();
-      const puente = tonos.techo.clone().lerp(tonos.linea, 0.3), vidrio = tonos.linea.clone().lerp(lin(COL.luces), ES.modo === 1 ? 0.6 : 0.15);
+      const puente = tonos.techo.clone().lerp(tonos.linea, 0.3), vidrio = tonos.linea.clone().lerp(lin(COL.luces), ES.noche ? 0.6 : 0.15);
       const fijoA = tonos.secundario.clone().multiplyScalar(0.85), fijoB = tonos.techo.clone().lerp(tonos.muro, 0.25);
       const espuma = tonos.agua.clone().lerp(tonos.techo, ES.modo === 1 ? 0.3 : 0.55);
       const P = [];
@@ -31,7 +31,7 @@
       P.push({ geo: planta(T, forma(13.2), 11, 11.4), color: cubierta });
       // el puente a popa: el bloque, la franja de ventanas, las alas y la chimenea
       P.push({ geo: B(T, 14, 24, 24, -76, 11, 0), color: puente });
-      P.push({ geo: B(T, 14.3, 1.6, 24.3, -76, 31, 0), color: vidrio, luz: ES.modo === 1 ? 0.6 : 0 });
+      P.push({ geo: B(T, 14.3, 1.6, 24.3, -76, 31, 0), color: vidrio, luz: ES.noche ? 0.6 : 0 });
       P.push({ geo: B(T, 6, 2.2, 32, -71, 33, 0), color: puente });
       P.push({ geo: B(T, 6, 9, 7, -86, 11, 0), color: casco });
       P.push({ geo: B(T, 5, 14, 5, -86, 20, 0), color: cubierta });

@@ -83,6 +83,21 @@ ok(salta("M3D19", f), "un contenedor a 150 m del suelo sin apoyo debía fallar M
 f = fallas_de(lambda m: (m.pop("video"), solo(m, [{"id": "calles", "tipo": "calles"}])))
 ok(not any(x[:5] in ("M3D15", "M3D16", "M3D17") for x in f), "sin `video: true` los gates de la escena no corren: %s" % [x[:8] for x in f])
 
+# ---------- la hora (mundo.hora sobre un estilo con `horas`) ----------
+def _hora(m, h, mundo="finca"):
+    m["mundos"][mundo]["hora"] = h
+f = fallas_de(lambda m: _hora(m, "noche"))
+ok(not f, "hora: la finca de noche debía pasar: %s" % f[:2])
+Rn = M3.resolver(M3.TR.partir((lambda m: (_hora(m, "noche"), m)[1])(copy.deepcopy(BASE)))[0][1], "9:16")
+ok(Rn["estilo_cfg"].get("noche") is True and Rn["estilo_cfg"].get("hora") == "noche" and Rn["col"]["fondo"] != M3.resolver(M3.TR.partir(copy.deepcopy(BASE))[0][1], "9:16")["col"]["fondo"],
+   "hora: de noche el resolver enciende `noche`, pone la hora y cambia el cielo")
+Rd = M3.resolver(M3.TR.partir(copy.deepcopy(BASE))[0][1], "9:16")
+ok(not Rd["estilo_cfg"].get("noche") and Rd["estilo_cfg"].get("tinte") in (None, [1.0, 1.0, 1.0]), "hora: sin `hora` es de día, sin tinte ni luces")
+f = fallas_de(lambda m: _hora(m, "madrugada"))
+ok(salta("M3D1", f), "hora: una hora que el estilo no tiene debía fallar M3D1: %s" % [x[:60] for x in f[:2]])
+f = fallas_de(lambda m: (m["mundos"]["finca"].update(estilo="contorno"), _hora(m, "noche")))
+ok(salta("M3D1", f), "hora: un estilo sin horas con `hora` debía fallar M3D1: %s" % [x[:60] for x in f[:2]])
+
 # ---------- la medida ----------
 partes = M3.TR.partir(copy.deepcopy(BASE))
 R = M3.resolver(partes[0][1], "9:16")

@@ -9,10 +9,10 @@
     faros: [[6.05, 0.75, -0.95], [6.05, 0.75, 0.95]], pilotos: [[-6.05, 0.9, -1.0], [-6.05, 0.9, 1.0]],
     variantes: (ctx) => ctx.tonos.vehiculos,
     partes(ctx) {
-      const { THREE: T, tonos, lin, COL, ES } = ctx, blanco = new T.Color(1, 1, 1), vidrio = tonos.linea.clone().lerp(lin(COL.luces), ES.modo === 1 ? 0.35 : 0.1);
+      const { THREE: T, tonos, lin, COL, ES } = ctx, blanco = new T.Color(1, 1, 1), vidrio = tonos.linea.clone().lerp(lin(COL.luces), ES.noche ? 0.35 : 0.1);
       return [
         { geo: B(T, 12, 2.6, 2.5, 0, 0.35, 0), color: blanco, tinte: true },
-        { geo: B(T, 11.0, 0.85, 2.54, 0.3, 1.65, 0), color: vidrio, luz: ES.modo === 1 ? 0.5 : 0 },
+        { geo: B(T, 11.0, 0.85, 2.54, 0.3, 1.65, 0), color: vidrio, luz: ES.noche ? 0.5 : 0 },
         { geo: B(T, 0.06, 1.2, 2.3, 6.0, 1.45, 0), color: vidrio },
         { geo: B(T, 0.08, 0.22, 0.4, 6.0, 0.62, -0.95), color: lin(COL.luces), luz: 1 },
         { geo: B(T, 0.08, 0.22, 0.4, 6.0, 0.62, 0.95), color: lin(COL.luces), luz: 1 },

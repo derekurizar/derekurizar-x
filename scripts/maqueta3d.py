@@ -784,12 +784,27 @@ def resolver(m, formato, avisos=None):
         capa["cierre"] = {"t": t0, "frase": ci.get("frase") or "", "palabras": pal_c, "redes": ci.get("redes") or [],
                           "t_redes": round(float(ci.get("t_redes", fin_frase + 0.35)), 3), "sfx": ci.get("sfx")}
     cfg = dict(est["cfg"])
+    # LA HORA (mundo.hora, sobre un estilo que declare `horas`): el cielo, la luz, el tinte, las luces encendidas, las estrellas
+    hora = mundo.get("hora")
+    colores_est = dict(est["colores"])
+    if hora is not None:
+        horas = est.get("horas") or {}
+        if hora not in horas:
+            raise Falla("M3D1", "mundo.hora «%s»: el estilo «%s» %s" % (hora, est["id"], "tiene las horas %s" % ", ".join(horas) if horas else
+                        "no tiene horas (usa un estilo de escena de cerca: %s)" % ", ".join(k for k, e2 in catalogo_estilos().items() if e2.get("horas"))))
+        H = horas[hora]
+        colores_est.update(H.get("colores") or {})
+        cfg["luz"] = dict(cfg["luz"], **(H.get("luz") or {}))
+        for k in ("tinte", "noche", "estrellas", "sombra_contacto"):
+            if H.get(k) is not None:
+                cfg[k] = H[k]
+        cfg["hora"] = hora
     capas = mundo.get("capas") or {}
     malas = [k for k in capas if k not in CAPAS_MUNDO] if isinstance(capas, dict) else ["(no es un objeto)"]
     if malas:
         raise Falla("M3D1", "mundo.capas: «%s» no existe (hay: %s)" % (", ".join(malas), ", ".join(CAPAS_MUNDO)))
     cfg["capas"] = {k: bool(capas.get(k, True)) for k in CAPAS_MUNDO}
-    col = {k: color(v) for k, v in est["colores"].items()}
+    col = {k: color(v) for k, v in colores_est.items()}
     return {
         "version": 1, "formato": formato, "W": Z["W"], "H": Z["H"], "fps": int(m.get("fps", 30)), "dur": dur, "estilo": est["id"], "paleta": m["paleta"],
         "motor": est["motor"], "blender": est.get("blender"),

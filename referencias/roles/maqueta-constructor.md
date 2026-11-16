@@ -42,6 +42,9 @@ Reglas del módulo (las revisa el lint):
   (posición = función de t y de su semilla), no se simula paso a paso.
 - **Sin colores escritos** (ni `#hex`, ni `0xRRGGBB`, ni `rgb()`): `ctx.COL` y `ctx.lin` traen los del estilo y la paleta;
   solo lo protagonista va en el acento.
+- **De día y de noche:** `ctx.ES.noche` dice si las luces están encendidas (el estilo noche o la hora noche de un mundo):
+  las ventanas, los faros y las pantallas van como partes con `luz` cuando es de noche. `check` dibuja también la hoja
+  de la otra hora: mira las dos.
 - **Sin red ni carga de nada**: todo llega en `ctx`.
 - **Sin texto ni números dentro del 3D**: lo que se lee va en la capa 2D (marcas y cifras), donde los gates lo revisan.
 - **Lo que se mueve no inventa datos**: el movimiento ilustra; un número visible pasa por el respaldo de las cifras.

@@ -168,6 +168,11 @@ if os.path.exists(os.path.join(FIXV, "guion.json")):
         g7 = copy.deepcopy(g6)
         g7["escenas"][-1]["cambios"][0]["dice"] = "una frase que no se dice"
         ok(any(x.startswith("C3D12") for x in V3.revisar_guion(g7, st, T)[0]), "cambios: un cambio anclado a una frase que no se dice debía fallar C3D12")
+        g8 = copy.deepcopy(g2)
+        g8["mundos"]["pueblo"]["hora"] = "noche"
+        ok(any(x.startswith("C3D19") for x in V3.revisar_guion(g8, st, T)[0]), "C3D19: una hora distinta del día sin `hora_razon` debía fallar")
+        g8["mundos"]["pueblo"]["hora_razon"] = "el pueblo duerme: pasó de madrugada"
+        ok(not any(x.startswith("C3D19") for x in V3.revisar_guion(g8, st, T)[0]), "C3D19: con su razón, la hora pasa")
         g4 = copy.deepcopy(g2)
         g4["mundos"]["sobra"] = {"escala": "esquema", "receta": "plaza", "piezas": []}
         ok(any(x.startswith("C3D12") for x in V3.revisar_guion(g4, st, T)[0]), "C3D12: un mundo sin usar debía fallar")

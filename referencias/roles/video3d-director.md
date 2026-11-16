@@ -50,6 +50,10 @@ Escribe `<TRABAJO>/direccion.json`:
   «Referencia visual» te los da en `verificacion_visual_<mundo>.json`) o se declara genérico. Si `quien` nombra personas,
   hay ≥ 2 en la escena haciendo algo. Al entrar a cada mundo, un titular o una marca dice dónde estamos en 3 s. Mide tu
   escena antes de entregar: `python3 scripts/maqueta3d.py escena <TRABAJO>/maqueta.json` (cuadro lleno, variedad, vida).
+- **La hora** (`mundos.<id>.hora`: amanecer, dia, atardecer, noche; C3D19): pon cada escena a la hora en que eso pasa en la
+  realidad (la cosecha con la primera luz, el turno de noche del puerto) o usa el cambio de hora para contar el paso del
+  tiempo. Cada hora distinta del día lleva su `hora_razon`; un salto de hora entra con `transicion: "oscuro"` o la voz lo
+  dice (`salto_hora`). De noche se encienden ventanas, faros y farolas: aprovéchalo, no lo uses por adorno.
 - **Detalle y dinamismo** (usuario, 2026-11-16: «hace falta más detalle… re usaste muchas escenas… el barco se traba»):
   - **Cada paso, su mundo y su objeto.** No vuelvas a un mundo a mitad del video (C3D13: solo el cierre puede volver al del
     gancho). Un mismo objeto no hace de dos cosas distintas: si la casa ya fue el beneficio, la bodega y el tostador son
@@ -102,7 +106,7 @@ fallas y mira UNA vez las hojas de `<TRABAJO>/ganchos/<id>/`.
 5. `guion.json` lleva también `idea_visual`, `estilo`, `protagonista`, `mundos` (o `mundo` si es uno solo), `no_afirmar`, `promesa` si la hay, el
    cierre (`tipo: "cierre"`, `final` ≤ 160 caracteres, sin anunciar el final, con su cámara que vuelve al gancho) y el
    `caption` (tiktok, instagram, facebook, shorts).
-6. `python3 scripts/video3d.py guion <TRABAJO> --check` hasta 0 fallas (C3D1–C3D18, V2–V5 y M3D1–M3D19 en 9:16 y 4:5, cada tramo con sus gates). Luego
+6. `python3 scripts/video3d.py guion <TRABAJO> --check` hasta 0 fallas (C3D1–C3D19, V2–V5 y M3D1–M3D19 en 9:16 y 4:5, cada tramo con sus gates). Luego
    `python3 scripts/video3d.py storyboard <TRABAJO>` y UNA lectura de `storyboard/hoja_9x16.jpg`: ¿cada cuadro muestra lo
    que su frase dice?
 7. Si al escribir aparece algo que el catálogo no tiene, devuélvelo en `briefs` (el Workflow llama al constructor UNA

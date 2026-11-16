@@ -121,6 +121,7 @@ def cifras_ok(trabajo):
 ESCALAS_CERCA = ("esquema", "ciudad")     # los mundos de cerca: cada uno es una ESCENA VIVA (C3D14–C3D18, M3D15–M3D19)
 CLAVES_ESCENA = ("que_pasa", "quien", "con_que", "se_mueve")
 NADIE = ("", "nadie", "ninguno", "ninguna", "no hay")
+HORAS = ("amanecer", "dia", "atardecer", "noche")   # mundo.hora (C3D19; las resuelve el estilo: design/sets3d/estilos.json → horas)
 NOMBRA_S = 3.0                            # C3D16: cada tramo dice dónde estamos en sus primeros segundos
 
 
@@ -425,11 +426,32 @@ def revisar_guion(g, st, trabajo):
             fallas.append("C3D12 los mundos %s no se usan en ninguna escena: quítalos" % ", ".join("«%s»" % k for k in sobran))
         # C3D13 · dinamismo: no se vuelve a un mundo a mitad del video (cada paso de la historia, su mundo); solo el cierre
         # puede volver a uno ya visto (el bucle). Usuario, 2026-11-16: «re usaste muchas escenas».
-        rachas = []
+        rachas, entradas = [], []   # entradas: (mundo, escena, transición con la que se entra, la escena) por racha
         for e in escenas:
-            for mid_r in [e.get("mundo")] + [cb.get("mundo") for cb in e.get("cambios") or []]:
+            for mid_r, trans in [(e.get("mundo"), e.get("transicion"))] + [(cb.get("mundo"), cb.get("transicion")) for cb in e.get("cambios") or []]:
                 if not rachas or rachas[-1][0] != mid_r:
                     rachas.append((mid_r, e.get("n"), e.get("tipo")))
+                    entradas.append((mid_r, e.get("n"), trans, e))
+        # C3D19 · la hora cuenta algo: una hora distinta del día lleva su razón, y un salto de hora entre escenas de cerca
+        # seguidas se ve (transición `oscuro`) o se oye (`salto_hora`: la frase de la voz que lo dice)
+        for mid_h, mu_h in MUNDOS.items():
+            h = (mu_h or {}).get("hora")
+            if h is not None and h not in HORAS:
+                fallas.append("C3D19 el mundo «%s»: `hora` «%s» (hay: %s)" % (mid_h, h, ", ".join(HORAS)))
+            elif h not in (None, "dia") and not ((mu_h or {}).get("hora_razon") or "").strip():
+                fallas.append("C3D19 el mundo «%s» va de «%s»: di por qué en `hora_razon` (eso pasa a esa hora en la realidad, o marca el paso del tiempo)" % (mid_h, h))
+        hora_prev = None
+        for mid_h, n_h, trans, e_h in entradas:
+            mu_h = MUNDOS.get(mid_h) or {}
+            if (mu_h.get("escala") or "pais") not in ESCALAS_CERCA:
+                continue
+            h = mu_h.get("hora") or "dia"
+            if hora_prev is not None and h != hora_prev and trans != "oscuro":
+                dicho = e_h.get("salto_hora")
+                if not (dicho and VD._norm(dicho) in VD._norm(e_h.get("texto") or "")):
+                    fallas.append("C3D19 escena %s: se pasa de «%s» a «%s» sin que se note: entra con `transicion: \"oscuro\"` o pon en `salto_hora` la "
+                                  "frase de la voz que lo dice" % (n_h, hora_prev, h))
+            hora_prev = h
         vistos = set()
         for i, (mid, n, tipo) in enumerate(rachas):
             if mid in vistos and not (i == len(rachas) - 1 and tipo == "cierre"):

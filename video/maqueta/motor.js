@@ -33,8 +33,12 @@ const ESTILOS = {
   plano:    { modo: 4, cubos: false, aditivo: true },
   dia:      { modo: 0, cubos: false, aditivo: false, dia: true },   // escena de cerca de día: cielo, sol y sombra de contacto
 };
-const ES = ESTILOS[M.estilo];
-if (!ES) throw new Error("estilo sin motor three: " + M.estilo);
+if (!ESTILOS[M.estilo]) throw new Error("estilo sin motor three: " + M.estilo);
+// LA HORA (mundo.hora: amanecer | dia | atardecer | noche, sobre un estilo con `horas`; scripts/maqueta3d.py la resuelve en
+// CFG): el cielo, de dónde viene la luz, el tinte de todo lo que no emite luz, las luces encendidas y las estrellas.
+// ES.noche = «es de noche: las luces están encendidas» (el estilo noche, o la hora noche de un estilo de día). Un módulo
+// pregunta ES.noche para encender ventanas y faros, y ES.modo === 1 solo para elegir la paleta del estilo noche.
+const ES = Object.assign({}, ESTILOS[M.estilo], { noche: ESTILOS[M.estilo].modo === 1 || !!CFG.noche, hora: CFG.hora || (ESTILOS[M.estilo].modo === 1 ? "noche" : "dia") });
 
 const MUNDO = window.MAQ && window.MAQ.MUNDOS && window.MAQ.MUNDOS[MU.escala];
 if (!MUNDO) throw new Error("mundo sin módulo: " + MU.escala + " (video/maqueta/mundos/" + MU.escala + ".js)");
@@ -60,21 +64,30 @@ const GLSL_COMUN = `
   float ruido(vec2 p) { return fract(sin(dot(floor(p), vec2(12.9898, 78.233))) * 43758.5453); }
   vec3 fondoEn(vec2 frag) { float v = frag.y / uRes.y; return mix(cFondo2, cFondo, smoothstep(0.0, 1.0, v)); }
   uniform vec2 uNiebla;                                  // unidades desde la cámara: dónde empieza y dónde termina de fundirse con el fondo
-  vec3 niebla(vec3 c, vec3 pos, vec2 frag) { return mix(c, fondoEn(frag), smoothstep(uNiebla.x, uNiebla.y, distance(pos, cameraPosition))); }
+  uniform vec3 uHora;                                    // la hora: el color de la luz sobre todo lo que no emite (blanco de día)
+  vec3 niebla(vec3 c, vec3 pos, vec2 frag) { return mix(c * uHora, fondoEn(frag), smoothstep(uNiebla.x, uNiebla.y, distance(pos, cameraPosition))); }
   vec3 salida(vec3 c, vec2 frag) {   // lineal → sRGB + grano fijo
     c = mix(c * 12.92, 1.055 * pow(max(c, vec3(0.0)), vec3(0.41666)) - 0.055, step(0.0031308, c));
     return c + (ruido(frag) - 0.5) * uGrano;
   }`;
 const NIEBLA = new THREE.Vector2(3000, 9000);
-const uComun = () => ({ cFondo: { value: lin(COL.fondo) }, cFondo2: { value: lin(COL.fondo2) }, uRes: { value: RES }, uGrano: { value: CFG.grano }, uNiebla: { value: NIEBLA } });
+const TINTE = (() => { const t = CFG.tinte || [1, 1, 1]; return new THREE.Vector3(t[0], t[1], t[2]); })();
+const uComun = () => ({ cFondo: { value: lin(COL.fondo) }, cFondo2: { value: lin(COL.fondo2) }, uRes: { value: RES }, uGrano: { value: CFG.grano }, uNiebla: { value: NIEBLA }, uHora: { value: TINTE } });
 
 // fondo: un triángulo a pantalla completa (degradado del estilo + grano)
 {
   const g = new THREE.BufferGeometry();
   g.setAttribute("position", new THREE.BufferAttribute(new Float32Array([-1, -1, 0, 3, -1, 0, -1, 3, 0]), 3));
-  const m = new THREE.ShaderMaterial({ uniforms: uComun(), depthTest: false, depthWrite: false,
+  // de noche (CFG.estrellas): estrellas fijas en la mitad alta del cielo (un punto por celda, por su hash; sin parpadeo)
+  const m = new THREE.ShaderMaterial({ uniforms: { ...uComun(), uEstrellas: { value: CFG.estrellas ? 1 : 0 } }, depthTest: false, depthWrite: false,
     vertexShader: "void main(){ gl_Position = vec4(position.xy, 1.0, 1.0); }",
-    fragmentShader: GLSL_COMUN + "void main(){ gl_FragColor = vec4(salida(fondoEn(gl_FragCoord.xy), gl_FragCoord.xy), 1.0); }" });
+    fragmentShader: GLSL_COMUN + `uniform float uEstrellas;
+      void main(){ vec3 c = fondoEn(gl_FragCoord.xy);
+        if (uEstrellas > 0.5) { vec2 g = gl_FragCoord.xy / 9.0; vec2 id = floor(g); float h = ruido(id * 9.0 + 3.0);
+          vec2 o = vec2(ruido(id * 9.0 + 17.0), ruido(id * 9.0 + 41.0)) * 0.7 + 0.15;
+          float d = length(fract(g) - o), alto = smoothstep(0.45, 0.95, gl_FragCoord.y / uRes.y);
+          c += vec3(0.9, 0.92, 1.0) * step(0.965, h) * (1.0 - smoothstep(0.04, 0.16, d)) * alto * (0.35 + 0.65 * ruido(id * 9.0 + 71.0)); }
+        gl_FragColor = vec4(salida(c, gl_FragCoord.xy), 1.0); }` });
   const q = new THREE.Mesh(g, m); q.frustumCulled = false; q.renderOrder = -10; scene.add(q);
   // el plano exterior: el mundo sigue más allá de la caja del relieve (mar hondo) hasta fundirse con el fondo a lo lejos,
   // para que el 3D llegue a los bordes del lienzo
@@ -297,7 +310,7 @@ function anclaEn(A, t) {
 // del estilo calculada en el shader (el objeto gira), su color por instancia (las partes con `tinte`) y, de noche, sus luces:
 // faros (puntos cálidos y un cono tenue en el suelo) y pilotos (que se avivan al frenar). Cada cuadro: poner(i, …) → listo().
 // El objeto da sus partes en METROS (x adelante, y arriba, z a su derecha); aquí se escalan a la unidad de la escena.
-const VERT_OBJ = `attribute vec3 color; attribute float aTinte, aLuz; uniform vec3 uLuz; uniform float uModo; varying vec3 vCol, vPos;
+const VERT_OBJ = `attribute vec3 color; attribute float aTinte, aLuz; uniform vec3 uLuz; uniform float uModo; varying vec3 vCol, vPos; varying float vLuz;
   void main(){ mat4 im = mat4(1.0);
     #ifdef USE_INSTANCING
       im = instanceMatrix;
@@ -308,9 +321,10 @@ const VERT_OBJ = `attribute vec3 color; attribute float aTinte, aLuz; uniform ve
     #ifdef USE_INSTANCING_COLOR
       c = mix(c, c * instanceColor, aTinte);
     #endif
-    vCol = mix(c * s, c * 1.25, aLuz);
+    vCol = mix(c * s, c * 1.25, aLuz); vLuz = aLuz;
     vec4 wp = modelMatrix * im * vec4(position, 1.0); vPos = wp.xyz; gl_Position = projectionMatrix * viewMatrix * wp; }`;
-const FRAG_OBJ = GLSL_COMUN + "uniform float uBrillo; varying vec3 vCol, vPos; void main(){ gl_FragColor = vec4(salida(niebla(vCol * uBrillo, vPos, gl_FragCoord.xy), gl_FragCoord.xy), 1.0); }";
+// lo que emite luz (aLuz: ventanas, faros, pantallas) no se tiñe con la hora: de noche es lo que brilla
+const FRAG_OBJ = GLSL_COMUN + "uniform float uBrillo; varying vec3 vCol, vPos; varying float vLuz; void main(){ vec3 c = vCol * uBrillo; c *= mix(vec3(1.0), vec3(1.0) / max(uHora, vec3(0.05)), clamp(vLuz, 0.0, 1.0)); gl_FragColor = vec4(salida(niebla(c, vPos, gl_FragCoord.xy), gl_FragCoord.xy), 1.0); }";
 const SRGB = "c = mix(c * 12.92, 1.055 * pow(max(c, vec3(0.0)), vec3(0.41666)) - 0.055, step(0.0031308, c));";
 function geoObjeto(partes) {           // las partes [{geo, color, tinte, luz}] → una geometría no indexada con color, aTinte y aLuz
   const pos = [], nor = [], col = [], tin = [], luz = [];
@@ -346,7 +360,7 @@ function flota(tipo, n, op = {}) {
     for (let i = 0; i < N1; i++) { m.setColorAt(i, op.color ? op.color(i, variantes) : variantes[0]); m.setMatrixAt(i, cero); }
     m.instanceColor.needsUpdate = true; scene.add(m);
   }
-  const mG = new THREE.Matrix4(), mP = new THREE.Matrix4(), mR = new THREE.Matrix4(), mS = new THREE.Matrix4(), eu = new THREE.Euler();
+  const mG = new THREE.Matrix4(), mP = new THREE.Matrix4(), mR = new THREE.Matrix4(), mS = new THREE.Matrix4(), eu = new THREE.Euler(), qS = new THREE.Quaternion();
   // la sombra de contacto (estilos con `sombra_contacto`): un disco suave bajo cada objeto, que lo asienta en el suelo
   let sombra = null;
   if ((CFG.sombra_contacto || 0) > 0) {
@@ -357,12 +371,15 @@ function flota(tipo, n, op = {}) {
     const sh = new THREE.InstancedMesh(gs, sm, N1); sh.frustumCulled = false; sh.renderOrder = 2;
     for (let i = 0; i < N1; i++) sh.setMatrixAt(i, cero);
     scene.add(sh);
-    sombra = { mesh: sh, l: (md.largo_m || 2) * 1.25, w: (md.ancho_m || 2) * 1.35 };
+    // con el sol bajo (amanecer, atardecer) la sombra se alarga hacia donde no da la luz, según la altura del objeto
+    const el = Math.max(8, Math.min(89, CFG.luz.elevacion)) * Math.PI / 180, largo = Math.min(3.2, 1 / Math.tan(el)) * (md.alto_m || 2) * 0.55;
+    const hx = -LUZ_DIR.x, hz = -LUZ_DIR.z, hn = Math.hypot(hx, hz) || 1;
+    sombra = { mesh: sh, l: (md.largo_m || 2) * 1.25, w: (md.ancho_m || 2) * 1.35, largo, dx: hx / hn, dz: hz / hn };
   }
   const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), e = new THREE.Vector3(), sc = new THREE.Vector3(), Y = new THREE.Vector3(0, 1, 0), k2 = new THREE.Vector3();
   // de noche: faros (cálidos) y pilotos (en el tono «mal», más vivos al frenar) como puntos, y el cono de los faros en el suelo
   let luces = null;
-  if (ES.modo === 1 && op.luces !== false && (O.faros || []).length) {
+  if (ES.noche && op.luces !== false && (O.faros || []).length) {
     const NF = O.faros.length, NP = (O.pilotos || []).length, N = N1 * (NF + NP);
     const g = new THREE.BufferGeometry();
     g.setAttribute("position", new THREE.BufferAttribute(new Float32Array(N * 3), 3));
@@ -408,7 +425,11 @@ function flota(tipo, n, op = {}) {
         if (!g || (!pose[g] && !GR[g].padre)) { m.setMatrixAt(i, m4); continue; }
         m.setMatrixAt(i, mG.copy(m4).multiply(local(g)));
       }
-      if (sombra) { k2.set(x, z + 0.04 * um, -y); sc.set(sombra.l * k0 * k, 1, sombra.w * k0 * k); sombra.mesh.setMatrixAt(i, k > 0 ? mS.compose(k2, q, sc) : cero); sc.setScalar(k0 * k); }
+      if (sombra) { const L = sombra.largo * k0 * k;   // el disco, corrido medio largo hacia la sombra y estirado en esa dirección
+        k2.set(x + sombra.dx * L * 0.5, z + 0.04 * um, -y + sombra.dz * L * 0.5);
+        const base = Math.max(sombra.l, sombra.w) * k0 * k; sc.set(base + L, 1, base * 0.9);
+        qS.setFromAxisAngle(Y, Math.atan2(-sombra.dz, sombra.dx));
+        sombra.mesh.setMatrixAt(i, k > 0 ? mS.compose(k2, L > base * 0.15 ? qS : q, sc) : cero); sc.setScalar(k0 * k); }
       if (!luces) return;
       const A = luces.pts.geometry.attributes, base = i * (luces.NF + luces.NP);
       const pon = (j, l, kk, cc) => { const lx = l[0] * k0, ly = l[1] * k0, lz = l[2] * k0;   // local (adelante, arriba, derecha) → escena
@@ -480,6 +501,7 @@ const ESTADO_EV = {};
 // lo que el núcleo comparte con los módulos (lo de un cuadro va en ctx.cuadro)
 const ctx = {
   THREE, M, MAQ, W, H, COL, CFG, ES, EXAG,
+  hora: ES.hora, noche: ES.noche, luzDir: LUZ_DIR,                  // la hora del mundo; noche = luces encendidas; luzDir: de dónde viene la luz (Vector3, y arriba)
   lin, clamp, suave, hash,
   scene, renderer, camera,
   // el MUNDO (lo pone su módulo en cargar): altura(x, y) → unidades de la escena (ya exagerada) · geo(lon, lat) → [x, y]

@@ -306,6 +306,30 @@ def check(spec, maqueta=None, sin_render=False, salida=None):
         h = os.path.join(dest, sub, "hoja_%s.jpg" % fmt)
         if os.path.isfile(h):
             R["hojas"].append(os.path.relpath(h, RAIZ))
+    # LA OTRA HORA (un mundo de cerca se ve de día y de noche: la vara pide que el módulo se lea en las dos): la misma maqueta
+    # con la hora contraria (estilo dia ↔ hora noche; el estilo noche ↔ el estilo dia). Un aviso si no resuelve; la hoja, en
+    # hojas[] (`…/otra_hora/hoja_9x16.jpg`): se mira junto con la primera.
+    escala = (m.get("mundo") or {}).get("escala") or "pais"
+    if not R["fallas"] and escala in ("esquema", "ciudad") and not m.get("tramos"):
+        otra = json.loads(json.dumps(m))
+        horas = (M3.catalogo_estilos().get(otra.get("estilo")) or {}).get("horas")
+        if horas:
+            otra["mundo"]["hora"] = "dia" if (otra["mundo"].get("hora") == "noche") else "noche"
+            nombre_h = otra["mundo"]["hora"]
+        else:
+            otra["estilo"] = next((k for k, e in M3.catalogo_estilos().items() if e.get("horas")), otra.get("estilo"))
+            otra["mundo"]["hora"] = "noche" if otra.get("estilo") != m.get("estilo") and m.get("estilo") != "noche" else "dia"
+            nombre_h = "%s · %s" % (otra["estilo"], otra["mundo"]["hora"])
+        ruta_o = os.path.join(dest, "maqueta_otra_hora.json")
+        with open(ruta_o, "w", encoding="utf-8") as fh:
+            json.dump(otra, fh, ensure_ascii=False, indent=1)
+        rc4, s4, _, out4 = cuadros(ruta_o, hoja, os.path.join(dest, "otra_hora"), "9:16", True)
+        h = os.path.join(dest, "otra_hora", "hoja_9x16.jpg")
+        if rc4 or not os.path.isfile(h):
+            R["avisos"].append("la otra hora (%s) no se pudo dibujar: %s" % (nombre_h, (" | ".join(x for x in out4.splitlines() if "FALLA" in x) or out4.strip()[-200:])))
+        else:
+            R["hojas"].append(os.path.relpath(h, RAIZ))
+            R["avisos"].append("otra hora dibujada (%s): mira las dos hojas" % nombre_h)
     if not R["fallas"]:
         R["check"] = "ok"
     return (1 if R["fallas"] else 0), R

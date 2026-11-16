@@ -8,10 +8,10 @@
     medidas: { largo_m: 0.01, ancho_m: 0.075, alto_m: 0.16 },
     variantes: (ctx) => [ctx.tonos.linea.clone().lerp(ctx.tonos.muro, 0.3)],
     partes(ctx) {
-      const { THREE: T, tonos, lin, COL, ES } = ctx, blanco = new T.Color(1, 1, 1), pantalla = ES.modo === 1 ? lin(COL.luz) : tonos.techo.clone();
+      const { THREE: T, tonos, lin, COL, ES } = ctx, blanco = new T.Color(1, 1, 1), pantalla = ES.noche ? lin(COL.luz) : tonos.techo.clone();
       return [
         { geo: B(T, 0.009, 0.16, 0.075, 0, 0, 0), color: blanco, tinte: true },
-        { geo: B(T, 0.002, 0.14, 0.066, 0.0052, 0.01, 0), color: pantalla, luz: ES.modo === 1 ? 1 : 0.3 },
+        { geo: B(T, 0.002, 0.14, 0.066, 0.0052, 0.01, 0), color: pantalla, luz: ES.noche ? 1 : 0.3 },
       ];
     },
   };

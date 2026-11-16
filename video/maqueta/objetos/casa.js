@@ -14,8 +14,8 @@
       return [
         { geo: B(T, 8, 3, 7, 0, 0, 0), color: blanco, tinte: true },
         { geo: techo, color: teja },
-        { geo: B(T, 0.06, 1.0, 1.0, 4.0, 1.2, -1.8), color: lin(COL.luces).multiplyScalar(ES.modo === 1 ? 1 : 0.4), luz: ES.modo === 1 ? 1 : 0 },
-        { geo: B(T, 0.06, 1.0, 1.0, 4.0, 1.2, 1.8), color: lin(COL.luces).multiplyScalar(ES.modo === 1 ? 1 : 0.4), luz: ES.modo === 1 ? 1 : 0 },
+        { geo: B(T, 0.06, 1.0, 1.0, 4.0, 1.2, -1.8), color: lin(COL.luces).multiplyScalar(ES.noche ? 1 : 0.4), luz: ES.noche ? 1 : 0 },
+        { geo: B(T, 0.06, 1.0, 1.0, 4.0, 1.2, 1.8), color: lin(COL.luces).multiplyScalar(ES.noche ? 1 : 0.4), luz: ES.noche ? 1 : 0 },
       ];
     },
   };
