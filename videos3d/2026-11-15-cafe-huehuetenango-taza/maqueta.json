@@ -95,7 +95,7 @@
         "rotulo": "de cereza por cada kilo de café oro, antes del tueste",
         "fuente": "MAGA (cálculo)",
         "t": 90.9333,
-        "hasta": 99.4
+        "hasta": 95.6333
       },
       {
         "valor": "US$3.52",
@@ -1862,21 +1862,72 @@
       ],
       "protagonista": "buque"
     },
-    "cafeteria": {
+    "tostaduria": {
       "escala": "esquema",
-      "receta": "plaza",
-      "semilla": 3,
+      "receta": "ciudad",
+      "semilla": 23,
       "tamano_m": 600,
+      "altura_max_m": 12,
       "estilo": "dia",
       "lugares": {
-        "tostador": {
-          "x": -10,
-          "y": 8,
-          "nombre": "Tostador"
+        "sacos": {
+          "x": -9,
+          "y": 4.4,
+          "nombre": "Café verde"
+        },
+        "tostadora": {
+          "x": -1.9,
+          "y": 1.2,
+          "nombre": "Tostadora"
+        },
+        "bandeja": {
+          "x": -0.9,
+          "y": 1.2,
+          "nombre": "Bandeja"
+        }
+      },
+      "piezas": [
+        {
+          "id": "calles",
+          "tipo": "calles"
+        },
+        {
+          "id": "edificios",
+          "tipo": "edificios"
+        },
+        {
+          "id": "tostaduria",
+          "tipo": "tostaduria",
+          "lugar": [
+            0,
+            0
+          ],
+          "rumbo": 0,
+          "tamano": 1.2,
+          "tostadoras": 2,
+          "personas": 3,
+          "semilla": 7
+        }
+      ],
+      "protagonista": "tostaduria"
+    },
+    "ciudad": {
+      "escala": "esquema",
+      "receta": "ciudad",
+      "semilla": 25,
+      "tamano_m": 600,
+      "manzana_m": 40,
+      "altura_max_m": 18,
+      "estilo": "dia",
+      "lugares": {
+        "cafeteria": {
+          "x": 10.5,
+          "y": 13,
+          "nombre": "Cafetería"
         },
         "mesa": {
-          "x": 12,
-          "y": -4,
+          "x": 9.0,
+          "y": 14.8,
           "nombre": "Mesa"
         }
       },
@@ -1890,42 +1941,286 @@
           "tipo": "edificios"
         },
         {
-          "id": "tostadora",
-          "tipo": "actor",
-          "objeto": "tostadora",
-          "lugar": "tostador",
-          "rumbo": 300,
-          "tamano": 1.6
+          "id": "plazuela",
+          "tipo": "zona",
+          "puntos": [
+            [
+              -16,
+              -16
+            ],
+            [
+              16,
+              -16
+            ],
+            [
+              16,
+              3
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              16
+            ],
+            [
+              -16,
+              16
+            ]
+          ],
+          "tono": "verde",
+          "opacidad": 0.55,
+          "borde": false
         },
         {
-          "id": "tostador-persona",
-          "tipo": "actor",
-          "objeto": "persona",
-          "lugar": [
-            -7.5,
-            5.5
+          "id": "avenida",
+          "tipo": "carretera",
+          "camino": "eo-0",
+          "carriles": 4,
+          "ancho_carril_m": 3.5
+        },
+        {
+          "id": "trafico",
+          "tipo": "flujo",
+          "carriles": [
+            "avenida.carril-1",
+            "avenida.carril-2",
+            "avenida.carril-3",
+            "avenida.carril-4"
           ],
-          "rumbo": 120,
-          "tamano": 1.6
+          "tipos": {
+            "carro": 0.72,
+            "bus": 0.14,
+            "moto": 0.14
+          },
+          "densidad": 16,
+          "vel_kmh": 35,
+          "semilla": 5
+        },
+        {
+          "id": "cafeteria",
+          "tipo": "actor",
+          "objeto": "cafeteria",
+          "lugar": [
+            10.5,
+            10.5
+          ],
+          "rumbo": 90,
+          "variante": 1
         },
         {
           "id": "taza",
           "tipo": "actor",
           "objeto": "taza",
           "lugar": "mesa",
-          "tamano": 5,
-          "rumbo": 30
+          "rumbo": 30,
+          "tamano": 1.8,
+          "lev_m": 0.76
         },
         {
-          "id": "cliente",
+          "id": "cliente-1",
+          "tipo": "actor",
+          "objeto": "cliente",
+          "lugar": [
+            7.8,
+            15.6
+          ],
+          "rumbo": 30,
+          "variante": 2
+        },
+        {
+          "id": "cliente-2",
+          "tipo": "actor",
+          "objeto": "cliente",
+          "lugar": [
+            16.1,
+            15.8
+          ],
+          "rumbo": 200,
+          "variante": 5
+        },
+        {
+          "id": "cliente-3",
+          "tipo": "actor",
+          "objeto": "cliente",
+          "puntos": [
+            [
+              18,
+              17.8
+            ],
+            [
+              -15,
+              17.8
+            ]
+          ],
+          "claves": [
+            {
+              "t": 0,
+              "s": 0,
+              "vel_kmh": 4.5
+            }
+          ],
+          "variante": 3
+        },
+        {
+          "id": "peaton-1",
           "tipo": "actor",
           "objeto": "persona",
-          "lugar": [
-            15,
-            -1.5
+          "puntos": [
+            [
+              17.8,
+              -4
+            ],
+            [
+              17.8,
+              17
+            ]
           ],
-          "rumbo": 210,
-          "tamano": 1.6
+          "claves": [
+            {
+              "t": 0,
+              "s": 0,
+              "vel_kmh": 4.5
+            }
+          ],
+          "variante": 4
+        },
+        {
+          "id": "peaton-2",
+          "tipo": "actor",
+          "objeto": "persona",
+          "puntos": [
+            [
+              0,
+              34.3
+            ],
+            [
+              60,
+              34.3
+            ]
+          ],
+          "claves": [
+            {
+              "t": 0,
+              "s": 0,
+              "vel_kmh": 4.8
+            }
+          ],
+          "variante": 6
+        },
+        {
+          "id": "peaton-3",
+          "tipo": "actor",
+          "objeto": "cliente",
+          "puntos": [
+            [
+              50,
+              34
+            ],
+            [
+              -10,
+              34
+            ]
+          ],
+          "claves": [
+            {
+              "t": 0,
+              "s": 0,
+              "vel_kmh": 4.2
+            }
+          ],
+          "variante": 7
+        },
+        {
+          "id": "arbol-1",
+          "tipo": "actor",
+          "objeto": "arbol",
+          "lugar": [
+            -4,
+            17.8
+          ]
+        },
+        {
+          "id": "arbol-2",
+          "tipo": "actor",
+          "objeto": "arbol",
+          "lugar": [
+            -14,
+            17.8
+          ]
+        },
+        {
+          "id": "arbol-3",
+          "tipo": "actor",
+          "objeto": "arbol",
+          "lugar": [
+            8,
+            34.6
+          ]
+        },
+        {
+          "id": "arbol-4",
+          "tipo": "actor",
+          "objeto": "arbol",
+          "lugar": [
+            22,
+            34.6
+          ]
+        },
+        {
+          "id": "arbol-5",
+          "tipo": "actor",
+          "objeto": "arbol",
+          "lugar": [
+            -10,
+            10
+          ]
+        },
+        {
+          "id": "arbol-6",
+          "tipo": "actor",
+          "objeto": "arbol",
+          "lugar": [
+            -13,
+            -5
+          ]
+        },
+        {
+          "id": "arbol-7",
+          "tipo": "actor",
+          "objeto": "arbol",
+          "lugar": [
+            0,
+            -12
+          ]
+        },
+        {
+          "id": "arbol-8",
+          "tipo": "actor",
+          "objeto": "arbol",
+          "lugar": [
+            -3,
+            3
+          ]
+        },
+        {
+          "id": "arbol-9",
+          "tipo": "actor",
+          "objeto": "arbol",
+          "lugar": [
+            12,
+            -8
+          ]
+        },
+        {
+          "id": "arbol-10",
+          "tipo": "actor",
+          "objeto": "arbol",
+          "lugar": [
+            17.8,
+            -12
+          ]
         }
       ],
       "protagonista": "taza"
@@ -2379,113 +2674,173 @@
       "fundido_s": 0.6
     },
     {
-      "id": "cafeteria-6",
-      "mundo": "cafeteria",
+      "id": "tostaduria-6",
+      "mundo": "tostaduria",
       "desde": 82.4667,
-      "hasta": 103.0,
+      "hasta": 95.8,
       "camara": [
         {
           "mira": [
-            -10,
-            8
+            -4,
+            1.5
           ],
-          "dist_m": 18,
-          "azimut": -20,
-          "elevacion": 16,
+          "dist_m": 24,
+          "azimut": 40,
+          "elevacion": 32,
           "t": 82.4667
         },
         {
           "mira": [
-            -10,
-            8
+            -7,
+            3
           ],
           "dist_m": 16,
-          "azimut": 18,
+          "azimut": 50,
+          "elevacion": 26,
+          "t": 83.8667
+        },
+        {
+          "mira": [
+            -2.6,
+            1.2
+          ],
+          "dist_m": 15,
+          "azimut": 35,
           "elevacion": 22,
           "t": 85.7667
         },
         {
           "mira": [
-            1,
-            2
+            -1.9,
+            -1.0
           ],
-          "dist_m": 26,
-          "azimut": 30,
-          "elevacion": 24,
+          "dist_m": 15,
+          "azimut": 25,
+          "elevacion": 20,
+          "t": 89.1667
+        },
+        {
+          "mira": "bandeja",
+          "dist_m": 15,
+          "azimut": 60,
+          "elevacion": 34,
           "t": 91.2
         },
         {
-          "mira": [
-            12,
-            -4
-          ],
-          "dist_m": 16,
-          "azimut": 36,
-          "elevacion": 18,
+          "mira": "bandeja",
+          "dist_m": 15,
+          "azimut": 72,
+          "elevacion": 30,
           "t": 94.2
-        },
-        {
-          "mira": [
-            12,
-            -4
-          ],
-          "dist_m": 16,
-          "azimut": 46,
-          "elevacion": 18,
-          "t": 96.2
-        },
-        {
-          "mira": [
-            12,
-            -4
-          ],
-          "dist_m": 16,
-          "azimut": 58,
-          "elevacion": 18,
-          "t": 102.8
         }
       ],
       "eventos": [
         {
           "tipo": "resaltar",
-          "pieza": "tostadora",
+          "pieza": "tostaduria",
           "dur": 2.5,
           "t": 82.4667
-        },
-        {
-          "tipo": "aparecer",
-          "pieza": "taza",
-          "dur": 0.8,
-          "t": 93.1
         }
       ],
       "marcas": [
         {
-          "lugar": "tostador",
-          "texto": "Tostador",
+          "lugar": "sacos",
+          "texto": "Café verde",
           "t": 82.6667,
-          "hasta": 90.7
-        }
-      ],
-      "anotaciones": [
+          "hasta": 86.8333
+        },
         {
-          "tipo": "pulso",
-          "sobre": [
-            [
-              12,
-              -4
-            ]
-          ],
-          "radio_m": 3,
-          "t": 95.9333,
-          "hasta": 103.0
+          "lugar": "tostadora",
+          "texto": "Tostadora",
+          "t": 85.5333,
+          "hasta": 90.7
         }
       ],
       "transicion": "oscuro",
       "fundido_s": 0.6
     },
     {
-      "id": "finca-7",
+      "id": "ciudad-7",
+      "mundo": "ciudad",
+      "desde": 95.8,
+      "hasta": 103.0,
+      "camara": [
+        {
+          "mira": [
+            10.5,
+            14
+          ],
+          "dist_m": 38,
+          "azimut": 115,
+          "elevacion": 10,
+          "t": 95.8
+        },
+        {
+          "mira": [
+            10.5,
+            14
+          ],
+          "dist_m": 38,
+          "azimut": 115,
+          "elevacion": 10,
+          "t": 96.2
+        },
+        {
+          "mira": [
+            10.5,
+            14.5
+          ],
+          "dist_m": 26,
+          "azimut": 130,
+          "elevacion": 12,
+          "t": 96.9
+        },
+        {
+          "mira": "mesa",
+          "dist_m": 15,
+          "azimut": 135,
+          "elevacion": 26,
+          "t": 98.0333
+        },
+        {
+          "mira": "mesa",
+          "dist_m": 15,
+          "azimut": 145,
+          "elevacion": 30,
+          "t": 102.8
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "aparecer",
+          "pieza": "taza",
+          "dur": 0.8,
+          "t": 98.0333
+        }
+      ],
+      "marcas": [
+        {
+          "lugar": "cafeteria",
+          "texto": "Una cafetería cualquiera",
+          "t": 95.9333,
+          "hasta": 99.4
+        }
+      ],
+      "anotaciones": [
+        {
+          "tipo": "pulso",
+          "sobre": [
+            "mesa"
+          ],
+          "radio_m": 1.6,
+          "t": 97.8,
+          "hasta": 103.0
+        }
+      ],
+      "transicion": "fundido"
+    },
+    {
+      "id": "finca-8",
       "mundo": "finca",
       "desde": 103.0,
       "hasta": 112.3,

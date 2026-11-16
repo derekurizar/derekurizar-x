@@ -1,0 +1,22 @@
+{
+ "tipo": "cliente",
+ "clase": "objeto",
+ "cuando": "una persona de ciudad con un vaso de café para llevar que camina y sorbe cada 4–6 s: quien toma el café en la cafetería o en otro país",
+ "parametros": {},
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "medidas": {
+  "largo_m": 0.6,
+  "ancho_m": 0.6,
+  "alto_m": 1.75
+ },
+ "ejemplo": {
+  "objeto": "cliente"
+ },
+ "notas": "Articulado. Piernas y brazo izquierdo caminan como `persona` según la velocidad del actor (de pie, quietos). El brazo derecho es una cadena hombro → codo (padre) → muñeca (padre) con el vaso (claro, funda de cartón, tapa con domo, sin logo): lo lleva derecho a la cintura y cada 4–6 s (desfasado por instancia) lo sube a la boca 0.7 s, sorbe 0.9 s y lo baja 0.8 s, también de pie; la cabeza se echa atrás al sorber. La chaqueta toma el color de la instancia (`variante`). Se lee de 8 a 25 m; más lejos el vaso es un punto claro."
+}

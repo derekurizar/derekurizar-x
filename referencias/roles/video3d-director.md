@@ -51,6 +51,10 @@ Escribe `<TRABAJO>/direccion.json`:
     que hace algo (objetos articulados: cosechar, caminar, cargar), objetos que se mueven y la cámara cerca (15–80 m).
   - **Algo pasa en cada oración:** una acción nueva (alguien cosecha, el camión arranca, la grúa sube el contenedor, el
     tambor gira), no solo una marca o una cifra. Varía el encuadre: de frente, cenital, seguimiento, acercamiento.
+  - **Una oración, dos lugares:** si la voz pasa de un lugar a otro dentro de una escena, usa `cambios` (`[{dice, mundo,
+    transicion}]`): el mundo cambia en esa frase sin tocar la voz.
+  - **Lugares llenos:** un lugar de cerca nunca es una sola cosa sobre el suelo vacío: gente que va y viene, objetos del
+    oficio, el entorno (la calle con carros, las mesas, los sacos, los estantes).
   - **Lo que la cámara sigue no se traba** (M3D14): si la cámara va tras un actor, su movimiento dura hasta que la cámara
     lo suelta.
 - **La dirección por frase**: para cada oración del borrador, el **verbo visual** del catálogo que la cuenta. Un

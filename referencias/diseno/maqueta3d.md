@@ -507,6 +507,8 @@ puede volver a un mundo ya visto. En el `maqueta.json`, en vez de `mundo`, `cama
   `placa.mp4` encadenada con ffmpeg (`xfade`) → la capa global en MODO PLACA encima (`placa.js`). `cuadro` arma cada
   cuadro igual (el mundo de su tramo y la capa encima); en un fundido muestra solo el tramo de ese segundo.
   `efectos.json` reúne los `sfx` de todos los tramos.
+- **Cambio a mitad de escena** (`cambios: [{dice, mundo, transicion}]` en la escena): el tramo se parte en esa frase; cada
+  cosa va al tramo de su ancla.
 - **El guion** (`video3d.py`): `mundos` en vez de `mundo` y `mundo: <id>` en cada escena (la primera de un cambio puede
   llevar `transicion` y `fundido_s`); `construir` hace un tramo por racha de escenas del mismo mundo (C3D12).
 - Caso de prueba: `video/maqueta/fixture/tramos.json` (campo → país → costa, fundido y corte); pruebas

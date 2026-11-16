@@ -2872,6 +2872,50 @@
       "problema": "ctx no publica la dirección de la luz (LUZ_DIR): las piezas que dibujan sombras (cafetal) la recalculan desde CFG.luz.",
       "propuesta": "Publicar ctx.luzDir.",
       "estado": "pendiente"
+    },
+    {
+      "id": "m262",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "motor",
+      "archivo": "video/maqueta/motor.js (flota)",
+      "problema": "La pose no puede cambiar el brillo de un grupo (la vitrina de la cafetería parpadea encogiendo bombillas) ni hay un segundo tinte por instancia (toldo y fachada no varían por separado).",
+      "propuesta": "Un 8.º valor de brillo por grupo en la pose y `tinte2` en las partes con un segundo color por instancia.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m263",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "motor",
+      "archivo": "video/maqueta/motor.js (flota) · objetos/persona.js",
+      "problema": "Una pieza no puede pedir una pose por instancia (quien carga el saco en la tostaduría solo se mece; el saco se mueve aparte).",
+      "propuesta": "`op.pose` en ctx.flota (un nombre de pose del objeto: cargar, rastrillar, sorber) que la pieza elige por instancia.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m264",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "tramos",
+      "archivo": "scripts/video3d.py (storyboard)",
+      "problema": "storyboard no limpia los PNG de una corrida anterior: la hoja mezcló cuadros viejos (la tostadora sola) con los nuevos.",
+      "propuesta": "Vaciar storyboard/ antes de escribir los cuadros nuevos.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m265",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "estilo",
+      "archivo": "design/sets3d/estilos.json (dia) · video/maqueta/motor.js (TONOS)",
+      "problema": "En `dia` los edificios del fondo de una ciudad salen pálidos y la mitad baja del cuadro es asfalto liso.",
+      "propuesta": "Algo más de contraste en los muros lejanos de `dia` y textura (juntas, manchas) en el asfalto y las aceras.",
+      "estado": "pendiente"
     }
   ]
 }

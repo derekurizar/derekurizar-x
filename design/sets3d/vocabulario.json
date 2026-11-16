@@ -17,10 +17,12 @@
       "barco",
       "bodega",
       "bus",
+      "cafeteria",
       "camion",
       "camionsacos",
       "carro",
       "casa",
+      "cliente",
       "contenedor",
       "cosechador",
       "grua",
@@ -127,10 +129,12 @@
     "barco",
     "bodega",
     "bus",
+    "cafeteria",
     "camion",
     "camionsacos",
     "carro",
     "casa",
+    "cliente",
     "contenedor",
     "cosechador",
     "grua",
@@ -603,10 +607,12 @@
       "barco",
       "bodega",
       "bus",
+      "cafeteria",
       "camion",
       "camionsacos",
       "carro",
       "casa",
+      "cliente",
       "contenedor",
       "cosechador",
       "grua",
@@ -698,10 +704,12 @@
     "barco",
     "bodega",
     "bus",
+    "cafeteria",
     "camion",
     "camionsacos",
     "carro",
     "casa",
+    "cliente",
     "contenedor",
     "cosechador",
     "grua",
@@ -819,6 +827,93 @@
    },
    "modulo": "piezas/ruta.js",
    "reglas": "scripts/maqueta_tipos/ruta.py"
+  },
+  {
+   "tipo": "tostaduria",
+   "clase": "pieza",
+   "cuando": "el interior de una tostaduría de café («allá lo tuestan»): sacos de café verde, tostadoras que giran y un saco que se vacía en la tolva",
+   "parametros": {
+    "lugar": {
+     "tipo": "lugar",
+     "requerido": true,
+     "descripcion": "el centro del galpón (un lugar del mundo, o [x, y] en metros en un esquema): huella ≈ 19 × 13 m por `tamano`"
+    },
+    "rumbo": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      360
+     ],
+     "defecto": 0,
+     "descripcion": "hacia dónde mira el frente abierto (grados; 0 = este, 90 = norte): la pared del fondo y la de la izquierda quedan enteras, la del frente y la de la derecha cortadas a media rodilla. Mira adentro con la cámara en azimut ≈ rumbo + 45 (de frente y por la derecha), elevación 15–35°, dist_m 10–24"
+    },
+    "tamano": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.6,
+      2
+     ],
+     "defecto": 1,
+     "descripcion": "escala de todo el galpón, sus máquinas y su gente (1 = medidas reales; la gente va ×1.1 y las tazas y el polvo agrandados para leerse a 8–25 m)"
+    },
+    "tostadoras": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      1,
+      2
+     ],
+     "defecto": 2,
+     "descripcion": "cuántas tostadoras de tambor (objeto tostadora: el tambor gira, el brazo remueve la bandeja, la chimenea humea), cada una con su desfase; la primera tiene detrás la plataforma de carga"
+    },
+    "personas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      3
+     ],
+     "defecto": 2,
+     "descripcion": "1 = quien carga, desde la plataforma, un saco que sube, se inclina sobre la tolva y se vacía con un chorro de grano verde (ciclo de 7 s; sin nadie no hay saco); 2 = y quien revisa la bandeja de la primera tostadora; 3 = y quien cata en la mesa"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "el azar fijo: tonos del ladrillo y de los sacos, cuántas camadas lleva cada estiba, el color de cada tostadora, la fase de la carga y de cada pose"
+    }
+   },
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "usa": [
+    "tostadora",
+    "persona"
+   ],
+   "ejemplo": {
+    "id": "tostaduria",
+    "tipo": "tostaduria",
+    "lugar": [
+     0,
+     0
+    ],
+    "rumbo": 0,
+    "tamano": 1,
+    "tostadoras": 2,
+    "personas": 2
+   },
+   "modulo": "piezas/tostaduria.js",
+   "reglas": "scripts/maqueta_tipos/tostaduria.py"
   },
   {
    "tipo": "trazo",
@@ -1737,6 +1832,29 @@
    "reglas": null
   },
   {
+   "tipo": "cafeteria",
+   "clase": "objeto",
+   "cuando": "cafetería genérica de esquina en una ciudad (ladrillo, toldo, vitrina con luz, terraza con sombrilla; sin marca): donde se toma el café afuera",
+   "parametros": {},
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "medidas": {
+    "largo_m": 12.1,
+    "ancho_m": 13.0,
+    "alto_m": 9.7
+   },
+   "ejemplo": {
+    "objeto": "cafeteria"
+   },
+   "modulo": "objetos/cafeteria.js",
+   "reglas": null
+  },
+  {
    "tipo": "camion",
    "clase": "objeto",
    "cuando": "un camión: la carga en una carretera, el bloqueo de una vía, el más lento del tráfico",
@@ -1826,6 +1944,30 @@
     "objeto": "casa"
    },
    "modulo": "objetos/casa.js",
+   "reglas": null
+  },
+  {
+   "tipo": "cliente",
+   "clase": "objeto",
+   "cuando": "una persona de ciudad con un vaso de café para llevar que camina y sorbe cada 4–6 s: quien toma el café en la cafetería o en otro país",
+   "parametros": {},
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "medidas": {
+    "largo_m": 0.6,
+    "ancho_m": 0.6,
+    "alto_m": 1.75
+   },
+   "ejemplo": {
+    "objeto": "cliente"
+   },
+   "notas": "Articulado. Piernas y brazo izquierdo caminan como `persona` según la velocidad del actor (de pie, quietos). El brazo derecho es una cadena hombro → codo (padre) → muñeca (padre) con el vaso (claro, funda de cartón, tapa con domo, sin logo): lo lleva derecho a la cintura y cada 4–6 s (desfasado por instancia) lo sube a la boca 0.7 s, sorbe 0.9 s y lo baja 0.8 s, también de pie; la cabeza se echa atrás al sorber. La chaqueta toma el color de la instancia (`variante`). Se lee de 8 a 25 m; más lejos el vaso es un punto claro.",
+   "modulo": "objetos/cliente.js",
    "reglas": null
   },
   {

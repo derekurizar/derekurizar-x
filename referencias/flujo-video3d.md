@@ -169,6 +169,11 @@ Familias de gancho 3D (los 5 candidatos son de familias distintas):
 - **Varios mundos:** en vez de `mundo`, `"mundos": {"finca": {…}, "pais": {…}}`, y cada escena dice el suyo
   (`"mundo": "finca"`); la primera escena de un cambio puede llevar `"transicion": "corte|fundido|oscuro"` y `fundido_s`.
   Las escenas seguidas del mismo mundo forman un tramo. Sin `mundos`, un solo mundo como siempre.
+- **Cambio de mundo a mitad de una escena** (2026-11-16): `"cambios": [{"dice": "Y en una cafetería", "mundo": "ciudad",
+  "transicion": "fundido"}]`. Desde esa frase la escena sigue en el otro mundo: cada cámara, evento, marca y anotación va
+  al mundo vivo en su `dice` (sin `dice`, al del inicio; con `al: "fin"`, al del final). Sirve cuando una sola oración
+  pasa por dos lugares (la tostaduría y luego la calle con la cafetería) sin regrabar la voz. C3D12 revisa que la frase
+  se diga y el mundo exista; C3D13 cuenta el cambio como un mundo más.
 - **Primero la narración de corrido** (≈ 15.5 caracteres por segundo: 45 s ≈ 700 caracteres), como una sola voz;
   después se reparte en escenas sin cambiar una palabra. `secuencia` agrupa las escenas cuya voz se graba de corrido.
 - **Anclas:** `dice` es una frase de la voz de esa escena (escrita como en `texto`; `vez: 2` si se repite). Sin

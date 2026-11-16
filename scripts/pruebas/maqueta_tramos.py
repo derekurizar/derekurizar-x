@@ -144,6 +144,25 @@ if os.path.exists(os.path.join(FIXV, "guion.json")):
         g5 = copy.deepcopy(g2)
         g5["escenas"][1]["mundo"] = "pueblo"; g5["escenas"][2]["mundo"] = "pais"   # país → pueblo → país → pueblo (cierre)
         ok(any(x.startswith("C3D13") for x in V3.revisar_guion(g5, st, T)[0]), "C3D13: volver a un mundo a mitad del video debía fallar")
+        # cambio de mundo a mitad de una escena: el cierre empieza en el país y pasa al pueblo en su última frase
+        g6 = copy.deepcopy(g2)
+        c6 = g6["escenas"][-1]
+        frase = c6["texto"].rstrip(".").split()[-1]
+        c6["mundo"] = "pais"
+        c6["cambios"] = [{"dice": frase, "mundo": "pueblo", "transicion": "corte"}]
+        c6["camara"] = [{"mira": "los-amates", "dist_km": 520, "azimut": 0, "elevacion": 62},
+                        {"dice": frase, "mira": "centro", "dist_m": 1300, "azimut": 0, "elevacion": 60},
+                        {"al": "fin", "mira": "centro", "dist_m": 900, "azimut": 20, "elevacion": 50}]
+        c6["eventos"] = [{"tipo": "resaltar", "pieza": "ruptura", "dur": 1.0}, {"dice": frase, "tipo": "resaltar", "lugar": "centro", "dur": 1.0}]
+        f6, _, loc6 = V3.revisar_guion(g6, st, T)
+        ok(not [x for x in f6 if x.startswith(("C3D12", "C3D13", "C3D3"))], "cambios: un cambio de mundo a mitad de escena debía pasar: %s" % f6[:3])
+        m6, _, _ = V3.construir(T, g6, loc6, real=False)
+        tr6 = m6.get("tramos") or []
+        ok([t["mundo"] for t in tr6] == ["pais", "pueblo"] and tr6[1]["transicion"] == "corte" and tr6[1]["desde"] > max(x["off"] for x in V3.linea_de_tiempo(T, loc6, False)[0]),
+           "cambios: el tramo del pueblo empieza en la frase del cambio (%s)" % [(t["mundo"], t["desde"]) for t in tr6])
+        g7 = copy.deepcopy(g6)
+        g7["escenas"][-1]["cambios"][0]["dice"] = "una frase que no se dice"
+        ok(any(x.startswith("C3D12") for x in V3.revisar_guion(g7, st, T)[0]), "cambios: un cambio anclado a una frase que no se dice debía fallar C3D12")
         g4 = copy.deepcopy(g2)
         g4["mundos"]["sobra"] = {"escala": "esquema", "receta": "plaza", "piezas": []}
         ok(any(x.startswith("C3D12") for x in V3.revisar_guion(g4, st, T)[0]), "C3D12: un mundo sin usar debía fallar")

@@ -563,79 +563,107 @@
       "acto": 3,
       "secuencia": 4,
       "texto": "Allá lo tuestan, y adelgaza una vez más: pierde entre el 12 y el 20 % de su peso, según el tueste. De casi 6 kilos de cereza queda menos de un kilo de café tostado. Y en una cafetería de Estados Unidos, un café normal cuesta, en la mediana, 3.52 dólares.",
-      "mundo": "cafeteria",
+      "mundo": "tostaduria",
       "transicion": "oscuro",
       "fundido_s": 0.6,
       "camara": [
         {
           "mira": [
-            -10,
-            8
+            -4,
+            1.5
           ],
-          "dist_m": 18,
-          "azimut": -20,
-          "elevacion": 16
+          "dist_m": 24,
+          "azimut": 40,
+          "elevacion": 32
+        },
+        {
+          "dice": "adelgaza",
+          "mira": [
+            -7,
+            3
+          ],
+          "dist_m": 16,
+          "azimut": 50,
+          "elevacion": 26
         },
         {
           "dice": "pierde entre",
           "mira": [
-            -10,
-            8
+            -2.6,
+            1.2
           ],
-          "dist_m": 16,
-          "azimut": 18,
+          "dist_m": 15,
+          "azimut": 35,
           "elevacion": 22
         },
         {
-          "dice": "casi 6 kilos",
+          "dice": "según el tueste",
           "mira": [
-            1,
-            2
+            -1.9,
+            -1.0
           ],
-          "dist_m": 26,
-          "azimut": 30,
-          "elevacion": 24
+          "dist_m": 15,
+          "azimut": 25,
+          "elevacion": 20
+        },
+        {
+          "dice": "casi 6 kilos",
+          "mira": "bandeja",
+          "dist_m": 15,
+          "azimut": 60,
+          "elevacion": 34
         },
         {
           "dice": "café tostado",
-          "mira": [
-            12,
-            -4
-          ],
-          "dist_m": 16,
-          "azimut": 36,
-          "elevacion": 18
+          "mira": "bandeja",
+          "dist_m": 15,
+          "azimut": 72,
+          "elevacion": 30
         },
         {
           "dice": "cafetería",
           "mira": [
-            12,
-            -4
+            10.5,
+            14
           ],
-          "dist_m": 16,
-          "azimut": 46,
-          "elevacion": 18
+          "dist_m": 38,
+          "azimut": 115,
+          "elevacion": 10
+        },
+        {
+          "dice": "Estados Unidos",
+          "mira": [
+            10.5,
+            14.5
+          ],
+          "dist_m": 26,
+          "azimut": 130,
+          "elevacion": 12
+        },
+        {
+          "dice": "un café normal",
+          "mira": "mesa",
+          "dist_m": 15,
+          "azimut": 135,
+          "elevacion": 26
         },
         {
           "al": "fin",
-          "mira": [
-            12,
-            -4
-          ],
-          "dist_m": 16,
-          "azimut": 58,
-          "elevacion": 18
+          "mira": "mesa",
+          "dist_m": 15,
+          "azimut": 145,
+          "elevacion": 30
         }
       ],
       "eventos": [
         {
           "dice": "Allá lo tuestan",
           "tipo": "resaltar",
-          "pieza": "tostadora",
+          "pieza": "tostaduria",
           "dur": 2.5
         },
         {
-          "dice": "menos de un kilo",
+          "dice": "un café normal",
           "tipo": "aparecer",
           "pieza": "taza",
           "dur": 0.8
@@ -644,22 +672,31 @@
       "marcas": [
         {
           "dice": "lo tuestan",
-          "lugar": "tostador",
-          "texto": "Tostador",
+          "lugar": "sacos",
+          "texto": "Café verde",
+          "hasta_dice": "pierde entre"
+        },
+        {
+          "dice": "pierde entre",
+          "lugar": "tostadora",
+          "texto": "Tostadora",
           "hasta_dice": "según el tueste"
+        },
+        {
+          "dice": "cafetería",
+          "lugar": "cafeteria",
+          "texto": "Una cafetería cualquiera",
+          "hasta_dice": "un café normal"
         }
       ],
       "anotaciones": [
         {
-          "dice": "cafetería",
+          "dice": "un café normal",
           "tipo": "pulso",
           "sobre": [
-            [
-              12,
-              -4
-            ]
+            "mesa"
           ],
-          "radio_m": 3
+          "radio_m": 1.6
         }
       ],
       "cifras": [
@@ -677,7 +714,7 @@
           "rotulo": "de cereza por cada kilo de café oro, antes del tueste",
           "cifra": "ruta-c11x12",
           "fuente": "MAGA (cálculo)",
-          "hasta_dice": "un café normal"
+          "hasta_dice": "café tostado"
         },
         {
           "dice": "3.52 dólares",
@@ -686,6 +723,13 @@
           "cifra": "taza-c18",
           "fuente": "Toast",
           "dura": 3.8
+        }
+      ],
+      "cambios": [
+        {
+          "dice": "Y en una cafetería",
+          "mundo": "ciudad",
+          "transicion": "fundido"
         }
       ]
     },
@@ -1183,21 +1227,72 @@
       ],
       "protagonista": "buque"
     },
-    "cafeteria": {
+    "tostaduria": {
       "escala": "esquema",
-      "receta": "plaza",
-      "semilla": 3,
+      "receta": "ciudad",
+      "semilla": 23,
       "tamano_m": 600,
+      "altura_max_m": 12,
       "estilo": "dia",
       "lugares": {
-        "tostador": {
-          "x": -10,
-          "y": 8,
-          "nombre": "Tostador"
+        "sacos": {
+          "x": -9,
+          "y": 4.4,
+          "nombre": "Café verde"
+        },
+        "tostadora": {
+          "x": -1.9,
+          "y": 1.2,
+          "nombre": "Tostadora"
+        },
+        "bandeja": {
+          "x": -0.9,
+          "y": 1.2,
+          "nombre": "Bandeja"
+        }
+      },
+      "piezas": [
+        {
+          "id": "calles",
+          "tipo": "calles"
+        },
+        {
+          "id": "edificios",
+          "tipo": "edificios"
+        },
+        {
+          "id": "tostaduria",
+          "tipo": "tostaduria",
+          "lugar": [
+            0,
+            0
+          ],
+          "rumbo": 0,
+          "tamano": 1.2,
+          "tostadoras": 2,
+          "personas": 3,
+          "semilla": 7
+        }
+      ],
+      "protagonista": "tostaduria"
+    },
+    "ciudad": {
+      "escala": "esquema",
+      "receta": "ciudad",
+      "semilla": 25,
+      "tamano_m": 600,
+      "manzana_m": 40,
+      "altura_max_m": 18,
+      "estilo": "dia",
+      "lugares": {
+        "cafeteria": {
+          "x": 10.5,
+          "y": 13,
+          "nombre": "Cafetería"
         },
         "mesa": {
-          "x": 12,
-          "y": -4,
+          "x": 9.0,
+          "y": 14.8,
           "nombre": "Mesa"
         }
       },
@@ -1211,42 +1306,286 @@
           "tipo": "edificios"
         },
         {
-          "id": "tostadora",
-          "tipo": "actor",
-          "objeto": "tostadora",
-          "lugar": "tostador",
-          "rumbo": 300,
-          "tamano": 1.6
+          "id": "plazuela",
+          "tipo": "zona",
+          "puntos": [
+            [
+              -16,
+              -16
+            ],
+            [
+              16,
+              -16
+            ],
+            [
+              16,
+              3
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              16
+            ],
+            [
+              -16,
+              16
+            ]
+          ],
+          "tono": "verde",
+          "opacidad": 0.55,
+          "borde": false
         },
         {
-          "id": "tostador-persona",
-          "tipo": "actor",
-          "objeto": "persona",
-          "lugar": [
-            -7.5,
-            5.5
+          "id": "avenida",
+          "tipo": "carretera",
+          "camino": "eo-0",
+          "carriles": 4,
+          "ancho_carril_m": 3.5
+        },
+        {
+          "id": "trafico",
+          "tipo": "flujo",
+          "carriles": [
+            "avenida.carril-1",
+            "avenida.carril-2",
+            "avenida.carril-3",
+            "avenida.carril-4"
           ],
-          "rumbo": 120,
-          "tamano": 1.6
+          "tipos": {
+            "carro": 0.72,
+            "bus": 0.14,
+            "moto": 0.14
+          },
+          "densidad": 16,
+          "vel_kmh": 35,
+          "semilla": 5
+        },
+        {
+          "id": "cafeteria",
+          "tipo": "actor",
+          "objeto": "cafeteria",
+          "lugar": [
+            10.5,
+            10.5
+          ],
+          "rumbo": 90,
+          "variante": 1
         },
         {
           "id": "taza",
           "tipo": "actor",
           "objeto": "taza",
           "lugar": "mesa",
-          "tamano": 5,
-          "rumbo": 30
+          "rumbo": 30,
+          "tamano": 1.8,
+          "lev_m": 0.76
         },
         {
-          "id": "cliente",
+          "id": "cliente-1",
+          "tipo": "actor",
+          "objeto": "cliente",
+          "lugar": [
+            7.8,
+            15.6
+          ],
+          "rumbo": 30,
+          "variante": 2
+        },
+        {
+          "id": "cliente-2",
+          "tipo": "actor",
+          "objeto": "cliente",
+          "lugar": [
+            16.1,
+            15.8
+          ],
+          "rumbo": 200,
+          "variante": 5
+        },
+        {
+          "id": "cliente-3",
+          "tipo": "actor",
+          "objeto": "cliente",
+          "puntos": [
+            [
+              18,
+              17.8
+            ],
+            [
+              -15,
+              17.8
+            ]
+          ],
+          "claves": [
+            {
+              "t": 0,
+              "s": 0,
+              "vel_kmh": 4.5
+            }
+          ],
+          "variante": 3
+        },
+        {
+          "id": "peaton-1",
           "tipo": "actor",
           "objeto": "persona",
-          "lugar": [
-            15,
-            -1.5
+          "puntos": [
+            [
+              17.8,
+              -4
+            ],
+            [
+              17.8,
+              17
+            ]
           ],
-          "rumbo": 210,
-          "tamano": 1.6
+          "claves": [
+            {
+              "t": 0,
+              "s": 0,
+              "vel_kmh": 4.5
+            }
+          ],
+          "variante": 4
+        },
+        {
+          "id": "peaton-2",
+          "tipo": "actor",
+          "objeto": "persona",
+          "puntos": [
+            [
+              0,
+              34.3
+            ],
+            [
+              60,
+              34.3
+            ]
+          ],
+          "claves": [
+            {
+              "t": 0,
+              "s": 0,
+              "vel_kmh": 4.8
+            }
+          ],
+          "variante": 6
+        },
+        {
+          "id": "peaton-3",
+          "tipo": "actor",
+          "objeto": "cliente",
+          "puntos": [
+            [
+              50,
+              34
+            ],
+            [
+              -10,
+              34
+            ]
+          ],
+          "claves": [
+            {
+              "t": 0,
+              "s": 0,
+              "vel_kmh": 4.2
+            }
+          ],
+          "variante": 7
+        },
+        {
+          "id": "arbol-1",
+          "tipo": "actor",
+          "objeto": "arbol",
+          "lugar": [
+            -4,
+            17.8
+          ]
+        },
+        {
+          "id": "arbol-2",
+          "tipo": "actor",
+          "objeto": "arbol",
+          "lugar": [
+            -14,
+            17.8
+          ]
+        },
+        {
+          "id": "arbol-3",
+          "tipo": "actor",
+          "objeto": "arbol",
+          "lugar": [
+            8,
+            34.6
+          ]
+        },
+        {
+          "id": "arbol-4",
+          "tipo": "actor",
+          "objeto": "arbol",
+          "lugar": [
+            22,
+            34.6
+          ]
+        },
+        {
+          "id": "arbol-5",
+          "tipo": "actor",
+          "objeto": "arbol",
+          "lugar": [
+            -10,
+            10
+          ]
+        },
+        {
+          "id": "arbol-6",
+          "tipo": "actor",
+          "objeto": "arbol",
+          "lugar": [
+            -13,
+            -5
+          ]
+        },
+        {
+          "id": "arbol-7",
+          "tipo": "actor",
+          "objeto": "arbol",
+          "lugar": [
+            0,
+            -12
+          ]
+        },
+        {
+          "id": "arbol-8",
+          "tipo": "actor",
+          "objeto": "arbol",
+          "lugar": [
+            -3,
+            3
+          ]
+        },
+        {
+          "id": "arbol-9",
+          "tipo": "actor",
+          "objeto": "arbol",
+          "lugar": [
+            12,
+            -8
+          ]
+        },
+        {
+          "id": "arbol-10",
+          "tipo": "actor",
+          "objeto": "arbol",
+          "lugar": [
+            17.8,
+            -12
+          ]
         }
       ],
       "protagonista": "taza"
@@ -1284,7 +1623,7 @@
     "Que la cosecha sea «cereza por cereza» como dato: los cosechadores ilustran la cosecha manual (finca-h07, AGN), la voz no la afirma",
     "La velocidad del camión y del barco, el ritmo de la grúa y cuántos contenedores hay: ilustran, no son datos",
     "Que el barco vaya a Estados Unidos: sale mar adentro sin rumbo dibujado; los destinos van en la voz y en la capa",
-    "El tipo de tostadora o de cafetería de Estados Unidos: la tostadora de tambor y la plaza son genéricas (esquema)",
+    "La tostaduría y la ciudad de la cafetería son genéricas (esquema): ni el tipo de tostadora, ni una ciudad, ni una marca reales; la cafetería no lleva logo y su marca dice «Una cafetería cualquiera»; el tráfico, la gente y los clientes con su vaso ilustran, no miden nada; en pantalla no hay más precio que US$3.52",
     "Que las tres parcelas chicas midan algo o sean de Huehuetenango: ilustran «gente con poca tierra» (taza-c10 es del país)"
   ],
   "caption": {

@@ -44,8 +44,8 @@
       "set": "guatemala",
       "mundos": [
         "esquema:campo",
+        "esquema:ciudad",
         "esquema:costa",
-        "esquema:plaza",
         "pais:guatemala"
       ],
       "idea_visual": "Seguimos el café de día, paso por paso y cada paso en su lugar: la ladera de Huehuetenango bajo sombra con gente cosechando, el beneficio donde se vuelve pergamino, la carretera y la trilla, el mapa desde arriba, la grúa que lo sube al barco y la tostadora junto a una taza humeante, hasta volver a la misma ladera.",

@@ -1,0 +1,85 @@
+{
+ "tipo": "tostaduria",
+ "clase": "pieza",
+ "cuando": "el interior de una tostaduría de café («allá lo tuestan»): sacos de café verde, tostadoras que giran y un saco que se vacía en la tolva",
+ "parametros": {
+  "lugar": {
+   "tipo": "lugar",
+   "requerido": true,
+   "descripcion": "el centro del galpón (un lugar del mundo, o [x, y] en metros en un esquema): huella ≈ 19 × 13 m por `tamano`"
+  },
+  "rumbo": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    360
+   ],
+   "defecto": 0,
+   "descripcion": "hacia dónde mira el frente abierto (grados; 0 = este, 90 = norte): la pared del fondo y la de la izquierda quedan enteras, la del frente y la de la derecha cortadas a media rodilla. Mira adentro con la cámara en azimut ≈ rumbo + 45 (de frente y por la derecha), elevación 15–35°, dist_m 10–24"
+  },
+  "tamano": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0.6,
+    2
+   ],
+   "defecto": 1,
+   "descripcion": "escala de todo el galpón, sus máquinas y su gente (1 = medidas reales; la gente va ×1.1 y las tazas y el polvo agrandados para leerse a 8–25 m)"
+  },
+  "tostadoras": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    1,
+    2
+   ],
+   "defecto": 2,
+   "descripcion": "cuántas tostadoras de tambor (objeto tostadora: el tambor gira, el brazo remueve la bandeja, la chimenea humea), cada una con su desfase; la primera tiene detrás la plataforma de carga"
+  },
+  "personas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    3
+   ],
+   "defecto": 2,
+   "descripcion": "1 = quien carga, desde la plataforma, un saco que sube, se inclina sobre la tolva y se vacía con un chorro de grano verde (ciclo de 7 s; sin nadie no hay saco); 2 = y quien revisa la bandeja de la primera tostadora; 3 = y quien cata en la mesa"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "el azar fijo: tonos del ladrillo y de los sacos, cuántas camadas lleva cada estiba, el color de cada tostadora, la fase de la carga y de cada pose"
+  }
+ },
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "usa": [
+  "tostadora",
+  "persona"
+ ],
+ "ejemplo": {
+  "id": "tostaduria",
+  "tipo": "tostaduria",
+  "lugar": [
+   0,
+   0
+  ],
+  "rumbo": 0,
+  "tamano": 1,
+  "tostadoras": 2,
+  "personas": 2
+ }
+}

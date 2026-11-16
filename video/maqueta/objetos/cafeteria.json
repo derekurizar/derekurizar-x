@@ -1,0 +1,21 @@
+{
+ "tipo": "cafeteria",
+ "clase": "objeto",
+ "cuando": "cafetería genérica de esquina en una ciudad (ladrillo, toldo, vitrina con luz, terraza con sombrilla; sin marca): donde se toma el café afuera",
+ "parametros": {},
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "medidas": {
+  "largo_m": 12.1,
+  "ancho_m": 13.0,
+  "alto_m": 9.7
+ },
+ "ejemplo": {
+  "objeto": "cafeteria"
+ }
+}
