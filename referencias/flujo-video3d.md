@@ -39,7 +39,7 @@ entrega) y `scripts/maqueta3d.py` (gates M3D, cuadros sueltos, render).
 | 3b | **Referencia visual:** un verificador por mundo de cerca (cómo se ve el lugar, qué pasa ahí, con qué; lo que no se puede afirmar) → `verificacion_visual_<mundo>.json` | Workflow `video3d`: `historia-verificador` (≤ 3 a la vez) |
 | 4 | Ganchos: 5 candidatos con su cuadro renderizado; el crítico recomienda y **el usuario elige** (y el estilo, si la confianza es baja) | Workflow: `ganchos --check --cuadros` → para con `elegir_gancho` |
 | 5 | Guion: la narración de corrido primero; luego las escenas y el `caption` por plataforma | Workflow: el director, `guion --check` (C3D1–C3D19, V2–V5, M3D1–M3D19) |
-| 6 | Storyboard: un cuadro por clave de cámara y evento, antes de gastar créditos | Workflow: `storyboard` |
+| 6 | Storyboard: un cuadro por clave de cámara y evento (y uno en el cruce de cada fundido), más **una hoja y la medida de cada mundo** en `escenas/`; limpia sus carpetas antes de escribir | Workflow: `storyboard` (`--sin-escenas` deja solo la hoja) |
 | 7 | Crítico (retención y concordancia) y cierre: **el usuario elige el cierre** | Workflow: `video-critico` en «Modo 3D» → 5 cierres (`elegir_cierre`) |
 | 7b | **Revisión de escenas:** una hoja por mundo y su medida; el crítico puntúa detalle, vida, realismo y claridad; ≤ 2 vuelve al director o al constructor. Las mejoras probadas se aplican solas | `maqueta3d.py escena --hoja` · Workflow |
 | — | **Retoque visual** (la voz ya existe): cambia solo lo que se ve | Workflow con `desde: "retoque_visual"` + `notas` |
@@ -257,3 +257,9 @@ se lee tres veces). Prueba cada arreglo en una copia del TRABAJO antes de propon
   de video: un video de 45 s tarda ≈ 16–22 min por formato (3 min ≈ 65–90 min por formato) (12–16 veces más que three.js). Elige un estilo de Blender
   cuando la forma o la luz lo valgan, no por costumbre. La primera vez, Cycles compila sus kernels (≈ 3.5 min).
 - Un cuadro suelto de three.js: segundos (por eso los ganchos y el storyboard se ven antes de la voz).
+- **Límite del render:** 600 s + 40 s por segundo de video (un render 3D va a ≈ 2–4× la duración); si lo pasa se detiene con
+  todos sus procesos y dice dónde está el registro. `MAQUETA_RENDER_LIMITE_S=<segundos>` lo sube en una máquina lenta.
+- **El pie se arma solo con lo que el video dibuja** (las capas de sus mundos, agrupadas por fuente); `guion.pie` lo fija
+  a mano cuando hay una fuente propia (una traza, un tratado).
+- **La carpeta de entrega lleva la fecha de la entrega**; volver a entregar el mismo video reutiliza su carpeta.
+- `memoria/videos3d.json` guarda `estilos` y `por_mundo` (estilo y hora de cada mundo).

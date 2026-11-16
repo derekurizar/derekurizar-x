@@ -551,6 +551,11 @@ viejos (los nuevos siguen la vara del constructor).
 - `persona` trae las poses con nombre (`de_pie`, `caminar`, `cosechar`, `rastrillar`, `cargar`, `sorber`, `sentado`,
   `atender`) con sus accesorios; `cosechador` y `cliente` siguen existiendo para los videos ya entregados.
 
+**Lo que rodea** (2026-11-16): `cuadro` dibuja el cruce de un fundido como lo deja el render (los dos tramos mezclados;
+en `oscuro`, el que sale apagándose o el que entra encendiéndose); `render` tiene límite de tiempo (`limite_render`,
+`MAQUETA_RENDER_LIMITE_S`); `maqueta_modulo.py check` revisa la sintaxis del módulo (`node --check`) y conserva la maqueta
+de prueba guardada en su carpeta; `capas_usadas()` dice qué capas usa un mundo (el gate M3D7 y el pie salen de ahí).
+
 ## Objetos articulados, estilo `dia` y M3D14 (usuario, 2026-11-16: «más detalle y dinamismo»)
 
 - **Objeto articulado** (`video/maqueta/objetos/<tipo>.js`): las partes con `grupo` se mueven solas con el tiempo. El

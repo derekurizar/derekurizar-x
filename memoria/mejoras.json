@@ -2574,7 +2574,7 @@
       "archivo": "scripts/maqueta3d.py (correr, render)",
       "problema": "El render de la maqueta 3D sigue sin límite de tiempo (la mesa ya lo tiene: mesa.limite_render); un render colgado bloquea la producción.",
       "propuesta": "Usar mesa.lanzar_render / limite_render también en maqueta3d.py.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m235",
@@ -2761,7 +2761,7 @@
       "archivo": "scripts/maqueta3d.py (cámara) · video/maqueta/motor.js",
       "problema": "`mira` es siempre un punto en el suelo: en un primer plano de una ladera (dist_m < ~100) la cámara puede quedar dentro del cerro o mirar a la base.",
       "propuesta": "Un `mira_lev_m` en la clave de cámara (o la altura de la pieza en ese punto), en el motor y en la proyección de los gates.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m252",
@@ -2772,7 +2772,7 @@
       "archivo": "scripts/maqueta_modulo.py (check)",
       "problema": "`check` vacía sesiones/_modulos/<tipo>/ antes de escribir y borra la maqueta de prueba que la guía del constructor pide guardar ahí.",
       "propuesta": "Conservar `maqueta.json` de esa carpeta, o que la guía pida guardarla en sesiones/_modulos/<tipo>.maqueta.json.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m253",
@@ -2794,7 +2794,7 @@
       "archivo": ".claude/workflows/video3d.js · referencias/roles/video-critico/3d.md",
       "problema": "El Workflow llegó a los cierres con un storyboard que pasaba todos los gates pero donde los mundos de esquema no se leían (la finca parecía franjas de luces, el camión diminuto, la taza no se veía); hizo falta una pasada de corrección del director y dos constructores a mano. Las mejoras que el crítico ya había probado quedaron sin aplicar.",
       "propuesta": "Que el crítico en «Modo 3D» puntúe la legibilidad de cada mundo en el storyboard (¿se reconoce el objeto protagonista de cada tramo a tamaño de teléfono?) y que un puntaje ≤ 2 vuelva al director/constructor; y que las mejoras probadas se apliquen solas antes de los cierres (como en /historia).",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m255",
@@ -2805,7 +2805,7 @@
       "archivo": "scripts/maqueta_tramos.py (cuadro)",
       "problema": "En un fundido, `cuadro` muestra solo el tramo de ese segundo: el storyboard no deja ver cómo se cruzan los dos mundos.",
       "propuesta": "En la ventana de un fundido, grabar los dos tramos y mezclarlos con el mismo peso que el xfade.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m256",
@@ -2816,7 +2816,7 @@
       "archivo": "scripts/video3d.py (construir → pie)",
       "problema": "El pie automático usa el texto completo del set (incluye «Fallas: GEM») aunque el video no dibuje fallas.",
       "propuesta": "Armar el pie con solo las claves que M3D7 pide para las capas usadas (fuente.json → pie_claves).",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m257",
@@ -2827,7 +2827,7 @@
       "archivo": "scripts/video3d.py (entregar)",
       "problema": "La carpeta de entrega lleva la fecha de `preparar` (2026-11-15) y no la de la entrega (2026-11-16).",
       "propuesta": "Usar la fecha del día en que se entrega, o preguntar si cambió.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m258",
@@ -2838,7 +2838,7 @@
       "archivo": ".claude/workflows/video3d.js",
       "problema": "El retoque visual con la voz ya grabada (el usuario pidió más detalle y dinamismo) se hizo con un director suelto: el Workflow no tiene un modo que conserve los textos y cambie solo lo visual.",
       "propuesta": "`desde: \"retoque_visual\"` + `notas`: el director cambia mundos, cámaras, eventos y marcas sin tocar texto/n/secuencia; luego tiempos (voz real), storyboard y crítico en «Modo 3D» (3C11).",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m259",
@@ -2849,7 +2849,7 @@
       "archivo": "video/maqueta/motor.js (flota)",
       "problema": "Una pieza no puede atar una malla a la mano de un objeto (el rastrillo del beneficio se coloca aparte con la misma posición), y las flotas que no son actores (beneficio, flujo) no pasan la velocidad a la pose.",
       "propuesta": "`op.adjuntos` en flota (mallas hijas de un grupo del objeto) y `vel` en poner() desde flujo y beneficio.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m260",
@@ -2860,7 +2860,7 @@
       "archivo": "scripts/memoria.py (--video3d) · scripts/validate.py (M21)",
       "problema": "Con estilo por mundo, el registro guarda solo el estilo global («dia»); la rotación y el análisis por estilo no ven que el mapa iba en «color».",
       "propuesta": "Guardar `estilos` (la lista por tramo) junto a `estilo`, y que M21 los valide contra el catálogo.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m261",
@@ -2871,7 +2871,7 @@
       "archivo": "video/maqueta/motor.js (ctx)",
       "problema": "ctx no publica la dirección de la luz (LUZ_DIR): las piezas que dibujan sombras (cafetal) la recalculan desde CFG.luz.",
       "propuesta": "Publicar ctx.luzDir.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m262",
@@ -2882,7 +2882,7 @@
       "archivo": "video/maqueta/motor.js (flota)",
       "problema": "La pose no puede cambiar el brillo de un grupo (la vitrina de la cafetería parpadea encogiendo bombillas) ni hay un segundo tinte por instancia (toldo y fachada no varían por separado).",
       "propuesta": "Un 8.º valor de brillo por grupo en la pose y `tinte2` en las partes con un segundo color por instancia.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m263",
@@ -2893,7 +2893,7 @@
       "archivo": "video/maqueta/motor.js (flota) · objetos/persona.js",
       "problema": "Una pieza no puede pedir una pose por instancia (quien carga el saco en la tostaduría solo se mece; el saco se mueve aparte).",
       "propuesta": "`op.pose` en ctx.flota (un nombre de pose del objeto: cargar, rastrillar, sorber) que la pieza elige por instancia.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m264",

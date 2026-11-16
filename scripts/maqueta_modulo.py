@@ -269,8 +269,15 @@ def check(spec, maqueta=None, sin_render=False, salida=None):
         return (1 if f else 0), R
     inyectar(fi, carpeta, tipo)
     dest = os.path.abspath(salida or os.path.join(SALIDA, tipo))
+    # la carpeta se limpia, pero la maqueta de prueba que el constructor guardó AHÍ (la guía se lo pide) se conserva (m252)
+    propia = os.path.abspath(maqueta) if maqueta else None
+    guardada = M3.cargar_texto(propia) if propia and os.path.isfile(propia) and os.path.commonpath([propia, dest]) == dest else None
     shutil.rmtree(dest, ignore_errors=True)
     os.makedirs(dest)
+    if guardada is not None:
+        os.makedirs(os.path.dirname(propia), exist_ok=True)
+        with open(propia, "w", encoding="utf-8") as fh:
+            fh.write(guardada)
     if maqueta:
         m = M3.cargar_json(maqueta)
         total = float(m.get("duracion_s", 4.0))

@@ -846,6 +846,10 @@ def registrar_video3d(d, estado, dry_run=False):
     reg = {"id": g["id"], "slug": g["slug"], "tema": g.get("tema", ""), "fecha": g["fecha"], "ruta": ruta,
            "estilo": (g.get("estilo") or {}).get("id"), "motor": g.get("motor"), "set": (g.get("mundo") or {}).get("set") or next((m.get("set") for m in (g.get("mundos") or {}).values() if m.get("set")), None),
            "mundos": sorted({"%s:%s" % (m.get("escala") or "pais", m.get("set") or m.get("receta") or "") for m in (g.get("mundos") or {}).values()}) or None,
+           # con estilo y hora por mundo (m260): qué estilo y qué hora llevó cada mundo, para la rotación y el análisis
+           "estilos": sorted({(g.get("estilo") or {}).get("id")} | {m.get("estilo") for m in (g.get("mundos") or {}).values()} - {None}) or None,
+           "por_mundo": {k: {"estilo": m.get("estilo") or (g.get("estilo") or {}).get("id"), "hora": m.get("hora") or "dia"}
+                         for k, m in (g.get("mundos") or {}).items()} or None,
            "idea_visual": g.get("idea_visual", ""), "gancho": gancho, "cierre": cierre, "paleta": g["paleta"], "musica": g["musica"],
            "duracion_s": g["duracion_s"], "creditos_voz": g.get("creditos_voz"), "desde": g.get("desde"), "estado": estado}
     ms = leer(VIDEOS3D, obligatorio=False) or json.loads(json.dumps(VACIO_VIDEOS3D))

@@ -302,6 +302,29 @@ def tramo_en(m, t):
     return partes[-1]
 
 
+def cruce_en(partes, t):
+    """Si en el segundo t se cruzan dos tramos (fundido u oscuro) → (transición, avance 0–1, tramo que sale, tramo que entra);
+    si no, None. El cruce va centrado en el límite, como en `encadenar`."""
+    for k in range(1, len(partes)):
+        info = partes[k][0]
+        d = info["fundido"]
+        if TRANSICIONES.get(info["transicion"]) and d > 0 and abs(t - info["desde"]) < d / 2 - 1e-6:
+            return info["transicion"], (t - (info["desde"] - d / 2)) / d, partes[k - 1], partes[k]
+    return None
+
+
+def mezclar(trans, p, a, b, destino):
+    """El cuadro de un cruce, como lo deja xfade: fundido = mezcla de los dos; oscuro = el que sale se apaga y el que entra
+    se enciende. → código de ffmpeg."""
+    if trans == "oscuro":
+        k, src = (1 - 2 * p, a) if p < 0.5 else (2 * p - 1, b)
+        cmd = ["ffmpeg", "-v", "error", "-y", "-i", src, "-vf", "format=rgb24,lutrgb=r='val*%.4f':g='val*%.4f':b='val*%.4f'" % (k, k, k), destino]
+    else:
+        cmd = ["ffmpeg", "-v", "error", "-y", "-i", a, "-i", b, "-filter_complex",
+               "[0]format=rgb24[a];[1]format=rgb24[b];[a][b]blend=all_expr='A*%.4f+B*%.4f'" % (1 - p, p), "-frames:v", "1", destino]
+    return subprocess.run(cmd, capture_output=True, text=True).returncode
+
+
 def cuadro(m, tiempos, formatos, salida, hoja, M3):
     """Cuadros sueltos de una maqueta con tramos: para cada t, el cuadro del mundo de su tramo (con sus marcas) y la capa
     global encima. → 0 ok · 1 falla."""
@@ -309,13 +332,17 @@ def cuadro(m, tiempos, formatos, salida, hoja, M3):
     fps = int(m.get("fps", 30))
     os.makedirs(salida, exist_ok=True)
     tmp = os.path.join(salida, "_tramos")
+    partes = partir(m)
     for f in formatos:
         carpeta = M3.carpeta_de(f)
-        por_tramo = {}
+        por_tramo, cruces = {}, {}
         for t in tiempos:
-            info, sub = tramo_en(m, t)
-            por_tramo.setdefault(info["n"], (info, sub, []))[2].append(t)
-        fotos = {}
+            x = cruce_en(partes, t)        # en un fundido se ven los DOS mundos: se dibuja el cuadro de cada uno y se mezclan
+            if x:
+                cruces[t] = (x[0], x[1], x[2][0]["n"], x[3][0]["n"])
+            for info, sub in ([x[2], x[3]] if x else [tramo_en(m, t)]):
+                por_tramo.setdefault(info["n"], (info, sub, []))[2].append(t)
+        fotos, de_tramo = {}, {}
         for n, (info, sub, ts) in sorted(por_tramo.items()):
             d = os.path.join(tmp, "tramo-%02d" % (n + 1))
             os.makedirs(d, exist_ok=True)
@@ -328,7 +355,14 @@ def cuadro(m, tiempos, formatos, salida, hoja, M3):
             if M3.cmd_cuadro(ns):
                 return 1
             for t, tl in zip(ts, locales):
-                fotos[int(round(t * fps))] = os.path.join(d, "%s_t%07.3f.png" % (carpeta, tl))
+                de_tramo[(n, t)] = os.path.join(d, "%s_t%07.3f.png" % (carpeta, tl))
+                if t not in cruces:
+                    fotos[int(round(t * fps))] = de_tramo[(n, t)]
+        for t, (trans, avance, na, nb) in cruces.items():
+            mez = os.path.join(tmp, "cruce_%s_t%07.3f.png" % (carpeta, t))
+            if mezclar(trans, avance, de_tramo[(na, t)], de_tramo[(nb, t)], mez):
+                print("FALLA cuadro %s (tramos): no se pudo mezclar el cruce de %.2f s" % (f, t)); return 1
+            fotos[int(round(t * fps))] = mez
         # la capa global en MODO PLACA, con cada cuadro del mundo como foto de la placa
         proy = os.path.join(tmp, "capa", carpeta)
         os.makedirs(proy, exist_ok=True)

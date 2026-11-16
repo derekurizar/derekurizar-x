@@ -180,6 +180,28 @@ if os.path.exists(os.path.join(FIXV, "guion.json")):
     finally:
         shutil.rmtree(T, ignore_errors=True)
 
+# el cruce de un fundido (m255), el pie con solo lo usado (m256) y el límite del render (m234)
+import maqueta_tramos as TRX  # noqa: E402
+import maqueta3d as M3X  # noqa: E402
+if True:
+    try:
+        mf = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "video", "maqueta", "fixture", "tramos.json"), encoding="utf-8"))
+        pf = TRX.partir(mf)
+        lim = pf[1][0]["desde"]
+        x = TRX.cruce_en(pf, lim)
+        ok(x and x[0] == "fundido" and abs(x[1] - 0.5) < 1e-6 and x[2][0]["n"] == 0 and x[3][0]["n"] == 1, "cruce_en: en el límite de un fundido se ven los dos tramos a la mitad (%s)" % (x and x[:2],))
+        ok(TRX.cruce_en(pf, lim + 1.0) is None, "cruce_en: lejos del límite no hay cruce")
+        ok(TRX.cruce_en(pf, pf[2][0]["desde"]) is None, "cruce_en: un corte no cruza")
+        pie = V3.pie_de_capas("guatemala", {"relieve", "lugares", "rios", "lagos"})
+        ok("GEM" not in pie and "Mapzen" in pie and "ríos y lagos: © OpenStreetMap" in pie, "pie_de_capas: solo lo usado y agrupado por fuente (%s)" % pie)
+        os.environ["MAQUETA_RENDER_LIMITE_S"] = "2"
+        p_, _ = M3X.correr([sys.executable, "-c", "import time; time.sleep(30)"], ".", None, limite=M3X.limite_render(10))
+        ok(p_.returncode == 124, "correr con límite: un proceso colgado se detiene con 124 (dio %s)" % p_.returncode)
+        os.environ.pop("MAQUETA_RENDER_LIMITE_S", None)
+        ok(M3X.limite_render(100) == M3X.RENDER_LIMITE_BASE_S + 100 * M3X.RENDER_LIMITE_POR_S, "limite_render: proporcional a la duración")
+    finally:
+        os.environ.pop("MAQUETA_RENDER_LIMITE_S", None)
+
 for x in F:
     print("FALLA", x)
 print("maqueta_tramos: %s" % ("OK" if not F else "%d falla(s)" % len(F)))

@@ -1215,13 +1215,7 @@ def gates_comunes(m, R, avisos):
     # si hay marcas, y las que declaran las fichas de sus piezas (`capas`, siempre; o un parámetro con `capa`, si la pieza lo
     # trae o tiene defecto): el pie nombra la fuente de cada una (las claves del set: fuente.json → pie_claves; un esquema
     # no tiene geodatos)
-    usadas = set((ficha(R["mundo"]["escala"], "mundo") or {}).get("capas") or []) | ({"lugares"} if R["marcas"] else set())
-    for mp in m["mundo"].get("piezas") or []:
-        fp = ficha(mp.get("tipo"), "pieza") or {}
-        usadas.update(fp.get("capas") or [])
-        for nombre, d in (fp.get("parametros") or {}).items():
-            if d.get("capa") and (mp.get(nombre) if mp.get(nombre) is not None else d.get("defecto")):
-                usadas.add(d["capa"])
+    usadas = capas_usadas(m["mundo"], R["mundo"]["escala"], bool(R["marcas"]))
     for capa in sorted(usadas):
         clave = R["_pie_claves"].get(capa)
         if clave and clave.lower() not in str(C.get("pie") or "").lower():
@@ -1543,9 +1537,55 @@ def efectos_de(m):
     return sorted([round(float(t), 3), s] for t, s in lista)
 
 
-def correr(cmd, cwd, registro=None):
+RENDER_LIMITE_BASE_S, RENDER_LIMITE_POR_S = 600, 40   # un render 3D va a ≈ 2–4× la duración; a 40× (más lo fijo) está colgado
+
+
+def limite_render(dur_s):
+    """Cuánto puede tardar un render antes de darlo por colgado (m234). MAQUETA_RENDER_LIMITE_S lo fija a mano."""
+    try:
+        return max(1.0, float(os.environ["MAQUETA_RENDER_LIMITE_S"]))
+    except (KeyError, ValueError):
+        return RENDER_LIMITE_BASE_S + RENDER_LIMITE_POR_S * max(0.0, float(dur_s or 0))
+
+
+def capas_usadas(mundo, escala, hay_marcas):
+    """Las capas de geodatos que un mundo usa: las de su escala, los lugares si hay marcas y las de las fichas de sus piezas
+    (`capas`, o un parámetro con `capa` que la pieza trae o tiene por defecto). De aquí salen el gate M3D7 y el pie."""
+    usadas = set((ficha(escala, "mundo") or {}).get("capas") or []) | ({"lugares"} if hay_marcas else set())
+    for mp in mundo.get("piezas") or []:
+        fp = ficha(mp.get("tipo"), "pieza") or {}
+        usadas.update(fp.get("capas") or [])
+        for nombre, d in (fp.get("parametros") or {}).items():
+            if d.get("capa") and (mp.get(nombre) if mp.get(nombre) is not None else d.get("defecto")):
+                usadas.add(d["capa"])
+    return usadas
+
+
+def correr(cmd, cwd, registro=None, limite=None):
+    """Corre `cmd` y guarda su salida en `registro`. Con `limite` (segundos), si se pasa se detiene con todo lo que lanzó
+    (npx → node → Chrome → ffmpeg: si queda vivo, sostiene el candado de HyperFrames) y devuelve código 124."""
+    import signal
     t0 = time.time()
-    p = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True)
+    if limite is None:
+        p = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True)
+    else:
+        pr = subprocess.Popen(cmd, cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, start_new_session=True)
+        try:
+            out, err = pr.communicate(timeout=limite)
+            p = subprocess.CompletedProcess(cmd, pr.returncode, out, err)
+        except subprocess.TimeoutExpired:
+            for senal in (signal.SIGTERM, signal.SIGKILL):
+                try:
+                    os.killpg(pr.pid, senal)
+                except OSError:
+                    break
+                try:
+                    pr.wait(timeout=8)
+                    break
+                except subprocess.TimeoutExpired:
+                    pass
+            out, err = pr.communicate()
+            p = subprocess.CompletedProcess(cmd, 124, out or "", (err or "") + "\nLÍMITE: el render pasó %.0f s y se detuvo (MAQUETA_RENDER_LIMITE_S=<segundos> lo sube)" % limite)
     if registro:
         with open(registro, "w", encoding="utf-8") as f:
             f.write(p.stdout + "\n" + p.stderr)
@@ -1732,7 +1772,9 @@ def renderizar(m, f, proy, final, registro, placa=None):
             extra = ["--video-frame-format", "png"]
         # un solo proceso de Chrome SIEMPRE: con varios, el video tiembla
         p, seg = correr(HF + ["render", "--fps", str(R["fps"]), "--workers", "1", "--crf", "18", "--quality", "delivery", "--browser-gpu"] + extra + ["-o", os.path.abspath(crudo)],
-                        proy, registro)
+                        proy, registro, limite=limite_render(R["dur"]))
+        if p.returncode == 124:
+            print("FALLA render %s: pasó su límite de %.0f s para %.1f s de video y se detuvo (ver %s; en una máquina lenta, MAQUETA_RENDER_LIMITE_S=<segundos>)" % (f, limite_render(R["dur"]), R["dur"], registro)); return 1
         if p.returncode != 0 or not os.path.exists(crudo):
             print("FALLA render %s: hyperframes devolvió %d (ver %s)" % (f, p.returncode, registro)); return 1
         info = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-count_frames", "-show_entries", "stream=codec_name,pix_fmt,width,height,nb_read_frames",

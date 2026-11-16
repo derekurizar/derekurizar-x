@@ -253,6 +253,27 @@ def lugares_de_mundo(mundo, estilo_id=None):
     return dict(_LUGARES_MUNDO[clave], **(mundo.get("lugares") or {}))
 
 
+def pie_de_capas(nombre_set, usadas):
+    """El pie de UN set con solo las capas que el video usa (m256), agrupadas por fuente: «Lugares, ríos y lagos: ©
+    OpenStreetMap». Sin fuente.json o sin capas con atribución → el pie entero del set."""
+    ruta = os.path.join(RAIZ, "design", "sets3d", nombre_set or "", "fuente.json")
+    if not os.path.exists(ruta):
+        return ""
+    capas = leer(ruta).get("capas")
+    if not isinstance(capas, dict):
+        return pie_del_set(nombre_set)
+    por = {}
+    for k, c in capas.items():
+        if k in usadas and isinstance(c, dict) and ": " in (c.get("atribucion") or ""):
+            etiqueta, _, fuente = c["atribucion"].partition(": ")
+            por.setdefault(fuente, []).append(etiqueta)
+    partes = []
+    for fuente, ets in por.items():
+        ets = [ets[0]] + [e[:1].lower() + e[1:] for e in ets[1:]]
+        partes.append("%s: %s" % (ets[0] if len(ets) == 1 else ", ".join(ets[:-1]) + " y " + ets[-1], fuente))
+    return " · ".join(partes)
+
+
 def pie_del_set(nombre_set):
     ruta = os.path.join(RAIZ, "design", "sets3d", nombre_set or "", "fuente.json")
     if not os.path.exists(ruta):
@@ -871,7 +892,16 @@ def construir(trabajo, g, loc, real, solo_escenas=None):
             actos.append(x["off"])
     MUNDOS = mundos_de(g)
     mundo = MUNDOS.get("principal") or next(iter(MUNDOS.values()))
-    pies = list(dict.fromkeys(p for p in (pie_del_set(v.get("set")) for v in MUNDOS.values() if (v.get("escala") or "pais") != "esquema") if p))
+    # el pie nombra SOLO las fuentes de lo que el video dibuja (m256): por set, las capas de todos sus mundos
+    hay_marcas = any(e.get("marcas") for e in escenas_de(g))
+    por_set = {}
+    for v in MUNDOS.values():
+        if (v.get("escala") or "pais") != "esquema" and v.get("set"):
+            por_set.setdefault(v["set"], set()).update(M3.capas_usadas(v, v.get("escala") or "pais", hay_marcas))
+            por_set[v["set"]].update(p_.get("tipo") for p_ in v.get("piezas") or [])   # una pieza que se llama como su capa (frontera, fallas…)
+    pies = list(dict.fromkeys(p for p in (pie_de_capas(s_, u) for s_, u in por_set.items()) if p))
+    if len(" · ".join(pies)) > 132:
+        pies = [p.replace("Mapzen Terrain Tiles", "Mapzen") for p in pies]
     capa = {"titulares": titulares, "cifras": cifras, "palabras": palabras, "progreso": {"actos": actos},
             "seguir": {"t": cuadro(t_seguir), "dur": SEGUIR_S},
             "pie": g.get("pie") or " · ".join(pies), "handle": HANDLE}
@@ -1029,7 +1059,10 @@ def tiempos_clave(maqueta):
     for t in sorted(min(max(0.0, t), maqueta["duracion_s"] - 0.05) for t in ts):
         if not out or t - out[-1] >= 0.8:
             out.append(round(t, 2))
-    return out
+    # un fundido se mira cerca de la mitad de su cruce (se ven los dos mundos); un corte o un paso por negro no tienen qué mostrar
+    cruces = [round(tr["desde"] - 0.08 * float(tr.get("fundido_s", 0.5)), 2) for tr in (maqueta.get("tramos") or [])[1:]
+              if tr.get("transicion", "fundido") == "fundido"]
+    return sorted(set(out + cruces))
 
 
 def cuadros(ruta_maqueta, tiempos, salida, formato="9:16", hoja=True):
@@ -1045,7 +1078,14 @@ def cmd_storyboard(a):
     if not os.path.exists(ruta):
         return falla("falta maqueta.json: corre guion --check primero")
     maqueta = leer(ruta)
-    return cuadros(ruta, tiempos_clave(maqueta), os.path.join(trabajo, "storyboard"), a.formato)
+    # se limpia antes de escribir: los cuadros de una versión anterior del guion no se mezclan con los de esta
+    for nombre in ("storyboard", "escenas"):
+        shutil.rmtree(os.path.join(trabajo, nombre), ignore_errors=True)
+    rc = cuadros(ruta, tiempos_clave(maqueta), os.path.join(trabajo, "storyboard"), a.formato)
+    if rc == 0 and maqueta.get("tramos") and not getattr(a, "sin_escenas", False):
+        # una hoja por mundo (6 cuadros de cada tramo) y su medida: lo que miran el director, el crítico y el usuario
+        subprocess.call([sys.executable, MAQUETA3D, "escena", ruta, "--formato", a.formato, "--hoja", "--salida", os.path.join(trabajo, "escenas")])
+    return rc
 
 
 def cmd_ganchos(a):
@@ -1303,7 +1343,11 @@ def cmd_entregar(a):
         for x in faltan:
             print("FALLA", x)
         return 1
-    destino = os.path.abspath(a.salida or os.path.join(RAIZ, "videos3d", "%s-%s" % (st["fecha"], st["slug"])))
+    # la carpeta lleva la fecha de la ENTREGA (m257); si el video ya se entregó, se vuelve a entregar en su carpeta
+    base3d = os.path.join(RAIZ, "videos3d")
+    previas = sorted(d for d in (os.listdir(base3d) if os.path.isdir(base3d) else []) if re.fullmatch(r"\d{4}-\d{2}-\d{2}-" + re.escape(st["slug"]), d))
+    fecha_entrega = previas[-1][:10] if previas else datetime.date.today().isoformat()
+    destino = os.path.abspath(a.salida or os.path.join(base3d, "%s-%s" % (fecha_entrega, st["slug"])))
     os.makedirs(destino, exist_ok=True)
     for f in ("video.mp4", "video_4x5.mp4", "subtitulos.srt", "portada.png"):
         if os.path.exists(os.path.join(sal, f)):
@@ -1312,7 +1356,7 @@ def cmd_entregar(a):
     shutil.copyfile(os.path.join(trabajo, "tiempos.json"), os.path.join(destino, "tiempos.json"))   # los cortes reales por escena (metricas.py alinear)
     estilos = {e["id"]: e for e in leer(ESTILOS)["estilos"]} if os.path.exists(ESTILOS) else {}
     escribir(os.path.join(destino, "guion.json"), dict(g, **{
-        "tipo": "video3d", "id": "video3d-" + st["slug"], "slug": st["slug"], "tema": st["tema"], "fecha": st["fecha"],
+        "tipo": "video3d", "id": "video3d-" + st["slug"], "slug": st["slug"], "tema": st["tema"], "fecha": fecha_entrega,
         "paleta": st["paleta"], "musica": st["musica"], "desde": st.get("desde"),
         "motor": (estilos.get((g.get("estilo") or {}).get("id")) or {}).get("motor"),
         "duracion_s": round(leer(os.path.join(trabajo, "tiempos.json"))["total_s"], 1),
@@ -1377,6 +1421,7 @@ def main():
     s.add_argument("--por", default="usuario")
     s.add_argument("--formato", default="9:16")
     s = sub.add_parser("storyboard")
+    s.add_argument("--sin-escenas", action="store_true", help="solo la hoja del storyboard, sin la hoja ni la medida de cada mundo")
     s.add_argument("trabajo")
     s.add_argument("--formato", default="9:16")
     for nombre in ("render", "montar"):
