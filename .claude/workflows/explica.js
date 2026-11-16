@@ -1,7 +1,7 @@
 export const meta = {
   name: 'explica',
-  description: 'Video explicativo para /explica (un concepto, un proceso o una regla en ~2 min): explica-editor (encuadre: la pregunta, la idea equivocada que casi todos tienen, el mecanismo y la oración que el oyente tiene que poder devolver, la leyenda de color, el glosario, el ejemplo conductor con sus modelos de la calculadora, las anclas de Guatemala, las revelaciones y 1–3 ejes; gate E1) → un explica-investigador por eje ⇢ su explica-verificador (pipeline; afirmaciones y cifras con cita guardada, segunda fuente o la oficial, cuatro veredictos; gate E2) → consolidar (la calculadora: los ejemplos ilustrativos los calcula el script, ej-cNN) → video-gancho en modo explica (5 candidatos; gate R1–R12) → video-critico elige → explica-guionista (PRIMERO la narración de corrido en tres actos: la pregunta, el mecanismo, en tu vida; DESPUÉS las escenas: cuenta (la pizarra), definición, explica, escala, tarjetas, rótulos de acto, secuencias de voz; gate E1–E12 + V1–V5, V9, F1–F8) → historia-oyente (oyente ingenuo que además explica de vuelta el mecanismo) → crítico en modo explica (claridad = la explicación devuelta casa con el mecanismo; ≤ 2 vueltas, acotadas desde la 2; arreglos probados que se aplican tal cual) → mejoras → video-animador por escena explica sin animación. 0 créditos de ElevenLabs.',
-  whenToUse: 'EL USUARIO ELIGE GANCHO Y CIERRE: sin args.gancho se detiene tras la Selección con veredicto elegir_gancho (candidatos, recomendado); la sesión pregunta, corre explica.py ganchos --elegir <id> y relanza con resumeFromRunId y args.gancho (o args.gancho_usuario con el texto que dictó); con el guion aprobado devuelve cierres (5 opciones, cierres.json) y la sesión aplica la elegida con explica.py cierres --usar <id> (o --propio). args.auto (o el fixture) deja la recomendación del crítico. Invocado por /explica <tema> DESPUÉS de `python3 scripts/explica.py preparar "<tema>"`. args: {trabajo, tema, modo, permitir_fallback, desde, notas}. trabajo = sesiones/explica-<slug> (lo imprime preparar). Produce y aprueba <trabajo>/encuadre.json, hallazgos_*.json, verificacion_*.json, explicacion.json, ejemplos.json, base/, ganchos.json, seleccion.json, guion.json, locucion.json, oyente.json y critica.json; la voz, los tiempos, la grabación y el montaje los hace la sesión principal después. Si el crítico sigue en «corregir» tras 2 vueltas y sus faltas traen arreglos probados, se aplican y devuelve pasa con aprobado_por: arreglos_probados; si no, devuelve veredicto corregir + faltas_pendientes y el comando pregunta al usuario. desde: "guion" = salta a Guion (explicacion.json, ganchos.json y seleccion.json ya existen); desde: "retoque" + notas = guion.json aprobado y con voz: el guionista aplica solo las notas conservando las voces → gate → oyente → crítica (1 vuelta) → mejoras → animación; devuelve voces_cambiadas.',
+  description: 'Guion de /explica: editor → investigador ⇢ verificador por eje → consolidar (la calculadora de ejemplos) → ganchos → selección → guionista → oyente con la explicación devuelta → crítico (≤ 2 pasadas) → animador. 0 créditos.',
+  whenToUse: 'Sin args.gancho se detiene con veredicto elegir_gancho (el usuario elige; la sesión corre `ganchos --elegir` y reanuda con resumeFromRunId y args.gancho o args.gancho_usuario); con el guion aprobado devuelve 5 cierres para el usuario. args.auto deja la recomendación del crítico. Tras `explica.py preparar`. args: {trabajo, tema, modo, desde: ganchos|guion|retoque, notas, hasta: consolidar, serie, permitir_fallback}. Si el crítico no aprueba tras 2 pasadas devuelve veredicto corregir + faltas_pendientes (no falla). La voz, los tiempos, el plano y el render los hace la sesión después. Detalle: .claude/commands/explica.md.',
   phases: [
     { title: 'Encuadre', detail: 'explica-editor: encuadre.json con la pregunta, la intuición (la idea equivocada), el mecanismo y su frase, la leyenda de color, el glosario, los personajes del ejemplo, los ejemplos (modelos de la calculadora), las anclas de Guatemala, las revelaciones, 1–3 ejes, la paleta, no_afirma y lo sensible; gate explica.py encuadre --check (E1)' },
     { title: 'Investigación', detail: 'un explica-investigador por eje en paralelo: afirmaciones (definición, regla, proceso, norma) y cifras de Guatemala con la cita literal del texto guardado (explica.py leer) → hallazgos_<eje>.json' },
@@ -11,7 +11,7 @@ export const meta = {
     { title: 'Guion', detail: 'explica-guionista: ganchos --usar → PRIMERO guion.narracion (tres actos: la pregunta, el mecanismo, en tu vida; explica.py narracion --check) → DESPUÉS las escenas sin cambiar una palabra (intuicion y corrige, cuenta, definicion, explica, escala, tarjetas, giro, rótulos, secuencias, cierre de consecuencia, captions); gate explica.py guion --check (E1–E12 + V1–V5, V9, F1–F8) y su RETORNO; en retoque aplica las notas y conserva las voces' },
     { title: 'Oyente', detail: 'historia-oyente en modo explica: la narración de corrido y luego la pantalla por escena (explica.py digesto --para oyente); confusiones, saltos, repeticiones, preguntas sin responder y explicacion_devuelta (el mecanismo con sus palabras)' },
     { title: 'Crítica', detail: 'video-critico en modo explica: gancho, claridad (la explicación devuelta del oyente casa con mecanismo_frase), intuicion (se rompe de forma visible), flujo, precision (ejemplos como ejemplos, datos con fecha, sin consejo), cierre; ≤ 2 vueltas (1 en retoque), acotadas desde la 2; arreglos probados (explica.py probar) que el guionista aplica tal cual (explica.py aplicar); con «pasa», las mejoras y el oyente las vuelve a oír' },
-    { title: 'Cierres', detail: 'el guionista escribe 5 cierres (cierres.json, F1–F8 con cierres --check; c1 = el del guion aprobado) para que el usuario elija antes de la voz (cierres --usar o --propio)' },
+    { title: 'Cierres', detail: 'el guionista escribe 5 cierres (cierres.json, F1–F9 con cierres --check; c1 = el del guion aprobado) y prueba cada uno puesto en el guion con el gate completo (cierres --opciones); en una parte de /serie que no es la última, los 5 de forma puente (SE6); vuelven solo los elegibles, para que el usuario elija antes de la voz (cierres --usar o --propio)' },
     { title: 'Animación', detail: 'video-animador por cada escena explica con animacion null (solo si el crítico aprueba): reusa del catálogo una del mismo mecanismo o escribe video/animaciones/<id>.js, --check, --registrar y --asignar' },
   ],
 }
@@ -67,7 +67,9 @@ const EJES_MAX_EF = SERIE && SERIE.partes ? EJES_MAX_SERIE : EJES_MAX
 const MODO_SERIE = SERIE ? ` MODO SERIE (lee «Modo serie» en tu guía y referencias/flujo-serie.md): ${PARTE ? `PARTE ${PARTE.parte} de ${PARTE.de} («${PARTE.titulo || ''}»), ≈ 90 s (75–110; explica-serie), un solo mecanismo, contada sola (nada de «como vimos»); ${PARTE.parte < PARTE.de ? `cierre con forma «puente»: la pregunta que abre la parte ${PARTE.parte + 1} («${(PARTE.siguiente || {}).titulo || ''}»), sin anunciarla en la frase final (P2); DESPUÉS, en cierre.invitacion (aparte de cierre.texto y de la narración), una oración que pide seguir la cuenta y dice qué explica la parte ${PARTE.parte + 1}: «Sígueme: en la ${['', '', 'segunda', 'tercera', 'cuarta', 'quinta'][PARTE.parte + 1] || ''} parte, …» (SE9: ≤ 18 palabras, sin cifras)` : 'es la ÚLTIMA: cierra con consecuencia, sin cierre.invitacion'}; captions que abren con «Serie · Parte ${PARTE.parte} de ${PARTE.de}: <título>» y Shorts con «(${PARTE.parte}/${PARTE.de})»${PARTE.parte > 1 ? '; TikTok, Instagram y Facebook llevan además «La Parte 1 está fijada en mi perfil»' : ''} (SE8).` : `la investigación compartida de un temario de ${SERIE.partes} partes.`}` : ''
 const notas = String(A.notas || '').trim()
 if (RETOQUE && !notas) throw new Error('args.notas: en modo retoque, lo que pidió el usuario (otro gancho, reescribir la escena 5, otro cierre…).')
-const VUELTAS = RETOQUE ? 1 : VUELTAS_CRITICA
+// VUELTAS = correcciones que el crítico puede pedir; el crítico pasa VUELTAS + 1 veces, es decir VUELTAS_CRITICA
+// (crítica → corrección → crítica acotada). Antes eran 3 pasadas de opus por corrida (2026-11-14).
+const VUELTAS = VUELTAS_CRITICA - 1
 
 const ELIGE_USUARIO = !(A.auto || !!A.fixture)   // sin args.auto, el usuario elige gancho y cierre
 
@@ -96,6 +98,11 @@ const agentRol = async (prompt, opts) => {
     return agent(`Asume el rol definido en .claude/agents/${agentType}.md: léelo primero y sigue sus instrucciones y sus límites. ` + prompt, { ...resto, agentType: 'general-purpose' })
   }
 }
+
+// Guías por modo (2026-11-14): el rol lee su núcleo (referencias/roles/<rol>.md) y SOLO los archivos de su modo
+// (referencias/roles/<rol>/<modo>.md). Antes leía la guía entera, con todos los modos, en cada pasada.
+const guia = (rol, ...modos) =>
+  `lee referencias/roles/${rol}.md (el núcleo) y, de referencias/roles/${rol}/, SOLO ${modos.map((m) => m + '.md').join(' y ')}`
 
 // Verificación mecánica (scripts/verificacion.py V-A–V-E): forma única del veredicto, cierre que el verificador
 // corre antes de devolver y una vuelta de reparación si quedan fallas; lo que siga fallando no se usa.
@@ -150,12 +157,15 @@ async function conReparacion(etiqueta, invocar, validar, max = 2) {
 // ── Schemas de retorno ───────────────────────────────────────────────────────
 const S = {
   cierres: {
-    type: 'object', required: ['archivo', 'gate', 'fallas', 'candidatos'],
+    type: 'object', required: ['archivo', 'gate', 'fallas', 'candidatos', 'elegibles'],
     properties: {
       archivo: { type: 'string', pattern: 'cierres\\.json$' }, gate: { type: 'string', enum: ['ok', 'falla'] },
       fallas: { type: 'array', items: { type: 'string' } },
       candidatos: { type: 'array', items: { type: 'object', required: ['id', 'tipo', 'forma', 'final'],
         properties: { id: { type: 'string' }, tipo: { type: 'string' }, forma: { type: 'string' }, final: { type: 'string' } } } },
+      // lo que dice `cierres --opciones` (el gate completo con cada cierre puesto): ids elegibles y las rechazadas con su falla
+      elegibles: { type: 'array', items: { type: 'string' } },
+      rechazadas: { type: 'array', items: { type: 'object', required: ['id', 'falla'], properties: { id: { type: 'string' }, falla: { type: 'string' } } } },
     },
   },
   rechequeo: { type: 'object', properties: { items: { type: 'array' } } },   // lo pide el bloque común; aquí no se usa
@@ -332,7 +342,7 @@ if (HASTA === 'consolidar') {
 // ── 4. Ganchos (consolidar + calculadora + candidatos) ───────────────────────
 phase('Ganchos')
 const invocarGanchos = (fallos, faltasSel) => agentRol(
-  `MODO EXPLICA (lee referencias/ganchos.md y la sección «Modo explica» de referencias/roles/video-gancho.md). TRABAJO = ${trabajo} · «${tema}».${MODO_SERIE}\n` +
+  `MODO EXPLICA (lee referencias/ganchos.md; ${guia('video-gancho', 'explica')}). TRABAJO = ${trabajo} · «${tema}».${MODO_SERIE}\n` +
     `PRIMERO corre python3 scripts/explica.py consolidar ${trabajo} (explicacion.json, base/ y la calculadora de los ejemplos; exit 1 = falta una cifra real o un ejemplo no se calcula: devuélvelo en fallas). ` +
     `Lee SOLO python3 scripts/explica.py digesto ${trabajo} --para gancho. Escribe ${trabajo}/ganchos.json con ${CANDIDATOS} candidatos de FAMILIAS DISTINTAS (si la rotación deja menos de 5 familias libres, repite familia con otra pantalla y otro ángulo: el usuario elige entre los 5; ${FAMILIAS_M.join(', ')}), ≥ 2 con visual (${VISUALES_M.filter((v) => v !== 'cifra').join(', ')}), ` +
     `que plantean la pregunta del video SIN dar el mecanismo ni la revelación; números de ejemplo solo los ej-cNN (dichos como ejemplo: «Imagina…», «Supón…»); «Guatemala» o «quetzales» en la voz o la pantalla. ` +
@@ -356,7 +366,7 @@ log(`Ganchos: ${K.candidatos.map((c) => `${c.id} ${c.familia}/${c.visual} «${c.
 // ── 5. Selección ─────────────────────────────────────────────────────────────
 phase('Selección')
 const seleccionar = (vuelta) => conReparacion('Selección', (fallos) => agentRol(
-  `MODO SELECCIÓN DE GANCHO de un VIDEO EXPLICATIVO (lee «Modo selección de gancho» y «Modo explica» de referencias/roles/video-critico.md). TRABAJO = ${trabajo} · vuelta ${vuelta}. ` +
+  `MODO SELECCIÓN DE GANCHO de un VIDEO EXPLICATIVO (${guia('video-critico', 'seleccion', 'explica')}: de explica.md, solo «Selección»). TRABAJO = ${trabajo} · vuelta ${vuelta}. ` +
     `Lee SOLO referencias/ganchos.md, ${trabajo}/ganchos.json y python3 scripts/explica.py digesto ${trabajo} --para gancho. Cada candidato primero en silencio y luego con la voz; puntúa silencio, reserva (plantea la pregunta sin regalar el mecanismo ni la revelación), tension, alineacion, honestidad (un número de ejemplo dicho como ejemplo, nunca como dato) y novedad; ganador (ninguno ≤ 2) y segundo de otra familia, o ganador null con faltas. Escribe ${trabajo}/seleccion.json.` +
     (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
   { agentType: 'video-critico', schema: S.seleccion, phase: 'Selección', label: `seleccion-${vuelta}` }),
@@ -492,7 +502,7 @@ for (let vuelta = 1; vuelta <= VUELTAS + 1; vuelta++) {
   if (vuelta > 1) O = await oir(vuelta)
   const acotada = cambiadas !== null
   critica = await conReparacion(`crítica ${vuelta}`, (fallos) => agentRol(
-    `MODO EXPLICA (lee la sección «Modo explica» de referencias/roles/video-critico.md). TRABAJO = ${trabajo}. Vuelta ${vuelta}. ` + MD.directiva +
+    `MODO EXPLICA (${guia('video-critico', 'explica', 'recompensa')}). TRABAJO = ${trabajo}. Vuelta ${vuelta}. ` + MD.directiva +
       `Insumos: ${trabajo}/guion.json, ${trabajo}/locucion.json, ` +
       (O ? `${trabajo}/oyente.json (lo que un oyente que SOLO oyó la voz no entendió y su explicacion_devuelta: E-C2 compara esa oración con mecanismo_frase; si no casan, bloquea con el arreglo de la escena donde se perdió; cada confusión y cada salto se resuelve con una falta o se justifica en oyente_descartadas[]{escena, motivo}) y ` : '') +
       `python3 scripts/explica.py digesto ${trabajo} --para critico (encuadre, afirmaciones, cifras, ejemplos y la NARRACIÓN DE CORRIDO). ` +
@@ -583,23 +593,50 @@ if (mejorasNoAplicadas.length) {
 }
 
 // ── Cierres: 5 opciones para que el usuario elija antes de la voz (c1 = el del guion aprobado) ─────────────────
+// Cada opción se prueba puesta en el guion con el gate COMPLETO del flujo (`cierres --opciones`; m062: una ✓ de solo F1–F9
+// la rechazó H16 al usarla) y aquí solo vuelven las que el usuario puede elegir. Donde el gate obliga una forma (SE6: una
+// parte de /serie que no es la última cierra con «puente»; m079, m151: 4 de 5 opciones eran botones muertos) las 5 son de esa.
 phase('Cierres')
 let CIERRES = null
+const CIERRE_FORMA = PARTE && PARTE.de && PARTE.parte < PARTE.de ? 'puente' : null   // la forma que el gate obliga (scripts/video.py forma_obligatoria)
+const CIERRES_MIN = 3   // con menos opciones elegibles se avisa (video.CIERRES_ELEGIBLES_MIN)
 if (critica.veredicto === 'pasa' && !RETOQUE && ELIGE_USUARIO) {
-  CIERRES = await conReparacion('Cierres', (fallos) => agentRol(
+  let vueltaCierres = 0
+  const eleg = (r) => (r.candidatos || []).filter((c) => (r.elegibles || []).includes(c.id) && (!CIERRE_FORMA || c.forma === CIERRE_FORMA))
+  const fuera = (r) => (r.candidatos || []).filter((c) => !eleg(r).includes(c))
+  const porQue = (r, c) => CIERRE_FORMA && c.forma !== CIERRE_FORMA ? `su forma es «${c.forma}» y aquí el gate solo acepta «${CIERRE_FORMA}»` : (((r.rechazadas || []).find((x) => x.id === c.id) || {}).falla || 'cierres --opciones lo marca ✗')
+  CIERRES = await conReparacion('Cierres', (fallos, intento) => { vueltaCierres = intento; return agentRol(
     `CIERRES PARA EL USUARIO (lee «Cierres para el usuario» en referencias/roles/explica-guionista.md y referencias/cierres.md). TRABAJO = ${trabajo}. ` +
       `El guion ya está aprobado: NO cambies guion.json. Escribe ${trabajo}/cierres.json = {"candidatos": [...]} con ${CIERRES_N} cierres: c1 = guion.cierre TAL CUAL ` +
-      `(texto, final, tipo, forma, consecuencia); c2–c${CIERRES_N} distintos entre sí y de c1: otra frase final y otra forma o mecanismo (consecuencia quien|perdida|reloj|despues|espera, legado, pendiente, quien_decide; a lo más una pregunta). ` +
-      `Al usuario le gusta la consecuencia humana para quien vive el tema (su tiempo, su familia, su bolsillo), dicha llano. Cada uno: id, texto (una oración que prepara, ≥ 3 s, y la frase final), final, tipo, forma, ` +
-      `consecuencia {mecanismo?, quien, verbo} si es consecuencia o legado, y por_que. Solo lo que el guion y sus cifras sostienen. Corre python3 scripts/explica.py cierres ${trabajo} --check hasta 0 fallas.` +
+      (CIERRE_FORMA
+        ? `(texto, final, tipo, forma). FORMA OBLIGATORIA (manda sobre tu guía): esta es la parte ${PARTE.parte} de ${PARTE.de} y el gate (SE6) solo acepta el cierre «puente», la pregunta que abre la parte ${PARTE.parte + 1} («${(PARTE.siguiente || {}).titulo || ''}»), así que los ${CIERRES_N} son de forma «${CIERRE_FORMA}» (tipo pregunta o remate) y NINGUNO es consecuencia, legado, pendiente ni quien_decide: el gate los rechaza y el usuario no podría elegirlos. c2–c${CIERRES_N} son ${CIERRES_N - 1} puentes distintos entre sí y de c1: otra frase final que deja abierta, con otras palabras o desde otro lado (quién, qué pasó, cuánto costó, qué quedó), la MISMA pregunta que abre la parte siguiente, sin anunciarla («en la próxima parte»: P2/F9) y sin tocar cierre.invitacion (va aparte). `
+        : `(texto, final, tipo, forma, consecuencia); c2–c${CIERRES_N} distintos entre sí y de c1: otra frase final y otra forma o mecanismo (consecuencia quien|perdida|reloj|despues|espera, legado, pendiente, quien_decide; a lo más una pregunta). ` +
+          `Al usuario le gusta la consecuencia humana para quien vive el tema (su tiempo, su familia, su bolsillo), dicha llano. `) +
+      `Cada uno: id, texto (una oración que prepara, ≥ 3 s, y la frase final), final, tipo, forma, ` +
+      `consecuencia {mecanismo?, quien, verbo} si es consecuencia o legado, y por_que. Solo lo que el guion y sus cifras sostienen. Corre python3 scripts/explica.py cierres ${trabajo} --check hasta 0 fallas (F1–F9). ` +
+      `DESPUÉS corre python3 scripts/explica.py cierres ${trabajo} --opciones: prueba cada opción PUESTA en el guion con el gate completo (narración y guion: un número sin respaldo en la oración que prepara, un conector que el acto 3 pierde, la forma) y marca ✗ con su FALLA las que el usuario no podría elegir. Reescribe cada ✗ (su FALLA dice qué rompe) y repite --check y --opciones hasta que las ${CIERRES_N} salgan con ✓. ` +
+      `Copia en tu retorno elegibles[] y rechazadas[] TAL CUAL de la última línea RETORNO de --opciones.` +
       (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : '') +
-      ' Retorno: {archivo, gate: ok|falla, fallas[], candidatos[]{id, tipo, forma, final}}.',
-    { agentType: 'explica-guionista', schema: S.cierres, label: 'cierres' }),
+      ' Retorno: {archivo, gate: ok|falla, fallas[], candidatos[]{id, tipo, forma, final}, elegibles[] (ids), rechazadas[]{id, falla}}.',
+    { agentType: 'explica-guionista', schema: S.cierres, label: 'cierres' }) },
   (r) => [...(rel(r.archivo) !== `${trabajo}/cierres.json` ? [`archivo debe ser ${trabajo}/cierres.json`] : []),
     ...(r.gate !== 'ok' ? ((r.fallas || []).length ? r.fallas : ['cierres --check falló sin detalle: córrelo y copia sus FALLA']) : []),
-    ...(r.candidatos.length !== CIERRES_N ? [`${r.candidatos.length} cierres; van ${CIERRES_N}`] : [])], 1)
+    ...(r.candidatos.length !== CIERRES_N ? [`${r.candidatos.length} cierres; van ${CIERRES_N}`] : []),
+    // las que el gate completo rechaza se mandan a rehacer UNA vez; si siguen, se descartan abajo (no tumban la fase)
+    ...(vueltaCierres < 1 ? fuera(r).map((c) => `${c.id} no es elegible: ${porQue(r, c)}; reescríbelo y vuelve a correr cierres --opciones`) : [])], 1)
     .catch((e) => { avisar(`AVISO: no hubo opciones de cierre (${String(e.message).split('\n')[0]}): pregunta al usuario con el cierre del guion o el suyo.`); return null })
-  if (CIERRES) avisar(`Cierres: ${CIERRES.candidatos.map((c) => `${c.id} ${c.forma} «${c.final}»`).join(' · ')} → el usuario elige (explica.py cierres --opciones)`)
+  if (CIERRES) {
+    const malas = fuera(CIERRES)
+    if (malas.length) avisar(`Cierres: se descartan ${malas.map((c) => `${c.id} (${porQue(CIERRES, c)})`).join(' · ')}: no pasan el gate completo con ese cierre puesto y el usuario no podría elegirlos.`)
+    CIERRES = { ...CIERRES, candidatos: eleg(CIERRES) }
+    if (!CIERRES.candidatos.length) {
+      avisar('AVISO: ningún cierre elegible: pregunta al usuario con el cierre del guion o el suyo.')
+      CIERRES = null
+    } else {
+      if (CIERRES.candidatos.length < CIERRES_MIN) avisar(`AVISO: solo ${CIERRES.candidatos.length} cierre(s) elegible(s) (van al menos ${CIERRES_MIN}): ofrece esos y que el usuario pueda dictar el suyo (cierres --propio${CIERRE_FORMA ? ` --forma ${CIERRE_FORMA}` : ''}).`)
+      avisar(`Cierres: ${CIERRES.candidatos.map((c) => `${c.id} ${c.forma} «${c.final}»`).join(' · ')} → el usuario elige (explica.py cierres --opciones)`)
+    }
+  }
 }
 
 // ── 8. Animación (solo si el crítico aprueba) ────────────────────────────────

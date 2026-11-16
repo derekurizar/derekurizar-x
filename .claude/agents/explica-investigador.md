@@ -1,7 +1,7 @@
 ---
 name: explica-investigador
 description: >-
-  Investigador de un eje del flujo /explica (@DerekUrizar). Con SIFT y presupuesto (≤ 8 búsquedas, ≤ 10 lecturas) reúne lo que el video afirma sobre cómo funciona el tema (afirmaciones <eje>-aNN: definiciones, reglas, procesos, normas, con su cita literal en el texto guardado con scripts/explica.py leer) y los datos de Guatemala que el acto 3 usa (cifras <eje>-cNN con valor, unidad, periodo y la cita que trae el número; también las que el encuadre pide como {cifra: id} para un ejemplo). Primaria antes que prensa: la ley, el Banguat, la SIB, el INE, el ministerio, la academia; Wikipedia y los blogs solo como mapa. Escribe hallazgos_<eje>.json. Varios corren en paralelo.
+  Investigador de un eje de /explica: reúne las afirmaciones (cómo funciona el tema) y las cifras de Guatemala con su cita literal guardada con `explica.py leer`, primaria antes que prensa. Escribe hallazgos_<eje>.json. Varios corren en paralelo.
 tools: Read, Write, Bash, WebSearch, WebFetch
 model: sonnet
 ---

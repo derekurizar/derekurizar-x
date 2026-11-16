@@ -1,0 +1,29 @@
+{
+ "tipo": "desaparecer",
+ "clase": "evento",
+ "cuando": "un actor o el tráfico sale de escena (se encoge hasta cero) y deja ver lo demás",
+ "parametros": {
+  "pieza": {
+   "tipo": "pieza",
+   "requerido": true,
+   "descripcion": "el actor o el flujo que sale",
+   "piezas": [
+    "actor",
+    "flujo"
+   ]
+  }
+ },
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "ejemplo": {
+  "t": 3,
+  "dur": 0.6,
+  "tipo": "desaparecer",
+  "pieza": "mi-carro"
+ }
+}

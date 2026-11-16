@@ -14,11 +14,11 @@
  * la tarjeta ya se dibujó), video/mapa.html (la tarjeta de mapa a pantalla completa) con h.js (bloque H de
  * templates/base.html) y geometria.js (GEOMETRIA de templates/graficos/mapa.html), video/explica.html con
  * video/animaciones/<id>.js (la biblioteca de animaciones de la escena explica), design/fonts/*.woff2,
- * TRABAJO/escenas.json y tarjeta_N.html = el tuit_N.html del hilo con animar.js inyectado; para /noticias,
- * video/noticia.html y TRABAJO/fotos/*.jpg|png|webp (sin --hilo); para /historia, además video/historia.html; para
+ * TRABAJO/escenas.json y tarjeta_N.html = el tuit_N.html del hilo con animar.js inyectado; para /historia,
+ * video/noticia.html (la escena foto y el gancho con foto), TRABAJO/fotos/*.jpg|png|webp y video/historia.html; para
  * /explica, video/cuenta.html (la pizarra). La
  * plantilla de cada escena la decide su `pagina` si la trae (/historia) o, si no, su `tipo`
- * (gancho|tarjeta|golpe|definicion|adivina|mapa|ranking|escala|tiempo|explica|titular|noticia|cierre).
+ * (gancho|tarjeta|golpe|definicion|adivina|mapa|ranking|escala|tiempo|explica|cierre).
  * Cualquier otra petición se aborta (cero dependencias externas, como las tarjetas).
  * `--paralelo N` graba N escenas a la vez en N páginas del mismo navegador (por defecto min(4, núcleos/4)): el
  * estado de cada página es solo seek(t), así que los clips salen idénticos a la grabación en serie.
@@ -72,7 +72,7 @@ function args(argv) {
     else { console.error("Opción desconocida: " + a); process.exit(2); }
   }
   if (!o.dir) { console.error("Uso: node scripts/video_grabar.js --dir TRABAJO [--hilo HILO] [--fps 30] [--solo 1,3] [--paralelo N]"); process.exit(2); }
-  o.hilo = o.hilo || o.dir;   // /noticias no tiene hilo: no sirve tarjetas
+  o.hilo = o.hilo || o.dir;   // un trabajo sin hilo no sirve tarjetas
   if (!(o.fps > 0) || !(o.paralelo >= 1)) { console.error("Uso: node scripts/video_grabar.js --dir TRABAJO --hilo HILO [--fps 30] [--solo 1,3] [--paralelo N]"); process.exit(2); }
   return o;
 }
@@ -99,7 +99,7 @@ function servir(o, ruta) {
   if (/^fonts\/[^/]+\.woff2$/.test(nombre)) archivo = path.join(RAIZ, "design", nombre);
   else if (/^iconos\/[a-z0-9-]+\.svg$/.test(nombre)) archivo = path.join(RAIZ, "design", nombre);   // biblioteca fija de iconos
   else if (/^animaciones\/[a-z0-9-]+\.js$/.test(nombre)) archivo = path.join(RAIZ, "video", nombre);   // animaciones de la escena explica
-  else if (/^fotos\/[a-z0-9_-]+\.(jpg|png|webp)$/.test(nombre)) archivo = path.join(o.dir, nombre);   // fotos de /noticias y /historia (TRABAJO/fotos/)
+  else if (/^fotos\/[a-z0-9_-]+\.(jpg|png|webp)$/.test(nombre)) archivo = path.join(o.dir, nombre);   // fotos de /historia (TRABAJO/fotos/)
   else if (/^tomas\/[a-z0-9-]+\/\d{5}\.jpg$/.test(nombre)) archivo = path.join(o.dir, nombre);   // cuadros de las tomas de video de /historia (TRABAJO/tomas/<id>/)
   else if (/^vias\/[a-z0-9-]+\.json$/.test(nombre) && !nombre.endsWith(".fuente.json")) archivo = path.join(RAIZ, "design", nombre);   // red vial real de la escena vias (scripts/build_vias.py)
   else if (["vias.html", "lupa.html", "deptos.html", "pagina.html", "cortina.html", "archivo.html", "bandos.html", "escena.html", "golpe.html", "gancho.html", "cierre.html", "mapa.html", "ranking.html", "escala.html", "tiempo.html", "portada.html", "explica.html", "noticia.html", "historia.html", "cuenta.html", "hemiciclo.html", "red.html", "tablero.html", "escenario.html", "miniatura.html", "teaser.html", "comun.js", "comun.css", "animar.js", "vertical.css"].includes(nombre)) archivo = path.join(RAIZ, "video", nombre);
@@ -129,7 +129,6 @@ function urlDe(e, F) {
   const propia = ["mapa", "ranking", "escala", "tiempo", "explica"].includes(tipo);   // escenas a pantalla completa con página propia
   const pagina = e.pagina ? `${e.pagina}.html?n=${e.n}`   // la escena nombra su página (/historia: foto → noticia, cita y capitulo → historia)
     : tipo === "cierre" ? "cierre.html?" : tipo === "tarjeta" ? `escena.html?n=${e.n}` : propia ? `${tipo}.html?n=${e.n}`
-    : ["titular", "noticia"].includes(tipo) ? `noticia.html?n=${e.n}`   // /noticias: el gancho y cada noticia
     : tipo === "gancho" && e.V ? `gancho.html?n=${e.n}` : `golpe.html?n=${e.n}`;   // gancho con visual (llenado, pareja, figuras, lugar)
   if (F.q === "&f=169" && !PAGINAS_169.includes(pagina.split(".")[0]))   // 16:9 sin layout propio: la escena 4:5 en el escenario
     return ORIGEN + "escenario.html?n=" + e.n + "&f=169&src=" + encodeURIComponent(pagina + "&f=45");

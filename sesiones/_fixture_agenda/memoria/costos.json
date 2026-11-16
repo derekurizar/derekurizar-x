@@ -1,0 +1,2464 @@
+{
+  "version": 1,
+  "_comentario": "MAQUETA: copia congelada (al 3 de noviembre de 2026) de lo que midió scripts/costo.py de las corridas reales de las historias y los videos de esta carpeta, con el formato de memoria/costos.json. La lee `make agenda-fixture` para los minutos de cada orden (agenda.medidas). No se actualiza.",
+  "costos": [
+    {
+      "pieza": "2026-10-19-crimen-organizado-respuesta-estado",
+      "flujo": "video",
+      "run": "wf_6f327f9f-48d",
+      "workflow": "video",
+      "fecha": "2026-10-19",
+      "inicio": "2026-10-20T03:06:26.735000+00:00",
+      "fin": "2026-10-20T03:12:41.675000+00:00",
+      "minutos": 6.2,
+      "agentes": 5,
+      "completados": 5,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 38,
+        "output": 31929,
+        "cache_read": 411227,
+        "cache_create": 196043,
+        "total": 639237
+      },
+      "herramientas": 27,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-guionista": {
+          "agentes": 2,
+          "tokens": 303390,
+          "salida": 13561,
+          "minutos": 2.1
+        },
+        "video-critico": {
+          "agentes": 3,
+          "tokens": 335847,
+          "salida": 18368,
+          "minutos": 2.8
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 5,
+          "tokens": 639237,
+          "salida": 31929
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-10-19-crimen-organizado-respuesta-estado",
+      "flujo": "video",
+      "run": "wf_79a3b021-0ae",
+      "workflow": "video",
+      "fecha": "2026-10-19",
+      "inicio": "2026-10-20T04:49:06.588000+00:00",
+      "fin": "2026-10-20T05:01:04.324000+00:00",
+      "minutos": 12.0,
+      "agentes": 8,
+      "completados": 8,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 80,
+        "output": 77542,
+        "cache_read": 1183585,
+        "cache_create": 382550,
+        "total": 1643757
+      },
+      "herramientas": 52,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-guionista": {
+          "agentes": 4,
+          "tokens": 1121946,
+          "salida": 42263,
+          "minutos": 6.6
+        },
+        "video-critico": {
+          "agentes": 4,
+          "tokens": 521811,
+          "salida": 35279,
+          "minutos": 5.3
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 8,
+          "tokens": 1643757,
+          "salida": 77542
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-10-06-madres-ninas-adolescentes-2026",
+      "flujo": "video",
+      "run": "wf_a52401f4-027",
+      "workflow": "video",
+      "fecha": "2026-10-19",
+      "inicio": "2026-10-20T05:43:55.433000+00:00",
+      "fin": "2026-10-20T06:00:16.986000+00:00",
+      "minutos": 16.4,
+      "agentes": 9,
+      "completados": 9,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 92,
+        "output": 83183,
+        "cache_read": 1371597,
+        "cache_create": 453877,
+        "total": 1908749
+      },
+      "herramientas": 64,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-guionista": {
+          "agentes": 4,
+          "tokens": 1219027,
+          "salida": 37633,
+          "minutos": 8.6
+        },
+        "video-critico": {
+          "agentes": 5,
+          "tokens": 689722,
+          "salida": 45550,
+          "minutos": 7.8
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 9,
+          "tokens": 1908749,
+          "salida": 83183
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-09-29-sequia-guatemala-2026",
+      "flujo": "video",
+      "run": "wf_cfc9af82-c51",
+      "workflow": "video",
+      "fecha": "2026-10-20",
+      "inicio": "2026-10-20T06:49:37.790000+00:00",
+      "fin": "2026-10-20T07:00:23.687000+00:00",
+      "minutos": 10.8,
+      "agentes": 8,
+      "completados": 8,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 66,
+        "output": 61055,
+        "cache_read": 791084,
+        "cache_create": 318949,
+        "total": 1171154
+      },
+      "herramientas": 46,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-guionista": {
+          "agentes": 4,
+          "tokens": 645386,
+          "salida": 28187,
+          "minutos": 4.7
+        },
+        "video-critico": {
+          "agentes": 4,
+          "tokens": 525768,
+          "salida": 32868,
+          "minutos": 6.0
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 8,
+          "tokens": 1171154,
+          "salida": 61055
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-09-29-sequia-guatemala-2026",
+      "flujo": "video",
+      "run": "wf_7e57fb75-62e",
+      "workflow": "video",
+      "fecha": "2026-10-20",
+      "inicio": "2026-10-20T22:15:14.108000+00:00",
+      "fin": "2026-10-20T22:23:05.646000+00:00",
+      "minutos": 7.9,
+      "agentes": 6,
+      "completados": 6,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 46,
+        "output": 49268,
+        "cache_read": 553241,
+        "cache_create": 256935,
+        "total": 859490
+      },
+      "herramientas": 35,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-guionista": {
+          "agentes": 3,
+          "tokens": 477185,
+          "salida": 17770,
+          "minutos": 2.9
+        },
+        "video-critico": {
+          "agentes": 3,
+          "tokens": 382305,
+          "salida": 31498,
+          "minutos": 4.9
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 6,
+          "tokens": 859490,
+          "salida": 49268
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-09-29-sequia-guatemala-2026",
+      "flujo": "video",
+      "run": "wf_931b230b-561",
+      "workflow": "video",
+      "fecha": "2026-10-21",
+      "inicio": "2026-10-21T18:59:37.045000+00:00",
+      "fin": "2026-10-21T19:11:00.899000+00:00",
+      "minutos": 11.4,
+      "agentes": 5,
+      "completados": 5,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 38,
+        "output": 72937,
+        "cache_read": 510340,
+        "cache_create": 260086,
+        "total": 843401
+      },
+      "herramientas": 27,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-guionista": {
+          "agentes": 2,
+          "tokens": 465028,
+          "salida": 30598,
+          "minutos": 4.7
+        },
+        "video-critico": {
+          "agentes": 3,
+          "tokens": 378373,
+          "salida": 42339,
+          "minutos": 6.7
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 5,
+          "tokens": 843401,
+          "salida": 72937
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-09-29-sequia-guatemala-2026",
+      "flujo": "video",
+      "run": "wf_392b4a97-e52",
+      "workflow": "video",
+      "fecha": "2026-10-21",
+      "inicio": "2026-10-21T20:06:57.663000+00:00",
+      "fin": "2026-10-21T20:14:43.095000+00:00",
+      "minutos": 7.8,
+      "agentes": 4,
+      "completados": 4,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 40,
+        "output": 48769,
+        "cache_read": 668400,
+        "cache_create": 223766,
+        "total": 940975
+      },
+      "herramientas": 29,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-guionista": {
+          "agentes": 2,
+          "tokens": 580869,
+          "salida": 14634,
+          "minutos": 2.5
+        },
+        "video-critico": {
+          "agentes": 2,
+          "tokens": 360106,
+          "salida": 34135,
+          "minutos": 5.3
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 4,
+          "tokens": 940975,
+          "salida": 48769
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-10-21-trafico-guatemala-2026",
+      "flujo": "video",
+      "run": "wf_b9ced35c-cc9",
+      "workflow": "video",
+      "fecha": "2026-10-21",
+      "inicio": "2026-10-22T05:06:17.022000+00:00",
+      "fin": "2026-10-22T05:22:06.150000+00:00",
+      "minutos": 15.8,
+      "agentes": 7,
+      "completados": 7,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 70,
+        "output": 89118,
+        "cache_read": 1072813,
+        "cache_create": 402615,
+        "total": 1564616
+      },
+      "herramientas": 46,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-guionista": {
+          "agentes": 3,
+          "tokens": 872974,
+          "salida": 41382,
+          "minutos": 7.4
+        },
+        "video-critico": {
+          "agentes": 4,
+          "tokens": 691642,
+          "salida": 47736,
+          "minutos": 8.4
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 7,
+          "tokens": 1564616,
+          "salida": 89118
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-10-06-carceles-hacinamiento-por-penal",
+      "flujo": "video",
+      "run": "wf_74bf9c54-746",
+      "workflow": "video",
+      "fecha": "2026-10-23",
+      "inicio": "2026-10-23T14:33:35.260000+00:00",
+      "fin": "2026-10-23T14:43:02.899000+00:00",
+      "minutos": 9.5,
+      "agentes": 4,
+      "completados": 4,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 38,
+        "output": 63738,
+        "cache_read": 676054,
+        "cache_create": 255099,
+        "total": 994929
+      },
+      "herramientas": 26,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-guionista": {
+          "agentes": 2,
+          "tokens": 662329,
+          "salida": 27119,
+          "minutos": 4.1
+        },
+        "video-critico": {
+          "agentes": 2,
+          "tokens": 332600,
+          "salida": 36619,
+          "minutos": 5.4
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 4,
+          "tokens": 994929,
+          "salida": 63738
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-10-06-carceles-hacinamiento-por-penal",
+      "flujo": "video",
+      "run": "wf_63ba5675-f95",
+      "workflow": "video",
+      "fecha": "2026-10-23",
+      "inicio": "2026-10-23T16:21:36.262000+00:00",
+      "fin": "2026-10-23T16:36:21.331000+00:00",
+      "minutos": 14.8,
+      "agentes": 10,
+      "completados": 10,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 94,
+        "output": 92325,
+        "cache_read": 1481760,
+        "cache_create": 481925,
+        "total": 2056104
+      },
+      "herramientas": 61,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-gancho": {
+          "agentes": 2,
+          "tokens": 349543,
+          "salida": 15930,
+          "minutos": 2.5
+        },
+        "video-critico": {
+          "agentes": 5,
+          "tokens": 566334,
+          "salida": 45746,
+          "minutos": 6.7
+        },
+        "video-guionista": {
+          "agentes": 3,
+          "tokens": 1140227,
+          "salida": 30649,
+          "minutos": 5.6
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 10,
+          "tokens": 2056104,
+          "salida": 92325
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-10-03-desnutricion-aguda-2026",
+      "flujo": "video",
+      "run": "wf_a98c9fc7-f12",
+      "workflow": "video",
+      "fecha": "2026-10-24",
+      "inicio": "2026-10-24T19:58:27.563000+00:00",
+      "fin": "2026-10-24T20:13:56.170000+00:00",
+      "minutos": 15.5,
+      "agentes": 7,
+      "completados": 7,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 70,
+        "output": 87551,
+        "cache_read": 1248529,
+        "cache_create": 443039,
+        "total": 1779189
+      },
+      "herramientas": 47,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-gancho": {
+          "agentes": 2,
+          "tokens": 424116,
+          "salida": 16886,
+          "minutos": 3.1
+        },
+        "video-critico": {
+          "agentes": 3,
+          "tokens": 509572,
+          "salida": 47650,
+          "minutos": 8.0
+        },
+        "video-guionista": {
+          "agentes": 2,
+          "tokens": 845501,
+          "salida": 23015,
+          "minutos": 4.4
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 7,
+          "tokens": 1779189,
+          "salida": 87551
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-10-24-la-cajita-feliz-se-invento-en-guatemala",
+      "flujo": "historia",
+      "run": "wf_90719d24-d25",
+      "workflow": "historia",
+      "fecha": "2026-10-24",
+      "inicio": "2026-10-25T02:48:46.654000+00:00",
+      "fin": "2026-10-25T03:07:22.892000+00:00",
+      "minutos": 18.6,
+      "agentes": 13,
+      "completados": 13,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 292,
+        "output": 165747,
+        "cache_read": 6234374,
+        "cache_create": 760099,
+        "total": 7160512
+      },
+      "herramientas": 177,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-editor": {
+          "agentes": 1,
+          "tokens": 183303,
+          "salida": 4025,
+          "minutos": 1.0
+        },
+        "historia-investigador": {
+          "agentes": 3,
+          "tokens": 1460459,
+          "salida": 30065,
+          "minutos": 4.7
+        },
+        "historia-verificador": {
+          "agentes": 3,
+          "tokens": 3642809,
+          "salida": 54226,
+          "minutos": 8.5
+        },
+        "video-gancho": {
+          "agentes": 1,
+          "tokens": 262393,
+          "salida": 8728,
+          "minutos": 1.5
+        },
+        "video-critico": {
+          "agentes": 3,
+          "tokens": 895498,
+          "salida": 46449,
+          "minutos": 7.3
+        },
+        "historia-guionista": {
+          "agentes": 2,
+          "tokens": 716050,
+          "salida": 22254,
+          "minutos": 3.7
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 7,
+          "tokens": 2057244,
+          "salida": 81456
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 6,
+          "tokens": 5103268,
+          "salida": 84291
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-10-26-incaparina",
+      "flujo": "historia",
+      "run": "wf_aea8db57-bc5",
+      "workflow": "historia",
+      "fecha": "2026-10-26",
+      "inicio": "2026-10-26T16:09:13.481000+00:00",
+      "fin": "2026-10-26T18:12:55.835000+00:00",
+      "minutos": 123.7,
+      "agentes": 32,
+      "completados": 32,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 632,
+        "output": 376532,
+        "cache_read": 13015339,
+        "cache_create": 1771489,
+        "total": 15163992
+      },
+      "herramientas": 373,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-editor": {
+          "agentes": 1,
+          "tokens": 220411,
+          "salida": 5540,
+          "minutos": 1.5
+        },
+        "historia-investigador": {
+          "agentes": 3,
+          "tokens": 3375023,
+          "salida": 44983,
+          "minutos": 9.3
+        },
+        "historia-verificador": {
+          "agentes": 3,
+          "tokens": 3737836,
+          "salida": 42180,
+          "minutos": 7.9
+        },
+        "video-gancho": {
+          "agentes": 2,
+          "tokens": 657775,
+          "salida": 31032,
+          "minutos": 5.4
+        },
+        "video-critico": {
+          "agentes": 7,
+          "tokens": 1852197,
+          "salida": 134438,
+          "minutos": 20.6
+        },
+        "historia-guionista": {
+          "agentes": 15,
+          "tokens": 4938108,
+          "salida": 104802,
+          "minutos": 19.3
+        },
+        "video-animador": {
+          "agentes": 1,
+          "tokens": 382642,
+          "salida": 13557,
+          "minutos": 2.9
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 26,
+          "tokens": 8051133,
+          "salida": 289369
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 6,
+          "tokens": 7112859,
+          "salida": 87163
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-10-26-incaparina",
+      "flujo": "historia",
+      "run": "wf_6c043ef9-81d",
+      "workflow": "historia",
+      "fecha": "2026-10-26",
+      "inicio": "2026-10-27T05:38:37.852000+00:00",
+      "fin": "2026-10-27T06:01:27.691000+00:00",
+      "minutos": 22.8,
+      "agentes": 8,
+      "completados": 8,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 122,
+        "output": 146920,
+        "cache_read": 2660874,
+        "cache_create": 603835,
+        "total": 3411751
+      },
+      "herramientas": 69,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-guionista": {
+          "agentes": 2,
+          "tokens": 1321719,
+          "salida": 19585,
+          "minutos": 3.7
+        },
+        "historia-oyente": {
+          "agentes": 2,
+          "tokens": 178553,
+          "salida": 9771,
+          "minutos": 1.2
+        },
+        "video-critico": {
+          "agentes": 4,
+          "tokens": 1911479,
+          "salida": 117564,
+          "minutos": 18.0
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 6,
+          "tokens": 3233198,
+          "salida": 137149
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 2,
+          "tokens": 178553,
+          "salida": 9771
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-10-26-incaparina",
+      "flujo": "historia",
+      "run": "wf_f4661ef8-575",
+      "workflow": "historia",
+      "fecha": "2026-10-27",
+      "inicio": "2026-10-27T06:05:03.152000+00:00",
+      "fin": "2026-10-27T06:23:37.903000+00:00",
+      "minutos": 18.6,
+      "agentes": 6,
+      "completados": 6,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 114,
+        "output": 115146,
+        "cache_read": 2455939,
+        "cache_create": 387124,
+        "total": 2958323
+      },
+      "herramientas": 59,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-guionista": {
+          "agentes": 2,
+          "tokens": 1623927,
+          "salida": 38235,
+          "minutos": 6.7
+        },
+        "historia-oyente": {
+          "agentes": 2,
+          "tokens": 178140,
+          "salida": 9564,
+          "minutos": 1.2
+        },
+        "video-critico": {
+          "agentes": 2,
+          "tokens": 1156256,
+          "salida": 67347,
+          "minutos": 10.6
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 4,
+          "tokens": 2780183,
+          "salida": 105582
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 2,
+          "tokens": 178140,
+          "salida": 9564
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-10-26-incaparina",
+      "flujo": "historia",
+      "run": "wf_385986a2-dfb",
+      "workflow": "historia",
+      "fecha": "2026-10-27",
+      "inicio": "2026-10-27T06:24:24.803000+00:00",
+      "fin": "2026-10-27T06:31:34.568000+00:00",
+      "minutos": 7.2,
+      "agentes": 6,
+      "completados": 6,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 86,
+        "output": 43605,
+        "cache_read": 1459189,
+        "cache_create": 220679,
+        "total": 1723559
+      },
+      "herramientas": 46,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-guionista": {
+          "agentes": 2,
+          "tokens": 582970,
+          "salida": 9241,
+          "minutos": 1.9
+        },
+        "historia-oyente": {
+          "agentes": 2,
+          "tokens": 179475,
+          "salida": 10304,
+          "minutos": 1.4
+        },
+        "video-critico": {
+          "agentes": 2,
+          "tokens": 961114,
+          "salida": 24060,
+          "minutos": 4.0
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 4,
+          "tokens": 1544084,
+          "salida": 33301
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 2,
+          "tokens": 179475,
+          "salida": 10304
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-10-27-el-caso-del-lago-de-amatitlan-el-quimico-que-resulto-ser-agu",
+      "flujo": "historia",
+      "run": "wf_a5bd61b0-bb6",
+      "workflow": "historia",
+      "fecha": "2026-10-27",
+      "inicio": "2026-10-27T13:01:42.716000+00:00",
+      "fin": "2026-10-27T13:34:47.298000+00:00",
+      "minutos": 33.1,
+      "agentes": 20,
+      "completados": 20,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 466,
+        "output": 287336,
+        "cache_read": 11677002,
+        "cache_create": 1307377,
+        "total": 13272181
+      },
+      "herramientas": 281,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-editor": {
+          "agentes": 1,
+          "tokens": 234213,
+          "salida": 7634,
+          "minutos": 1.6
+        },
+        "historia-investigador": {
+          "agentes": 3,
+          "tokens": 2773210,
+          "salida": 48517,
+          "minutos": 8.4
+        },
+        "historia-verificador": {
+          "agentes": 3,
+          "tokens": 5471871,
+          "salida": 55362,
+          "minutos": 8.8
+        },
+        "video-gancho": {
+          "agentes": 1,
+          "tokens": 311166,
+          "salida": 10547,
+          "minutos": 1.6
+        },
+        "video-critico": {
+          "agentes": 6,
+          "tokens": 2495264,
+          "salida": 108186,
+          "minutos": 15.7
+        },
+        "historia-guionista": {
+          "agentes": 3,
+          "tokens": 1751760,
+          "salida": 44124,
+          "minutos": 6.6
+        },
+        "historia-oyente": {
+          "agentes": 3,
+          "tokens": 234697,
+          "salida": 12966,
+          "minutos": 1.4
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 11,
+          "tokens": 4792403,
+          "salida": 170491
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 9,
+          "tokens": 8479778,
+          "salida": 116845
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-10-27-el-caso-del-lago-de-amatitlan-el-quimico-que-resulto-ser-agu",
+      "flujo": "historia",
+      "run": "wf_6220f38d-221",
+      "workflow": "historia",
+      "fecha": "2026-10-27",
+      "inicio": "2026-10-27T13:56:46.342000+00:00",
+      "fin": "2026-10-27T13:59:42.079000+00:00",
+      "minutos": 2.9,
+      "agentes": 3,
+      "completados": 3,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 36,
+        "output": 20585,
+        "cache_read": 576989,
+        "cache_create": 158589,
+        "total": 756199
+      },
+      "herramientas": 21,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-guionista": {
+          "agentes": 1,
+          "tokens": 311581,
+          "salida": 4500,
+          "minutos": 0.7
+        },
+        "historia-oyente": {
+          "agentes": 1,
+          "tokens": 56873,
+          "salida": 4805,
+          "minutos": 0.5
+        },
+        "video-critico": {
+          "agentes": 1,
+          "tokens": 387745,
+          "salida": 11280,
+          "minutos": 1.7
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 2,
+          "tokens": 699326,
+          "salida": 15780
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 1,
+          "tokens": 56873,
+          "salida": 4805
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-10-27-el-caso-del-lago-de-amatitlan-el-quimico-que-resulto-ser-agu",
+      "flujo": "historia",
+      "run": "wf_5d8295f2-f9b",
+      "workflow": "historia",
+      "fecha": "2026-10-27",
+      "inicio": "2026-10-27T18:35:19.049000+00:00",
+      "fin": "2026-10-27T19:18:04.634000+00:00",
+      "minutos": 42.8,
+      "agentes": 15,
+      "completados": 15,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 238,
+        "output": 285222,
+        "cache_read": 5427446,
+        "cache_create": 1106326,
+        "total": 6819232
+      },
+      "herramientas": 129,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-editor": {
+          "agentes": 1,
+          "tokens": 165580,
+          "salida": 5706,
+          "minutos": 0.8
+        },
+        "historia-guionista": {
+          "agentes": 4,
+          "tokens": 3163108,
+          "salida": 59211,
+          "minutos": 9.1
+        },
+        "historia-oyente": {
+          "agentes": 4,
+          "tokens": 371881,
+          "salida": 19093,
+          "minutos": 2.2
+        },
+        "video-critico": {
+          "agentes": 6,
+          "tokens": 3118663,
+          "salida": 201212,
+          "minutos": 29.2
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 11,
+          "tokens": 6447351,
+          "salida": 266129
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 4,
+          "tokens": 371881,
+          "salida": 19093
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-10-27-como-se-creo-pollo-campero",
+      "flujo": "historia",
+      "run": "wf_d83746c0-fda",
+      "workflow": "historia",
+      "fecha": "2026-10-27",
+      "inicio": "2026-10-27T21:24:15.862000+00:00",
+      "fin": "2026-10-27T22:08:16.846000+00:00",
+      "minutos": 44.0,
+      "agentes": 20,
+      "completados": 20,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 482,
+        "output": 337364,
+        "cache_read": 12299562,
+        "cache_create": 1462197,
+        "total": 14099605
+      },
+      "herramientas": 285,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-editor": {
+          "agentes": 1,
+          "tokens": 272762,
+          "salida": 9662,
+          "minutos": 1.7
+        },
+        "historia-investigador": {
+          "agentes": 3,
+          "tokens": 4762730,
+          "salida": 55038,
+          "minutos": 11.7
+        },
+        "historia-verificador": {
+          "agentes": 3,
+          "tokens": 2408313,
+          "salida": 37802,
+          "minutos": 5.6
+        },
+        "video-gancho": {
+          "agentes": 1,
+          "tokens": 389727,
+          "salida": 12659,
+          "minutos": 2.1
+        },
+        "video-critico": {
+          "agentes": 4,
+          "tokens": 1774003,
+          "salida": 122496,
+          "minutos": 17.9
+        },
+        "historia-guionista": {
+          "agentes": 5,
+          "tokens": 4202113,
+          "salida": 82877,
+          "minutos": 13.5
+        },
+        "historia-oyente": {
+          "agentes": 3,
+          "tokens": 289957,
+          "salida": 16830,
+          "minutos": 2.0
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 11,
+          "tokens": 6638605,
+          "salida": 227694
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 9,
+          "tokens": 7461000,
+          "salida": 109670
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-10-27-como-se-creo-pollo-campero",
+      "flujo": "historia",
+      "run": "wf_20e1df2f-064",
+      "workflow": "historia",
+      "fecha": "2026-10-27",
+      "inicio": "2026-10-27T22:09:53.561000+00:00",
+      "fin": "2026-10-27T22:22:40.391000+00:00",
+      "minutos": 12.8,
+      "agentes": 6,
+      "completados": 6,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 140,
+        "output": 80803,
+        "cache_read": 3695329,
+        "cache_create": 406368,
+        "total": 4182640
+      },
+      "herramientas": 74,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-guionista": {
+          "agentes": 2,
+          "tokens": 2687367,
+          "salida": 33663,
+          "minutos": 5.8
+        },
+        "historia-oyente": {
+          "agentes": 2,
+          "tokens": 190146,
+          "salida": 9464,
+          "minutos": 1.1
+        },
+        "video-critico": {
+          "agentes": 2,
+          "tokens": 1305127,
+          "salida": 37676,
+          "minutos": 5.9
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 4,
+          "tokens": 3992494,
+          "salida": 71339
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 2,
+          "tokens": 190146,
+          "salida": 9464
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-10-27-como-se-creo-pollo-campero",
+      "flujo": "historia",
+      "run": "wf_9ac7d579-404",
+      "workflow": "historia",
+      "fecha": "2026-10-27",
+      "inicio": "2026-10-27T22:26:06.250000+00:00",
+      "fin": "2026-10-27T22:34:20.412000+00:00",
+      "minutos": 8.2,
+      "agentes": 4,
+      "completados": 4,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 62,
+        "output": 46385,
+        "cache_read": 1052246,
+        "cache_create": 230825,
+        "total": 1329518
+      },
+      "herramientas": 33,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-guionista": {
+          "agentes": 1,
+          "tokens": 335738,
+          "salida": 4535,
+          "minutos": 0.8
+        },
+        "historia-oyente": {
+          "agentes": 1,
+          "tokens": 131021,
+          "salida": 6980,
+          "minutos": 1.1
+        },
+        "video-critico": {
+          "agentes": 1,
+          "tokens": 415973,
+          "salida": 14471,
+          "minutos": 2.2
+        },
+        "video-animador": {
+          "agentes": 1,
+          "tokens": 446786,
+          "salida": 20399,
+          "minutos": 4.1
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 3,
+          "tokens": 1198497,
+          "salida": 39405
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 1,
+          "tokens": 131021,
+          "salida": 6980
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-10-28-como-nacio-la-cerveza-gallo",
+      "flujo": "historia",
+      "run": "wf_e3f66da6-70f",
+      "workflow": "historia",
+      "fecha": "2026-10-28",
+      "inicio": "2026-10-29T01:58:05.343000+00:00",
+      "fin": "2026-10-29T02:51:09.831000+00:00",
+      "minutos": 53.1,
+      "agentes": 21,
+      "completados": 21,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 480,
+        "output": 346637,
+        "cache_read": 13097268,
+        "cache_create": 1389578,
+        "total": 14833963
+      },
+      "herramientas": 269,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-editor": {
+          "agentes": 1,
+          "tokens": 301483,
+          "salida": 10048,
+          "minutos": 2.1
+        },
+        "historia-investigador": {
+          "agentes": 3,
+          "tokens": 2446251,
+          "salida": 34854,
+          "minutos": 6.3
+        },
+        "historia-verificador": {
+          "agentes": 3,
+          "tokens": 1314628,
+          "salida": 15097,
+          "minutos": 2.8
+        },
+        "video-gancho": {
+          "agentes": 1,
+          "tokens": 312439,
+          "salida": 13908,
+          "minutos": 2.5
+        },
+        "video-critico": {
+          "agentes": 6,
+          "tokens": 6960040,
+          "salida": 205503,
+          "minutos": 33.4
+        },
+        "historia-guionista": {
+          "agentes": 4,
+          "tokens": 3242977,
+          "salida": 53167,
+          "minutos": 10.2
+        },
+        "historia-oyente": {
+          "agentes": 3,
+          "tokens": 256145,
+          "salida": 14060,
+          "minutos": 1.5
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 12,
+          "tokens": 10816939,
+          "salida": 282626
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 9,
+          "tokens": 4017024,
+          "salida": 64011
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-10-28-como-nacio-la-cerveza-gallo",
+      "flujo": "historia",
+      "run": "wf_ada702dd-29e",
+      "workflow": "historia",
+      "fecha": "2026-10-28",
+      "inicio": "2026-10-29T02:54:04.986000+00:00",
+      "fin": "2026-10-29T03:07:30.052000+00:00",
+      "minutos": 13.4,
+      "agentes": 6,
+      "completados": 6,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 104,
+        "output": 80201,
+        "cache_read": 2563033,
+        "cache_create": 365531,
+        "total": 3008869
+      },
+      "herramientas": 57,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-guionista": {
+          "agentes": 2,
+          "tokens": 1067682,
+          "salida": 11584,
+          "minutos": 2.5
+        },
+        "historia-oyente": {
+          "agentes": 2,
+          "tokens": 158369,
+          "salida": 9540,
+          "minutos": 1.0
+        },
+        "video-critico": {
+          "agentes": 2,
+          "tokens": 1782818,
+          "salida": 59077,
+          "minutos": 9.9
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 4,
+          "tokens": 2850500,
+          "salida": 70661
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 2,
+          "tokens": 158369,
+          "salida": 9540
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-10-28-como-nacio-la-cerveza-gallo",
+      "flujo": "historia",
+      "run": "wf_dffc7f9e-951",
+      "workflow": "historia",
+      "fecha": "2026-10-28",
+      "inicio": "2026-10-29T03:08:07.023000+00:00",
+      "fin": "2026-10-29T03:21:03.518000+00:00",
+      "minutos": 12.9,
+      "agentes": 6,
+      "completados": 6,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 102,
+        "output": 82433,
+        "cache_read": 2407582,
+        "cache_create": 329423,
+        "total": 2819540
+      },
+      "herramientas": 55,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-guionista": {
+          "agentes": 2,
+          "tokens": 495117,
+          "salida": 5585,
+          "minutos": 1.2
+        },
+        "historia-oyente": {
+          "agentes": 2,
+          "tokens": 157760,
+          "salida": 9373,
+          "minutos": 0.9
+        },
+        "video-critico": {
+          "agentes": 2,
+          "tokens": 2166663,
+          "salida": 67475,
+          "minutos": 10.8
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 4,
+          "tokens": 2661780,
+          "salida": 73060
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 2,
+          "tokens": 157760,
+          "salida": 9373
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-10-28-como-nacio-la-cerveza-gallo",
+      "flujo": "historia",
+      "run": "wf_da49fc81-51b",
+      "workflow": "historia",
+      "fecha": "2026-10-28",
+      "inicio": "2026-10-29T03:22:43.710000+00:00",
+      "fin": "2026-10-29T03:32:24.224000+00:00",
+      "minutos": 9.7,
+      "agentes": 7,
+      "completados": 7,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 90,
+        "output": 52732,
+        "cache_read": 1616586,
+        "cache_create": 298968,
+        "total": 1968376
+      },
+      "herramientas": 50,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-guionista": {
+          "agentes": 3,
+          "tokens": 661486,
+          "salida": 8486,
+          "minutos": 1.9
+        },
+        "historia-oyente": {
+          "agentes": 2,
+          "tokens": 158397,
+          "salida": 9798,
+          "minutos": 1.0
+        },
+        "video-critico": {
+          "agentes": 1,
+          "tokens": 699527,
+          "salida": 21659,
+          "minutos": 3.5
+        },
+        "video-animador": {
+          "agentes": 1,
+          "tokens": 448966,
+          "salida": 12789,
+          "minutos": 3.3
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 5,
+          "tokens": 1809979,
+          "salida": 42934
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 2,
+          "tokens": 158397,
+          "salida": 9798
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-10-06-madres-ninas-adolescentes-2026",
+      "flujo": "video",
+      "run": "wf_120f36b6-d7f",
+      "workflow": "video",
+      "fecha": "2026-10-29",
+      "inicio": "2026-10-29T19:29:56.199000+00:00",
+      "fin": "2026-10-29T19:58:19.850000+00:00",
+      "minutos": 28.4,
+      "agentes": 11,
+      "completados": 11,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 136,
+        "output": 163266,
+        "cache_read": 3078121,
+        "cache_create": 765311,
+        "total": 4006834
+      },
+      "herramientas": 86,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-gancho": {
+          "agentes": 2,
+          "tokens": 471892,
+          "salida": 23942,
+          "minutos": 4.0
+        },
+        "video-critico": {
+          "agentes": 4,
+          "tokens": 1239052,
+          "salida": 73454,
+          "minutos": 12.1
+        },
+        "video-guionista": {
+          "agentes": 3,
+          "tokens": 1562798,
+          "salida": 45426,
+          "minutos": 8.0
+        },
+        "historia-oyente": {
+          "agentes": 1,
+          "tokens": 98323,
+          "salida": 4215,
+          "minutos": 0.5
+        },
+        "video-animador": {
+          "agentes": 1,
+          "tokens": 634769,
+          "salida": 16229,
+          "minutos": 3.9
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 10,
+          "tokens": 3908511,
+          "salida": 159051
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 1,
+          "tokens": 98323,
+          "salida": 4215
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-10-30-vacunas-sputnik-v",
+      "flujo": "historia",
+      "run": "wf_08e423a1-bfa",
+      "workflow": "historia",
+      "fecha": "2026-10-30",
+      "inicio": "2026-10-30T16:32:21.455000+00:00",
+      "fin": "2026-10-30T17:22:53.237000+00:00",
+      "minutos": 50.5,
+      "agentes": 24,
+      "completados": 24,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 560,
+        "output": 382541,
+        "cache_read": 18066945,
+        "cache_create": 1709774,
+        "total": 20159820
+      },
+      "herramientas": 332,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-editor": {
+          "agentes": 1,
+          "tokens": 352627,
+          "salida": 11240,
+          "minutos": 2.2
+        },
+        "historia-investigador": {
+          "agentes": 3,
+          "tokens": 3182342,
+          "salida": 61766,
+          "minutos": 10.4
+        },
+        "historia-verificador": {
+          "agentes": 3,
+          "tokens": 7679318,
+          "salida": 69234,
+          "minutos": 13.4
+        },
+        "video-gancho": {
+          "agentes": 1,
+          "tokens": 363786,
+          "salida": 11511,
+          "minutos": 2.0
+        },
+        "video-critico": {
+          "agentes": 5,
+          "tokens": 5658479,
+          "salida": 135186,
+          "minutos": 21.3
+        },
+        "historia-guionista": {
+          "agentes": 5,
+          "tokens": 2084937,
+          "salida": 54887,
+          "minutos": 8.9
+        },
+        "historia-oyente": {
+          "agentes": 5,
+          "tokens": 474954,
+          "salida": 25982,
+          "minutos": 3.7
+        },
+        "video-animador": {
+          "agentes": 1,
+          "tokens": 363377,
+          "salida": 12735,
+          "minutos": 2.6
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 13,
+          "tokens": 8823206,
+          "salida": 225559
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 11,
+          "tokens": 11336614,
+          "salida": 156982
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-10-30-vacunas-sputnik-v",
+      "flujo": "historia",
+      "run": "wf_06805f1f-96c",
+      "workflow": "historia",
+      "fecha": "2026-10-30",
+      "inicio": "2026-10-30T17:23:42.173000+00:00",
+      "fin": "2026-10-30T17:36:18.935000+00:00",
+      "minutos": 12.6,
+      "agentes": 11,
+      "completados": 11,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 148,
+        "output": 80106,
+        "cache_read": 2921881,
+        "cache_create": 466444,
+        "total": 3468579
+      },
+      "herramientas": 78,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-guionista": {
+          "agentes": 5,
+          "tokens": 1665946,
+          "salida": 20796,
+          "minutos": 3.7
+        },
+        "historia-oyente": {
+          "agentes": 4,
+          "tokens": 435145,
+          "salida": 17255,
+          "minutos": 2.7
+        },
+        "video-critico": {
+          "agentes": 2,
+          "tokens": 1367488,
+          "salida": 42055,
+          "minutos": 6.3
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 7,
+          "tokens": 3033434,
+          "salida": 62851
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 4,
+          "tokens": 435145,
+          "salida": 17255
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-10-30-vacunas-sputnik-v",
+      "flujo": "historia",
+      "run": "wf_d7cfbf06-669",
+      "workflow": "historia",
+      "fecha": "2026-10-30",
+      "inicio": "2026-10-30T17:38:32.465000+00:00",
+      "fin": "2026-10-30T17:42:03.157000+00:00",
+      "minutos": 3.5,
+      "agentes": 4,
+      "completados": 4,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 50,
+        "output": 20688,
+        "cache_read": 919065,
+        "cache_create": 164646,
+        "total": 1104449
+      },
+      "herramientas": 27,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-guionista": {
+          "agentes": 2,
+          "tokens": 465057,
+          "salida": 5427,
+          "minutos": 1.0
+        },
+        "historia-oyente": {
+          "agentes": 1,
+          "tokens": 107815,
+          "salida": 3759,
+          "minutos": 0.6
+        },
+        "video-critico": {
+          "agentes": 1,
+          "tokens": 531577,
+          "salida": 11502,
+          "minutos": 1.9
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 3,
+          "tokens": 996634,
+          "salida": 16929
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 1,
+          "tokens": 107815,
+          "salida": 3759
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-10-30-vacunas-sputnik-v",
+      "flujo": "historia",
+      "run": "wf_a3f63461-bf0",
+      "workflow": "historia",
+      "fecha": "2026-10-30",
+      "inicio": "2026-10-30T18:10:01.878000+00:00",
+      "fin": "2026-10-30T18:12:39.720000+00:00",
+      "minutos": 2.6,
+      "agentes": 3,
+      "completados": 3,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 36,
+        "output": 14426,
+        "cache_read": 602079,
+        "cache_create": 138618,
+        "total": 755159
+      },
+      "herramientas": 21,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-guionista": {
+          "agentes": 1,
+          "tokens": 254847,
+          "salida": 2940,
+          "minutos": 0.7
+        },
+        "historia-oyente": {
+          "agentes": 1,
+          "tokens": 110845,
+          "salida": 5026,
+          "minutos": 0.7
+        },
+        "video-critico": {
+          "agentes": 1,
+          "tokens": 389467,
+          "salida": 6460,
+          "minutos": 1.2
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 2,
+          "tokens": 644314,
+          "salida": 9400
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 1,
+          "tokens": 110845,
+          "salida": 5026
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-10-31-el-guatemalteco-que-desarrollo-el-cafe-soluble",
+      "flujo": "historia",
+      "run": "wf_050236a5-614",
+      "workflow": "historia",
+      "fecha": "2026-10-31",
+      "inicio": "2026-10-31T06:17:22.355000+00:00",
+      "fin": "2026-10-31T07:04:20.734000+00:00",
+      "minutos": 47.0,
+      "agentes": 22,
+      "completados": 22,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 540,
+        "output": 338605,
+        "cache_read": 16484585,
+        "cache_create": 1498667,
+        "total": 18322397
+      },
+      "herramientas": 309,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-editor": {
+          "agentes": 1,
+          "tokens": 301203,
+          "salida": 11135,
+          "minutos": 2.0
+        },
+        "historia-investigador": {
+          "agentes": 3,
+          "tokens": 4617470,
+          "salida": 50255,
+          "minutos": 12.6
+        },
+        "historia-verificador": {
+          "agentes": 3,
+          "tokens": 2110409,
+          "salida": 31573,
+          "minutos": 4.4
+        },
+        "video-gancho": {
+          "agentes": 1,
+          "tokens": 392500,
+          "salida": 8651,
+          "minutos": 1.4
+        },
+        "video-critico": {
+          "agentes": 5,
+          "tokens": 7055994,
+          "salida": 153112,
+          "minutos": 23.4
+        },
+        "historia-guionista": {
+          "agentes": 4,
+          "tokens": 3084096,
+          "salida": 55237,
+          "minutos": 8.6
+        },
+        "historia-oyente": {
+          "agentes": 4,
+          "tokens": 401415,
+          "salida": 19705,
+          "minutos": 2.1
+        },
+        "video-animador": {
+          "agentes": 1,
+          "tokens": 359310,
+          "salida": 8937,
+          "minutos": 1.9
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 12,
+          "tokens": 11193103,
+          "salida": 237072
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 10,
+          "tokens": 7129294,
+          "salida": 101533
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-11-01-la-erupcion-del-volcan-de-fuego-de-2018",
+      "flujo": "historia",
+      "run": "wf_6dbf0afe-417",
+      "workflow": "historia",
+      "fecha": "2026-11-01",
+      "inicio": "2026-11-01T06:30:09.192000+00:00",
+      "fin": "2026-11-01T07:21:48.760000+00:00",
+      "minutos": 51.7,
+      "agentes": 22,
+      "completados": 22,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 574,
+        "output": 398799,
+        "cache_read": 19104750,
+        "cache_create": 1640776,
+        "total": 21144899
+      },
+      "herramientas": 339,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-editor": {
+          "agentes": 1,
+          "tokens": 317803,
+          "salida": 11040,
+          "minutos": 2.0
+        },
+        "historia-investigador": {
+          "agentes": 3,
+          "tokens": 5465779,
+          "salida": 66299,
+          "minutos": 11.0
+        },
+        "historia-verificador": {
+          "agentes": 3,
+          "tokens": 6412711,
+          "salida": 64902,
+          "minutos": 10.0
+        },
+        "video-gancho": {
+          "agentes": 1,
+          "tokens": 531127,
+          "salida": 12943,
+          "minutos": 2.1
+        },
+        "video-critico": {
+          "agentes": 4,
+          "tokens": 4555333,
+          "salida": 140496,
+          "minutos": 22.2
+        },
+        "historia-guionista": {
+          "agentes": 5,
+          "tokens": 3299728,
+          "salida": 73837,
+          "minutos": 11.9
+        },
+        "historia-oyente": {
+          "agentes": 5,
+          "tokens": 562418,
+          "salida": 29282,
+          "minutos": 3.1
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 11,
+          "tokens": 8703991,
+          "salida": 238316
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 11,
+          "tokens": 12440908,
+          "salida": 160483
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-11-01-la-erupcion-del-volcan-de-fuego-de-2018",
+      "flujo": "historia",
+      "run": "wf_75c0ed7d-4f5",
+      "workflow": "historia",
+      "fecha": "2026-11-01",
+      "inicio": "2026-11-01T07:22:41.469000+00:00",
+      "fin": "2026-11-01T07:35:44.940000+00:00",
+      "minutos": 13.1,
+      "agentes": 8,
+      "completados": 8,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 156,
+        "output": 85467,
+        "cache_read": 3794370,
+        "cache_create": 514095,
+        "total": 4394088
+      },
+      "herramientas": 81,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-guionista": {
+          "agentes": 3,
+          "tokens": 1486731,
+          "salida": 13646,
+          "minutos": 2.7
+        },
+        "historia-oyente": {
+          "agentes": 2,
+          "tokens": 223864,
+          "salida": 11780,
+          "minutos": 1.2
+        },
+        "video-critico": {
+          "agentes": 3,
+          "tokens": 2683493,
+          "salida": 60041,
+          "minutos": 9.2
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 6,
+          "tokens": 4170224,
+          "salida": 73687
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 2,
+          "tokens": 223864,
+          "salida": 11780
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-11-01-volcan-de-fuego-hora-a-hora",
+      "flujo": "historia",
+      "run": "wf_037c8bba-de8",
+      "workflow": "historia",
+      "fecha": "2026-11-01",
+      "inicio": "2026-11-01T15:26:57.297000+00:00",
+      "fin": "2026-11-01T16:27:55.885000+00:00",
+      "minutos": 61.0,
+      "agentes": 25,
+      "completados": 25,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 708,
+        "output": 478305,
+        "cache_read": 25377660,
+        "cache_create": 1975289,
+        "total": 27831962
+      },
+      "herramientas": 407,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-editor": {
+          "agentes": 1,
+          "tokens": 272898,
+          "salida": 10681,
+          "minutos": 1.8
+        },
+        "historia-investigador": {
+          "agentes": 3,
+          "tokens": 5066133,
+          "salida": 64543,
+          "minutos": 12.2
+        },
+        "historia-verificador": {
+          "agentes": 3,
+          "tokens": 10086954,
+          "salida": 92516,
+          "minutos": 15.9
+        },
+        "video-gancho": {
+          "agentes": 1,
+          "tokens": 539402,
+          "salida": 16260,
+          "minutos": 2.7
+        },
+        "video-critico": {
+          "agentes": 6,
+          "tokens": 8157782,
+          "salida": 192748,
+          "minutos": 30.7
+        },
+        "historia-guionista": {
+          "agentes": 5,
+          "tokens": 2708071,
+          "salida": 60592,
+          "minutos": 9.7
+        },
+        "historia-oyente": {
+          "agentes": 5,
+          "tokens": 549920,
+          "salida": 24218,
+          "minutos": 2.8
+        },
+        "video-animador": {
+          "agentes": 1,
+          "tokens": 450802,
+          "salida": 16747,
+          "minutos": 3.6
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 14,
+          "tokens": 12128955,
+          "salida": 297028
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 11,
+          "tokens": 15703007,
+          "salida": 181277
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-11-01-volcan-de-fuego-hora-a-hora",
+      "flujo": "historia",
+      "run": "wf_3b9ecb3d-038",
+      "workflow": "historia",
+      "fecha": "2026-11-01",
+      "inicio": "2026-11-01T16:32:45.737000+00:00",
+      "fin": "2026-11-01T16:44:03.051000+00:00",
+      "minutos": 11.3,
+      "agentes": 7,
+      "completados": 7,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 124,
+        "output": 66927,
+        "cache_read": 3326418,
+        "cache_create": 378637,
+        "total": 3772106
+      },
+      "herramientas": 65,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-guionista": {
+          "agentes": 3,
+          "tokens": 2038586,
+          "salida": 20530,
+          "minutos": 4.0
+        },
+        "historia-oyente": {
+          "agentes": 2,
+          "tokens": 223926,
+          "salida": 11556,
+          "minutos": 1.4
+        },
+        "video-critico": {
+          "agentes": 2,
+          "tokens": 1509594,
+          "salida": 34841,
+          "minutos": 5.8
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 5,
+          "tokens": 3548180,
+          "salida": 55371
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 2,
+          "tokens": 223926,
+          "salida": 11556
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-11-01-el-inventor-de-duolingo",
+      "flujo": "historia",
+      "run": "wf_e473c438-f36",
+      "workflow": "historia",
+      "fecha": "2026-11-01",
+      "inicio": "2026-11-02T05:03:07.455000+00:00",
+      "fin": "2026-11-02T05:48:54.609000+00:00",
+      "minutos": 45.8,
+      "agentes": 22,
+      "completados": 22,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 462,
+        "output": 329009,
+        "cache_read": 12558669,
+        "cache_create": 1484345,
+        "total": 14372485
+      },
+      "herramientas": 274,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-editor": {
+          "agentes": 1,
+          "tokens": 300112,
+          "salida": 8861,
+          "minutos": 1.7
+        },
+        "historia-investigador": {
+          "agentes": 3,
+          "tokens": 3185915,
+          "salida": 46435,
+          "minutos": 10.3
+        },
+        "historia-verificador": {
+          "agentes": 3,
+          "tokens": 2006880,
+          "salida": 27488,
+          "minutos": 4.4
+        },
+        "video-gancho": {
+          "agentes": 1,
+          "tokens": 482751,
+          "salida": 12925,
+          "minutos": 2.0
+        },
+        "video-critico": {
+          "agentes": 5,
+          "tokens": 5005395,
+          "salida": 145917,
+          "minutos": 22.2
+        },
+        "historia-guionista": {
+          "agentes": 4,
+          "tokens": 2414341,
+          "salida": 47227,
+          "minutos": 7.4
+        },
+        "historia-oyente": {
+          "agentes": 4,
+          "tokens": 436646,
+          "salida": 18431,
+          "minutos": 2.1
+        },
+        "video-animador": {
+          "agentes": 1,
+          "tokens": 540445,
+          "salida": 21725,
+          "minutos": 4.3
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 12,
+          "tokens": 8743044,
+          "salida": 236655
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 10,
+          "tokens": 5629441,
+          "salida": 92354
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-11-01-el-inventor-de-duolingo",
+      "flujo": "historia",
+      "run": "wf_e9e9325b-b6b",
+      "workflow": "historia",
+      "fecha": "2026-11-02",
+      "inicio": "2026-11-02T15:57:49.199000+00:00",
+      "fin": "2026-11-02T16:14:49.585000+00:00",
+      "minutos": 17.0,
+      "agentes": 11,
+      "completados": 11,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 166,
+        "output": 109781,
+        "cache_read": 4276217,
+        "cache_create": 644772,
+        "total": 5030936
+      },
+      "herramientas": 90,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-guionista": {
+          "agentes": 4,
+          "tokens": 1667260,
+          "salida": 14213,
+          "minutos": 2.9
+        },
+        "historia-oyente": {
+          "agentes": 4,
+          "tokens": 443554,
+          "salida": 19498,
+          "minutos": 2.1
+        },
+        "video-critico": {
+          "agentes": 3,
+          "tokens": 2920122,
+          "salida": 76070,
+          "minutos": 11.8
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 7,
+          "tokens": 4587382,
+          "salida": 90283
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 4,
+          "tokens": 443554,
+          "salida": 19498
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-11-03-por-que-en-la-ciudad-capital-hay-tanto-trafico",
+      "flujo": "historia",
+      "run": "wf_45d629c6-0f5",
+      "workflow": "historia",
+      "fecha": "2026-11-03",
+      "inicio": "2026-11-03T18:36:57.403000+00:00",
+      "fin": "2026-11-03T19:11:56.783000+00:00",
+      "minutos": 35.0,
+      "agentes": 22,
+      "completados": 22,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 466,
+        "output": 257341,
+        "cache_read": 13669640,
+        "cache_create": 1425298,
+        "total": 15352745
+      },
+      "herramientas": 269,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-editor": {
+          "agentes": 1,
+          "tokens": 356374,
+          "salida": 8434,
+          "minutos": 1.9
+        },
+        "historia-investigador": {
+          "agentes": 3,
+          "tokens": 4259552,
+          "salida": 54771,
+          "minutos": 10.5
+        },
+        "historia-verificador": {
+          "agentes": 3,
+          "tokens": 3906996,
+          "salida": 37895,
+          "minutos": 6.9
+        },
+        "video-gancho": {
+          "agentes": 1,
+          "tokens": 428401,
+          "salida": 7893,
+          "minutos": 1.5
+        },
+        "video-critico": {
+          "agentes": 4,
+          "tokens": 3144062,
+          "salida": 69890,
+          "minutos": 11.7
+        },
+        "historia-guionista": {
+          "agentes": 5,
+          "tokens": 2702828,
+          "salida": 54649,
+          "minutos": 9.4
+        },
+        "historia-oyente": {
+          "agentes": 5,
+          "tokens": 554532,
+          "salida": 23809,
+          "minutos": 3.4
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 11,
+          "tokens": 6631665,
+          "salida": 140866
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 11,
+          "tokens": 8721080,
+          "salida": 116475
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-11-03-por-que-en-la-ciudad-capital-hay-tanto-trafico",
+      "flujo": "historia",
+      "run": "wf_637fa487-20e",
+      "workflow": "historia",
+      "fecha": "2026-11-03",
+      "inicio": "2026-11-03T19:13:12.955000+00:00",
+      "fin": "2026-11-03T19:29:14.934000+00:00",
+      "minutos": 16.0,
+      "agentes": 11,
+      "completados": 11,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 148,
+        "output": 94083,
+        "cache_read": 3406141,
+        "cache_create": 534140,
+        "total": 4034512
+      },
+      "herramientas": 79,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-guionista": {
+          "agentes": 4,
+          "tokens": 1374317,
+          "salida": 16880,
+          "minutos": 3.8
+        },
+        "historia-oyente": {
+          "agentes": 4,
+          "tokens": 477863,
+          "salida": 20597,
+          "minutos": 2.6
+        },
+        "video-critico": {
+          "agentes": 3,
+          "tokens": 2182332,
+          "salida": 56606,
+          "minutos": 9.7
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 7,
+          "tokens": 3556649,
+          "salida": 73486
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 4,
+          "tokens": 477863,
+          "salida": 20597
+        }
+      },
+      "registrado": "2026-11-03"
+    },
+    {
+      "pieza": "2026-11-03-por-que-en-la-ciudad-capital-hay-tanto-trafico",
+      "flujo": "historia",
+      "run": "wf_626ff29e-773",
+      "workflow": "historia",
+      "fecha": "2026-11-03",
+      "inicio": "2026-11-03T19:49:16.739000+00:00",
+      "fin": "2026-11-03T19:52:43.523000+00:00",
+      "minutos": 3.4,
+      "agentes": 6,
+      "completados": 6,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 56,
+        "output": 23495,
+        "cache_read": 983010,
+        "cache_create": 240300,
+        "total": 1246861
+      },
+      "herramientas": 30,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-guionista": {
+          "agentes": 2,
+          "tokens": 394103,
+          "salida": 3896,
+          "minutos": 0.7
+        },
+        "historia-oyente": {
+          "agentes": 2,
+          "tokens": 237892,
+          "salida": 8948,
+          "minutos": 1.2
+        },
+        "video-critico": {
+          "agentes": 2,
+          "tokens": 614866,
+          "salida": 10651,
+          "minutos": 1.5
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 4,
+          "tokens": 1008969,
+          "salida": 14547
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 2,
+          "tokens": 237892,
+          "salida": 8948
+        }
+      },
+      "registrado": "2026-11-03"
+    }
+  ]
+}

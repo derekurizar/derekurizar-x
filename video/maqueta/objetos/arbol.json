@@ -1,0 +1,21 @@
+{
+ "tipo": "arbol",
+ "clase": "objeto",
+ "cuando": "un árbol: un parque, una calle arbolada, el bosque que se tala o se quema",
+ "parametros": {},
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "medidas": {
+  "largo_m": 4.4,
+  "ancho_m": 4.4,
+  "alto_m": 7.0
+ },
+ "ejemplo": {
+  "objeto": "arbol"
+ }
+}

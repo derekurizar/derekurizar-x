@@ -1,399 +1,173 @@
 # Hilos · @DerekUrizar
 
-Framework en español para producir **hilos de X con datos de Guatemala**: a
-partir de UN tema, agentes orquestados investigan, verifican, escriben el guion
-y generan una tarjeta 1080×1080 por tuit (HTML → PNG). La publicación es manual;
-el entregable queda en `hilos/YYYY-MM-DD-<slug>/` con `hilo.html` (vista previa
-con imagen + texto opcional + alt-text), `contacto.png`, `post.md`, `datos.json`,
-los PNG de X (1080×1080) y **`redes/`**: cada tarjeta también en 4:5 (`redes/4x5/`, 1080×1350) y 9:16
-(`redes/9x16/`, 1080×1920) para carrusel, en el formato de `/video` (el titular como golpe arriba y la tarjeta en
-modo vertical; `scripts/redes.py`, lo llama `ensamblar.py`; H4 en `validate.py` desde 2026-11-04). Un segundo flujo, `/ideas`, llena un **banco de ideas** (`ideas/`)
-del que `/hilo` toma temas; al entregar un hilo, su idea queda `hecha`. Un
-tercer flujo, `/dato [pista]`, produce **un solo dato impactante** en una
-tarjeta 1080×1080 con el texto del tuit y su alt-text (sin hilo, sin banco de
-ideas), entregado en `datos/YYYY-MM-DD-<slug>/` y registrado en `memoria/datos.json`.
-`/dato` tiene **modos** (`/dato vs|mapa|antes [pista]`, con alias `/vs`, `/mapa`, `/antes`):
-mismos agentes y entregable, distinto género (Guatemala frente a otros países · brecha por
-departamento · hace N años frente a hoy); el modo viaja en `guion.modo` y `tipo` sigue siendo `dato`.
-`/hilo` tiene los suyos (`/hilo explica|perfil`, alias `/perfil`): el tema explicado con
-sus números sin giro, y el retrato de un departamento o grupo frente al país. `/fecha` produce la
-pieza que toca según el calendario editorial (`ideas/calendario.json`). Un quinto flujo, **`/investigacion
-<tema|idea:<id>|desde:<slug>>`**, produce un **informe de investigación** (documento Letter → PDF de 14–30 páginas
-con el sistema visual en su estilo clásico; lo demás va en Noche) **y el hilo que lo acompaña** (sus tarjetas son figuras del informe): `investigacion/`
-guarda las plantillas del documento, `scripts/informe.py` arma el PDF desde un `informe.json` cuyas cifras se
-cruzan con `datos.json`, y el entregable queda en `investigacion/YYYY-MM-DD-<slug>/` (`informe.json`, `salida/`,
-`hilo/`), registrado en `memoria/informes.json`. Un sexto flujo, **`/video <slug|ultimo> [corto|medio|largo]`**,
-convierte un hilo ya entregado en un **video vertical narrado** (1080×1920; ~2 min por defecto, 1 o 4) para TikTok,
-Reels y Facebook, escrito para retener y sin cara: gancho elegido entre 4–5 familias distintas (contraste, paradoja, lugar, escala, tú…; agente `video-gancho` + selección del crítico en silencio; la familia y el visual rotan entre videos) con su visual (la cifra con referente, un contenedor que se desborda, dos bloques, figuras o el mapa), tarjetas del hilo animadas
-con zoom a la cifra (o la tarjeta de mapa a pantalla completa), golpes de texto cinético (y escenas «definición», «adivina» (con «pausa y responde»), «ranking», «escala», «línea de tiempo» y «explica»: una animación a medida que explica el mecanismo del fenómeno, guardada en una biblioteca para reutilizarla), «pero / por eso», promesa que se paga, cierre en dos pantallas (conclusiones y luego la frase final con «Sígueme en»: lo normal un remate de consecuencia, lo que la cifra le hace a quien la vive y no el dato otra vez; a veces una pregunta sobre el sistema, anclada al tema y sin exponer al espectador; `referencias/cierres.md`, F1–F8), voz de ElevenLabs con las cifras
-en palabras, subtítulos, barra de progreso, música con ducking y efectos del catálogo fijo; el guion lo aprueba un
-**crítico de retención** (Workflow `video`) antes de gastar créditos; entrega en `hilos/<fecha>-<slug>/video/` (mp4
-fuera de git), registrado en `memoria/videos.json`.
+Framework en español para producir **piezas con datos de Guatemala**: hilos de X (una tarjeta 1080×1080 por tuit, HTML →
+PNG), datos sueltos, informes en PDF, carruseles, **videos verticales narrados** (9:16 + 4:5) y videos largos de YouTube
+(16:9). Agentes orquestados investigan, verifican, escriben y producen; **la publicación es manual**.
 
-Un séptimo flujo, **`/noticias [hoy|YYYY-MM-DD] [sin-voz|fixture]`**, produce el **resumen diario de noticias de
-Guatemala** en un video vertical de ≤ 70 s (gancho con la noticia más fuerte, 3–4 noticias verificadas con su foto y su
-fuente en pantalla, cierre «Hoy en Guatemala» con «Sígueme en» siempre), con la misma voz, música, efectos y gates de
-render que `/video`; una paleta por día (ciclo de 8 por fecha). Su modo **`/semana [YYYY-MM-DD] [sin-voz|fixture]`**
-(«Las 5 cifras de la semana en Guatemala», se publica el domingo) cuenta de la #5 a la #1, en 62–90 s (< 61 s reales
-falla), cinco cifras de la semana de lunes a domingo: la **cosecha** de los noticieros diarios ya `confirmada`
-(`semana.py cosechar`, N2 rehecho en código con ventana de 7 días; `en_desarrollo` nunca entra) más los datos oficiales
-nuevos de dos rastreadores (`ofi`, `sem`; Workflow `noticias` con `modo: semana`); paleta y música fijas de marca
-(`cielo`, `cielo-2`); gates SM1–SM11; entrega en `semanas/<domingo>/` (mp4 fuera de git), registrada en
-`memoria/semanas.json`; `semana.py carrusel` arma su `/carrusel`.
+Cada flujo tiene su comando en `.claude/commands/`, su guía en `referencias/` (léela antes de tocar ese flujo) y su
+registro en `memoria/`. Dónde vive cada archivo, script, agente y maqueta: **`referencias/mapa.md`**. Este archivo lo
+carga cada agente de cada corrida: aquí van solo las reglas, las decisiones del usuario y una línea por flujo.
 
-Un octavo flujo, **`/historia <tema> [sin-voz]`**, cuenta **un evento o una historia de Guatemala de principio a fin**
-(una marca, una empresa, una persona, un proceso, un caso de justicia…, sin modos) en un video vertical de 2–3 min:
-editor que encuadra (pregunta, arco abierto, **tres actos y la espina**: detonante, punto medio, clímax, resolución;
-hilos que la historia abre y personajes con su presentación; periodos que reparten los ejes), investigador y verificador por eje (hechos con
-fecha y cita guardada, segunda fuente, cuatro veredictos `confirmado | una_fuente | en_disputa | no_confirmado` con `tipo_hecho`, estado actual de los casos, fotos de Wikimedia Commons con licencia libre u
-oficiales o del medio con crédito (`foto --de-fuente` baja la og:image de una nota leída), o de referencia («Foto de referencia: …»; nunca un icono); la del protagonista es obligatoria (H12); **tomas de video** de las notas (`leer` lista los videos, `historia.py video` los baja con yt-dlp con hoja de contacto y transcripción de whisper, `historia.py toma` corta el tramo): sin audio ≤ 6 s con la voz encima, o con su audio original ≤ 10 s cuando el sonido es el hecho, todas ≤ 25 % del video, ≤ 2 con audio, «Video: <medio>, <fecha>» en pantalla y en `fuentes.md`, la oficial antes que la del medio (TM1–TM6; decisión del usuario, 2026-11-05)), gancho elegido por el crítico (siempre con la foto a sangre del protagonista, nombrándolo (H10) y sin adelantar una `revelacion` del encuadre (H13; puntaje `reserva`)), guionista que escribe **primero la narración de corrido** por acto (320–400 palabras ≈ 150 s; H15) y la reparte sin cambiar una palabra en escenas `foto`, `cita` (también de
-documentos), tarjetas de las plantillas de los hilos y animaciones de la biblioteca, con **rótulos de acto** sobre la imagen (sin tarjetas de capítulo con voz) y **secuencias de voz** de 2–5 escenas grabadas de corrido; atribución hablada solo para lo contestado, los alegatos y las citas (≤ 4 «según»), fuente en pantalla para lo de una sola fuente (H4, H19); misma voz, música,
-efectos y gates de render que `/video`, un **oyente ingenuo** (`historia-oyente`, sonnet: solo la voz y la pantalla) cuyas confusiones y preguntas sin responder el crítico resuelve o justifica (puntúa `flujo`: una sola voz, no tarjetas leídas), cierre `legado` (lo que la gente hace hoy con lo que la historia dejó; H9: sin «según» en el final) con «Sígueme en», gates H1–H20, modo **retoque** del Workflow (`desde: retoque` + `notas`: cambios sin editar a mano, conservando las voces; `voz --pendientes` imprime las secuencias que hay que regrabar y `--sueltas` solo las escenas; `desde: encuadre` re-encuadra por actos una cronología ya verificada y `desde: guion` salta al guion); entrega en `historias/<fecha>-<slug>/` (video, 4:5,
-caption, `fuentes.md` por acto, `cronologia.md`; mp4 fuera de git), registrada en `memoria/historias.json`. **Desde el 2026-11-14 lo dibuja la mesa de archivo** (`realizacion: mesa`): tras la voz, el paso «Plano» (Workflow `plano`, `video-realizador`) decide qué pieza entra con cada oración; las escenas de este párrafo siguen siendo la unidad de voz y de respaldo, y lo que describen de cámara, chips, tarjetas de persona y foto a sangre es del motor propio.
+## Flujos
 
-Un noveno flujo, **`/sabias <slug|ultimo|pista> [sin-voz|fixture]`**, convierte un dato de `/dato` en el clásico
-**«¿Sabías que en Guatemala…?»** en video vertical de 20–30 s (9:16 + 4:5): gancho con «¿SABÍAS QUE…?» en pantalla, la
-línea con la cifra y un visual (cifra, llenado, pareja, figuras o el mapa); la tarjeta Noche del dato con zoom a la cifra
-(o su escena tiempo, ranking o mapa); a lo más un apoyo (golpe a escala humana, escala o una explica de la biblioteca); y
-el cierre en una sola pantalla (la consecuencia y «Sígueme en»). Una pista que no es un dato entregado corre `/dato`
-primero. El guion lo escribe la sesión (`sabias.py digesto`), pasa el gate S1–S3 + V1–V5, V9, F1–F8 y el crítico en
-«Modo sabías»; voz, tiempos y render son los de `/video`; entrega en `datos/<fecha>-<slug>/video/` (mp4 fuera de git),
-registrado en `memoria/sabias.json`.
+| Comando | Qué produce | Guía | Entrega · registro |
+|---|---|---|---|
+| `/hilo [explica\|perfil] [tema\|idea:<id>]` | Hilo de X con investigación multi-agente y una tarjeta por tuit. Modos: `explica` (sin giro) y `perfil` (un sujeto frente al país; alias `/perfil`) | `flujo-hilo.md` | `hilos/<fecha>-<slug>/` con `redes/` (4:5 y 9:16) · `hilos.json` |
+| `/dato [vs\|mapa\|antes] [pista]` | Un dato impactante en UNA tarjeta con texto y alt-text (alias `/vs`, `/mapa`, `/antes`) | `flujo-dato.md` | `datos/<fecha>-<slug>/` · `datos.json` |
+| `/ideas [n] [enfoque]` | Temas con datos descargables para el banco de ideas | `roles/explorador.md` | `ideas/banco.json` |
+| `/fecha [hoy\|fecha\|id\|texto]` | La pieza que toca según el calendario editorial; despacha a `/dato` o `/hilo` | `.claude/commands/fecha.md` | `ideas/calendario.json` |
+| `/investigacion <tema\|idea:<id>\|desde:<slug>>` | Informe PDF Letter de 14–30 páginas (estilo clásico) y el hilo cuyas tarjetas son sus figuras | `flujo-investigacion.md` | `investigacion/<fecha>-<slug>/` · `informes.json` |
+| `/video <slug\|ultimo> [corto\|medio\|largo]` | Un hilo entregado → video narrado (~2 min por defecto) | `flujo-video.md` | `hilos/<fecha>-<slug>/video/` · `videos.json` |
+| `/historia <tema>` | Un evento o una historia de principio a fin, 2–3 min, en tres actos | `flujo-historia.md` | `historias/<fecha>-<slug>/` · `historias.json` |
+| `/serie <tema> [3-5] [explica\|caso]` | Un tema en 3–5 partes de ≈ 90 s (caso: 3–8 de ≈ 130 s) con investigación compartida y plan versionado | `flujo-serie.md` | `series/<fecha>-<slug>/parte-N` · `series.json` |
+| `/explica <tema> [corto\|medio\|largo]` | Un concepto, un proceso o una regla en ~2 min: la pregunta, el mecanismo, en tu vida | `flujo-explica.md` | `explicaciones/<fecha>-<slug>/` · `explicaciones.json` |
+| `/sabias <slug\|ultimo\|pista>` | «¿Sabías que en Guatemala…?» de 20–30 s desde un dato de `/dato` | `flujo-sabias.md` | `datos/<fecha>-<slug>/video/` · `sabias.json` |
+| `/departamento <nombre\|siguiente\|tablero>` | La serie de los 22: `/perfil` con el canon de dimensiones y luego `/video` en modo departamento | `flujo-departamento.md` | `videos.json` (`serie`, `sujeto`) |
+| `/congreso [<iniciativa N>\|<tema>]` | Una ley del Congreso en < 1 min: qué buscaba, los votos frente al umbral, diputados de cada lado | `flujo-congreso.md` | `congreso/<fecha>-<slug>/` · `congreso.json` |
+| `/video-3d <tema\|desde:<pieza>>` | La maqueta que vuela: de 45 s a 3 min, 100 % en 3D, cuando el lugar es la información | `flujo-video3d.md` | `videos3d/<fecha>-<slug>/` · `videos3d.json` |
+| `/youtube-long <serie\|ultima>` | Una serie entregada → UN video 16:9 de 8–20 min: un montaje que reutiliza la voz grabada | `flujo-youtube.md` | `series/<fecha>-<slug>/youtube/` · `youtube.json` |
+| `/carrusel <slug\|ultimo\|carpeta> [9:16]` | 5–10 láminas 4:5 y su 9:16 desde un hilo o un dato; sin voz, créditos ni agentes | `flujo-carrusel.md` | `<original>/carrusel/` · `carruseles.json` |
+| `/agenda [hoy\|semana\|AAAA-MM-DD] [replan]` | El content manager: qué se publica cada día, dónde, a qué hora, y qué producir | `flujo-agenda.md` | `agenda/<AAAA-Wnn>/` |
+| `/analyze-improve [plataformas] [desde:…]` | Mide lo publicado (Chrome, solo lectura), lo alinea con las escenas y propone mejoras | `flujo-analisis.md` | `memoria/metricas.json` |
 
-Un décimo flujo, **`/explica <tema> [corto|medio|largo] [sin-voz|fixture]`**, explica **un concepto, un proceso o una
-regla** (el interés compuesto, cómo se calcula la tarifa de luz) en un video vertical de ~2 min (9:16 + 4:5) para que
-quien lo vea pueda explicárselo a otro (el hilo en modo explica sigue siendo `/hilo explica`). Tres actos fijos: **la
-pregunta** (gancho, promesa y la idea equivocada que casi todos tienen, `intuicion`), **el mecanismo** (la cuenta con
-quetzales antes de la definición, la animación, el «ajá», el giro = la otra cara del mecanismo) y **en tu vida** (el
-mecanismo con datos reales de Guatemala, la regla práctica, cierre de consecuencia). Editor → investigador ⇢
-verificador por eje (afirmaciones y cifras con cita guardada, E2) → **la calculadora** de `explica.py` (los números de
-ejemplo los calcula el script en un catálogo cerrado de modelos, cifras `ej-cNN`; la voz los dice como ejemplo y la
-pantalla lleva el chip «Ejemplo», E3–E4) → gancho → guionista (narración de corrido primero) → oyente ingenuo que
-**explica de vuelta** el mecanismo (`explicacion_devuelta`, la prueba de retorno) → crítico en modo explica → animador;
-escena propia **`cuenta`** (la pizarra, `video/cuenta.html`) y mecanismo `exponencial` (semilla `bola-nieve`); gates
-E1–E12; voz, tiempos y render los de `/video` y `/historia`; entrega en `explicaciones/<fecha>-<slug>/` (con
-`ejemplos.md`; mp4 fuera de git), registrada en `memoria/explicaciones.json`.
-
-Un undécimo flujo, **`/carrusel <slug|ultimo|carpeta> [9:16] [fixture]`**, convierte un hilo o un dato ya entregados en
-un **carrusel** de 5–10 láminas 4:5 (1080×1350, Instagram y Facebook) más su 9:16 (modo foto de TikTok), sin voz, sin
-créditos y sin agentes: portada legible en miniatura (cifra ≥ 220 px, título ≤ 8 palabras, «Desliza →»), las tarjetas
-del original **re-materializadas** en Noche con un golpe arriba (nunca se recortan los PNG), láminas de texto, «Por qué
-importa» y cierre con «Guárdalo» y «Sígueme en»; contador n/N, fuente y handle en cada pie. El `carrusel.json` lo
-escribe la sesión con el digesto (como /sabias), `scripts/carrusel.py` lo cierra con CA1–CA8 (palabra clave en portada
-y captions, cada cifra con respaldo) y `scripts/carrusel.js` renderiza y mide CA9–CA12; entrega en
-`<original>/carrusel/` (un carrusel por original), registrado en `memoria/carruseles.json`.
-
-Un duodécimo flujo, **`/departamento <nombre|siguiente|tablero> [corto|medio] [sin-voz|fixture]`**, es la **serie de los
-22**: `/perfil <depto>` con el **canon** de dimensiones (`referencias/departamentos.json`: misma fuente y año para los
-22, orden por población, alias; borrador en «propuesta») y luego `/video` sobre ese hilo; `video.py preparar` detecta el
-modo solo (`perfil.tipo: departamento`): gancho de identidad, escena `mapa`, `ranking` en ventana («…», «N.º X de 22»),
-comparación con el país, cierre que nombra el departamento y caption «Para alguien de <depto>» (invitación implícita,
-F4 intacto); gates D1–D9 en `scripts/departamentos.py`; registrado en `memoria/videos.json` con `serie` y `sujeto`.
-
-Un decimoquinto flujo, **`/agenda [hoy|semana|AAAA-MM-DD] [replan]`**, es el **content manager**. Planifica de hoy al
-domingo qué se publica cada día, en qué plataforma y a qué hora, y qué hay que producir para llenar cada espacio.
-
-Espacios por día (sin noticieros: el usuario no los publica, así que `/noticias` y `/semana` no se programan):
-- **A · pieza fuerte**, 09:00: historia, explica, parte de serie o `/video`.
-- **B · pieza corta**, 19:30: «¿Sabías que…?» o departamento.
-- **C · carrusel** (opcional), 13:00.
-
-En Facebook, cada video lleva un estilo de descripción que rota (historia, pregunta, dato, lista). La sesión la escribe con
-`agenda.py facebook`, y `metricas.py rendimiento --por estilo_fb` mide cuál rinde.
-
-Como máximo 2 videos al día; cada video va a las cuatro plataformas en 9:16, con su 4:5 al feed.
-
-Los espacios se llenan en este orden:
-1. Lo listo sin publicar, cruzando `memoria/` con `metricas.json`: lo corto al B, lo demás al A.
-2. Las partes de `/serie` que ya se pueden publicar (A).
-3. ≤ 2 fechas del calendario: un dato a «¿Sabías que…?» en el B, un hilo a `/video` en el A, nunca antes de su fecha.
-4. El siguiente `/departamento` (B).
-5. La mezcla: el A con ≥ 3 historias y 1 explica; el B es «¿Sabías que…?».
-
-Lo que no tiene pieza es una orden de producción con su comando, su día, sus minutos y sus créditos. Los temas los propone
-la sesión y los elige el usuario. Gates AG1–AG9 (M18). Estado en `agenda/<AAAA-Wnn>/agenda.json` + `agenda.md` (solo
-`scripts/agenda.py`).
-
-Un decimocuarto flujo, **`/serie <tema> [3-5] [explica|caso] [sin-voz|fixture]`**, cuenta un tema en **3–5 partes de ≈ 90 s**
-con una investigación compartida y un plan versionado, sobre el motor `/historia` (las partes son periodos) o `/explica`
-(un temario: un mecanismo por parte). Pasos:
-1. `serie.py preparar` y el Workflow del motor con `hasta: "consolidar"`: el editor escribe el plan (SE1–SE2).
-2. `serie.py cobertura` (SE3).
-3. El usuario aprueba el plan.
-4. Cada parte: `serie.py parte N`, que arma el formato `historia-serie` o `explica-serie`, con los hechos solo hasta el fin
-   de su periodo. Luego el Workflow con `desde: "ganchos"`, el gate de la parte (SE4–SE9, enchufado en `historia.py` y
-   `explica.py`), la voz y el render, y `serie.py entregar-parte`.
-
-En pantalla: chip «Parte N de M» en el gancho y «Parte N+1 · título» en el cierre; desde la parte 2, «Empieza por la
-Parte 1 · fijada en mi perfil» (y lo mismo en los captions, SE8). La parte que no es la última cierra con la forma
-`puente` (F1), cuya frase final no anuncia la siguiente (F9), y luego la voz invita: «Sígueme: en la segunda parte…» con
-lo que cuenta (`cierre.invitacion`, SE9; decisión del usuario, 2026-11-05). La parte N se publica cuando la N+1 tiene el guion aprobado.
-Estado en `series/<fecha>-<slug>/serie.json` + `serie.md`; registro en `memoria/series.json` (M16). **Modo caso** (2026-11-06): `/serie <tema> 7 caso`, de 3 a 8 partes de ≈ 130 s repartidas por temas (`serie.columna`, `partes[].hechos`), formato `historia-caso` y gates SE10–SE12 (inventario, columna, densidad). **Resumen final** (SE14, 2026-11-07): la última parte de toda serie lleva una escena `resumen_serie` de 20–30 s que repasa la serie entera (ids ya contados, ≥ 5 partes), fuera de SE13, y puede durar esos 30 s de más (≤ 180 s); su `cronologia` admite hasta 8 pasos (m110). Una escena se inserta en un guion ya grabado con `aplicar` `{insertar: N, escena, despues_de}`, que corre los audios de las siguientes (m108); el gate V24 revisa claves y tipos de cada escena antes que los demás (m109). **Cada parte trae lo nuevo** (SE15–SE16, 2026-11-09): lo que ya contaron las partes anteriores entra solo como contexto (≤ 2 ids en ≤ 2 escenas), quien ya se presentó vuelve con un recordatorio de una palabra y una sigla ya explicada lleva ≤ 4 palabras de glosa; los digestos marcan `[YA CONTADO EN Pk]` (`serie.revisar_novedad`, `lineas_ya_contado`). **Periodos por día y renombrar** (2026-11-11): `periodo` admite AAAA-MM-DD y SE2 falla si dos partes comparten un mes sin día (m133); `serie.py renombrar SERIE N "<título>"` cambia el título de una parte en plan, TRABAJO, la parte anterior y captions (m134); el Workflow `historia` suma al tope de palabras de la última parte las +72 del resumen SE14 (m132, W12).
-
-Un decimoséptimo flujo, **`/youtube-long <serie|ultima> [sin-voz|fixture]`** (2026-11-08), convierte una **serie ya
-entregada en UN video largo 16:9 de YouTube** (8–20 min) que se oye como un solo documental. No es un guion nuevo: es un
-**montaje** (`montaje.json`) de escenas ya verificadas y grabadas.
-
-Por qué hace falta: cada parte se hizo para entenderse **sola**, así que pegadas se repiten. En La Línea (7 partes,
-17.3 min) había 12 ganchos y cierres de parte, 23 hechos contados en dos partes, Monzón presentado ×6, CICIG explicada ×6
-y saltos atrás en el tiempo.
-
-- **Detección en código** (`youtube.py preparar`): hechos por id (`escenas[].hechos`), frases de ≥ 8 palabras,
-  presentaciones y glosas → `repeticiones.json`. El borrador ya quita ganchos, cierres intermedios y el resumen SE14.
-- **Agentes** (Workflow `youtube`, 0 créditos): el `youtube-editor` (opus) quita escenas, recorta frases e incisos y
-  escribe los puentes y la promesa. Un puente es de 1–2 oraciones, con hechos y sin anunciar; la promesa global se paga
-  en el último 40 %. Luego el oyente y el crítico en «Modo largo» (Y-C1–Y-C7, arreglos probados con `youtube.py
-  probar`), y el **usuario aprueba el montaje**.
-- **Voz**: los recortes cortan `voz_N_r.mp3` por palabra en silencios de ≥ 80 ms y corren los tiempos de la escena.
-  Solo se graba lo nuevo (puentes, promesa, revozadas ≤ 3) en `nuevas/`.
-- **Render** 16:9 1920×1080 con HyperFrames (un proyecto por capítulo). No hay subtítulos quemados (van en el `.srt`) ni
-  barra de progreso.
-- **Montaje del video**: rótulo de capítulo sin voz, música alternada por capítulo, 12 s de pantalla final y miniatura
-  1280×720.
-- **El 16:9 es una «mesa de archivo» en HyperFrames** (decisión del usuario, 2026-11-13, tras un piloto aprobado):
-  dinamismo es que **entre en pantalla lo que la voz nombra**, nunca mover la cámara ni escalar una escena para aparentar
-  ritmo. Con cada oración cae una pieza (foto, recorte de prensa, página de documento, ficha de persona o institución,
-  lugar en el mapa, fecha, cifra con su rótulo) y se queda quieta. El guion visual es `plano.json`: lo escribe un
-  `youtube-realizador` por capítulo (Workflow `youtube` con `desde: "plano"`) sobre `plano.borrador.json`, y lo valida
-  `youtube.py plano --check` (YT13–YT19, sobre los datos: nunca sobre píxeles). `scripts/youtube_hf.py` genera un
-  proyecto de HyperFrames por capítulo y lo renderiza con `--workers 1` (con varios procesos el video tiembla). El motor
-  propio solo graba los tableros (`explica`, `tarjeta`). Referencia: `referencias/flujo-youtube.md` («El 16:9: una mesa
-  de archivo en HyperFrames») y `referencias/roles/youtube-realizador.md`.
-- **Gates** YT1–YT19 en `scripts/youtube.py` y `scripts/youtube_hf.py` (YT12 retirado).
-- **Entrega** en `series/<fecha>-<slug>/youtube/` (mp4 fuera de git), registrada en `memoria/youtube.json` (M20).
-
-Un decimoctavo flujo, **`/video-3d <tema|desde:<pieza>> [sin-voz]`** (2026-11-14), es **la maqueta que vuela**: un video
-vertical 100 % en 3D (9:16 + 4:5, 45–75 s) donde una cámara recorre un mundo simple (el relieve del país, sus pueblos, una
-falla, una ruta) mientras la voz cuenta, con una capa 2D encima (titular, pines que siguen al 3D, cifras, subtítulos).
-Sirve cuando **el lugar es la información**. Decisiones del usuario:
-
-- **Motores:** three.js dentro de HyperFrames (estilos `noche`, `color`, `contorno`, `voxel`, `plano`) o Blender + la capa
-  2D de HyperFrames (`arquitecto`, `diorama`, `papel`). El estilo decide el motor. Remotion quedó fuera.
-- **Un solo estilo por video; nunca se mezclan.** Lo elige el orquestador entre los ocho por la idea visual; si no está
-  seguro (`estilo.confianza: "baja"`), muestra el mismo cuadro en los candidatos y pregunta.
-- **Dentro de la maqueta la cámara se mueve** (la excepción a la cámara quieta de la mesa de archivo).
-- **El gancho manda y todo concuerda:** el gancho es un evento 3D en el cuadro cero, y cada toma, pin y cifra nace en una
-  frase que la voz dice (gates C3D1–C3D11 en `video3d.py guion --check`).
-- **Lo que se dibuja también se afirma:** los geodatos se verifican como las cifras (qué tramo, de dónde a dónde, hacia
-  dónde); lo que las fuentes no sostienen va en `no_afirmar` y no se dibuja. El pie nombra siempre las fuentes de los
-  geodatos; «Maqueta · no a escala» es **opcional** (solo si el guion trae `aviso`).
-
-El guion lo escribe la sesión con el digesto (como /sabias): idea visual → estilo → 5 ganchos con su cuadro y su clip
-renderizados (el usuario elige) → narración de corrido y escenas con anclas `dice` → storyboard → crítico en «Modo 3D» →
-el usuario elige el cierre → voz (MCP) → tiempos → render → montaje → entrega en `videos3d/<fecha>-<slug>/` (mp4 fuera de
-git), registrada en `memoria/videos3d.json` (M21). El motor solo conoce `maqueta.json` (contrato en
-`referencias/diseno/maqueta3d.md`, gates M3D1–M3D11 sobre los datos: dónde cae cada pin, la velocidad de la cámara, los
-tiempos de lectura, la separación). **Otros flujos alojan una maqueta** dentro de su mesa de archivo: el realizador la
-declara en `plano.json` a nivel de mesa (bloque `maqueta`) y se renderiza con el modo pieza (`maqueta3d.py pieza`);
-gates MV15–MV19 en vertical e YT20–YT24 en 16:9; ≤ 2 por video vertical. Referencia: `referencias/flujo-video3d.md` y
-«La maqueta» en `referencias/flujo-mesa.md`.
-
-**Dinamismo y personas** (decisión del usuario, 2026-11-06; **motor propio**: /noticias, /semana y los trabajos con `realizacion: propio`. En los demás flujos manda desde el 2026-11-14 «El vertical como mesa de archivo», más abajo; la cámara quieta del 2026-11-07 ya había retirado los sub-planos, el whip y las transiciones con dirección):
-- **Sub-planos:** en cada foto, cada 3–4.5 s, sobre las caras que detecta `historia.py focos` (Vision de macOS, `scripts/caras.swift`); salto de cámara en las escenas sin foto.
-- **Tarjeta de persona:** retrato, nombre y cargo en la primera mención de cada persona del encuadre (H21–H22).
-- **Escena `red`:** el organigrama con aristas de hechos verificados (H23).
-- **Más señales:** documento con sello, subrayado, pantalla dividida, mini-mapa y transiciones con dirección.
-- **Cierre:** «Seguir» animado con campana.
-- **Siglas:** dichas bien (`SIGLAS`, V20).
-- **Gates de ritmo:** V21 (novedad visual: un tramo de más de 5 s sin cambio falla) y V22 (sobrecarga).
-- **Efectos:** la biblioteca fija pasa a 14 (`whip`, `papel`, `marcador`).
-- **Referencia:** `referencias/flujo-historia.md` («Personas, red y dinamismo») y `flujo-video.md`.
-
-**El vertical como mesa de archivo** (decisión del usuario, 2026-11-14; `referencias/flujo-mesa.md`):
-- **Qué es:** el lenguaje del 16:9 llevado al 9:16 y al 4:5. Con cada oración entra una pieza que la voz nombra y se queda
-  quieta; la cámara no se mueve. Motor: HyperFrames (`scripts/video_hf.py`; el núcleo común con el 16:9 es `scripts/mesa.py`).
-- **Quién lo usa:** **todos los flujos de video menos /noticias y /semana**: /historia, /serie, /explica, /sabias,
-  /video, /departamento y /congreso (`video.json → "realizacion": "mesa"`, por defecto desde el 2026-11-14; lo fija
-  `preparar` (`VD.MESA_FLUJOS`), y un trabajo empezado con un motor termina con él). Decisión del usuario tras aprobar
-  los pilotos: lo mismo para los demás, sin otro piloto. Lo que no tiene pieza propia va como tablero (`cuenta`,
-  `explica`, `adivina`, `tarjeta`, `ranking`, `mapa`, `escala`, `tiempo`, `hemiciclo`); el texto cinético (gancho, golpe,
-  definición) pasa a piezas, la pareja a la pieza `barra`, el chip «Ejemplo» lo pone la mesa y la versión B de /video
-  rehace solo la mesa del gancho (`variante --plano`). En /congreso el gancho deja el portal: foto del pleno + barra de
-  votos frente al umbral.
-- **Paso «Plano»:** después de la voz real (`tiempos`) y antes de `grabar`, el Workflow `plano` lanza al `video-realizador`
-  (opus), que escribe `plano.json` (mesas → golpes con `dice`) y deja `<flujo>.py plano T --check --hoja` en 0. Lo que
-  falle en pantalla se arregla en el plano, nunca en el guion ni en la voz.
-- **Repliegue por corte:** cuando la pieza que entra no cabe, las de al frente pasan de un corte a su versión compacta,
-  arriba. Nunca para dar ritmo, nunca animando la escala.
-- **Tiempo de lectura (MV8):** un texto queda al frente ≥ 0.5 s + 0.3 s por palabra que la voz no dice (mínimo 1 s); la cita
-  y el documento que la voz lee no cuentan.
-- **El cuadro:** kicker de serie, barra de progreso por actos, golpe de arriba, mesa en la zona segura, subtítulos palabra
-  por palabra, «Sígueme» a mitad, cierre con «Sígueme en», logos y usuarios, bucle al cuadro 0 y portada limpia.
-- **Personas:** la `red` como jerarquía (hilo punteado y «Según…» para un alegato, MV12; quien acusa, aparte y sin hilos).
-- **Gates** MV1–MV14 sobre el plano, nunca sobre píxeles. Los tableros (`explica`, `tarjeta`, `vias`…) se graban limpios
-  con el motor propio. En mesa no corren V7 (salvo tableros), V10, V12, V13, V15, V21, V22, V26 ni A3.
-- **Producción:** los comandos de siempre (`grabar`, `montar`, `revisar`, `producir`) despachan a la mesa; render con un
-  proceso (≈ 1.6× la duración por formato). `make video-fixture-mesa` = la maqueta con render real.
-
-**Recompensa, tensión y expediente** (decisión del usuario, 2026-11-10; `/historia`, `/serie`, `/explica`, `/youtube-long` y, en lo común, todo video):
-- **«Sígueme» a mitad del video** (V25): el botón animado sin cuenta, arriba a la derecha, hacia el 50 %, sin cortar la escena (`V.seguir`, `video.py marcar_seguir`).
-- **La pregunta en pantalla** (P6): la promesa se oye antes del segundo 10; `promesa.pregunta` sale en pantalla solo en el pago, con su check, cuando el dato ya se ve (usuario, 2026-11-10); la voz sigue sin anunciar el video. En series, `serie.promesa` (SE1) y la última parte la responde (SE18).
-- **Tensión:** `en_juego` por acto y por parte; H25 (cada tercio abre o paga algo; los hilos no se pagan de golpe).
-- **Imagen:** H26 (una foto fija ≤ 12 s; composiciones distintas), SE19 (una foto en ≤ 2 partes), música de la familia del tema con una pista por parte (SE5).
-- **16:9:** pantalla final «Suscríbete», música por capítulo, `comentario.txt` (el margen de expediente y el tablero de los rótulos se retiraron el 2026-11-13 con la mesa de archivo).
-- **Proceso:** `historia.py producir`, `.srt` sin solapes, avisos de `revisar` guardados.
-- **Con base en la investigación** (`referencias/analisis/investigacion.md`, niveles A · B · C): V26 (la cifra se señala cuando la voz la dice), AN13 (envíos por alcance) y AN14 (Shorts deslizados), `metricas.py rendimiento --por parte`, el tablero en vertical (`red` con `estilo: "tablero"`), el mapa con `ruta`, y en el largo el `adelanto` (un momento alto antes del gancho) y `youtube.py teaser` (el 9:16 que lleva al largo).
-- **Referencia:** `referencias/promesas.md` §5, `flujo-historia.md` («Tensión, imagen y producción»), `flujo-serie.md`, `flujo-youtube.md` («El expediente en pantalla»), `flujo-video.md`.
-
-Un decimotercer flujo, **`/analyze-improve [plataformas] [desde:AAAA-MM-DD] [solo-diagnostico] [fixture]`**, cierra el
-ciclo con las **métricas reales**. Lee las piezas publicadas en TikTok Studio, YouTube Studio, Instagram y Facebook con
-Claude in Chrome (solo lectura; fragmentos en `referencias/analisis/captura.md`) y las liga a su pieza en los registros.
-Alinea la curva de retención por segundo con las escenas del guion y detecta AN1–AN12 (gancho, cuadro 0, promesa,
-ritmo, animación o cierre, duración, restricción por plataforma, caption a mano o con erratas, familia, horario). Busca
-en la web cómo se resuelve cada problema sistémico (`referencias/analisis/benchmarks.md`) y propone mejoras con su
-evidencia a `memoria/mejoras.json` (`flujo: analisis`), que no se aplican sin el usuario. Lo medido vuelve a los
-digestos como «Rendimiento real» (retención por familia, visual y cierre). La primera medición (2026-11-03) dio:
-- **R14**: el gancho necesita un sujeto reconocible.
-- **Voz del gancho ≤ 6 s** (antes 7.5 s).
-- **P5**: la escena 2 dura ≤ 12 s, con aviso desde 8 s.
-- **F9**: el cierre no anuncia el final, y su voz va de 160 caracteres para abajo.
-- **El visual `foto`** en el gancho de `/video` (`historia.py foto` + `video.py fotos`).
-- **`caption.md`** en bloques para copiar, con la lista de publicación.
-- **`puntaje.sujeto`** en `/ideas`.
-- **La prueba A/B de duración** (`…/video-corto` → `<id>-corto`). Registro: `memoria/metricas.json` (solo `scripts/metricas.py`; M17).
-
-Un decimosexto flujo, **`/congreso [<iniciativa N>|<tema>] [sin-voz|fixture]`**, cuenta **una ley del Congreso en menos
-de un minuto** (43–57 s estimados, ≤ 59.5 s reales; 9:16 + 4:5): qué buscaba, cuántos votos tuvo frente al umbral (81; 107
-en urgencia nacional) y hasta 3 diputados de cada lado, de partidos distintos y de los que más votos dieron. Los votos salen del registro nominal oficial (congreso.gob.gt, que
-bloquea las descargas: se captura con Claude in Chrome, `referencias/congreso/captura.js`) a una base local
-(`sesiones/_congreso/base/`, la de la investigación N.º 03); sin iniciativa, `congreso.py proponer` lista las leyes
-recientes. Escena propia **`hemiciclo`** (`video/hemiciclo.html`: los 160 asientos se llenan con su contador y un pop por
-tanda, la línea del umbral, el sello, el foco con el retrato oficial unido al asiento, las columnas) y el gancho con la
-foto del pleno y el hemiciclo en un círculo que se abre hacia la escena siguiente (el **portal**); `foto` y `cita` de
-/historia. El guion lo escribe la sesión con el digesto (como /sabias), gates CG1–CG10 (cada nombre con el voto que dio,
-los dos lados, sin calificativos, qué buscaba con cita) y el crítico en «Modo congreso»; efectos nuevos `voto`, `mazo`,
-`sello`; entrega en `congreso/<fecha>-<slug>/` (con `votos.csv` y `fuentes.md`), registrado en `memoria/congreso.json` (M19).
-
-## Mapa del proyecto
-
-- `.claude/commands/hilo.md` — `/hilo [explica|perfil] [tema|idea:<id>] [smoke|fixture]`: preflight (`make doctor`, idea del banco; sin tema → `ideas.py --siguiente`) → Workflow `hilo` → post-checks (`make validate`, `make costo`); tabla `MODOS` en `hilo.js` (explica: 3–6 tuits sin giro con beat `paso`; perfil: 5–8 sin giro con beat `dimension` y comparación con el país) y espejo en `ensamblar.py`
-- `.claude/commands/departamento.md` · `scripts/departamentos.py` · `referencias/departamentos.json` · `referencias/flujo-departamento.md` — `/departamento <nombre|siguiente|tablero> [corto|medio] [sin-voz|fixture]`: `--resolver`/`--siguiente` → `/perfil` con `args.canon` (`--directiva`) y `min_tuits: 7` (hilo.js y G1 exigen un mapa de los 22 que destaca al departamento; `PERFIL_DEPARTAMENTO`, W5) → `/video` (modo detectado en `preparar`; ranking `ventana` en `video/ranking.html`; D1–D9 en `guion --check`, `tiempos` y `entregar`) → `--tablero`; «Modo departamento» en `referencias/roles/video-{gancho,guionista,critico}.md` y canon en editor/investigador; `sesiones/_fixture_perfil/` + `sesiones/_fixture_departamento/` (`make departamento-fixture`)
-- `.claude/commands/perfil.md` — alias de `/hilo perfil` (delega en `hilo.md`; no consulta el banco de ideas); el modo explica se pide como `/hilo explica` (`/explica` es el video explicativo)
-- `.claude/commands/ideas.md` · `.claude/workflows/ideas.js` · `.claude/agents/ideas-explorador.md` (sonnet) — `/ideas [n] [enfoque]`: exploradores en paralelo → `ideas.py --importar`; guía `referencias/roles/explorador.md`
-- `.claude/commands/dato.md` · `.claude/workflows/dato.js` — `/dato [vs|mapa|antes] [pista] [smoke|fixture]`: un dato impactante en UNA tarjeta; reutiliza 4 agentes `hilo-*` (investigador con encuadre ligero → verificador → guionista que puntúa candidatas → productor con QA visual); tabla `MODOS` (gancho, plantillas y gates por modo) con espejo mínimo en `ensamblar.py`; guía `referencias/flujo-dato.md`
-- `.claude/commands/vs.md` · `mapa.md` · `antes.md` — alias de `/dato` con el modo fijado (8 líneas cada uno; delegan en `dato.md`)
-- `.claude/commands/investigacion.md` · `.claude/workflows/investigacion.js` · `.claude/agents/informe-redactor.md` (opus) · `.claude/agents/informe-revisor.md` (opus) — `/investigacion <tema|idea:<id>|desde:<slug>> [smoke|fixture]`: preflight (`make doctor`, `memoria.py --informes` da el N.º, banco de ideas) → Workflow `investigacion` (Encuadre con plan de capítulos → Investigación ⇢ Verificación (cierre con `verificacion.py`) → [auditoría: Rechequeo de compromisos → Puntaje] → Guion 6–12 tuits con bloque `investigacion` y cierre `[ENLACE AL INFORME]` → Rechequeo (ancla y T1) → Visuales → Producción del hilo en `investigacion/<fecha>-<slug>/hilo` → Informe (redactor: `informe.json` + `informe.py --check --png`, I1–I7/P1–P5) → Revisión (revisor: «¿de dónde sale cada número, barra y afirmación?», V1–V8 con `scripts/revision.py` y sus avisos R1–R6; el redactor corrige las faltas que bloquean, ≤ 3 vueltas; si quedan, `incompleto`) → Cierre (PDF al entregable, `memoria.py --informe`, validate)) → post-checks; `desde:<slug>` salta a Relectura → Informe → Revisión → Cierre sobre un hilo ya entregado; `investigacion` es un **modo** de tipo `hilo` (tabla `MODOS` propia, W5 por unión con `hilo.js`); guías `referencias/flujo-investigacion.md`, `referencias/roles/redactor.md` (estructura canónica, presupuestos de página medidos, justificación, bucle de QA), `referencias/roles/revisor.md` (V1–V8, gravedad, arreglos) y «Modo investigación» en los demás roles
-- `.claude/commands/fecha.md` · `scripts/calendario.py` · `ideas/calendario.json` — `/fecha [hoy|fecha|id|texto] [smoke|fixture]`: calendario editorial (efemérides, días internacionales, publicaciones de fuentes; fechas `MM-DD` anuales, `DD` mensuales, `YYYY-MM-DD` puntuales) que despacha a `/dato` (con su modo) o `/hilo` y marca la entrada `hecha`; `/fecha buscar [mes]` lanza un `ideas-explorador` («Modo calendario» en `referencias/roles/explorador.md`) y `calendario.py --importar`
-- `.claude/workflows/hilo.js` — orquestación con schemas, presupuestos y gates en código; bucles de reparación; fail-fast si los agentes no están registrados
-- `.claude/agents/hilo-*.md` — los seis roles (opus: editor, investigador, guionista, productor; sonnet: verificador, visualista); cada uno apunta solo a su guía
-- `referencias/flujo-hilo.md` (índice) · `flujo-dato.md` (índice de /dato) · `contrato-sesion.md` (incluye «Sesión dato») · `narrativa.md` (arco, ganchos `hook_tipo`, dato héroe, dato único) · `roles/<rol>.md` (y `roles/<rol>-dato.md` para /dato en investigador, verificador, guionista y productor)
-- `referencias/promesas.md` (promesa y bisagra de /video, /historia y /explica: catálogo de formas `pregunta|presagio|apuesta|reloj|contradiccion|secreto`, nunca anunciar el video, rotación; gates P1–P4 en `video.py`) · `referencias/diseno/sistema.md` (estilo Noche de tarjetas y video: reglas, tokens, roles `--bg/--ink/--a1/--a2/--a3`, tipografía, grano, contraste; el interruptor de estilo; anatomía y checks R1–R6; apéndice «Estilo clásico» para /investigacion) · `diseno/graficos.md` (pregunta→gráfico, contrato `DATA`, flujo del visualista, checklist QA) · `diseno/brief/` (brief original)
-- `investigacion/` — informes: `base.html` (hoja Letter, `@page apaisada`), `paginas/*.js` (`PAGINAS.<tipo>`: portada, indice, resumen, tablero, capitulo banda|dividida|destacado, cuerpo, apaisada, cronologia, conclusiones, metodo, glosario, anexo, tarjetas (con `desde_hilo` se llena sola desde `hilo.json`), contraportada), `graficos/*.js` (`G.<tipo>` dibujados en el documento con el **mismo contrato `datos` que la tarjeta** (`graficos.md`), nombre kebab o snake; más `chispa`, `cuadros`, `comparacion`, `columnas`), `ejemplos/dengue-2026/` (`informe.json` + `salida/informe.pdf`), `ejemplos/catalogo/` (generado por `scripts/catalogo_informe.py`: todos los `G.*` en papel, panel y media página), `YYYY-MM-DD-<slug>/` (entregables de `/investigacion`); contrato en `referencias/diseno/informe.md`
-- `.claude/commands/video.md` · `.claude/workflows/video.js` · `.claude/agents/video-guionista.md` (opus) · `.claude/agents/video-critico.md` (opus) · `referencias/flujo-video.md` (índice, formato fijo, plataformas, gates V1–V13 y K2, costos) · `referencias/roles/video-guionista.md` · `referencias/roles/video-critico.md` (C1–C12, puntajes, gravedad; C11 = frases de plantilla contra «Frases ya usadas» de `memoria/videos.json`; C12 = flujo narrativo, puntaje `flujo`) — `/video <slug|ultimo> [corto|medio|largo] [musica:<id>] [fixture]`: el guion lo orquesta el Workflow `video` (`video-gancho` → gate `ganchos --check` R1–R10 → crítico en modo selección → guionista (`ganchos --usar`; PRIMERO la narración de corrido en 3 actos con las reglas de narración de /historia (`video.py narracion --check`), DESPUÉS repartida en escenas sin cambiar una palabra) → gate V1–V5, V9 + V17–V18 (narración literal por acto, conectores, aperturas, «según», referencias; secuencias de voz por acto) → oyente ingenuo (`historia-oyente` con `video.py oyente`) → crítico ≤ 2 vueltas; 0 créditos; catálogo, reglas y evidencia en `referencias/ganchos.md`, agente `.claude/agents/video-gancho.md` (opus) con guía `referencias/roles/video-gancho.md`) y la sesión principal hace el resto (la voz y Scribe salen del MCP de ElevenLabs); `scripts/video.py` (preparar → narracion --check → guion --check V1–V5, V9, V17–V18 → oyente → voz (un nodo por secuencia de voz) / descargar `--estado` (el JSON de estado del MCP → voz, palabras y créditos) → tiempos V16 (aprieta el silencio dentro de nombres y cifras), V6, V10 → escuchar V11 (whisper.cpp local, opcional: `make whisper`) → grabar V7, V13 zona segura → montar V8 → revisar (V12 quietud) → lo mismo en 4:5 → entregar (9:16 para TikTok, Reels y Shorts + 4:5 para el feed + `caption.md` por plataforma); `musica`, `voz-falsa`), `scripts/numeros_es.py` (cifras → palabras con género, `--prueba`), `scripts/video_grabar.js` (Playwright cuadro a cuadro → ffmpeg; `--paralelo N` escenas a la vez, clips idénticos a la serie), `scripts/video_animar.js` (V7), `scripts/sfx.py` (`--importar` una sola vez, `--check` = K2), `video/golpe.html` (gancho con visual cifra, golpes, definición y adivina) · `video/gancho.html` (gancho con visual llenado, pareja, figuras o lugar, sincronizado con la voz) · `video.py variante` (versión B con el segundo gancho: solo la voz de la escena 1) · `video/mapa.html` (escena mapa) · `video/ranking.html` · `video/escala.html` · `video/tiempo.html` (cuenta regresiva, escala humana con figuras y línea de tiempo a pantalla completa; `preparar` guarda los `DATA` de cada tarjeta en `video.json`) · `video/escena.html` (tarjeta en layout vertical con golpe arriba, zoom a la cifra y deriva) · `video/vertical.css` (la tarjeta sin titular ni handle, gráfico a todo el ancho) · `video/cierre.html` · `video/comun.css` + `video/comun.js` (hoja y módulo común `V` de todas las páginas de escena: fuentes, golpe de arriba, barra de progreso, subtítulos, carga de `escenas.json`, zona segura `V.zona()` y gate V13 `V.medirZona()`, chip o sello `V.chip({texto, tono, desde, pos})` (desde `escenas.json` con `chip` en la escena; el chip «Ejemplo» lo usa); una escena nueva los usa y escribe solo lo propio) · `video/explica.html` + `video/animaciones/` (escena «explica»: animación a medida que explica el mecanismo del fenómeno; biblioteca `<id>.js` + `catalogo.json` que escribe solo `scripts/animaciones.py` (`--check` lint, grabación doble, 4:5, A1 quieta entre pasos y A2 ningún paso antes de la voz (2026-11-07; el viejo «nunca quieto» salió); A3 en toda grabación: nada encima del rótulo de acto; V23 voz trabada en `tiempos`; `--registrar`, `--asignar`; K4; escena con `rotulos`, `sujeto` y `continua`); las escribe el agente `.claude/agents/video-animador.md` (opus, guía `referencias/roles/video-animador.md`) en la fase Animación del Workflow `video`; la biblioteca va **por mecanismo** (`cadena|ciclo|balance|onda|embudo|proporcion|umbral|cronologia|exponencial`, `MECANISMOS_EXPLICA` en `video.py`): la escena declara su `mecanismo` y su `brief`, solo reutiliza una animación de ese mismo mecanismo y no la de los últimos 2 videos (`frases.animaciones` en `memoria/videos.json`); si no hay, la escribe el animador y queda como plantilla; semillas `cadena`, `cronologia`, `onda-frenado`, `embudo-filtro`, `fraccion-espacios`, `tanque-balance`, `ciclo-vicioso`) · `video/animar.js` (animador propio para las 26 plantillas y `__caja` para el foco), `design/musica/` (biblioteca FIJA: 2 pistas por paleta, `catalogo.json`) · `design/sfx/` (biblioteca FIJA: 14 efectos, `catalogo.json`) · `design/iconos/` (biblioteca FIJA: 50 iconos Lucide con `scripts/iconos.py`, K3; `icono: "<id>"` en gancho, golpe y definición) · `video/portada.html` (portada de texto; todas las portadas se dibujan limpias con `video_grabar.js --portadas`)
-- `.claude/commands/noticias.md` · `.claude/workflows/noticias.js` · `.claude/agents/noticias-rastreador.md` (sonnet) · `noticias-verificador.md` (sonnet) · `noticias-editor.md` (opus) · `referencias/flujo-noticias.md` (índice, formato, reglas editoriales, gates N1–N8) · `referencias/roles/noticias-*.md` · «Modo noticiero» en `referencias/roles/video-critico.md` — `/noticias`: preparar (paleta del día) → Workflow `noticias` (3 rastreadores pol·seg·eco → preselección en código → un verificador por noticia: segunda fuente independiente u oficial, citas literales en el texto guardado, foto obligatoria: oficial → og:image del medio → de referencia (institución, lugar o persona, «Foto de referencia: …») → editor: 3–4 noticias, guion ≤ 70 s → crítico en modo noticiero) → QA de fotos → voz (MCP ElevenLabs, como `/video`) → tiempos → escuchar → grabar → montar → revisar (9:16 y 4:5) → entregar a `noticias/<fecha>/` (+ `fuentes.md`) → `memoria.py --noticias`; `scripts/noticias.py` (preparar, leer, candidatas N1, verificacion N2+N7, foto, consolidar, digesto, guion N3–N6+N8, tiempos, fotos-contacto, entregar; escribe el mismo TRABAJO que `/video` y reenvía voz, grabar, montar y revisar a `video.py`) · `video/noticia.html` (gancho con foto a sangre y noticia con foto, titular, cifra y fuente) · `sesiones/_fixture_noticias/` (maqueta: noticias de ejemplo; `make noticias-fixture`)
-- `.claude/commands/semana.md` · `scripts/semana.py` · `referencias/flujo-semana.md` (formato, cosecha, escenas, gates SM1–SM11, entrega) · «Modo semana» en `referencias/roles/noticias-{rastreador,verificador,editor}.md` y `video-critico.md` (SM-C1–SM-C6) — `/semana [YYYY-MM-DD] [sin-voz|fixture]`: preparar (domingo, ventana lunes→domingo, `ventana_dias: 6`, paleta y música fijas `PALETA_SEMANA`/`MUSICA_SEMANA`, `piso_s` 61, `palabra_clave`) → cosechar (los 7 `sesiones/noticias-<día>/noticias.json`: confirmadas con cifras, N2 rehecho, fuente fechada en la ventana, fotos copiadas; `cosecha.json` con días sin noticiero y descartes) → Workflow `noticias` con `modo: semana` (tabla `MODOS {diario, semana}`; rastreadores `ofi`·`sem`, verificación solo de lo nuevo: un dato oficial puede ir `confirmada` con su sola fuente oficial, SM3) → consolidar (cifras `sm-cNN`) → editor y crítico en «Modo semana» → voz, tiempos (`noticias.cmd_tiempos` con `puesto`, `chip` y `humana`; SM5 con `video.piso_duracion`, SM11 con `video.revisar_palabra_clave`), grabar, montar, revisar (9:16 y 4:5) → entregar a `semanas/<domingo>/` (`guion.json` con las 5 cifras, su valor, cita y url; `fuentes.md`) → `memoria.py --semana`; `semana.py carrusel` → TRABAJO de `/carrusel` con origen `semana` (`semana.base_carrusel`: las 5 cifras como láminas `texto`) y `carrusel.json` que pasa CA1–CA8; `video/noticia.html` con `S.N.puesto` (numeral) y `S.N.humana`; `video/cierre.html` con 5 líneas en un renglón · `sesiones/_fixture_semana/` (3 diarios de ejemplo con descartes, un dato oficial, guion fijo, `semanas.json` previo; `make semana-fixture`)
-- `.claude/commands/historia.md` · `.claude/workflows/historia.js` · `.claude/agents/historia-editor.md` (opus) · `historia-investigador.md` (sonnet) · `historia-verificador.md` (sonnet) · `historia-guionista.md` (opus) · `historia-oyente.md` (sonnet) · `referencias/flujo-historia.md` (índice, formato por actos, reglas de verdad y atribución, gates H1–H20, voz por secuencias, retoques) · `referencias/roles/historia-*.md` · «Modo historia» en `referencias/roles/video-{gancho,critico,animador}.md` — `/historia <tema> [sin-voz]`: preparar → Workflow `historia` (editor (actos, espina, hilos, personajes; `desde: encuadre` re-encuadra) → investigador ⇢ verificador por eje en pipeline, gate H1–H3 + H7 → consolidar (cronología + `base/`) → video-gancho en modo historia → crítico elige → guionista (narración de corrido → `narracion --check` H16–H19 → escenas), gate H3–H20 + V1–V5, V9, F1–F8 → oyente → crítico en modo historia (desde la vuelta 2, acotado a lo que cambió; los arreglos probados se aplican tal cual con `aplicar` y, si la última vuelta solo bloquea con ellos, queda aprobado; con «pasa», el guionista aplica sus mejoras y el oyente las vuelve a oír: se revierte solo la escena que confunde) → animador) → QA de fotos → voz (MCP, un nodo por secuencia, en lotes de ≤ 20 ids) o voz falsa → tiempos → escuchar → grabar → montar → revisar (9:16 y 4:5) → entregar a `historias/<fecha>-<slug>/` → `memoria.py --historia`; `scripts/historia.py` (preparar, leer (HTML, PDF, Wayback; lista cerrada de fuentes con prensa internacional, museos y la regla de agencias: una nota firmada por AP/EFE/Reuters/AFP cuenta como la agencia), commons, foto (licencia, sha1 (una imagen ya bajada devuelve su id), `--retrato-de`, `--encaje contener`), hechos (también `--reclasificar [--aplicar]`: `en_disputa` de un solo grupo → `una_fuente`), consolidar (funde fotos repetidas), digesto (también `--para editor`), ganchos, tarjetas, narracion (por acto: palabras, segundos, conectores, «según», primeras menciones, hilos; `--check` H16–H19), probar (el crítico prueba un arreglo en una copia: narracion + guion --check), aplicar (los mismos cambios en el TRABAJO real; restaura si el gate los rechaza), guion (también retrato verificado, foto en ≤ 2 escenas, chip sin año anterior a la foto, traducción de citas en otro idioma, ≤ 19 escenas, actos y rótulos, H15 narración literal, secuencias), voz (`--pendientes` por secuencia, `--sueltas`), partir (corta una secuencia en sus escenas con Scribe), tiempos, fotos-contacto, entregar (`fuentes.md`, `cronologia.md`); arma en `TRABAJO/base/` un hilo base (hilo.json, datos.json, tuit_N.html materializadas) y enchufa sus escenas en `video.py` por `CONSTRUCTORES`, `TRANSICION_DE` y `SIN_HUECO`) · `video/historia.html` (`cita` y `capitulo`; la escena `foto`, la escena `toma` (el clip cuadro a cuadro en un canvas, `S.N.toma`; `video_grabar.js` sirve `tomas/<id>/NNNNN.jpg`; su audio original lo mezcla `video.cmd_montar` desde `S.toma.wav` en la pista de voz; hooks `SEGUNDOS_EXTRA` y `EXTRA_OYENTE` en `video.py`) y el gancho con foto usan `video/noticia.html`) · `video/animaciones/cronologia.js` · `sesiones/_fixture_historia/` (maqueta inventada con fuentes de ejemplo guardadas; `make historia-fixture`)
-- `scripts/build_vias.py` · `design/vias/<id>.fuente.json` → `design/vias/<id>.json` · `video/vias.html` · `scripts/escena_prueba.py` · `sesiones/_fixture_escenas/` — la escena **`vias`** de /historia y /serie (2026-11-12): el mapa vial REAL de una ciudad (OpenStreetMap, ODbL; se baja una vez por Overpass con caché en `sesiones/_descargas/vias/` y queda en el repositorio: el video no llama a la red; pie «Mapa: © colaboradores de OpenStreetMap») animado por `capas`, una por frase de la voz (arterias que crecen por su trazo real con `nivel` y `sentido`, `lugar` con aro, rótulo y `etiqueta`, `cifra` + `rotulo`, `burbuja` por valor, `riel`, cámara con `zoom`/`acerca`); tipo propio en `historia.TIPOS_PROPIOS` (constructor `t_vias`, gate **H27** `revisar_vias`, línea del digesto `lineas_vias`, oyente en `pantalla_de`), claves `red_vial` y `capas` en V24, espejo W12 en `historia.js`, `video_grabar.js` sirve `vias/<id>.json`; `escena_prueba.py <tipo>` arma un caso con el constructor real sobre voz falsa y mide pureza (dos grabaciones), 4:5, V13, A3 y A1 → `sesiones/_escenas/<tipo>-<caso>/contacto.png`; red disponible: `capital` (7 arterias, 7 lugares, vía de tren)
-- `video/{lupa,deptos,pagina,cortina,archivo,bandos}.html` · `historia.py pagina` — las demás **escenas con archivos reales** de /historia y /serie (2026-11-12; mismas piezas que `vias`: tipo propio, constructor `t_<tipo>`, gate `revisar_<tipo>`, `lineas_archivo` en el digesto, `pantalla_de`, V24, W12, casos en `sesiones/_fixture_escenas/<tipo>.json` para `escena_prueba.py`): **`lupa`** (H28: una foto real que se interroga con `puntos` {dice, x, y, etiqueta}; estilo `puntos` con cámara y velo, o `pistas` para un objeto), **`deptos`** (H29: los 22 departamentos por `capas` con `deptos`, `arco`, `onda`, `zoom` y el dato de arriba; geometría de `geometria.js`), **`pagina`** (H30: la página real de un PDF ya leído con la frase subrayada en su sitio; `historia.py pagina <TRABAJO> --id --url|--pdf --frase` saca la imagen y la caja de cada renglón con poppler → `TRABAJO/paginas.json`; el marcador sigue a la voz), **`cortina`** (H31: antes y ahora con dos fotos), **`archivo`** (H32: piezas reales por frase en estilo `tira`, `capas`, `mesa`, `conteo` o `barras`) y **`bandos`** (H33: las personas del encuadre toman partido en dos columnas, con `umbral` opcional); `vias` admite `carrera {arteria, veces}` en una capa; ayudantes comunes en `historia.py` (`entradas_dice`, `revisar_dice`, `numeros_pantalla`, `foto_de`, `cerrar_escena`, `ESCENAS_ARCHIVO`); orquestación: la directiva del guionista en `historia.js`, su digesto y su guía las nombran, el editor, el investigador y el verificador saben qué archivos pedir y bajar («Archivos…» en sus roles), el crítico las juzga en «Modo historia» (¿el archivo es la prueba o adorno?), sus fotos cuentan en H7/H7b y en SE19 y salen en `fuentes.md` (`fotos_de_archivo`), y `/youtube-long` enlaza las páginas de documento
-- `.claude/commands/sabias.md` · `scripts/sabias.py` · `referencias/flujo-sabias.md` · «Modo sabías» en `referencias/roles/video-critico.md` (SQ-C1–C5) — `/sabias <slug|ultimo|pista> [sin-voz|fixture]`: preparar (arma en `TRABAJO/base/` un hilo de una tarjeta desde `dato.json`, rearma la tarjeta en Noche, elige la música y escribe el digesto) → guion escrito por la sesión → `sabias.py guion --check` (S1 estructura gancho → dato → apoyo → cierre de una pantalla, S2 gancho «¿Sabías que…?» con «Guatemala» en su primera oración, S3 rotación del visual y el apoyo contra `memoria/sabias.json`; más V1–V5, V9, F1–F8 de `video.py`, enchufados como `/historia`) → crítico → voz (MCP) o voz falsa → tiempos → escuchar → grabar → montar → revisar (9:16 y 4:5) → entregar a `datos/<fecha>-<slug>/video/` → `memoria.py --sabias`; `video/cierre.html` sin `resumen` = una sola pantalla · `sesiones/_fixture_sabias/` (guion fijo sobre el dato de prueba; `make sabias-fixture`)
-- `.claude/commands/explica.md` · `.claude/workflows/explica.js` · `.claude/agents/explica-editor.md` (opus) · `explica-investigador.md` (sonnet) · `explica-verificador.md` (sonnet) · `explica-guionista.md` (opus) · `referencias/flujo-explica.md` (índice: dramaturgia en tres actos, números de ejemplo, escenas, gates E1–E12) · `referencias/roles/explica-*.md` · «Modo explica» en `referencias/roles/video-{gancho,critico,animador}.md` e `historia-oyente.md` — `/explica <tema> [corto|medio|largo] [sin-voz|fixture]`: preparar → Workflow `explica` (editor (pregunta, intuicion, mecanismo + mecanismo_frase, leyenda de color, glosario, ejemplos, anclas, revelaciones) → investigador ⇢ verificador por eje, gate E2 → consolidar (la calculadora) → video-gancho en modo explica → crítico elige → guionista (narración de corrido → escenas con `cuenta`, `definicion`, `explica`, `escala`, tarjetas, rótulos de acto, secuencias) → oyente con `explicacion_devuelta` → crítico (E-C1–E-C7, ≤ 2 vueltas acotadas, arreglos probados) → mejoras → animador) → ejemplos → voz por secuencias (MCP) o voz falsa → tiempos → escuchar → grabar → montar → revisar (9:16 y 4:5) → entregar a `explicaciones/<fecha>-<slug>/` → `memoria.py --explica`; `scripts/explica.py` (preparar, leer (→ historia.py), encuadre E1, afirmaciones E2, consolidar + ejemplos (la calculadora: `MODELOS` compuesto, simple, aporte_periodico, regla72, tasa_real, cuota, porcentaje, proporcion, producto → cifras `ej-cNN` en `base/datos.json` y `ejemplos.json`), digesto, ganchos, narracion E9, tarjetas, guion E3–E12 + V1–V5, V9, F1–F8 (marca en `locucion.json` las escenas con números de ejemplo: chip «Ejemplo»), probar, aplicar, tiempos (constructor de la cuenta, rótulo de acto), entregar (`fuentes.md`, `ejemplos.md`); enchufa en `video.py` el tipo `cuenta`, las familias del explicador y la estructura E5) · `video/cuenta.html` (la pizarra: renglones «a op b = r» al ritmo de la voz, resaltado en acento, saldo, fuente) · chip «Ejemplo» en `video/comun.js` (`S.ejemplo`) · `video/animaciones/bola-nieve.js` (semilla del mecanismo `exponencial`) · `sesiones/_fixture_explica/` (maqueta del interés compuesto con fuentes de ejemplo; `make explica-fixture`)
-- `.claude/commands/congreso.md` · `scripts/congreso.py` · `video/hemiciclo.html` · `referencias/flujo-congreso.md` · `referencias/congreso/{captura.js,captura.md,diputados.json}` · «Modo congreso» en `referencias/roles/video-critico.md` — `/congreso`: captura con Chrome (`CG.correr({desde|padron|fotos|textos|pdfs})` → textarea → `pbpaste`) → `importar` (CG1, coteja lo ya importado) / `padron` → `proponer` → `preparar <iniciativa> [--semilla DIR]` (votación decisiva: redacción final > único debate > tercer debate; urgencia aparte; `votacion.json`, `votos_ley.csv`, `base/datos.json` con `cg-cNN`, digesto con bancadas, cruzados y notoriedad) → `leer` (notas y PDFs capturados → `sesiones/_descargas/congreso/`, foto oficial `ley-fNN`) → `ley.json` + `ley --check` (CG2; sus `cifras` `ley-cNN` pasan a datos.json) → `fotos` (retratos `dip-<id>`, caché `design/diputados/`) → guion de la sesión → `guion --check` (CG3–CG10 + V1–V5, V9, F1–F8; enchufa `hemiciclo`, `foto`, `cita` y el gancho con `mini` en video.py) → crítico → voz → `tiempos` (CG7) → grabar/montar/revisar (9:16 y 4:5) → `entregar` → `memoria.py --congreso`; `sesiones/_fixture_congreso/` (la Ley de Ciberseguridad, iniciativa 6347; `make congreso-fixture`)
-- `.claude/commands/carrusel.md` · `scripts/carrusel.py` · `scripts/carrusel.js` · `templates/carrusel/lamina.html` + `carrusel.css` · `referencias/flujo-carrusel.md` (índice, anatomía, gates CA1–CA12, plataformas) — `/carrusel <slug|ultimo|carpeta> [9:16] [fixture]`: preparar (resuelve el hilo con `video.resolver_hilo` o el dato con `sabias.resolver_dato`/`hilo_base`, exige `listo|publicado`, `video.rebasar_tarjetas` → `TRABAJO/tarjetas/`, digesto) → `carrusel.json` escrito por la sesión → `guion --check` CA1–CA8 (estructura portada → tarjeta|texto → porque → cierre, palabras, palabra clave con `video.revisar_palabra_clave` sin voz, cifras con `video.sin_respaldo` + `calculo`, fuente, prohibido, captions y alt, rotación de `portada_forma`) → `render [--formato 4:5|9:16]` (Playwright en un origen ficticio; la tarjeta en un iframe con `video/vertical.css`, encajada como en `video/escena.html`; CA9 lienzo, CA10 miniatura y zona segura, CA11 un acento y sin hex, CA12 pie; `contacto.js --prefijo lamina_`) → entregar a `<original>/carrusel/` (PNG, `9x16/`, `carrusel.json`, `caption.md`, `alt.md`) → `memoria.py --carrusel`; TRABAJO = `sesiones/<slug>/carrusel/` · `sesiones/_fixture_carrusel/` (`carrusel.json` sobre el hilo de prueba, `carrusel_dato.json` sobre el dato; `make carrusel-fixture`)
-- `scripts/mesa.py` · `scripts/video_hf.py` · `referencias/flujo-mesa.md` · `design/vendor/gsap-3.15.0.min.js` — la **mesa de archivo**: `mesa.py` es el núcleo común (plano con `dice` → segundos y mesas, gates sobre datos con `ctx["reglas"]` por formato, clase `Mesa`, dibujo de cada pieza, mapas, páginas de documento); `youtube_hf.py` es el 16:9 (medidas, colocación libre, capítulos) y `video_hf.py` el vertical de /historia y /serie (9:16 y 4:5: `borrador`, `digesto`, `plano --check --hoja` MV1–MV14, `tableros`, `proyecto`, `revisar`, `audio`, `render`, `montar`, `portada`, `contacto`, `piloto`, `importar-plano`; colocación por regla con repliegue, cabecera, subtítulos, «Sígueme», cierre con logos, bucle; pieza `red`); `video.py` despacha `plano`, `grabar`, `montar` y `revisar` según `realizacion` (`MESA_FLUJOS`, `es_mesa`); `.claude/workflows/plano.js` + `.claude/agents/video-realizador.md` (opus) + `referencias/roles/video-realizador.md` = el paso «Plano» tras la voz; GSAP local (sin red en el render); `MESA_RENDER=0` en las maquetas; `sesiones/_fixture_mesa/` se genera con `make video-fixture-mesa`
-- `.claude/commands/youtube-long.md` · `.claude/workflows/youtube.js` · `.claude/agents/youtube-editor.md` (opus) · `.claude/agents/youtube-realizador.md` (opus) · `scripts/youtube.py` · `scripts/youtube_hf.py` · `referencias/flujo-youtube.md` · `referencias/roles/youtube-editor.md` · `referencias/roles/youtube-realizador.md` · «Modo largo» en `referencias/roles/{historia-oyente,video-critico}.md` — `/youtube-long`: `preparar` (serie completa y entregada con su voz final → `youtube.json`, `indice.json` (escenas Pk.eN y frases Pk.eN.fM con tiempos), `repeticiones.json`, `montaje.borrador.json`) → Workflow `youtube` (editor → `montaje --check` YT1–YT8, YT11 → oyente → crítico ≤ 2 vueltas con `probar`/`aplicar`; para en `aprobar_montaje`) → `resumen` (lo aprueba el usuario) → `voz [--falsa]` (arma `nuevas/`: un TRABAJO de /historia con solo las piezas nuevas; nodos para el MCP) → `video.py descargar <T>/nuevas` → `tiempos` → `armar` (escenas unidas, `recortar_escena` corre los tiempos y `recortar_audio` corta el mp3; fotos, tarjetas (`tuit` = parte·100 + n); escucha YT6 con whisper; `plano.borrador.json`) → Workflow con `desde: "plano"` (un `youtube-realizador` por capítulo → `plano_<N>.json`) → `plano --check --hoja` (YT13–YT19, `scripts/youtube_hf.py`) → `grabar` (solo los tableros `explica` y `tarjeta` → `clips_tablero/`) → `proyecto` (HyperFrames, `hf/cap-N/`) → `revisar` (check + hojas de contacto) → `audio` (voz, `musica_por_capitulo`, efectos del plano, −14 LUFS, srt, capítulos) → `render` (`--workers 1` por capítulo) → `montar` → `miniatura` (`video/miniatura.html`, YT10) → `entregar` (YT11, `caption.md` con capítulos, `fuentes.md` por capítulo) → `memoria.py --youtube`; `sesiones/_fixture_youtube/` (la parte 1 de La Espiga dos veces + montaje fijo; `make youtube-fixture`)
-- `.claude/commands/video-3d.md` · `scripts/video3d.py` · `scripts/maqueta3d.py` · `scripts/maqueta_blender.py` · `scripts/build_set3d.py` · `video/maqueta/` · `design/sets3d/` · `design/vendor/three-0.187.0/` · `referencias/flujo-video3d.md` · `referencias/diseno/maqueta3d.md` · «Modo 3D» en `referencias/roles/video-critico.md` — `/video-3d`: `video3d.py preparar <slug> --tema … --musica-tema T [--desde <pieza>]` → investigación y verificación de lo que falte, geodatos incluidos (`datos --sumar`) → `digesto` → `ganchos --check --cuadros --clips` (5 candidatos de familias `ruptura|caida|revelacion|escala|contraste|recorrido`, el usuario elige) → `ganchos --usar` → `guion --check` (C3D1–C3D11 concordancia, V2–V4, y `maqueta3d.py check` M3D1–M3D11 en 9:16 y 4:5; escribe `locucion.json` con la forma de /video y `maqueta.json` con cada `dice` en su segundo) → `storyboard` → crítico en «Modo 3D» → voz (los comandos `voz`, `voz-falsa`, `descargar`, `partir` se reenvían a `video.py`) → `tiempos` → `render` → `montar` (voz, música del tema con ducking, efectos de los eventos, −14 LUFS) → `entregar` → `memoria.py --video3d`; `maqueta3d.py` (`check`, `cuadro`, `proyecto`, `render`, `pieza --lienzo WxH` para alojarla en otro flujo, `estilos`, `sets`, `prueba`) despacha por el motor del estilo (three.js en HyperFrames con `--workers 1`, o Blender sin ventana con `maqueta_blender.py`); `build_set3d.py <set>` baja una vez los geodatos (relieve de Mapzen Terrain Tiles, fallas de GEM, frontera de Natural Earth, lugares de OpenStreetMap, con su `fuente.json`); `design/sets3d/estilos.json` = el catálogo de los ocho estilos; en la mesa: `mesa.py` (`revisar_maquetas`, `maqueta_json`, `grabar_maquetas`), `video_hf.py maquetas`, `youtube_hf.py maquetas`; `sesiones/_fixture_video3d/` (`make video3d-fixture`) y `sesiones/_fixture_serie/parte-1/mesa_maqueta.json` (`make video-fixture-maqueta`)
-- `.claude/commands/agenda.md` · `scripts/agenda.py` — `/agenda`: `plan [--desde] [--memoria] [--dir]` (inventario de los registros cruzado con `memoria/metricas.json`; `listas`, `incompletas`, `calendario_en`, `series_publicables`, `departamento_siguiente`, `mezcla` por `metricas.rendimiento --por flujo`; conserva lo de antes de `desde` y lo que tiene tema, está producido o publicado) → `tema SLOT "<tema>"` (AG4) → `producido SLOT --ruta` → `publicado SLOT [--plataforma]` → `hoy` (archivos 9:16/4:5 y bloques de `caption.md`) · `--check` AG1–AG9 (M18 en `validate.py`, solo semanas sin terminar); `sesiones/_fixture_agenda/memoria` (registros congelados; `make agenda-fixture`)
-- `.claude/commands/serie.md` · `scripts/serie.py` · `referencias/flujo-serie.md` · «Modo serie» en `referencias/roles/{historia,explica}-{editor,guionista}.md` — `/serie <tema> [3-5] [explica]`: `preparar` (serie.json + TRABAJO `sesiones/serie-<slug>`) → Workflow `historia` o `explica` con `args.serie {partes}` y `hasta: "consolidar"` (el editor escribe `encuadre.serie.partes`; `plan --check` SE1–SE2, versionado) → `cobertura --check` (consolidar + SE3) → plan aprobado (`plan --aprobar`) → por parte: `parte SERIE N` (`<TRABAJO>/parte-N`: investigación copiada, encuadre de la parte, `video.json` con formato `historia-serie`/`explica-serie`, piso 61, paleta y música de la serie, `serie.siguiente`; `historia.consolidar` deja fuera lo posterior a su periodo → `reservados`) → Workflow con `desde: "ganchos"` y `args.serie {parte, de, titulo, siguiente}` → `guion-aprobado` → voz, tiempos, render → `entregar-parte` (→ `series/<fecha>-<slug>/parte-N`, `serie.md` con qué publicar) → `memoria.py --serie`; `historia.aplicar_formato` (FORMATOS: OBJETIVO_S, PALABRAS, HILOS, HECHOS_MIN por formato), H17 `pasa_a`, chip «Parte N de M» en `post_historia`/`post_explica`, «Parte N+1 · título» en `video/cierre.html` (`escenas.json → serie`), forma de cierre `puente` en `video.CIERRE_FORMAS` (F1); W12 vigila `EJES_MAX_SERIE` y `PALABRAS_SERIE`; `sesiones/_fixture_serie/` y `sesiones/_fixture_serie_explica/` (`make serie-fixture`, `make serie-explica-fixture`)
-- `.claude/commands/analyze-improve.md` · `scripts/metricas.py` · `referencias/flujo-analisis.md` · `referencias/analisis/{captura,benchmarks,publicacion}.md` — `/analyze-improve`: captura con Chrome (TikTok: lista + analítica por video en un iframe, curva por segundo de los props de React; YouTube: «se quedaron viendo» y tiempo medio; Facebook: tabla de la Biblioteca de contenido; Instagram: tarjetas + `/api/v1/media/<id>/info/`; el JSON sale por textarea → `cmd+a cmd+c` → `pbpaste`) → `metricas.py importar` (snapshots fechados, `memoria/metricas.json`) → `vincular` (fecha −1…+6 días, duración ±6 s, palabras del título; `--fijar`/`--ajena`) → `alinear <pieza>` (escenas de `escenas.json` o del guion entregado; pérdida relativa por segundo) → `diagnostico` AN1–AN12 (`--mejoras` escribe el borrador para `memoria.py --mejoras`) → `rendimiento --por familia|visual|cierre|animacion|flujo`; `video.lineas_rendimiento_real()` pone «Rendimiento real» en los digestos de `video.py`, `historia.py` y `explica.py`; `video.reglas_r14` (R14) en `reglas_gancho` de video e historia (sabias exento); capturas crudas en `sesiones/_analisis/<fecha>/`; `sesiones/_fixture_analisis/` (`make analisis-fixture`)
-- `design/tokens.json` (bloque `noche` de tarjetas y video: `fondo`, `fondo_acto2`, `fondo_golpe`, `acento` y `serie` por paleta, `texto` crema; `paletas` clásicas con `papel_tinta`/`papel_barra` y bloque `documento` para informes) · `design/fonts/` (woff2 locales; `archivo-wdth.woff2` con eje de ancho para la condensada) · `design/mapa_geometria.svg` (22 departamentos)
-- `templates/base.html` (anatomía + helpers `H.*`; `body[data-estilo="noche"]` con su grano, `.cifra-heroe`, `H.estilo`, `H.fuenteCifra`, `H.medirCifra`) · `templates/graficos/*.html` (26 plantillas con `DATA` de ejemplo) · `templates/.pruebas/` · `templates/hilo.html` · `templates/dato.html` (vista previa de un dato)
-- `scripts/` — cada script documenta su uso en `--help`; aquí, para qué sirve:
-  - producción: `materializar.py` (guion → tarjetas) · `render.js` (HTML→PNG, R1–R6, fuentes según el estilo) · `ensamblar.py` (sesión → entrega, gate G1–G10; G9 = `verificacion.py` sobre las cifras de cada tarjeta, G10 = números del texto) · `redes.py` (cada tarjeta del hilo en 4:5 y 9:16 → `redes/`, con el motor de `/carrusel` y sus checks CA9–CA12) · `contacto.js` · `contar_x.py/.js` (peso X) · `nuevo_visual.py` (`--estilo noche|clasico`) · `build_mapa.py`
-  - verificación: `verificacion.py` (V-A la cita, el archivo local o `calculo` contienen el número, con redondeo, escala y números de prensa; V-B una ajustada no deja valores viejos; V-C independencia; V-D antigüedad; V-E completitud; cierre del verificador)
-  - insumos de agentes: `digesto.py` (`--para <rol>`, `--serie ID`) · `fuentes.py` · `revision.py` (digesto del revisor con avisos R1–R6)
-  - descargas: `fetch_tabla.py` · `fetch_pdf.sh` · `fetch_api.py` · `tabla.py` · `indice_descargas.py` (caché en `sesiones/_descargas/`)
-  - informe: `informe.py` (informe.json → HTML + PDF, I1–I7; I7 con la tolerancia de `verificacion.py`) · `render_informe.js` (P1–P5) · `catalogo_informe.py` · `fuentes_ruta.js`
-  - auditoría: `auditoria.py` (inventario → `evaluacion_<eje>.json` → `--validar` (observado ↔ cifras, `existe_desde`) → `--calcular` (`aud-cNN`) → `--insertar` fichas → `--justificar` J1–J5; reglas en `referencias/flujo-investigacion.md` «Variante auditoría»; `make auditoria-rehacer`)
-  - registros: `memoria.py` · `ideas.py` · `calendario.py` · `costo.py`
-  - mantenimiento: `check_workflows.py` (W1–W12) · `armar_workflows.py` (copia `scripts/workflow_comun.js` en cada workflow, `video.js` incluido) · `validate.py` · `test.sh` · `doctor.sh`
-- `memoria/fuentes.json` (fuentes con notas de acceso + `series[]`) · `memoria/hilos.json` (registro de hilos) · `memoria/datos.json` (registro de datos de /dato) · `memoria/informes.json` (registro de informes de /investigacion, con su N.º) · `memoria/videos.json` (registro de videos de /video) · `memoria/noticias.json` (registro de noticieros de /noticias) · `memoria/historias.json` (registro de historias de /historia) · `memoria/sabias.json` (registro de los «¿Sabías que…?» de /sabias) · `memoria/congreso.json` (registro de los videos de /congreso; M19) · `memoria/explicaciones.json` (registro de videos de /explica; M12) · `memoria/carruseles.json` (registro de carruseles de /carrusel; M14) · `memoria/semanas.json` (registro de «Las 5 cifras de la semana» de /semana; M15) · `memoria/mejoras.json` (mejoras al framework que encontró cada video; M11); los registros los escribe `memoria.py`
-- `ideas/banco.json` (banco de ideas; lo escribe `ideas.py`) · `ideas/README.md` (índice generado) · `ideas/calendario.json` (calendario editorial; lo escribe solo `calendario.py`)
-- `sesiones/<slug>/` (memoria de trabajo; `_ideas/` propuestas de los exploradores; `_fixture/` sesión de prueba de hilo (con `informe.json` de ejemplo para `make informe-fixture`); `_fixture_dato/` sesión de prueba de /dato; `_fixture_auditoria/` auditoría de prueba (2 semillas, 8 compromisos); `_descargas/` caché con `indice.json`) · `hilos/` (entregables de /hilo) · `datos/` (entregables de /dato) · `investigacion/<fecha>-<slug>/` (entregables de /investigacion) · `noticias/<fecha>/` (entregables de /noticias) · `historias/<fecha>-<slug>/` (entregables de /historia)
+Las guías están en `referencias/`. Sufijos comunes: `sin-voz` (voz falsa, 0 créditos, sin entrega), `fixture` (la maqueta
+del flujo, sin web ni créditos: `make <flujo>-fixture`) y `smoke` (corrida corta con web). Los mp4 quedan fuera de git.
+`/noticias` y `/semana` se retiraron el 2026-11-14 (el usuario no publica noticieros); queda el histórico en `noticias/`
+y `memoria/noticias.json`.
 
 ## Reglas de oro
 
-1. **Ninguna cifra `no_confirmada` aparece en el hilo.** Solo `verificada|ajustada`, y manda `valor_final` (y `serie_final`/`partes_final`: el valor original de una ajustada ya no respalda nada). Cada cifra lleva evidencia (url + cita + archivo local) y, si es derivada, `calculo`; el verificador parte de ella, busca segunda fuente por niveles (completa para ancla, derivadas y comparaciones) y cierra con `scripts/verificacion.py` en 0 fallas; tras el guion, un **rechequeo** adversarial revisa lo que sostiene la conclusión. No inventar, extrapolar ni redondear lo que la fuente no redondea.
-2. **Los agentes no leen JSON de sesión enteros ni código**: usan `scripts/digesto.py`, `scripts/fuentes.py` y los límites que llegan en su directiva. Presupuestos por rol (búsquedas, fetch, cifras, lecturas de PNG) en `referencias/roles/`.
-3. **`guion.json` es la fuente de verdad de las tarjetas.** Los visuales se regeneran con `scripts/materializar.py`; nadie edita `tuit_N.html` a mano. Los visualistas escriben solo `tuit_N.ajuste.json`; consolida el productor, único escritor de `guion.json` desde entonces.
-4. **Cero dependencias externas en las tarjetas** (ni `https://` ni emoji). Fuentes tipográficas desde `design/fonts/`; colores solo por variables (ningún hex en plantillas, páginas de escena ni animaciones). El pie lleva siempre «Fuente: …» y el handle. **Sin Playwright MCP** (descargas con `make tabla`/`make pdf`/`fetch_api.py`, cacheadas).
-5. **Una paleta por hilo** (o por dato), elegida por tema en el encuadre. El **estilo** no se elige: tarjetas y videos en **Noche** (fondo de la paleta casi negro con grano fijo, texto crema, una sola cosa en acento, Archivo condensado para cifras, nombres y años, sin Instrument Serif); `/investigacion` (informe y tarjetas de su hilo) en clásico (`materializar.py` por `guion.modo`; `informe.py` rearma clásicas las tarjetas Noche que copia; `referencias/diseno/sistema.md`). T1 siempre con texto (40–280 de peso X, sin enlaces, gancho `hook_tipo`); los demás pueden ir sin texto; con imagen ≤ 200; el texto nunca repite la tarjeta (dato héroe). Los **modos** no crean tipos nuevos: `guion.tipo` es `hilo` o `dato` y `guion.modo` (`MODOS` en `ensamblar.py`, tabla `MODOS` en cada workflow; `investigacion` es un modo de `hilo` que vive en `investigacion.js`) fuerza gancho, plantillas y gates; G1 rechaza tipos y modos desconocidos y `scripts/check_workflows.py` mantiene las constantes alineadas. En el informe, `grafico.tipo` y `datos` siguen el **mismo contrato que la tarjeta** y I2 coteja cada número con las cifras.
-6. Los gates viven en código (`hilo.js`, `ensamblar.py --check` G1–G8, `render.js --check` R1–R6 y las fuentes de su estilo, `validate.py` M3 el contraste Noche); los checks Noche sobre `contacto.png` son del QA visual y del productor. Un hilo que no pasa C1–C8 se entrega marcado `incompleto`, nunca como `listo`.
-7. El agente nunca publica en X. `memoria/` la escribe solo `scripts/memoria.py` desde el productor (`hilos.json` en /hilo, `datos.json` en /dato, según `guion.tipo`; `informes.json` con `--informe` en /investigacion; `noticias.json` con `--noticias` en /noticias; `historias.json` con `--historia` en /historia; `sabias.json` con `--sabias` en /sabias; `congreso.json` con `--congreso` en /congreso; `explicaciones.json` con `--explica` en /explica; `carruseles.json` con `--carrusel` en /carrusel; `semanas.json` con `--semana` en /semana; `series.json` con `--serie` en /serie; `youtube.json` con `--youtube` en /youtube-long; `videos3d.json` con `--video3d` en /video-3d; `mejoras.json` con `--mejoras` al cerrar cada video y en /analyze-improve; nunca en smoke/fixture; la excepción es `memoria/metricas.json`, que escribe solo `scripts/metricas.py`); `ideas/banco.json` lo escribe solo `scripts/ideas.py` (también vía `memoria.py`, que marca `hecha` la idea del `idea_id` del encuadre; `/dato` no toca el banco) e `ideas/calendario.json` solo `scripts/calendario.py` (`/fecha` lo marca al cerrar).
-8. Al terminar cualquier corrida: `make validate` sale 0; `make costo` mide la corrida.
-9. **`/video` nunca genera música ni efectos** (solo `design/musica/catalogo.json` y `design/sfx/catalogo.json`; la música se elige por **tema** (`temas` de cada pista, `musica_tema` del encuadre, H8m), no por color; la biblioteca solo crece cuando el usuario lo pide: 6 pistas de corrupción, política y justicia el 2026-11-09; la paleta sale del tinte del tema (H8p) y dos escenas seguidas nunca repiten imagen (H7b)); su
-   locución pasa V2 (como G10: cada número con respaldo en `datos.json` o en un `calculo` declarado) y su estructura V9
-   (gancho elegido entre candidatos de familias distintas que cumple R1–R14 de `referencias/ganchos.md` (legible en silencio, sujeto reconocible y nunca solo la cifra en pantalla (R14, medido con `/analyze-improve`), cifra con referente, sin abrir con contexto, «Guatemala» en ≤ 6 s sin prefijo automático, «hoy» solo con datos del año, familia y visual que no repiten los de los últimos videos) y voz en oración con verbo, `verbo` en gancho y golpes; promesa pagada en el último tercio, enlaces «pero / por eso», golpes ≤ 6
-   palabras, ritmo ≤ 6 s); el crítico de retención aprueba el guion antes de gastar créditos; voz, formato y cierre
-   fijos en `referencias/flujo-video.md`. La promesa es una oración propia que abre una pregunta de la historia y **nunca anuncia el
-   video** («al final», «vas a ver», «quédate»: P2), con una `forma` del catálogo de `referencias/promesas.md` que rota
-   entre piezas (P1, P3); una **bisagra** re-engancha justo antes del giro (P4); y
-   ninguna frase de plantilla se repite entre videos (C11 contra `memoria/videos.json`); todo lo visible queda en la
-   zona segura de TikTok, Reels y Shorts (V13); la voz nunca se corta, estira ni pausa dentro de un nombre propio, una
-   sigla o una cifra para casar con la pantalla: `tiempos` aprieta el silencio que ElevenLabs metió ahí (V16) y cada video sale en 9:16 y 4:5 con un caption por plataforma. En una escena `adivina`, la opción correcta lleva respaldo y las otras dos son
-   señuelos de juego, no cifras (exentas de V2).
-10. **Al final de cada video** (/video, /noticias, /historia, /explica) el reporte termina con «Mejoras al framework» (o
-   «ninguna»): lo que se trabó o se hizo a mano, con el archivo y el cambio propuesto; se registran con
-   `memoria.py --mejoras` en `memoria/mejoras.json` y no se aplican sin que el usuario lo pida. En /historia y /explica,
-   el crítico prueba cada arreglo de texto con `historia.py probar` (o `explica.py probar`) antes de escribirlo.
+1. **Ninguna cifra `no_confirmada` aparece en una pieza.** Solo `verificada|ajustada`, y manda `valor_final` (y
+   `serie_final`/`partes_final`: el valor original de una ajustada ya no respalda nada). Cada cifra lleva evidencia (url
+   + cita + archivo local) y, si es derivada, `calculo`; el verificador busca segunda fuente por niveles y cierra con
+   `scripts/verificacion.py` en 0 fallas; tras el guion, un **rechequeo** adversarial revisa lo que sostiene la
+   conclusión. No inventar, extrapolar ni redondear lo que la fuente no redondea.
+2. **Los agentes no leen JSON de sesión enteros ni código**: usan los digestos (`scripts/digesto.py`, `<flujo>.py
+   digesto`), `scripts/fuentes.py` y los límites de su directiva. Presupuestos por rol en `referencias/roles/`; un rol
+   con modos lee su núcleo y **solo el archivo de su modo** (`referencias/roles/<rol>/<modo>.md`).
+3. **`guion.json` es la fuente de verdad.** Las tarjetas se regeneran con `scripts/materializar.py`; nadie edita
+   `tuit_N.html` a mano. Los visualistas escriben solo `tuit_N.ajuste.json`; consolida el productor, único escritor de
+   `guion.json` desde entonces. En video, un guion aprobado se cambia con `aplicar` o con un retoque del Workflow, nunca
+   a mano.
+4. **Cero dependencias externas en lo que se renderiza** (ni `https://` ni emoji). Fuentes tipográficas desde
+   `design/fonts/`; colores solo por variables (ningún hex en plantillas, páginas de escena ni animaciones). El pie
+   lleva siempre «Fuente: …» y el handle. **Sin Playwright MCP** (descargas con `make tabla`, `make pdf`,
+   `fetch_api.py`, cacheadas).
+5. **Una paleta por pieza**, elegida por tema. El **estilo** no se elige: tarjetas y videos en **Noche**;
+   `/investigacion` en clásico (`referencias/diseno/sistema.md`). T1 siempre con texto (40–280 de peso X, sin enlaces,
+   gancho `hook_tipo`); con imagen ≤ 200; el texto nunca repite la tarjeta. Los **modos** no crean tipos: `guion.tipo`
+   es `hilo` o `dato` y `guion.modo` (tabla `MODOS` en cada workflow, espejo en `ensamblar.py`) fuerza gancho,
+   plantillas y gates; `scripts/check_workflows.py` mantiene las constantes alineadas.
+6. **Los gates viven en código** (los workflows, `ensamblar.py --check`, `render.js --check`, `validate.py`,
+   `<flujo>.py guion --check`, `plano --check`), sobre los datos y nunca sobre píxeles. Una pieza que no pasa su gate
+   de coherencia se entrega `incompleto`, nunca `listo`.
+7. **El agente nunca publica.** `memoria/` la escribe solo `scripts/memoria.py` (un registro por flujo; nunca en
+   smoke ni fixture), salvo `memoria/metricas.json`, que escribe solo `scripts/metricas.py`. `ideas/banco.json` lo
+   escribe solo `scripts/ideas.py`, `ideas/calendario.json` solo `scripts/calendario.py` y `agenda/` solo
+   `scripts/agenda.py`.
+8. **Al terminar cualquier corrida**: `make validate` sale 0; `make costo` mide la corrida y, en un video, `costo.py
+   --registrar` la guarda en `memoria/costos.json` (de ahí salen las medianas que usa `/agenda`).
+9. **Los videos nunca generan música ni efectos**: solo `design/musica/catalogo.json` y `design/sfx/catalogo.json`; la
+   música se elige por **tema** y la biblioteca crece solo cuando el usuario lo pide. Cada número de la locución tiene
+   respaldo (V2). El guion pasa la estructura de retención (V9): un gancho que cumple R1–R14 de
+   `referencias/ganchos.md` (se lee en silencio, sujeto reconocible, «Guatemala» en ≤ 6 s, voz ≤ 6 s con verbo, medida también
+   sobre la voz real; familia y visual que rotan **sobre todo el feed**, no por flujo); una promesa que abre una pregunta de la historia, **nunca anuncia el video** («al final», «vas
+   a ver», «quédate») y se paga en el último tercio, con su bisagra antes del giro (`referencias/promesas.md`, P1–P6);
+   ninguna frase de plantilla repetida entre videos (C11); un cierre que dice la consecuencia y no anuncia el final
+   (`referencias/cierres.md`, F1–F9). El **crítico de retención aprueba el guion antes de gastar créditos**. Todo lo
+   visible queda en la zona segura (V13); la voz nunca se corta, estira ni pausa dentro de un nombre, una sigla o una
+   cifra (V16); cada video sale en 9:16 y 4:5 con un caption por plataforma.
+10. **Al final de cada video** el reporte termina con «Mejoras al framework» (o «ninguna»): lo que se trabó o se hizo a
+    mano, con el archivo y el cambio propuesto. Se registran con `memoria.py --mejoras` y **no se aplican sin que el
+    usuario lo pida**. El crítico prueba cada arreglo de texto con `probar` antes de escribirlo.
+11. **El usuario elige el gancho y el cierre de cada video** entre 5 opciones distintas, o dicta el suyo. Los workflows
+    se detienen tras la selección (`veredicto: "elegir_gancho"`) y devuelven 5 `cierres` antes de la voz; el crítico
+    solo recomienda (`args.auto` deja su recomendación).
 
-11. **El usuario elige el gancho y el cierre de cada video** (2026-11-03) entre 5 opciones distintas, o dicta el suyo:
-   los workflows `video`, `historia` y `explica` se detienen tras la Selección (`veredicto: "elegir_gancho"`; la sesión
-   pregunta, corre `ganchos --elegir <id>` y reanuda con `args.gancho` o `args.gancho_usuario`) y devuelven `cierres` (5 en
-   `cierres.json`) que la sesión pregunta antes de la voz (`cierres --usar <id>` o `--propio`); en `/sabias` la sesión
-   propone las 5 y 5. El crítico solo recomienda; `args.auto` deja su recomendación.
+## Decisiones del usuario
 
-## Comandos
+Mandan sobre el criterio de cualquier agente. La fecha dice desde cuándo; la guía trae el detalle y sus gates.
 
-| Comando | Qué hace |
-|---|---|
-| `/hilo [explica\|perfil] [tema] [smoke\|fixture]` | Produce un hilo completo (Workflow multi-agente). `smoke` = corta con web; `fixture` = sin web, solo guion → visuales → productor (hilo con giro) |
-| `/explica <tema> [corto\|medio\|largo] [sin-voz\|fixture]` | Un concepto, un proceso o una regla explicado en video vertical de ~2 min + 4:5, para que quien lo vea pueda explicárselo a otro: tres actos (la pregunta y la idea equivocada, el mecanismo, en tu vida con datos de Guatemala), la pizarra `cuenta`, animación del mecanismo, números de ejemplo calculados por el script con el chip «Ejemplo» (Workflow `explica`, ~15–30 min; voz ≈ 1,700 créditos en medio); entrega en `explicaciones/<fecha>-<slug>/`; `make explica-fixture` = la maqueta del interés compuesto sin web ni créditos. El hilo en modo explica (3–6 tarjetas, sin giro) es `/hilo explica` |
-| `/departamento <nombre\|siguiente\|tablero> [corto\|medio] [sin-voz\|fixture]` | Serie de 22 videos «<depto> frente al país»: `/perfil` con el canon de dimensiones → `/video` con mapa, ranking en ventana y gates D1–D9 (≥ 61 s); `tablero` muestra el avance; `make departamento-fixture` = la maqueta de Huehuetenango sin web ni créditos |
-| `/perfil <departamento o grupo>` | Retrato del sujeto frente al país en 5–8 tarjetas sin giro; cada dimensión compara sujeto y país en la misma fuente y año (= `/hilo perfil`) |
-| `/ideas [n] [enfoque]` | Busca temas con datos descargables y los añade a `ideas/banco.json` (1–3 exploradores sonnet, ~5–10 min) |
-| `/dato [vs\|mapa\|antes] [pista] [smoke\|fixture]` | Un dato impactante en UNA tarjeta 1080×1080 con texto y alt-text (4 agentes `hilo-*`, ~8–15 min). La pista (tema, ángulo, fuente o corazonada) es opcional: sin ella el investigador elige un dato de actualidad. `smoke` = corta con web; `fixture` = sin web, solo productor sobre `sesiones/_fixture_dato` (dato simple) |
-| `/vs [pista]` | Guatemala frente a otros países en una tarjeta: todos de la misma fuente, edición y periodo; Guatemala destacada; sin «ganamos/perdemos» (= `/dato vs`) |
-| `/mapa [pista]` | Brecha por departamento: mapa de los 22 con extremos, tasa per cápita con denominador INE, gancho `brecha_territorial` (= `/dato mapa`) |
-| `/antes [pista]` | Hace N años frente a hoy: misma serie y fuente a ≥5 años, gancho `antes_despues`, dinero corriente declarado (= `/dato antes`) |
-| `/investigacion [tema\|idea:<id>\|desde:<slug>] [smoke\|fixture]` | Informe de investigación en PDF (14–30 páginas) + hilo de 6–12 tuits cuyas tarjetas son figuras del informe (Workflow de 7 fases con el agente `informe-redactor`, ~45–70 min). `desde:<slug>` escribe solo el informe sobre un hilo ya entregado; `smoke` = 1 eje y 8–12 páginas en staging; `fixture` = sin web sobre `sesiones/_fixture` |
-| `/fecha [hoy\|fecha\|id\|texto]` | Pieza atada a una fecha del calendario editorial; sin argumento lista los próximos 30 días; `buscar [mes]` propone entradas nuevas con un explorador. Despacha a `/dato` o `/hilo` y marca la entrada `hecha` |
-| `/video <slug\|ultimo> [corto\|medio\|largo] [musica:<id>] [fixture]` | Video vertical narrado de un hilo entregado (~2 min por defecto, 1 o 4): Workflow `video` (ganchos `video-gancho` + selección y crítica `video-critico` + guionista `video-guionista`, 0 créditos) y luego voz El Faraon 4 (ElevenLabs MCP, ≈ 1 crédito por carácter) + animación local con zoom, ducking y efectos fijos; entrega en `hilos/<fecha>-<slug>/video/` un 9:16 para TikTok, Reels y Shorts, un 4:5 para el feed y `caption.md` por plataforma |
-| `/noticias [hoy\|YYYY-MM-DD] [sin-voz\|fixture]` | Resumen diario de noticias de Guatemala en video vertical de ≤ 70 s + 4:5: rastreadores, verificador por noticia, editor y crítico (Workflow `noticias`), fotos con crédito, cierre con «Sígueme en»; voz El Faraon 4 (≈ 850 créditos) y entrega en `noticias/<fecha>/` (registro en `memoria/noticias.json`); `sin-voz` = voz falsa sin créditos ni entrega; `make noticias-fixture` = la maqueta sin web ni créditos |
-| `/semana [YYYY-MM-DD] [sin-voz\|fixture]` | «Las 5 cifras de la semana en Guatemala» (modo semana de `/noticias`), cuenta regresiva 5→1 en 62–90 s + 4:5, para el domingo: cifras de las noticias ya confirmadas en los diarios de lunes a domingo (cosecha) y datos oficiales nuevos, paleta y música fijas de marca, gates SM1–SM11; voz El Faraon 4 (≈ 1,200 créditos), entrega en `semanas/<domingo>/` (registro en `memoria/semanas.json`) y su carrusel con `semana.py carrusel`; `make semana-fixture` = la maqueta sin web ni créditos |
-| `/historia <tema> [sin-voz]` | (Dibujado por la mesa de archivo desde el 2026-11-14: tras la voz, paso «Plano» con el Workflow `plano`.) Un evento o una historia de Guatemala de principio a fin en video vertical de 2–3 min + 4:5: editor (tres actos y espina, hilos, personajes), investigador y verificador por eje (cuatro veredictos), gancho elegido por el crítico, guionista (primero la narración de corrido, luego escenas foto, cita, tarjetas y animaciones con rótulos de acto y secuencias de voz), oyente ingenuo y crítico en modo historia que puntúa `flujo` (Workflow `historia`, ~20–40 min; `desde: encuadre\|guion\|retoque`); voz El Faraon 4 por secuencia (≈ 1,800–2,600 créditos) y entrega en `historias/<fecha>-<slug>/` (registro en `memoria/historias.json`); `sin-voz` = voz falsa sin créditos ni entrega; `make historia-fixture` = la maqueta sin web ni créditos |
-| `/sabias <slug\|ultimo\|pista> [sin-voz\|fixture]` | El clásico «¿Sabías que en Guatemala…?» de un dato de `/dato` en video vertical de 20–30 s + 4:5: gancho «¿SABÍAS QUE…?» con la cifra y su visual, la tarjeta Noche con zoom, un apoyo opcional y cierre de una pantalla con «Sígueme en»; guion de la sesión con gate S1–S3 y crítico en «Modo sabías»; voz El Faraon 4 (≈ 300–450 créditos), entrega en `datos/<fecha>-<slug>/video/` (registro en `memoria/sabias.json`); una pista corre `/dato` primero; `sin-voz` = voz falsa sin entrega; `make sabias-fixture` = la maqueta sin web ni créditos |
-| `/congreso [<iniciativa N>\|<tema>] [sin-voz\|fixture]` | Una ley del Congreso en menos de un minuto (9:16 + 4:5): qué buscaba, votos a favor y en contra frente al umbral (81; 107 en urgencia), hasta 3 diputados por lado de partidos distintos con su retrato; hemiciclo animado con portal desde el gancho; votos del registro nominal oficial capturado con Chrome; gates CG1–CG10; voz ≈ 700–900 créditos; entrega en `congreso/<fecha>-<slug>/`; sin argumento propone; `make congreso-fixture` = la Ley de Ciberseguridad sin web ni créditos |
-| `/carrusel <slug\|ultimo\|carpeta> [9:16] [fixture]` | Carrusel de 5–10 láminas 4:5 (Instagram, Facebook) + 9:16 (TikTok, modo foto) desde un hilo o un dato entregados: portada con cifra y título legibles en miniatura, tarjetas del original rearmadas en Noche con golpe, «Por qué importa» y cierre con «Guárdalo» y «Sígueme en»; texto escrito por la sesión, gates CA1–CA12, 0 créditos; entrega en `<original>/carrusel/` (registro en `memoria/carruseles.json`); `make carrusel-fixture` = la maqueta sobre el hilo y el dato de prueba |
-| `/agenda [hoy\|semana\|AAAA-MM-DD] [replan]` | El content manager: de hoy al domingo, qué se publica cada día (≤ 2 videos: una pieza fuerte a las 09:00 y una corta a las 19:30, sin noticieros; carrusel aparte; en Facebook un estilo de descripción que rota), en qué plataforma y a qué hora, y qué producir para cada espacio (comando, día, créditos); los temas los elige el usuario; `hoy` = la lista del día con archivos y captions; gates AG1–AG9; `make agenda-fixture` = la semana del 4 al 8 de noviembre sobre registros congelados |
-| `/serie <tema> [3-5] [explica] [sin-voz\|fixture]` | (Motor historia: cada parte la dibuja la mesa de archivo, con su paso «Plano» tras la voz.) Un tema en 3–5 partes de ≈ 90 s (9:16 + 4:5) con una investigación compartida y un plan versionado; motor /historia (por periodos) o /explica (temario); cada parte sola, cierre puente hacia la siguiente, «Serie · Parte N de M»; gates SE1–SE9, M16; entrega en `series/<fecha>-<slug>/parte-N`; `make serie-fixture` / `make serie-explica-fixture` = las maquetas sin web ni créditos |
-| `/youtube-long <serie\|ultima> [sin-voz\|fixture]` | Una serie entregada → UN video largo 16:9 de YouTube (8–20 min). Un montaje quita lo que se repite al pegar las partes (ganchos y cierres, hechos contados otra vez, personas y siglas presentadas otra vez), une los capítulos con 1–2 oraciones sin anunciar y reutiliza la voz grabada (solo se graban las uniones y la promesa, ≈ 600–1,000 créditos). El usuario aprueba el montaje y la miniatura. Rótulos de capítulo, música por capítulo, pantalla final, `caption.md` con capítulos, `.srt` y fuentes. Mesa de archivo en HyperFrames: con cada oración entra una pieza que la voz nombra (paso Plano). Gates YT1–YT19 y M20; `make youtube-fixture` = la maqueta sin web ni créditos |
-| `/video-3d <tema\|desde:<pieza>> [sin-voz]` | La maqueta que vuela: un video vertical 100 % en 3D (9:16 + 4:5, 45–75 s) para temas donde el lugar es la información. Un solo estilo por video entre ocho (three.js o Blender sobre HyperFrames), gancho = evento 3D en el cuadro cero, cada toma en una frase de la voz (C3D1–C3D11, M3D1–M3D11); el usuario elige gancho (5 clips) y cierre; voz ≈ 700 créditos en 45 s; render ≈ 1.7× la duración por formato con three.js; entrega en `videos3d/<fecha>-<slug>/` (M21); `make video3d-fixture` = la maqueta corta sin créditos |
-| `make video-fixture-maqueta [FPS=10]` | Una mesa de archivo con una maqueta 3D dentro (la parte 1 de la maqueta de /serie): gates MV15–MV19, clip real con `maqueta3d.py pieza`, 9:16 en HyperFrames y 4:5 |
-| `make video-fixture-mesa [FPS=10]` | La mesa de archivo de punta a punta con render real: la parte 1 de la maqueta de /serie por los comandos de siempre (plano MV1–MV14 → grabar → montar → revisar), 9:16 en HyperFrames y 4:5 sin render |
-| `/analyze-improve [plataformas] [desde:AAAA-MM-DD] [solo-diagnostico\|fixture]` | Mide las piezas publicadas en TikTok, YouTube, Instagram y Facebook (Chrome, solo lectura), alinea la retención con las escenas, detecta AN1–AN12, busca en la web cómo resolverlos y propone mejoras con evidencia (no las aplica sin el usuario); `make analisis-fixture` = 3 piezas reales sin Chrome ni web |
-| `make video-fixture [FPS=10]` · `make musica` · `make whisper` · `make iconos` | `/video` de prueba sin créditos (voz falsa, 55 s) en `sesiones/_fixture_video/salida`; catálogo de música y sus usos; el modelo de whisper.cpp para la escucha V11 (una vez; antes `brew install whisper-cpp`); la biblioteca fija de iconos (una vez) y su check K3 |
-| `make escenas-prueba [TIPO=vias] [CASO=zoom]` · `python3 scripts/build_vias.py <id> [--check]` · `python3 scripts/historia.py pagina <TRABAJO> --id ID --url URL --frase «…»` | Las escenas con archivos reales de /historia grabadas con su constructor sobre los casos de `sesiones/_fixture_escenas/` (pureza, 4:5, V13, A3, A1; sin sesión ni créditos); la red vial de una ciudad desde OpenStreetMap a `design/vias/`; la página de un PDF ya leído con la caja de cada renglón de una frase (para la escena `pagina`; necesita poppler) |
-| `make informe DIR=<carpeta> [PAL=paleta]` · `make informe-ejemplo` · `make informe-fixture` · `make informe-catalogo` | Informe de investigación desde `informe.json`: gates I1–I7 (cifras con `id` contra `datos.json`), PDF Letter en `<carpeta>/salida/` y checks P1–P5; el ejemplo de dengue, el fixture de 8 páginas y el catálogo de gráficos del informe |
-| `make test [RAPIDO=1]` | Pruebas: validate, catálogo, fixture, negativos de gate (incluidos tipo, modo y V9 de video), vectores de peso X, informe de ejemplo (PDF + negativos I1–I6, P1, P2), fixture de video, sintaxis de los workflows, `check_workflows.py` (W1–W12) |
-| `make doctor` | Comprueba node, Playwright, python, fuentes, agentes y workflow |
-| `make costo [RUN=wf_xxx]` | Tokens, herramientas y tiempo por agente de una corrida |
-| `make catalogo [PALETAS=todas]` | Ensambla y renderiza todas las plantillas + pruebas de estrés |
-| `python3 scripts/materializar.py sesiones/<slug> [--tuit N] [--consolidar]` | Guion → tarjetas |
-| `python3 scripts/ensamblar.py sesiones/<slug> --check` | Sesión → carpeta de entrega + gate G1–G8 + `contacto.png` |
-| `make digesto SESION= [PARA=]` · `make fuentes TEMA=` | Insumos compactos para agentes |
-| `make ideas` · `python3 scripts/ideas.py --siguiente\|--ver ID\|--marcar ID --estado E [--hilo H] [--nota N]\|--conciliar\|--excluir` | Banco de ideas (`--excluir`: lo producido y el banco, etiquetado, para `/ideas`) |
-| `make calendario [DIAS=30]` · `python3 scripts/calendario.py --proximas\|--dia F\|--ver ID\|--buscar T\|--importar DIR\|--marcar ID --estado E [--pieza R]` | Calendario editorial de `/fecha` |
-| `python3 scripts/memoria.py --datos ["tema"]` · `--informes ["tema"]` | Datos ya publicados por /dato, o informes de /investigacion con el siguiente N.º (el más reciente primero; con tema, filtrados) |
-| `python3 scripts/memoria.py --mejoras ARCHIVO` · `--ver-mejoras [pendiente]` · `--marcar-mejora ID --como hecha` | Mejoras al framework de cada video: registrar las del reporte, listarlas, cerrarlas |
-| `make validate` · `make limpiar [SESION=]` · `make contacto DIR=` | Utilidades |
-| `make tabla URL=` · `make pdf URL=` · `python3 scripts/tabla.py` | Descargas oficiales cacheadas y agregación de CSV |
+- **Nunca «en suma»** en hilos, datos ni informes; la sección de cierre se titula «Conclusiones» (G2, I3).
+- **Sin cara, voz El Faraon 4** (`eleven_multilingual_v2`, cifras en palabras), barra de progreso, «Sígueme en» en el
+  cierre, 9:16 + 4:5 (`flujo-video.md`).
+- **2026-10-26 · /historia**: el gancho nombra al protagonista y lleva su foto (obligatoria, H10–H12); foto de
+  referencia con su crédito, **nunca un icono**; cierre `legado`: lo que la gente hace hoy con lo que la historia dejó.
+- **2026-10-27 · narración de corrido primero**: el guionista escribe la narración por actos y luego la reparte en
+  escenas sin cambiar una palabra; la voz se graba por secuencias; atribución hablada solo para lo contestado, los
+  alegatos y las citas (`flujo-historia.md`; desde entonces también en `/video` y `/explica`).
+- **2026-10-28 · estilo Noche** para tarjetas y videos; `/investigacion` queda en clásico (`diseno/sistema.md`).
+- **2026-11-02 · la promesa nunca anuncia el video**; sus formas rotan (`promesas.md`).
+- **2026-11-03 · el usuario elige gancho y cierre** (regla 11). **Sin noticieros.** Con la primera medición
+  (`/analyze-improve`): R14 (sujeto reconocible), voz del gancho ≤ 6 s, escena 2 ≤ 12 s (P5), el cierre no anuncia el
+  final y su voz va de 160 caracteres para abajo (F9), `caption.md` en bloques para copiar (`flujo-analisis.md`).
+- **2026-11-04 · cada hilo entrega `redes/`** (4:5 y 9:16 por tarjeta, H4). Los hilos explicativos llevan contexto:
+  fecha, actor, cita y consecuencia por tuit (`flujo-hilo.md`).
+- **2026-11-05 · /serie**: la parte que no es la última cierra con un puente y la voz invita («Sígueme: en la segunda
+  parte…»); desde la parte 2, «Empieza por la Parte 1 · fijada en mi perfil» (SE8–SE9, `flujo-serie.md`).
+- **2026-11-07 · cámara quieta**: la imagen cambia cuando cambia el tema, nunca por reloj. **Sin tomas de video**: una
+  declaración va como cita leída por la voz. Las animaciones no hacen nada antes de la voz (A2) y quedan quietas entre
+  pasos (A1). La última parte de una serie lleva su resumen final (SE14).
+- **2026-11-08 · /youtube-long es un montaje**, no un guion nuevo: escenas ya verificadas y grabadas, con solo las
+  uniones y la promesa grabadas de nuevo; el usuario aprueba el montaje y la miniatura (`flujo-youtube.md`).
+- **2026-11-09 · en una serie cada parte trae lo nuevo** (SE15–SE16) y ninguna parte se graba hasta revisar la serie
+  completa (SE17). **Color y música por tema**, no por costumbre (H8p, H8m); dos escenas seguidas nunca repiten imagen
+  (H7b).
+- **2026-11-10 · recompensa y tensión**: «Sígueme» a mitad del video (V25); la pregunta de la promesa sale en pantalla
+  **solo en el pago** (P6); cada tercio abre o paga algo (H25); una foto fija ≤ 12 s (H26). «Revisa y mejora» incluye
+  mejoras generales.
+- **2026-11-12 · «interactivo» = escenas con archivos reales** (mapa vial de OpenStreetMap, fotos que se interrogan,
+  páginas de documentos, departamentos), no controles para el espectador (`flujo-historia.md`).
+- **2026-11-13 · dinamismo = entra en pantalla lo que la voz nombra**; nunca mover la cámara ni escalar una escena para
+  aparentar ritmo. Un piloto antes de rehacer algo grande.
+- **2026-11-14 · todo video vertical va en mesa de archivo** (abajo). **/video-3d**: three.js o Blender sobre
+  HyperFrames (Remotion quedó fuera); **un solo estilo por video**, lo elige el orquestador entre ocho y pregunta si no
+  está seguro; dentro de la maqueta la cámara sí se mueve; el gancho es un evento 3D en el cuadro cero y cada toma nace
+  en una frase de la voz; los geodatos se verifican como las cifras; «Maqueta · no a escala» es opcional
+  (`flujo-video3d.md`).
 
-Prueba sin agentes: `python3 scripts/materializar.py sesiones/_fixture && python3 scripts/ensamblar.py sesiones/_fixture --check` → abre `sesiones/_fixture/salida/hilo.html`. Para `/dato`: `python3 scripts/materializar.py sesiones/_fixture_dato && python3 scripts/ensamblar.py sesiones/_fixture_dato --check` → abre `sesiones/_fixture_dato/salida/dato.html`. Para el informe (tras el fixture de hilo): `make informe-fixture` → abre `sesiones/_fixture/informe/informe.pdf`.
+## La mesa de archivo
+
+El lenguaje de todos los videos menos `/video-3d` (`referencias/flujo-mesa.md`; motor HyperFrames: `scripts/mesa.py`,
+`video_hf.py` en vertical, `youtube_hf.py` en 16:9).
+
+- **Con cada oración entra una pieza que la voz nombra** (foto, recorte de prensa, página de documento, ficha de
+  persona o institución, lugar en el mapa, fecha, cifra con su rótulo, red de personas, barra) **y se queda quieta**.
+  La cámara no se mueve.
+- **Paso «Plano»**: después de la voz real (`tiempos`) y antes de `grabar`, el Workflow `plano` lanza al
+  `video-realizador`, que escribe `plano.json` y deja `<flujo>.py plano <TRABAJO> --check --hoja` en 0 (MV1–MV19; en
+  16:9, YT13–YT24). Lo que falle en pantalla se arregla en el plano, nunca en el guion ni en la voz.
+- **Lo que no tiene pieza propia va como tablero** (`cuenta`, `explica`, `tarjeta`, `ranking`, `mapa`, `escala`,
+  `tiempo`, `hemiciclo`, `vias`…), grabado limpio con el motor propio (`scripts/video_grabar.js`).
+- **Repliegue por corte** cuando la pieza que entra no cabe; nunca para dar ritmo, nunca animando la escala.
+- **Tiempo de lectura** (MV8): un texto queda al frente ≥ 0.5 s + 0.3 s por palabra que la voz no dice.
+- **Una maqueta 3D puede vivir dentro de una mesa** (bloque `maqueta` del plano; ≤ 2 por video vertical).
+- **Render con un solo proceso** (`--workers 1`: con varios el video tiembla) y un render a la vez. Un trabajo empezado
+  con un motor (`video.json → realizacion`) termina con él.
+- **De la voz al video en un comando**: `<flujo>.py producir <TRABAJO>` corre la cadena, se detiene con código 3 a
+  esperar el plano y reanuda donde quedó (`referencias/fragmentos/producir.md`).
+
+## Mantenimiento
+
+- Tras cualquier cambio: `make validate`, `python3 scripts/check_workflows.py`, `python3 scripts/armar_workflows.py
+  --check`, `python3 scripts/check_docs.py` y `make test RAPIDO=1` (sin `RAPIDO`, también los renders). `make doctor`
+  comprueba el entorno.
+- El código común de los workflows vive en `scripts/workflow_comun.js`; `armar_workflows.py` lo copia en cada uno.
+- Los agentes y los workflows se registran al arrancar Claude Code: tras crear o editar `.claude/agents/` o
+  `.claude/workflows/`, **reiniciar**. Si un Workflow falla con «agente no registrado», se reinicia; no se relanza con
+  `permitir_fallback` (triplica el contexto).
+- La voz sale del MCP de ElevenLabs con un solo protocolo: `referencias/fragmentos/voz-mcp.md`.
+- `make podar-intermedios` lista los intermedios de lo ya entregado (≈ 30 GB en `sesiones/`); solo borra con
+  `CONFIRMAR=1`, y eso lo decide el usuario.
+- Este archivo no pasa de ≈ 3,000 palabras (`check_docs.py`, D1): lo nuevo va a la guía de su flujo y a
+  `referencias/mapa.md`; aquí, a lo más una línea.
 
 ## Convenciones
 
-- **Nunca «en suma»** en hilos, datos ni informes (ni como título ni como conector): la sección de cierre del informe se titula «Conclusiones». Lo rechazan G2 (`ensamblar.py`) e I3 (`informe.py`).
-- Todo en español; nombres de archivo en minúsculas sin tildes. Scripts Python stdlib puro con `argparse`, `--help`; exit 0 ok · 1 fallo · 2 uso incorrecto.
+- Todo en español; nombres de archivo en minúsculas sin tildes. Scripts Python de stdlib pura con `argparse` y
+  `--help`; exit 0 ok · 1 fallo · 2 uso incorrecto (· 3 pausa por el plano en `producir`).
 - Las cifras en `visual.datos` van crudas y en la unidad de la fuente; el formato lo pone `datos.formato`.
-- Slug: minúsculas, sin tildes, guiones, sin fecha; la carpeta de entrega antepone la fecha (`hilos/` para hilos, `datos/` para datos); las rutas en retornos y memoria son relativas a la raíz.
-- Los agentes personalizados se registran al arrancar Claude Code: tras crear o editar `.claude/agents/` o `.claude/workflows/`, reiniciar (o usar `scriptPath`).
+- Slug: minúsculas, sin tildes, guiones, sin fecha; la carpeta de entrega antepone la fecha; las rutas en retornos y
+  memoria son relativas a la raíz.
+- `sesiones/<slug>/` es la memoria de trabajo (fuera de git salvo las maquetas `_fixture*`); `sesiones/_descargas/`
+  es la caché de descargas.

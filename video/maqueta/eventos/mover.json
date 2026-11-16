@@ -1,0 +1,34 @@
+{
+ "tipo": "mover",
+ "clase": "evento",
+ "cuando": "un actor va a otro lugar en el tiempo que dura (la ambulancia que llega, la persona que cruza)",
+ "parametros": {
+  "actor": {
+   "tipo": "pieza",
+   "requerido": true,
+   "descripcion": "el actor que se mueve (sobre su camino)",
+   "piezas": [
+    "actor"
+   ]
+  },
+  "a": {
+   "tipo": "lugar",
+   "requerido": true,
+   "descripcion": "a dónde llega (el punto de su camino más cercano a ese lugar), al final de `dur`"
+  }
+ },
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "ejemplo": {
+  "t": 1,
+  "dur": 3,
+  "tipo": "mover",
+  "actor": "mi-carro",
+  "a": "puente"
+ }
+}

@@ -1,0 +1,39 @@
+{
+ "tipo": "falla",
+ "clase": "pieza",
+ "cuando": "una falla geológica que se rompe o se desliza (un terremoto): la traza del set o una dibujada",
+ "parametros": {
+  "trazos": {
+   "tipo": "lista",
+   "requerido": false,
+   "descripcion": "nombres de trazos del set (design/sets3d/<set>/fallas.json → nombres); con `puntos`, al menos uno de los dos",
+   "capa": "fallas"
+  },
+  "puntos": {
+   "tipo": "puntos",
+   "requerido": false,
+   "min": 2,
+   "descripcion": "el trazo propio, [[lon, lat], …] (la traza publicada de una ruptura)"
+  },
+  "suave": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "suaviza los `puntos` con una curva (Catmull-Rom)"
+  }
+ },
+ "escalas": [
+  "pais"
+ ],
+ "motores": [
+  "three",
+  "blender"
+ ],
+ "ejemplo": {
+  "id": "motagua",
+  "tipo": "falla",
+  "trazos": [
+   "Motagua Fault"
+  ]
+ }
+}

@@ -15,19 +15,30 @@ Subcomandos:
                                   distribucion, trafico, hold {1,2,3,5,10,15,30,60}}}; la misma fecha reemplaza su snapshot.
                                   Solo este script escribe memoria/metricas.json.
   vincular [--fijar PUB FLUJO:ID] [--ajena PUB] [--dry-run]
-                                  liga cada publicación a una pieza de los registros (videos, historias, noticias, sabias,
-                                  explicaciones, semanas) por fecha (−1…+6 días), duración (±6 s) y palabras del título; lo
-                                  anterior al primer registro queda «ajena»; lo dudoso, «pendiente» (la sesión lo fija).
+                                  liga cada publicación a una pieza de los registros (videos, historias, sabias,
+                                  explicaciones, congreso, videos3d y el histórico de noticias) por fecha (−1…+6 días), duración (±6 s) y
+                                  palabras del título; lo anterior al primer registro queda «ajena»; lo dudoso, «pendiente»
+                                  (la sesión lo fija). Cada PARTE entregada de una serie (memoria/series.json) es una pieza
+                                  «serie:<serie>-parte-N» y cada largo de memoria/youtube.json, «youtube:youtube-<serie>»:
+                                  ventana de −1…+45 días; «Parte N» en el título decide la parte (otra parte queda
+                                  descartada) y, sin eso, la duración; dos publicaciones de una plataforma que casan con la
+                                  misma parte sin nombrarla quedan «pendiente»; un largo solo casa con su duración (±12 s).
   alinear PIEZA [--plataforma P] [--json]
                                   cruza la curva con las escenas (inicio = Σ(dur − transición) de escenas.json de la sesión o
                                   del guion.json entregado): retención al entrar y salir de cada escena y puntos perdidos por
-                                  segundo. PIEZA = slug, id o «flujo:id».
+                                  segundo. PIEZA = slug, id o «flujo:id». /video-3d: escenas de su guion.json con los cortes
+                                  de tiempos.json (entrega o TRABAJO) o de las palabras de maqueta.json, y los eventos y
+                                  claves de cámara de cada una; un largo de YouTube, por capítulos.
   diagnostico [--desde F] [--mejoras SALIDA] [--json]
                                   detectores AN1–AN12 (abajo) sobre las piezas vinculadas; --mejoras escribe el borrador
                                   {flujo: analisis, pieza, mejoras[]} para memoria.py --mejoras (la sesión lo edita antes).
-  rendimiento [--por familia|visual|cierre|animacion|flujo|estilo_fb] [--md]
-                                  mediana del hold a 3 s y del tiempo medio (TikTok, y YouTube «visto») por categoría;
-                                  video.py, historia.py y explica.py leen lineas_rendimiento() para el digesto.
+  rendimiento [--por familia|visual|cierre|animacion|flujo|duracion|promesa|plataforma|parte|estilo_fb] [--md]
+                                  mediana del hold a 3 s y del tiempo medio (TikTok, y YouTube «visto») por categoría, con
+                                  las vistas acumuladas y las vistas por día de vida (vistas ÷ días entre la publicación y
+                                  la captura, mínimo 1: lo que compara una pieza de 2 días con una de 10); duracion = tramos
+                                  < 35 s · 35–70 · 70–120 · > 120; promesa = la `forma` de la promesa; plataforma = cada
+                                  publicación en la suya; parte = el paso de una parte de serie a la siguiente;
+                                  video.py, historia.py, explica.py y video3d.py leen lineas_rendimiento() para el digesto.
   --check                         M17: el esquema de memoria/metricas.json (también lo corre validate.py).
 
 Detectores (cada uno nombra el archivo del framework que implica):
@@ -67,11 +78,19 @@ HOLD_S = (1, 2, 3, 5, 10, 15, 30, 60)
 TRANSICION = 0.3   # = video.TRANSICION (sin importar video.py: este script no depende del motor de video)
 # registro → (archivo, clave de la lista, flujo, campo de la ruta)
 REGISTROS = (("videos.json", "videos", "video", "ruta_video"), ("historias.json", "historias", "historia", "ruta"),
-             ("noticias.json", "noticieros", "noticias", "ruta"), ("sabias.json", "sabias", "sabias", "ruta"),
-             ("explicaciones.json", "explicaciones", "explica", "ruta"), ("semanas.json", "semanas", "semana", "ruta"),
+             ("noticias.json", "noticieros", "noticias", "ruta"),   # histórico: /noticias se retiró el 2026-11-14 (12 publicaciones medidas)
+             ("sabias.json", "sabias", "sabias", "ruta"), ("explicaciones.json", "explicaciones", "explica", "ruta"),
              ("congreso.json", "congreso", "congreso", "ruta"), ("videos3d.json", "videos3d", "video3d", "ruta"))
 VENTANA_DIAS = (-1, 6)       # publicada entre un día antes y seis después del registro
+# Las partes de /serie (memoria/series.json → una pieza por parte entregada, flujo «serie», id <serie>-parte-N: el mismo
+# que usa /agenda) y los largos de /youtube-long (memoria/youtube.json, flujo «youtube») se publican días o semanas
+# después de su registro (la parte N sale cuando la N+1 tiene el guion aprobado), y series.json no guarda la fecha de
+# cada parte: su ventana es más ancha y dentro de ella los días no restan
+VENTANA_SERIE = (-1, 45)
+SUELTAS = ("serie", "youtube")
 TOLERANCIA_DUR = 6.0         # s entre la duración publicada y la del registro
+TOLERANCIA_LARGO = 12.0      # un largo de YouTube solo casa con una publicación de su duración (nunca con un corto)
+TRAMOS_DURACION = ("< 35 s", "35–70 s", "70–120 s", "> 120 s")   # rendimiento --por duracion
 UMBRAL_AUTO, MARGEN_AUTO = 2.0, 1.0   # puntaje mínimo para vincular solo y ventaja sobre el segundo candidato
 STOP = set("de del la el los las en y a o que un una al lo se es su sus por para con como mas hoy datos dato video "
            "guatemala guatemalteco guatemalteca gt shorts fue era".split())
@@ -234,8 +253,78 @@ def piezas():
         for v in d.get(clave, []):
             out.append({"flujo": flujo, "id": v.get("id"), "slug": v.get("slug") or v.get("id"), "fecha": v.get("fecha"),
                         "tema": v.get("tema") or "", "duracion_s": v.get("duracion_s"), "ruta": v.get(campo),
-                        "frases": v.get("frases") or {}, "reg": v})
+                        "frases": v.get("frases") or frases_de_registro(v), "reg": v})
+    return out + piezas_de_series() + piezas_largos()
+
+
+def frases_de_guion(g):
+    """Las categorías de `rendimiento` leídas de un guion entregado: lo que memoria.py guarda en `frases` para los demás
+    flujos (las partes de serie y los largos no lo tienen en su registro)."""
+    gan, cie, pro = [g.get(k) if isinstance(g.get(k), dict) else {} for k in ("gancho", "cierre", "promesa")]
+    e1 = next((e for e in g.get("escenas") or [] if isinstance(e, dict)), {})
+    fr = {"familia": gan.get("familia"), "visual": gan.get("visual"), "cierre_forma": cie.get("forma"),
+          "promesa_forma": pro.get("forma"), "gancho": gan.get("texto") or e1.get("voz") or e1.get("texto"),
+          "animaciones": [e["animacion"] for e in g.get("escenas") or [] if isinstance(e, dict) and e.get("animacion")]}
+    return {k: v for k, v in fr.items() if v}
+
+
+def frases_de_registro(v):
+    """Un registro sin `frases` (videos3d.json guarda `gancho` y `cierre` como objetos) → las mismas categorías."""
+    return frases_de_guion({"gancho": v.get("gancho"), "cierre": v.get("cierre"), "promesa": v.get("promesa")})
+
+
+def piezas_de_series():
+    """Cada PARTE entregada de una serie (memoria/series.json) es una pieza: flujo «serie», id y slug <serie>-parte-N."""
+    out = []
+    for s in (leer(os.path.join(RAIZ, "memoria", "series.json")) or {}).get("series", []):
+        partes = [pt for pt in s.get("partes") or [] if isinstance(pt, dict)]
+        for pt in partes:
+            if pt.get("estado") != "entregada" or not pt.get("ruta") or not isinstance(pt.get("n"), int):
+                continue
+            g = leer(os.path.join(RAIZ, pt["ruta"], "guion.json")) or {}
+            pid = "%s-parte-%d" % (s.get("slug"), pt["n"])
+            out.append({"flujo": "serie", "id": pid, "slug": pid, "fecha": pt.get("fecha") or s.get("fecha"),
+                        "tema": "%s · %s" % (s.get("tema") or "", pt.get("titulo") or ""),
+                        "duracion_s": pt.get("duracion_s") or g.get("duracion_s"), "ruta": pt["ruta"],
+                        "frases": frases_de_guion(g), "serie": s.get("slug"), "parte": pt["n"], "de": len(partes),
+                        "claves": palabras(s.get("slug")) | palabras(s.get("tema")) | palabras(pt.get("titulo")),
+                        "reg": dict(pt, serie=s.get("slug"), motor=s.get("motor"), carpeta=s.get("carpeta"))})
     return out
+
+
+def piezas_largos():
+    """Cada video largo de /youtube-long (memoria/youtube.json): flujo «youtube», id youtube-<serie>."""
+    out = []
+    for v in (leer(os.path.join(RAIZ, "memoria", "youtube.json")) or {}).get("videos", []):
+        g = leer(os.path.join(RAIZ, v.get("carpeta") or "", "guion.json")) or {}
+        out.append({"flujo": "youtube", "id": v.get("id"), "slug": v.get("slug") or v.get("id"), "fecha": v.get("fecha"),
+                    "tema": "%s · %s" % (v.get("tema") or "", v.get("titulo") or ""), "duracion_s": v.get("duracion_s"),
+                    "ruta": v.get("carpeta"), "frases": frases_de_guion(g),
+                    "claves": palabras(v.get("slug")) | palabras(v.get("tema")) | palabras(v.get("titulo")), "reg": v})
+    return out
+
+
+ORDINAL = {"uno": 1, "una": 1, "primera": 1, "dos": 2, "segunda": 2, "tres": 3, "tercera": 3, "cuatro": 4, "cuarta": 4,
+           "cinco": 5, "quinta": 5, "seis": 6, "sexta": 6, "siete": 7, "septima": 7, "ocho": 8, "octava": 8}
+RE_PARTE = re.compile(r"\b(?:parte|pt\.?)\s*(\d{1,2}|%s)\b" % "|".join(ORDINAL))
+RE_PARTE_DE = re.compile(r"(?<![\d.,/])(\d)\s*(?:/|de)\s*(\d)(?![\d.,/])")
+
+
+def parte_del_titulo(t, de=None):
+    """El número de parte que nombra un título publicado: «Parte 3», «parte tres», «cuarta parte» o, solo si coincide con
+    el total de partes `de` de la serie, «3/7» y «3 de 7» (así «1 de 3 niños» no cuenta). → int o None."""
+    t = plano(t)
+    m = RE_PARTE.search(t)
+    if m:
+        return int(m.group(1)) if m.group(1).isdigit() else ORDINAL[m.group(1)]
+    m = re.search(r"\b(%s)\s+parte\b" % "|".join(k for k in ORDINAL if k.endswith("a") and k != "una"), t)
+    if m:
+        return ORDINAL[m.group(1)]
+    if de:
+        for m in RE_PARTE_DE.finditer(t):
+            if int(m.group(2)) == de and 1 <= int(m.group(1)) <= de:
+                return int(m.group(1))
+    return None
 
 
 def pieza_por(clave, ps=None):
@@ -251,14 +340,27 @@ def puntaje(pub, p):
     if not fp or not fr:
         return -1
     dias = (fp - fr).days
-    if not VENTANA_DIAS[0] <= dias <= VENTANA_DIAS[1]:
+    suelta = p["flujo"] in SUELTAS
+    ventana = VENTANA_SERIE if suelta else VENTANA_DIAS
+    if not ventana[0] <= dias <= ventana[1]:
         return -1
-    s = 1.0 - 0.4 * abs(dias)
+    s = 0.5 if suelta else 1.0 - 0.4 * abs(dias)
     if pub.get("duracion_s") and p.get("duracion_s"):
         dd = abs(pub["duracion_s"] - p["duracion_s"])
+        if p["flujo"] == "youtube" and dd > TOLERANCIA_LARGO:   # un corto (una parte, un teaser) nunca es el largo
+            return -1
         s += 2.0 if dd <= 2.5 else 1.0 if dd <= TOLERANCIA_DUR else -2.0
-    comunes = palabras(pub.get("titulo")) & (palabras(p["slug"]) | palabras(p["tema"]))
+    comunes = palabras(pub.get("titulo")) & (p.get("claves") or (palabras(p["slug"]) | palabras(p["tema"])))
     s += 1.5 * len(comunes)
+    # el número de parte del título: dos partes de la misma serie duran casi lo mismo y pueden salir el mismo día; lo
+    # único que las distingue es «Parte N» (y, si el título no lo dice, la duración: un empate queda «pendiente»)
+    if p["flujo"] == "serie":
+        n = parte_del_titulo(pub.get("titulo"), p.get("de"))
+        if n is not None and n != p.get("parte"):
+            return -1
+        s += 3.0 if n is not None else 0.0
+    elif parte_del_titulo(pub.get("titulo")) is not None:
+        s -= 2.0   # «Parte 3» en el título: es una parte de serie, no una pieza suelta ni el largo
     if p["flujo"] == "noticias":   # un noticiero se publica el mismo día que su fecha (su id)
         es_noticia = bool(re.search(r"noticia", plano(pub.get("titulo"))))
         s += (3.0 if dias == 0 else -3.0) if es_noticia else -2.0
@@ -301,6 +403,17 @@ def cmd_vincular(a):
             else:
                 cand = ["%s:%s (%.1f)" % (p["flujo"], p["id"], s) for s, p in orden[:3] if s >= 0]
                 x.update(pieza=None, vinculo="pendiente", candidatos=cand)
+        # una parte de serie tiene UNA publicación por plataforma: si dos casan solas con la misma parte y su título no
+        # dice «Parte N», lo más probable es que una sea la parte vecina (duran casi lo mismo): las dos quedan pendientes
+        dobles, de = {}, {p["id"]: p.get("de") for p in ps if p["flujo"] == "serie"}
+        for x in M["publicaciones"]:
+            pz = x.get("pieza") or {}
+            if (x.get("vinculo") == "auto" and pz.get("flujo") == "serie"
+                    and parte_del_titulo(x.get("titulo"), de.get(pz.get("id"))) is None):
+                dobles.setdefault((x["plataforma"], pz["id"]), []).append(x)
+        for (_, pid), xs in dobles.items():
+            for x in xs if len(xs) > 1 else []:
+                x.update(pieza=None, vinculo="pendiente", candidatos=["serie:%s (dos publicaciones sin «Parte N» casan con esta parte)" % pid])
     n = {v: sum(1 for x in M["publicaciones"] if x.get("vinculo") == v) for v in VINCULOS}
     for x in M["publicaciones"]:
         if x.get("vinculo") == "pendiente":
@@ -317,12 +430,70 @@ def cmd_vincular(a):
 
 
 # ---------- alineación ----------
+def escenas_3d(p):
+    """/video-3d (m194): las escenas del guion entregado con sus segundos reales. Los cortes salen de `tiempos.json` (el
+    de la entrega o el del TRABAJO, si es de la voz real y dura lo que la maqueta) o, si no hay, de las palabras de
+    `maqueta.json` (`capa.palabras`, repartidas por escena con las palabras de su `texto`); sin eso, por caracteres
+    (estimado). `en_3d` dice qué pasa en la escena: los eventos y cuántas claves de cámara caen en ella."""
+    ruta = p["ruta"] or ""
+    guion = leer(os.path.join(RAIZ, ruta, "guion.json")) or {}
+    maq = leer(os.path.join(RAIZ, ruta, "maqueta.json")) or {}
+    esc = [e for e in guion.get("escenas") or [] if isinstance(e, dict)]
+    total = float(maq.get("duracion_s") or guion.get("duracion_s") or p.get("duracion_s") or 0)
+    cortes, fuente = None, None
+    for c in (os.path.join(ruta, "tiempos.json"), "sesiones/video3d-%s/tiempos.json" % p["slug"]):
+        T = leer(os.path.join(RAIZ, c)) or {}
+        if T.get("real") and len(T.get("escenas") or []) == len(esc) and abs(float(T.get("total_s") or 0) - total) < 0.5:
+            cortes, fuente = [(float(x["off"]), float(x["off"]) + float(x["dur"])) for x in T["escenas"]], c
+            break
+    if cortes is None and esc:
+        ws = (maq.get("capa") or {}).get("palabras") or []
+        ns = [len(str(e.get("texto") or "").split()) for e in esc]
+        if ws and sum(ns) == len(ws):   # la capa lleva una ficha por palabra del texto: la escena empieza en su primera palabra
+            ini, k = [], 0
+            for n in ns:
+                ini.append(float(ws[k]["start"]) if k else 0.0)
+                k += n
+            fuente = os.path.join(ruta, "maqueta.json") + " (capa.palabras)"
+        else:
+            car, ac, ini = [max(1, len(str(e.get("texto") or ""))) for e in esc], 0, []
+            for c in car:
+                ini.append(total * ac / sum(car))
+                ac += c
+            fuente = os.path.join(ruta, "guion.json") + " (estimado por caracteres)"
+        cortes = list(zip(ini, ini[1:] + [total]))
+    out = []
+    for k, (e, (t0, t1)) in enumerate(zip(esc, cortes or []), 1):
+        tit = e.get("titular") if isinstance(e.get("titular"), dict) else {}
+        cif = next((c for c in e.get("cifras") or [] if isinstance(c, dict)), {})
+        eventos = [str(v.get("tipo")) for v in maq.get("eventos") or [] if t0 <= float(v.get("t") or 0) < t1]
+        claves = sum(1 for c in maq.get("camara") or [] if t0 <= float(c.get("t") or 0) < t1)
+        out.append({"n": int(e.get("n") or k), "tipo": e.get("tipo") or "toma", "t0": round(t0, 2), "t1": round(t1, 2),
+                    "pantalla": str(tit.get("texto") or " ".join(filter(None, (cif.get("valor"), cif.get("rotulo")))))[:60],
+                    "voz": re.sub(r"\s+", " ", str(e.get("texto") or ""))[:90], "animacion": None, "mecanismo": None,
+                    "en_3d": " · ".join(eventos + ["%d clave%s de cámara" % (claves, "" if claves == 1 else "s")])})
+    return out, fuente, guion
+
+
 def escenas_de(p):
     """[{n, tipo, t0, t1, pantalla, voz, animacion, mecanismo}] de la pieza: escenas.json de la sesión si existe (tiempos
     medidos), si no el guion.json entregado (dur estimada)."""
     reg = p["reg"]
     cand = []
-    if p["flujo"] == "video":
+    if p["flujo"] == "video3d":
+        return escenas_3d(p)
+    if p["flujo"] == "serie":   # el TRABAJO de la parte lo guarda el serie.json de la entrega
+        S = leer(os.path.join(RAIZ, reg.get("carpeta") or os.path.dirname(p["ruta"] or ""), "serie.json")) or {}
+        t_ = next((x.get("trabajo") for x in S.get("partes") or [] if x.get("n") == p.get("parte")), None)
+        cand += [t_ + "/escenas.json"] if t_ else []
+    elif p["flujo"] == "youtube":   # un largo se alinea por capítulos: sus segundos reales están en el registro
+        caps = [c for c in reg.get("capitulos") or [] if isinstance(c, dict) and isinstance(c.get("t"), (int, float))]
+        fin = [c["t"] for c in caps[1:]] + [float(p.get("duracion_s") or (caps[-1]["t"] if caps else 0))]
+        return ([{"n": c.get("numero") or k, "tipo": "capitulo", "t0": round(c["t"], 2), "t1": round(t1, 2),
+                  "pantalla": str(c.get("titulo") or "")[:60], "voz": "", "animacion": None, "mecanismo": None}
+                 for k, (c, t1) in enumerate(zip(caps, fin), 1)],
+                "memoria/youtube.json (capitulos)", leer(os.path.join(RAIZ, p["ruta"] or "", "guion.json")) or {})
+    elif p["flujo"] == "video":
         cand.append("sesiones/%s/video/escenas.json" % p["slug"])
     elif p["flujo"] == "historia":
         cand.append("sesiones/historia-%s/escenas.json" % p["slug"])
@@ -334,8 +505,6 @@ def escenas_de(p):
         cand.append("sesiones/congreso-%s/escenas.json" % p["slug"])
     elif p["flujo"] == "explica":
         cand.append("sesiones/explica-%s/escenas.json" % p["slug"])
-    elif p["flujo"] == "semana":
-        cand.append("sesiones/semana-%s/escenas.json" % reg.get("fecha"))
     guion = leer(os.path.join(RAIZ, p["ruta"] or "", "guion.json")) or {}
     por_n = {int(e.get("n") or k): e for k, e in enumerate(guion.get("escenas") or [], 1)}
     fuente = next((c for c in cand if os.path.exists(os.path.join(RAIZ, c))), None)
@@ -392,6 +561,24 @@ def ultimo(x):
     return (x.get("snapshots") or [{}])[-1]
 
 
+def dias_de_vida(x):
+    """Días entre la publicación y su última captura (mínimo 1), o None si falta una de las dos fechas."""
+    fp, fc = fecha_de((x or {}).get("fecha_pub")), fecha_de(ultimo(x or {}).get("fecha"))
+    return max(1, (fc - fp).days) if fp and fc else None
+
+
+def vistas_dia(x):
+    """Vistas por día de vida: vistas de la última captura ÷ días desde la publicación (mínimo 1). Una pieza de 2 días
+    y una de 10 no se comparan por sus vistas acumuladas; por día sí (sigue favoreciendo a la reciente: el primer día
+    concentra las vistas, así que es una corrección, no una igualdad)."""
+    v, d = ultimo(x or {}).get("views"), dias_de_vida(x)
+    return v / d if v is not None and d else None
+
+
+def por_dia(v):
+    return "%d/día" % round(v) if v is not None else "—/día"
+
+
 def cmd_alinear(a):
     M = cargar()
     p = pieza_por(a.pieza)
@@ -415,7 +602,7 @@ def cmd_alinear(a):
         marca = "  ◀ %.1f× la mediana" % (f["tasa"] / med) if med > 0 and f["n"] > 1 and f["tasa"] > 2 * med else ""
         print("%2d %-9s %6.1f–%6.1f s  %3.0f%% → %3.0f%%  −%4.1f pts (se va %4.2f%%/s)  «%s»%s" % (
             f["n"], f["tipo"], f["t0"], f["t1"], f["r0"] * 100, f["r1"] * 100, f["perdida"], f["tasa"],
-            f["pantalla"] or f["voz"][:40], marca))
+            (f["pantalla"] or f["voz"][:40]) + (" [%s]" % f["en_3d"] if f.get("en_3d") else ""), marca))
     return 0
 
 
@@ -465,6 +652,8 @@ def diagnosticar(M, desde=None):
     base1 = mediana([h.get("1") for h in holds.values()])
     n_plat = {pl: sum(1 for r in R.values() if pl in r["pubs"]) for pl in PLATAFORMAS}
     med_plat = {pl: mediana([ultimo(r["pubs"][pl]).get("views") for r in R.values() if pl in r["pubs"]]) for pl in PLATAFORMAS}
+    # vistas por día de vida: solo se AÑADEN a la evidencia de AN6, AN11 y AN12 (los umbrales siguen sobre las acumuladas)
+    med_plat_dia = {pl: mediana([vistas_dia(r["pubs"][pl]) for r in R.values() if pl in r["pubs"]]) for pl in PLATAFORMAS}
     for k, r in sorted(R.items(), key=lambda kv: kv[1]["p"].get("fecha") or ""):
         p, pid = r["p"], "%s:%s" % k
         x = r["pubs"].get("tiktok")
@@ -494,6 +683,8 @@ def diagnosticar(M, desde=None):
                         propuesta="Pagar una micro-respuesta antes de 8 s; la promesa no puede ser una escena quieta."))
                 elif f["n"] > 2 and f["tasa"] > 2 * med and f["perdida"] >= 2 and f["r0"] >= 0.03:
                     arch = ("video/animaciones/%s.js" % f["animacion"]) if f.get("animacion") else ARCHIVO_ESCENA.get(f["tipo"], ARCHIVO["ritmo"])
+                    if p["flujo"] == "video3d":   # sus escenas no salen de una página de video/: son tomas de la maqueta
+                        arch = "referencias/flujo-video3d.md"
                     if f["tipo"] == "cierre":
                         arch = ARCHIVO["cierre"]
                     H.append(hallazgo("AN4", "cierre" if f["tipo"] == "cierre" else "ritmo", pid, "escena %d (%s%s) %.1f–%.1f s: se va el %.2f%%/s de quien seguía (%.1f× la mediana) · «%s»" % (
@@ -522,8 +713,9 @@ def diagnosticar(M, desde=None):
             # con pocas piezas la mediana de la plataforma engaña: además, la pieza sí se vio en sus otras plataformas
             if (v is not None and med_pl and med_pl >= 100 and v < 0.05 * med_pl and edad >= 2
                     and (n_plat.get(pl, 0) >= 5 or (otras and v < 0.05 * otras))):
-                H.append(hallazgo("AN6", "publicacion", pid, "%s: %d vistas frente a una mediana de %d de las piezas en %s" % (
-                    pl, v, med_pl, pl), propuesta="Revisar en %s si está restringido (edad, alcohol, reclamo de música), si falta "
+                H.append(hallazgo("AN6", "publicacion", pid, "%s: %d vistas frente a una mediana de %d de las piezas en %s "
+                                  "(por día de vida: %s en %s días frente a %s)" % (
+                    pl, v, med_pl, pl, por_dia(vistas_dia(pb)), dias_de_vida(pb) or "—", por_dia(med_plat_dia.get(pl))), propuesta="Revisar en %s si está restringido (edad, alcohol, reclamo de música), si falta "
                                                    "una pregunta obligatoria (YouTube: «hecho para niños») o si la subida falló." % pl))
         # AN7 caption: ¿se usó caption.md? ¿hay erratas?
         cap = caption_de(p)
@@ -612,20 +804,21 @@ def diagnosticar(M, desde=None):
     por_flujo = {}
     for k, h in holds.items():
         if h.get("3") is not None:
-            por_flujo.setdefault(k[0], []).append((h["3"], ultimo(tk[k]).get("views") or 0))
+            por_flujo.setdefault(k[0], []).append((h["3"], ultimo(tk[k]).get("views") or 0, vistas_dia(tk[k])))
     if len(por_flujo) >= 2:
         H.append(hallazgo("AN11", "tema", "canal", "TikTok por flujo: " + " · ".join(
-            "%s hold3 %.0f%% vistas med. %d (n=%d)" % (f, mediana([a for a, _ in xs]) * 100, mediana([b for _, b in xs]), len(xs))
+            "%s hold3 %.0f%% vistas med. %d (%s) (n=%d)" % (f, mediana([a for a, _, _ in xs]) * 100, mediana([b for _, b, _ in xs]),
+                                                           por_dia(mediana([c for _, _, c in xs])), len(xs))
             for f, xs in sorted(por_flujo.items())), propuesta=""))
     # AN12 horario
     franjas = {}
     for k, x in tk.items():
         hh = hora_de(x.get("fecha_pub"))
         if hh is not None:
-            franjas.setdefault("mañana" if hh < 12 else "tarde" if hh < 18 else "noche", []).append(ultimo(x).get("views") or 0)
+            franjas.setdefault("mañana" if hh < 12 else "tarde" if hh < 18 else "noche", []).append((ultimo(x).get("views") or 0, vistas_dia(x)))
     if franjas and min(len(v) for v in franjas.values()) >= 10:
-        H.append(hallazgo("AN12", "horario", "canal", "vistas medianas por franja: " + ", ".join(
-            "%s %d (n=%d)" % (f, mediana(v), len(v)) for f, v in franjas.items())))
+        H.append(hallazgo("AN12", "horario", "canal", "vistas medianas por franja (acumuladas y por día de vida): " + ", ".join(
+            "%s %d · %s (n=%d)" % (f, mediana([a for a, _ in v]), por_dia(mediana([b for _, b in v])), len(v)) for f, v in franjas.items())))
     return H, {"hold3": base3, "hold1": base1, "piezas": len(R)}
 
 
@@ -666,7 +859,18 @@ def categoria(p, por):
         return [fr.get("cierre_forma")]
     if por == "animacion":
         return fr.get("animaciones") or []
+    if por == "duracion":
+        return [tramo_duracion(p.get("duracion_s"))]
+    if por == "promesa":   # la `forma` de la promesa: la del registro o, si no la guardó, la del guion entregado
+        return [fr.get("promesa_forma") or frases_de_guion(leer(os.path.join(RAIZ, p.get("ruta") or "", "guion.json")) or {}).get("promesa_forma")]
     return [p["flujo"]]
+
+
+def tramo_duracion(d):
+    """El tramo de TRAMOS_DURACION de una duración en segundos: < 35 · 35–70 (35 ≤ d < 70) · 70–120 (70 ≤ d ≤ 120) · > 120."""
+    if not isinstance(d, (int, float)) or d <= 0:
+        return None
+    return TRAMOS_DURACION[0 if d < 35 else 1 if d < 70 else 2 if d <= 120 else 3]
 
 
 def rendimiento(por="familia", M=None):
@@ -681,10 +885,30 @@ def rendimiento(por="familia", M=None):
         vy = ultimo(yt).get("viewed_pct") if yt else None
         for c in categoria(r["p"], por):
             if c:
-                tabla.setdefault(c, []).append({"h3": h3, "avg": avg, "views": vis, "yt": vy, "pieza": r["p"]["slug"]})
+                tabla.setdefault(c, []).append({"h3": h3, "avg": avg, "views": vis, "vpd": vistas_dia(tk) if tk else None,
+                                                "dias": dias_de_vida(tk) if tk else None, "yt": vy, "pieza": r["p"]["slug"]})
     return {c: {"n": len(xs), "hold3": mediana([x["h3"] for x in xs]), "avg_s": mediana([x["avg"] for x in xs]),
-                "views": mediana([x["views"] for x in xs]), "yt_visto": mediana([x["yt"] for x in xs]),
+                "views": mediana([x["views"] for x in xs]), "views_dia": mediana([x["vpd"] for x in xs]),
+                "dias": mediana([x["dias"] for x in xs]), "yt_visto": mediana([x["yt"] for x in xs]),
                 "piezas": [x["pieza"] for x in xs]} for c, xs in tabla.items()}
+
+
+def rendimiento_plataforma(M=None):
+    """Por plataforma (cada publicación vinculada cuenta en la suya): vistas acumuladas y por día de vida, tiempo medio,
+    tiempo medio ÷ duración, completado y retención a 3 s (solo donde hay curva: TikTok), medianas."""
+    M = M if M is not None else cargar()
+    tabla = {}
+    for r in resumen_piezas(M).values():
+        for pl, x in r["pubs"].items():
+            s = ultimo(x)
+            dur = x.get("duracion_s") or r["p"].get("duracion_s")
+            tabla.setdefault(pl, []).append({"views": s.get("views"), "vpd": vistas_dia(x), "dias": dias_de_vida(x), "avg": s.get("avg_s"),
+                                             "rel": s["avg_s"] / dur if s.get("avg_s") and dur else None,
+                                             "comp": s.get("completion"), "h3": (s.get("hold") or {}).get("3"), "pieza": r["p"]["slug"]})
+    return {pl: {"n": len(xs), "views": mediana([x["views"] for x in xs]), "views_dia": mediana([x["vpd"] for x in xs]),
+                 "dias": mediana([x["dias"] for x in xs]), "avg_s": mediana([x["avg"] for x in xs]),
+                 "avg_rel": mediana([x["rel"] for x in xs]), "completion": mediana([x["comp"] for x in xs]),
+                 "hold3": mediana([x["h3"] for x in xs]), "piezas": [x["pieza"] for x in xs]} for pl, xs in tabla.items()}
 
 
 def estilos_facebook():
@@ -736,9 +960,11 @@ def lineas_rendimiento(pors=("familia", "visual")):
             continue
         base = mediana([v["hold3"] for v in t.values()])
         filas = sorted(t.items(), key=lambda kv: -(kv[1]["hold3"] or 0))
-        out.append("- Por %s (TikTok: retención a 3 s · tiempo medio · vistas medianas; YouTube: «visto»): %s" % (por, " · ".join(
-            "%s %s · %.0f s · %s · YT %s (n=%d)%s" % (c, pct(v["hold3"]), v["avg_s"] or 0, int(v["views"] or 0), pct(v["yt_visto"]), v["n"],
-                                                    " ▼" if base and v["hold3"] is not None and v["hold3"] < 0.8 * base and v["n"] >= 2 else "")
+        out.append("- Por %s (TikTok: retención a 3 s · tiempo medio · vistas medianas acumuladas y, entre paréntesis, por día "
+                   "de vida; YouTube: «visto»): %s" % (por, " · ".join(
+            "%s %s · %.0f s · %s (%s) · YT %s (n=%d)%s" % (c, pct(v["hold3"]), v["avg_s"] or 0, int(v["views"] or 0), por_dia(v.get("views_dia")),
+                                                         pct(v["yt_visto"]), v["n"],
+                                                         " ▼" if base and v["hold3"] is not None and v["hold3"] < 0.8 * base and v["n"] >= 2 else "")
             for c, v in filas)))
     if out:
         out.append("- ▼ = por debajo de 0.8× la mediana con n ≥ 2: si eliges esa categoría, el `por_que` explica qué la hace distinta "
@@ -760,15 +986,19 @@ def rendimiento_por_parte():
         v = ultimo(x).get("views")
         if v:
             d = por.setdefault(m.group(1), {}).setdefault(x["plataforma"], {})
-            d[int(m.group(2))] = max(d.get(int(m.group(2)), 0), v)
+            if v > d.get(int(m.group(2)), (0, None))[0]:
+                d[int(m.group(2))] = (v, vistas_dia(x))
     if not por:
         print("(ninguna parte de serie publicada y medida todavía: vincula las publicaciones con metricas.py vincular)")
         return 0
+    print("Por parte: vistas acumuladas [por día de vida]; entre paréntesis, las de la parte N+1 entre las de la N (el paso). "
+          "Las partes se publican en días distintos: compara también las de por día.")
     for serie, pls in sorted(por.items()):
         print(serie)
         for pl, d in sorted(pls.items()):
             ns = sorted(d)
-            pasos = ["P%d %d" % (ns[0], d[ns[0]])] + ["→ P%d %d (%.0f%%)" % (b, d[b], 100.0 * d[b] / d[a_]) for a_, b in zip(ns, ns[1:])]
+            pasos = ["P%d %d [%s]" % (ns[0], d[ns[0]][0], por_dia(d[ns[0]][1]))]
+            pasos += ["→ P%d %d [%s] (%.0f%%)" % (b, d[b][0], por_dia(d[b][1]), 100.0 * d[b][0] / d[a_][0]) for a_, b in zip(ns, ns[1:])]
             print("  %-10s %s" % (pl, " ".join(pasos)))
     return 0
 
@@ -785,13 +1015,34 @@ def cmd_rendimiento(a):
         return 0
     if a.por == "parte":
         return rendimiento_por_parte()
+    if a.por == "plataforma":
+        t = rendimiento_plataforma()
+        if not t:
+            print("(sin publicaciones vinculadas todavía)")
+            return 0
+        print("Columnas (medianas de las publicaciones vinculadas de cada plataforma): vistas = acumuladas a la captura · "
+              "vistas/día = vistas ÷ días entre la publicación y la captura (mínimo 1) · edad = esos días · avg = tiempo medio · "
+              "avg/dur = tiempo medio ÷ duración · completado · hold3 = retención a 3 s (solo con curva: TikTok)")
+        for pl, v in sorted(t.items(), key=lambda kv: -(kv[1]["views_dia"] or 0)):
+            print("%-10s n=%-2d vistas %7d  vistas/día %6s  edad %4s d  avg %7s  avg/dur %-5s completado %-5s hold3 %-5s" % (
+                pl, v["n"], int(v["views"] or 0), "%d" % round(v["views_dia"]) if v["views_dia"] is not None else "—",
+                "%d" % v["dias"] if v["dias"] is not None else "—", "%.1f s" % v["avg_s"] if v["avg_s"] is not None else "—",
+                pct(v["avg_rel"]), pct(v["completion"]), pct(v["hold3"])))
+        return 0
     if a.md:
         print("\n".join(lineas_rendimiento((a.por,))))
         return 0
     t = rendimiento(a.por)
-    for c, v in sorted(t.items(), key=lambda kv: -(kv[1]["hold3"] or 0)):
-        print("%-14s n=%-2d hold3 %-5s avg %5.1f s  vistas %7d  YT visto %-5s  %s" % (
-            c, v["n"], pct(v["hold3"]), v["avg_s"] or 0, int(v["views"] or 0), pct(v["yt_visto"]), ", ".join(v["piezas"])[:80]))
+    if t:
+        print("Columnas (medianas por categoría; TikTok salvo la última): hold3 = retención a 3 s · avg = tiempo medio · "
+              "vistas = acumuladas a la captura · vistas/día = vistas ÷ días entre la publicación y la captura (mínimo 1; lo "
+              "que compara piezas de distinta edad) · edad = esos días · YT visto = «se quedaron viendo» en YouTube")
+    orden = (lambda kv: TRAMOS_DURACION.index(kv[0])) if a.por == "duracion" else (lambda kv: -(kv[1]["hold3"] or 0))
+    for c, v in sorted(t.items(), key=orden):
+        print("%-14s n=%-2d hold3 %-5s avg %5.1f s  vistas %7d  vistas/día %6s  edad %4s d  YT visto %-5s  %s" % (
+            c, v["n"], pct(v["hold3"]), v["avg_s"] or 0, int(v["views"] or 0),
+            "%d" % round(v["views_dia"]) if v["views_dia"] is not None else "—", "%d" % v["dias"] if v["dias"] is not None else "—",
+            pct(v["yt_visto"]), ", ".join(v["piezas"])[:80]))
     return 0
 
 
@@ -864,7 +1115,8 @@ def main():
     s.add_argument("--mejoras", metavar="SALIDA")
     s.add_argument("--json", action="store_true")
     s = sub.add_parser("rendimiento")
-    s.add_argument("--por", choices=("familia", "visual", "cierre", "animacion", "flujo", "estilo_fb", "parte"), default="familia")
+    s.add_argument("--por", choices=("familia", "visual", "cierre", "animacion", "flujo", "estilo_fb", "parte", "duracion", "promesa",
+                                     "plataforma"), default="familia")
     s.add_argument("--md", action="store_true")
     a = ap.parse_args()
     if a.metricas:

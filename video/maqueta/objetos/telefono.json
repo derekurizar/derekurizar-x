@@ -1,0 +1,21 @@
+{
+ "tipo": "telefono",
+ "clase": "objeto",
+ "cuando": "un teléfono: la señal de cada móvil, quien manda su ubicación, el aviso que llega a todos",
+ "parametros": {},
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "medidas": {
+  "largo_m": 0.01,
+  "ancho_m": 0.075,
+  "alto_m": 0.16
+ },
+ "ejemplo": {
+  "objeto": "telefono"
+ }
+}

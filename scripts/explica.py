@@ -51,8 +51,8 @@ import sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RAIZ, "scripts"))
+import fuentes_web as FW  # noqa: E402
 import historia as HI  # noqa: E402
-import noticias as NT  # noqa: E402
 import numeros_es as NE  # noqa: E402
 import verificacion as VM  # noqa: E402
 import video as VD  # noqa: E402
@@ -198,12 +198,10 @@ def frases_explicaciones(slug_actual, n=VD.FRASES_USADAS_VIDEOS):
 
 
 def recientes(slug_actual):
-    fr = [h.get("frases") or {} for h in explicaciones_registradas(slug_actual)]
-    return ({"familias": [x["familia"] for x in fr[-ROTACION_FAMILIAS:] if x.get("familia")],
-             "visuales": [x["visual"] for x in fr[-1:] if x.get("visual")]},
-            {"tipos": [x.get("cierre_tipo") or "remate" for x in fr[-1:]],
-             "formas": [x.get("cierre_forma") for x in fr[-VD.ROTACION_CIERRES:] if x.get("cierre_forma")],
-             "mecanismos": [x["cierre_mecanismo"] for x in fr[-1:] if x.get("cierre_mecanismo")]})
+    """R9 y F7 de un explicador contra el feed entero (video.piezas_feed: todos los flujos, con las partes de /serie):
+    la familia de las últimas ROTACION_FAMILIAS piezas, el visual de la última y el cierre."""
+    piezas = VD.piezas_feed(slug_actual)
+    return (VD.ganchos_recientes(slug_actual, ROTACION_FAMILIAS, 1, piezas), VD.cierres_recientes(slug_actual, piezas))
 
 
 def animaciones_recientes(slug_actual):
@@ -211,21 +209,6 @@ def animaciones_recientes(slug_actual):
     for h in explicaciones_registradas(slug_actual)[-VD.ROTACION_ANIMACIONES:]:
         out += [x for x in (h.get("frases") or {}).get("animaciones") or [] if x and x not in out]
     return out
-
-
-def elegir_musica(paleta, forzada=None):
-    """La pista de la paleta usada hace más tiempo (o nunca) entre videos, historias y explicaciones."""
-    if forzada:
-        return VD.elegir_musica(paleta, forzada)
-    cat = [x for x in leer(os.path.join(RAIZ, "design", "musica", "catalogo.json"))["pistas"] if x["paleta"] == paleta]
-    if not cat:
-        raise ValueError("el catálogo no tiene música para la paleta «%s»" % paleta)
-    usos = {}
-    vids = os.path.join(RAIZ, "memoria", "videos.json")
-    regs = ((leer(vids).get("videos") or []) if os.path.exists(vids) else []) + HI.historias_registradas() + explicaciones_registradas()
-    for v in regs:
-        usos[v.get("musica")] = max(usos.get(v.get("musica"), ""), v.get("fecha", ""))
-    return sorted(cat, key=lambda x: (usos.get(x["id"], ""), x["id"]))[0]
 
 
 # ---------- preparar ----------
@@ -250,7 +233,7 @@ def cmd_preparar(a):
         print("--paleta: una de %s" % ", ".join(pal), file=sys.stderr)
         return 2
     try:
-        pista = elegir_musica(paleta, a.musica)
+        pista = VD.elegir_musica(paleta, a.musica)
     except ValueError as ex:
         return falla(str(ex))
     clave, objetivo = FORMATOS[a.duracion][0], FORMATOS[a.duracion][1]
@@ -382,7 +365,7 @@ def revisar_eje(v, propios=()):
                 if not 10 <= len(x.get("texto") or "") <= HI.HECHO_CARACTERES:
                     fallas.append("E2 %s: texto de 10–%d caracteres" % (xid, HI.HECHO_CARACTERES))
                 for tok, _, _ in HI.numeros_de(x.get("texto")):
-                    if NT.sueltos(tok, nums):
+                    if VM.sueltos_prensa(tok, nums):
                         fallas.append("E2 %s: el número «%s» del texto no está en sus citas" % (xid, tok))
             elif clase == "cifras":
                 if not isinstance(x.get("valor"), (int, float)) or isinstance(x.get("valor"), bool):
@@ -390,9 +373,9 @@ def revisar_eje(v, propios=()):
                     continue
                 if not str(x.get("periodo") or x.get("anio") or "").strip():
                     fallas.append("E2 %s: «periodo» (el año o el mes del dato: la voz dice de cuándo es)" % xid)
-                if NT.sueltos(x.get("texto") or "", [(round(float(x["valor"]), 6), VM.factor_unidad(x.get("unidad"))), (round(float(x["valor"]), 6), None)]):
+                if VM.sueltos_prensa(x.get("texto") or "", [(round(float(x["valor"]), 6), VM.factor_unidad(x.get("unidad"))), (round(float(x["valor"]), 6), None)]):
                     fallas.append("E2 %s: «%s» no es su valor %s" % (xid, x.get("texto"), x["valor"]))
-                elif NT.sueltos(x.get("texto") or "", nums):
+                elif VM.sueltos_prensa(x.get("texto") or "", nums):
                     fallas.append("E2 %s: ninguna cita trae el número «%s»" % (xid, x.get("texto")))
             else:
                 frase = HI.plano(x.get("texto"))
@@ -588,7 +571,7 @@ def consolidar(trabajo):
         fuente = (c.get("fuentes") or [{}])[0]
         cifras.append({"id": c["id"], "concepto": c.get("concepto") or c.get("texto"), "valor": c["valor"], "unidad": c.get("unidad") or "",
                        "periodo": str(c.get("periodo") or c.get("anio") or ""), "veredicto": "verificada", "url": fuente.get("url"),
-                       "fuente": fuente.get("medio") or NT.dominio(fuente.get("url") or ""), "ilustrativo": False})
+                       "fuente": fuente.get("medio") or FW.dominio(fuente.get("url") or ""), "ilustrativo": False})
     for x in X["afirmaciones"] + X["citas"]:
         for k, (tok, val, despues) in enumerate(HI.numeros_de(x.get("texto")), 1):
             cifras.append({"id": "%s-n%d" % (x["id"], k), "concepto": x.get("texto"), "valor": val, "unidad": HI.unidad_de(despues),
@@ -610,7 +593,7 @@ def consolidar(trabajo):
     cambia = False
     if paleta != st["paleta"]:
         st["paleta"] = paleta
-        st["musica"] = elegir_musica(paleta, st.get("musica_forzada"))["id"]
+        st["musica"] = VD.elegir_musica(paleta, st.get("musica_forzada"))["id"]
         cambia = True
     pt = None if st.get("musica_forzada") or not enc.get("musica_tema") else VD.elegir_musica_tema(enc["musica_tema"], st.get("slug"))
     if pt and pt["id"] != st.get("musica") and st.get("musica_tema") != enc["musica_tema"]:
@@ -1287,7 +1270,7 @@ def cmd_probar(a):
     except (OSError, ValueError) as ex:
         print("FALLA --cambios ilegible: %s" % ex)
         return 2
-    tmp = os.path.join(RAIZ, "sesiones", "_probar-%s-%d" % (os.path.basename(trabajo), os.getpid()))
+    tmp = os.path.join(os.path.dirname(trabajo), "_probar-%s-%d" % (os.path.basename(trabajo), os.getpid()))   # junto al TRABAJO: una parte de serie se mide contra sus hermanas (SE13, SE15, SE19)
     shutil.copytree(trabajo, tmp, ignore=shutil.ignore_patterns("audio", "salida", "revision", "clips*", "segs*", "hf", "tablero"))
     try:
         g = leer(os.path.join(tmp, "guion.json"))
@@ -1345,12 +1328,12 @@ def lineas_verificado(X):
     out = ["## Afirmaciones verificadas (id · estado · tipo — texto [fuentes])"]
     for x in X.get("afirmaciones") or []:
         out.append("- %s · %s · %s — %s [%s]%s" % (x["id"], x["estado"], x.get("tipo"), x.get("texto"),
-                                                  ", ".join(f.get("medio") or NT.dominio(f.get("url") or "") for f in x.get("fuentes") or []),
+                                                  ", ".join(f.get("medio") or FW.dominio(f.get("url") or "") for f in x.get("fuentes") or []),
                                                   " · en disputa: %s" % x.get("nota") if x["estado"] == "en_disputa" else ""))
     out += ["", "## Cifras reales de Guatemala (id · valor · periodo — concepto [fuente]; la voz dice de cuándo es)"]
     for c in X.get("cifras") or []:
         out.append("- %s · %s %s · %s — %s [%s]" % (c["id"], c["valor"], c.get("unidad") or "", c.get("periodo") or c.get("anio") or "",
-                                                  c.get("concepto") or c.get("texto"), ", ".join(f.get("medio") or NT.dominio(f.get("url") or "")
+                                                  c.get("concepto") or c.get("texto"), ", ".join(f.get("medio") or FW.dominio(f.get("url") or "")
                                                                                                 for f in c.get("fuentes") or [])))
     if X.get("citas"):
         out += ["", "## Citas literales (id · autor — frase)"] + ["- %s · %s — «%s»" % (q["id"], q.get("autor"), q.get("texto")) for q in X["citas"]]
@@ -1411,9 +1394,9 @@ def cmd_digesto(a):
                 for x in hz.get(k) or []:
                     out.append("- %s · %s — %s" % (x.get("id"), (x.get("texto") or x.get("concepto") or "")[:200],
                                " | ".join("%s «%s»" % (ev.get("url"), (ev.get("cita") or "")[:140]) for ev in x.get("fuentes") or [])))
-        out += ["", "## Clases de fuente que cuentan", "- oficial: *.gob.gt, %s, %s" % (", ".join(sorted(NT.OFICIALES)), ", ".join(sorted(HI.OTROS_OFICIALES))),
+        out += ["", "## Clases de fuente que cuentan", "- oficial: *.gob.gt, %s, %s" % (", ".join(sorted(FW.OFICIALES)), ", ".join(sorted(HI.OTROS_OFICIALES))),
                 "- academica: *.edu, %s" % ", ".join(sorted(HI.ACADEMICAS)),
-                "- medio (dominio → grupo): %s" % ", ".join("%s→%s" % kv for kv in sorted({**NT.MEDIOS, **HI.INTERNACIONALES}.items()))]
+                "- medio (dominio → grupo): %s" % ", ".join("%s→%s" % kv for kv in sorted({**FW.MEDIOS, **HI.INTERNACIONALES}.items()))]
         print("\n".join(out))
         return 0
     X = explicacion_de(trabajo)
@@ -1550,6 +1533,7 @@ def cmd_entregar(a):
         "gancho": {k: e1.get(k) for k in ("familia", "visual", "pantalla", "linea")}, "promesa": g.get("promesa"), "bisagra": g.get("bisagra"),
         "ejemplos": [{"id": x["id"], "modelo": x["modelo"], "ilustrativo": x["ilustrativo"]} for x in X.get("ejemplos") or []],
         "escenas": escenas, "cierre": g.get("cierre"), "caption": g.get("caption"), "modo": MODO}
+    VD.con_eleccion(entrega, trabajo, g)   # quién eligió el gancho y el cierre, y qué recomendaba el crítico
     escribir(os.path.join(destino, "guion.json"), entrega)
     open(os.path.join(destino, "fuentes.md"), "w", encoding="utf-8").write(fuentes_md(st, escenas_g, X))
     open(os.path.join(destino, "ejemplos.md"), "w", encoding="utf-8").write(ejemplos_md(st, X))
@@ -1573,7 +1557,7 @@ def fuentes_md(st, escenas, X):
             L.append("- %s%s" % (txt, HI.etiqueta_estado(x)))
             for f in x.get("fuentes") or []:
                 if f.get("url"):
-                    L.append("  - %s: %s" % (f.get("medio") or NT.dominio(f["url"]), f["url"]))
+                    L.append("  - %s: %s" % (f.get("medio") or FW.dominio(f["url"]), f["url"]))
         L.append("")
     L.append("Sígueme: %s" % " · ".join("%s %s" % (r["nombre"], r["handle"]) for r in VD.REDES))
     return "\n".join(L) + "\n"
@@ -1597,6 +1581,8 @@ REENVIO = ("voz", "voz-falsa", "descargar", "partir", "escuchar", "plano", "grab
 
 
 def main():
+    if len(sys.argv) > 1 and sys.argv[1] == "producir":   # la cadena de producción común y reanudable (scripts/producir.py)
+        return subprocess.run([sys.executable, os.path.join(RAIZ, "scripts", "producir.py")] + sys.argv[2:], cwd=RAIZ).returncode
     if len(sys.argv) > 1 and sys.argv[1] in REENVIO:
         if len(sys.argv) > 2 and os.path.isdir(sys.argv[2]):
             fijar_modo(os.path.abspath(sys.argv[2]))   # un TRABAJO en un modo retirado no se graba ni se monta
@@ -1637,6 +1623,7 @@ def main():
     x.add_argument("--opciones", action="store_true")
     x.add_argument("--elegir")
     q.add_argument("--segundo")
+    q.add_argument("--por", choices=VD.ELEGIDO_POR, help="quién eligió el gancho (video.py ganchos --help)")
     q = sub.add_parser("cierres")
     q.add_argument("trabajo")
     VD.agregar_args_cierres(q)

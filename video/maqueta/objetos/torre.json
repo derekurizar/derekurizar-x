@@ -1,0 +1,21 @@
+{
+ "tipo": "torre",
+ "clase": "objeto",
+ "cuando": "una antena de celular o de radio: la señal que viaja, la cobertura, la torre más cercana",
+ "parametros": {},
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "medidas": {
+  "largo_m": 2.4,
+  "ancho_m": 2.4,
+  "alto_m": 30.0
+ },
+ "ejemplo": {
+  "objeto": "torre"
+ }
+}

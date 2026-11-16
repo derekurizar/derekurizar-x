@@ -1,0 +1,41 @@
+{
+ "tipo": "trazar",
+ "clase": "evento",
+ "cuando": "la línea de un trazo se dibuja mientras la voz la recorre (la ruta que aparece, el camino que se marca)",
+ "parametros": {
+  "trazo": {
+   "tipo": "pieza",
+   "requerido": true,
+   "descripcion": "el trazo que se dibuja (antes de su primer trazar no se ve)",
+   "piezas": [
+    "trazo"
+   ]
+  },
+  "desde": {
+   "tipo": "posicion",
+   "requerido": false,
+   "descripcion": "de dónde arranca el dibujo (por defecto, el inicio del trazo; «NN%» es del trazo)"
+  },
+  "hasta": {
+   "tipo": "posicion",
+   "requerido": false,
+   "descripcion": "hasta dónde llega (por defecto, el final del trazo)"
+  }
+ },
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "adelanto": {
+  "dur": 0.08
+ },
+ "ejemplo": {
+  "t": 0.5,
+  "dur": 3,
+  "tipo": "trazar",
+  "trazo": "ruta"
+ }
+}

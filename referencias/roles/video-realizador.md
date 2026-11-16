@@ -24,9 +24,11 @@ Lee primero `referencias/flujo-mesa.md` (el cuadro, las reglas y los gates MV).
 - **Golpe**: una pieza que entra cuando la voz dice `dice` (1–4 palabras literales de la voz de esa escena, en orden: las
   que nombran la pieza).
 
-En el cuadro caben 2–3 piezas a la vez. Cuando la que entra no cabe, las de al frente pasan de un corte a su versión
+En el cuadro caben 2–3 piezas a la vez (hasta 4 si la última es chica). Cuando la que entra no cabe, las de al frente pasan de un corte a su versión
 compacta, arriba (el **repliegue**). No lo decides tú: lo calcula el motor. Si quieres que el corte caiga en un punto
 concreto (antes de la pieza que más importa), ponle `"limpia": true` a esa pieza.
+
+**Un solo acento al frente (MV13).** Llevan el color de acento la `cifra`, la `barra`, la nota (`termino` sin `definicion`), la `lista` con `acento` o `lazo`, la `red` con `etiqueta`, el `recorte` con `resalta` y el `documento` con `pagina`: una `cifra` o una `barra` no comparte el acento con otra ni con una nota (falla); otras dos a la vez solo avisan. A la que no es el dato que la voz está diciendo ponle `"crema": true` (solo `cifra`, `termino` y `barra`), o `"limpia": true` a la que entra.
 
 Las escenas `explica`, `tarjeta`, `cuenta`, `vias`, `deptos`, `lupa`, `cortina`, `mapa`, `ranking`, `tiempo`, `escala` y
 `hemiciclo` son **tableros**: su animación ya aprobada va sola en su mesa (`{"escenas": ["eN"], "golpes": []}`). Solo si
@@ -83,6 +85,12 @@ cámara que vuela mientras la voz cuenta. Es la única pieza donde la cámara se
 
 - **Úsala** cuando la voz de la mesa nombra ≥ 2 lugares o un recorrido, y verlos en su sitio explica la oración. El
   digesto trae, bajo «Maqueta 3D», los estilos y los lugares del set que la voz nombra (con su id).
+- **También para un mecanismo** (desde el 2026-11-15): cuando la oración cuenta **cómo pasa algo que se mueve** (cómo se
+  forma una cola, cómo viaja una señal, cómo se llena un embalse) y verlo moverse lo explica mejor que una pieza quieta,
+  una maqueta de escala `esquema` (un mundo genérico, sin geografía real) puede hacerlo dentro de la mesa, como hoy una
+  animación `explica`. Un esquema no nombra lugares reales y lleva el aviso «Esquema». Lo que hay para cada escala:
+  `python3 scripts/maqueta3d.py catalogo --para realizador --escala esquema` (o `pais`, `ciudad`).
+  En /explica, mira si el editor dejó una `maqueta_sugerida` (`python3 -c "import json;print(json.load(open('<TRABAJO>/encuadre.json')).get('maqueta_sugerida'))"`).
 - **No la uses** para ubicar un solo lugar (pieza `lugar`), para adornar, en una escena tablero, en el gancho, ni donde
   hay una foto, un recorte o un documento que pruebe lo que se dice: la maqueta **no cuenta como archivo real**.
 - **≤ 2 por video, del mismo `estilo`**, en una mesa de 5–24 s. Cuesta ≈ 1.8 s de render por segundo de maqueta.
@@ -109,9 +117,13 @@ Cómo se escribe:
   acercamiento lento. No la marees: el gate del motor frena los vuelos bruscos (M3D3) y te dice cuánto.
 - **Marcas**: una por lugar que la voz nombra, con el nombre como se dice («Escuintla»); `sub` para lo que es («Puerto»,
   «Epicentro»). Sin números que la voz no diga.
-- **Eventos**: `resaltar` un lugar o la pieza protagonista cuando la voz llega a él; `encender` / `apagar` /
-  `parpadear` las luces de unos pueblos; `ruptura`, `onda` y `deslizar` son de fallas (sus campos, en
-  `referencias/diseno/maqueta3d.md`).
+- **Piezas y eventos**: solo los del catálogo del vocabulario, que el digesto trae bajo «Vocabulario de la maqueta 3D»
+  (cada tipo con para qué sirve, sus parámetros y un ejemplo; a mano: `python3 scripts/maqueta3d.py catalogo --para
+  realizador`). Lo habitual: `resaltar` un lugar o la pieza protagonista cuando la voz llega a él. Si la historia pide
+  algo que no está, no lo inventes: cuenta esa oración con piezas (el plano pasa el gate sin la maqueta nueva) y deja en
+  tu retorno `briefs[]` (≤ 1 por video): `{tipo_sugerido, clase (pieza|evento|objeto), escala, que_se_ve, parametros,
+  frase}` — qué tiene que verse, en qué escala, con qué parámetros y a qué frase literal de la voz responde. El Workflow
+  `plano` se lo pasa UNA vez al `maqueta-constructor`; si lo registra, te devuelve el plano para que lo uses en esa mesa.
 - **Golpes encima**: ≤ 3, uno a la vez, abajo a la izquierda del marco: la `cifra` o la `fecha` que la voz dice (MV1 las
   pide igual que en cualquier mesa). Nada grande: tapa la maqueta (MV11).
 - El `titulo` de la mesa es el golpe de arriba; la maqueta no lleva titulares ni cifras propias.

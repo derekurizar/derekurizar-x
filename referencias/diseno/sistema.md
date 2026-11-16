@@ -2,8 +2,8 @@
 
 Dos estilos con la misma anatomía y los mismos roles de color:
 
-- **Noche** — todas las tarjetas de X (`/hilo`, `/dato` y sus modos) y todos los videos (`/video`, `/noticias`,
-  `/historia`): el color del tema llevado casi a negro, texto crema, un solo acento claro y Archivo condensado.
+- **Noche** — todas las tarjetas de X (`/hilo`, `/dato` y sus modos) y todos los videos (`/video`,
+  `/historia` y los demás): el color del tema llevado casi a negro, texto crema, un solo acento claro y Archivo condensado.
 - **Clásico** — solo `/investigacion`: el informe en papel y las tarjetas de su hilo (son figuras del informe).
   Paletas planas e Instrument Serif; está en el apéndice.
 
@@ -137,7 +137,7 @@ flechas ▲▼ y el signo × sí están en el subconjunto latino.
 
 - `video.py colores(paleta)` → `escenas.json → colores`, que `V.cargar` vuelca como variables: `bg` (fondo), `ink`
   (crema), `a1`/`acento`/`grafico`/`pregunta` (el acento), `a2`/`a3` (serie atenuada), `resalte_bg` (acento) y
-  `resalte_ink`/`tinta_acento` (#1A1208), `fondo_acto2`, `fondo_golpe`; `/noticias` y `/historia` suman `realce`
+  `resalte_ink`/`tinta_acento` (#1A1208), `fondo_acto2`, `fondo_golpe`; `/historia` suma `realce`
   (= acento: se lee sobre la foto oscurecida).
 - `video/comun.css`: fondo `var(--bg)` con el mismo grano fijo · `.condensada` (Archivo 900, 62.5 %, mayúsculas) ·
   arriba, la barra de progreso primero y debajo el golpe como titular: Archivo condensado 900 en mayúsculas, 96 px (se
@@ -148,7 +148,7 @@ flechas ▲▼ y el signo × sí están en el subconjunto latino.
   ya se leen en pantalla, no se muestra)
   (`--resalte-bg` / `--resalte-ink`) y las que faltan al 38 % · rótulo de acto con el año condensado en acento, el
   título en Archivo 800 66 px y el lugar en Mono 600 24 px.
-- Barra de progreso por grupos (`V.pintarProgreso`): un tramo por escena en `/video`, por noticia en `/noticias` y por
+- Barra de progreso por grupos (`V.pintarProgreso`): un tramo por escena en `/video` y por
   acto en `/historia`, de largo proporcional a su duración. En el acto 2 de `/historia`, `--bg` pasa a `fondo_acto2`.
 
 ## Reglas del brief (verbatim)

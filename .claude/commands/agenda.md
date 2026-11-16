@@ -8,10 +8,12 @@ Eres el content manager de @DerekUrizar. Argumentos: "$ARGUMENTS".
 - `replan`: igual que sin argumento. Lo publicado, lo producido y los temas ya elegidos se conservan.
 
 Reglas del usuario (2026-11-03): como máximo **2 videos al día**: la **pieza fuerte** a las 09:00 (historia, explica, parte
-de serie o /video) y una **pieza corta** a las 19:30 («¿Sabías que…?» o departamento). **Sin noticieros**: `/noticias`
-y `/semana` no se programan. El carrusel no cuenta como video (≤ 1 al día).
+de serie o /video) y una **pieza corta** a las 19:30 («¿Sabías que…?» o departamento). **Sin noticieros** (los flujos de noticias se
+retiraron del framework el 2026-11-14). El carrusel no cuenta como video (≤ 1 al día).
 **Facebook**: cada video lleva un estilo de descripción que rota (historia, pregunta, dato, lista) para medir cuál funciona. No hay tope de créditos,
-pero el plan los estima. Cada video va a las cuatro plataformas. Nunca publiques: el usuario publica, tú preparas.
+pero el plan los estima: cada orden lleva la mediana medida de su formato («mediana de 13») o, con menos de 3 mediciones,
+el estimado fijo («estimado»); `python3 scripts/agenda.py medidas` lo lista. Cada video va a las cuatro plataformas. Nunca
+publiques: el usuario publica, tú preparas.
 
 1. **PLAN**
    - `python3 scripts/agenda.py plan [--desde AAAA-MM-DD]`. Arma `agenda/<AAAA-Wnn>/agenda.json` y `agenda.md`, llenando
@@ -46,7 +48,8 @@ pero el plan los estima. Cada video va a las cuatro plataformas. Nunca publiques
 4. **REVISIÓN**
    - `python3 scripts/agenda.py --check --listo` (AG1–AG10, exit 0) y `make validate`.
 5. **REPORTE**
-   - La tabla de `agenda.md` (día, hora, espacio, formato, pieza o tema, estado, cuándo producir, créditos) y los avisos.
+   - La tabla de `agenda.md` (día, hora, espacio, formato, pieza o tema, estado, cuándo producir, créditos) y los avisos;
+     di de dónde salen los minutos y los créditos (mediana medida o estimado; «solo agentes» = sin voz ni render).
    - **Producir hoy y mañana**: los comandos exactos, en orden. Lo de mañana, el día de antes, para historia, explica y
      departamento.
    - **Publicar hoy**: lo que imprime `python3 scripts/agenda.py hoy`, que trae:
@@ -54,7 +57,9 @@ pero el plan los estima. Cada video va a las cuatro plataformas. Nunca publiques
      - los bloques de `caption.md` que hay que copiar tal cual;
      - la pregunta de audiencia de YouTube.
    - Las piezas publicadas solo en algunas plataformas (`incompletas`), por si conviene completarlas.
-   - Recuérdale: tras publicar, `python3 scripts/agenda.py publicado <SLOT>`. Tras producir una pieza,
-     `python3 scripts/agenda.py producido <SLOT> --ruta <entrega>`.
+   - Recuérdale: tras publicar, `python3 scripts/agenda.py publicado <SLOT>`. Al registrar una pieza, `memoria.py` marca
+     solo su espacio como producido; si avisa que casan varios (o ninguno), `python3 scripts/agenda.py producido <SLOT>
+     --ruta <entrega>`. Y `python3 scripts/costo.py --registrar --pieza <id> --flujo <flujo> --run … --entrega <entrega>`
+     guarda lo que costó, para que las próximas órdenes lleven la mediana medida.
 
 Con `hoy`: solo `python3 scripts/agenda.py hoy` y el resumen. Si no hay agenda de la semana, corre primero el paso 1.

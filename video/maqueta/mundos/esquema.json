@@ -1,0 +1,54 @@
+{
+ "tipo": "esquema",
+ "clase": "mundo",
+ "cuando": "un lugar genérico (una ciudad, una carretera, el campo, la costa, una plaza) para mostrar un mecanismo",
+ "parametros": {
+  "receta": {
+   "tipo": "texto",
+   "requerido": true,
+   "valores": ["ciudad", "carretera", "campo", "costa", "plaza"],
+   "descripcion": "qué lugar arma: ciudad (cuadrícula de manzanas), carretera (una autopista que cruza una ciudad), campo, costa o plaza"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [0, 999999],
+   "defecto": 1,
+   "descripcion": "la misma semilla da el mismo lugar (alturas, parques, casas)"
+  },
+  "tamano_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [300, 6000],
+   "defecto": 1600,
+   "descripcion": "el lado del mundo en metros"
+  },
+  "carriles": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [2, 8],
+   "defecto": 4,
+   "descripcion": "carriles de la autopista de la receta carretera (la mitad en cada sentido)"
+  },
+  "manzana_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [40, 200],
+   "defecto": 90,
+   "descripcion": "el lado de una manzana"
+  },
+  "altura_max_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [6, 300],
+   "defecto": 60,
+   "descripcion": "la altura de los edificios más altos (en el centro)"
+  }
+ },
+ "escalas": ["esquema"],
+ "motores": ["three"],
+ "unidad_m": 1,
+ "camara": {"campo": "dist_m", "unidad": "m", "rango": [15, 5000], "despeje": 4, "cerca": 0.3, "lejos": 30000, "niebla": [900, 3.0, 3000, 9]},
+ "plano": {"y": -0.15, "lado": 30000},
+ "ejemplo": {"escala": "esquema", "receta": "carretera", "semilla": 7, "carriles": 4, "tamano_m": 1600}
+}

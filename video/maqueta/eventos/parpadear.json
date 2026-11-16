@@ -1,0 +1,30 @@
+{
+ "tipo": "parpadear",
+ "clase": "evento",
+ "cuando": "las luces de unos lugares titilan (el temblor que corta la luz)",
+ "parametros": {
+  "lugares": {
+   "tipo": "lugares",
+   "todos": true,
+   "requerido": false,
+   "defecto": "todos",
+   "descripcion": "«todos» o ids de luces de una pieza `luces`"
+  }
+ },
+ "escalas": [
+  "pais"
+ ],
+ "motores": [
+  "three",
+  "blender"
+ ],
+ "ejemplo": {
+  "t": 7.0,
+  "dur": 1.8,
+  "tipo": "parpadear",
+  "lugares": [
+   "guatemala",
+   "chimaltenango"
+  ]
+ }
+}

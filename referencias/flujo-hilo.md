@@ -39,3 +39,10 @@ editor la copia a `encuadre.idea_id` y `memoria.py` la marca `hecha` al registra
 - Narrativa, ganchos (`hook_tipo`), dato héroe, honestidad, alt-text: `referencias/narrativa.md`
 - Sistema visual y gate de render: `referencias/diseno/sistema.md`
 - Catálogo de gráficos, contrato `DATA`, flujo del visualista, checklist QA: `referencias/diseno/graficos.md`
+
+## `redes/`: cada tarjeta también en 4:5 y 9:16 (decisión del usuario, 2026-11-04)
+
+Cada hilo entrega, además de los PNG de X (1080×1080), la versión carrusel de cada tarjeta: `redes/4x5/` (1080×1350)
+y `redes/9x16/` (1080×1920), en el formato de `/video` (el titular como golpe arriba y la tarjeta en modo vertical). Lo
+arma `scripts/redes.py` con el motor de `/carrusel` y sus checks CA9–CA12; lo llama `ensamblar.py`, y `validate.py` lo
+exige como **H4** desde el 2026-11-04.

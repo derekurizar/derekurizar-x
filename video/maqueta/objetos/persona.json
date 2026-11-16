@@ -1,0 +1,21 @@
+{
+ "tipo": "persona",
+ "clase": "objeto",
+ "cuando": "una persona: quien camina por la calle, quien espera en la parada, la multitud de una plaza",
+ "parametros": {},
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "medidas": {
+  "largo_m": 0.5,
+  "ancho_m": 0.5,
+  "alto_m": 1.75
+ },
+ "ejemplo": {
+  "objeto": "persona"
+ }
+}

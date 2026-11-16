@@ -7,7 +7,10 @@ El cierre es la última pantalla: primero las **Conclusiones** (el `resumen` mie
 
 **El usuario elige el cierre** (2026-11-03): con el guion aprobado, el guionista escribe 5 opciones en `cierres.json`
 (`c1` = la del guion; las otras con otra frase final y otra forma o mecanismo) y la sesión pregunta antes de la voz
-(`cierres --opciones`, `--usar <id>` o `--propio "<texto>"`, id `cu`). Su referencia: «Y mientras tanto, los
+(`cierres --opciones`, `--usar <id>` o `--propio "<texto>"`, id `cu`). Desde el 2026-11-14, `--opciones` **prueba cada opción
+puesta en una copia con el gate completo** (narración + guion) y marca ✓ o `✗ <primera FALLA>`: solo se ofrecen las
+elegibles (pueden ser menos de 5). En una parte de serie que no es la última la forma es obligatoria (`puente`, SE6): las
+5 opciones son puentes. Su referencia: «Y mientras tanto, los
 guatemaltecos pasan tiempo en el tráfico y no con sus familias» (la consecuencia humana para quien vive el tema).
 
 **Por qué existe** (2026-10-23): los cinco primeros videos cerraron con el mismo molde, una pregunta sobre la vida del
@@ -112,7 +115,7 @@ contenido va en las conclusiones.
 | F4 | **Sin cebo**: ni «comenta», «etiqueta», «comparte», «escribe sí», «te leo», en la voz ni en pantalla | gate |
 | F5 | **No expone**: en un tema sensible (cárcel, violencia, delito, salud sexual o reproductiva, migración) la pregunta no es de `experiencia` ni toca la casa, la familia o «alguna vez» del espectador; el grupo vulnerable nunca es blanco («¿merecen…?», «¿qué harías con ellos?») | gate + crítico |
 | F6 | **Un remate no es un dato**: a lo más una cifra (cuántos lo viven) y nunca la del gancho. La `consecuencia` y el `legado` declaran `quien` (gente: familias, niños, nietos, conductores, presos…, tal cual en la frase) y `verbo` (lo que les pasa, conjugado, en la frase; en el legado, en presente); solo la consecuencia lleva `mecanismo` (quien, perdida, reloj, despues, espera) | gate |
-| F7 | **Rotación**: una pregunta nunca sigue a otra (si el video anterior cerró con pregunta, este cierra con remate); la `forma`, salvo `consecuencia` y `legado` (las normales), no repite la de los últimos 2 videos, y el `mecanismo` de consecuencia no repite el del último (`memoria/videos.json`; el digesto los lista en «Cierres recientes») | gate |
+| F7 | **Rotación**: una pregunta nunca sigue a otra (si el video anterior cerró con pregunta, este cierra con remate); la `forma`, salvo `consecuencia` y `legado` (las normales) y `puente` (obligatoria en las partes de serie), no repite la de las últimas 2 piezas **del feed, de cualquier flujo** (2026-11-14), y el `mecanismo` de consecuencia no repite el del último (`video.piezas_feed`; el digesto los lista en «Cierres recientes») | gate |
 | F9 | **No anuncia el final** (medido, /analyze-improve 2026-11-03): la última escena perdió 3–5× la mediana en 7 piezas, porque la gente se va en cuanto reconoce el final. Ni «Eso fue lo más importante de hoy», «Para terminar», «En resumen», «Mañana te cuento» ni «Gracias por ver». La voz del cierre ≤ 160 caracteres (≈ 10 s) y el último cuadro vuelve al gancho (bucle) | gate (`video.py`, N8 en `noticias.py`) |
 | F1 serie | La forma **`puente`** (`tipo` pregunta o remate) solo en una parte de `/serie` que no es la última: la frase final deja la pregunta que abre la parte siguiente (el `puente` del plan) sin anunciarla; en otro video, F1 falla. Tras ella, `cierre.invitacion` («Sígueme: en la segunda parte…», SE9) | gate (`video.reglas_cierre`) + SE6, SE9 (`serie.py`) |
 | F8 | **No afirma de más**: sin fatalismo («no hay nada que hacer», «nadie hace nada», «no tiene solución») y sin futuro de una pérdida («perderán», «morirán») salvo que `consecuencia.proyeccion` dé el id de una cifra que proyecte; lo que ya pasó va en pasado o presente («ya», «este año van») | gate |

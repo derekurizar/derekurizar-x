@@ -1,0 +1,992 @@
+{
+"set":"capital",
+"lugares":{
+"capital":{
+"nombre":"Capital",
+"lon":-90.525,
+"lat":14.615,
+"clase":"receta",
+"peso":1.0
+},
+"el-trebol":{
+"nombre":"El Trébol",
+"lon":-90.5356,
+"lat":14.6128,
+"clase":"receta",
+"peso":1.0
+},
+"zona-5":{
+"nombre":"Zona 5",
+"lon":-90.499264,
+"lat":14.62552,
+"clase":"quarter",
+"peso":0.7
+},
+"colonia-kaminal-juyu-1":{
+"nombre":"Colonia Kaminal Juyu 1",
+"lon":-90.54876,
+"lat":14.628016,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"oakland":{
+"nombre":"Oakland",
+"lon":-90.503804,
+"lat":14.596687,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-vista-hermosa-2":{
+"nombre":"Colonia Vista Hermosa 2",
+"lon":-90.494273,
+"lat":14.588607,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-vista-hermosa-i":{
+"nombre":"Colonia Vista Hermosa I",
+"lon":-90.492181,
+"lat":14.595948,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-el-maestro-ii":{
+"nombre":"Colonia El Maestro II",
+"lon":-90.494702,
+"lat":14.599623,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-el-maestro-i":{
+"nombre":"Colonia El Maestro I",
+"lon":-90.499401,
+"lat":14.59927,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"mercado-de-artesanias":{
+"nombre":"Mercado de Artesanías",
+"lon":-90.526702,
+"lat":14.596888,
+"clase":"attraction",
+"peso":0.5
+},
+"colonia-el-carmen":{
+"nombre":"Colonia El Carmen",
+"lon":-90.490413,
+"lat":14.649135,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"centro-hospitalario-la-paz-zona-10":{
+"nombre":"Centro Hospitalario La Paz - Zona 10",
+"lon":-90.505469,
+"lat":14.61052,
+"clase":"hospital",
+"peso":0.5
+},
+"hospital-los-cedros":{
+"nombre":"Hospital Los Cedros",
+"lon":-90.51115,
+"lat":14.646049,
+"clase":"hospital",
+"peso":0.5
+},
+"hospital-santa-margarita":{
+"nombre":"Hospital Santa Margarita",
+"lon":-90.516882,
+"lat":14.638478,
+"clase":"hospital",
+"peso":0.5
+},
+"hospital-privado-la-asuncion":{
+"nombre":"Hospital Privado La Asuncion",
+"lon":-90.503537,
+"lat":14.624131,
+"clase":"hospital",
+"peso":0.5
+},
+"sanatorio-nuestra-senora-de-fatima":{
+"nombre":"Sanatorio Nuestra Señora de Fátima",
+"lon":-90.542473,
+"lat":14.602297,
+"clase":"hospital",
+"peso":0.5
+},
+"zona-15":{
+"nombre":"Zona 15",
+"lon":-90.492226,
+"lat":14.591608,
+"clase":"quarter",
+"peso":0.7
+},
+"fundacion-pediatrica-guatemalteca":{
+"nombre":"Fundación Pediátrica Guatemalteca",
+"lon":-90.514686,
+"lat":14.647884,
+"clase":"hospital",
+"peso":0.5
+},
+"iglesia-centrtal-rios-de-agua-viva-evangelica-pentecostes":{
+"nombre":"Iglesia Centrtal Ríos de Agua Viva Evangélica Pentecostés",
+"lon":-90.546098,
+"lat":14.596616,
+"clase":"townhall",
+"peso":0.5
+},
+"igss":{
+"nombre":"IGSS",
+"lon":-90.532338,
+"lat":14.608273,
+"clase":"hospital",
+"peso":0.5
+},
+"museo-popol-vuh":{
+"nombre":"Museo Popol Vuh",
+"lon":-90.50514,
+"lat":14.608027,
+"clase":"museum",
+"peso":0.5
+},
+"museo-de-la-iglesia-de-san-francisco":{
+"nombre":"Museo de la Iglesia de San Francisco",
+"lon":-90.514061,
+"lat":14.635863,
+"clase":"museum",
+"peso":0.5
+},
+"mini-muni":{
+"nombre":"Mini Muni",
+"lon":-90.518683,
+"lat":14.600482,
+"clase":"townhall",
+"peso":0.5
+},
+"condominio-firenze":{
+"nombre":"Condominio Firenze",
+"lon":-90.499053,
+"lat":14.589858,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"escuela-de-negocios-ufm":{
+"nombre":"Escuela de Negocios UFM",
+"lon":-90.505769,
+"lat":14.604225,
+"clase":"university",
+"peso":0.5
+},
+"colonia-ciudad-de-plata":{
+"nombre":"Colonia Ciudad de Plata",
+"lon":-90.549706,
+"lat":14.640844,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-villa-linda-3":{
+"nombre":"Colonia Villa Linda 3",
+"lon":-90.546585,
+"lat":14.643363,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-nino-dormido":{
+"nombre":"Colonia Niño Dormido",
+"lon":-90.540516,
+"lat":14.645225,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-el-incienso":{
+"nombre":"Colonia El Incienso",
+"lon":-90.541707,
+"lat":14.643235,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-4-de-febrero":{
+"nombre":"Colonia 4 de Febrero",
+"lon":-90.537829,
+"lat":14.643708,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"las-torres":{
+"nombre":"Las Torres",
+"lon":-90.533335,
+"lat":14.645006,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-kjell-eugenio-laugerud":{
+"nombre":"Colonia Kjell Eugenio Laugerud",
+"lon":-90.537263,
+"lat":14.647038,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-madre-dormida":{
+"nombre":"Colonia Madre Dormida",
+"lon":-90.532171,
+"lat":14.648832,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-ciudad-de-plata-2":{
+"nombre":"Colonia Ciudad de Plata 2",
+"lon":-90.548439,
+"lat":14.638716,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"kaminal-juyu-2":{
+"nombre":"Kaminal Juyú 2",
+"lon":-90.544178,
+"lat":14.632855,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-quinta-samayoa":{
+"nombre":"Colonia Quinta Samayoa",
+"lon":-90.546019,
+"lat":14.625359,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"recidenciales-villas-de-san-juan":{
+"nombre":"Recidenciales Villas de San Juan",
+"lon":-90.549048,
+"lat":14.626896,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"roosevelt":{
+"nombre":"Roosevelt",
+"lon":-90.542207,
+"lat":14.613568,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-castillo-lara":{
+"nombre":"Colonia Castillo Lara",
+"lon":-90.539827,
+"lat":14.624287,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-san-vicente":{
+"nombre":"Colonia San Vicente",
+"lon":-90.540191,
+"lat":14.627548,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"zona-7":{
+"nombre":"Zona 7",
+"lon":-90.548247,
+"lat":14.628774,
+"clase":"quarter",
+"peso":0.7
+},
+"colonia-la-verbena":{
+"nombre":"Colonia La Verbena",
+"lon":-90.536835,
+"lat":14.628492,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-landivar":{
+"nombre":"Colonia Landívar",
+"lon":-90.536498,
+"lat":14.621766,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-villas-de-mariscal":{
+"nombre":"Colonia Villas de Mariscal",
+"lon":-90.549365,
+"lat":14.606989,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-valles-de-almeria":{
+"nombre":"Colonia Valles de Almeria",
+"lon":-90.549348,
+"lat":14.605474,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-6-de-octubre":{
+"nombre":"Colonia 6 de Octubre",
+"lon":-90.537391,
+"lat":14.632388,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"hospital-de-rehabilitacion-doctor-jorge-von-ahn":{
+"nombre":"Hospital de Rehabilitación Doctor Jorge Von Ahn",
+"lon":-90.521917,
+"lat":14.637158,
+"clase":"hospital",
+"peso":0.5
+},
+"aprofam-zona-5":{
+"nombre":"APROFAM, zona 5",
+"lon":-90.502856,
+"lat":14.623546,
+"clase":"hospital",
+"peso":0.5
+},
+"museo-del-ejercito-de-guatemala":{
+"nombre":"Museo del Ejército de Guatemala",
+"lon":-90.516631,
+"lat":14.627881,
+"clase":"museum",
+"peso":0.5
+},
+"plaza-del-comercio-popular":{
+"nombre":"Plaza del Comercio Popular",
+"lon":-90.511973,
+"lat":14.62963,
+"clase":"marketplace",
+"peso":0.5
+},
+"edificio-academico-ufm":{
+"nombre":"Edificio Académico UFM",
+"lon":-90.506223,
+"lat":14.605091,
+"clase":"university",
+"peso":0.5
+},
+"instituto-de-cancerologia-y-hospital-doctor-bernatdeo-del-valle-s-incan":{
+"nombre":"Instituto de Cancerología y Hospital Doctor Bernatdeo del Valle S - INCAN",
+"lon":-90.54104,
+"lat":14.616357,
+"clase":"hospital",
+"peso":0.5
+},
+"condominio-la-joya":{
+"nombre":"Condominio La Joya",
+"lon":-90.493915,
+"lat":14.604635,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-jardines-de-minerva":{
+"nombre":"Colonia Jardines de Minerva",
+"lon":-90.498506,
+"lat":14.603815,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-villa-el-pedregal":{
+"nombre":"Colonia Villa El Pedregal",
+"lon":-90.496983,
+"lat":14.602123,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-covias":{
+"nombre":"Colonia Covías",
+"lon":-90.49352,
+"lat":14.622042,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-vivibien":{
+"nombre":"Colonia Vivibien",
+"lon":-90.500242,
+"lat":14.622852,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-mariscal":{
+"nombre":"Colonia Mariscal",
+"lon":-90.5499,
+"lat":14.606587,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-lomas-de-pamplona":{
+"nombre":"Colonia Lomas de Pamplona",
+"lon":-90.535078,
+"lat":14.600308,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-miles-rock":{
+"nombre":"Colonia Miles Rock",
+"lon":-90.53739,
+"lat":14.596688,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-23-de-julio":{
+"nombre":"Colonia 23 de Julio",
+"lon":-90.539311,
+"lat":14.597078,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-forestal":{
+"nombre":"Colonia Forestal",
+"lon":-90.533839,
+"lat":14.590033,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-bosques-de-villa-linda":{
+"nombre":"Colonia Bosques de Villa Linda",
+"lon":-90.545181,
+"lat":14.644868,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-julio-salazar":{
+"nombre":"Colonia Julio Salazar",
+"lon":-90.544939,
+"lat":14.641387,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-la-foresta":{
+"nombre":"Colonia La Foresta",
+"lon":-90.520494,
+"lat":14.649637,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-bran":{
+"nombre":"Colonia Bran",
+"lon":-90.522596,
+"lat":14.649657,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"vision-integral":{
+"nombre":"Visión Integral",
+"lon":-90.523812,
+"lat":14.606598,
+"clase":"hospital",
+"peso":0.5
+},
+"unidad-nacional-de-oncologia-pediatrica":{
+"nombre":"Unidad Nacional De Oncologia Pediatrica",
+"lon":-90.543872,
+"lat":14.611825,
+"clase":"hospital",
+"peso":0.5
+},
+"centro-de-salud-zona-3":{
+"nombre":"Centro de Salud, zona 3",
+"lon":-90.528373,
+"lat":14.62572,
+"clase":"hospital",
+"peso":0.5
+},
+"igss-de-jubilados":{
+"nombre":"IGSS De Jubilados",
+"lon":-90.533162,
+"lat":14.608941,
+"clase":"hospital",
+"peso":0.5
+},
+"igss-de-rehabilitacion":{
+"nombre":"IGSS De Rehabilitación",
+"lon":-90.532273,
+"lat":14.606979,
+"clase":"hospital",
+"peso":0.5
+},
+"unicar":{
+"nombre":"UNICAR",
+"lon":-90.543465,
+"lat":14.611406,
+"clase":"hospital",
+"peso":0.5
+},
+"asentamiento-el-esfuerzo":{
+"nombre":"Asentamiento El Esfuerzo",
+"lon":-90.535418,
+"lat":14.644463,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"centro-de-salud-zona-1":{
+"nombre":"Centro de Salud Zona 1",
+"lon":-90.510754,
+"lat":14.634017,
+"clase":"hospital",
+"peso":0.5
+},
+"las-calaveras":{
+"nombre":"Las Calaveras",
+"lon":-90.525045,
+"lat":14.640797,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"kaji-tulam-casa-de-la-memoria":{
+"nombre":"Kaji Tulam Casa de la Memoria",
+"lon":-90.513141,
+"lat":14.647191,
+"clase":"museum",
+"peso":0.5
+},
+"aprofan":{
+"nombre":"APROFAN",
+"lon":-90.520534,
+"lat":14.642119,
+"clase":"hospital",
+"peso":0.5
+},
+"zona-10":{
+"nombre":"Zona 10",
+"lon":-90.510754,
+"lat":14.602933,
+"clase":"quarter",
+"peso":0.7
+},
+"casa-mima":{
+"nombre":"Casa Mima",
+"lon":-90.512725,
+"lat":14.634412,
+"clase":"museum",
+"peso":0.5
+},
+"zona-1":{
+"nombre":"Zona 1",
+"lon":-90.510237,
+"lat":14.636892,
+"clase":"quarter",
+"peso":0.7
+},
+"zona-3":{
+"nombre":"Zona 3",
+"lon":-90.526468,
+"lat":14.631275,
+"clase":"quarter",
+"peso":0.7
+},
+"zona-4":{
+"nombre":"Zona 4",
+"lon":-90.516727,
+"lat":14.619415,
+"clase":"quarter",
+"peso":0.7
+},
+"zona-8":{
+"nombre":"Zona 8",
+"lon":-90.526018,
+"lat":14.617602,
+"clase":"quarter",
+"peso":0.7
+},
+"zona-9":{
+"nombre":"Zona 9",
+"lon":-90.520867,
+"lat":14.607117,
+"clase":"quarter",
+"peso":0.7
+},
+"colonia-ciudad-de-plata-1":{
+"nombre":"Colonia Ciudad de Plata 1",
+"lon":-90.548767,
+"lat":14.636177,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-villa-linda-2":{
+"nombre":"Colonia Villa Linda 2",
+"lon":-90.548859,
+"lat":14.642113,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-las-margaritas":{
+"nombre":"Colonia Las Margaritas",
+"lon":-90.535959,
+"lat":14.648516,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-martinez-de-lejarza":{
+"nombre":"Colonia Martínez de Lejarza",
+"lon":-90.535261,
+"lat":14.646141,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"liga-guatemalteca-del-corazon":{
+"nombre":"Liga Guatemalteca del Corazón",
+"lon":-90.518202,
+"lat":14.63467,
+"clase":"hospital",
+"peso":0.5
+},
+"liga-guatemalteca-del-corazon-central":{
+"nombre":"Liga Guatemalteca del Corazón - Central.",
+"lon":-90.518517,
+"lat":14.635043,
+"clase":"hospital",
+"peso":0.5
+},
+"museo-del-holocausto-guatemala":{
+"nombre":"Museo del Holocausto Guatemala",
+"lon":-90.513277,
+"lat":14.647091,
+"clase":"museum",
+"peso":0.5
+},
+"santa-rita":{
+"nombre":"Santa Rita",
+"lon":-90.528955,
+"lat":14.647209,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-aguilar":{
+"nombre":"Colonia Aguilar",
+"lon":-90.532866,
+"lat":14.619233,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"ciudad-olimpica":{
+"nombre":"Ciudad Olímpica",
+"lon":-90.510827,
+"lat":14.624445,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"hospital-inside-health":{
+"nombre":"Hospital Inside Health",
+"lon":-90.51416,
+"lat":14.592743,
+"clase":"hospital",
+"peso":0.5
+},
+"igss-de-autonomia-consulta-externa-de-enfermedades":{
+"nombre":"Igss de autonomía consulta externa de enfermedades",
+"lon":-90.52789,
+"lat":14.604107,
+"clase":"hospital",
+"peso":0.5
+},
+"oftalmo":{
+"nombre":"Oftalmó",
+"lon":-90.510238,
+"lat":14.608204,
+"clase":"hospital",
+"peso":0.5
+},
+"igss-zona-9-biopsias":{
+"nombre":"Igss zona 9 biopsias",
+"lon":-90.517308,
+"lat":14.605098,
+"clase":"hospital",
+"peso":0.5
+},
+"zher-medical":{
+"nombre":"Zher Medical",
+"lon":-90.509691,
+"lat":14.611667,
+"clase":"hospital",
+"peso":0.5
+},
+"hospital-miraflores":{
+"nombre":"Hospital Miraflores",
+"lon":-90.514568,
+"lat":14.592619,
+"clase":"hospital",
+"peso":0.5
+},
+"pamplona":{
+"nombre":"Pamplona",
+"lon":-90.5308,
+"lat":14.602939,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"la-reformita":{
+"nombre":"La Reformita",
+"lon":-90.542011,
+"lat":14.603648,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"barrio-el-gallito":{
+"nombre":"Barrio El Gallito",
+"lon":-90.526237,
+"lat":14.636211,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-roosevelt":{
+"nombre":"Colonia Roosevelt",
+"lon":-90.546992,
+"lat":14.614916,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-carabanchel":{
+"nombre":"Colonia Carabanchel",
+"lon":-90.54968,
+"lat":14.61657,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"canton-tivoli":{
+"nombre":"Cantón Tivoli",
+"lon":-90.522043,
+"lat":14.603931,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"la-trinidad":{
+"nombre":"La Trinidad",
+"lon":-90.528465,
+"lat":14.641025,
+"clase":"suburb",
+"peso":0.8
+},
+"colonia-saravia":{
+"nombre":"Colonia Saravia",
+"lon":-90.491455,
+"lat":14.624863,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"la-limonada":{
+"nombre":"La Limonada",
+"lon":-90.500725,
+"lat":14.630334,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"asentamiento-san-jose-el-esfuerzo":{
+"nombre":"Asentamiento San José El Esfuerzo",
+"lon":-90.500038,
+"lat":14.628597,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-arrivillaga":{
+"nombre":"Colonia Arrivillaga",
+"lon":-90.495006,
+"lat":14.624621,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-la-palmita":{
+"nombre":"Colonia La Palmita",
+"lon":-90.504498,
+"lat":14.625682,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-providencia":{
+"nombre":"Colonia Providencia",
+"lon":-90.502261,
+"lat":14.616274,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-santa-ana":{
+"nombre":"Colonia Santa Ana",
+"lon":-90.500123,
+"lat":14.61956,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"barrio-gerona":{
+"nombre":"Barrio Gerona",
+"lon":-90.504442,
+"lat":14.633492,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-santa-rosa":{
+"nombre":"Colonia Santa Rosa",
+"lon":-90.547934,
+"lat":14.590678,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"santa-elisa":{
+"nombre":"Santa Elisa",
+"lon":-90.543942,
+"lat":14.586778,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"oakland-ii":{
+"nombre":"Oakland II",
+"lon":-90.503526,
+"lat":14.593759,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"barrio-moderno":{
+"nombre":"Barrio Moderno",
+"lon":-90.50615,
+"lat":14.649154,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"monja-blanca":{
+"nombre":"Monja Blanca",
+"lon":-90.490923,
+"lat":14.638882,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"barrio-san-pedrito":{
+"nombre":"Barrio San Pedrito",
+"lon":-90.507708,
+"lat":14.619269,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"canton-exposicion":{
+"nombre":"Cantón Exposición",
+"lon":-90.515919,
+"lat":14.618728,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"bethania":{
+"nombre":"Bethania",
+"lon":-90.533999,
+"lat":14.647796,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"santo-domingo":{
+"nombre":"Santo Domingo",
+"lon":-90.490129,
+"lat":14.635091,
+"clase":"suburb",
+"peso":0.8
+},
+"los-angeles":{
+"nombre":"Los Ángeles",
+"lon":-90.495547,
+"lat":14.644561,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"la-ruedita":{
+"nombre":"La Ruedita",
+"lon":-90.523336,
+"lat":14.64217,
+"clase":"suburb",
+"peso":0.8
+},
+"el-cerrito":{
+"nombre":"El Cerrito",
+"lon":-90.528147,
+"lat":14.649467,
+"clase":"suburb",
+"peso":0.8
+},
+"las-victorias":{
+"nombre":"Las Victorias",
+"lon":-90.493678,
+"lat":14.646925,
+"clase":"suburb",
+"peso":0.8
+},
+"el-administrador":{
+"nombre":"El Administrador",
+"lon":-90.505371,
+"lat":14.628703,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"asentamiento-lourdes":{
+"nombre":"Asentamiento Lourdes",
+"lon":-90.507725,
+"lat":14.62597,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"5-de-octubre":{
+"nombre":"5 de Octubre",
+"lon":-90.503094,
+"lat":14.630353,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"centro-historico":{
+"nombre":"Centro Histórico",
+"lon":-90.51408,
+"lat":14.638564,
+"clase":"suburb",
+"peso":0.8
+},
+"el-eden":{
+"nombre":"El Edén",
+"lon":-90.497138,
+"lat":14.635136,
+"clase":"suburb",
+"peso":0.8
+},
+"jardines-de-la-asuncion":{
+"nombre":"Jardines de la Asunción",
+"lon":-90.494399,
+"lat":14.632816,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-20-de-octubre":{
+"nombre":"Colonia 20 de Octubre",
+"lon":-90.50391,
+"lat":14.61706,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"canton-guarda-viejo":{
+"nombre":"Cantón Guarda Viejo",
+"lon":-90.526866,
+"lat":14.616606,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-abril":{
+"nombre":"Colonia Abril",
+"lon":-90.497559,
+"lat":14.631583,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-25-de-junio":{
+"nombre":"Colonia 25 de Junio",
+"lon":-90.507887,
+"lat":14.624001,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-tecun-uman":{
+"nombre":"Colonia Tecun Umán",
+"lon":-90.501034,
+"lat":14.607056,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"villa-de-guadalupe":{
+"nombre":"Villa de Guadalupe",
+"lon":-90.507841,
+"lat":14.591547,
+"clase":"neighbourhood",
+"peso":0.6
+},
+"colonia-el-progreso":{
+"nombre":"Colonia El Progreso",
+"lon":-90.539631,
+"lat":14.612128,
+"clase":"neighbourhood",
+"peso":0.6
+}
+}
+}

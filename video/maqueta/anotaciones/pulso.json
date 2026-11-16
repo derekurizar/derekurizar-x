@@ -1,0 +1,59 @@
+{
+ "tipo": "pulso",
+ "clase": "anotacion",
+ "cuando": "anillos que pulsan sobre algo para decir «este manda una señal» o «aquí»: un carro, varios carros, un lugar",
+ "parametros": {
+  "sobre": {
+   "tipo": "anclas",
+   "requerido": true,
+   "descripcion": "dónde pulsa: lugares, {actor: id} o vehículos de un flujo ({flujo: id, cerca: lugar, t: s, cuantos: k})",
+   "min": 1
+  },
+  "radio_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "descripcion": "hasta dónde se abre cada anillo (metros en el suelo)",
+   "rango": [
+    1,
+    100000
+   ],
+   "defecto": 14
+  },
+  "periodo_s": {
+   "tipo": "numero",
+   "requerido": false,
+   "descripcion": "cada cuánto sale un anillo",
+   "rango": [
+    0.4,
+    4
+   ],
+   "defecto": 1.4
+  },
+  "anillos": {
+   "tipo": "entero",
+   "requerido": false,
+   "descripcion": "anillos vivos a la vez",
+   "rango": [
+    1,
+    3
+   ],
+   "defecto": 2
+  }
+ },
+ "escalas": [
+  "esquema",
+  "ciudad",
+  "pais"
+ ],
+ "motores": [
+  "three"
+ ],
+ "ejemplo": {
+  "t": 1,
+  "hasta": 4,
+  "tipo": "pulso",
+  "sobre": [
+   "centro"
+  ]
+ }
+}

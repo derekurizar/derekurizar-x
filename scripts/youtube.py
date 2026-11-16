@@ -125,6 +125,16 @@ def leer(p):
         return json.load(fh)
 
 
+# Lo que pasa al leer los datos de un gate: el archivo no está, no es JSON o es JSON con otra forma (= mesa.DATOS_ILEGIBLES).
+DATOS_ILEGIBLES = (OSError, ValueError, LookupError, TypeError, AttributeError)
+
+
+def aviso_datos(gate, que, ex):
+    """Un gate se queda sin sus datos: se dice cuál y por qué (AVISO por stderr, una vez por proceso), nunca se calla."""
+    import mesa as MS   # aquí y no arriba: mesa.py importa este módulo dentro de sus funciones
+    return MS.aviso_datos(None, gate, que, ex)
+
+
 def escribir(p, obj):
     os.makedirs(os.path.dirname(os.path.abspath(p)), exist_ok=True)
     with open(p, "w", encoding="utf-8") as fh:
@@ -648,12 +658,20 @@ def silencio_de(Y):
 
 
 def hechos_serie(Y):
-    """{id: hecho} de la cronología verificada de la serie (historia.json del TRABAJO base)."""
+    """{id: hecho} de la cronología verificada de la serie (historia.json del TRABAJO base). Sin historia.json (un flujo sin
+    cronología) no hay hechos; si está y no se puede leer, se avisa: los gates que cotejan con los hechos quedan sin ellos."""
     try:
-        H = leer(os.path.join(RAIZ, Y["base"], "historia.json"))
-    except (OSError, ValueError, TypeError):
+        f = os.path.join(RAIZ, Y["base"], "historia.json")
+    except TypeError:   # sin TRABAJO base
         return {}
-    return {h["id"]: h for h in H.get("hechos") or []}
+    if not os.path.exists(f):
+        return {}
+    try:
+        return {h["id"]: h for h in leer(f).get("hechos") or []}
+    except DATOS_ILEGIBLES as ex:
+        aviso_datos("YT3/YT16", "no se pudieron leer los hechos verificados (%s); lo que una unión o una pieza diga solo pasa si la voz "
+                                "lo dice" % os.path.relpath(f, RAIZ), ex)
+        return {}
 
 
 def fotos_serie(Y):
@@ -669,15 +687,22 @@ def fotos_serie(Y):
     return out
 
 
-def valores_de(Y):
+def valores_de(Y, sin_leer=None):
+    """Las cifras verificadas de todas las partes de la serie: [(valor, factor de la unidad)] (VD.valores_respaldo). Una
+    parte cuyos datos no se pueden leer no se calla: queda en `sin_leer` [(trabajo, error)] si se pasa la lista (mesa.revisar
+    la vuelve aviso de su gate) o sale como AVISO; sin sus cifras, YT3, YT10 e YT16 no tienen contra qué cotejar un número."""
     vals = []
     for p in Y["partes"]:
         try:
             st = leer(os.path.join(RAIZ, p["trabajo"], "video.json"))
             v, _, _ = VD.valores_respaldo(st["hilo"])
             vals += v
-        except (OSError, ValueError, KeyError):
-            continue
+        except DATOS_ILEGIBLES as ex:
+            donde = (p.get("trabajo") if isinstance(p, dict) else None) or "una parte sin `trabajo`"
+            if sin_leer is not None:
+                sin_leer.append((donde, ex))
+            else:
+                aviso_datos("YT3/YT10", "no se pudo leer el respaldo de las cifras de %s; los números que solo estén ahí no se cotejan" % donde, ex)
     return vals
 
 
@@ -2425,6 +2450,8 @@ def cmd_entregar(a):
 
 # ---------- main ----------
 def main():
+    if len(sys.argv) > 1 and sys.argv[1] == "producir":   # la cadena de producción común y reanudable (scripts/producir.py)
+        return subprocess.run([sys.executable, os.path.join(RAIZ, "scripts", "producir.py")] + sys.argv[2:], cwd=RAIZ).returncode
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0], formatter_class=argparse.RawDescriptionHelpFormatter, epilog=__doc__)
     sub = ap.add_subparsers(dest="cmd")
     q = sub.add_parser("preparar")

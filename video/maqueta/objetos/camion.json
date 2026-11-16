@@ -1,0 +1,21 @@
+{
+ "tipo": "camion",
+ "clase": "objeto",
+ "cuando": "un camión: la carga en una carretera, el bloqueo de una vía, el más lento del tráfico",
+ "parametros": {},
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "medidas": {
+  "largo_m": 10.0,
+  "ancho_m": 2.5,
+  "alto_m": 3.6
+ },
+ "ejemplo": {
+  "objeto": "camion"
+ }
+}

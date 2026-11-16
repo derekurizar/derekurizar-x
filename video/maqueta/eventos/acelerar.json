@@ -1,0 +1,59 @@
+{
+ "tipo": "acelerar",
+ "clase": "evento",
+ "cuando": "el tráfico vuelve a avanzar (se suelta la cola de un tramo frenado) o todo el flujo cambia de velocidad",
+ "parametros": {
+  "flujo": {
+   "tipo": "pieza",
+   "requerido": true,
+   "descripcion": "el flujo",
+   "piezas": [
+    "flujo"
+   ]
+  },
+  "en": {
+   "tipo": "posicion",
+   "requerido": false,
+   "descripcion": "el tramo que se suelta (el de un frenar); sin él, cambia la velocidad de todo el flujo"
+  },
+  "longitud_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "descripcion": "el largo del tramo, hacia adelante desde `en`",
+   "rango": [
+    5,
+    3000
+   ],
+   "defecto": 60
+  },
+  "vel_kmh": {
+   "tipo": "numero",
+   "requerido": true,
+   "descripcion": "la velocidad nueva; `dur` es lo que tardan en llegar a ella",
+   "rango": [
+    0,
+    200
+   ]
+  },
+  "carriles": {
+   "tipo": "lista",
+   "requerido": false,
+   "descripcion": "qué carriles del flujo (por defecto, todos)"
+  }
+ },
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "ejemplo": {
+  "t": 9,
+  "dur": 2,
+  "tipo": "acelerar",
+  "flujo": "trafico",
+  "en": "60%",
+  "vel_kmh": 70
+ }
+}

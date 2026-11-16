@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "_comentario": "Caso de prueba del mundo «ciudad» (set capital: el centro de la Ciudad de Guatemala, datos de OpenStreetMap): la cámara baja desde arriba de la ciudad hasta las torres de la zona 10 y resalta un edificio. No es un video: los textos son de relleno.",
+  "estilo": "noche",
+  "paleta": "obsidiana",
+  "fps": 30,
+  "duracion_s": 12.0,
+  "protagonista": "edificios",
+  "mundo": {
+    "escala": "ciudad",
+    "set": "capital",
+    "exageracion": 1.5,
+    "lugares": {
+      "torre": {"lon": -90.51543, "lat": 14.59923, "nombre": "Dubai Center"}
+    },
+    "piezas": [
+      {"id": "parques", "tipo": "zona", "area": "parques", "tono": "verde", "opacidad": 0.5, "borde": false},
+      {"id": "agua", "tipo": "agua"},
+      {"id": "calles", "tipo": "calles"},
+      {"id": "bolivar", "tipo": "carretera", "camino": "bolivar", "carriles": 4},
+      {"id": "edificios", "tipo": "edificios"}
+    ]
+  },
+  "camara": [
+    {"t": 0.0, "mira": "capital", "dist_m": 6000, "azimut": 0, "elevacion": 62},
+    {"t": 4.0, "mira": "el-trebol", "dist_m": 2000, "azimut": -20, "elevacion": 44},
+    {"t": 8.0, "mira": "torre", "dist_m": 800, "azimut": 15, "elevacion": 36},
+    {"t": 12.0, "mira": "torre", "dist_m": 700, "azimut": 22, "elevacion": 36}
+  ],
+  "eventos": [
+    {"t": 0.0, "dur": 2.6, "tipo": "resaltar", "lugar": "capital"},
+    {"t": 3.2, "dur": 2.6, "tipo": "resaltar", "pieza": "bolivar", "elemento": "el-trebol"},
+    {"t": 7.0, "dur": 2.0, "tipo": "resaltar", "pieza": "edificios", "elemento": "torre"}
+  ],
+  "marcas": [
+    {"t": 3.0, "hasta": 5.2, "lugar": "el-trebol", "texto": "El Trébol"},
+    {"t": 7.0, "hasta": 8.9, "lugar": "torre", "texto": "Zona 10", "sub": "prueba", "alto": 150}
+  ],
+  "capa": {
+    "titulares": [
+      {"t": 0.0, "hasta": 3.0, "kicker": "Maqueta de prueba", "texto": "El centro de la capital"},
+      {"t": 5.0, "hasta": 9.0, "kicker": "Segundo titular", "texto": "Hasta las torres"}
+    ],
+    "cifras": [],
+    "palabras": [],
+    "progreso": {"actos": [0.0, 5.0]},
+    "seguir": {"t": 3.0, "dur": 2.0},
+    "pie": "Relieve: Mapzen Terrain Tiles · Calles, edificios y lugares: © OpenStreetMap (ODbL)",
+    "handle": "@DerekUrizar",
+    "cierre": {"t": 9.0, "frase": "Esto es una prueba.", "redes": [{"nombre": "TikTok", "handle": "@derekurizargt"}, {"nombre": "X", "handle": "@DerekUrizar"}]}
+  }
+}

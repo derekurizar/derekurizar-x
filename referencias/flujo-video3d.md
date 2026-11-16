@@ -1,9 +1,11 @@
 # /video-3d: la maqueta que vuela
 
-Un video vertical 100 % en 3D (9:16 + 4:5, 45–75 s): un mundo simple (el relieve del país, una ciudad, una plaza)
+Un video vertical 100 % en 3D (9:16 + 4:5, de 45 s a 3 min como los demás videos; `--duracion S`, 20–180, por defecto 45; C3D9 falla por encima de 180 s estimados o reales): un mundo simple (el relieve del país, una ciudad, una plaza)
 que una cámara recorre mientras la voz cuenta, con una capa 2D encima (titular, pines que siguen al 3D, cifras,
-subtítulos). Sirve cuando **el lugar es la información**: una falla que cruza el país, una ruta, una cuenca, un
-cierre vial. Si el tema no pasa en un lugar, es otro flujo.
+subtítulos). Sirve cuando **el lugar o el mecanismo se entienden mejor viéndolos moverse** (2026-11-15; antes: «cuando el
+lugar es la información»): una falla que cruza el país, una ruta, una cuenca, un cierre vial; o cómo se forma una cola,
+cómo viaja una señal, cómo se llena un embalse (un mundo `esquema`, genérico, con el aviso «Esquema»). Si ni el lugar ni
+el mecanismo lo piden, es otro flujo.
 
 Decisiones del usuario (2026-11-14):
 
@@ -15,7 +17,9 @@ Decisiones del usuario (2026-11-14):
 4. **El gancho manda y todo concuerda:** lo que se ve es lo que la voz está diciendo.
 5. Otros flujos (/historia, /serie, /explica, /youtube-long) pueden alojar una maqueta dentro de su mesa de archivo:
    el realizador la declara en `plano.json` y se renderiza con el **modo pieza** del motor (`maqueta3d.py pieza`, el
-   mundo y sus pines en el lienzo que pida el anfitrión). Ver «La maqueta» en `referencias/flujo-mesa.md`.
+   mundo y sus pines en el lienzo que pida el anfitrión). Ver «La maqueta» en `referencias/flujo-mesa.md`. Una maqueta
+   de escala `esquema` puede explicar un mecanismo dentro de la mesa (como una animación `explica`); lo que el catálogo
+   no tiene, el realizador lo pide con un brief y el Workflow `plano` lo pasa al constructor una vez.
 6. **«Maqueta · no a escala» no es obligatorio.** El aviso sale solo cuando el guion lo pide (`aviso`); el pie con las
    fuentes de los geodatos sí va siempre.
 
@@ -28,16 +32,60 @@ entrega) y `scripts/maqueta3d.py` (gates M3D, cuadros sueltos, render).
 |---|---|---|
 | 1 | Preparar (con `--desde` reutiliza las cifras verificadas de una pieza ya investigada) | `video3d.py preparar <slug> --tema "…" --musica-tema <tema>` |
 | 2 | Investigar y verificar lo que falte, incluidos los geodatos (qué se dibuja y de dónde sale) | agentes de /historia; `video3d.py datos --sumar` |
-| 3 | Dirección: la idea visual, el estilo y el mundo | la sesión, con `video3d.py digesto` |
-| 4 | Ganchos: 5 candidatos con su cuadro renderizado; **el usuario elige** | `ganchos --check --cuadros` → `ganchos --usar <id>` |
-| 5 | Guion: la narración de corrido primero; luego las escenas | `guion --check` (C3D1–C3D11, V2–V4, M3D) |
-| 6 | Storyboard: un cuadro por clave de cámara y evento, antes de gastar créditos | `storyboard` |
-| 7 | Crítico (retención y concordancia) y cierre: **el usuario elige el cierre** | agente `video-critico` en «Modo 3D» (su guía de rol) |
-| 8 | Voz (ElevenLabs, El Faraon 4) | `voz` → MCP → `descargar --estado` (o `--nodos` si el estado llegó en el chat) |
+| 3 | Dirección visual por frase (idea visual, criterio, escala, estilo, mundo, el verbo del catálogo por oración); lo que falta, al constructor | Workflow `video3d`: `video3d-director` → `maqueta-constructor` |
+| 4 | Ganchos: 5 candidatos con su cuadro renderizado; el crítico recomienda y **el usuario elige** (y el estilo, si la confianza es baja) | Workflow: `ganchos --check --cuadros` → para con `elegir_gancho` |
+| 5 | Guion: la narración de corrido primero; luego las escenas y el `caption` por plataforma | Workflow: el director, `guion --check` (C3D1–C3D11, V2–V5, M3D) |
+| 6 | Storyboard: un cuadro por clave de cámara y evento, antes de gastar créditos | Workflow: `storyboard` |
+| 7 | Crítico (retención y concordancia) y cierre: **el usuario elige el cierre** | Workflow: `video-critico` en «Modo 3D» → 5 cierres (`elegir_cierre`) |
+| 8 | Voz (ElevenLabs, El Faraon 4) y escucha independiente (V11) | `voz` → MCP → `descargar --estado` (o `--nodos` si el estado llegó en el chat) → `escuchar` |
 | 9 | Tiempos reales | `tiempos` |
 | 10 | Render en 9:16 y 4:5 | `render` |
-| 11 | Montaje: voz, música del tema con ducking, efectos, −14 LUFS | `montar` |
+| 11 | Montaje: voz, música del tema con ducking, efectos, −14 LUFS; `.srt` y portada | `montar` |
 | 12 | Entrega en `videos3d/<fecha>-<slug>/` y registro (M21) | `entregar` → `memoria.py --video3d <entrega>` |
+
+## La orquestación (Workflow `video3d`, 2026-11-15)
+
+Desde el 2026-11-15 la dirección, los ganchos, el guion y el `maqueta.json` no los escribe la sesión a mano (cerró m193):
+
+| Fase | Quién | Qué deja |
+|---|---|---|
+| Dirección | `video3d-director` (opus; `referencias/roles/video3d-director.md`) | `direccion.json`: idea visual, criterio (`lugar` o `mecanismo`), escala (`pais`, `ciudad`, `esquema`), estilo con `razon` y `confianza`, mundo, borrador y **la dirección por frase**: para cada oración, el verbo visual del catálogo que la cuenta; `briefs[]` con lo que falta |
+| Constructor | `maqueta-constructor` (opus; `referencias/roles/maqueta-constructor.md`), uno por brief, ≤ 3 a la vez | un módulo nuevo del vocabulario (`video/maqueta/<clase>/<tipo>.js` + ficha), probado con `scripts/maqueta_modulo.py check` (lint, pureza, hojas) y registrado; o «ya existía» |
+| — | el usuario | el estilo, si la confianza es baja (`elegir_estilo`, cuadros en `estilos/<id>/`) |
+| Ganchos | el director (el único que tiene el estilo, el mundo y el catálogo: más simple que darle a `video-gancho` un modo 3D) | `ganchos.json` + hojas (`ganchos --check --cuadros`) |
+| Selección | `video-critico` (selección del gancho 3D) | `seleccion.json`; luego **el usuario elige** (`elegir_gancho`) |
+| Guion | el director | narración, `direccion.json` final, `guion.json`, `guion --check` en 0, `storyboard`; un brief nuevo va al constructor UNA vez |
+| Crítica | `video-critico` en «Modo 3D» (≤ 2 pasadas; el director corrige) | `critica.json` |
+| Cierres | el director | `cierres.json` (5, cada uno probado en una copia con `guion --check`); **el usuario elige** (`elegir_cierre`) |
+
+El vocabulario (qué se puede dibujar) **no se lista en ningún workflow ni guía**: todos leen el catálogo
+(`maqueta3d.py catalogo --para sesion|realizador|critico [--escala E]`), que escribe solo `maqueta3d.py catalogo
+--registrar` desde las fichas (W15 de `check_workflows.py` y `scripts/pruebas/maqueta_orquestacion.py` lo vigilan).
+
+## A la par de los demás flujos de video
+
+- **Caption obligatorio (V5).** `guion.caption` lleva `tiktok`, `instagram`, `facebook` y `shorts` (el título de ≤ 100
+  caracteres en la primera línea y `#Shorts`), con las cifras en dígitos y sin anunciar el video. Sin él, `guion
+  --check` falla y `entregar` no entrega. Las reglas son las de `video.py` (están escritas dentro de su `cmd_guion`;
+  `video3d.revisar_caption` las repite con las mismas constantes).
+- **Portada.** `montar` (con el 9:16) deja `salida/portada.png`: el cuadro cero del video sin subtítulos, dibujado por
+  `maqueta3d.py cuadro` (`video3d.py portada <TRABAJO>` la rehace sola). Es el archivo que `caption.md` pide como
+  miniatura; `entregar` falla si falta.
+- **Escucha (V11).** `video3d.py escuchar <TRABAJO>` reenvía a `video.py escuchar` (whisper.cpp local: transcribe cada
+  voz sin el guion y coteja las cifras). Con voz falsa no se corre.
+- **9:16 y 4:5.** `entregar` falla si falta `salida/video_4x5.mp4`; `--sin-4x5` entrega solo el 9:16 a propósito.
+- **Subtítulos y mezcla comunes.** El `.srt` es el de `video.texto_srt` (por oración, 2 líneas de ≤ 42 caracteres, sin
+  solapes) y la mezcla, la de `youtube.mezclar_voz` + `youtube.pista_final` (la de los videos de mesa: ducking, tres
+  tomas de cada efecto, fundido final de 4 s, limitador).
+- **Estimación.** Los segundos estimados salen de `video.segundos_voz` (≈ 15.5 caracteres por segundo con las cifras ya
+  en palabras), como en los demás flujos.
+- **Rotación (G3D2).** La familia del gancho de los últimos 2 videos 3D (`memoria/videos3d.json`) queda marcada «NO
+  REPETIR» en el digesto; `ganchos --check`, `ganchos --usar` y `guion --check` avisan si se repite (aviso, no falla).
+- **Rendimiento real.** El digesto trae lo medido con `/analyze-improve` (retención por familia, visual, cierre y tramo
+  de duración). `metricas.py alinear <slug>` cruza la curva con las escenas del video 3D: usa el `tiempos.json` que
+  `entregar` copia a la entrega (o las palabras de `maqueta.json`) y dice qué eventos y cuántas claves de cámara caen
+  en cada escena.
+- **Pruebas sin render:** `python3 scripts/pruebas/ola1_video3d.py` (los 22 negativos M3D del motor y lo de esta lista).
 
 ## La idea visual
 
@@ -120,6 +168,7 @@ Familias de gancho 3D (los 5 candidatos son de familias distintas):
 - **Anclas:** `dice` es una frase de la voz de esa escena (escrita como en `texto`; `vez: 2` si se repite). Sin
   `dice`, el elemento nace al empezar la escena. `al: "fin"` lo pone al terminar la frase (o, sin `dice`, al terminar
   la voz de la escena).
+- **`caption` es obligatorio** (V5): un texto por plataforma; ver «A la par de los demás flujos de video».
 - **Cámara:** cada clave es el encuadre al que la cámara **llega** en ese momento; el vuelo ocurre entre claves. Una
   clave con `al: "fin"` hace que el vuelo dure toda la escena.
 - **Marcas y cifras:** viven hasta el final de su escena, o `hasta: N` (el final de la escena N), `hasta_dice` o
@@ -156,12 +205,17 @@ Los gates M3D (dónde cae cada pin, velocidad de la cámara, tiempos de lectura,
   hecho y unas flechas largas dicen que todo ese tramo se movió: se revisa en el storyboard.
 - Los geodatos se verifican como las cifras: qué tramo, de dónde a dónde, hacia dónde, con su fuente guardada (el USGS,
   la NOAA y la NASA cuentan como oficiales en `historia.py leer`).
+- **El esquema no es un lugar.** Un mundo de escala `esquema` (una ciudad, una carretera, el campo, la costa o una plaza
+  hechos por una receta; `referencias/diseno/maqueta3d.md` § «Mundos») sirve para mostrar un MECANISMO (cómo se forma una
+  cola, cómo cruza una autopista), no para afirmar geografía: lleva «Esquema» en el aviso y sus lugares y marcas usan
+  nombres genéricos (centro, plaza, entrada), nunca el de un lugar real (M3D12). Si la historia pasa en un lugar real, el
+  mundo es `ciudad` (un set con sus calles y edificios de OpenStreetMap, que el pie nombra) o `pais`.
 - Ninguna cifra ni texto dentro del 3D: van en la capa, donde los gates los revisan.
 - Personas: muñecos sin rostro; nunca el parecido de una persona real.
 
 ## Crítico en «Modo 3D»
 
-El `video-critico` tiene su sección «Modo 3D (`/video-3d`)» en `referencias/roles/video-critico.md` (3C1–3C8: el cuadro
+El `video-critico` tiene su modo 3D en `referencias/roles/video-critico/3d.md` (3C1–3C8: el cuadro
 cero, la concordancia, un protagonista, el estilo, lo dibujado también se afirma, el bucle, quien no sabe nada y lo que
 se lee tres veces). Prueba cada arreglo en una copia del TRABAJO antes de proponerlo.
 
@@ -176,8 +230,8 @@ se lee tres veces). Prueba cada arreglo en una copia del TRABAJO antes de propon
 ## Costos (medidos el 2026-11-14 en un M4 Max)
 
 - Voz: ≈ 1 crédito por carácter (45 s ≈ 700 créditos).
-- Render three.js en HyperFrames: ≈ 1.7× la duración por formato (45 s ≈ 80 s).
+- Render three.js en HyperFrames: ≈ 1.7× la duración por formato (45 s ≈ 80 s; 3 min ≈ 5 min por formato).
 - Render Blender (`arquitecto`, `diorama`, `papel`): 0.5–0.85 s por cuadro de placa más ≈ 5 s de capa 2D por segundo
-  de video: un video de 45 s tarda ≈ 16–22 min por formato (12–16 veces más que three.js). Elige un estilo de Blender
+  de video: un video de 45 s tarda ≈ 16–22 min por formato (3 min ≈ 65–90 min por formato) (12–16 veces más que three.js). Elige un estilo de Blender
   cuando la forma o la luz lo valgan, no por costumbre. La primera vez, Cycles compila sus kernels (≈ 3.5 min).
 - Un cuadro suelto de three.js: segundos (por eso los ganchos y el storyboard se ven antes de la voz).

@@ -1,0 +1,21 @@
+{
+ "tipo": "pin",
+ "clase": "objeto",
+ "cuando": "un pin: el punto exacto del que se habla (dónde está alguien, a dónde llega algo)",
+ "parametros": {},
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "medidas": {
+  "largo_m": 1.0,
+  "ancho_m": 1.0,
+  "alto_m": 2.4
+ },
+ "ejemplo": {
+  "objeto": "pin"
+ }
+}

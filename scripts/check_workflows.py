@@ -23,7 +23,7 @@ El sandbox del Workflow no importa módulos, así que hilo.js, dato.js e ideas.j
      workflow no redefine las constantes del gate (CPS, COLA, RITMO_MAX_S, CARACTERES, DURACION_DEFECTO, VISUALES_DE,
      APERTURAS_PROHIBIDAS), que
      viven solo en video.py
-  W11 noticias.js: la tabla MODOS refleja noticias.SECCIONES (diario) y semana.SECCIONES, PUNTAJES y CIFRAS (semana)
+  W11 (retirado el 2026-11-14 con /noticias y /semana: era el espejo del workflow de noticias; los demás conservan su número)
   W12 historia.js: TIPOS (los de video.py más foto, cita y capitulo), FAMILIAS, VISUALES y PUNTAJES (y los escalares de la
      narración, también EJES_MAX_SERIE y PALABRAS_SERIE de /serie) son espejos literales de
       scripts/historia.py
@@ -32,6 +32,9 @@ El sandbox del Workflow no importa módulos, así que hilo.js, dato.js e ideas.j
       de explica.MODOS y, por modo, las mismas familias, visuales, puntajes y ejes_obligatorios
   W14 youtube.js: PUNTAJES y los límites del montaje (PUENTE_ORACIONES, PUENTE_CARACTERES, REPRISE_MAX, REVOZAR_MAX,
       DURACION_MIN/MAX) son espejos literales de scripts/youtube.py
+  W15 video3d.js: ESCENAS_MIN/MAX, GANCHO_VOZ_S y DURACION_MIN_S/MAX_S son espejos de scripts/video3d.py; y ni video3d.js ni
+      plano.js listan a mano tipos del vocabulario de la maqueta (design/sets3d/vocabulario.json): los agentes leen
+      `maqueta3d.py catalogo` y el gate valida
 
 Uso: python3 scripts/check_workflows.py [--quiet]   · salida 0 ok · 1 diferencias
 """
@@ -204,10 +207,10 @@ def main():
             err("W6 investigacion.js MARCADOR_INFORME %r ≠ ensamblar.MARCADOR_INFORME %r" % (m.group(1), MARCADOR_INFORME))
     graficos_informe(catalogo)
     video_workflow()
-    noticias_workflow()
     historia_workflow()
     explica_workflow()
     youtube_workflow()
+    video3d_workflow()
     return fin(quiet)
 
 
@@ -242,38 +245,6 @@ def video_workflow():
             err("W10 video.js define `const %s`: las constantes del gate viven solo en scripts/video.py" % nombre)
 
 
-def noticias_workflow():
-    """W11: noticias.js refleja las secciones de scripts/noticias.py (modo diario) y las secciones, los puntajes del
-    crítico y el número de cifras de scripts/semana.py (modo semana) en su tabla MODOS."""
-    src = fuente("noticias.js", opcional=True)
-    if not src:
-        return
-    try:
-        import noticias as NOT
-        import semana as SEM
-    except Exception as ex:  # noqa: BLE001
-        err("W11 no se pudo importar scripts/noticias.py o scripts/semana.py: %s" % ex)
-        return
-    modos = modos_explica(src)   # el mismo formato de tabla que explica.js
-    if modos is None:
-        err("W11 noticias.js: no se encontró `const MODOS = {...}`")
-        return
-    if list(modos) != ["diario", "semana"]:
-        err("W11 noticias.js MODOS %s ≠ ['diario', 'semana']" % list(modos))
-    esperado = {("diario", "secciones"): list(NOT.SECCIONES), ("semana", "secciones"): list(SEM.SECCIONES),
-                ("semana", "puntajes"): list(SEM.PUNTAJES)}
-    for (modo, campo), py in esperado.items():
-        js = (modos.get(modo) or {}).get(campo)
-        if js is None:
-            err("W11 noticias.js MODOS.%s sin «%s: [...]»" % (modo, campo))
-        elif js != py:
-            err("W11 noticias.js MODOS.%s.%s %s ≠ %s" % (modo, campo, js, py))
-    b = bloque(src, "  semana: {", r"^  \},?") or ""
-    m = re.search(r"^\s+cifras: (\d+),?\s*$", b, re.M)
-    if not m or int(m.group(1)) != SEM.CIFRAS:
-        err("W11 noticias.js MODOS.semana.cifras = %s ≠ semana.CIFRAS %s" % (m.group(1) if m else "?", SEM.CIFRAS))
-
-
 def historia_workflow():
     """W12: historia.js refleja las listas de scripts/historia.py."""
     src = fuente("historia.js", opcional=True)
@@ -306,6 +277,33 @@ def historia_workflow():
             err("W12 historia.js: no se encontró `%s = N`" % nombre)
         elif int(m.group(1)) != py:
             err("W12 historia.js %s = %s ≠ historia.py %s" % (nombre, m.group(1), py))
+
+
+def video3d_workflow():
+    """W15: video3d.js frente a scripts/video3d.py, y ningún workflow de la maqueta con tipos del catálogo escritos a mano."""
+    src = fuente("video3d.js", opcional=True)
+    if not src:
+        return
+    try:
+        import video3d as V3
+        import maqueta3d as M3
+    except Exception as ex:  # noqa: BLE001
+        err("W15 no se pudo importar scripts/video3d.py: %s" % ex)
+        return
+    escalares = {"ESCENAS_MIN": V3.ESCENAS[0], "ESCENAS_MAX": V3.ESCENAS[1], "GANCHO_VOZ_S": V3.GANCHO_VOZ_S,
+                 "DURACION_MIN_S": V3.DURACION_MIN_S, "DURACION_MAX_S": V3.DURACION_MAX_S}
+    for nombre, py in escalares.items():
+        m = re.search(r"\b%s = ([\d.]+)" % nombre, src)
+        if not m:
+            err("W15 video3d.js: no se encontró `%s = N`" % nombre)
+        elif float(m.group(1)) != float(py):
+            err("W15 video3d.js %s = %s ≠ video3d.py %s" % (nombre, m.group(1), py))
+    tipos = set(M3.vocabulario())
+    for nombre in ("video3d.js", "plano.js"):
+        for m in re.finditer(r"\[([^\[\]]*)\]", fuente(nombre, opcional=True)):
+            a_mano = sorted(set(re.findall(r"'([a-z_]+)'", m.group(1))) & tipos)
+            if len(a_mano) >= 2:
+                err("W15 %s lista tipos del vocabulario a mano (%s): que los agentes lean `maqueta3d.py catalogo`" % (nombre, ", ".join(a_mano)))
 
 
 def youtube_workflow():

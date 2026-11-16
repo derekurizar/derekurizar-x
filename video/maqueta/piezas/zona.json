@@ -1,0 +1,62 @@
+{
+ "tipo": "zona",
+ "clase": "pieza",
+ "cuando": "un área teñida sobre el suelo: un barrio, un parque, la plaza, el área de lo que pasó",
+ "parametros": {
+  "area": {
+   "tipo": "texto",
+   "requerido": false,
+   "capa": "zonas",
+   "descripcion": "el id de una zona del mundo (parques y áreas verdes del set, la plaza o un parque de la receta), o «parques»: todas las verdes"
+  },
+  "puntos": {
+   "tipo": "puntos",
+   "requerido": false,
+   "min": 3,
+   "descripcion": "o el polígono: [lon, lat] en una ciudad, [x, y] en metros en un esquema"
+  },
+  "tono": {
+   "tipo": "texto",
+   "requerido": false,
+   "valores": [
+    "acento",
+    "secundario",
+    "verde",
+    "agua"
+   ],
+   "defecto": "acento",
+   "descripcion": "de qué color se tiñe"
+  },
+  "opacidad": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0.1,
+    1
+   ],
+   "defecto": 0.4,
+   "descripcion": "cuánto tapa el suelo"
+  },
+  "borde": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "con su contorno en línea"
+  }
+ },
+ "escalas": [
+  "ciudad",
+  "esquema"
+ ],
+ "motores": [
+  "three"
+ ],
+ "ejemplo": {
+  "id": "parques",
+  "tipo": "zona",
+  "area": "parques",
+  "tono": "verde",
+  "opacidad": 0.5,
+  "borde": false
+ }
+}

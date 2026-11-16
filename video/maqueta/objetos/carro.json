@@ -1,0 +1,21 @@
+{
+ "tipo": "carro",
+ "clase": "objeto",
+ "cuando": "un carro: el tráfico de una autopista, el que la cámara sigue, el que llega a un lugar",
+ "parametros": {},
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "medidas": {
+  "largo_m": 4.5,
+  "ancho_m": 1.8,
+  "alto_m": 1.5
+ },
+ "ejemplo": {
+  "objeto": "carro"
+ }
+}

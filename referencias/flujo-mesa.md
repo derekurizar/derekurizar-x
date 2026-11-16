@@ -6,8 +6,8 @@ del usuario (2026-11-14), tras aprobar el lienzo «Animador vertical» en Claude
 `scripts/video_grabar.js`) sigue vivo para los flujos sin migrar y para grabar los tableros.
 
 **Estado (2026-11-14).** El usuario aprobó los pilotos (Bancafé parte 1 y La Línea parte 3) y pidió aplicar lo mismo a
-los demás flujos «con las reglas, animaciones y todo», sin otro piloto. Todos los flujos de video menos /noticias y /semana
-nacen en mesa.
+los demás flujos «con las reglas, animaciones y todo», sin otro piloto. Todos los flujos de video nacen en mesa (los
+noticieros, que seguían en el motor propio, se retiraron del framework ese mismo día).
 
 | Flujo | Quién dibuja | Cómo cae en la mesa |
 |---|---|---|
@@ -16,12 +16,11 @@ nacen en mesa.
 | /sabias | **la mesa** | Gancho «¿Sabías que…?» con su visual ya puesto en el cuadro 0; la tarjeta del dato, tablero; cierre de una pantalla. |
 | /video, /departamento | **la mesa** | Las tarjetas del hilo, `ranking`, `mapa`, `escala` y `tiempo` son tableros; gancho, golpes y definiciones, piezas (nota, cifra, `barra`, mapa de los 22). Versión B con `variante --plano`. |
 | /congreso | **la mesa** | El `hemiciclo` es tablero (asientos, umbral, sello, foco con retrato); el gancho deja el portal y abre con la foto del pleno y la `barra` de votos frente al umbral. |
-| /noticias, /semana | motor propio | No se publican. |
 
 `realizacion` la fija `preparar` al crear el TRABAJO (`VD.MESA_FLUJOS`; `--realizacion propio|mesa` la fuerza): un trabajo
 empezado con un motor termina con ese motor. Migrar un flujo es añadir su `tipo` a `MESA_FLUJOS` cuando sus piezas existan.
 
-Pendiente en el motor: MV13 (un solo acento a la vez), la pregunta P6 en el pago y las piezas `paso` (cronología),
+Pendiente en el motor: la pregunta P6 en el pago y las piezas `paso` (cronología),
 `brecha`, `hoja` (la pizarra como pieza; hoy es tablero), `tabla` y `diagrama`. Mientras no existan, lo suyo va como tablero.
 
 ## 1. Reglas (lo que no se negocia)
@@ -31,7 +30,7 @@ Pendiente en el motor: MV13 (un solo acento a la vez), la pregunta P6 en el pago
 2. **El texto da tiempo de leerse (MV8).** Una pieza queda al frente al menos `0.5 s + 0.3 s × palabras que la voz no
    dice` (nunca menos de 1 s) antes de replegarse o barrerse. Lo que la voz dice mientras la pieza está en pantalla se oye
    a la vez que se ve y no cuenta; por eso la cita y el documento que la voz lee no tienen mínimo.
-3. **Repliegue por corte.** En 1080×1920 caben 2–3 piezas. Cuando la que entra no cabe, las de al frente pasan **de un
+3. **Repliegue por corte.** En 1080×1920 caben 2–3 piezas (hasta 4 si la última es chica). Cuando la que entra no cabe, las de al frente pasan **de un
    corte** a su versión compacta, arriba y atenuadas (a lo más dos). Solo ocurre cuando entra otra pieza: nunca para dar
    ritmo, nunca animando la escala.
 4. **Archivo real primero.** Foto con crédito, recorte con el titular o el extracto literal de la nota leída, página de
@@ -86,6 +85,8 @@ palabra por palabra) · `lista` (un chip por `dice`, con `lazo`).
 - **Chip «Ejemplo»** (/explica, E3–E4): arriba a la derecha, en la línea del kicker, mientras está una mesa con números de
   ejemplo (también sobre un tablero: su clip se graba sin chip).
 - `"limpia": true` en un golpe: el plano pide el repliegue justo antes de esa pieza.
+- `"crema": true` en una `cifra`, una nota (`termino`) o una `barra`: se dibuja sin el color de acento (MV13: un solo
+  acento al frente; § 5b).
 - **Tablero**: `explica`, `tarjeta`, `cuenta`, `hemiciclo`, `vias`, `deptos`, `ranking`, `mapa`, `escala`, `tiempo`,
   `lupa`, `cortina`, `adivina` se graban limpias con el motor propio (`video_hf.py tableros`) y van solas en su mesa. Si el plano
   les pone golpes, el primero entra ≥ 1 s después del último paso y la animación le cede la mesa de un corte.
@@ -101,7 +102,15 @@ golpe de arriba y las piezas siguen quietos).
 
 **Cuándo sí.** Cuando **el lugar es la información**: una ruta entre dos sitios, una falla, una cuenca, qué tan lejos
 queda algo de otra cosa, por dónde pasó, qué pueblos alcanzó. La voz nombra lugares y la oración se entiende mejor
-viéndolos en su sitio.
+viéndolos en su sitio. **O cuando el mecanismo se entiende mejor viéndolo moverse** (2026-11-15): cómo se forma una cola,
+cómo viaja una señal, cómo se llena un embalse; para eso, una maqueta de escala `esquema` (un mundo genérico, sin
+geografía real, con el aviso «Esquema»), como hoy se pide una animación `explica`. El `explica-editor` puede proponerla
+en el encuadre; la decide el realizador.
+
+**Lo que no existe se pide.** El vocabulario es el catálogo (`maqueta3d.py catalogo --para realizador [--escala E]`). Si
+falta algo, el realizador cuenta la oración con piezas y deja un `brief` en su retorno (≤ 1 por video); el Workflow
+`plano` lo pasa UNA vez al agente `maqueta-constructor` (`scripts/maqueta_modulo.py check` → `registrar`; guía
+`referencias/roles/maqueta-constructor.md`) y, si queda registrado, el realizador lo usa en esa mesa.
 
 **Cuándo no.** Para ubicar un solo lugar (eso es la pieza `lugar`, que es archivo y cuesta nada); para adornar una
 oración que no habla de un lugar; en una escena que ya es tablero; en el gancho (el cuadro 0 es del sujeto: MV14); cuando
@@ -130,15 +139,16 @@ Es cara de mirar y de producir: **≤ 2 por video vertical** (≤ 4 en el 16:9, 
 - **`estilo`**: uno del catálogo cuyo motor renderice (`python3 scripts/maqueta3d.py estilos` los lista con su «cuándo
   usarlo»; los de three.js: `noche`, `color`, `contorno`, `voxel`, `plano`). **Un solo estilo por video**: si el plano
   trae dos maquetas, llevan el mismo.
-- **`piezas`** y **`protagonista`**: lo que hay sobre el mundo (`falla`, `luces`, `frontera`, `ruta`) y la única pieza
-  que va en el acento. Ninguna lleva texto.
+- **`piezas`** y **`protagonista`**: lo que hay sobre el mundo y la única pieza que va en el acento. Ninguna lleva texto.
+  Los tipos, sus parámetros y un ejemplo de cada uno están en el catálogo del vocabulario (el digesto del plano lo trae;
+  a mano: `python3 scripts/maqueta3d.py catalogo --para realizador`). Lo que no está en el catálogo no se dibuja.
 - **`camara`**: claves `{mira, dist_km, azimut, elevacion}`. **La primera va sin `dice`**: es el encuadre con que abre la
   mesa. Cada una de las demás lleva el `dice` con el que la cámara **llega** a ese encuadre (`"al": "fin"` = llega al
   terminar la frase; sin `dice` y con `"al": "fin"`, al terminar la mesa: un acercamiento lento de cierre). Entre claves
   la cámara vuela sola. Referencia: el país entero cabe desde `dist_km` ≈ 700–800 con `elevacion` ≈ 62; a 150–250 km se
   lee un valle. El punto que mira cae en el centro del marco.
-- **`eventos`**: `ruptura`, `onda`, `deslizar`, `encender`, `apagar`, `parpadear`, `resaltar` (los campos de cada uno, en
-  el contrato), con `dice` y `dur` en segundos (o `hasta_dice`); `sfx` opcional del catálogo fijo.
+- **`eventos`**: los del catálogo (`maqueta3d.py catalogo --para realizador`: cada uno con sus parámetros y un ejemplo),
+  con `dice` y `dur` en segundos (o `hasta_dice`); `sfx` opcional del catálogo fijo.
 - **`marcas`**: pines pegados al mundo: `dice`, `lugar`, `texto` (y `sub`). Entra 0.3 s antes de su palabra y se queda
   hasta el final de la mesa (`dura` en segundos o `hasta_dice` la acortan; a lo más 3 a la vez).
 - Cada `dice` son palabras literales de la voz **de las escenas de esa mesa** (`"escena": "e5"` lo fija a una; `"vez": 2`
@@ -203,16 +213,50 @@ de /serie con una mesa de maqueta, de punta a punta.
 | MV6 | carga: mesa de 3–24 s y ≤ 6 piezas; entradas a ≥ 0.4 s; el golpe de un tablero, tras su último paso |
 | MV7 | sin cámara |
 | MV8 | lectura: `0.5 + 0.3 × palabras no dichas` s al frente (≥ 1 s) |
-| MV9 | pila: ≤ 3 piezas al frente y ≤ 2 compactas (por construcción) |
+| MV9 | pila (no es un gate: no hay `FALLA MV9`; sale de cómo `componer` coloca las piezas): ≤ 4 piezas al frente (3 en fila, `PILA_LEGIBLES`, más una chica al lado de la tercera) y ≤ 2 compactas arriba (`PILA_COMPACTAS`) |
 | MV10 | zona segura por geometría, en 9:16 y en 4:5 |
 | MV11 | ninguna pieza se dibuja a menos del 72 % de su tamaño |
 | MV12 | alegato: los hilos de una `red` atribuida van punteados, con `etiqueta` «Según…» y con la voz de la mesa atribuyendo; quien acusa, sin hilos |
-| MV13 | (pendiente) un solo acento legible a la vez |
+| MV13 | un solo acento al frente a la vez: falla si una cifra o una barra comparte el acento con otra o con una nota; otras dos piezas en acento a la vez, aviso (§ 5b); `crema` solo en `cifra`, `termino` y `barra` |
 | MV14 | el cuadro 0 abre con ≥ 2 piezas ya puestas (el gancho no lleva maqueta) |
 | MV15–MV19 | la maqueta 3D de una mesa: forma, concordancia con la voz, un solo estilo, carga y los gates del motor (§ 3b) |
 
 MV1–MV7 son YT13–YT19 del núcleo con las constantes del vertical (`REGLAS`), y MV15–MV19 son YT20–YT24. `hyperframes check` añade sus propios
 avisos (texto bajo 28 px, texto sin tiempo de lectura, tramos sin cambio): se leen en `video_hf.py revisar`.
+
+### 5b. MV13: un solo acento al frente
+
+La regla Noche («acento = una sola cosa»; `referencias/diseno/sistema.md`) en la mesa. El gate lee **los datos del plano**
+(`mesa.en_acento`, lo mismo que el motor pinta con el color de acento) y los tiempos de `componer`; nunca píxeles.
+
+| Pieza | Lo que lleva en acento | Peso |
+|---|---|---|
+| `cifra` | el valor (y sus `cuadros`) | dato |
+| `barra` | la barra destacada (`acento`, o la última) y su valor | dato |
+| `termino` sin `definicion` (la nota) | la nota entera; con `definicion` es una ficha de papel y no cuenta | bloque |
+| `lista` con `acento` | el chip destacado | bloque |
+| `red` con `etiqueta` o con una `clave` | la etiqueta «Según…» o la clave | bloque |
+| `recorte` con `resalta` | el subrayado | marca |
+| `documento` con `pagina` | el marcador sobre la página (una `portada` no lleva) | marca |
+| `lista` con `lazo` (sin `acento`) | el lazo | marca |
+
+- Se mira cuando una de esas piezas entra y otra **sigue al frente**. Una pieza replegada no cuenta (su compacta va
+  atenuada, arriba); en una mesa con maqueta las piezas van de una en una y nunca coinciden.
+- **Falla** si una es un **dato** y la otra es otro dato o un bloque (`mesa.acento_compite`): con una cifra en pantalla
+  el acento es solo suyo (la cifra y su nota, la barra y la cifra). **Avisa** en lo demás: dos notas, una nota junto a un
+  subrayado, una cifra junto a la frase subrayada de la que sale. Así salieron los dos pilotos aprobados (Bancafé parte 1 y
+  La Línea parte 3: 9 coincidencias de las que avisan y ninguna de las que fallan), y el gate no rechaza la referencia
+  aprobada; el aviso queda a la vista del realizador y del juez del plano.
+- No cuentan las marcas chicas (los puntos de un mapa del mundo, la línea de crédito de la pestaña de un documento) ni el
+  cuadro (kicker, palabra activa del subtítulo, cierre): no son piezas.
+- **Cómo se arregla, en el plano:** `"crema": true` en la que no es el dato que la voz está diciendo (solo `cifra`,
+  `termino` y `barra`: el motor la dibuja en crema, también replegada); `"limpia": true` en la que entra (repliega lo
+  anterior); quitar el `resalta`, el `lazo` o el `acento` que sobra; o llevarla a otra mesa.
+- El borrador ya lo trae resuelto donde lo causa él: en el gancho de texto cinético, la nota que acompaña a la `cifra` o a
+  la `barra` va en crema, y la línea bajo un golpe, también.
+- Solo vertical. En el 16:9 (`youtube_hf.py`) las piezas se colocan a mano y el gate no existe (no hay código YT libre:
+  YT12 está retirado y no se reusa); `mesa.en_acento` y `mesa.acentos_a_la_vez` están en el núcleo para cuando lo tenga, y
+  su hoja de estilos aún no dibuja `crema`.
 
 ## 6. Cómo se produce
 
@@ -220,7 +264,9 @@ Los comandos son los de siempre; con `realizacion: mesa` despachan a la mesa (`V
 
 ```
 <flujo>.py tiempos T                  la voz real → escenas.json (igual que antes)
-Workflow «plano» {trabajo: T}         video-realizador escribe T/plano.json desde `<flujo>.py plano T --digesto` (tras la voz)
+Workflow «plano» {trabajo: T}         video-realizador escribe T/plano.json desde `<flujo>.py plano T --digesto` (tras la voz);
+                                      luego el juez del plano (historia-oyente, modo plano) lee plano.md con ojos frescos y lo que
+                                      bloquea vuelve al realizador una vez (T/juez_plano.json; `sin_juez: true` lo salta)
 <flujo>.py plano T --check --hoja     gates MV1–MV14 y la hoja de golpes (plano.md)
 <flujo>.py grabar T [--formato 4:5]   plano --check → tableros limpios y maquetas 3D → proyecto → hyperframes check → render (un proceso)
 <flujo>.py montar T [--formato 4:5]   una mezcla para los dos formatos (−14 LUFS), .srt, caption.md y portada.png
@@ -236,8 +282,13 @@ historia.py producir T                la cadena entera; se detiene si falta plan
 - Lo que falle en pantalla se arregla **en el plano**: no se toca el guion ni la voz. Un retoque = el Workflow «plano» con
   `notas`. Si cambia una voz: `tiempos`, `plano --check` y volver a grabar (no hay `grabar --solo`).
 - Render: ≈ 1.6× la duración por formato, en fila (HyperFrames renderiza de uno en uno). `MESA_CALIDAD=draft` para probar.
-- `MESA_RENDER=0` (maquetas): `grabar` hace todo menos el render y deja un doble de la duración exacta; `entregar` real lo
-  rechaza. `make historia-fixture` y `make serie-fixture` van así; `make video-fixture-mesa` renderiza de verdad.
+- `MESA_RENDER=0` (maquetas): `grabar` hace todo menos el render y deja un doble de la duración exacta, **marcado por
+  formato** (`salida/.maqueta_sin_render.<9x16|4x5>`); la marca la quita `montar` cuando monta un render de verdad de
+  ese formato, y `entregar` real rechaza un trabajo con cualquier formato marcado.
+- El render tiene límite de tiempo (600 s + 20 s por segundo de video; `MESA_RENDER_LIMITE_S` lo fija a mano): al
+  vencer se mata el grupo de procesos entero. GSAP sale de `design/vendor/` (sin red) y las versiones de HyperFrames,
+  GSAP y three.js viven en `scripts/versiones.py`.
+- `make historia-fixture` y `make serie-fixture` van con `MESA_RENDER=0`; `make video-fixture-mesa` renderiza de verdad.
 - `video_hf.py` también se puede llamar directo: `piloto` (copia un TRABAJO ya producido para rehacerlo en mesa),
   `importar-plano` (los golpes del 16:9 de una parte, como punto de partida), `borrador`, `digesto`, `tableros`, `maquetas`, `proyecto`,
   `revisar` (hyperframes check + hojas por mesa), `audio`, `render`, `montar`, `portada`, `contacto`.

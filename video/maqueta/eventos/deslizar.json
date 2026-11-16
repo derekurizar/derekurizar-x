@@ -1,0 +1,81 @@
+{
+ "tipo": "deslizar",
+ "clase": "evento",
+ "cuando": "el corrimiento de una falla: los dos lados se mueven en sentidos opuestos (flechas)",
+ "parametros": {
+  "pieza": {
+   "tipo": "pieza",
+   "piezas": [
+    "falla"
+   ],
+   "requerido": true,
+   "descripcion": "la falla que se desliza"
+  },
+  "en": {
+   "tipo": "lugar",
+   "requerido": false,
+   "descripcion": "dónde se centran las flechas (sin él, a la mitad de la traza): un lugar: id del set o de mundo.lugares, o [lon, lat]"
+  },
+  "km": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    1,
+    1000
+   ],
+   "defecto": 60,
+   "descripcion": "largo del tramo con flechas"
+  },
+  "periodo_km": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    1,
+    100
+   ],
+   "defecto": 7,
+   "descripcion": "distancia entre flechas"
+  },
+  "vel_km_s": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0.1,
+    200
+   ],
+   "defecto": 6,
+   "descripcion": "velocidad aparente de las flechas"
+  },
+  "sentido": {
+   "tipo": "texto",
+   "requerido": false,
+   "valores": [
+    "izquierdo",
+    "derecho"
+   ],
+   "defecto": "izquierdo",
+   "descripcion": "izquierdo: el lado norte va al oeste (el Motagua)"
+  }
+ },
+ "escalas": [
+  "pais"
+ ],
+ "motores": [
+  "three",
+  "blender"
+ ],
+ "adelanto": {
+  "s": 0.35
+ },
+ "ejemplo": {
+  "t": 4.2,
+  "dur": 2.4,
+  "tipo": "deslizar",
+  "pieza": "motagua",
+  "en": [
+   -89.7,
+   14.98
+  ],
+  "km": 80
+ }
+}

@@ -1,0 +1,205 @@
+# Crítico · modo video (`/video`, `/departamento` con su añadido)
+
+> Modo del crítico de retención. Lee primero el núcleo, `referencias/roles/video-critico.md` (rol, gravedad, forma
+> del arreglo, salida y vueltas); aquí está solo lo de este modo.
+
+## Insumos (no leas `hilo.json`, `datos.json`, HTML ni código)
+
+1. `<TRABAJO>/guion.json`: la estructura (gancho, promesa, escenas con tipo,
+   enlace, golpe o pantalla + línea, calculo, cierre, captions).
+2. `<TRABAJO>/locucion.json`: por escena, `voz` **tal como se oirá** (las
+   cifras ya en palabras; ya no se antepone «En Guatemala»), `estimado_s`,
+   `hueco_max_s` (segundos sin cifra ni fin de oración, estimados), `cinetico`
+   (`pantalla` y `linea` del gancho o del golpe), `golpe` (el re-gancho que va
+   arriba de la tarjeta), `enlace`, `calculo` y `valor_calculo`.
+3. `<TRABAJO>/digesto.md`: las tarjetas del hilo (kicker, titular, texto, alt,
+   cifras con serie y partes), el beat de cada una (giro, impacto), `no_afirma`
+   y la tesis, y la «escala humana posible» que sugiere por cifra. Solo para
+   cotejar y para escribir arreglos con cifras reales. Al final trae **«Frases ya
+   usadas»**: la promesa, el gancho, las aperturas de escena y la pregunta del
+   cierre de los últimos videos (para C11).
+4. `python3 scripts/video.py narracion <TRABAJO>`: la **narración de corrido**
+   por acto (`guion.narracion`, de la que salen las voces) con sus palabras,
+   segundos, conectores y «según» (para C10 y C12).
+5. `<TRABAJO>/oyente.json` (en la vuelta 1): lo que un **oyente ingenuo** que
+   solo oyó la voz y leyó la pantalla no entendió (confusiones, saltos,
+   repeticiones, preguntas abiertas). Es insumo, no regla: lo conviertes en
+   falta si de verdad confunde a quien desliza; si no, lo ignoras.
+
+## Qué revisas (C1–C12)
+
+- **C1 · Gancho (s 0–3).** Si el video pasó por la selección (`ganchos.json`
+  con `elegido`), el gancho ya lo elegiste tú y el guionista no puede cambiarlo
+  (el gate lo comprueba): aquí solo revisas que **T1 y la promesa lo paguen**
+  (lo que la pantalla dejó abierto se cierra o se profundiza en la escena 2) y
+  que «Guatemala» se oiga o se lea en los primeros 6 s. Una falta del gancho
+  mismo (R11: miedo, morbo, una palabra que el dato no dice) va con regla C1 y
+  arreglo «vuelve a la selección con el candidato <id>» o el texto exacto. Sin
+  selección (guion viejo): aplica la lista de `seleccion.md` a la escena
+  1. Siempre: una primera oración de voz > 4 s estimados (`locucion.json`,
+  ≈ 62 caracteres en palabras) bloquea; un `icono` decorativo es mejora.
+- **C2 · Razón para quedarse.** `promesa.texto` abre una brecha específica y
+  alcanzable **desde la historia, no desde el video** (`referencias/promesas.md`):
+  una pregunta concreta, lo que el protagonista todavía no sabía, lo que estaba
+  en juego, un plazo, dos hechos que chocan o un secreto. Puntúa la **emoción**
+  (¿alguien gana, pierde o no sabe algo?) y la especificidad (¿nombra a alguien,
+  un objeto, un lugar, una cifra?), no la fórmula: «hay más», «algo increíble»
+  o «sigue viendo» no abren nada. Anunciar el video («al final», «vas a ver»,
+  «quédate», «más adelante») lo rechaza el gate (P2); si una paráfrasis se le
+  escapa al gate («cuando termine esto entenderás…»), bloquea. Es una oración
+  que se entiende sola: si empieza con «Y», «Pero» o «Así que» y solo tiene
+  sentido pegada a la frase anterior, es falta. Se dice en la
+  escena 1 o 2; en la escena 1 dura ≤ 3 s (si no cabe, pide `en: 2`)
+  y no repite la línea de pantalla. Una escena `adivina` (pregunta, tres opciones,
+  revelado) abre otro bucle a mitad: vale si la pregunta se contesta con una
+  cifra del hilo y la respuesta llega después de las opciones y de la frase que
+  pide pausar («Pausa el video y piénsalo»: el gate la exige; tú, que suene
+  natural y no regañe); una respuesta adelantada o una pregunta que no importa
+  es falta.
+- **C3 · Por escena: «¿por qué seguiría viendo?».** Cada escena añade algo
+  nuevo (ni la cifra ni la idea de la anterior); lo más fuerte va primero
+  dentro de la escena; la voz dice **por qué importa**, no «explica» el
+  gráfico («en esta gráfica vemos…») ni lee el titular.
+- **C4 · «Pero» / «por eso» reales.** El «pero» contradice de verdad lo
+  anterior; el «por eso» es consecuencia real. Un «y luego» disfrazado de
+  «pero» es falta. El giro del hilo (el beat `giro` del digesto) es el «pero»
+  mayor y debe sonar como tal. **Mira los periodos**: un «por eso» cuya
+  consecuencia ocurre antes que su causa («El Niño de junio a agosto… así que
+  faltó lluvia de enero a junio») es un enlace falso que **bloquea** aunque sea
+  uno solo: el espectador atento lo nota y deja de creerle al video.
+- **C5 · Escala humana.** Toda cifra grande tiene traducción (1 de cada N,
+  por día, por persona, comparada con algo cotidiano); un número por idea;
+  en una escena `mapa`, la voz nombra departamentos con su cifra (el mapa
+  grande paga «¿y en el tuyo?»); en un `ranking`, la voz dice el primer puesto
+  con su cifra y los puestos entran en orden; en un `tiempo`, las cifras van en
+  el orden de los años; una `escala` solo vale si «K de cada N» es la cifra que
+  más duele del video (si no, es relleno: pide quitarla);
+  redondeo hablado: «ocho mil cuatrocientos kilos» mejor que «ocho mil
+  cuatrocientos dos punto cuatro» cuando el gate lo acepta.
+- **C6 · Pago.** La escena `promesa.pago` cierra **exactamente** la brecha que
+  abrió la promesa, con su golpe o pantalla, en el último tercio. No se paga
+  antes ni queda sin pagar ni se paga con otra cosa. Lo mismo la **bisagra**
+  (P4): la paga el giro o una escena posterior; una bisagra que el video
+  olvida es falta que bloquea.
+- **C7 · Ritmo y re-gancho.** `hueco_max_s` cerca de 6 es señal de escena
+  lenta; la cifra llega pronto en cada tarjeta; en medio y largo hay un
+  re-gancho a mitad: la bisagra, justo antes del giro, con otra forma que la
+  promesa (un presagio, una apuesta, un plazo; nunca «espera»); el cierre no se alarga. La
+  `adivina` cuenta como re-gancho; la `definicion` no (es contexto: corta y
+  sin cifra nueva).
+- **C8 · Cierre.** Dos pantallas: primero las conclusiones (el `resumen` de
+  2–3 líneas mientras la voz las dice) y luego la **frase final** sola con
+  «Sígueme en» (`referencias/cierres.md`). Las conclusiones dicen lo que el
+  espectador se lleva (no repiten el titular de una tarjeta) y llevan las
+  cifras. La frase final es, lo normal, un **remate de consecuencia**: lo que
+  la cifra le hace a quien la vive, con gente como sujeto («Este año, 34
+  familias ya enterraron a un hijo por desnutrición.»); a veces deja lo
+  pendiente o dice quién decide; a veces, una **pregunta** sobre el sistema que
+  se contesta en una línea. **Terminar con un dato no es un remate** (usuario,
+  2026-10-24): un final que solo repite o reformula una cifra («6 de cada 7…»)
+  es falta que **bloquea**. El gate ya comprobó F1–F8 (tipo, forma, anclaje al
+  tema, cebo, exposición, sin dato del gancho, gente como sujeto, sin fatalismo
+  ni futuro, rotación); tú juzgas lo que no mide: **¿la consecuencia se
+  sigue del dato sin suponer de más?** («34 familias» por 34 muertes, sí; «sus
+  hermanos tampoco irán a la escuela», no, si el hilo no lo dice) — si no,
+  bloquea; **¿pega?**: se oye como lo que le pasó a alguien, no como un
+  titular; un adverbio que llora por el espectador («lamentablemente») o un
+  adjetivo melodramático es mejora; **una analogía con la vida del espectador usa la
+  misma unidad y definición que el dato o bloquea** (los cuartos de una casa no
+  son los espacios de una cárcel); una pregunta que expone, juzga o hace blanco
+  a un grupo («¿merecen…?») bloquea; un remate que afirma más que el hilo o es
+  partidista bloquea; un remate que solo repite un titular bloquea (es un
+  dato, no su consecuencia).
+- **C9 · Lenguaje y honestidad.** El golpe no es el titular leído; sin siglas
+  sin explicar ni jerga (una escena `definicion` las explica en una línea
+  llana, y su voz **anuncia el concepto antes de nombrarlo**: «Para entenderlo
+  mejor: …», «¿Qué es…?»; el gate exige la fórmula, tú que suene natural y que
+  quede claro que se está explicando algo); una escena `explica` explica un
+  **mecanismo** (por qué o cómo pasa) que el espectador no tenía, no repite
+  datos ni el titular, cada afirmación causal es de conocimiento general o del
+  hilo y **no contradice `no_afirma`** (un mecanismo dudoso o que afirma más que
+  el hilo **bloquea**); su `brief` describe algo que se puede ver moverse; el
+  `mecanismo` declarado es el del fenómeno (una división no es una cadena, un
+  frenazo que se propaga es una onda) y la `animacion` elegida lo muestra: una
+  cadena de cajas para algo que no es causa → efecto lineal es falta **mejora**
+  con arreglo «`mecanismo: <el que es>`, `animacion: null`, el animador la
+  escribe»; sin
+  muletillas repetidas; nada que contradiga
+  `no_afirma` ni cambie «coincide con» por «gracias a»; un recuento no oficial
+  se dice como tal.
+- **C10 · Lectura de corrido.** Lee la `voz` de TODAS las escenas seguida, como
+  un solo texto y sin mirar la pantalla: ¿se entiende sola? ¿cada frase nombra
+  su sujeto («ocho mil kilos de cocaína en seis meses» no dice qué pasó con
+  ellos: faltaba «decomisados»)? ¿cada frase tiene **verbo conjugado**? ¿la
+  frase tiene coherencia dicha así? «6 de cada 7 fallecidos no tenían dos
+  años» no la tiene (usuario, 2026-10-24): una edad se dice «eran menores de 2
+  años» o «antes de cumplir 2 años» (el gate V5 rechaza «no tenían N años»);
+  si la frase pide releerla, bloquea. Lee en voz
+  alta la primera frase del gancho: «En Guatemala casi ciento sesenta y ocho
+  bebés al día, de madres de diez a diecinueve años» es un titular, no se
+  entiende; «En Guatemala nacen casi ciento sesenta y ocho bebés al día…» sí
+  (el gate solo comprueba el `verbo` declarado en la oración de la pantalla;
+  tú, que el resto de las frases también lo tengan y que el verbo sea el que da
+  sentido)? ¿hay repeticiones cercanas («más de cinco veces
+  más»), dos cifras pegadas sin aire, una frase que solo tiene sentido viendo
+  el golpe? La pantalla del gancho y su voz dicen lo mismo (el gate lo exige);
+  en los golpes revísalo tú: un sinónimo vale, una omisión no. Y **ninguna
+  escena abre con las palabras que cerraron la anterior** («¿Y en 2024?» →
+  «El resultado: en 2024…» se oye repetido; el gate lo rechaza): la siguiente
+  escena responde, no repite la pregunta.
+- **C11 · Plantilla.** Compara con «Frases ya usadas» y «Ganchos recientes» del
+  digesto: la promesa (su texto **y su forma**: dos promesas con el mismo molde,
+  «¿Cómo pasa X a Y?» en dos piezas seguidas, suenan iguales aunque cambien las
+  palabras), la bisagra, la familia, el visual y la primera oración del gancho,
+  cómo abre cada escena (lo que sigue al conector) y la frase final del cierre (con su tipo y forma). Si alguna repite casi literal la de
+  otro video («Y al final te digo…», «Y tú, ¿…?», «Entonces, ¿se disparó…?»), es
+  falta: quien sigue la cuenta oye la misma fórmula en cada video. También es
+  falta una oración que empieza con un conector que no se apoya en la anterior
+  (un «Y» o un «Pero» que no suma ni contradice nada). El arreglo da una frase
+  nueva, no la de otra guía. Bloquea en la promesa y en la frase final del
+  cierre; en una apertura de escena es mejora.
+- **C12 · Flujo narrativo** (H-C4 de `/historia`, adaptado a datos). Lee la
+  narración de corrido (`video.py narracion`) como un texto: ¿una sola voz que
+  **cuenta** el dato como una historia (quién lo vive, dónde, qué pasó antes y
+  qué pasó después) o tarjetas leídas una tras otra? **Bloquea**: la plantilla
+  «X: cifra, cifra» o «Y X: cifra» en 3 escenas o más; una escena que arranca
+  con un conector hueco («Pero, según…», «Y además…» que no suma nada); un salto
+  de tiempo, de lugar o de tema sin decirlo; dos escenas que abren igual; una
+  cifra sin nadie que la viva en todo el acto 1. Un «pero» o un «por eso» real
+  puede ir en medio de la oración: el `enlace` ya no tiene que abrir la voz.
+  Puntúa 5 cuando podrías cerrar los ojos y seguir el video sin perderte, y 1
+  cuando cada escena vuelve a empezar. Cada arreglo es el texto exacto y cambia
+  también el tramo de la narración.
+
+## Puntajes (1–5)
+
+| Puntaje | Lo sostiene | 5 | 3 | ≤ 2 |
+|---|---|---|---|---|
+| `gancho` | C1 | lo publicarías tal cual | se sostiene | no se entrega sin arreglo |
+| `bucle` | C2 + C4 + C11 | | | |
+| `ritmo` | C3 + C7 | | | |
+| `flujo` | C10 + C12 | podrías cerrar los ojos y seguirlo | se oye una voz, con algún tramo leído | tarjetas leídas: cada escena vuelve a empezar |
+| `escala_humana` | C5 | | | |
+| `pago` | C6 | | | |
+| `cierre` | C8 + C11 | | | |
+
+Un puntaje **≤ 2 exige una falta `bloquea`** de su regla (el workflow lo
+comprueba). C9 no tiene puntaje propio: sus faltas van con la gravedad que
+toque.
+
+## Qué bloquea
+
+- **bloquea**: pantalla del gancho que sola no se entiende o sin cifra ni
+  pregunta concreta (C1); promesa vaga o ausente (C2); dos o más enlaces falsos,
+  o un solo «por eso» con la causa después del efecto (C4); pago que no cierra la brecha (C6); pregunta abstracta
+  que no se contesta en una línea, un remate partidista, una analogía con otra unidad o una pregunta que expone (C8); golpe que lee el titular o afirma algo de `no_afirma` (C9); una frase
+  de la voz que no se entiende sin la pantalla o que no tiene verbo conjugado o una repetición audible en la
+  frase del dato (C10); una promesa o una frase final del cierre que repite la de
+  otro video, o una promesa con conector suelto (C11); cualquier puntaje ≤ 2.
+- Un caption que adelanta el pago es **mejora** (no toca la voz), pero señálalo
+  siempre: se lee mientras corre el video.
+- **mejora**: todo lo demás (una cifra sin traducir, un hueco de 5 s, un «y»
+  que podría ser «pero», una muletilla).
+
+Una falta por problema, no una por repetición: si tres escenas fallan por lo
+mismo, es una falta con las tres en `problema`.

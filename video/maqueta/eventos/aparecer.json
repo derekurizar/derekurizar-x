@@ -1,0 +1,29 @@
+{
+ "tipo": "aparecer",
+ "clase": "evento",
+ "cuando": "un actor o el tráfico entra en escena cuando la voz lo nombra (crece desde cero)",
+ "parametros": {
+  "pieza": {
+   "tipo": "pieza",
+   "requerido": true,
+   "descripcion": "el actor o el flujo que entra (antes de su primer aparecer no se ve)",
+   "piezas": [
+    "actor",
+    "flujo"
+   ]
+  }
+ },
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "ejemplo": {
+  "t": 1,
+  "dur": 0.6,
+  "tipo": "aparecer",
+  "pieza": "mi-carro"
+ }
+}

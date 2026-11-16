@@ -32,7 +32,7 @@ FEMENINOS = {"personas", "persona", "denuncias", "denuncia", "víctimas", "víct
              "captura", "toneladas", "tonelada", "muertes", "muerte", "mujeres", "mujer", "niñas", "niña", "horas",
              "hora", "semanas", "semana", "veces", "vez", "gráficas", "gráfica", "sentencias", "sentencia",
              "necropsias", "necropsia", "extorsiones", "extorsión", "armas", "arma", "cárceles", "cárcel", "pandillas",
-             # /noticias: sustantivos que salen a diario en las noticias
+             # sustantivos que salen a diario en las noticias (los sumó el noticiero diario, retirado el 2026-11-14)
              "familias", "familia", "viviendas", "vivienda", "casas", "casa", "escuelas", "escuela", "comunidades",
              "comunidad", "aldeas", "aldea", "empresas", "empresa", "plazas", "plaza", "hectáreas", "hectárea",
              "carreteras", "carretera", "unidades", "unidad", "órdenes", "vacunas", "vacuna", "dosis", "camas", "cama",

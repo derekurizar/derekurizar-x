@@ -107,11 +107,14 @@ cuadros, `critica.json`).
   `linea` entra palabra a palabra **en sincronía con la voz** (cada palabra que la voz dice literal, al decirla; las
   demás, agrupadas como frase; sin ninguna coincidencia, repartidas hasta el fin de la primera oración); igual en
   golpes, definición y la pregunta de la adivina. V9 exige primera oración ≤ 4 s estimados, promesa ≤ 3 s si va en
-  la escena 1 (si no, `en: 2`) y voz del gancho ≤ 7.5 s. La promesa es un evento (`promesa`, con `tic`). En las
+  la escena 1 (si no, `en: 2`) y voz del gancho ≤ 6 s (R5; bajó de 7.5 s el 2026-11-03). **Las dos medidas se repiten en
+  `tiempos` con la voz real** (2026-11-14, `video.revisar_voz_real`): el gancho avisa por encima de 6.0 s y falla por
+  encima de 6.5 s; la escena 2 (P5) avisa por encima de 12 s y falla por encima de 13 s; el mensaje trae la retoma
+  (`voz <TRABAJO> --solo N`). /sabias y /congreso no aplican P5. La promesa es un evento (`promesa`, con `tic`). En las
   escenas de texto el subtítulo se oculta mientras solo repite lo que ya está en pantalla (y hasta que aterriza
   la cifra): aparece para lo que no está (la promesa, la respuesta de la adivina, la explicación).
 - **Barra de progreso** arriba en todas las escenas, un tramo por escena (cierre incluido) de largo proporcional a su
-  duración (`V.pintarProgreso`; `/noticias` agrupa por noticia y `/historia` por acto).
+  duración (`V.pintarProgreso`; `/historia` agrupa por acto).
 - **«Guatemala» en los primeros 6 s** (R6), donde funcione mejor: en la voz o la pantalla del gancho o en la
   primera oración de T1. Desde 2026-10-23 el script **ya no antepone «En Guatemala»** y la voz del gancho no abre con
   contexto (R3): los cinco primeros videos abrían igual y abrir con contexto frena menos (usuario, 2026-10-23).
@@ -141,8 +144,8 @@ cuadros, `critica.json`).
   `portada_texto.png` (`video/portada.html`: solo el gancho en texto, para la miniatura del feed) y, para elegir,
   `portada_cierre.png` (el cierre con la frase final, remate o pregunta, en pantalla), `portada_giro.png` (la escena del giro con su cifra
   ya contada) y `portada_adivina.png` (las opciones a la vista). `entregar` copia todas.
-- **Música** solo del catálogo fijo `design/musica/catalogo.json` (2 pistas por paleta; se elige la de la paleta
-  del hilo usada hace más tiempo), con **ducking** bajo la voz (sidechain). **Efectos** solo del catálogo fijo
+- **Música** solo del catálogo fijo `design/musica/catalogo.json` (se elige por tema; entre las que tocan, la usada
+  hace más tiempo **contando todos los flujos y cada parte de serie**: una sola `video.elegir_musica`), con **ducking** bajo la voz (sidechain). **Efectos** solo del catálogo fijo
   `design/sfx/catalogo.json` (8 WAV: whoosh, tic, pulso, impacto, grave, riser, resolucion, foco), disparados
   por los eventos de cada escena. **`/video` nunca genera música ni efectos.**
 - **Estilo Noche** (decisión del usuario, 2026-10-28; reglas y tokens en `referencias/diseno/sistema.md`), el mismo de
@@ -180,14 +183,15 @@ cuadros, `critica.json`).
 - **Layout vertical de la tarjeta** (`video/vertical.css`, decisión del usuario tras el primer video: «en redes el
   layout es distinto»): la tarjeta no se incrusta al 86 %; se inyecta una hoja que oculta el titular y el handle,
   deja kicker → gráfico a todo el ancho (escala 1, y≈420–1220: por encima de la franja de íconos todo el ancho es
-  seguro) → nota → «Fuente» pequeña. El **foco** hace zoom de 1.25–1.45 a la cifra mientras la voz la dice (el resto
-  se sale de cuadro), con **deriva** lenta cuando no hay foco; el golpe entra desde la izquierda. V7 compara el
-  render vertical contra el animado vertical (`video_animar.js` inyecta la misma hoja; `--cuadrada` para el modo
-  viejo). Entre escenas, **transición de deslizamiento** de 0.3 s (`xfade` en `montar`, vertical en el giro).
+  seguro) → nota → «Fuente» pequeña. La tarjeta va **quieta**: el zoom a la cifra, la deriva y la transición de
+  deslizamiento se retiraron con la cámara quieta (2026-11-07, abajo); se anima lo de adentro y entre escenas hay
+  corte o fundido. V7 compara el render vertical contra el animado vertical (`video_animar.js` inyecta la misma
+  hoja; `--cuadrada` para el modo viejo). En la mesa de archivo la tarjeta es un tablero (`referencias/flujo-mesa.md`).
 
 ## Cámara y edición (decisión del usuario, 2026-11-06)
 
-`CAMARA_QUIETA` en `scripts/video.py` (pasa a cada escena como `S.quieta`):
+La cámara quieta es fija (ya no hay interruptor `CAMARA_QUIETA`: su código muerto salió el 2026-11-14; cada escena
+lleva `S.quieta = true`):
 - **Fotos**: un solo empuje lento en toda la escena; a lo más **un** corte limpio a la cara de la persona que la voz
   nombra (`planos_foto`: el plano amplio y, si hay tarjeta de persona con su cara en la foto, ese corte). Sin
   sub-planos por reloj, sin paneos laterales, sin alejar después de acercar, sin empujón por oración.
@@ -215,6 +219,9 @@ TikTok y cubre las otras en publicaciones normales; las guías de anuncios de Me
 
 - **Duración**: Shorts admite hasta 3 min (`SHORTS_MAX_S`); el `largo` (~4 min) se sube a YouTube como video normal
   (`entregar` y `caption.md` lo avisan). TikTok, Reels y Facebook admiten los tres.
+- **Para teclear** (2026-11-14; 17 de 20 piezas se publicaron con el caption escrito a mano y con erratas): `caption.md`
+  abre con el bloque «Si lo vas a teclear»: un título de ≤ 60 caracteres sin comillas, rayas ni hashtags, y la palabra
+  clave si el guion la trae.
 - **Texto**: `caption.md` con una sección por plataforma (`caption.tiktok|instagram|facebook|shorts`; V5 exige las
   cuatro; la primera línea de `shorts` es el título de YouTube, ≤ 100 caracteres, y lleva `#Shorts`).
 - **Miniatura**: una `portada_*.png` (1080×1920); lo importante va en el 3:4 central, que es lo que muestran las
@@ -269,11 +276,11 @@ corte, se construye como mejora aparte.
 | **V17 narración** | `guion --check` (y `narracion --check` sin escenas) | `guion.narracion` = 3 entradas {acto 1\|2\|3, texto} (planteamiento, nudo, desenlace); cada escena lleva su `acto` (el gancho es del 1), los actos no bajan y el 2 y el 3 tienen escenas propias; **cada acto es la suma literal de las voces de sus escenas** (en el 3, más `cierre.texto`): la narración se escribe primero y se reparte sin cambiar una palabra (las reglas H15 de `/historia`) |
 | **V18 hilo de la voz** | `guion --check` (y `narracion --check`) | ≥ 2 conectores causales o temporales por acto (≥ 1 en `corto` y `prueba`: pero, por eso, así que, entonces, hasta que, mientras tanto, porque, «un año después», «esa misma semana»…); ≤ 1 escena abre con una atribución («Pero, según…»); dos escenas seguidas no abren con las mismas dos palabras (aviso si > 3 abren con la misma); «según» ≤ 3 por video, ≤ 2 por acto, nunca en dos escenas seguidas ni la misma fuente dos veces; cada «esos N …», «ese …» tiene antecedente en lo ya dicho o leído (H11); más de 6.5 cortes por minuto es **aviso** (en `/historia`, falla). Las mismas funciones de `video.py` revisan H15, H16, H11 y H19 de `/historia` |
 | **V19 palabra clave** (opcional) | `guion --check` (estimado) y `tiempos` (real) | solo si `guion.json` o `video.json` declaran `palabra_clave` (string o lista de alias; se compara sin tildes ni mayúsculas): la voz de la escena 1 la dice antes de 3 s (estimado con `CPS`; en `tiempos`, con el `start` real de la palabra), algún texto de pantalla de la escena 1 la lleva (pantalla, línea, golpe, título, titular, término, pregunta o `chip.texto`) y la 1.ª línea de `caption.tiktok`, `caption.instagram` y `caption.facebook` (y, si el flujo lo pide, el título de `shorts`) la abre. Helper `video.py: revisar_palabra_clave(clave, voz, pantalla_textos, captions, max_s=3.0, plataformas=…)`; lo heredan /historia, /explica y /sabias por `guion --check` |
-| **Piso de duración** (opcional) | `tiempos` | solo si `video.json` trae `piso_s` (lo pone el flujo en `preparar`; TikTok Creator Rewards paga desde 60 s, por eso el piso es 61): la duración real del mp4 (escenas − transiciones + bucle) por debajo es FALLA. Helper `video.py: piso_duracion(duracion_s, minimo=61)`; /video, /historia, /explica, /sabias y /noticias no lo activan |
+| **Piso de duración** (opcional) | `tiempos` | solo si `video.json` trae `piso_s` (lo pone el flujo en `preparar`; TikTok Creator Rewards paga desde 60 s, por eso el piso es 61): la duración real del mp4 (escenas − transiciones + bucle) por debajo es FALLA. Helper `video.py: piso_duracion(duracion_s, minimo=61)`; /video, /historia, /explica y /sabias no lo activan |
 | Workflow | `video.js` | retorno de video-gancho coherente (gate ok, 5 candidatos, familias distintas, ≥ 2 con visual); selección coherente (ganador y segundo entre los candidatos, puntajes de todos; sin ganador, faltas con arreglo → video-gancho rehace una vez; si sigue sin ganador, devuelve `corregir` y el comando pregunta al usuario); retorno del guionista coherente (gate ok, tipos, gancho primero, T1 segunda, promesa/pago en rango, pregunta con «?»); retorno del crítico coherente (bloqueantes, veredicto, cada puntaje ≤ 2 con falta `bloquea` de su regla); ≤ 2 vueltas de corrección de lo que bloquea; una sola vuelta de pulido, solo si aprueba con algún puntaje de 3 (aprobado con todo ≥ 4 no se pule: las mejoras van al reporte y el coordinador aplica las que son solo texto en pantalla); si sigue en `corregir`, el comando pregunta al usuario antes de gastar créditos |
 | V6 alineación | `tiempos` | las palabras de Scribe coinciden con la locución (si no, rehacer la voz de esa escena); duración real fuera de ±15 % = aviso |
 | **V10 ritmo** | `tiempos` | con tiempos reales, hueco máximo entre eventos visuales (golpe, entrada, cifra, foco, nota, línea y cada palabra de la línea que la voz dice, promesa, fin, y cada año dicho que la tarjeta tiene en su eje: la columna late sin zoom) ≤ 6 s; **aviso**, no falla. `tiempos` también fija la transición de entrada de cada escena del catálogo `TRANSICIONES` (del gancho a la primera tarjeta `smoothleft`; tarjeta → tarjeta `slideleft`; entrada a golpe o definición `smoothleft`; a la adivina `circleopen`; a una escena a pantalla completa `circleopen`; el giro `slideup`; el cierre `fade`; el bucle `fade`; `zoomin` queda fuera: escala con píxeles enteros y se ve pixelado) y desplaza golpe y cifra 0.3 s para que no queden bajo el `xfade`; `montar` rechaza (V8) una transición fuera del catálogo |
-| **V11 escucha** | `escuchar` | **whisper.cpp local** (`brew install whisper-cpp` + `make whisper`, modelo `ggml-small` en `sesiones/_descargas/whisper/`; opcional) transcribe cada `voz_N.mp3` **sin el guion** y lo coteja con la locución: dígitos → palabras con `numeros_es`, coma decimal, género de los numerales y tildes no cuentan; un tramo distinto que toca una palabra numérica es **FALLA** (retoma de esa escena), y también uno que whisper oyó de más repitiendo ≥ 2 palabras vecinas (titubeo: «si se… o si se»); el resto aviso (ortografía de whisper). Scribe, conectado al nodo TTS, alinea el prompt (devuelve hasta `<break>`): V6 no detecta una cifra mal dicha. Sin whisper, `AVISO V11` y sigue. Resultado en `audio/escucha.json` |
+| **V11 escucha** | `escuchar` | **whisper.cpp local** (`brew install whisper-cpp` + `make whisper`, modelo `ggml-small` en `sesiones/_descargas/whisper/`; opcional) transcribe cada `voz_N.mp3` **sin el guion** y lo coteja con la locución: dígitos → palabras con `numeros_es`, coma decimal, género de los numerales y tildes no cuentan; un tramo distinto que toca una palabra numérica es **FALLA** (retoma de esa escena), y también uno que whisper oyó de más repitiendo ≥ 2 palabras vecinas (titubeo: «si se… o si se»); el resto aviso (ortografía de whisper). Scribe, conectado al nodo TTS, alinea el prompt (devuelve hasta `<break>`): V6 no detecta una cifra mal dicha. Sin whisper, `AVISO V11` y sigue. Resultado en `audio/escucha.json` **Desde el 2026-11-14**: caché por huella en `audio/escucha.json` (una escena cuya voz, modelo y texto no cambiaron no se vuelve a escuchar; `--de-nuevo` lo fuerza); los nombres propios de la locución van como `--prompt` de whisper (nunca cifras ni el texto de la escena); y antes de fallar se coteja con Scribe: la falla baja a aviso solo si lo mal oído no es un número, suena parecido y Scribe trae lo esperado («que sales» por «quetzales»); un número distinto se queda en FALLA. |
 | **V12 quietud** | `revisar` | por clip, diferencia media de luma entre cuadros muestreados a 4 fps y 270 px (`tblend=difference` + `signalstats`): un tramo de ≥ 2.0 s con todo < 0.02 es pantalla congelada → **aviso** («E7 2.3 s sin movimiento desde 7.5 s»; `--estricto` lo vuelve fallo). La deriva (0.1–0.9) y cada palabra que entra (0.3–1.0) cuentan como movimiento; una pantalla quieta mide < 0.01. `revision/quietud.json` guarda la serie por escena |
 | **F1–F8 cierre** | `guion --check` | `cierre.tipo` remate o pregunta y `forma` del catálogo (remates: consecuencia, pendiente, quien_decide); `final` = la última frase de la voz, ≤ 14 palabras (una pregunta, una sola con «?»; un remate, sin «?»); nombra el tema (una raíz del tema, los titulares o el concepto de una cifra del hilo); sin cebo («comenta», «etiqueta», «te leo»…); en un tema sensible, ni pregunta de experiencia ni la casa, la familia o «alguna vez» del espectador; **F6** un remate dice ≤ 1 cifra y nunca la del gancho, y la consecuencia declara `mecanismo`, `quien` (gente, en la frase) y `verbo` (en la frase); **F8** un remate sin fatalismo («no hay nada que hacer») ni futuro de una pérdida que la fuente no proyecta; **F7** una pregunta no sigue a otra, la forma (salvo consecuencia) no repite la de los últimos 2 videos y el mecanismo no repite el del último (`cierres_recientes`) |
 | **V16 voz de corrido** | `tiempos` | ElevenLabs a veces mete un silencio **dentro** de un nombre propio, una sigla o una cifra («que le dijo a la B…BC», «dos mil… dos»). Antes del `atempo`, `apretar_voz` (`video.py`) busca con `silencedetect` (−35 dB, ≥ 0.06 s; los tramos pegados se unen) los silencios que caen dentro de una palabra (≥ 0.10 s, lejos de sus bordes: más que el cierre de una «p» o una «t») o entre dos palabras de la misma cifra (el segmento `p ≠ v` de la locución) o del mismo nombre (palabras seguidas con mayúscula o siglas, unidas por de/del/la/las/los; la corrida acaba en coma, punto o dos puntos) (≥ 0.08 s), y los deja en 0.03 s; mueve los tiempos de Scribe lo recortado. `voz_N.mp3` queda intacto (repetir `tiempos` da lo mismo); lo recortado se imprime («V16 E4 «BBC» −0.21 s…») y queda en `escenas.json → escenas[].apretado`. Una palabra de cifra o de nombre que sigue alargada sin silencio (> 1.6 × lo que pide su largo) es **aviso**: retoma esa escena (`voz --sueltas N`). Nunca se estira ni se pausa la voz para que case con la pantalla: la pantalla sigue a la voz |
@@ -284,13 +291,14 @@ corte, se construye como mejora aparte.
 | K2 efectos | `validate.py` / `sfx.py --check` | `design/sfx/catalogo.json` con los 8 ids fijos, cada WAV presente, duración 0.2–4 s coherente con la cabecera, ganancia −40–0 dB |
 | K3 iconos | `validate.py` / `iconos.py --check` | `design/iconos/catalogo.json` (biblioteca FIJA: 50 iconos Lucide, tag fijado, licencia ISC; `make iconos` la baja UNA vez): cada SVG presente, 24×24, ninguno fuera del catálogo, `LICENSE.txt`. Solo se comprueba si el catálogo existe; el guion la usa con `icono: "<id>"` en gancho, golpe y definición (V1) |
 
-Crítico (`referencias/roles/video-critico.md`, C1–C12): gancho en silencio · razón para quedarse · «¿por qué seguiría
+Crítico (`referencias/roles/video-critico.md` + `video-critico/video.md`, C1–C12): gancho en silencio · razón para quedarse · «¿por qué seguiría
 viendo?» por escena · pero/por eso reales · escala humana · pago · ritmo y re-gancho · cierre · lenguaje y honestidad ·
 lectura de corrido · plantilla (C11: la promesa, el gancho (familia, visual y frase), las aperturas y la pregunta no repiten
 las de «Frases ya usadas» y «Ganchos recientes») · **flujo narrativo** (C12: la narración de corrido se oye como una voz
 que cuenta el dato como una historia, no como tarjetas leídas; lee también `oyente.json`, lo que un oyente ingenuo no
-entendió, como insumo). Antes del guion, el mismo crítico elige el gancho en **modo selección**
-(silencio, referente, tensión, alineación, honestidad, novedad; R11).
+entendió, como insumo). Antes del guion, el mismo crítico puntúa los ganchos en **modo selección**
+(silencio, referente, tensión, alineación, honestidad, novedad; R11) y **recomienda**: el gancho lo elige el usuario
+(regla de oro 11).
 Puntajes 1–5: gancho, bucle, ritmo, flujo, escala_humana, pago, cierre. `pasa` = sin faltas `bloquea` y todos ≥ 3.
 
 ### Dinamismo, siglas y cierre (decisión del usuario, 2026-11-06)

@@ -1,0 +1,354 @@
+{
+  "version": 1,
+  "_comentario": "Caso integrador de la Fase 2 y 3 de la maqueta (esquema carretera): dos flujos de tráfico en seis carriles; la cámara baja de cenital a seguir un carro; un trazo sobre los carriles que se dibuja verde y se pinta de ámbar y rojo desde donde el flujo frena; anillos que pulsan sobre los carros de la cola; un círculo de 5 m alrededor del carro con acercamiento; su velocidad en una etiqueta; un reloj que corre un segundo. Ilustración: no es un video; los números son del propio esquema.",
+  "estilo": "noche",
+  "paleta": "obsidiana",
+  "fps": 30,
+  "duracion_s": 18.0,
+  "protagonista": "estado",
+  "mundo": {
+    "escala": "esquema",
+    "receta": "carretera",
+    "semilla": 7,
+    "carriles": 6,
+    "tamano_m": 1600,
+    "lugares": {
+      "inicio": {
+        "nombre": "Inicio",
+        "x": -420,
+        "y": -7.4
+      },
+      "cola": {
+        "nombre": "Cola",
+        "x": 100,
+        "y": -7.4
+      },
+      "frenada": {
+        "nombre": "Frenada",
+        "x": 130,
+        "y": -7.4
+      },
+      "frente": {
+        "nombre": "Frente",
+        "x": 360,
+        "y": -7.4
+      },
+      "ambar": {
+        "nombre": "Lento",
+        "x": 60,
+        "y": -7.4
+      }
+    },
+    "piezas": [
+      {
+        "id": "parques",
+        "tipo": "zona",
+        "area": "parques",
+        "tono": "verde",
+        "opacidad": 0.55,
+        "borde": false
+      },
+      {
+        "id": "calles",
+        "tipo": "calles"
+      },
+      {
+        "id": "autopista",
+        "tipo": "carretera",
+        "camino": "eje"
+      },
+      {
+        "id": "edificios",
+        "tipo": "edificios"
+      },
+      {
+        "id": "este",
+        "tipo": "flujo",
+        "carriles": [
+          "carril-1",
+          "carril-2",
+          "carril-3"
+        ],
+        "tipos": {
+          "carro": 0.82,
+          "camion": 0.1,
+          "bus": 0.08
+        },
+        "densidad": 26,
+        "vel_kmh": 80,
+        "semilla": 3
+      },
+      {
+        "id": "oeste",
+        "tipo": "flujo",
+        "carriles": [
+          "carril-4",
+          "carril-5",
+          "carril-6"
+        ],
+        "tipos": {
+          "carro": 0.88,
+          "moto": 0.05,
+          "bus": 0.07
+        },
+        "densidad": 18,
+        "vel_kmh": 80,
+        "semilla": 11
+      },
+      {
+        "id": "estado",
+        "tipo": "trazo",
+        "camino": "eje",
+        "desde": "inicio",
+        "hasta": "salida",
+        "desplazar_m": -7.4,
+        "color": "bien",
+        "ancho_px": 6
+      }
+    ]
+  },
+  "camara": [
+    {
+      "t": 0.0,
+      "mira": [
+        40,
+        -7
+      ],
+      "dist_m": 1500,
+      "azimut": 90,
+      "cenital": true
+    },
+    {
+      "t": 4.0,
+      "mira": [
+        60,
+        -7
+      ],
+      "dist_m": 1000,
+      "azimut": 90,
+      "cenital": true
+    },
+    {
+      "t": 7.5,
+      "mira": [
+        150,
+        -7
+      ],
+      "dist_m": 650,
+      "azimut": 90,
+      "cenital": true
+    },
+    {
+      "t": 10.2,
+      "mira": {
+        "flujo": "este",
+        "carril": 2,
+        "cerca": [
+          66,
+          -7
+        ],
+        "t": 10.2,
+        "desfase_m": 14
+      },
+      "dist_m": 150,
+      "azimut": 64,
+      "elevacion": 42
+    },
+    {
+      "t": 12.2,
+      "mira": {
+        "flujo": "este",
+        "carril": 2,
+        "cerca": [
+          66,
+          -7
+        ],
+        "t": 10.2
+      },
+      "dist_m": 72,
+      "azimut": 56,
+      "elevacion": 38
+    },
+    {
+      "t": 14.4,
+      "mira": {
+        "flujo": "este",
+        "carril": 2,
+        "cerca": [
+          66,
+          -7
+        ],
+        "t": 10.2
+      },
+      "dist_m": 46,
+      "azimut": 50,
+      "elevacion": 36
+    },
+    {
+      "t": 18.0,
+      "mira": [
+        180,
+        -7
+      ],
+      "dist_m": 560,
+      "azimut": 80,
+      "elevacion": 64
+    }
+  ],
+  "eventos": [
+    {
+      "t": 0.0,
+      "dur": 3.6,
+      "tipo": "trazar",
+      "trazo": "estado",
+      "sfx": "whoosh"
+    },
+    {
+      "t": 4.6,
+      "dur": 1.8,
+      "tipo": "frenar",
+      "flujo": "este",
+      "en": "frenada",
+      "longitud_m": 230,
+      "vel_kmh": 8
+    },
+    {
+      "t": 5.0,
+      "dur": 3.0,
+      "tipo": "pintar",
+      "trazo": "estado",
+      "desde": "frente",
+      "hasta": "ambar",
+      "color": "medio"
+    },
+    {
+      "t": 5.6,
+      "dur": 3.4,
+      "tipo": "pintar",
+      "trazo": "estado",
+      "desde": "frente",
+      "hasta": "cola",
+      "color": "mal"
+    }
+  ],
+  "anotaciones": [
+    {
+      "t": 4.2,
+      "hasta": 8.6,
+      "tipo": "reloj",
+      "de": "8:14:21",
+      "a": "8:14:22",
+      "corre_desde": 5.0,
+      "corre_hasta": 8.0,
+      "rotulo": "Hora",
+      "ilustrativo": true
+    },
+    {
+      "t": 10.0,
+      "hasta": 11.8,
+      "tipo": "etiqueta",
+      "sigue": {
+        "flujo": "este",
+        "carril": 2,
+        "cerca": [
+          66,
+          -7
+        ],
+        "t": 10.2
+      },
+      "texto": "80 km/h"
+    },
+    {
+      "t": 11.4,
+      "hasta": 13.8,
+      "tipo": "pulso",
+      "sobre": [
+        {
+          "flujo": "este",
+          "cerca": "frenada",
+          "t": 12.5,
+          "cuantos": 5
+        }
+      ],
+      "radio_m": 6.5,
+      "periodo_s": 1.2
+    },
+    {
+      "t": 12.6,
+      "hasta": 14.9,
+      "tipo": "medida",
+      "en": {
+        "flujo": "este",
+        "carril": 2,
+        "cerca": [
+          66,
+          -7
+        ],
+        "t": 10.2
+      },
+      "radio_m": 5
+    },
+    {
+      "t": 12.8,
+      "hasta": 14.9,
+      "tipo": "etiqueta",
+      "sigue": {
+        "flujo": "este",
+        "carril": 2,
+        "cerca": [
+          66,
+          -7
+        ],
+        "t": 10.2
+      },
+      "texto": "8 km/h"
+    }
+  ],
+  "marcas": [],
+  "capa": {
+    "titulares": [
+      {
+        "t": 0.0,
+        "hasta": 4.0,
+        "kicker": "Maqueta de prueba",
+        "texto": "¿Cómo sabe el mapa que hay tráfico?"
+      },
+      {
+        "t": 4.3,
+        "hasta": 8.0,
+        "kicker": "Un tramo frena",
+        "texto": "La línea se pinta de rojo"
+      }
+    ],
+    "cifras": [],
+    "palabras": [],
+    "progreso": {
+      "actos": [
+        0.0,
+        4.3,
+        8.0
+      ]
+    },
+    "seguir": {
+      "t": 8.2,
+      "dur": 2.2
+    },
+    "aviso": "Esquema · no es un lugar real",
+    "pie": "Ilustración: un esquema genérico, no un lugar real",
+    "handle": "@DerekUrizar",
+    "cierre": {
+      "t": 15.0,
+      "frase": "Esto es una prueba.",
+      "redes": [
+        {
+          "nombre": "TikTok",
+          "handle": "@derekurizargt"
+        },
+        {
+          "nombre": "X",
+          "handle": "@DerekUrizar"
+        }
+      ]
+    }
+  }
+}

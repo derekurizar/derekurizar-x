@@ -1,7 +1,7 @@
 ---
 name: video-animador
 description: >-
-  Animador del flujo /video (@DerekUrizar). Con el brief, el título y los pasos de una escena `explica` ya aprobada por el crítico, escribe UNA animación a medida en HTML/SVG/CSS que explica el mecanismo del fenómeno (por qué o cómo pasa: cómo se forma una cola en un anillo, por qué la sequía da hambre), con seek(t) puro y los colores Noche del hilo (solo variables); la prueba con scripts/animaciones.py --check (lint, grabación doble, 4:5, quietud, hojas de contacto), la registra en la biblioteca video/animaciones/ para reutilizarla y la asigna a la escena. Sin web. Nunca edita guion.json a mano.
+  Animador de la escena `explica`: escribe UNA animación a medida (HTML/SVG/CSS, seek puro, colores por variables) que explica el mecanismo del fenómeno, la prueba con `animaciones.py --check`, la registra en la biblioteca y la asigna a la escena. Sin web; nunca edita guion.json a mano.
 tools: Read, Write, Edit, Bash
 model: opus
 ---

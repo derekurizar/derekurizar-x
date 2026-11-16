@@ -1,0 +1,137 @@
+{
+ "tipo": "actor",
+ "clase": "pieza",
+ "cuando": "UN objeto que se mueve por un camino (el carro que seguimos, la persona que camina, el bus que llega) o que está quieto en un lugar",
+ "parametros": {
+  "objeto": {
+   "tipo": "texto",
+   "requerido": false,
+   "descripcion": "qué es: uno de los objetos del catálogo",
+   "defecto": "carro",
+   "valores": [
+    "arbol",
+    "bus",
+    "camion",
+    "carro",
+    "casa",
+    "moto",
+    "persona",
+    "pin",
+    "telefono",
+    "torre"
+   ]
+  },
+  "camino": {
+   "tipo": "texto",
+   "requerido": false,
+   "descripcion": "el camino con nombre que sigue (de la receta o de una pieza: «carril-1», «autopista.carril-2», «eje»)"
+  },
+  "desde": {
+   "tipo": "lugar",
+   "requerido": false,
+   "descripcion": "con `hacia`: va en línea recta de este lugar a aquel (en vez de `camino`)"
+  },
+  "hacia": {
+   "tipo": "lugar",
+   "requerido": false,
+   "descripcion": "a dónde va cuando lleva `desde`"
+  },
+  "puntos": {
+   "tipo": "puntos",
+   "requerido": false,
+   "descripcion": "su propio recorrido (en un esquema, [x, y] en metros)",
+   "min": 2
+  },
+  "lugar": {
+   "tipo": "lugar",
+   "requerido": false,
+   "descripcion": "quieto en este lugar (en vez de un camino), mirando a `rumbo`"
+  },
+  "rumbo": {
+   "tipo": "numero",
+   "requerido": false,
+   "descripcion": "quieto: hacia dónde mira (grados; 0 = este, 90 = norte)",
+   "rango": [
+    0,
+    360
+   ],
+   "defecto": 0
+  },
+  "claves": {
+   "tipo": "claves",
+   "requerido": false,
+   "descripcion": "[{t, s | lugar | vel_kmh}]: dónde está o a qué velocidad va en cada segundo (s: metros desde el inicio del camino o «40%»)"
+  },
+  "tamano": {
+   "tipo": "numero",
+   "requerido": false,
+   "descripcion": "agranda el objeto para que se lea de lejos (1 = su tamaño real)",
+   "rango": [
+    1,
+    8
+   ],
+   "defecto": 1
+  },
+  "suavizado_s": {
+   "tipo": "numero",
+   "requerido": false,
+   "descripcion": "segundos de la ventana que suaviza arranques y frenadas",
+   "rango": [
+    0,
+    4
+   ],
+   "defecto": 1.0
+  },
+  "variante": {
+   "tipo": "entero",
+   "requerido": false,
+   "descripcion": "qué color de carrocería (si no es el protagonista, que va en el acento)",
+   "rango": [
+    0,
+    99
+   ]
+  },
+  "lev_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "descripcion": "metros sobre el suelo (un pin que flota, un teléfono en la mano)",
+   "rango": [
+    0,
+    500
+   ],
+   "defecto": 0
+  }
+ },
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "usa": [
+  "arbol",
+  "bus",
+  "camion",
+  "carro",
+  "casa",
+  "moto",
+  "persona",
+  "pin",
+  "telefono",
+  "torre"
+ ],
+ "ejemplo": {
+  "id": "mi-carro",
+  "tipo": "actor",
+  "objeto": "carro",
+  "camino": "carril-1",
+  "claves": [
+   {
+    "t": 0,
+    "s": "45%",
+    "vel_kmh": 60
+   }
+  ]
+ }
+}

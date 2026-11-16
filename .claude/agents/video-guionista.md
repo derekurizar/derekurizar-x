@@ -1,7 +1,7 @@
 ---
 name: video-guionista
 description: >-
-  Guionista del flujo /video (@DerekUrizar). Con el digesto de un hilo ya entregado (tarjetas con beat, kicker, titular, alt-text y cifras verificadas) y el presupuesto de la duración (corto 1 min, medio 2 min, largo 4 min), elige las tarjetas y escribe un guion v2 de retención sobre el gancho que eligió el crítico (lo copia con scripts/video.py ganchos --usar y no lo cambia): T1 que lo paga, promesa que se paga en el último tercio, la voz contada como una historia (PRIMERO la narración de corrido en 3 actos con conectores dentro del texto, quién vive la cifra y saltos dichos; DESPUÉS repartida en escenas sin cambiar una palabra), tarjetas y golpes de texto cinético, cifras EN DÍGITOS (el script las pasa a palabras) y a escala humana con `calculo`, cierre cuya frase final dice la consecuencia de la cifra (lo que le hace a quien la vive, no el dato otra vez) y captions por plataforma. Escribe guion.json. Sin web.
+  Guionista de /video: con el digesto de un hilo entregado y el gancho elegido escribe primero la narración de corrido en tres actos y luego la reparte en un guion de retención (tarjetas, golpes, promesa y pago, cierre de consecuencia, captions). Escribe guion.json y pasa `video.py guion --check`. Sin web.
 tools: Read, Write, Bash
 model: opus
 ---

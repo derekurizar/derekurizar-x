@@ -80,7 +80,7 @@ MAQUETA_MARGEN = 26        # px del marco de la maqueta a la pieza que cae encim
 MAQUETA_PIE_PX = 22        # el pie del marco (la atribución de los geodatos y el `aviso` si lo hay): letra de crédito
 MAQUETA_GOLPE_ALTO = 0.35  # una pieza sobre la maqueta no tapa más de esta fracción de su alto
 LECT_BASE, LECT_PALABRA, LECT_MIN = 0.5, 0.3, 1.0   # MV8: segundos al frente = 0.5 + 0.3 × palabras que la voz no dice (nunca menos de 1 s)
-PILA_LEGIBLES, PILA_COMPACTAS = 3, 2   # MV9: piezas al frente a la vez y compactas arriba
+PILA_LEGIBLES, PILA_COMPACTAS = 3, 2   # MV9 (no es un gate): 3 piezas en fila al frente, más una chica al lado de la tercera (4), y 2 compactas arriba
 ESCALA_MIN = 0.72                      # MV11: una pieza no se dibuja a menos de esto de su tamaño
 COMPACTA_ANCHO = 388                   # dos compactas caben lado a lado en la columna
 ANCHO_PIEZA = 791                      # el ancho de la columna segura completa (x 85–876)
@@ -126,6 +126,8 @@ CSS = """
 .cifra .v{color:$acento;white-space:nowrap}
 .cifra .l{font-size:56px;margin-top:2px}
 .cifra .f{color:$gris}
+.cifra.cr .v{color:$papel}
+.cifra.cr .cuad i{background:$papel}
 .recorte{background:$papel2;padding:26px 30px 28px}
 .recorte .cab{display:flex;justify-content:space-between;align-items:baseline;border-bottom:4px solid $tinta;padding-bottom:10px}
 .recorte .cab .m{font-size:46px}
@@ -137,6 +139,7 @@ CSS = """
 .hl{background-image:linear-gradient($acento,$acento);background-repeat:no-repeat;background-size:0% 100%;-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:2px 0}
 .nota{background:$acento;padding:22px 30px 20px}
 .nota .cond{font-size:96px}
+.nota.cr{background:$papel}
 .cita{background:$papel;padding:34px 40px 34px;border-left:14px solid $cafe}
 .cita .q{font-size:56px;line-height:1.22;font-weight:600;color:#a89a80}
 .cita .a{margin-top:22px;font-size:50px}
@@ -174,6 +177,7 @@ CSS = """
 .cm .n{font-size:50px;margin-top:4px}
 .cm.osc{background:$mesa2;border:1px solid $filo;color:$papel}
 .cm.osc .n{color:$acento;font-size:96px;white-space:nowrap}
+.cm.osc.cr .n{color:$papel}
 .cm.osc .l{font-size:34px}
 .cm.ac{background:$acento;border-top:0;padding-top:16px}
 .cmf{background:$papel;padding:10px 10px 0}
@@ -241,16 +245,23 @@ def contexto_v(trabajo):
     st = leer(os.path.join(trabajo, "video.json")) if os.path.exists(os.path.join(trabajo, "video.json")) else {}
     Y = {"partes": [{"trabajo": rel(trabajo)}], "base": rel(trabajo), "slug": st.get("slug") or os.path.basename(trabajo), "musica": st.get("musica"),
          "paleta": st.get("paleta"), "fixture": bool(st.get("fixture")) or "/_fixture" in "/" + rel(trabajo)}   # una maqueta: los gates avisan
-    hechos_de = {}
+    # Lo que un gate necesita y no se pudo leer NO se calla (MS.aviso_datos): queda en ctx["avisos"], `revisar` lo suma a los
+    # suyos (sale en `plano --check`) y sale por stderr. Solo se atrapa lo que pasa al leer datos (MS.DATOS_ILEGIBLES).
+    avisos, hechos_de = [], {}
     try:
         for k, e in enumerate(leer(os.path.join(trabajo, "guion.json")).get("escenas") or []):
             hechos_de["e%d" % (k + 1)] = e.get("hechos") or []
-    except (OSError, ValueError):
-        pass
+    except MS.DATOS_ILEGIBLES as ex:
+        hechos_de = {}
+        MS.aviso_datos(avisos, "MV4", "no se pudo leer %s, que dice qué hechos verificados cuenta cada escena; un número o un nombre en "
+                                      "pantalla solo pasa si la voz lo dice" % rel(os.path.join(trabajo, "guion.json")), ex)
     try:
         elenco = YT.elenco_serie(Y)
-    except Exception:
+    except MS.DATOS_ILEGIBLES as ex:
         elenco = []
+        MS.aviso_datos(avisos, "MV4", "no se pudo leer el elenco (los `personajes` de %s y sus retratos); las fichas de persona salen sin "
+                                      "retrato y a cada una se le pide `cargo` y el nombre como lo dice la voz, como a alguien de fuera del elenco"
+                       % rel(os.path.join(trabajo, "encuadre.json")), ex)
     prot = None
     try:
         pr = leer(os.path.join(trabajo, "encuadre.json")).get("protagonista")
@@ -261,11 +272,13 @@ def contexto_v(trabajo):
            "caps": [{"numero": 1, "idx": list(range(len(es))), "titulo": "", "ini": 0.0, "fin": total}],
            "reglas": REGLAS, "hechos_de": hechos_de, "elenco": elenco, "doc": DOC_V, "protagonista": prot}
     try:   # el respaldo de los números en pantalla: las cifras de los datos del video, también como las redondea una tarjeta
-        vals, _, _ = VD.valores_respaldo(st["hilo"])   # {(valor, factor de la unidad)}
-        nums = [x for v, fct in vals for x in (v, v * fct)]
-        ctx["respaldo"] = nums + [round(v) for v in nums] + [round(v, 1) for v in nums]
-    except Exception:
-        pass
+        ctx["respaldo"] = MS.numeros_respaldo(VD.valores_respaldo(st["hilo"])[0])   # [(valor, factor de la unidad)] → números sueltos
+    except MS.DATOS_ILEGIBLES as ex:
+        ctx["respaldo"] = []
+        donde = "datos.json e hilo.json de %s" % st["hilo"] if st.get("hilo") else "video.json no dice su `hilo`"
+        MS.aviso_datos(avisos, "MV4", "no se pudo leer el respaldo de las cifras (%s); un número en pantalla solo pasa si la voz lo dice o "
+                                      "está en los hechos de la mesa" % donde, ex)
+    ctx["avisos"] = avisos
     ctx["seguir"] = seguir_de(ctx)
     return ctx
 
@@ -538,27 +551,23 @@ def compacta(ctx, g, F, elenco):
         iy = -(rc[1] * th * s) - max(0, ch * s - hi) * fy
         return 300, 10 + hi + 12 + 31 * min(2, renglones(pie, 28, 270, False)) + 10, ('<div class="cmf"><div class="im" style="width:%dpx;height:%dpx"><img src="assets/%s" style="left:%.0fpx;top:%.0fpx;width:%.0fpx;height:%.0fpx" alt=""></div>'
                                    '<b>%s</b></div>' % (wi, hi, r["archivo"], ix, iy, tw * s, th * s, esc(pie))), [r["archivo"]]
-    if t == "cifra":
-        v = str(g.get("valor") or "")
-        w = min(COMPACTA_ANCHO, max(240, int(len(v) * 96 * 0.44) + 40))
-        rot = " ".join((g.get("rotulo") or "").split()[:5])
-        return w, 14 + 92 + 34 * renglones(rot, 34, w - 38) + 16, '<div class="cm osc"><div class="n cond">%s</div><div class="l cond">%s</div></div>' % (esc(v), esc(rot)), []
     if t == "barra":
         bs = [b for b in g.get("barras") or [] if isinstance(b, dict)]
         b = next((b for b in bs if b.get("acento")), bs[-1] if bs else None)
         if not b:
             return None
-        g = {"tipo": "cifra", "valor": b.get("texto") or b.get("valor"), "rotulo": b.get("etiqueta") or ""}
+        g = {"tipo": "cifra", "valor": b.get("texto") or b.get("valor"), "rotulo": b.get("etiqueta") or "", "crema": g.get("crema")}
         t = "cifra"
     if t == "cifra":
         v = str(g.get("valor") or "")
         w = min(COMPACTA_ANCHO, max(240, int(len(v) * 96 * 0.44) + 40))
         rot = " ".join((g.get("rotulo") or "").split()[:5])
-        return w, 14 + 92 + 34 * renglones(rot, 34, w - 38) + 16, '<div class="cm osc"><div class="n cond">%s</div><div class="l cond">%s</div></div>' % (esc(v), esc(rot)), []
+        return w, 14 + 92 + 34 * renglones(rot, 34, w - 38) + 16, ('<div class="cm osc%s"><div class="n cond">%s</div><div class="l cond">%s</div></div>'
+                                                                 % (" cr" if g.get("crema") else "", esc(v), esc(rot))), []
     if t == "termino" and not g.get("definicion"):
         txt = g.get("texto") or ""
         w = min(COMPACTA_ANCHO, max(200, int(len(txt) * 50 * 0.47) + 40))
-        return w, 30 + 48 * renglones(txt, 50, w - 36), '<div class="cm ac"><div class="n cond" style="margin-top:0">%s</div></div>' % esc(txt), []
+        return w, 30 + 48 * renglones(txt, 50, w - 36), '<div class="cm%s"><div class="n cond" style="margin-top:0">%s</div></div>' % ("" if g.get("crema") else " ac", esc(txt)), []
     if t == "persona":
         n = g.get("persona") or ""
     elif t == "institucion":
@@ -702,7 +711,22 @@ def componer(ctx, M, fmt, F, elenco):
         if hasta - p["t"] < pide - 0.05:
             fallas.append("MV8 %s golpe %d (%s «%s»): queda %.1f s al frente y pide %.1f s (%d palabras que la voz no dice): acorta el texto, quita la "
                           "pieza que la desplaza, o parte la mesa" % (nom, p["k"] + 1, p["g"]["tipo"], resumen_golpe(p["g"])[:40], hasta - p["t"], pide, n))
-    return {"cab": cab, "tits": tits, "piezas": out, "compactas": comp, "fallas": fallas, "y0": y0}
+    # MV13: un solo acento al frente a la vez (la que ya se replegó va atenuada, arriba, y no cuenta). Falla si un dato (cifra,
+    # barra) comparte el acento con otro dato o con un bloque; lo demás se avisa (MS.acento_compite dice por qué)
+    avisos = []
+    for b, antes in MS.acentos_a_la_vez(out, fin_mesa):
+        cuales = lambda ps: " y ".join("%s (golpe %d)" % (MS.en_acento(a_["g"]), a_["k"] + 1) for a_ in ps)
+        graves = [a_ for a_ in antes if MS.acento_compite(a_["g"], b["g"])]
+        leves = [a_ for a_ in antes if a_ not in graves]
+        cabeza_ = "MV13 %s golpe %d (%s, %s): %s entra a los %.1f s y " % (nom, b["k"] + 1, b["g"]["tipo"], fmt, MS.en_acento(b["g"]), b["t"])
+        if graves:
+            fallas.append(cabeza_ + "%s sigue%s al frente en acento: un solo acento a la vez, y con una cifra en pantalla el acento es solo suyo. Pon "
+                          "`\"crema\": true` en la que no es el dato que la voz está diciendo (cifra, nota o barra), `\"limpia\": true` en la que entra (repliega lo "
+                          "anterior), quita el `acento` de la lista, o llévala a otra mesa" % (cuales(graves), "n" if len(graves) > 1 else ""))
+        if leves:
+            avisos.append(cabeza_ + "%s sigue%s al frente en acento: dos acentos a la vez. Si compiten, deja uno: `\"crema\": true` (cifra, nota o barra), "
+                          "`\"limpia\": true` en la que entra, o quita el subrayado o el lazo que sobra" % (cuales(leves), "n" if len(leves) > 1 else ""))
+    return {"cab": cab, "tits": tits, "piezas": out, "compactas": comp, "fallas": fallas, "avisos": avisos, "y0": y0}
 
 
 def marco_clip(ctx, M, fmt):
@@ -880,7 +904,7 @@ def dibujar_barra(ctx, m, g, x, y, w, h, ex, k, F, usados):
     bs = [b for b in g.get("barras") or [] if isinstance(b, dict)][:BARRAS_MAX]
     vals = [valor_num(b.get("valor")) or 0.0 for b in bs]
     tope = max(vals + [1e-9])
-    ac = next((j for j, b in enumerate(bs) if b.get("acento")), len(bs) - 1)
+    ac = -1 if g.get("crema") else next((j for j, b in enumerate(bs) if b.get("acento")), len(bs) - 1)   # en crema ninguna destaca (MV13)
     pid = "%s-b%d" % (m.id, m.k + 1)
     filas = "".join('<div class="fi%s"><div class="et cond"><span>%s</span><span class="v">%s</span></div><div class="pi"><b id="%s-%d" style="width:%.1f%%"></b></div></div>'
                     % (" ac" if j == ac else "", esc(b.get("etiqueta")), esc(str(b.get("texto") or (num_txt(b["valor"]) if valor_num(b.get("valor")) is not None else ""))), pid, j, 100.0 * max(0.0, v) / tope)
@@ -1210,7 +1234,7 @@ def armar(trabajo, fmt, portada=False):
     for fnt in ("archivo-wdth.woff2", "jetbrains-mono-var.woff2"):
         enlazar(os.path.join(RAIZ, "design", "fonts", fnt), os.path.join(P, "assets", "fonts", fnt))
     enlazar(os.path.join(RAIZ, "design", "grano-mesa.png"), os.path.join(P, "assets", "grano.png"))
-    enlazar(os.path.join(RAIZ, "design", "vendor", "gsap-3.15.0.min.js"), os.path.join(P, "assets", "vendor", "gsap.min.js"))
+    MS.gsap_local(P)   # GSAP del repositorio (scripts/versiones.py): assets/vendor/gsap.min.js; el render no llama a la red
     # la cabecera: la barra por actos, el kicker de la serie y el golpe de arriba (cambia de un corte con su mesa)
     x0, col = Fz["x0"], Fz["x1b"] - Fz["x0"]
     cab0 = cabeza(ctx, Fz, "")
@@ -1343,7 +1367,9 @@ def armar(trabajo, fmt, portada=False):
 # ---------- gates ----------
 def revisar_v(ctx, P, mesas=None, f0=None):
     """MV1–MV14 sobre el plano → (fallas, avisos, medidas). MV1–MV7 son los del núcleo con las reglas del vertical; MV8–MV11
-    salen de componer la mesa en los dos formatos (geometría calculada, nunca píxeles)."""
+    y MV13 salen de componer la mesa en los dos formatos (geometría y tiempos calculados, nunca píxeles): MV13 = dos piezas
+    que el plano manda dibujar en el color de acento (mesa.en_acento) no coinciden al frente; falla si una es un dato (cifra o
+    barra) y la otra otro dato o un bloque, y lo demás se avisa (mesa.acento_compite)."""
     if mesas is None:
         mesas, f0 = resolver_v(ctx, P)
     f, av, med = MS.revisar(ctx, P, mesas, f0)
@@ -1365,16 +1391,28 @@ def revisar_v(ctx, P, mesas=None, f0=None):
                 if g["_t"] - LEAD <= M["ini"] + 0.05:
                     g["_ya"] = True
         for fmt in FORMATOS:
-            for x in componer(ctx, M, fmt, F, elenco)["fallas"]:
-                clave = re.sub(r", (9:16|4:5)\)", ")", x)
-                if clave not in vistos:
-                    vistos.add(clave)
-                    f.append(x)
+            try:
+                L = componer(ctx, M, fmt, F, elenco)
+                fallas_fmt, avisos_fmt = L["fallas"], L.get("avisos") or []
+            except (OSError, KeyError) as e:
+                # un documento cuya página no está en paginas.json: mesa.revisar ya dio su MV4; aquí no se puede medir la
+                # mesa, y antes el gate reventaba con FileNotFoundError / KeyError en vez de decirlo
+                fallas_fmt, avisos_fmt = ["MV4 %s: no se puede componer la mesa (%s: %s): revisa las páginas de sus documentos (historia.py pagina)"
+                                          % (M["id"], type(e).__name__, e)], []
+            for lista, destino in ((fallas_fmt, f), (avisos_fmt, av)):
+                for x in lista:
+                    clave = re.sub(r", (9:16|4:5)\)", ")", x)
+                    if clave not in vistos:
+                        vistos.add(clave)
+                        destino.append(x)
     # MV4 y MV12: la jerarquía de personas (red)
     voz_video = " ".join(VD._plano(w["text"]) for S in ctx["es"] for w in S.get("palabras") or [])
     for M in mesas:
         voz_mesa = " ".join(VD._plano(w["text"]) for i in M["idx"] for w in ctx["es"][i].get("palabras") or [])
         for j, g in enumerate(M["golpes"]):
+            if g.get("crema") and g.get("tipo") not in MS.CREMA_TIPOS:   # MV13: `crema` solo donde el motor sabe dibujarla sin acento
+                f.append("MV13 %s golpe %d (%s): `crema` solo vale en %s (la pieza se dibuja sin acento); en esta no cambia nada: quítalo"
+                         % (M["id"], j + 1, g.get("tipo"), ", ".join(MS.CREMA_TIPOS)))
             if g.get("tipo") == "barra":   # MV4: la comparación, a la misma escala y con algo que medir
                 q = "%s golpe %d (barra)" % (M["id"], j + 1)
                 bs = [b for b in g.get("barras") or [] if isinstance(b, dict)]
@@ -1466,7 +1504,8 @@ def texto_pantalla(S, i, frase, F):
         if linea and len(linea.split()) <= 6 and VD._plano(linea) != VD._plano(pant):
             r = buscar(S, " ".join(linea.split()[:2]), 0)
             if r and r[1] > 2:
-                gs.append({"tipo": "termino", "dice": " ".join(w["text"] for w in pal[r[1]:r[1] + 2]), "texto": linea})
+                # la línea bajo el golpe va en crema: el acento es del golpe (MV13: un solo acento al frente)
+                gs.append({"tipo": "termino", "dice": " ".join(w["text"] for w in pal[r[1]:r[1] + 2]), "texto": linea, "crema": True})
         return gs
     if tipo != "gancho":
         return gs
@@ -1516,6 +1555,10 @@ def texto_pantalla(S, i, frase, F):
             if g.get("dice"):
                 g.pop("dice")
                 break
+    if any(g["tipo"] in ("cifra", "barra") for g in gs):   # MV13: el acento es del dato (la cifra, la barra); la nota que lo acompaña, en crema
+        for g in gs:
+            if g["tipo"] == "termino":
+                g["crema"] = True
     return gs
 
 
@@ -1634,7 +1677,8 @@ def cmd_digesto(a):
                     usados[g.get("foto")] = usados.get(g.get("foto"), 0) + 1
     print("# Plano vertical de %s · %s · escribe %s" % (ctx["Y"]["slug"], VD_mmss(ctx["total"]), rel(fp)))
     print("\nReglas: una pieza por oración; texto corto (lo que la voz ya dice no hace falta repetirlo); cada texto queda al frente 0.5 s + 0.3 s por "
-          "palabra que la voz no dice; ≤ %d piezas por mesa; una foto, una sola vez; mesas de una o dos escenas con `titulo` de ≤ 6 palabras." % REGLAS["MESA_PIEZAS"])
+          "palabra que la voz no dice; ≤ %d piezas por mesa; una foto, una sola vez; mesas de una o dos escenas con `titulo` de ≤ 6 palabras; un solo acento "
+          "al frente (cifra, nota, barra, subrayado: a la que no es el dato, `\"crema\": true`)." % REGLAS["MESA_PIEZAS"])
     print("\n## Escenas (clave · tipo · segundo). Cada «·» es una oración: ahí tiene que entrar algo.")
     notas = MS.notas_leidas()
     for i, S in enumerate(es):
@@ -2029,6 +2073,59 @@ def cmd_audio(a):
     return 0
 
 
+# ---------- el doble sin render (MESA_RENDER=0), por formato ----------
+# Una maqueta no renderiza con HyperFrames: su «render» es un doble en negro de la duración exacta. Eso se anota POR FORMATO
+# (un 4:5 de doble no queda limpio porque el 9:16 se haya vuelto a grabar de verdad):
+#   hf/<formato>/render/.doble           el sello viaja con el render: lo pone el doble y lo quita un render de verdad
+#   salida/.maqueta_sin_render.<formato> el video montado de ese formato viene de un doble: la pone el doble y la pone o la
+#                                        quita `montar`, según el sello del render que monta
+#   salida/.maqueta_sin_render           la general (VD.MESA_SIN_RENDER), la que leen los `entregar`: existe mientras
+#                                        ALGÚN formato esté marcado
+def sello_doble(trabajo, fid):
+    return os.path.join(trabajo, "hf", fid, "render", ".doble")
+
+
+def marca_doble(trabajo, fid=None):
+    """La marca de salida/: la de un formato («9x16», «4x5») o, sin `fid`, la general que leen los `entregar`."""
+    return os.path.join(trabajo, "salida", VD.MESA_SIN_RENDER + ("." + fid if fid else ""))
+
+
+def dobles_sin_render(trabajo):
+    """Los formatos cuyo video montado viene de un doble → ["9x16", "4x5"] (vacío: se puede entregar)."""
+    return [Fz["id"] for Fz in FORMATOS.values() if os.path.exists(marca_doble(trabajo, Fz["id"]))]
+
+
+def repartir_marca_vieja(trabajo):
+    """Una marca general sin marcas por formato es de antes de que existieran y no dice de qué formato era: vale para todo
+    formato que ya tenga render o video montado (cada uno queda con su sello y su marca hasta que se grabe de verdad)."""
+    if dobles_sin_render(trabajo) or not os.path.exists(marca_doble(trabajo)):
+        return
+    for Fz in FORMATOS.values():
+        r = os.path.join(trabajo, "hf", Fz["id"], "render")
+        if os.path.exists(os.path.join(r, "video.mp4")) or os.path.exists(os.path.join(trabajo, "salida", Fz["salida"])):
+            if os.path.isdir(r):
+                open(sello_doble(trabajo, Fz["id"]), "w").write("MESA_RENDER=0 (marca general anterior a las marcas por formato)\n")
+            open(marca_doble(trabajo, Fz["id"]), "w").write("MESA_RENDER=0 (marca general anterior a las marcas por formato)\n")
+
+
+def marcar_doble(trabajo, fid, doble):
+    """Anota si el video del formato `fid` viene de un doble (o ya no) y deja al día la marca general, que existe mientras
+    algún formato siga marcado. → los formatos marcados."""
+    os.makedirs(os.path.join(trabajo, "salida"), exist_ok=True)
+    repartir_marca_vieja(trabajo)
+    m = marca_doble(trabajo, fid)
+    if doble:
+        open(m, "w").write("MESA_RENDER=0\n")
+    elif os.path.exists(m):
+        os.remove(m)
+    quedan, general = dobles_sin_render(trabajo), marca_doble(trabajo)
+    if quedan:
+        open(general, "w").write("MESA_RENDER=0\n%s\n" % " ".join(quedan))
+    elif os.path.exists(general):
+        os.remove(general)
+    return quedan
+
+
 def cmd_render(a):
     trabajo = os.path.abspath(a.trabajo)
     Fz = FORMATOS[a.formato]
@@ -2038,20 +2135,23 @@ def cmd_render(a):
     os.makedirs(os.path.join(P, "render"), exist_ok=True)
     out = os.path.join(P, "render", "video.mp4")
     D = total_de(trabajo, a.formato) or contexto_v(trabajo)["total"]
-    marca = os.path.join(trabajo, "salida", VD.MESA_SIN_RENDER)
-    os.makedirs(os.path.join(trabajo, "salida"), exist_ok=True)
+    sello = sello_doble(trabajo, Fz["id"])
     if os.environ.get("MESA_RENDER") == "0":   # las maquetas: un doble de la duración exacta, sin HyperFrames (el proyecto ya pasó su check)
         VD.ff("-f", "lavfi", "-i", "color=c=0x14100d:s=%dx%d:r=%d:d=%.4f" % (Fz["w"], Fz["h"], FPS, D), "-c:v", "libx264", "-pix_fmt", "yuv420p", "-an", out)
-        open(marca, "w").write("MESA_RENDER=0\n")
+        open(sello, "w").write("MESA_RENDER=0\n")
+        marcar_doble(trabajo, Fz["id"], True)
         print("render %s: doble sin render de %.2f s (MESA_RENDER=0; no se puede entregar) → %s" % (a.formato, D, rel(out)))
         return 0
-    with open(os.path.join(P, "render", "render.log"), "w") as log:   # SIEMPRE un proceso: con varios el video tiembla
-        rc = subprocess.run(["npx", "--yes", "hyperframes@" + HF_VERSION, "render", "--quality", a.calidad, "--workers", "1", "-o", "render/video.mp4"],
-                            cwd=P, stdout=log, stderr=subprocess.STDOUT).returncode
+    registro = os.path.join(P, "render", "render.log")
+    limite = MS.limite_render(D)   # SIEMPRE un proceso (con varios el video tiembla) y con un límite proporcional a la duración
+    rc, vencido = MS.render_hf(P, ["--quality", a.calidad, "--workers", "1", "-o", "render/video.mp4"], limite, registro)
+    if vencido:
+        return falla(MS.texto_limite("el render %s" % a.formato, limite, D, registro))
     if rc or not os.path.exists(out):
-        return falla("el render falló (%s)" % rel(os.path.join(P, "render", "render.log")))
-    if os.path.exists(marca):
-        os.remove(marca)
+        return falla("el render falló (hyperframes %s; %s)" % (HF_VERSION, rel(registro)))
+    repartir_marca_vieja(trabajo)   # una marca general de antes de las marcas por formato: se reparte ANTES de quitar el sello de este
+    if os.path.exists(sello):
+        os.remove(sello)             # este render ya es de verdad; la marca de salida/ la quita `montar` cuando lo monte
     d = VD.ffprobe_dur(out)
     print("render %s: %s (%.2f s; el plano dice %.2f s) → %s" % (a.formato, VD_mmss(d), d, D, rel(out)))
     if abs(d - D) > 2.0 / FPS + 0.05:
@@ -2082,6 +2182,11 @@ def cmd_montar(a):
     if abs(mf["input_i"] - VD.LUFS) > VD.LUFS_TOL or mf["input_tp"] > VD.TP_MAX:
         fallas.append("V8 sonoridad %.1f LUFS / %.1f dBTP (se espera %.0f ±%.1f, ≤ %.0f)" % (mf["input_i"], mf["input_tp"], VD.LUFS, VD.LUFS_TOL, VD.TP_MAX))
     print("video %s %s · %.1f LUFS · %.1f dBTP → %s" % (a.formato, VD_mmss(VD.ffprobe_dur(video)), mf["input_i"], mf["input_tp"], rel(video)))
+    # el video montado es de verdad solo si su render lo es: la marca del formato sigue al sello del render (la general, a todas)
+    dobles = marcar_doble(trabajo, Fz["id"], os.path.exists(sello_doble(trabajo, Fz["id"])))
+    if dobles:
+        print("  doble sin render (MESA_RENDER=0) en %s: no se puede entregar hasta grabar y montar de verdad %s"
+              % (", ".join(dobles), "ese formato" if len(dobles) == 1 else "esos formatos"))
     for x in fallas:
         print("FALLA", x)
     return 1 if fallas else 0

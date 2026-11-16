@@ -507,14 +507,13 @@ def armar_votacion(trabajo, ini, fixture=False):
     return V, cifras
 
 
-def recientes():
+def recientes(slug=None):
+    """Los videos de /congreso ya registrados (para rotar la paleta) y R9 + F7 contra el feed entero (video.piezas_feed:
+    todos los flujos): la familia de las últimas 2 piezas (el visual no rota: es el pleno) y el cierre."""
     regs = leer(REGISTRO).get("congreso", []) if os.path.exists(REGISTRO) else []
     regs = sorted(regs, key=lambda r: (r.get("fecha", ""), r.get("id", "")))
-    fr = [r.get("frases") or {} for r in regs]
-    return regs, ({"familias": [x.get("familia") for x in fr[-2:] if x.get("familia")], "visuales": []},
-                  {"tipos": [x.get("cierre_tipo") for x in fr[-1:] if x.get("cierre_tipo")],
-                   "formas": [x.get("cierre_forma") for x in fr[-VD.ROTACION_CIERRES:] if x.get("cierre_forma")],
-                   "mecanismos": [x["cierre_mecanismo"] for x in fr[-1:] if x.get("cierre_mecanismo")]})
+    piezas = VD.piezas_feed(slug)
+    return regs, (VD.ganchos_recientes(slug, 2, 0, piezas), VD.cierres_recientes(slug, piezas))
 
 
 SEMILLA = ("votacion.json", "votos_ley.csv", "ley.json", "fotos", "fuentes")
@@ -540,7 +539,7 @@ def cmd_preparar(a):
         cifras = leer(os.path.join(a.semilla, "datos.json"))["cifras"]
     else:
         V, cifras = armar_votacion(trabajo, ini, a.fixture)
-    regs, (rec_g, rec_c) = recientes()
+    regs, (rec_g, rec_c) = recientes(slug)
     usadas = [r.get("paleta") for r in regs]
     paleta = a.paleta or min(PALETAS, key=lambda p: (usadas[::-1].index(p) * -1 if p in usadas else -999, PALETAS.index(p)))
     if a.paleta is None and usadas:
@@ -888,6 +887,7 @@ def aplicar_extension(trabajo):
     VD.TRANSICIONES["portal"] = "fade"
     VD.CONSTRUCTORES.update(gancho=t_gancho, hemiciclo=t_hemiciclo, foto=HI.t_foto, cita=HI.t_cita)
     VD.TRANSICION_DE.update(hemiciclo="portal", foto="tarjeta", cita="texto")
+    VD.NO_APLICA_REAL.append(de_video_que_no_aplica)   # sin promesa: P5 tampoco se mide sobre la voz real
     VD.validar_estructura = estructura
     VD.reglas_gancho = reglas_gancho
 
@@ -1268,6 +1268,8 @@ REENVIO = ("voz", "voz-falsa", "descargar", "escuchar", "plano", "grabar", "mont
 
 
 def main():
+    if len(sys.argv) > 1 and sys.argv[1] == "producir":   # la cadena de producción común y reanudable (scripts/producir.py)
+        return subprocess.run([sys.executable, os.path.join(RAIZ, "scripts", "producir.py")] + sys.argv[2:], cwd=RAIZ).returncode
     if len(sys.argv) > 1 and sys.argv[1] in REENVIO:
         return subprocess.run([sys.executable, os.path.join(RAIZ, "scripts", "video.py")] + sys.argv[1:], cwd=RAIZ).returncode
     p = argparse.ArgumentParser(description=__doc__.split("\n")[0], epilog=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)

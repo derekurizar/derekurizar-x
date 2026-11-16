@@ -1,7 +1,7 @@
 ---
 name: historia-investigador
 description: >-
-  Investigador de un eje del flujo /historia (@DerekUrizar). Con SIFT y presupuesto (≤ 10 búsquedas, ≤ 12 lecturas) reúne los hechos de su eje con fecha, actores, lugar y la cita literal de cada fuente guardada con scripts/historia.py leer (HTML, PDF o Wayback), las cifras con su número en la cita, las frases textuales de personas o documentos y fotos candidatas (la og:image de las notas que lee —leer la imprime—, Wikimedia Commons con licencia libre, oficiales, prensa de la empresa; la del protagonista es obligatoria). Primaria antes que prensa; Wikipedia solo como mapa. Escribe hallazgos_<eje>.json. Varios corren en paralelo.
+  Investigador de un eje de /historia: reúne hechos con fecha, actores y cita literal guardada con `historia.py leer`, cifras, frases textuales y fotos candidatas (la del protagonista es obligatoria). Escribe hallazgos_<eje>.json. Varios corren en paralelo.
 tools: Read, Write, Bash, WebSearch, WebFetch
 model: sonnet
 ---

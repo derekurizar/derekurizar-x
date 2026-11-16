@@ -1,0 +1,30 @@
+{
+ "tipo": "encender",
+ "clase": "evento",
+ "cuando": "las luces de unos lugares se encienden de a poco (vuelve la luz, llega algo)",
+ "parametros": {
+  "lugares": {
+   "tipo": "lugares",
+   "todos": true,
+   "requerido": false,
+   "defecto": "todos",
+   "descripcion": "«todos» o ids de luces de una pieza `luces`"
+  }
+ },
+ "escalas": [
+  "pais"
+ ],
+ "motores": [
+  "three",
+  "blender"
+ ],
+ "ejemplo": {
+  "t": 3.0,
+  "dur": 2.0,
+  "tipo": "encender",
+  "lugares": [
+   "guatemala",
+   "mixco"
+  ]
+ }
+}

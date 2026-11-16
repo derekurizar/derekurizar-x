@@ -37,7 +37,7 @@ Comprueba:
   M8 memoria/videos.json (si existe; registro de /video): schema de cada video (id, fecha, slug, hilo_id, paleta,
      duracion ∈ corto|medio|largo, duracion_s, n_escenas, musica, ruta_video, ruta_hilo, estado) · ids únicos ·
      ruta_video con guion.json (el mp4 está fuera de git: su ausencia es aviso) · musica en el catálogo
-  M9 memoria/noticias.json (si existe; registro de /noticias): campos, ids únicos, estado, paleta y música conocidas,
+  M9 memoria/noticias.json (si existe; el histórico de /noticias, flujo retirado el 2026-11-14): campos, ids únicos, estado, paleta y música conocidas,
      ruta con guion.json, fuentes.md y caption.md (el mp4 fuera de git: aviso) · cada noticia con titular y urls
   M10 memoria/historias.json (si existe; registro de /historia): campos, ids y slugs únicos, estado, paleta y música
      conocidas, ruta con guion.json (tipo historia), fuentes.md, cronologia.md y caption.md (el mp4 fuera de git: aviso)
@@ -47,9 +47,7 @@ Comprueba:
      conocidas, ruta con guion.json (tipo sabias) y caption.md (el mp4 fuera de git: aviso)
   M14 memoria/carruseles.json (si existe; registro de /carrusel): campos, ids únicos, un carrusel por original,
      estado, paleta, origen existente, ruta con carrusel.json (tipo carrusel), caption.md, alt.md y sus n_laminas PNG
-  M15 memoria/semanas.json (si existe; registro de /semana): campos, ids AAAA-Wnn únicos, estado, paleta y música
-     conocidas, 5 cifras con puestos 5→1, valor y url, ruta con guion.json (tipo semana), fuentes.md y caption.md (el
-     mp4 fuera de git: aviso)
+  (M15, el registro de /semana, se retiró con el flujo el 2026-11-14)
   M16 memoria/series.json (si existe; registro de /serie): campos, ids únicos, motor historia|explica, carpeta con serie.json
      que pasa serie.revisar_serie (partes 3–5 en orden, estado conocido, entregada ⇒ guion.json en su ruta)
   M19 memoria/congreso.json (si existe; /congreso): campos, estado, paleta, música, duración < 60 s, los dos lados (CG4) y
@@ -65,6 +63,9 @@ Comprueba:
      lo revisa scripts/metricas.py (revisar)
   M11 memoria/mejoras.json (si existe; mejoras al framework de cada video): campos, ids únicos mNNN, flujo conocido,
      estado pendiente|hecha|descartada, archivo relativo a la raíz
+  M22 memoria/costos.json (si existe; lo medido por costo.py --registrar, vía memoria.py --costo): campos de cada corrida
+     (pieza, flujo, run, fecha, minutos, agentes, tokens.total), run único, flujo de memoria.FLUJOS_COSTO, fecha
+     AAAA-MM-DD, números válidos, entrega relativa a la raíz; aviso si la pieza no está en el registro de su flujo
   K1 design/musica/catalogo.json: cada pista existe, ids únicos, paleta conocida (o null: solo por tema), temas de video.MUSICA_TEMAS y ≥ 2 pistas por paleta
   N1 cada investigacion/<YYYY-MM-DD>-*/ (entregable de /investigacion) tiene informe.json,
      salida/informe.pdf y salida/informe.html; aviso si no está en memoria/informes.json (corrida
@@ -818,49 +819,6 @@ def validar_carruseles(paletas):
             err("M14 carruseles[%d] %s/carrusel.json no es de /carrusel (tipo %r)" % (i, r, c.get("tipo")))
 
 
-def validar_semanas(paletas):
-    """M15 memoria/semanas.json (registro de /semana)."""
-    rel_mem = "memoria/semanas.json"
-    if not os.path.exists(os.path.join(RAIZ, rel_mem)):  # ausente = ok: memoria.py --semana lo crea con la primera
-        return
-    d = cargar(rel_mem) or {}
-    musica = {p.get("id") for p in (cargar("design/musica/catalogo.json") or {}).get("pistas", [])}
-    ids = set()
-    for i, v in enumerate(d.get("semanas", [])):
-        for campo in ("id", "fecha", "ventana", "ruta", "paleta", "musica", "duracion_s", "estado", "cifras"):
-            if campo not in v:
-                err("M15 semanas[%d] sin %s" % (i, campo))
-        if v.get("id") in ids:
-            err("M15 semanas: id repetido %s" % v.get("id"))
-        ids.add(v.get("id"))
-        if not re.fullmatch(r"\d{4}-W\d{2}", str(v.get("id"))):
-            err("M15 semanas[%d] id %r (va AAAA-Wnn)" % (i, v.get("id")))
-        if v.get("estado") not in ("listo", "publicado", "incompleto"):
-            err("M15 semanas[%d] estado %r" % (i, v.get("estado")))
-        if paletas and v.get("paleta") not in paletas:
-            err("M15 semanas[%d] paleta %r desconocida" % (i, v.get("paleta")))
-        if v.get("musica") not in musica:
-            err("M15 semanas[%d] música %r no está en el catálogo" % (i, v.get("musica")))
-        cs = v.get("cifras") or []
-        if [c.get("puesto") for c in cs] != [5, 4, 3, 2, 1]:
-            err("M15 semanas[%d] cifras con puestos %s (van 5, 4, 3, 2, 1)" % (i, [c.get("puesto") for c in cs]))
-        for c in cs:
-            if not isinstance(c.get("valor"), (int, float)) or not c.get("url"):
-                err("M15 semanas[%d] cifra #%s sin valor numérico o sin url" % (i, c.get("puesto")))
-        r = str(v.get("ruta", ""))
-        if os.path.isabs(r):
-            err("M15 semanas[%d] la ruta debe ser relativa a la raíz" % i)
-            continue
-        for f in ("guion.json", "fuentes.md", "caption.md"):
-            if not os.path.exists(os.path.join(RAIZ, r, f)):
-                err("M15 semanas[%d] %s sin %s" % (i, r, f))
-        g = cargar(os.path.join(r, "guion.json")) if os.path.exists(os.path.join(RAIZ, r, "guion.json")) else {}
-        if g and g.get("tipo") != "semana":
-            err("M15 semanas[%d] %s/guion.json no es de /semana (tipo %r)" % (i, r, g.get("tipo")))
-        if not os.path.exists(os.path.join(RAIZ, r, "video.mp4")):
-            warn("M15 semanas[%d] %s/video.mp4 no está (fuera de git: se regenera con /semana)" % (i, r))
-
-
 def validar_explicaciones(paletas):
     """M12 memoria/explicaciones.json (registro de /explica)."""
     rel_mem = "memoria/explicaciones.json"
@@ -899,7 +857,7 @@ def validar_explicaciones(paletas):
             warn("M12 explicaciones[%d] %s/video.mp4 no está (fuera de git: se regenera con /explica)" % (i, r))
 
 
-FLUJOS_MEJORA = ("video", "noticias", "historia", "explica", "sabias", "carrusel", "semana", "analisis", "serie", "congreso", "youtube", "video3d")
+FLUJOS_MEJORA = ("video", "noticias", "historia", "explica", "sabias", "carrusel", "analisis", "serie", "congreso", "youtube", "video3d")   # «noticias»: mejoras históricas (flujo retirado el 2026-11-14)
 
 
 def validar_agendas():
@@ -1004,10 +962,41 @@ def validar_mejoras():
             err("M11 mejoras[%d] el archivo debe ser relativo a la raíz" % i)
 
 
+def validar_costos():
+    """M22 memoria/costos.json (lo que midió costo.py de cada corrida de Workflow; lo escribe memoria.py --costo)."""
+    rel_mem = "memoria/costos.json"
+    if not os.path.exists(os.path.join(RAIZ, rel_mem)):  # ausente = ok: memoria.py --costo lo crea
+        return
+    import memoria as _mem
+    num = lambda v: isinstance(v, (int, float)) and not isinstance(v, bool)   # noqa: E731
+    runs = set()
+    for i, c in enumerate((cargar(rel_mem) or {}).get("costos", [])):
+        for campo in ("pieza", "flujo", "run", "fecha", "minutos", "agentes", "tokens"):
+            if c.get(campo) in (None, ""):
+                err("M22 costos[%d] sin %s" % (i, campo))
+        if c.get("run") in runs:
+            err("M22 costos: run repetido %s (registrar la misma corrida reemplaza)" % c.get("run"))
+        runs.add(c.get("run"))
+        if c.get("flujo") not in _mem.FLUJOS_COSTO:
+            err("M22 costos[%d] flujo %r (%s)" % (i, c.get("flujo"), "|".join(_mem.FLUJOS_COSTO)))
+        if not re.match(r"^\d{4}-\d{2}-\d{2}$", str(c.get("fecha"))):
+            err("M22 costos[%d] fecha %r (va AAAA-MM-DD)" % (i, c.get("fecha")))
+        tk = c.get("tokens") if isinstance(c.get("tokens"), dict) else {}
+        if not num(c.get("minutos")) or c["minutos"] < 0 or not num(c.get("agentes")) or c["agentes"] < 1 \
+                or not num(tk.get("total")) or tk["total"] < 0:
+            err("M22 costos[%d] minutos (≥ 0), agentes (≥ 1) y tokens.total (≥ 0) deben ser números" % i)
+        if "minutos_pieza" in c and (not num(c["minutos_pieza"]) or c["minutos_pieza"] <= 0):
+            err("M22 costos[%d] minutos_pieza %r (el reloj hasta la entrega va > 0)" % (i, c["minutos_pieza"]))
+        if os.path.isabs(str(c.get("entrega", ""))):
+            err("M22 costos[%d] la entrega debe ser relativa a la raíz" % i)
+        if c.get("flujo") in _mem.FLUJOS_COSTO and c.get("pieza") and not _mem.resolver_pieza(c["flujo"], c["pieza"])[1]:
+            warn("M22 costos[%d] la pieza %s no está en el registro de /%s" % (i, c["pieza"], c["flujo"]))
+
+
 def validar_noticias(paletas):
-    """M9 memoria/noticias.json (registro de /noticias)."""
+    """M9 memoria/noticias.json (el histórico de /noticias: el flujo se retiró el 2026-11-14 y el registro ya no crece)."""
     rel_mem = "memoria/noticias.json"
-    if not os.path.exists(os.path.join(RAIZ, rel_mem)):  # ausente = ok: memoria.py lo crea con el primer noticiero
+    if not os.path.exists(os.path.join(RAIZ, rel_mem)):  # ausente = ok
         return
     d = cargar(rel_mem) or {}
     musica = {p.get("id") for p in (cargar("design/musica/catalogo.json") or {}).get("pistas", [])}
@@ -1033,7 +1022,7 @@ def validar_noticias(paletas):
             if not os.path.exists(os.path.join(RAIZ, r, f)):
                 err("M9 noticieros[%d] %s sin %s" % (i, r, f))
         if not os.path.exists(os.path.join(RAIZ, r, "video.mp4")):
-            warn("M9 noticieros[%d] %s/video.mp4 no está (fuera de git: se regenera con /noticias)" % (i, r))
+            warn("M9 noticieros[%d] %s/video.mp4 no está (fuera de git; /noticias se retiró: ya no se regenera)" % (i, r))
         for k, x in enumerate(v.get("noticias") or []):
             if not x.get("titular") or not x.get("urls"):
                 err("M9 noticieros[%d].noticias[%d] sin titular o sin urls" % (i, k))
@@ -1058,8 +1047,8 @@ def main():
     validar_video3d(paletas)
     validar_congreso(paletas)
     validar_carruseles(paletas)
-    validar_semanas(paletas)
     validar_mejoras()
+    validar_costos()
     validar_metricas()
     validar_series()
     validar_youtube()

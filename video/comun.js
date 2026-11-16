@@ -133,11 +133,11 @@ const V = (() => {
   };
 
   // barra de progreso: un tramo por grupo, de largo proporcional a su duración. /historia agrupa por acto (S.acto),
-  // /noticias por noticia (S.N.indice) y /video va por escena. Una escena sin grupo toma el de la anterior (el cierre) o,
+  // y /video va por escena. Una escena sin grupo toma el de la anterior (el cierre) o,
   // al principio, el de la siguiente (el gancho). Los grupos anteriores llenos, el actual avanza con el tiempo.
   let GRUPOS = null;
   const grupos = (todo) => {
-    const es = todo.escenas, ks = es.map((e) => (e.acto != null ? 'a' + e.acto : e.N && e.N.indice != null ? 'n' + e.N.indice : null));
+    const es = todo.escenas, ks = es.map((e) => (e.acto != null ? 'a' + e.acto : null));
     if (!ks.some((x) => x !== null)) return es.map((e) => ({ ns: [e.n], durs: [e.dur || 1] }));
     for (let i = 0; i < ks.length; i++) if (ks[i] === null) ks[i] = i > 0 ? ks[i - 1] : ks.find((x) => x !== null);
     const out = [];

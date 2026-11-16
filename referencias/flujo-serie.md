@@ -87,7 +87,7 @@ Cómo filtra cada parte: entra lo que se le repartió aunque se haya revelado de
 La Línea repetían 17 hechos, presentaban a Monzón ×6 y explicaban la Cicig ×6; vistas de seguido en el perfil, cada
 parte gastaba 20–30 s en lo ya contado. Cada parte se sigue entendiendo sola (SE4), pero con una oración de contexto y
 un recordatorio corto, no con el relato otra vez. Los digestos de la parte marcan `[YA CONTADO EN Pk]` y listan
-presentados y siglas (`serie.lineas_ya_contado`). Sobre la serie entregada de La Línea, SE15–SE16 dan 3–5 fallas en
+presentados y siglas (`serie.lineas_ya_contado`; el gate es `serie.revisar_novedad`). Sobre la serie entregada de La Línea, SE15–SE16 dan 3–5 fallas en
 cada parte de la 2 a la 7.
 
 ## La serie completa antes de la voz (SE17, decisión del usuario, 2026-11-09)
@@ -114,7 +114,8 @@ lo que pasó, y con impacto (termina en lo que más pesa).
 - **Nada nuevo:** sus `hechos` son ids que ya contó alguna parte (o esta misma), de ≥ 5 partes anteriores (o de todas,
   si hay menos). Los alegatos se atribuyen igual que en el resto del video («para la acusación…», H4).
 - **Fuera de SE13** (repetir es su trabajo), de V1 (no cuenta como explica) y del aviso de flashback.
-- **Duración:** sus segundos se suman al límite de la parte: +30 s en SE7 y en H5/V4, hasta 180 s (el tope de Shorts).
+- **Duración:** sus segundos se suman al límite de la parte: +30 s en SE7 y en H5/V4, hasta 180 s (el tope de Shorts). El Workflow
+  `historia` suma al tope de palabras de la última parte las +72 del resumen (m132; W12 lo vigila).
 - Primera vez: La Línea, Parte 7 (147 → 172 s).
 - **Agregarlo a una parte ya grabada:** `historia.py aplicar <TRABAJO> --cambios '{"insertar": N, "escena": {…},
   "despues_de": "frase literal de la narración"}'` (m108). Inserta la escena y su texto en la narración, corre los audios
@@ -179,3 +180,12 @@ la Parte 1 fijada.
 las ve en su digesto. SE19 cuenta también las fotos de una `cortina` y las piezas de un `archivo` (una foto en ≤ 2
 partes), y `/youtube-long` enlaza las páginas de documento de las escenas `pagina`; en 16:9 se muestran dentro del
 escenario.
+
+## Rotación y registro por parte (2026-11-14)
+
+- `serie.py parte N` **recalcula la rotación** al armar cada parte (`rotacion_parte`): el feed de todos los flujos sin
+  esta serie, más sus partes anteriores leídas del TRABAJO. Antes la rotación quedaba congelada en el `preparar` de la
+  serie y tres partes seguidas salían con la misma forma de promesa (P3).
+- La forma de cierre `puente` no rota (es obligatoria en las partes que no son la última).
+- `memoria.py --serie` guarda por parte entregada su `musica` y sus `frases` (familia del gancho, forma de la promesa y
+  del cierre, quién eligió), y `metricas.py` vincula cada parte como una pieza (`<serie>-parte-N`).

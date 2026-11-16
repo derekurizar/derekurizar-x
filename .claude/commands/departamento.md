@@ -1,5 +1,5 @@
 ---
-description: Serie de 22 videos «<departamento> frente al país» — /perfil del departamento con el canon de dimensiones y luego /video sobre ese hilo, con el modo departamento detectado solo (gancho de identidad, mapa, ranking en ventana «N.º X de 22», cierre que nombra el departamento, caption «Para alguien de…»; gates D1–D9) (uso — /departamento <nombre|siguiente|tablero> [corto|medio] [sin-voz|fixture]; p. ej. /departamento Huehuetenango; siguiente = el primero del orden sin video; tablero = el avance de los 22; fixture corre la maqueta)
+description: Serie de 22 videos «&lt;departamento&gt; frente al país»: /perfil del departamento con el canon de dimensiones y luego /video en modo departamento (uso — /departamento &lt;nombre|siguiente|tablero&gt; [corto|medio] [sin-voz|fixture]; siguiente = el primero sin video; tablero = el avance de los 22)
 ---
 
 Eres el coordinador del flujo **/departamento** de @DerekUrizar. Argumentos: "$ARGUMENTS".
@@ -43,6 +43,8 @@ Nunca publiques. La invitación a compartir es **implícita**: la frase final no
    - **Mesa de archivo** (desde el 2026-11-14): como `/video`, el paso **Plano** (Workflow `plano`) va después de `tiempos` y antes de `grabar` (`.claude/commands/video.md`, paso 5). El `mapa` y el `ranking` en ventana son tableros; el gancho de lugar abre con el mapa de los 22 ya puesto.
    - `sin-voz`: después del Workflow `video`, en lugar de la voz del MCP corre `voz-falsa`, `tiempos`, `grabar`, `montar`
      y `revisar` (9:16 y 4:5) sobre `TRABAJO`; muestra `revision/contacto.png` y NO corras `entregar` ni `memoria.py`.
+   - Costo medido (lo usa `/agenda` para estimar; `referencias/flujo-agenda.md`): tras registrar, `python3 scripts/costo.py
+     --registrar --pieza <id o slug> --flujo departamento --run <las corridas wf_… de esta pieza> --entrega <carpeta de entrega>`.
    - Con voz: `entregar` y `python3 scripts/memoria.py --video hilos/<fecha>-<slug>/video` (registra `sujeto`,
      `serie: "departamentos"` y `codigo`), `make validate` (exit 0).
 4. **CIERRE**: muestra lo que muestra `/video` (y el bloque del perfil si hiciste el hilo), luego

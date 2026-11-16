@@ -4,7 +4,8 @@ Un video vertical de **43–57 s estimados y ≤ 59.5 s reales** (9:16 + 4:5) so
 Guatemala: qué buscaba, cuántos votos tuvo frente al umbral y quiénes votaron de cada lado. Inspirado en los videos de
 parlamentos con hemiciclo animado (decisión del usuario, 2026-11-04): el hemiciclo que se llena asiento por asiento con su
 contador y un pop por tanda, la línea de mayoría, el sello del resultado, los avatares de los diputados unidos a su
-asiento y el **portal**: el círculo del gancho que se abre hacia el hemiciclo. Comando: `.claude/commands/congreso.md`.
+asiento y, solo con el motor propio, el **portal** (el círculo del gancho que se abre hacia el hemiciclo; la mesa abre
+con la foto del pleno y la barra de votos). Comando: `.claude/commands/congreso.md`.
 
 > **Mesa de archivo (2026-11-14).** Este flujo se dibuja con la mesa de archivo (`video.json → "realizacion": "mesa"`; `referencias/flujo-mesa.md`): el guion, la voz y sus gates no cambian, y tras `tiempos` el paso **Plano** (Workflow `plano`, `video-realizador`) decide qué pieza entra con cada oración. En la mesa, el `hemiciclo` es un tablero grabado limpio (asientos, umbral, sello, foco con el retrato); el gancho deja el portal (es del motor propio) y abre con la foto del pleno y la `barra` de votos (a favor, los que hacían falta, en contra).
 
@@ -58,7 +59,7 @@ escena 2 o 3 (CG10).
   palabra de la voz que dispara las columnas), `golpe` arriba. Los 160 asientos de izquierda a derecha: a favor por
   bancada (la mayor primero), ausentes, licencia y en contra (la mayor al extremo derecho). A favor en el acento, en
   contra en crema, el resto apagado; **sin colores de partido**.
-- **gancho con `mini`** (`congreso.py t_gancho`): la misma página en modo gancho; el portal se abre si la escena 2 es un hemiciclo.
+- **gancho con `mini`** (`congreso.py t_gancho`): la misma página en modo gancho; el portal se abre si la escena 2 es un hemiciclo (solo `realizacion: propio`; en la mesa el gancho es foto + `barra`).
 - `foto` y `cita` son las de `/historia` (`historia.t_foto`, `historia.t_cita`), con las fotos de `TRABAJO/fotos` y las
   citas de `ley.json`.
 - Efectos (catálogo fijo, `scripts/sfx.py`): `voto` (cada tanda de asientos, ≤ 12 por tramo), `mazo` (el resultado),

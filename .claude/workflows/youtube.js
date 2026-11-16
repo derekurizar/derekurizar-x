@@ -1,7 +1,7 @@
 export const meta = {
   name: 'youtube',
-  description: 'Video largo de YouTube desde una serie entregada (/youtube-long): youtube-editor (el MONTAJE: quita lo que se repite al pegar las partes —hechos contados otra vez, personas presentadas otra vez, siglas explicadas otra vez—, recorta frases e incisos en silencios de ≥ 80 ms, escribe 1–2 oraciones de puente donde hay un salto de tiempo o de tema sin anunciar lo que viene, la promesa global y el título, la descripción y los capítulos; gate youtube.py montaje --check YT1–YT8, YT11) → historia-oyente en modo largo (el video entero de corrido: repeticiones, saltos, confusiones) → video-critico en modo largo (repetición, continuidad, uniones, ritmo, promesa, claridad; arreglos probados con youtube.py probar; ≤ 2 vueltas, desde la 2 acotadas) → se detiene con veredicto aprobar_montaje para que el usuario lo apruebe antes de gastar créditos. 0 créditos.',
-  whenToUse: 'Invocado por /youtube-long <serie> DESPUÉS de `python3 scripts/youtube.py preparar <serie>`. args: {trabajo, permitir_fallback, desde, notas}. trabajo = sesiones/youtube-<slug> (la última línea de preparar). desde: "retoque" + notas = montaje.json ya existe: el editor aplica solo las notas del usuario → gate → oyente → crítica (1 vuelta). desde: "plano" + capitulos (N) = el paso «Plano» tras youtube.py armar: un youtube-realizador por capítulo escribe el guion visual del 16:9 (plano_<N>.json) y un cierre deja youtube.py plano --check en 0; devuelve veredicto plano_listo o plano_pendiente. Devuelve veredicto aprobar_montaje (la sesión muestra youtube.py resumen y pregunta) o corregir + faltas_pendientes. La voz de las piezas nuevas, el armado, los tableros, el proyecto de HyperFrames, el render, el audio, la miniatura y la entrega los hace la sesión después.',
+  description: 'Montaje de /youtube-long: youtube-editor (quita lo repetido, une los capítulos) → oyente → crítico en modo largo (≤ 2 pasadas) → se detiene para que el usuario apruebe el montaje; con desde: plano, un youtube-realizador por capítulo. 0 créditos.',
+  whenToUse: 'Tras `youtube.py preparar`. args: {trabajo, desde: retoque|plano, notas, capitulos, permitir_fallback}. Devuelve aprobar_montaje, corregir + faltas_pendientes, o plano_listo | plano_pendiente. Detalle: .claude/commands/youtube-long.md.',
   phases: [
     { title: 'Montaje', detail: 'youtube-editor: montaje.json desde el borrador (las marcas del formato corto ya quitadas): quitar, recortar (frases e incisos literales, en silencios ≥ 80 ms, sin partir nombres), puentes (1–2 oraciones con hechos, foto y titular, sin anunciar), promesa global, títulos de capítulo, título y descripción de YouTube; gate youtube.py montaje --check (YT1–YT8, YT11) y su RETORNO' },
     { title: 'Oyente', detail: 'historia-oyente en modo largo: el video entero de corrido (youtube.py digesto --para oyente); repeticiones, saltos y confusiones; vuelve a oír tras cada corrección' },
@@ -32,7 +32,9 @@ if (PLANO && !(CAPITULOS >= 1 && CAPITULOS <= 12)) throw new Error('args.capitul
 const RETOQUE = DESDE === 'retoque'
 const notas = String(A.notas || '').trim()
 if (RETOQUE && !notas) throw new Error('args.notas: en modo retoque, lo que pidió el usuario (quitar una unión, otra promesa, dejar la escena P3.e8…).')
-const VUELTAS = RETOQUE ? 1 : VUELTAS_CRITICA
+// VUELTAS = correcciones que el crítico puede pedir; el crítico pasa VUELTAS + 1 veces, es decir VUELTAS_CRITICA
+// (crítica → corrección → crítica acotada). Antes eran 3 pasadas de opus por corrida (2026-11-14).
+const VUELTAS = VUELTAS_CRITICA - 1
 
 // <comun> generado por scripts/armar_workflows.py desde scripts/workflow_comun.js: no editar aquí
 // Código común de los workflows hilo.js, dato.js, investigacion.js y video.js (el sandbox de Workflow no importa módulos).
@@ -59,6 +61,11 @@ const agentRol = async (prompt, opts) => {
     return agent(`Asume el rol definido en .claude/agents/${agentType}.md: léelo primero y sigue sus instrucciones y sus límites. ` + prompt, { ...resto, agentType: 'general-purpose' })
   }
 }
+
+// Guías por modo (2026-11-14): el rol lee su núcleo (referencias/roles/<rol>.md) y SOLO los archivos de su modo
+// (referencias/roles/<rol>/<modo>.md). Antes leía la guía entera, con todos los modos, en cada pasada.
+const guia = (rol, ...modos) =>
+  `lee referencias/roles/${rol}.md (el núcleo) y, de referencias/roles/${rol}/, SOLO ${modos.map((m) => m + '.md').join(' y ')}`
 
 // Verificación mecánica (scripts/verificacion.py V-A–V-E): forma única del veredicto, cierre que el verificador
 // corre antes de devolver y una vuelta de reparación si quedan fallas; lo que siga fallando no se usa.
@@ -241,7 +248,7 @@ for (let vuelta = 1; vuelta <= VUELTAS + 1; vuelta++) {
   if (vuelta > 1) O = (await oir(vuelta)) || O
   const acotada = vuelta > 1 || RETOQUE
   critica = await conReparacion(`crítica ${vuelta}`, (fallos) => agentRol(
-    `MODO LARGO (lee la sección «Modo largo» de referencias/roles/video-critico.md). TRABAJO = ${trabajo}. Vuelta ${vuelta}. ` +
+    `MODO LARGO (${guia('video-critico', 'largo', 'recompensa')}). TRABAJO = ${trabajo}. Vuelta ${vuelta}. ` +
       `Insumos: python3 scripts/youtube.py digesto ${trabajo} --para critico, python3 scripts/youtube.py resumen ${trabajo}` + (O ? ` y ${trabajo}/oyente.json (cada confusión y salto se resuelve con una falta bloquea de Y-C2 o se justifica en oyente_descartadas; sus repeticiones son tu primera lista para Y-C1)` : '') + '. ' +
       `La pregunta: ¿se oye como UN documental o como partes pegadas? Y-C3: un puente o la promesa que anuncia («en este capítulo», «ahora veremos», «te cuento») o resume lo visto bloquea. ` +
       (acotada ? `VUELTA ACOTADA: solo bloquea lo que cambió en la corrección, lo que la vuelta anterior dejó sin resolver o un puntaje ≤ 2; lo demás va como mejora. ` : '') +

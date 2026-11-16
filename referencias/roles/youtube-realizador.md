@@ -117,12 +117,13 @@ escenas puedes fijar uno con `"escena": "<clave>"`):
 ```
 
 - `set`: `guatemala` (lugares por id: minúsculas, sin tildes, con guiones; o `[lon, lat]`; o declarados en `lugares`).
-  `estilo`: uno de los que lista el digesto (`noche`, `color`, `contorno`, `voxel`, `plano`…). `piezas`: `falla`, `luces`, `frontera`, `ruta`;
-  `protagonista` es la única que va en el acento.
+  `estilo`: uno de los que lista el digesto (`noche`, `color`, `contorno`, `voxel`, `plano`…). `piezas`: las del catálogo
+  del vocabulario (el digesto lo trae bajo «Vocabulario de la maqueta 3D»; a mano: `python3 scripts/maqueta3d.py catalogo
+  --para realizador`); `protagonista` es la única que va en el acento.
 - **Cámara**: la primera clave sin `dice` (el encuadre con que abre la mesa); las demás, con el `dice` en el que
   **llegan** (`"al": "fin"` = al terminar la frase; sin `dice` y con `"al": "fin"`, al terminar la mesa).
-- **Marcas**: una por lugar que la voz nombra (`dice`, `lugar`, `texto`, `sub`). **Eventos**: `resaltar`, `encender`,
-  `apagar`, `parpadear`, `ruptura`, `onda`, `deslizar`, con `dice` y `dur` (o `hasta_dice`).
+- **Marcas**: una por lugar que la voz nombra (`dice`, `lugar`, `texto`, `sub`). **Eventos**: los del catálogo (cada
+  uno con sus parámetros y un ejemplo), con `dice` y `dur` (o `hasta_dice`). Lo que no está en el catálogo no se dibuja.
 - Cada oración de la mesa trae una entrada (YT14): la cámara que llega, un evento, una marca o un golpe. Las cifras y los
   años que la voz dice van en golpes (YT13). La maqueta no lleva titulares ni cifras propias.
 - El detalle de cada campo: `referencias/flujo-mesa.md` («La maqueta») y `referencias/diseno/maqueta3d.md`.

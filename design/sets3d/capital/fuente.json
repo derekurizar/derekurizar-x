@@ -1,0 +1,64 @@
+{
+ "set": "capital",
+ "escala": "ciudad",
+ "nombre": "Ciudad de Guatemala (centro)",
+ "caja": {
+  "lon_min": -90.55,
+  "lon_max": -90.49,
+  "lat_min": 14.585,
+  "lat_max": 14.65
+ },
+ "capas": {
+  "relieve": {
+   "fuente": "Mapzen Terrain Tiles (AWS Open Data), formato terrarium, zoom 14 (≈ 15 m por celda)",
+   "url": "https://registry.opendata.aws/terrain-tiles/",
+   "licencia": "Datos abiertos; atribución según la fuente de cada mosaico (SRTM, GMTED2010, ETOPO1 y otros)",
+   "atribucion": "Relieve: Mapzen Terrain Tiles",
+   "descarga": "2026-11-15"
+  },
+  "calles": {
+   "fuente": "OpenStreetMap (Overpass API) y la receta de las vías design/vias/capital.fuente.json",
+   "url": "https://www.openstreetmap.org/copyright",
+   "licencia": "ODbL 1.0",
+   "atribucion": "Calles: © OpenStreetMap",
+   "descarga": "2026-11-15"
+  },
+  "edificios": {
+   "fuente": "OpenStreetMap (Overpass API) y la receta de las vías design/vias/capital.fuente.json",
+   "url": "https://www.openstreetmap.org/copyright",
+   "licencia": "ODbL 1.0",
+   "atribucion": "Edificios: © OpenStreetMap",
+   "descarga": "2026-11-15"
+  },
+  "agua": {
+   "fuente": "OpenStreetMap (Overpass API) y la receta de las vías design/vias/capital.fuente.json",
+   "url": "https://www.openstreetmap.org/copyright",
+   "licencia": "ODbL 1.0",
+   "atribucion": "Agua: © OpenStreetMap",
+   "descarga": "2026-11-15"
+  },
+  "zonas": {
+   "fuente": "OpenStreetMap (Overpass API) y la receta de las vías design/vias/capital.fuente.json",
+   "url": "https://www.openstreetmap.org/copyright",
+   "licencia": "ODbL 1.0",
+   "atribucion": "Zonas verdes: © OpenStreetMap",
+   "descarga": "2026-11-15"
+  },
+  "lugares": {
+   "fuente": "OpenStreetMap (Overpass API) y la receta de las vías design/vias/capital.fuente.json",
+   "url": "https://www.openstreetmap.org/copyright",
+   "licencia": "ODbL 1.0",
+   "atribucion": "Lugares: © OpenStreetMap",
+   "descarga": "2026-11-15"
+  }
+ },
+ "pie": "Relieve: Mapzen Terrain Tiles · Calles, edificios y lugares: © OpenStreetMap (ODbL)",
+ "pie_claves": {
+  "relieve": "Mapzen",
+  "calles": "OpenStreetMap",
+  "edificios": "OpenStreetMap",
+  "agua": "OpenStreetMap",
+  "zonas": "OpenStreetMap",
+  "lugares": "OpenStreetMap"
+ }
+}

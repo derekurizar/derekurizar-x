@@ -49,6 +49,9 @@ pasan los mismos gates y dejan las mismas salidas (ver «Motor Blender»).
     {"t": 24.0, "dur": 5.5, "tipo": "onda", "pieza": "motagua", "radio_km": 170},
     {"t": 25.0, "dur": 3.0, "tipo": "parpadear", "lugares": ["guatemala", "chimaltenango"]}
   ],
+  "anotaciones": [
+    {"t": 8.0, "hasta": 11.0, "tipo": "pulso", "sobre": ["guatemala"], "radio_m": 20000}
+  ],
   "marcas": [
     {"t": 6.1, "hasta": 11.0, "lugar": "los-amates", "texto": "Los Amates, Izabal", "sub": "Epicentro"},
     {"t": 20.0, "hasta": 26.0, "lugar": "guatemala", "texto": "Ciudad de Guatemala", "sub": "A 25 km", "separada_de": "motagua"}
@@ -77,9 +80,12 @@ pasan los mismos gates y dejan las mismas salidas (ver «Motor Blender»).
   una falla que no es la protagonista se enciende en crema (el color `secundario` del estilo), y la capa 2D nunca usa
   el acento (los pines, los titulares y la palabra que suena van en crema). Si falta, es la primera pieza `falla`
   (con aviso). Puede ser una falla, la frontera, una ruta o unas luces.
-- **`mundo.set`**: una carpeta de `design/sets3d/<set>/` (geodatos ya bajados con `scripts/build_set3d.py`, con su
-  fuente y licencia en `fuente.json`; el render no llama a la red). `exageracion` multiplica la altura del relieve
-  (5 por defecto).
+- **`mundo.escala`**: `pais` (por defecto: el relieve de un territorio, en km), `ciudad` (un lugar real de pocos km,
+  en metros) o `esquema` (un lugar genérico hecho por una receta, en metros). Lo que cambia con la escala, la unidad de la
+  cámara y lo que se puede dibujar en cada una: § «Mundos: pais, ciudad y esquema».
+- **`mundo.set`** (pais y ciudad): una carpeta de `design/sets3d/<set>/` de esa escala (geodatos ya bajados con
+  `scripts/build_set3d.py`, con su fuente y licencia en `fuente.json`; el render no llama a la red). `exageracion`
+  multiplica la altura del relieve (5 por defecto en pais; 1.5 en ciudad, donde los edificios guardan su altura real).
 - **`mundo.lugares`**: puntos con `lon`, `lat` y `nombre`; los del set (`lugares.json`: las 22 cabeceras y los ≈ 300
   pueblos de OpenStreetMap, por id en minúsculas con guiones: `guatemala`, `los-amates`, `tecpan`…) se usan sin
   declararlos. Donde el contrato pide un lugar vale también `[lon, lat]`.
@@ -88,7 +94,10 @@ pasan los mismos gates y dejan las mismas salidas (ver «Motor Blender»).
   clave desconocida falla M3D1. Hoy las dibuja el estilo `plano` (motor three.js). **Con `plano` se pregunta siempre al
   usuario si quiere todas las capas o una versión limpia** (usuario, 2026-11-15: en la frontera recta con México las
   curvas de la sierra de Chiapas ensuciaban el cuadro; quedó `{"curvas": false, "batimetria": false}`).
-- **`mundo.piezas`**: lo que hay sobre el mundo. Ninguna pieza lleva texto ni cifras: eso va en la capa. Tipos v1:
+- **`mundo.piezas`**: lo que hay sobre el mundo. Ninguna pieza lleva texto ni cifras: eso va en la capa. **Los tipos, sus
+  parámetros (con tipo, rango y defecto), las escalas y los motores que los dibujan están en el catálogo**
+  (`design/sets3d/vocabulario.json`; legible: `python3 scripts/maqueta3d.py catalogo`); un tipo que no está ahí es FALLA
+  M3D2. Notas de los tipos de hoy:
   - `falla`: `trazos` (nombres del set, `fallas.json → nombres`) **o** `puntos: [[lon, lat], …]` (un trazo propio, p. ej.
     la traza publicada de una ruptura; se suaviza con una curva por los puntos, salvo `"suave": false`), o los dos. Se
     posa sobre el relieve. Los trazos se encadenan en una sola línea ordenada de oeste a este (o de sur a norte); el
@@ -102,8 +111,12 @@ pasan los mismos gates y dejan las mismas salidas (ver «Motor Blender»).
     Natural Earth con `build_set3d.py <set> --capa frontera` y quedan en `frontera.json → vecinos`), para que se entienda
     dónde queda cada cosa. Los dos motores los dibujan; nunca van en el acento.
   - `ruta`: una línea de rayas entre `lugares` (≥ 2), posada sobre el relieve.
-- **`camara`**: claves ordenadas por `t`, la primera en `t = 0`. Cada clave: `mira` (id de lugar o `[lon, lat]`),
-  `dist_km` (del ojo al punto que mira; 15–1600), `azimut` (grados; 0 = el ojo al sur del punto, mirando al norte;
+- **`camara`**: claves ordenadas por `t`, la primera en `t = 0`. Cada clave: `mira` (id de lugar o `[lon, lat]`; en un
+  esquema, `[x, y]` en metros; o algo que se MUEVE: `{"actor": id}` o un vehículo de un flujo `{"flujo": id, "n": k}` /
+  `{"flujo": id, "carril": 2, "cerca": lugar, "t": s}`, con `desfase_m` (metros por delante, o `[adelante, izquierda]`): la
+  cámara lo sigue, § «La cámara que sigue»), `cenital: true` (atajo de `elevacion: 89`), `dist_km` (del ojo al punto que mira; 15–1600) en un mundo `pais`, o **`dist_m`** en
+  `ciudad` (40–9000 m) y `esquema` (15–5000 m): la unidad y el rango los fija la ficha del mundo (`camara`) y M3D3 los
+  revisa, `azimut` (grados; 0 = el ojo al sur del punto, mirando al norte;
   positivo gira el ojo hacia el este), `elevacion` (grados sobre el horizonte; 8–89) y `fov` opcional (vertical, 50 por
   defecto; 20–75). El punto que mira está a la altura del relieve ahí (ya exagerada). Entre claves se interpola cada
   parámetro (también esa altura) con `e = -(cos(pi*u) - 1)/2`; antes de la primera y después de la última, la cámara
@@ -115,7 +128,8 @@ pasan los mismos gates y dejan las mismas salidas (ver «Motor Blender»).
   (también el `sfx` de un titular, una cifra, una marca, `seguir` o el `cierre`). **Un evento con `t ≤ 0.1` ya se ve en
   el cuadro 0**: el motor lo dibuja como si llevara un avance (ruptura ≈ 0.25 s: el destello de origen encendido y un
   primer tramo de línea; onda: el anillo ya abierto; deslizar y resaltar: ya a plena fuerza) y termina cuando dice el
-  `maqueta.json`. Tipos v1:
+  `maqueta.json`. Cuánto avance lleva cada tipo lo dice su ficha (`adelanto`). Los tipos y sus parámetros: el catálogo
+  (`maqueta3d.py catalogo`). Notas de los de hoy:
   - `ruptura`: la falla `pieza` se enciende desde el punto del trazo más cercano a `desde`. O bien `hacia:
     este|oeste|norte|sur|ambos` con `km` (con `ambos`, `km` es el largo total: la mitad a cada lado), o bien
     **`km_oeste` y `km_este`** (o `km_norte` / `km_sur`): ruptura bilateral y asimétrica, **cada frente avanza a su
@@ -135,8 +149,10 @@ pasan los mismos gates y dejan las mismas salidas (ver «Motor Blender»).
 - **`marcas`**: pines pegados al 3D: un punto en el ancla proyectada, una línea y una tarjeta con `texto` (y `sub`).
   Visibles de `t` a `hasta`. `alto` (px de la línea, 110) sirve para separar dos tarjetas que se pisan. La tarjeta no
   se sale de los márgenes y se desvanece sola antes de pisar el titular o la banda de abajo. **`separada_de`** (el id
-  de una pieza `falla`, `ruta` o `frontera`): la marca dice que está LEJOS de esa pieza («A 25 km de la falla»), así que
+  de una pieza que sea una línea: hoy `falla`, `ruta` o `frontera`, las que traen `tramos` en sus reglas): la marca dice que está LEJOS de esa pieza («A 25 km de la falla»), así que
   no puede dibujarse pegada a ella; con la cámara rasante las distancias se aplastan y M3D11 lo detiene.
+- **`anotaciones`**: la capa 2D ATADA AL 3D (clase `anotacion` del catálogo: `pulso`, `medida`, `etiqueta`, `reloj`), cada
+  una con `tipo`, `t`, `hasta` y sus parámetros; sus anclas son lugares o algo que se mueve (§ «Anotaciones»). Opcional.
 - **`capa`**: el cuadro 2D, de la familia de `video/comun.css` (Noche: crema, Archivo condensado, JetBrains Mono).
   - `titulares`: `kicker` + `texto` (≤ 3 renglones), arriba a la izquierda bajo la barra, de `t` a `hasta`. Un titular
     con `t ≤ 0.1` está completo desde el cuadro 0 (sin animación de entrada); los demás entran animados.
@@ -183,16 +199,18 @@ el motor y la proyección de los gates.
 
 | Gate | Qué revisa |
 |---|---|
-| M3D1 | Forma y versión; `estilo` del catálogo (de motor three o blender); `set` y `paleta` existen |
-| M3D2 | Piezas, trazos, lugares, `protagonista` y `sfx` referenciados existen; cada evento con sus campos |
-| M3D3 | Cámara: claves crecientes desde `t = 0`, parámetros en rango, velocidad tope por tramo (paneo ≤ 0.85 del `dist_km` por segundo, giro ≤ 45°/s, cabeceo ≤ 30°/s, zoom ≤ ×3 por segundo; el pico de la curva es π/2 veces la media) y el ojo siempre por encima del relieve |
+| M3D1 | Forma y versión; `estilo` del catálogo (de motor three o blender); `set` y `paleta` existen; el `set` es de la escala del mundo |
+| M3D2 | Piezas, trazos, lugares, `protagonista` y `sfx` referenciados existen; cada evento con sus campos; el mundo, cada pieza y cada evento están en el catálogo, su motor dibuja el estilo y **su ficha incluye la escala del mundo** |
+| M3D3 | Cámara: claves crecientes desde `t = 0`, la distancia en la unidad de la escala (`dist_km` en pais, `dist_m` en ciudad y esquema) y en su rango, parámetros en rango, velocidad tope por tramo (paneo ≤ 0.85 de la distancia por segundo, giro ≤ 45°/s, cabeceo ≤ 30°/s, zoom ≤ ×3 por segundo; el pico de la curva es π/2 veces la media) y el ojo siempre por encima del suelo (más el despeje de su escala: 1.5 km, 6 m, 4 m) |
+| M3D4 (anotaciones) | Cada anotación cabe en el video, lo que dice se alcanza a leer (sus reglas → `textos`) y, si está atada al 3D (reglas → `anclas`), al menos la mitad de sus anclas está en cuadro ≥ 80 % de su ventana; ninguna sigue en pantalla cuando entra el cierre (M3D5) |
 | M3D4 | Cada marca cae dentro del cuadro, con su tarjeta bajo el titular vivo y su ancla sobre la banda de abajo, ≥ 80 % de su ventana, y dura lo que se tarda en leer (0.5 s + 0.3 s por palabra, mínimo 1.2 s); ≤ 3 marcas a la vez; dos tarjetas no se pisan |
 | M3D5 | Titulares y cifras: tiempo de lectura; dos titulares no se pisan; una cifra a la vez; la cifra no tapa una marca viva; nada sigue en pantalla cuando entra el cierre; `seguir` no cae sobre un titular |
 | M3D6 | Cada evento cabe en la duración y su centro se ve en cámara ≥ 60 % de lo que dura (en una ruptura, sus frentes) |
-| M3D7 | `pie`, `handle`, `seguir` y `cierre` presentes (`aviso` es opcional); el pie nombra las fuentes de las capas del set que se usan (`fuente.json → pie_claves`) |
+| M3D7 | `pie`, `handle`, `seguir` y `cierre` presentes (`aviso` es opcional); el pie nombra las fuentes de las capas del set que se usan (`fuente.json → pie_claves`): las del mundo (`capas` de su ficha: el relieve), las de las piezas (`capas` de su ficha o un parámetro con `capa`) y los lugares si hay marcas. Un set de ciudad pide «Mapzen» y «OpenStreetMap» |
 | M3D8 | Un solo estilo (ningún `estilo` por toma, pieza o evento) |
-| M3D9 | El gancho es un evento que se VE en el cuadro 0: hay una `ruptura`, `onda`, `deslizar` o `resaltar` con `t ≤ 0.1` y su origen cae dentro del cuadro en `t = 0` (aviso si ningún titular empieza en `t ≤ 0.1`: la portada saldría sin titular) |
+| M3D9 | El gancho es un evento que se VE en el cuadro 0: hay un evento visible en la portada (los que traen `adelanto` en su ficha: hoy `ruptura`, `onda`, `deslizar`, `resaltar`) con `t ≤ 0.1` y su origen cae dentro del cuadro en `t = 0` (aviso si ningún titular empieza en `t ≤ 0.1`: la portada saldría sin titular) |
 | M3D10 | Todo lo anterior se cumple en los dos formatos (9:16 y 4:5 encuadran distinto) |
+| M3D12 | Un `esquema` no se lee como un lugar real: lleva `capa.aviso` con «Esquema» (en modo pieza sin capa lo pone la mesa que lo aloja: aviso), y ni sus lugares (id y nombre, los de la receta y los de `mundo.lugares`) ni el texto de sus marcas llevan el nombre de un lugar real de `design/sets3d/guatemala/lugares.json` |
 | M3D11 | Separación: una marca con `separada_de` guarda ≥ 60 px en pantalla entre su ancla y el punto más cercano de esa pieza en ≥ 80 % de su ventana (en 9:16 y 4:5, o en el lienzo de la pieza). La falla dice cuántos px hubo y propone una cámara más cenital o más cercana |
 
 Cada falla dice el gate, el formato, la pieza y cómo arreglarlo. Los avisos (no fallan): una ruptura que pide más
@@ -231,8 +249,10 @@ subtítulos, la barra y el cierre; **la maqueta solo pone el mundo y sus pines**
 | `pieza MAQUETA --lienzo ANCHOxALTO --salida ARCHIVO.mp4 [--borrador]` | El mp4 del modo pieza y su `ARCHIVO.efectos.json`; exige sus gates en 0 salvo `--borrador` |
 | `cuadro MAQUETA --t S [--t S …] --salida DIR [--formato F] [--hoja]` | PNG de cuadros sueltos (`DIR/<9x16\|4x5>_tSSS.SSS.png`) y `hoja_<formato>.jpg`; ≈ 4–7 s en total (con un estilo de Blender, ≈ 4–5 s un cuadro y ≈ 9–11 s seis: la placa a resolución completa y con las muestras del render, más la capa 2D). No exige pasar los gates ni traer `seguir` y `cierre`: sirve para ver ganchos candidatos |
 | `proyecto MAQUETA --dir DIR [--formato F]` | El proyecto de HyperFrames en `DIR/<9x16\|4x5>/proyecto/` (con un estilo de Blender, solo la capa 2D: la placa `assets/placa.mp4` la pone `render`) |
-| `render MAQUETA --dir DIR [--formato F] [--borrador]` | Exige `check` en 0 (salvo `--borrador`: un candidato para mirar, nunca para entregar); `DIR/<9x16\|4x5>/video.mp4` (H.264 yuv420p, sin audio, `duracion_s` ± 1 cuadro; HyperFrames 0.9.28 con `--workers 1`) y `DIR/efectos.json` (`[[t, id], …]`); ≈ 1.8 s por segundo de video y formato con three.js; con un estilo de Blender, ver los tiempos de «Motor Blender» |
+| `render MAQUETA --dir DIR [--formato F] [--borrador]` | Exige `check` en 0 (salvo `--borrador`: un candidato para mirar, nunca para entregar); `DIR/<9x16\|4x5>/video.mp4` (H.264 yuv420p, sin audio, `duracion_s` ± 1 cuadro; HyperFrames (versión en `scripts/versiones.py`) con `--workers 1`) y `DIR/efectos.json` (`[[t, id], …]`); ≈ 1.8 s por segundo de video y formato con three.js; con un estilo de Blender, ver los tiempos de «Motor Blender» |
 | `estilos` · `sets` | Los catálogos |
+| `catalogo [--para sesion\|realizador\|critico] [--escala E] [--motor M]` | El vocabulario legible (≤ 1 página por escala): cada pieza, evento, objeto o mundo con para qué sirve, sus parámetros y un ejemplo. Lo imprimen `video3d.py digesto` y el digesto del plano de la mesa |
+| `catalogo --registrar` · `catalogo --check` | Revisa las fichas y sus módulos y escribe `design/sets3d/vocabulario.json` (su único escritor); `--check` falla si el catálogo no está al día |
 | `prueba [--dir DIR]` | Sobre `video/maqueta/fixture/maqueta.json`: check, negativos y positivos de gate (también el modo pieza en tres lienzos y los tres estilos de Blender), hoja y render en los dos formatos con three.js, y al final un caso corto del motor Blender (el fixture en `arquitecto`: check y un cuadro; se salta con un aviso si Blender no está) |
 | `prueba --blender-render ESTILO [--formato F]` | Solo el render completo del fixture en un estilo de Blender (minutos) |
 
@@ -244,13 +264,259 @@ Los geodatos: `python3 scripts/build_set3d.py guatemala [--check] [--capa reliev
 - `maqueta3d.py` **resuelve** el `maqueta.json` (lugares → km, cadenas de falla, alturas, tiempos del cierre, colores
   del estilo y de la paleta, zona del formato) y se lo entrega al motor en `assets/datos.js`: la geometría vive en un
   solo sitio y el motor solo dibuja.
-- `motor.js` (three.js 0.187, `design/vendor/`): relieve en malla + textura de normales con un shader que tiene una
-  rama por estilo (`voxel` usa columnas), cintas con ancho en píxeles para falla, frontera, ruta y flechas, luces
-  como puntos, y la cámara del contrato. `capa.js` + `capa.css`: la capa 2D. `plantilla.html`: la composición.
+- `motor.js` (three.js 0.187, `design/vendor/`) es el NÚCLEO: el fondo y el plano exterior, las cintas con ancho en
+  píxeles, las superficies de mundo (`malla`, `tonos`, `sombra`), la cámara del contrato y el registro del vocabulario.
+  **No sabe de relieves**: el suelo es un MUNDO (`mundos/<escala>.js`; el relieve nacional con su shader de una rama por
+  estilo y las columnas de `voxel` es `mundos/pais.js`, movido sin cambiar un píxel). Las piezas y los eventos son
+  **módulos** (`piezas/`, `eventos/`, `objetos/`, `anotaciones/`) que se registran solos; el proyecto copia solo los que usa la maqueta
+  (`assets/modulos/`) y la plantilla los carga antes del núcleo. `capa.js` + `capa.css`: la capa 2D. `plantilla.html`:
+  la composición.
 - Todo es función pura del tiempo que pide HyperFrames (evento `hf-seek`): sin reloj, sin azar, sin red. El mismo
   cuadro sale byte a byte igual en dos cargas distintas.
 - Ningún color escrito en el motor ni en la capa: salen de `design/sets3d/estilos.json` (con `@acento`, `@texto`,
   `@fondo3`… de la paleta) y entran como uniformes y variables CSS.
+
+## Añadir vocabulario
+
+El vocabulario (lo que la maqueta sabe dibujar) es un **catálogo de módulos**, como la biblioteca de animaciones de la
+escena `explica`: el motor, los gates y la orquestación leen el mismo catálogo y nadie mantiene listas a mano.
+
+**Una entrada son hasta tres archivos con el mismo nombre (`<tipo>`, minúsculas, sin tildes ni guiones):**
+
+| Archivo | Qué es |
+|---|---|
+| `video/maqueta/<clase>/<tipo>.js` | El MÓDULO de motor.js (`<clase>`: `piezas`, `eventos`, `objetos`, `anotaciones`, `mundos`; las anotaciones las corre capa.js) |
+| `video/maqueta/<clase>/<tipo>.json` | La FICHA: lo que el catálogo, el validador y la orquestación saben del tipo |
+| `scripts/maqueta_tipos/<tipo>.py` | Opcional: las REGLAS que no caben en la ficha (resolver, topes, dónde pasa para los gates) |
+
+**El módulo** se registra solo (es un script clásico; la plantilla lo carga antes de `motor.js`) y no importa nada:
+todo le llega en `ctx`.
+
+```js
+(function (MAQ) {
+  MAQ.EVENTOS.onda = {                 // MAQ.PIEZAS · MAQ.EVENTOS · MAQ.OBJETOS · MAQ.MUNDOS
+    orden: 60,                         // orden de armado (los de hoy: 10–72); empate: piezas antes que eventos, luego por tipo
+    armar(ctx, lista) { return estado; },          // una vez: `lista` = las piezas (o eventos) de este tipo, en orden
+    inicio(t, estado, ctx) {},                     // cada cuadro, antes de los eventos (deja el estado en reposo)
+    aplicar(t, e, ctx, estado) {},                 // SOLO eventos: cada evento, en el orden del maqueta.json
+    en(t, estado, ctx) {},                         // cada cuadro, después de todos los eventos
+  };
+})(window.MAQ = window.MAQ || { PIEZAS: {}, EVENTOS: {}, OBJETOS: {}, MUNDOS: {} });
+```
+
+Todo es opcional salvo `aplicar` en un evento. Un cuadro es: cámara → `inicio` de todos → `aplicar` de cada evento →
+`en` de todos → render → capa 2D. **Seek puro**: lo que se ve en `t` se calcula de `t` (nada de acumular entre cuadros,
+ni `Math.random`, ni reloj: `ctx.hash(i, k)` da el azar fijo). Sin colores escritos (`ctx.COL` y `ctx.lin`), sin red.
+
+`ctx` (lo que comparte el núcleo): `THREE`, `M` (el maqueta.json resuelto), `W`, `H`, `COL`, `CFG` (el estilo),
+`ES` (`aditivo`, `cubos`), `EXAG`, `scene`, `renderer`, `camera`, `lin`, `clamp`, `suave`, `hash`; el MUNDO (§ «Mundos»):
+`escala`, `unidad_m`, `metros(v)`, `caja`, `altura(x, y)`, `V3(x, y, lev)`, `geo(lon, lat)` (= `km`), `caminos`,
+`camino(nombre)`, `enCamino(nombre, s)`, `lugares`, `puntoEnS`, `distCadena`, `proyectar(x, y, z)`; superficies de mundo:
+`malla` (`nueva`, `banda`, `poligono`, `geometria`, `material`, `poner`), `tonos`, `sombra(nx, ny, nz)`; líneas:
+`cinta(pts, color, ancho_px, alfa, orden, {raya, oculta})`, `pegar(polilínea, paso_km, lev)`, `geoCinta`, `VERT_CINTA`,
+`linea(id, cinta)` (una línea que «resaltar» aviva por el id de su pieza); la superficie (el shader del relieve):
+`superficie` (sus uniformes: `uCad`, `cPieza`, `uBrillo`, `uOnda`…), `uRuptura`, `uComun()`, `GLSL_COMUN`,
+`GLSL_RUPTURA`, `NR`, `NC`, `NO`; lo que publican otros módulos: `fallas`, `idxFalla(id)`, `fallas3d`, `luces`; y
+lo que se mueve (Fase 2): `tray` (evaluar una trayectoria T/S suavizada: `tray.nueva(T, S)`, `tray.suave(r, h, t)` → [s, v]),
+`moviles` (id → (t, n) → {x, y, dx, dy, v, vis}: lo registran actor y flujo), `ancla(A, t)` (un ancla resuelta → dónde está),
+`flota(tipo, n, {tamano, lev, luces, color, orden})` (n objetos de un tipo en una malla instanciada: `poner(i, x, y, dx, dy, k,
+freno)` y `listo()`), `tonos.bien|medio|mal` y `tonos.vehiculos`;
+`cuadro` = `{t, k, pxKm, dist, dist_km, brillo, elementos, ondas, rupturas}` (lo de este cuadro: `brillo[id]` y
+`elementos[id] = [{i, k}]` los pone `resaltar`, `ondas` las pone `onda`). Lo propio del relieve nacional (`superficie`,
+`uRuptura`, `GLSL_RUPTURA`, `NR`, `NC`, `NO`) lo publica el mundo `pais`: una pieza que lo usa es de escala pais.
+
+**La ficha** (`<tipo>.json`):
+
+```json
+{"tipo": "onda", "clase": "evento",
+ "cuando": "la sacudida que se propaga: un anillo que crece desde un lugar o desde toda una falla",
+ "parametros": {
+   "radio_km": {"tipo": "numero", "requerido": true, "rango": [1, 3000], "descripcion": "hasta dónde llega el anillo"},
+   "centro": {"tipo": "lugar", "requerido": false, "descripcion": "de dónde sale (o `pieza`)"},
+   "pieza": {"tipo": "pieza", "piezas": ["falla"], "requerido": false, "descripcion": "la falla de la que sale (o `centro`)"}},
+ "escalas": ["pais"], "motores": ["three", "blender"], "adelanto": {"dur": 0.08},
+ "ejemplo": {"t": 6.4, "dur": 2.8, "tipo": "onda", "pieza": "motagua", "radio_km": 140}}
+```
+
+- `clase`: `pieza` · `evento` · `objeto` · `mundo`. `cuando`: una línea, para qué historia sirve (es lo que lee quien elige).
+- `parametros` (sin los comunes: `id`, `tipo` en una pieza; `tipo`, `t`, `dur`, `sfx` en un evento): cada uno con
+  `tipo` (`numero`, `entero`, `texto`, `bool`, `lugar` (id o `[lon, lat]`), `lugares` (lista; con `"todos": true` vale
+  también `"todos"`), `pieza` (id de una pieza; `piezas` restringe su tipo), `puntos` (`[[lon, lat], …]`), `lista`
+  (de textos)), `requerido`, `descripcion` y, si aplica, `rango`, `valores`, `defecto`, `min` (elementos de una lista) y
+  `capa` (la capa de geodatos del set que usa: el pie tiene que nombrar su fuente, M3D7).
+- `escalas`: `pais` · `ciudad` · `esquema`. `motores`: `three` · `blender` (un estilo cuyo motor no está aquí no puede
+  usar el tipo: FALLA M3D2 «este estilo no dibuja <tipo>: usa un estilo de three.js»).
+- `adelanto` (eventos): si se ve en la portada, cuánto avance lleva cuando empieza en `t ≤ 0.1` (`{"s": 0.25}` o
+  `{"dur": 0.08}`); sin él, el tipo no sirve de gancho (M3D9). `usa` (opcional): otros tipos del catálogo que el módulo
+  necesita en el proyecto (un objeto que una pieza dibuja).
+- `ejemplo`: tal como va en el `maqueta.json`; se valida contra la propia ficha.
+
+**Las reglas** (`scripts/maqueta_tipos/<tipo>.py`, todas opcionales; la referencia de cada función está en
+`scripts/maqueta_tipos/__init__.py`): `resolver(o, X, que)` (lo que el tipo añade al maqueta.json resuelto; sin él, los
+parámetros pasan tal cual con los lugares en km), `cerrar(lista, X)` (reglas sobre todas las de su tipo: el tope de 4
+rupturas, la simplificación de las fallas), y para los gates `tramos(pieza)` (es una línea: vale para `separada_de`,
+M3D11), `centro(pieza, G)`, `puntos(evento, u, G)` (M3D6) y `origen(evento, G)` (M3D9).
+
+**El validador genérico** (`maqueta3d.validar_campos`) revisa cada pieza y cada evento contra su ficha (requerido,
+tipo, rango, valores, mínimo, a qué pieza apunta) con la descripción del parámetro en el mensaje; lo que la ficha no
+declara se avisa y se ignora.
+
+**Pasos para una entrada nueva:**
+1. Escribe `video/maqueta/<clase>/<tipo>.js` y su `<tipo>.json` (copia una parecida); si hace falta,
+   `scripts/maqueta_tipos/<tipo>.py`.
+2. `python3 scripts/maqueta3d.py catalogo --registrar`: revisa las fichas (completas, cada módulo con ficha y cada
+   ficha con módulo, el módulo se registra, sin colores escritos, sin red ni azar, el ejemplo pasa su ficha) y escribe
+   `design/sets3d/vocabulario.json`. Nadie más escribe ese archivo.
+3. Un caso en un `maqueta.json` de prueba: `maqueta3d.py check` y `maqueta3d.py cuadro --t …` en 9:16 y 4:5.
+4. `python3 scripts/pruebas/maqueta_registro.py` (el catálogo, el validador y el motor de cada tipo).
+
+Atajo para los pasos 2 y 3 (lo usa el agente `maqueta-constructor`, que escribe las entradas nuevas cuando un video pide
+algo que el catálogo no tiene): `python3 scripts/maqueta_modulo.py check <clase>/<tipo>` (lint más estricto, la ficha,
+una maqueta mínima armada con el `ejemplo`, la **pureza** —el mismo segundo dibujado directo y tras recorrer otros da el
+mismo cuadro—, el tiempo por cuadro y las hojas 9:16 y 4:5) y `registrar <clase>/<tipo>` (el check y luego `catalogo
+--registrar`).
+
+Ninguna entrada nueva toca `motor.js`, `maqueta3d.py` ni otra entrada: el núcleo no conoce ningún tipo. El motor
+Blender (`maqueta_blender.py`) no usa módulos: dibuja los tipos de hoy con sus propias ramas; una entrada nueva declara
+`"motores": ["three"]` hasta que alguien la escriba ahí.
+
+## Lo que se mueve, las líneas que se pintan y las anotaciones (Fases 2 y 3)
+
+Para contar un MECANISMO (cómo se forma una cola, cómo viaja una señal, quién manda su ubicación): objetos que se mueven
+por caminos, una línea que se pinta por tramos y lo que se dibuja encima. Todo en escala `ciudad` o `esquema` (metros) y
+solo con el motor three. Caso de prueba que lo usa todo: `video/maqueta/fixture/trafico.json`; pruebas sin render:
+`scripts/pruebas/maqueta_movimiento.py`.
+
+**Objetos** (`video/maqueta/objetos/<tipo>.js`, clase `objeto`): `carro`, `bus`, `camion`, `moto`, `persona`, `casa`,
+`arbol`, `torre`, `telefono`, `pin`. Low-poly con primitivas de three.js, en METROS reales (x adelante, y arriba, z a su
+derecha); su ficha trae `medidas` (`largo_m`, `ancho_m`, `alto_m`: el largo separa los vehículos en la cola). El módulo da
+`partes(ctx)` → `[{geo, color, tinte, luz}]` (las partes con `tinte` toman el color de la instancia, una de `variantes(ctx)`
+por semilla; `luz` = brilla sola), y los vehículos `faros` y `pilotos` (puntos locales). No los recorre el núcleo: los dibuja
+una pieza con `ctx.flota` (una `InstancedMesh` por tipo, con la luz del estilo en el shader porque el objeto gira; de noche,
+faros cálidos con un cono tenue en el suelo y pilotos en el tono «mal» que se avivan al frenar). Colores: `ctx.tonos`
+(`tonos.vehiculos`: carrocerías claras de noche, de tinta en los fondos claros), nunca escritos.
+
+**Pieza `actor`**: un objeto que sigue un camino: `camino` (con nombre), `desde` + `hacia` (dos lugares), `puntos` o `lugar`
+(quieto, mirando a `rumbo`). `claves` `[{t, s | lugar | vel_kmh}]`: con posición (`s`: metros desde el inicio del camino o
+«40%»; `lugar`: su proyección) está ahí en t y entre dos claves va en línea recta en el tiempo; con `vel_kmh` sigue a esa
+velocidad; tras la última, a su última velocidad, y se detiene al final del camino. El evento `mover` (`actor`, `a`: un
+lugar) añade dos claves. Va orientado en la dirección del camino; el protagonista, en el acento.
+
+**Pieza `flujo`** (el tráfico): `carriles` (caminos en el sentido de la marcha), `tipos` (`{"carro": 0.8, "bus": 0.1, …}`),
+`densidad` (vehículos por km y carril), `vel_kmh`, `reaccion_s`, `suavizado_s`, `semilla`, `tamano`, `luces`. **El modelo**
+(`scripts/maqueta_tipos/_movimiento.py`; lo calcula Python al resolver, una vez, y motor.js solo evalúa: así la cámara que
+sigue, los gates y el dibujo ven lo mismo):
+1. Cada vehículo tiene una trayectoria s(t) LINEAL POR TRAMOS (listas T y S). Lo que se dibuja es la media móvil de ±h s:
+   `s̄(t) = (F(t+h) − F(t−h)) / 2h` con `F = ∫ s` (cuadrática por tramos): forma cerrada, sin pasos de simulación.
+2. `libre_i(t)`: el vehículo solo en el campo de velocidades del carril, la base (que `acelerar` sin tramo cambia) y los
+   TRAMOS `[a, b)` con su velocidad en el tiempo (`frenar` crea uno; `acelerar` sobre él lo suelta; cada cambio es una
+   escalera de 6 escalones en `dur`). Se calcula por eventos: al cruzar un borde de tramo o al llegar un cambio de tiempo.
+3. Newell (2002), que es LWR con diagrama triangular: `x_i(t) = min(libre_i(t), x_{i−1}(t − τ) − δ_i)`, del primero al
+   último de cada carril (τ = `reaccion_s`; δ_i = los dos medios largos + 2 m). El mínimo de lineales por tramos es lineal por
+   tramos.
+4. La cola crece HACIA ATRÁS sola, a `w = δ/τ` (≈ 8 m/s con carros y τ = 0.8 s) mientras lleguen más vehículos de los que el
+   tramo deja pasar, y se suelta desde adelante tras `acelerar`. Nadie atraviesa a nadie: `x_i ≤ x_{i−1}(t − τ) − δ ≤
+   x_{i−1}(t) − δ`, y la media móvil (lineal y monótona) lo conserva.
+5. El hueco inicial es ≥ δ + v·τ (si no, el de atrás saltaría en el arranque): la `densidad` tiene tope y M3D2 lo dice.
+Un vehículo se ve mientras está sobre su carril (0 ≤ s ≤ largo); los de atrás arrancan fuera del mundo y entran por el borde.
+
+**Eventos de lo que se mueve**: `frenar` (`flujo`, `en`: una posición sobre su primer carril, `longitud_m` hacia adelante,
+`vel_kmh`, `carriles`; `dur` = lo que tardan en frenar), `acelerar` (lo mismo con `en` opcional: sin él, todo el flujo),
+`aparecer` / `desaparecer` (`pieza`: un actor o un flujo; escriben `ctx.cuadro.vis[id]`, la escala 0–1, y van en el orden del
+maqueta.json por t), `mover`. `frenar`, `acelerar` y `mover` no dibujan nada en motor.js: su efecto ya va en las trayectorias.
+
+**La cámara que sigue**: `mira` acepta `{actor: id}` o un vehículo `{flujo: id, n}` / `{flujo, carril, cerca, t}` (el de ese
+carril más cercano a `cerca` en el segundo `t`), con `desfase_m`. La clave resuelta lleva `sigue` (motor.js: `miraDe`) y, solo
+en Python, `_pos` (t → x, y, alt; `camara_en`): entre claves se interpola igual que siempre, pero el punto de una clave que
+sigue es dónde está el móvil en t (una clave fija da exactamente lo mismo que antes: los cuadros de las maquetas existentes son
+idénticos byte a byte). `cenital: true` = `elevacion: 89`; con `azimut: 90` la vía este–oeste queda vertical en el 9:16.
+
+**Pieza `trazo`** (generaliza `ruta` para ciudad y esquema): una línea brillante (núcleo + halo, que de noche suma luz) sobre
+un camino, de `desde` a `hasta` (posiciones; al revés va en contra del camino), corrida `desplazar_m`, en `color` `bien` ·
+`medio` · `mal` (verde, ámbar y rojo del estilo: `estilos.json → colores.bien|medio|mal`), `texto`, o `acento` solo si es el
+protagonista. `trazar` la DIBUJA en `dur` (un trazo con algún trazar no se ve antes; con `adelanto`, sirve de gancho en el
+cuadro 0) y `pintar` la PINTA POR TRAMOS: el color nuevo avanza como un frente de `desde` a `hasta` (de adelante hacia atrás:
+la cola que crece) y se queda; el último pintado manda. `ruta` sigue igual.
+
+**Anotaciones** (clase `anotacion`, `video/maqueta/anotaciones/<tipo>.js`, lista `anotaciones` del maqueta.json, con `t` y
+`hasta`). *Arquitectura:* van en la CAPA 2D (texto nítido, crema, sin el acento) pero atadas al 3D: `maqueta3d.py` resuelve
+sus anclas (lugar → `{x, y}`; algo que se mueve → `{movil, n, desfase, lev}`); el proyecto añade un clip `#anot` con una capa
+SVG y una de texto; motor.js llama `window.__capa(t, proyectar, mundo)` y capa.js arma cada tipo la primera vez y le pasa `A`:
+`A.ancla(ancla, t)` (dónde está en pantalla), `A.suelo(x, y, r_m)` (un círculo de r metros en el suelo, proyectado),
+`A.svg(tag, clase)`, `A.div(clase, texto)`, `A.p`, `A.vida`, `A.Z`. Así una anotación nueva es un módulo más, como una pieza.
+Sus reglas (`scripts/maqueta_tipos/<tipo>.py`) dicen `anclas(a)` y `textos(a, escala)` para M3D4 y el respaldo.
+- `pulso`: anillos que se abren en el suelo sobre `sobre` (anclas; `{flujo, cerca, t, cuantos: k}` da k vehículos), `radio_m`,
+  `periodo_s`, `anillos`.
+- `medida`: un círculo de `radio_m` en el suelo alrededor de `en` (o una `regla` hacia adelante) con su rótulo («5 m»).
+- `etiqueta`: una píldora que SIGUE a `sigue` («102 km/h»).
+- `reloj`: una hora que corre de `de` a `a` entre `corre_desde` y `corre_hasta` (arriba, abajo o sobre un ancla).
+**Cada número que muestran pasa por el respaldo de las cifras** (C3D5 en `video3d.py guion --check`, que ahora lee las
+`anotaciones` de cada escena con su `dice`: `maqueta3d.textos_anotacion`; «5 m» se lee como 5 metros). Excepción: un `reloj`
+`ilustrativo` sobre un ESQUEMA (no es un momento real; la voz no dice esa hora como dato).
+
+
+## Mundos: pais, ciudad y esquema
+
+El suelo de la maqueta es un **mundo**: un módulo `video/maqueta/mundos/<escala>.js` (registrado en `MAQ.MUNDOS`) con su
+ficha `<escala>.json` y sus reglas `scripts/maqueta_tipos/<escala>.py`. El maqueta.json lo elige con `mundo.escala`
+(`pais` por defecto). Un mundo da a las piezas el suelo, la proyección y la escala; las piezas y los eventos declaran en
+su ficha en qué `escalas` sirven (M3D2). `python3 scripts/maqueta3d.py catalogo --escala ciudad|esquema` lista lo que se
+puede usar en cada una; `maqueta3d.py sets`, los sets con su escala.
+
+| Escala | Unidad de la escena | Cámara | El suelo | Qué se dibuja (hoy) |
+|---|---|---|---|---|
+| `pais` | 1 km | `dist_km` 15–1600 | el relieve de un set de país (`guatemala`), con mar y máscara del país | `falla`, `luces`, `frontera`, `ruta` y todos los eventos |
+| `ciudad` | 1 m | `dist_m` 40–9000 | el relieve de un set de ciudad a ≈ 15 m por celda, con su punto más bajo en 0 | `calles`, `edificios`, `agua`, `zona`, `carretera`; `resaltar`; lo que se mueve (`actor`, `flujo`), `trazo` y las anotaciones |
+| `esquema` | 1 m | `dist_m` 15–5000 | plano, con los suelos de su receta (arena, campos, pavimento, el mar de la costa) | las mismas que ciudad (y lo que se mueve) |
+
+**El contrato de un mundo** (`video/maqueta/mundos/<escala>.js`): `async cargar(ctx) → estado` (lo que baja: el
+relieve.png; publica `ctx.altura(x, y)` en unidades ya exageradas y `ctx.geo(lon, lat) → [x, y]`, o `null` en un
+esquema), `armar(ctx, estado)` (el suelo, antes que las piezas) y `en(t, estado, ctx)` (al final de cada cuadro). Su
+ficha añade `unidad_m`, `camara` (`campo`, `unidad`, `rango`, `despeje`, `cerca`, `lejos`, `niebla`), `plano` (el plano
+exterior) y `capas` (las del set que usa siempre: el pie las nombra, M3D7); sus reglas, `mundo(o, ficha, m3)` → el
+objeto que el resolver y los gates usan (`suelo`, `dentro`, `punto`, `lugares`, `caminos`, `capa(nombre)`…).
+
+**Lo que el mundo da a las piezas** (la API de la Fase 2: carros y gente que siguen caminos):
+- `ctx.altura(x, y)`: la altura del suelo en unidades de la escena (ya exagerada); `ctx.V3(x, y, lev)` el punto en three.
+- `ctx.geo(lon, lat) → [x, y]` (pais en km; ciudad en metros; `null` en esquema, donde todo va en metros desde el centro).
+- `ctx.unidad_m` (metros por unidad: 1000 en pais, 1 en ciudad y esquema) y `ctx.metros(v)` (metros → unidades).
+- `ctx.caja = [x0, y0, x1, y1]`.
+- `ctx.caminos = {nombre: [[x, y, s, 0], …]}` (s: unidades desde el inicio; el mismo formato de las cadenas de falla, así
+  que `ctx.puntoEnS(cadena, s)` vale), `ctx.camino(nombre)` y `ctx.enCamino(nombre, s) → {x, y, dx, dy}` (el punto y su
+  dirección unitaria). Vienen de la receta del esquema y de cada `carretera` (`<id>`, `<id>.carril-k`).
+- `ctx.lugares = {id: {x, y, nombre}}`: los del mundo (ciudad y esquema) y los de `mundo.lugares`.
+
+**Sets de ciudad** (`scripts/build_set3d.py <set>`; el primero, `capital`: el centro de la Ciudad de Guatemala, zonas 1–5,
+8–11 y 13, ≈ 6.5 × 7.2 km, 1 MB). Todo en metros locales (`x = (lon − lon0)·m_lon`, `y = (lat − lat0)·m_lat`; la
+proyección en `relieve.json`): `relieve.png` (Mapzen terrarium z14, ≈ 15 m por celda, `base_m`), `calles.json` (por clase y
+las arterias con nombre de la receta de `design/vias/<vias>.fuente.json`, de la misma consulta y caché de
+`build_vias.py`), `edificios.json` (`[altura_m, x0, y0, …]`: `height`, o `building:levels` × 3 m; sin dato, 6 m),
+`agua.json`, `zonas.json` (parques y áreas verdes, con id por su nombre) y `lugares.json` (los de la receta de las vías y
+los nodos con nombre). Atribución en `fuente.json` («© OpenStreetMap», ODbL; Mapzen); el pie la nombra (M3D7). La caja de
+`design/vias/capital.json` (26 × 34 km) se dejó para las vías: con calles menores y edificios pesaría decenas de MB.
+
+**Recetas de esquema** (`mundo.receta`; `semilla`, `tamano_m`, `carriles`, `manzana_m`, `altura_max_m`). Las calcula
+`scripts/maqueta_tipos/esquema.py` una vez (la misma semilla da los mismos datos) y viajan resueltas al motor, así los
+gates y el dibujo ven lo mismo:
+- `ciudad`: cuadrícula de manzanas (lotes con retiro, más altos cerca del centro, algún parque). Caminos `ns-<k>`, `eo-<k>`,
+  `eje-ns`, `eje-eo`; lugar `parque`.
+- `carretera`: una autopista de `carriles` (la mitad por sentido) que cruza una ciudad de oeste a este, con edificios más
+  bajos junto a ella. Caminos `eje`, `carril-1…N` (1…N/2 hacia el este, a la derecha del eje; los demás hacia el oeste, con
+  sus puntos en el sentido de la marcha), `lateral-norte|sur`; lugares `entrada`, `salida`, `puente`.
+- `campo`: parcelas en dos tonos, un camino curvo (`camino`), un río (`rio`) y un pueblo; lugares `pueblo`, `puente`.
+- `costa`: el mar al sur con su orilla ondulada, la playa, la costanera (`costanera`, `orilla`) y un pueblo en cuadrícula;
+  lugares `playa`, `mar`.
+- `plaza`: una plaza central con el edificio principal al norte; caminos `vuelta-plaza`; lugares `plaza`,
+  `edificio-principal`.
+Toda receta trae los lugares `centro`, `norte`, `sur`, `este`, `oeste`; `mundo.lugares` añade otros con `x` e `y` en metros.
+**Un esquema no afirma geografía** (M3D12): «Esquema» en el aviso, nombres genéricos. Para un lugar real: `ciudad` o `pais`.
+
+**Las piezas de mundo**: `calles` (por clase, bandas de su ancho real), `edificios` (extruidos con su altura; `destacar`
+uno en el acento; en contorno y plano, sus aristas en línea), `agua`, `zona` (un polígono teñido: `area` de una zona del
+mundo o «parques», o `puntos`), `carretera` (carriles, línea central y orillas sobre el eje de la receta o una arteria del
+set). `resaltar` con `pieza` + `elemento` (un lugar) enciende en el acento el edificio o la calle de ese lugar (o la
+carretera entera). Casos de prueba: `video/maqueta/fixture/esquema_carretera.json` y `ciudad_capital.json` (los revisa
+`maqueta3d.py prueba`; sus negativos, `scripts/pruebas/maqueta_mundos.py`).
 
 ## Motor Blender (`scripts/maqueta_blender.py` + `video/maqueta/placa.js`)
 

@@ -22,15 +22,23 @@ import math
 import os
 import re
 import shutil
+import signal
 import subprocess
 import sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RAIZ, "scripts"))
 import video as VD   # noqa: E402
+from versiones import HF, HF_VERSION, GSAP_JS   # noqa: E402,F401  (las versiones fijadas viven en scripts/versiones.py, y solo ahí)
 
 FPS = 30
-HF_VERSION = "0.9.28"
+# Lo que de verdad pasa al leer los datos de un gate: el archivo no está (OSError), no es JSON (ValueError) o es JSON con otra
+# forma (falta una clave, llega una lista donde iba un objeto). Se atrapa SOLO eso y siempre con `aviso_datos`: un gate sin
+# datos no se calla. Un error de programación (NameError, ImportError…) no se atrapa: revienta a la vista.
+DATOS_ILEGIBLES = (OSError, ValueError, LookupError, TypeError, AttributeError)
+CARPETAS_NOTAS = tuple(os.path.join(RAIZ, "sesiones", "_descargas", d) for d in ("historia", "congreso"))   # `historia.py leer` y `congreso.py leer`
+RENDER_LIMITE_BASE_S = 600   # lo fijo de un render de HyperFrames: bajar el paquete la primera vez, arrancar Chrome, codificar
+RENDER_LIMITE_POR_S = 20     # y por segundo de video: con un proceso va a ≈ 1.6× la duración (medido); a 20× está colgado
 LEAD = 0.30            # la pieza empieza a caer 0.3 s antes de su palabra y aterriza en ella
 ENTRA = 0.5
 VISIBLES = 3           # YT18: con 3 piezas nuevas encima, la de abajo se atenúa
@@ -108,6 +116,40 @@ def falla(m):
     return 1
 
 
+_AVISADOS = set()
+
+
+def avisar(m):
+    """Un AVISO por stderr, una sola vez por proceso (las medidas de una pieza se piden muchas veces)."""
+    if m not in _AVISADOS:
+        _AVISADOS.add(m)
+        print("AVISO " + m, file=sys.stderr)
+    return m
+
+
+def aviso_datos(avisos, gate, que, ex):
+    """Un gate se queda sin sus datos (DATOS_ILEGIBLES): se dice cuál y por qué, nunca se calla. El aviso queda en `avisos`
+    (la lista de ctx["avisos"]: `revisar` la suma a los suyos y sale en `plano --check`) y además sale por stderr, una vez
+    por proceso, para los comandos que arman el contexto sin correr el gate (digesto, proyecto). → el texto."""
+    m = "%s sin datos: %s (%s: %s)" % (gate, que, type(ex).__name__, ex)
+    if avisos is not None and m not in avisos:
+        avisos.append(m)
+    return avisar(m)
+
+
+def numeros_respaldo(vals):
+    """Los valores con respaldo como números sueltos, para cotejar lo que una pieza pone en pantalla: de cada (valor, factor
+    de la unidad) —lo que da VD.valores_respaldo— el valor y el valor por su factor, y cada uno también como lo redondea una
+    tarjeta (entero y a un decimal). Un número suelto pasa tal cual."""
+    nums = []
+    for v in vals or []:
+        if isinstance(v, (tuple, list)) and len(v) == 2 and all(isinstance(x, (int, float)) and not isinstance(x, bool) for x in v):
+            nums += [v[0], v[0] * v[1]]
+        elif isinstance(v, (int, float)) and not isinstance(v, bool):
+            nums.append(v)
+    return nums + [round(v) for v in nums] + [round(v, 1) for v in nums]
+
+
 def esc(s):
     return (s or "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
@@ -148,13 +190,15 @@ def toks_de(S):
 def buscar(S, dice, desde=0):
     """Dónde dice la voz de la escena la frase `dice`, desde la ficha `desde` → (ficha inicial, palabra inicial, palabra final) o None."""
     T = toks_de(S)
-    q = VD._plano(dice).split()
-    if not q:
-        return None
     ws = [t for t, _ in T]
-    for j in range(desde, len(ws) - len(q) + 1):
-        if ws[j:j + len(q)] == q:
-            return j, T[j][1], T[j + len(q) - 1][1]
+    literal = VD._plano(dice).split()
+    en_palabras = VD._plano(VD.dicho(dice)).split()   # «1995» → como lo dice la voz (la misma conversión que /video-3d)
+    for q in ([literal] if en_palabras == literal else [literal, en_palabras]):
+        if not q:
+            continue
+        for j in range(desde, len(ws) - len(q) + 1):
+            if ws[j:j + len(q)] == q:
+                return j, T[j][1], T[j + len(q) - 1][1]
     return None
 
 
@@ -337,20 +381,44 @@ def textos_de(g):
     return " ".join(str(x) for x in partes if x)
 
 
-def notas_leidas():
-    """Las notas guardadas por `historia.py leer`: {url: ficha}."""
-    if not hasattr(notas_leidas, "c"):
-        out = {}
-        for f in glob.glob(os.path.join(RAIZ, "sesiones", "_descargas", "historia", "*.json")):
-            try:
-                d = leer(f)
-            except (OSError, ValueError):
-                continue
-            if isinstance(d, dict) and d.get("url"):
-                d["_json"] = f
-                out[d["url"]] = d
+def notas_de(carpeta):
+    """Las notas guardadas en una carpeta de descargas: {url: ficha}. `historia.py leer` deja la ficha <hash>.json junto a su
+    texto; `congreso.py leer` deja solo <hash>.txt (línea 1 la url; línea 2 el titular, vacía si es un PDF) y, de una
+    iniciativa, <hash>.pdf: su ficha se arma aquí, con las claves que usan `texto_nota` y `pdf_de`."""
+    out = {}
+    for f in sorted(glob.glob(os.path.join(carpeta, "*.json"))):
+        try:
+            d = leer(f)
+        except (OSError, ValueError):
+            continue
+        if isinstance(d, dict) and d.get("url"):
+            d["_json"] = f
+            out[d["url"]] = d
+    for f in sorted(glob.glob(os.path.join(carpeta, "*.txt"))):
+        if os.path.exists(f[:-4] + ".json"):
+            continue   # el texto de una ficha ya leída
+        try:
+            with open(f, encoding="utf-8", errors="ignore") as fh:
+                url, titulo = fh.readline().strip(), fh.readline().strip()
+        except OSError:
+            continue
+        if re.match(r"https?://\S+$", url) and url not in out:
+            out[url] = {"url": url, "titulo": titulo, "archivo": f, "_json": f[:-4] + ".json"}
+    return out
+
+
+def notas_leidas(carpetas=None):
+    """Las notas ya leídas: {url: ficha}. Las de `historia.py leer` (sesiones/_descargas/historia) y las de `congreso.py leer`
+    (sesiones/_descargas/congreso); si una url está en las dos, vale la primera. Con `carpetas` (las pruebas) no usa la caché."""
+    if carpetas is None and hasattr(notas_leidas, "c"):
+        return notas_leidas.c
+    out = {}
+    for carpeta in (CARPETAS_NOTAS if carpetas is None else carpetas):
+        for url, d in notas_de(carpeta).items():
+            out.setdefault(url, d)
+    if carpetas is None:
         notas_leidas.c = out
-    return notas_leidas.c
+    return out
 
 
 def texto_nota(n):
@@ -373,11 +441,21 @@ def revisar(ctx, P, mesas=None, f0=None):
     F = fichas(ctx["trabajo"])
     elenco = ctx["elenco"] if "elenco" in ctx else YT.elenco_serie(ctx["Y"])
     nombres = {VD._plano(c) for p in elenco for c in p["claves"]} | {VD._plano(p["nombre"]) for p in elenco}
-    try:
-        respaldo = {re.sub(r"\.0+$", "", ("%f" % v).rstrip("0").rstrip(".")) for v in (ctx["respaldo"] if "respaldo" in ctx else YT.valores_de(ctx["Y"]))
-                    if isinstance(v, (int, float))}
-    except Exception:
-        respaldo = set()
+    for m in ctx.get("avisos") or []:   # lo que el contexto no pudo leer (aviso_datos): el gate lo dice, no se calla
+        if m not in av:
+            av.append(m)
+    if "respaldo" in ctx:   # el vertical lo trae resuelto (números sueltos)
+        vals = ctx["respaldo"]
+    else:                   # el 16:9: las cifras verificadas de cada parte de la serie
+        sin_leer = []
+        try:
+            vals = numeros_respaldo(YT.valores_de(ctx["Y"], sin_leer))
+        except DATOS_ILEGIBLES as ex:
+            vals, sin_leer = [], [("la serie (su estado no trae las partes)", ex)]
+        for donde, ex in sin_leer:
+            aviso_datos(av, "YT16", "no se pudo leer el respaldo de las cifras de %s; un número en pantalla solo pasa si la voz lo dice "
+                                    "o está en los hechos de la mesa" % donde, ex)
+    respaldo = {re.sub(r"\.0+$", "", ("%f" % v).rstrip("0").rstrip(".")) for v in vals if isinstance(v, (int, float)) and not isinstance(v, bool)}
     PG = leer(os.path.join(ctx["trabajo"], "paginas.json")) if os.path.exists(os.path.join(ctx["trabajo"], "paginas.json")) else {}
     # lo que respalda un número o un nombre además de la voz de la mesa: todo lo que la voz dice en el video y los hechos
     # verificados de las escenas de la mesa (su texto, su fecha, sus citas, sus actores)
@@ -386,8 +464,10 @@ def revisar(ctx, P, mesas=None, f0=None):
         H = ctx["hechos"] if "hechos" in ctx else YT.hechos_serie(ctx["Y"])
         hechos_de = ctx["hechos_de"] if "hechos_de" in ctx else {
             e.get("id"): e.get("hechos") or [] for e in leer(os.path.join(ctx["trabajo"], "indice.json")).get("escenas") or []}
-    except (OSError, ValueError, KeyError):
+    except DATOS_ILEGIBLES as ex:
         H, hechos_de = {}, {}
+        aviso_datos(av, "YT16", "no se pudieron leer los hechos verificados de las escenas (%s); un número o un nombre en pantalla solo "
+                                "pasa si la voz lo dice" % rel(os.path.join(ctx["trabajo"], "indice.json")), ex)
 
     def hechos_mesa(M):
         return [H[h] for i in M["idx"] for h in hechos_de.get(es[i]["clave"]) or [] if h in H]
@@ -698,13 +778,20 @@ def pdf_de(url):
 def pagina_png(trabajo, url, pagina, dpi=200):
     """La página de un PDF ya leído como imagen (fotos/_doc-<hash>-p<N>.jpg, con poppler). → (ruta relativa al TRABAJO, ancho, alto) o None."""
     pdf = pdf_de(url)
-    if not pdf or not shutil.which("pdftoppm"):
-        return None
+    if not pdf:
+        return None   # no es un PDF ya leído: la pieza se dibuja sin la imagen de la página
     base = "_doc-%s-p%d" % (hashlib.sha1(url.encode()).hexdigest()[:8], pagina)
     dst = os.path.join(trabajo, "fotos", base + ".jpg")
     if not os.path.exists(dst):
+        if not shutil.which("pdftoppm"):
+            avisar("falta pdftoppm (brew install poppler): la página %d de %s no se puede sacar como imagen y el documento sale sin ella" % (pagina, rel(pdf)))
+            return None
         tmp = os.path.join(trabajo, "fotos", base)
-        subprocess.run(["pdftoppm", "-r", str(dpi), "-f", str(pagina), "-l", str(pagina), "-jpeg", "-jpegopt", "quality=88", "-singlefile", pdf, tmp], check=False)
+        r = subprocess.run(["pdftoppm", "-r", str(dpi), "-f", str(pagina), "-l", str(pagina), "-jpeg", "-jpegopt", "quality=88", "-singlefile", pdf, tmp],
+                           check=False, capture_output=True, text=True)
+        if not os.path.exists(dst):
+            avisar("pdftoppm no sacó la página %d de %s (código %d%s): el documento sale sin la imagen de la página"
+                   % (pagina, rel(pdf), r.returncode, ": " + (r.stderr.strip().splitlines() or ["sin detalle"])[-1][:160] if r.stderr.strip() else ""))
     if not os.path.exists(dst):
         return None
     r = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "stream=width,height", "-of", "csv=p=0", dst], capture_output=True, text=True).stdout.strip().split(",")
@@ -784,8 +871,71 @@ def VD_mmss(t):
     return "%d:%02d" % (int(t) // 60, int(t) % 60)
 
 
+def gsap_local(P):
+    """GSAP del repositorio en el proyecto P (assets/vendor/gsap.min.js) → la etiqueta que lo carga. El render no llama a la
+    red: ningún proyecto de la mesa (vertical o 16:9) trae un <script> de un CDN."""
+    enlazar(GSAP_JS, os.path.join(P, "assets", "vendor", "gsap.min.js"))
+    return '<script src="assets/vendor/gsap.min.js"></script>'
+
+
 def hf(P, *args, timeout=3600):
-    return subprocess.run(["npx", "--yes", "hyperframes@" + HF_VERSION] + list(args), cwd=P, capture_output=True, text=True, timeout=timeout)
+    return subprocess.run(HF + list(args), cwd=P, capture_output=True, text=True, timeout=timeout)
+
+
+# ---------- el render de HyperFrames: un proceso y un límite de tiempo ----------
+def limite_render(dur_s):
+    """Cuánto puede tardar un render antes de darlo por colgado (segundos): proporcional a lo que dura el video
+    (RENDER_LIMITE_BASE_S + RENDER_LIMITE_POR_S por segundo). MESA_RENDER_LIMITE_S lo fija a mano (una máquina lenta)."""
+    env = os.environ.get("MESA_RENDER_LIMITE_S")
+    if env:
+        try:
+            return max(1.0, float(env))
+        except ValueError:
+            avisar("MESA_RENDER_LIMITE_S=%r no es un número de segundos: vale el límite por duración" % env)
+    return RENDER_LIMITE_BASE_S + RENDER_LIMITE_POR_S * max(0.0, float(dur_s or 0))
+
+
+def texto_limite(que, limite, dur_s, log):
+    """El mensaje de un render que pasó su límite: qué se detuvo, cuánto se le dio y qué hacer."""
+    return ("%s pasó su límite de %s (%.0f s para %.1f s de video; lo normal es ≈ 1.6× la duración) y se detuvo. Mira %s; si la máquina "
+            "de verdad va así de lenta, vuelve a correrlo con MESA_RENDER_LIMITE_S=<segundos>" % (que, VD_mmss(limite), limite, dur_s, rel(log)))
+
+
+def lanzar_render(P, args, log):
+    """`hyperframes render` en el proyecto P, en su propio grupo de procesos (para poder detenerlo entero) → Popen.
+    SIEMPRE con un proceso (--workers 1 va en `args`): con varios el video tiembla."""
+    return subprocess.Popen(HF + ["render"] + list(args), cwd=P, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+
+
+def detener_render(pr):
+    """Termina un render y todo lo que lanzó (npx → node → Chrome → ffmpeg): si queda vivo, sostiene el candado global de
+    HyperFrames y el siguiente render se queda en fila."""
+    for senal in (signal.SIGTERM, signal.SIGKILL):
+        try:
+            os.killpg(pr.pid, senal)
+        except OSError:
+            break   # ya no queda nadie en el grupo
+        try:
+            pr.wait(timeout=8)
+        except subprocess.TimeoutExpired:
+            pass
+    if pr.poll() is None:
+        pr.kill()
+        pr.wait()
+
+
+def render_hf(P, args, limite, ruta_log):
+    """Un render con límite de tiempo → (código de salida, vencido). Si pasa `limite` segundos se detiene con todos sus
+    procesos y devuelve (None, True); el registro queda en `ruta_log`."""
+    with open(ruta_log, "w") as log:
+        pr = lanzar_render(P, args, log)
+        try:
+            return pr.wait(timeout=limite), False
+        except subprocess.TimeoutExpired:
+            return None, True
+        finally:
+            if pr.poll() is None:   # venció, o se interrumpió a mano: no queda huérfano
+                detener_render(pr)
 
 
 def hoja_de(ctx, mesas):
@@ -877,6 +1027,84 @@ def doc_de(ctx, g):
     k = w / ((x1 - x0) * img[1])
     return {"img": img[0], "w": w, "h": DW["portada_h"], "k": k, "x0": x0, "y0": y0, "pw": img[1], "ph": img[2], "lineas": [], "tab": (g.get("kicker") or "", g.get("titulo") or ""),
             "sub": g.get("subtitulo") or "", "abajo": True}
+
+
+# ---------- el acento: qué piezas lo llevan (MV13 del vertical: un solo acento al frente a la vez) ----------
+CREMA_TIPOS = ("cifra", "termino", "barra")   # las que el motor sabe dibujar sin acento: `"crema": true` en el golpe
+
+
+def en_acento(g):
+    """Lo que una pieza lleva en el color de acento, leído de sus datos (lo mismo que `dibujar` pinta con `$acento`), o "" si no
+    lleva nada. Es la regla Noche «acento = una sola cosa» (referencias/diseno/sistema.md) llevada a la mesa:
+      cifra      el valor (y sus `cuadros`)             termino   la nota entera (sin `definicion`; con ella es una ficha de papel)
+      barra      la barra destacada y su valor          recorte   el subrayado de `resalta`
+      documento  el marcador sobre la página (`pagina`; una `portada` no lleva)
+      lista      el chip de `acento` o el `lazo`        red       la `etiqueta` «Según…» o una `clave`
+    `"crema": true` en una cifra, una nota o una barra la deja sin acento (el motor la dibuja en crema: CREMA_TIPOS). No cuentan
+    las marcas chicas que no se leen como acento (los puntos de un mapa del mundo, la línea de crédito de la pestaña de un
+    documento) ni el cuadro (kicker, palabra activa del subtítulo), que no son piezas."""
+    t = g.get("tipo")
+    if g.get("crema") and t in CREMA_TIPOS:
+        return ""
+    if t == "cifra":
+        return "la cifra «%s»" % g.get("valor")
+    if t == "termino" and not g.get("definicion"):
+        return "la nota «%s»" % (g.get("texto") or "")[:40]
+    if t == "barra":
+        bs = [b for b in g.get("barras") or [] if isinstance(b, dict)]
+        b = next((b for b in bs if b.get("acento")), bs[-1] if bs else None)
+        return "la barra «%s»" % (b or {}).get("etiqueta") if b else ""
+    if t == "recorte" and g.get("resalta") and g["resalta"] in (g.get("extracto") or ""):
+        return "el subrayado del recorte"
+    if t == "documento" and g.get("pagina"):
+        return "el marcador del documento"
+    if t == "lista":
+        n = len([it for it in g.get("items") or [] if isinstance(it, dict)])
+        if isinstance(g.get("lazo"), dict) or (isinstance(g.get("acento"), int) and not isinstance(g.get("acento"), bool) and 0 <= g["acento"] < n):
+            return "la lista (su %s)" % ("lazo" if isinstance(g.get("lazo"), dict) else "chip de `acento`")
+        return ""
+    if t == "red" and (g.get("etiqueta") or any(isinstance(n, dict) and n.get("clave") for n in g.get("nodos") or [])):
+        return "la jerarquía (su %s)" % ("etiqueta «%s»" % g["etiqueta"] if g.get("etiqueta") else "clave")
+    return ""
+
+
+def peso_acento(g):
+    """Cuánto pesa el acento de una pieza: «dato» (el acento ES la cifra: `cifra`, `barra`), «bloque» (una caja entera en
+    acento: la nota, el chip de una lista, la etiqueta o la clave de una jerarquía), «marca» (un trazo de marcador sobre papel:
+    el subrayado de un recorte, el marcador de un documento, el lazo de una lista) o "" (no lleva acento)."""
+    que = en_acento(g)
+    if not que:
+        return ""
+    t = g.get("tipo")
+    if t in ("cifra", "barra"):
+        return "dato"
+    if t in ("recorte", "documento") or (t == "lista" and "lazo" in que):
+        return "marca"
+    return "bloque"
+
+
+def acento_compite(a, b):
+    """¿Dos piezas en acento al frente BLOQUEAN (MV13 falla) o solo se avisan? Bloquea cuando una es un dato (cifra o barra) y
+    la otra es otro dato o un bloque: con una cifra en pantalla el acento es solo suyo (la regla Noche: la cifra, no la cifra y
+    su nota). Lo demás (dos notas, una nota junto a un subrayado, una cifra junto a la frase subrayada de la que sale) solo se
+    avisa: así salieron los dos pilotos que el usuario aprobó (Bancafé parte 1 y La Línea parte 3: 9 coincidencias de esas y
+    ninguna de dato con bloque), y un gate no rechaza la referencia aprobada."""
+    pa, pb = peso_acento(a), peso_acento(b)
+    return bool(pa and pb) and "dato" in (pa, pb) and "marca" not in (pa, pb)
+
+
+def acentos_a_la_vez(piezas, fin):
+    """MV13 sobre una mesa ya compuesta: las piezas en acento (`en_acento`) que coinciden AL FRENTE. `piezas` = [{g, t, hasta, k}]
+    (t = cuando entra; hasta = cuando se repliega o se va, None = sigue hasta `fin`). Una pieza replegada (su compacta va
+    atenuada) ya no cuenta. → [(la que entra, [las que seguían al frente en acento])], una entrada por pieza que entra."""
+    ac = sorted(((p, en_acento(p["g"])) for p in piezas), key=lambda x: (x[0]["t"], x[0]["k"]))
+    ac = [(p, q) for p, q in ac if q]
+    out = []
+    for i, (b, _) in enumerate(ac):
+        antes = [a for a, _ in ac[:i] if (a["hasta"] if a["hasta"] is not None else fin) > b["t"] + 0.05]
+        if antes:
+            out.append((b, antes))
+    return out
 
 
 GIROS = [-2, 3, -1.5, 2, -3, 1.5, -2.5, 2.5, -1, 3.5, -3.5, 1]
@@ -1015,8 +1243,8 @@ def dibujar(ctx, m, g, x, y, w, h, ex, k, F, usados):
     elif t == "cifra":
         v = str(g.get("valor"))
         cu = int(g.get("cuadros") or 0)
-        dentro = ('<div class="cifra"><div id="%s-v" class="v cond" style="font-size:%dpx">%s</div><div class="l cond">%s</div>%s%s</div>'
-                  % (pid, ex["px"], esc(v), esc(g.get("rotulo")), '<div class="cuad">%s</div>' % "".join('<i id="%s-c%d"></i>' % (pid, i) for i in range(cu)) if cu else "",
+        dentro = ('<div class="cifra%s"><div id="%s-v" class="v cond" style="font-size:%dpx">%s</div><div class="l cond">%s</div>%s%s</div>'
+                  % (" cr" if g.get("crema") else "", pid, ex["px"], esc(v), esc(g.get("rotulo")), '<div class="cuad">%s</div>' % "".join('<i id="%s-c%d"></i>' % (pid, i) for i in range(cu)) if cu else "",
                      '<div class="f" data-layout-ignore>%s</div>' % esc(g["fuente"]) if g.get("fuente") else ""))
         mm = re.match(r"^(\D*)(\d[\d,]*)(.*)$", v)
         cuenta = g.get("cuenta") if isinstance(g.get("cuenta"), int) and g.get("cuenta") > 3 and mm else None
@@ -1030,7 +1258,7 @@ def dibujar(ctx, m, g, x, y, w, h, ex, k, F, usados):
         for i in range(cu):
             m.tl.append('tl.fromTo("#%s-c%d",{opacity:0},{opacity:1,duration:.08},%.3f);' % (pid, i, m.loc(T + i * 0.05)))
     elif t == "termino":
-        m.pieza(T, x, y, w, giro, '<div class="nota"><div class="cond">%s</div></div>' % esc(g.get("texto")), sfx="papel", ya=ya)
+        m.pieza(T, x, y, w, giro, '<div class="nota%s"><div class="cond">%s</div></div>' % (" cr" if g.get("crema") else "", esc(g.get("texto"))), sfx="papel", ya=ya)
     elif t == "cita":
         # la cita entra atenuada y cada palabra se entinta cuando la voz la lee (la voz dice quién habla y luego la lee)
         pal = (g.get("texto") or "").split()
@@ -1345,7 +1573,7 @@ def revisar_maqueta(ctx, M, nom, respaldado):
         f.append("YT20 %s: el estilo «%s» es de motor %s, que aún no renderiza; van: %s" % (nom, q["estilo"], E[q["estilo"]].get("motor"), " · ".join(con_motor)))
     pz = q.get("piezas")
     if not (isinstance(pz, list) and pz and all(isinstance(p, dict) and p.get("id") and p.get("tipo") for p in pz)):
-        f.append("YT20 %s: `piezas` son una o más {id, tipo, …} (falla · luces · frontera · ruta): lo que hay sobre el mundo" % nom)
+        f.append("YT20 %s: `piezas` son una o más {id, tipo, …}: lo que hay sobre el mundo (los tipos: maqueta3d.py catalogo --para realizador)" % nom)
         pz = []
     if q.get("protagonista") and q["protagonista"] not in {p["id"] for p in pz}:
         f.append("YT20 %s: `protagonista` («%s») es el id de una de sus piezas (%s): la única que va en el acento"
@@ -1543,4 +1771,16 @@ def digesto_maqueta(ctx):
                     dichos.append("%s («%s», %s a los %.1f s)" % (lid, nombre, S["clave"], ctx["offs"][i] + S["palabras"][r[1]]["start"]))
                     break
         L.append("  set %s: %d lugares (las 22 cabeceras y los pueblos de OpenStreetMap). La voz nombra: %s" % (sid, len(lug), "; ".join(dichos[:14]) or "ninguno por su nombre"))
+    L += ["  " + x for x in catalogo_maqueta()]
     return L
+
+
+def catalogo_maqueta():
+    """El vocabulario de la maqueta para el realizador (maqueta3d.py catalogo --para realizador), solo lo que dibujan los
+    motores con render (motores_maqueta). → renglones; vacío si no se puede leer."""
+    try:
+        import maqueta3d
+        mot = motores_maqueta()
+        return maqueta3d.lineas_catalogo("realizador", motor=mot[0] if len(mot) == 1 else None)
+    except (ImportError, OSError, ValueError, KeyError) as e:   # el digesto no se cae por el catálogo, pero lo dice
+        return ["(no se pudo leer el catálogo de la maqueta: %s; python3 scripts/maqueta3d.py catalogo --para realizador)" % e]

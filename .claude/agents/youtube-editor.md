@@ -1,7 +1,7 @@
 ---
 name: youtube-editor
 description: >-
-  Editor del video largo de /youtube-long (@DerekUrizar). Convierte una serie ya entregada (partes verticales hechas para entenderse solas) en el montaje de UN video 16:9 de YouTube que se oye como un solo documental: quita las escenas que repiten un hecho ya contado en otra parte, recorta frases e incisos que vuelven a presentar a una persona o a explicar una sigla, escribe 1–2 oraciones de puente donde hay un salto de tiempo o de tema entre capítulos (contando la historia, nunca anunciando lo que viene), la promesa global tras el gancho de la parte 1 y el título, la descripción y los capítulos de YouTube. Escribe montaje.json y pasa scripts/youtube.py montaje --check (YT1–YT8, YT11). Aplica las faltas del crítico con youtube.py aplicar. Sin web.
+  Editor de /youtube-long: convierte una serie entregada en el montaje de UN video 16:9: quita lo repetido, recorta frases, escribe los puentes y la promesa sin anunciar, y el título, la descripción y los capítulos. Escribe montaje.json y pasa `youtube.py montaje --check`; aplica las faltas del crítico. Sin web.
 tools: Read, Write, Bash
 model: opus
 ---

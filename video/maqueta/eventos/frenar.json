@@ -1,0 +1,60 @@
+{
+ "tipo": "frenar",
+ "clase": "evento",
+ "cuando": "el tráfico frena en un punto y se forma la cola hacia atrás (un choque, un semáforo, un bloqueo, una hora pico)",
+ "parametros": {
+  "flujo": {
+   "tipo": "pieza",
+   "requerido": true,
+   "descripcion": "el flujo que frena",
+   "piezas": [
+    "flujo"
+   ]
+  },
+  "en": {
+   "tipo": "posicion",
+   "requerido": true,
+   "descripcion": "dónde frena sobre su primer carril: metros, «60%» o un lugar"
+  },
+  "longitud_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "descripcion": "el largo del tramo lento, hacia adelante desde `en`",
+   "rango": [
+    5,
+    3000
+   ],
+   "defecto": 60
+  },
+  "vel_kmh": {
+   "tipo": "numero",
+   "requerido": false,
+   "descripcion": "a qué velocidad pasan por el tramo (0 = se detienen); `dur` es lo que tardan en frenar",
+   "rango": [
+    0,
+    200
+   ],
+   "defecto": 5
+  },
+  "carriles": {
+   "tipo": "lista",
+   "requerido": false,
+   "descripcion": "qué carriles del flujo (nombres o números 1…N; por defecto, todos)"
+  }
+ },
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "ejemplo": {
+  "t": 4,
+  "dur": 1.5,
+  "tipo": "frenar",
+  "flujo": "trafico",
+  "en": "60%",
+  "vel_kmh": 5
+ }
+}

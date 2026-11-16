@@ -1,0 +1,40 @@
+{
+ "tipo": "resaltar",
+ "clase": "evento",
+ "cuando": "señalar una pieza (la falla, la ruta, la carretera), un edificio o una calle de ella, o un lugar, mientras la voz lo nombra",
+ "parametros": {
+  "pieza": {
+   "tipo": "pieza",
+   "requerido": false,
+   "descripcion": "la pieza que se aviva (o `lugar`)"
+  },
+  "lugar": {
+   "tipo": "lugar",
+   "requerido": false,
+   "descripcion": "el lugar que se marca con anillos (o `pieza`): un lugar: id del set o de mundo.lugares, o [lon, lat]"
+  },
+  "elemento": {
+   "tipo": "lugar",
+   "requerido": false,
+   "descripcion": "con `pieza` de edificios, calles o carretera: el edificio o la calle que está en ese lugar (el más cercano), en el acento"
+  }
+ },
+ "escalas": [
+  "pais",
+  "ciudad",
+  "esquema"
+ ],
+ "motores": [
+  "three",
+  "blender"
+ ],
+ "adelanto": {
+  "s": 0.3
+ },
+ "ejemplo": {
+  "t": 5.1,
+  "dur": 2.2,
+  "tipo": "resaltar",
+  "lugar": "los-amates"
+ }
+}

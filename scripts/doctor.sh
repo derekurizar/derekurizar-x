@@ -12,10 +12,14 @@ aviso() { printf 'AVISO  %s\n' "$*"; AVISOS=$((AVISOS+1)); }
 error() { printf 'ERROR  %s\n' "$*"; ERRORES=$((ERRORES+1)); }
 TMP="$(mktemp -d)"; trap 'rm -rf "$TMP"' EXIT
 
-# node ≥ 20
+# node ≥ 22: lo pide HyperFrames, que dibuja la mesa de archivo (/historia, /serie, /explica, /video, /departamento, /sabias,
+# /congreso), el 16:9 de /youtube-long y la maqueta 3D; el mínimo va en scripts/versiones.py (NODE_MIN). Las tarjetas de
+# /hilo y /dato (Playwright) andan con 20, pero casi ningún video sale sin la mesa: por debajo de 22 es un ERROR.
+NODE_MIN="$(python3 scripts/versiones.py node 2>/dev/null || echo 22)"
 if command -v node >/dev/null; then
   NV="$(node --version | sed 's/^v//')"; NMAJ="${NV%%.*}"
-  if [[ "$NMAJ" -ge 20 ]]; then ok "node $NV (≥ 20)"; else error "node $NV: se necesita ≥ 20"; fi
+  if [[ "$NMAJ" -ge "$NODE_MIN" ]]; then ok "node $NV (≥ $NODE_MIN: la mesa de archivo con HyperFrames)"
+  else error "node $NV: se necesita ≥ $NODE_MIN (HyperFrames dibuja la mesa de archivo de /historia, /serie, /explica, /video, /departamento, /sabias y /congreso, el 16:9 de /youtube-long y la maqueta 3D; con 20–21 solo salen las tarjetas de /hilo y /dato)"; fi
 else
   error "node no está instalado"
 fi
@@ -54,34 +58,40 @@ else
   aviso "render de prueba omitido (hay errores previos)"
 fi
 
-# pdftotext
+# poppler: pdftotext (el texto de un PDF) y pdftoppm (la página de un documento como imagen)
 if command -v pdftotext >/dev/null; then ok "pdftotext ($(pdftotext -v 2>&1 | head -1))"; else aviso "falta pdftotext (brew install poppler): make pdf no funcionará"; fi
+if command -v pdftoppm >/dev/null; then ok "pdftoppm (la página de un documento como imagen: la pieza «documento» de la mesa y historia.py pagina)"; else aviso "falta pdftoppm (brew install poppler): la mesa dibuja los documentos sin la imagen de su página y historia.py pagina no funcionará"; fi
+# swiftc: compila scripts/caras.swift (Vision de macOS) la primera vez que historia.py focos busca las caras de una foto
+if command -v swiftc >/dev/null; then ok "swiftc (las caras de las fotos con Vision: historia.py focos)"; else aviso "sin swiftc (xcode-select --install): historia.py focos no detecta caras y los retratos se encuadran sin el foco de la cara"; fi
 
 # /video: ffmpeg/ffprobe, los agentes, el workflow, el comando, las plantillas verticales, la música y los efectos fijos
 if command -v ffmpeg >/dev/null && command -v ffprobe >/dev/null; then ok "ffmpeg y ffprobe ($(ffmpeg -version | head -1 | cut -d' ' -f1-3))"; else aviso "falta ffmpeg (brew install ffmpeg): /video no funcionará"; fi
 if [[ -s design/iconos/catalogo.json ]]; then ok "design/iconos/: biblioteca fija de iconos ($(python3 -c "import json; print(len(json.load(open('design/iconos/catalogo.json'))['iconos']))") iconos)"; else aviso "falta design/iconos/catalogo.json (make iconos): /video no podrá usar iconos"; fi
-if command -v yt-dlp >/dev/null; then ok "yt-dlp $(yt-dlp --version) (videos de las fuentes para las tomas de /historia)"; else aviso "sin yt-dlp (brew install yt-dlp): /historia no podrá bajar videos de YouTube, JW Player, Brightcove o Facebook (los mp4/m3u8 directos sí)"; fi
 if command -v whisper-cli >/dev/null && [[ -s "${HILOS_WHISPER:-sesiones/_descargas/whisper/ggml-small.bin}" ]]; then ok "whisper-cli y su modelo (escucha V11 de /video)"; else aviso "sin whisper-cli o sin modelo (opcional: brew install whisper-cpp · make whisper): /video salta la escucha V11"; fi
 for f in scripts/video.py scripts/numeros_es.py scripts/video_grabar.js scripts/video_animar.js video/escena.html video/cierre.html video/golpe.html video/gancho.html video/comun.css video/comun.js video/explica.html video/animaciones/catalogo.json video/animaciones/cadena.js scripts/animaciones.py video/animar.js .claude/agents/video-gancho.md referencias/roles/video-gancho.md referencias/ganchos.md referencias/cierres.md .claude/agents/video-guionista.md .claude/agents/video-critico.md .claude/agents/video-animador.md referencias/roles/video-animador.md .claude/workflows/video.js .claude/commands/video.md referencias/roles/video-guionista.md referencias/roles/video-critico.md referencias/flujo-video.md design/musica/catalogo.json design/sfx/catalogo.json sesiones/_fixture_video/guion.json sesiones/_fixture_video/ganchos.json sesiones/_fixture_video/seleccion.json; do
   [[ -s "$f" ]] || aviso "falta $f (/video no estará disponible)"
 done
 # /historia: script, página de escena, agentes, workflow, comando, guías y maqueta (usa la voz, la música, los efectos, las
 # tarjetas y la biblioteca de animaciones de /video); pdftotext para leer fuentes en PDF
-for f in scripts/historia.py video/historia.html video/animaciones/cronologia.js .claude/agents/historia-editor.md .claude/agents/historia-investigador.md .claude/agents/historia-verificador.md .claude/agents/historia-guionista.md .claude/agents/historia-oyente.md .claude/workflows/historia.js .claude/commands/historia.md referencias/flujo-historia.md referencias/roles/historia-editor.md referencias/roles/historia-investigador.md referencias/roles/historia-verificador.md referencias/roles/historia-guionista.md referencias/roles/historia-oyente.md sesiones/_fixture_historia/guion.json sesiones/_fixture_historia/encuadre.json; do
+for f in scripts/historia.py scripts/fuentes_web.py video/historia.html video/noticia.html video/animaciones/cronologia.js .claude/agents/historia-editor.md .claude/agents/historia-investigador.md .claude/agents/historia-verificador.md .claude/agents/historia-guionista.md .claude/agents/historia-oyente.md .claude/workflows/historia.js .claude/commands/historia.md referencias/flujo-historia.md referencias/roles/historia-editor.md referencias/roles/historia-investigador.md referencias/roles/historia-verificador.md referencias/roles/historia-guionista.md referencias/roles/historia-oyente.md sesiones/_fixture_historia/guion.json sesiones/_fixture_historia/encuadre.json; do
   [[ -s "$f" ]] || aviso "falta $f (/historia no estará disponible)"
 done
 command -v pdftotext >/dev/null || aviso "falta pdftotext (brew install poppler): /historia no podrá leer fuentes en PDF"
 # /youtube-long: script, páginas 16:9 (escenario y miniatura), agente, workflow, comando, guías y maqueta (usa la voz, la
 # música, los efectos y las páginas de escena de /video y /historia)
-for f in scripts/youtube.py scripts/youtube_hf.py scripts/mesa.py scripts/video_hf.py design/vendor/gsap-3.15.0.min.js referencias/flujo-mesa.md .claude/workflows/plano.js .claude/agents/video-realizador.md referencias/roles/video-realizador.md video/escenario.html video/miniatura.html .claude/agents/youtube-editor.md .claude/agents/youtube-realizador.md .claude/workflows/youtube.js .claude/commands/youtube-long.md referencias/flujo-youtube.md referencias/roles/youtube-editor.md referencias/roles/youtube-realizador.md design/mapas/paises-50m.json design/grano-mesa.png sesiones/_fixture_youtube/montaje.json sesiones/_fixture_youtube/serie/serie.json; do
+HFV="$(python3 scripts/versiones.py hf 2>/dev/null || true)"; GSAPV="$(python3 scripts/versiones.py gsap 2>/dev/null || true)"; THREEV="$(python3 scripts/versiones.py three 2>/dev/null || true)"
+for f in scripts/youtube.py scripts/youtube_hf.py scripts/mesa.py scripts/video_hf.py scripts/versiones.py "design/vendor/gsap-${GSAPV}.min.js" referencias/flujo-mesa.md .claude/workflows/plano.js .claude/agents/video-realizador.md referencias/roles/video-realizador.md video/escenario.html video/miniatura.html .claude/agents/youtube-editor.md .claude/agents/youtube-realizador.md .claude/workflows/youtube.js .claude/commands/youtube-long.md referencias/flujo-youtube.md referencias/roles/youtube-editor.md referencias/roles/youtube-realizador.md design/mapas/paises-50m.json design/grano-mesa.png sesiones/_fixture_youtube/montaje.json sesiones/_fixture_youtube/serie/serie.json; do
   [[ -s "$f" ]] || aviso "falta $f (/youtube-long no estará disponible)"
 done
-# el 16:9 de /youtube-long lo dibuja HyperFrames (Node ≥ 22; la versión va fijada en scripts/mesa.py: HF_VERSION)
-HFV="$(python3 -c "import re;print(re.search(r'HF_VERSION = \"([^\"]+)\"', open('scripts/mesa.py').read()).group(1))" 2>/dev/null || true)"
-if [[ "${NMAJ:-0}" -ge 22 ]] && npx --yes "hyperframes@${HFV}" --version >/dev/null 2>&1; then ok "hyperframes ${HFV} (el 16:9 de /youtube-long)"; else aviso "sin hyperframes ${HFV} o node < 22: /youtube-long no podrá renderizar el 16:9 (npx hyperframes@${HFV} --version)"; fi
+# HyperFrames dibuja y renderiza la mesa de archivo (el vertical de /historia, /serie, /explica, /video, /departamento, /sabias
+# y /congreso, y el 16:9 de /youtube-long) y la maqueta 3D. Pide Node ≥ NODE_MIN; las versiones de HyperFrames, GSAP y
+# three.js van fijadas en scripts/versiones.py, y solo ahí.
+if [[ -z "$HFV" ]]; then error "scripts/versiones.py no dice la versión de HyperFrames (python3 scripts/versiones.py hf)"
+elif [[ "${NMAJ:-0}" -ge "$NODE_MIN" ]] && npx --yes "hyperframes@${HFV}" --version >/dev/null 2>&1; then ok "hyperframes ${HFV} (la mesa de archivo: vertical y 16:9; la maqueta 3D)"
+else aviso "sin hyperframes ${HFV} o node < ${NODE_MIN}: la mesa de archivo no podrá dibujar ni renderizar (/historia, /serie, /explica, /video, /departamento, /sabias, /congreso, /youtube-long) ni la maqueta 3D (npx --yes hyperframes@${HFV} --version)"; fi
 # /video-3d y la maqueta 3D: scripts, motor three.js vendorizado, set de geodatos, guías y maqueta de prueba; Blender solo
 # hace falta para los estilos arquitecto, diorama y papel
-for f in scripts/video3d.py scripts/maqueta3d.py scripts/build_set3d.py video/maqueta/motor.js video/maqueta/capa.js video/maqueta/plantilla.html design/vendor/three-0.187.0/three.module.js design/sets3d/estilos.json design/sets3d/guatemala/relieve.png design/sets3d/guatemala/lugares.json referencias/flujo-video3d.md referencias/diseno/maqueta3d.md .claude/commands/video-3d.md sesiones/_fixture_video3d/guion.json; do
+for f in scripts/video3d.py scripts/maqueta3d.py scripts/build_set3d.py video/maqueta/motor.js video/maqueta/capa.js video/maqueta/plantilla.html "design/vendor/three-${THREEV}/three.module.js" design/sets3d/estilos.json design/sets3d/guatemala/relieve.png design/sets3d/guatemala/lugares.json referencias/flujo-video3d.md referencias/diseno/maqueta3d.md .claude/commands/video-3d.md sesiones/_fixture_video3d/guion.json; do
   [[ -s "$f" ]] || aviso "falta $f (/video-3d no estará disponible)"
 done
 if [[ -x "${BLENDER:-/Applications/Blender.app/Contents/MacOS/Blender}" ]] || command -v blender >/dev/null; then ok "Blender (estilos arquitecto, diorama y papel de la maqueta 3D)"; else aviso "sin Blender: la maqueta 3D solo podrá usar los estilos de three.js (noche, color, contorno, voxel, plano)"; fi
@@ -89,10 +99,6 @@ if [[ -x "${BLENDER:-/Applications/Blender.app/Contents/MacOS/Blender}" ]] || co
 # efectos, el render y la lectura de fuentes de /video y /historia)
 for f in scripts/explica.py video/cuenta.html video/animaciones/bola-nieve.js .claude/agents/explica-editor.md .claude/agents/explica-investigador.md .claude/agents/explica-verificador.md .claude/agents/explica-guionista.md .claude/workflows/explica.js .claude/commands/explica.md referencias/flujo-explica.md referencias/roles/explica-editor.md referencias/roles/explica-investigador.md referencias/roles/explica-verificador.md referencias/roles/explica-guionista.md sesiones/_fixture_explica/guion.json sesiones/_fixture_explica/encuadre.json; do
   [[ -s "$f" ]] || aviso "falta $f (/explica no estará disponible)"
-done
-# /noticias: script, página de escena, agentes, workflow, comando, guías y maqueta (usa la voz, la música y los efectos de /video)
-for f in scripts/noticias.py video/noticia.html .claude/agents/noticias-rastreador.md .claude/agents/noticias-verificador.md .claude/agents/noticias-editor.md .claude/workflows/noticias.js .claude/commands/noticias.md referencias/flujo-noticias.md referencias/roles/noticias-rastreador.md referencias/roles/noticias-verificador.md referencias/roles/noticias-editor.md sesiones/_fixture_noticias/guion.json sesiones/_fixture_noticias/noticias.json; do
-  [[ -s "$f" ]] || aviso "falta $f (/noticias no estará disponible)"
 done
 # /congreso: script, escena hemiciclo, captura del sitio, padrón, comando, guía y maqueta (sin agentes propios: la sesión
 # captura con Chrome y escribe el guion; usa la voz, la música, los efectos y el render de /video y las escenas de /historia)
@@ -107,6 +113,16 @@ done
 # agentes y workflow
 NAG="$(ls .claude/agents/hilo-*.md 2>/dev/null | wc -l | tr -d ' ')"
 if [[ "$NAG" -eq 6 ]]; then ok ".claude/agents/: 6 archivos hilo-*.md"; else error ".claude/agents/: hay $NAG hilo-*.md (deben ser 6: editor, investigador, verificador, guionista, visualista, productor)"; fi
+# los agentes de los videos: cada uno con su archivo y con `name:` igual al nombre del archivo (así lo llama su workflow; con
+# otro nombre Claude Code lo registra distinto y el workflow no lo encuentra)
+AGV="video-critico video-gancho video-guionista video-animador video-realizador historia-editor historia-investigador historia-verificador historia-guionista historia-oyente explica-editor explica-investigador explica-verificador explica-guionista youtube-editor youtube-realizador"
+NAV=0; MALV=""
+for a in $AGV; do
+  NAV=$((NAV+1))
+  if [[ ! -s ".claude/agents/$a.md" ]]; then MALV="$MALV $a(falta)"
+  elif ! sed -n '1,12p' ".claude/agents/$a.md" | grep -qx "name: $a"; then MALV="$MALV $a(sin «name: $a»)"; fi
+done
+if [[ -z "$MALV" ]]; then ok ".claude/agents/: los $NAV agentes de video (video-*, historia-*, explica-*, youtube-*) con su name"; else error ".claude/agents/: agentes de video que faltan o no se registran con su nombre:$MALV (de $NAV: $AGV)"; fi
 if [[ -s .claude/workflows/hilo.js ]]; then ok ".claude/workflows/hilo.js presente"; else error "falta .claude/workflows/hilo.js"; fi
 if [[ -f .claude/commands/hilo.md ]]; then ok ".claude/commands/hilo.md presente"; else aviso "falta .claude/commands/hilo.md (/hilo no estará disponible)"; fi
 for f in .claude/agents/ideas-explorador.md .claude/workflows/ideas.js .claude/commands/ideas.md; do

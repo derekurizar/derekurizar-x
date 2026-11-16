@@ -1,0 +1,24 @@
+{
+ "tipo": "frontera",
+ "clase": "pieza",
+ "cuando": "el contorno del país: dónde queda algo respecto de Guatemala (con `vecinos`, también los países de alrededor)",
+ "parametros": {
+  "vecinos": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": false,
+   "descripcion": "dibuja también, más finos y tenues, los bordes y la costa de los países de alrededor (Natural Earth): cuando el video sale del país o habla de una frontera"
+  }
+ },
+ "escalas": [
+  "pais"
+ ],
+ "motores": [
+  "three",
+  "blender"
+ ],
+ "ejemplo": {
+  "id": "frontera",
+  "tipo": "frontera"
+ }
+}

@@ -1,5 +1,5 @@
 ---
-description: Un «¿Sabías que…?» en video vertical de 20–30 s para TikTok, Reels y Shorts, más su 4:5, desde un dato de /dato — gancho «¿Sabías que en Guatemala…?» con la cifra animada, la tarjeta Noche del dato con zoom, un visual de apoyo y cierre con «Sígueme en» (uso — /sabias <slug|ultimo|pista> [sin-voz|fixture]; con una pista que no es un dato entregado corre /dato primero; voz de ElevenLabs ≈ 300–450 créditos; sin-voz arma el video con voz falsa, 0 créditos; fixture corre la maqueta)
+description: Un «¿Sabías que en Guatemala…?» en video vertical de 20–30 s (9:16 + 4:5) desde un dato de /dato (uso — /sabias &lt;slug|ultimo|pista&gt; [sin-voz|fixture]; una pista que no es un dato entregado corre /dato primero; voz ≈ 300–450 créditos)
 ---
 
 Eres el coordinador del flujo **/sabias** de @DerekUrizar. Sus argumentos son: "$ARGUMENTS".
@@ -31,34 +31,32 @@ La guía es `referencias/flujo-sabias.md`. Nunca publiques. Nunca generes músic
      por S3) y, con el guion armado, 5 cierres de una pantalla (otra consecuencia: quién lo vive, qué pierde, qué
      espera…; `referencias/cierres.md`). Pregunta con AskUserQuestion (4 botones, la quinta en el texto de la pregunta;
      en «Otro» puede dictar el suyo, que va casi literal) y escribe en `guion.json` lo que elija.
+     Deja en `guion.json` quién eligió, para medirlo: `"gancho": {"id", "elegido_por": "usuario|critico|propio",
+     "recomendado": "<el que tú recomendabas>"}` y, dentro de `cierre`, `elegido_por` y `recomendado`.
    - `python3 scripts/sabias.py guion <TRABAJO> --check` hasta exit 0 (S1–S3, V1–V5, V9, F1–F8; la tabla da los
      segundos estimados: 20–30 s).
 3. **CRÍTICA** (0 créditos)
-   - Lanza el agente `video-critico` (Agent, `subagent_type: "video-critico"`) en **Modo sabías** de
-     `referencias/roles/video-critico.md` con `TRABAJO` y `vuelta: 1`. Aplica sus faltas `bloquea` con el texto exacto
+   - Lanza el agente `video-critico` (Agent, `subagent_type: "video-critico"`) en **Modo sabías** (su guía:
+     `referencias/roles/video-critico.md` y `referencias/roles/video-critico/sabias.md`) con `TRABAJO` y `vuelta: 1`. Aplica sus faltas `bloquea` con el texto exacto
      del arreglo, repasa `guion --check` y, si hubo faltas, una segunda vuelta (`vuelta: 2`, con la lista anterior).
    - Si tras 2 vueltas no pasa, muestra las faltas y **pregunta al usuario** antes de gastar créditos.
 4. **VOZ** (con `sin-voz`: `python3 scripts/sabias.py voz-falsa <TRABAJO>` y salta al paso 5)
-   - Di al usuario los caracteres de voz (`locucion.json → caracteres`) antes de gastar.
-   - `python3 scripts/sabias.py voz <TRABAJO>` imprime la voz y un `prompt` por nodo.
-   - `creative_create_flow` con el nombre «Sabías que · <slug>»; por nodo, `creative_add_flow_node` (`node_type:
-     "tts"`, `model_id: "eleven_multilingual_v2"`, el `voice_id` de la salida, `model_parameters: {"language_code":
-     "es"}` y el `prompt` **exacto**); `creative_run_flow_nodes` con todos y **`generations_count: 1`**.
-   - Sondea `creative_get_flow_run_status` solo con las sesiones pendientes (no relances nodos). Con la voz completa,
-     `creative_transcribe_audio` por nodo (`eleven_scribe_v1`, `connect_from: [nodo]`), luego **una sola**
-     `creative_get_flow_run_status` con las sesiones de voz y Scribe (queda guardada en un archivo) y
-     `python3 scripts/sabias.py descargar <TRABAJO> --estado <ese archivo>`.
-   - **El estado en línea** (m045, m047): si `creative_get_flow_run_status` devuelve la respuesta en el chat y no en un archivo
-     (pasa con pocas sesiones), escríbela TAL CUAL a `<TRABAJO>/audio/estado.json` y pásale ese archivo a `descargar --estado`;
-     valen las `words` en línea de Scribe. `descargar` falla si una transcripción no casa con ninguna escena.
+   - Sigue `referencias/fragmentos/voz-mcp.md` (lee ese archivo: nodos por secuencia, lotes de ≤ 3, `generations_count: 1`, Scribe y
+     `descargar --nodos`) con `<script>` = `sabias.py` y el flow «Sabías que · <slug>».
 5. **TIEMPOS Y ESCUCHA**
+   - **En un comando**: `python3 scripts/sabias.py producir <TRABAJO>` corre este paso y los siguientes hasta `revisar` en 9:16 y
+     4:5; se detiene con código 3 a esperar el plano (lanza el Workflow `plano` y repítelo) y reanuda donde quedó
+     (`referencias/fragmentos/producir.md`; con `sin-voz`, añade `--borrador`). Los pasos de abajo son lo que corre, uno
+     por uno: sirven para entender una falla o rehacer solo uno.
    - `python3 scripts/sabias.py tiempos <TRABAJO>` (V6, V10, V16). Si una escena no se alinea, rehaz SOLO ese nodo
-     (1 toma), transcríbelo, `descargar --estado` con esas dos sesiones y repite `tiempos`.
+     («Retomas» en `referencias/fragmentos/voz-mcp.md`) y repite `tiempos`.
    - Con voz real, `python3 scripts/sabias.py escuchar <TRABAJO>` (V11). Una `FALLA V11` → la misma retoma de un nodo.
 6. **GRABAR, MONTAR Y REVISAR**
    - **PLANO** (mesa de archivo, desde el 2026-11-14; todo TRABAJO nuevo trae `"realizacion": "mesa"` en `video.json`):
-     después de `tiempos` y antes de `grabar`, lanza `Workflow({ name: "plano", args: { trabajo: "<TRABAJO>" } })`
-     (hasta reiniciar Claude Code, con `scriptPath: ".claude/workflows/plano.js"` y `args.permitir_fallback: true`). El
+     después de `tiempos` y antes de `grabar`, lanza `Workflow({ name: "plano", args: { trabajo: "<TRABAJO>" } })`.
+     Si falla con «agente no registrado», pide
+     reiniciar Claude Code (los agentes se cargan al arrancar); el plano no se relanza con `permitir_fallback`: un
+     realizador sin su agente triplica el contexto. El
      `video-realizador` escribe `<TRABAJO>/plano.json` (qué pieza entra con cada oración) y deja
      `python3 scripts/sabias.py plano <TRABAJO> --check --hoja` en 0 (MV1–MV14). Con `plano_listo`, muestra
      `<TRABAJO>/plano.md` y sigue; con `plano_pendiente`, muestra las `fallas` y relánzalo (conserva el plano). Lo que
@@ -71,6 +69,8 @@ La guía es `referencias/flujo-sabias.md`. Nunca publiques. Nunca generes músic
    - Luego el 4:5: `grabar`, `montar` y `revisar` con `--formato 4:5`.
 7. **ENTREGAR** (no con `sin-voz`: ahí abre `<TRABAJO>/salida/video.mp4` y pasa al reporte)
    - `python3 scripts/sabias.py entregar <TRABAJO>` → `datos/<fecha>-<slug>/video/`.
+   - Costo medido (lo usa `/agenda` para estimar; `referencias/flujo-agenda.md`): tras registrar, `python3 scripts/costo.py
+     --registrar --pieza <id o slug> --flujo sabias --run <las corridas wf_… de esta pieza> --entrega <carpeta de entrega>`.
    - `python3 scripts/memoria.py --sabias datos/<fecha>-<slug>/video` y `make validate` (exit 0).
    - Abre el `video.mp4` entregado con `open`.
 8. **REPORTE**

@@ -1,0 +1,56 @@
+{
+ "tipo": "carretera",
+ "clase": "pieza",
+ "cuando": "una vía con sus carriles y su línea central (por donde pasan los carros: sus caminos tienen nombre)",
+ "parametros": {
+  "camino": {
+   "tipo": "texto",
+   "requerido": false,
+   "defecto": "eje",
+   "descripcion": "en un esquema, un camino de la receta («eje»: la autopista de la receta carretera); en una ciudad, una arteria del set (roosevelt, bolivar…)"
+  },
+  "carriles": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    2,
+    8
+   ],
+   "descripcion": "cuántos carriles (la mitad en cada sentido); sin él, los de la receta o 4"
+  },
+  "ancho_carril_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    2.5,
+    4.5
+   ],
+   "defecto": 3.5,
+   "descripcion": "el ancho de cada carril"
+  },
+  "mediana_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    30
+   ],
+   "descripcion": "el ancho de la mediana entre los dos sentidos"
+  }
+ },
+ "escalas": [
+  "ciudad",
+  "esquema"
+ ],
+ "motores": [
+  "three"
+ ],
+ "capas": [
+  "calles"
+ ],
+ "ejemplo": {
+  "id": "autopista",
+  "tipo": "carretera",
+  "camino": "eje"
+ }
+}

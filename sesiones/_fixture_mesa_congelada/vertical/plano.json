@@ -1,0 +1,69 @@
+{
+ "version": 1,
+ "_comentario": "Plano CURADO A MANO sobre las escenas congeladas (scripts/pruebas/mesa_congelada.py): parte del borrador y pasa MV1–MV14 con 0 fallas y 0 avisos. --congelar no lo toca; si las escenas cambian, se ajusta a mano.",
+ "mesas": [
+  {
+   "escenas": ["e1"],
+   "golpes": [
+    {"tipo": "foto", "foto": "ori-f01", "pie": "Un horno de leña"},
+    {"tipo": "termino", "texto": "La Espiga"},
+    {"tipo": "lugar", "dice": "en Xela,", "mapa": "guatemala", "depto": "Quetzaltenango", "rotulo": "Xela"}
+   ]
+  },
+  {
+   "escenas": ["e2"],
+   "titulo": "Un solo horno",
+   "golpes": [
+    {"tipo": "foto", "dice": "¿Cómo llena", "foto": "cas-f02", "pie": "Harina para una ciudad"},
+    {"tipo": "fecha", "dice": "1952,", "grande": "1952", "chico": "en"},
+    {"tipo": "lugar", "dice": "en Quetzaltenango,", "mapa": "guatemala", "depto": "Quetzaltenango", "rotulo": "Quetzaltenango"},
+    {"tipo": "termino", "dice": "una sola puerta", "texto": "Una sola puerta"}
+   ]
+  },
+  {
+   "escenas": ["e3"],
+   "titulo": "La fundadora",
+   "golpes": [
+    {"tipo": "persona", "dice": "Marta Pérez,", "persona": "Marta Pérez", "cargo": "la fundadora"},
+    {"tipo": "foto", "dice": "con sus propias manos", "foto": "ori-f05", "pie": "El pan de La Espiga"},
+    {"tipo": "termino", "dice": "antes de que", "texto": "Antes de abrir"},
+    {"tipo": "foto", "dice": "ya con el negocio", "foto": "ori-f03", "pie": "Marta Pérez"},
+    {"tipo": "cita", "dice": "Cada pan sale", "texto": "Cada pan sale del mismo horno que encendí el primer día", "autor": "Marta Pérez", "cargo": "fundadora de La Espiga"}
+   ]
+  },
+  {
+   "escenas": ["e4"],
+   "golpes": [
+    {"tipo": "fecha", "dice": "1958,", "grande": "1958", "chico": "en"},
+    {"tipo": "foto", "dice": "primera sucursal", "foto": "ori-f04", "pie": "La primera sucursal"},
+    {"tipo": "termino", "dice": "cuánto pan", "texto": "¿Cuánto pan?"}
+   ]
+  },
+  {
+   "escenas": ["e5"],
+   "titulo": "El salto",
+   "golpes": [
+    {"tipo": "foto", "dice": "Pero el", "foto": "cas-f01", "pie": "La sucursal del barrio"},
+    {"tipo": "lugar", "dice": "el barrio entero", "mapa": "guatemala", "depto": "Quetzaltenango", "rotulo": "Xela"},
+    {"tipo": "fecha", "dice": "1968,", "grande": "1968", "chico": "en"},
+    {"tipo": "cifra", "dice": "4,500", "valor": "4,500", "rotulo": "panes al día"}
+   ]
+  },
+  {
+   "escenas": ["e6"],
+   "titulo": "Un fuego",
+   "golpes": [
+    {"tipo": "foto", "dice": "un solo fuego", "foto": "ori-f02", "pie": "El fuego de La Espiga"},
+    {"tipo": "cifra", "dice": "4,500", "valor": "4,500", "rotulo": "panes cada día"}
+   ]
+  },
+  {
+   "escenas": ["e7"],
+   "golpes": [
+    {"tipo": "fecha", "dice": "1971,", "grande": "1971", "chico": "para"},
+    {"tipo": "foto", "dice": "cinco sucursales", "foto": "ori-f06", "pie": "Cinco sucursales en Xela"},
+    {"tipo": "persona", "dice": "Marta seguía", "persona": "Marta Pérez", "cargo": "la fundadora"}
+   ]
+  }
+ ]
+}

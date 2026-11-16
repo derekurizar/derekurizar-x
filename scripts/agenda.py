@@ -4,7 +4,7 @@ producir para que ningún espacio quede vacío. Solo stdlib.
 
 Decisiones del usuario (2026-11-03): como máximo 2 videos al día. El espacio A es una pieza fuerte (historia, explica,
 parte de serie, /video de un hilo) y el B una pieza corta (¿Sabías que…?, departamento). El carrusel va aparte (no es
-video, ≤ 1 al día). **No se publican noticieros**: /noticias y /semana no se programan. Planifica producción y publicación;
+video, ≤ 1 al día). Los noticieros se retiraron del framework (2026-11-14): no hay formato que los programe. Planifica producción y publicación;
 sin tope de créditos (el plan muestra la estimación). Corrido a mitad de semana, planifica el resto: lo producido, publicado
 o con tema elegido se conserva.
 
@@ -23,8 +23,19 @@ Cómo se llenan los espacios (en orden):
 5. La mezcla: el A con ≥ 3 historias y 1 explica; el B es «¿Sabías que…?». Nunca el mismo formato dos días
    seguidos en el mismo espacio, salvo historia y «¿Sabías que…?».
 
-Lo que no tiene pieza es una orden de producción (comando, día para producirla, minutos y créditos estimados); el tema lo
+Lo que no tiene pieza es una orden de producción (comando, día para producirla, minutos y créditos); el tema lo
 propone la sesión y lo elige el usuario (`tema`).
+
+De dónde salen los minutos y los créditos de una orden (m214): de la **mediana medida** de su formato cuando hay ≥ 3
+mediciones (MIN_MEDICIONES), y si no del estimado fijo de FORMATOS; `origen` lo dice en cada espacio («mediana de 13» o
+«estimado») y agenda.md lo muestra. Créditos: el `creditos_voz` de los registros de ese formato (historias.json,
+explicaciones.json, sabias.json, congreso.json, videos3d.json; videos.json partido en video y departamento; las partes
+entregadas de series.json, o el guion.json de su entrega). Minutos: memoria/costos.json (lo escribe `costo.py --registrar`
+vía memoria.py): por pieza, el reloj hasta la entrega (`minutos_pieza`) si se midió y, si no, la suma de los minutos de
+sus corridas («solo agentes» en el origen: sin voz ni render). `medidas` imprime la tabla.
+
+Al registrar un video, scripts/memoria.py llama a `ligar_pieza` (m063): si UN espacio sin producir de una agenda que no ha
+terminado tiene ese tema (el criterio de AG4) y es de ese formato, queda `producido` con su ruta; con varios no marca.
 
 Subcomandos (DIR = agenda/<AAAA-Wnn>/ de la semana; --dir otro):
   plan [--desde AAAA-MM-DD] [--memoria DIR] [--dir DIR]   arma (o rehace: lo producido, publicado o con tema elegido se
@@ -37,9 +48,11 @@ Subcomandos (DIR = agenda/<AAAA-Wnn>/ de la semana; --dir otro):
   omitir PIEZA [--motivo M] [--dir DIR]                  una pieza lista que el usuario no quiere publicar: sale de la agenda
   hoy [--fecha F] [--dir DIR]                             la lista del día: qué producir ahora y qué publicar, con el archivo
                                                           de cada plataforma y el bloque de caption.md
+  medidas [--memoria DIR]                                 por formato: el estimado fijo, cuántas mediciones hay y la mediana
+                                                          (solo lectura; lo que usarán las órdenes del próximo plan)
   --check [--dir DIR]                                     AG1–AG9 sobre agenda.json (también lo corre validate.py como M18)
 
-Gates: AG1 ≤ 2 videos por día · AG2 el A lleva una pieza fuerte y el B una corta; ningún noticiero ni /semana · AG3 sin
+Gates: AG1 ≤ 2 videos por día · AG2 el A lleva una pieza fuerte y el B una corta; ningún formato desconocido o retirado · AG3 sin
 el mismo formato en días seguidos en el mismo espacio, salvo historia y «¿Sabías que…?» · AG4 sin repetir un tema producido en los últimos 60 días ni
 otro de la agenda · AG5 una parte de serie solo cuando la siguiente tiene guion aprobado · AG6 cada orden de producción
 vence antes de su espacio · AG7 una pieza ya publicada no se vuelve a programar · AG8 cada video a las 4 plataformas, con su estilo de Facebook ·
@@ -49,10 +62,12 @@ Exit: 0 ok · 1 falla · 2 uso incorrecto.
 """
 import argparse
 import datetime
+import glob
 import html
 import json
 import os
 import re
+import statistics
 import sys
 import unicodedata
 
@@ -64,7 +79,8 @@ PLATAFORMAS_CARRUSEL = ("instagram", "facebook", "tiktok")
 HORA = {"A": "09:00", "B": "19:30", "C": "13:00"}
 VIDEOS_POR_DIA = 2
 CARRUSELES_POR_DIA = 1
-# formato → (comando, días antes para producir, minutos, créditos de voz estimados; CLAUDE.md)
+# formato → (comando, días antes para producir, minutos, créditos de voz estimados; referencias/flujo-agenda.md). Los minutos y los créditos
+# son el estimado de partida: con ≥ MIN_MEDICIONES mediciones del formato manda su mediana (medidas, presupuestar)
 FORMATOS = {
     "historia": ("/historia <tema>", 1, 45, 2200),
     "explica": ("/explica <tema>", 1, 35, 1700),
@@ -74,14 +90,14 @@ FORMATOS = {
     "congreso": ("/congreso <iniciativa>", 1, 25, 800),
     "video": ("/video <slug>", 1, 30, 1700),
     "video3d": ("/video-3d <tema>", 1, 40, 700),
-    "noticias": ("/noticias", 0, 30, 850),
-    "semana": ("/semana", 0, 30, 1200),
     "carrusel": ("/carrusel <slug>", 0, 10, 0),
 }
 FUERTES = ("historia", "explica", "serie", "video", "video3d")    # espacio A (video3d = la maqueta que vuela)
 CORTAS = ("sabias", "departamento", "congreso")                    # espacio B (20–90 s)
 ROTACION_CORTAS = ("sabias",)                                      # lo que llena el espacio B
-SIN_AGENDA = ("noticias", "semana")   # el usuario no publica noticieros (2026-11-03): /noticias y /semana no se programan
+# flujos retirados cuyo registro sigue en el inventario (sus publicaciones están medidas en memoria/metricas.json) pero
+# que nunca se programan: /noticias se retiró el 2026-11-14
+RETIRADOS = ("noticias",)
 # estilos de la descripción de Facebook (rotan; /analyze-improve compara cuál funciona). Ninguno pide comentar, compartir ni
 # etiquetar (F4: Meta lo penaliza)
 ESTILOS_FB = {"pregunta": "Abre con la pregunta que el video responde (una sola, concreta, sin cebo) y una línea de contexto.",
@@ -95,16 +111,23 @@ DIAS_REPETIDO, DIAS_PARECIDO = 60, 30
 ESTADOS = ("propuesto", "tema", "producido", "publicado")
 MIN_OPCIONES, MAX_OPCIONES = 2, 3   # opciones de tema por espacio (la primera queda como tema: la semana queda lista)
 FLUJO_DE_FORMATO = {"historia": "historia", "explica": "explica", "sabias": "sabias", "congreso": "congreso", "video": "video", "video3d": "video3d",
-                    "departamento": "video", "noticias": "noticias", "semana": "semana", "serie": "serie", "carrusel": "carrusel"}
+                    "departamento": "video", "serie": "serie", "carrusel": "carrusel"}
 REGISTROS = (("videos.json", "videos", "video", "ruta_video"), ("historias.json", "historias", "historia", "ruta"),
-             ("noticias.json", "noticieros", "noticias", "ruta"), ("sabias.json", "sabias", "sabias", "ruta"),
-             ("congreso.json", "congreso", "congreso", "ruta"),
-             ("explicaciones.json", "explicaciones", "explica", "ruta"), ("semanas.json", "semanas", "semana", "ruta"),
+             ("noticias.json", "noticieros", "noticias", "ruta"),   # histórico (RETIRADOS): cuenta para AG4 y AG7, no se programa
+             ("sabias.json", "sabias", "sabias", "ruta"), ("congreso.json", "congreso", "congreso", "ruta"),
+             ("explicaciones.json", "explicaciones", "explica", "ruta"),
              ("carruseles.json", "carruseles", "carrusel", "ruta"), ("videos3d.json", "videos3d", "video3d", "ruta"))
 DIAS = ("lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo")
 STOP = set("de del la el los las en y a o que un una al lo se por para con como su sus es guatemala historia maqueta publica "
            "publicacion anterior mensual frente pais datos".split())
 CALENDARIO_MAX = 2      # fechas del calendario por semana (las publicaciones mensuales pueden caer juntas)
+MIN_MEDICIONES = 3      # con menos mediciones de un formato, sus órdenes llevan el estimado fijo de FORMATOS
+ESTIMADO = "estimado"
+UMBRAL_TEMA = 0.6       # AG4: desde este parecido un tema «repite» una pieza (ligar_pieza casa con el mismo criterio)
+# registros con `creditos_voz` de un solo formato: (archivo, clave, formato). videos.json y series.json van aparte
+REGISTROS_CREDITOS = (("historias.json", "historias", "historia"), ("explicaciones.json", "explicaciones", "explica"),
+                      ("sabias.json", "sabias", "sabias"), ("congreso.json", "congreso", "congreso"),
+                      ("videos3d.json", "videos3d", "video3d"))
 
 
 def leer(p, defecto=None):
@@ -187,7 +210,7 @@ def listas(inv):
     publicadas = [x for x in inv if x["publicadas"]]
     out = []
     for x in inv:
-        if x["publicadas"] or x.get("estado") not in ("listo", "publicado") or x["flujo"] in ("noticias", "semana"):
+        if x["publicadas"] or x.get("estado") not in ("listo", "publicado") or x["flujo"] in RETIRADOS:
             continue
         aviso = None
         for y in publicadas:
@@ -277,6 +300,94 @@ def rendimiento_formatos(memdir):
         return {}
 
 
+# ---------- lo medido: créditos de voz y minutos por formato ----------
+def _positivo(v):
+    return isinstance(v, (int, float)) and not isinstance(v, bool) and v > 0
+
+
+def creditos_medidos(memdir):
+    """{formato: [creditos_voz de cada pieza registrada]} (solo los que traen un número > 0: sin voz falsa)."""
+    out = {f: [] for f in FORMATOS}
+    for archivo, clave, formato in REGISTROS_CREDITOS:
+        for v in (leer(os.path.join(memdir, archivo), {}) or {}).get(clave, []):
+            if _positivo(v.get("creditos_voz")):
+                out[formato].append(v["creditos_voz"])
+    for v in (leer(os.path.join(memdir, "videos.json"), {}) or {}).get("videos", []):
+        if _positivo(v.get("creditos_voz")) and not v.get("variante"):   # el corte A/B reutiliza la voz del video
+            out["departamento" if v.get("serie") == "departamentos" else "video"].append(v["creditos_voz"])
+    for S in (leer(os.path.join(memdir, "series.json"), {}) or {}).get("series", []):
+        for p in S.get("partes") or []:
+            c = p.get("creditos_voz")
+            if c is None and p.get("estado") == "entregada" and p.get("ruta"):   # registrada antes de guardarlo: su entrega
+                c = (leer(os.path.join(RAIZ, p["ruta"], "guion.json"), {}) or {}).get("creditos_voz")
+            if _positivo(c):
+                out["serie"].append(c)
+    return out
+
+
+def minutos_medidos(memdir):
+    """{formato: [(minutos, con_reloj) de cada pieza medida]} desde memoria/costos.json: por pieza, el reloj hasta la
+    entrega si se midió (`minutos_pieza`: incluye voz, render y esperas) y, si no, la suma de los minutos de sus corridas
+    (solo el tiempo de los agentes: con_reloj False). De una serie cuenta cada parte (la investigación compartida,
+    registrada con el id de la serie, no es una orden de la agenda)."""
+    piezas = {}
+    for c in (leer(os.path.join(memdir, "costos.json"), {}) or {}).get("costos", []):
+        f, pz = c.get("flujo"), c.get("pieza")
+        if f not in FORMATOS or not pz or (f == "serie" and not re.search(r"-parte-\d+$", str(pz))):
+            continue
+        x = piezas.setdefault((f, pz), {"suma": 0.0, "reloj": 0.0})
+        if _positivo(c.get("minutos")):
+            x["suma"] += c["minutos"]
+        if _positivo(c.get("minutos_pieza")):
+            x["reloj"] = max(x["reloj"], c["minutos_pieza"])
+    out = {f: [] for f in FORMATOS}
+    for (f, _), x in sorted(piezas.items()):
+        m = x["reloj"] or x["suma"]
+        if m > 0:
+            out[f].append((m, x["reloj"] > 0))
+    return out
+
+
+def medidas(memdir):
+    """{formato: {"minutos": (valor, origen), "creditos": (valor, origen), "n": {"minutos": N, "creditos": N}}}: la
+    mediana medida con ≥ MIN_MEDICIONES mediciones («mediana de N») o el estimado fijo de FORMATOS («estimado»). En los
+    minutos, «solo agentes» dice cuántas de esas piezas se midieron sin el reloj hasta la entrega (la suma de sus
+    corridas: sin voz ni render, así que la orden tarda algo más)."""
+    cred, mins = creditos_medidos(memdir), minutos_medidos(memdir)
+    out = {}
+    for f, (_, _, minutos, creditos) in FORMATOS.items():
+        m = {"n": {"minutos": len(mins[f]), "creditos": len(cred[f])}}
+        sin_reloj = sum(1 for _, reloj in mins[f] if not reloj)
+        nota = "" if not sin_reloj else ", solo agentes" if sin_reloj == len(mins[f]) else ", %d solo agentes" % sin_reloj
+        for k, vals, fijo, nota_k in (("minutos", [v for v, _ in mins[f]], minutos, nota), ("creditos", cred[f], creditos, "")):
+            if len(vals) >= MIN_MEDICIONES:
+                m[k] = (int(round(statistics.median(vals))), "mediana de %d%s" % (len(vals), nota_k))
+            else:
+                m[k] = (fijo, ESTIMADO)
+        out[f] = m
+    return out
+
+
+def presupuestar(s, med=None):
+    """Los minutos y los créditos de una orden de producción y de dónde salen (`origen`): la mediana medida de su formato
+    o el estimado fijo."""
+    if s.get("formato") not in FORMATOS:
+        return s
+    m = (med or {}).get(s["formato"]) or {"minutos": (FORMATOS[s["formato"]][2], ESTIMADO), "creditos": (FORMATOS[s["formato"]][3], ESTIMADO)}
+    s["minutos"], s["creditos"] = m["minutos"][0], m["creditos"][0]
+    s["origen"] = {"minutos": m["minutos"][1], "creditos": m["creditos"][1]}
+    return s
+
+
+def es_orden(s):
+    """¿El espacio es una orden de producción (todavía sin pieza entregada)?"""
+    return s.get("estado") in ("propuesto", "tema")
+
+
+def origen_de(s, campo):
+    return (s.get("origen") or {}).get(campo) or ESTIMADO
+
+
 # ---------- plan ----------
 def espacio(d, slot, formato, **kw):
     hora = HORA[slot]
@@ -284,7 +395,8 @@ def espacio(d, slot, formato, **kw):
     plataformas = PLATAFORMAS_CARRUSEL if formato == "carrusel" else PLATAFORMAS_VIDEO
     s = {"id": "%s-%s" % (d.isoformat(), slot), "fecha": d.isoformat(), "dia": DIAS[d.weekday()], "slot": slot, "hora": hora,
          "formato": formato, "pieza": None, "tema": None, "comando": com, "producir_el": (d - datetime.timedelta(days=antes)).isoformat(),
-         "minutos": minutos, "creditos": cred, "plataformas": list(plataformas), "estado": "propuesto", "avisos": [], "publicado": {}}
+         "minutos": minutos, "creditos": cred, "origen": {"minutos": ESTIMADO, "creditos": ESTIMADO},
+         "plataformas": list(plataformas), "estado": "propuesto", "avisos": [], "publicado": {}}
     s.update(kw)
     return s
 
@@ -292,6 +404,7 @@ def espacio(d, slot, formato, **kw):
 def con_pieza(s, x):
     s.update(pieza={"flujo": x["flujo"], "id": x["id"], "ruta": x["ruta"]}, tema=x.get("tema") or x.get("slug"), estado="producido",
              comando=None, producir_el=None, minutos=0, creditos=0)
+    s.pop("origen", None)   # ya no es una orden: no hay nada que estimar
     if x.get("aviso"):
         s["avisos"].append(x["aviso"])
     return s
@@ -311,7 +424,7 @@ def armar(desde, memdir, previo=None, ahora=None):
     omitidas = list((previo or {}).get("omitidas") or [])
     previos = {s["id"]: s for s in (previo or {}).get("espacios", [])
                if not (s.get("pieza") and s["pieza"].get("id") in {o["id"] for o in omitidas} and s.get("estado") != "publicado")
-               and s.get("formato") not in SIN_AGENDA}
+               and s.get("formato") in FORMATOS}   # un espacio con un formato retirado no se conserva
     # lo de antes de `desde` y lo que ya avanzó (tema elegido, producido, publicado) se conserva tal cual
     conservar = {k: s for k, s in previos.items() if s["fecha"] < desde.isoformat() or s.get("estado") in ("tema", "producido", "publicado")}
     # lo de hoy que ya pasó su hora sin publicarse vuelve al inventario; un espacio del calendario repetido se queda una vez
@@ -367,7 +480,9 @@ def armar(desde, memdir, previo=None, ahora=None):
     for sp in series_publicables(memdir):
         if not libres["A"]:
             break
-        d = libres["A"][0]
+        d = next((x for x in libres["A"] if not vecino("A", x, "serie")), None)   # AG3: dos «serie» no van en días seguidos
+        if d is None:
+            continue
         poner("A", d, espacio(d, "A", "serie", tema="%s · Parte %d de %d: %s" % (sp["serie"], sp["n"], sp["de"], sp["titulo"]),
                               estado="producido" if sp.get("ruta") else "tema",
                               pieza={"flujo": "serie", "id": "%s-parte-%d" % (sp["serie"], sp["n"]), "ruta": sp.get("ruta")}))
@@ -427,6 +542,10 @@ def armar(desde, memdir, previo=None, ahora=None):
     espacios.sort(key=lambda s: (s["fecha"], {"A": 0, "C": 1, "B": 2}[s["slot"]]))
     _desempatar(espacios)
     asignar_estilos_facebook(espacios)
+    med = medidas(memdir)   # cada orden de producción, con la mediana medida de su formato (o el estimado fijo)
+    for s in espacios:
+        if s["fecha"] >= hoy and es_orden(s):
+            presupuestar(s, med)
     return {"version": 2, "semana": semana_iso(desde), "desde": desde.isoformat(), "hasta": hasta.isoformat(),
             "generado": datetime.date.today().isoformat(), "espacios": espacios, "omitidas": omitidas,
             "pospuestas": [{"id": c["id"], "fecha": c["fecha"], "titulo": c["titulo"]} for c in pospuestas],
@@ -487,8 +606,8 @@ def revisar(A, memdir, listo=False):
         if len(videos) > VIDEOS_POR_DIA:
             f.append("AG1 %s: %d videos (van ≤ %d; el carrusel no cuenta)" % (d, len(videos), VIDEOS_POR_DIA))
         for s in ss:
-            if s["formato"] in SIN_AGENDA:
-                f.append("AG2 %s: %s en la agenda (el usuario no publica noticieros: el espacio B es una pieza corta)" % (s["id"], s["formato"]))
+            if s["formato"] not in FORMATOS:
+                f.append("AG2 %s: «%s» no es un formato de la agenda (va %s)" % (s["id"], s["formato"], "|".join(FORMATOS)))
             elif s["slot"] == "B" and s["formato"] not in CORTAS:
                 f.append("AG2 %s: el espacio B lleva una pieza corta (%s), no %s" % (s["id"], "|".join(CORTAS), s["formato"]))
             elif s["slot"] == "A" and s["formato"] not in FUERTES:
@@ -508,15 +627,15 @@ def revisar(A, memdir, listo=False):
     producidos = [x for x in inv.values() if x.get("fecha") and (hoy - fecha(x["fecha"])).days <= DIAS_REPETIDO]
     temas = []
     for s in esp:
-        if s["formato"] in ("noticias", "semana") or not s.get("tema") or s.get("pieza"):
+        if s["formato"] not in FORMATOS or not s.get("tema") or s.get("pieza"):
             continue
         ks = claves(s["tema"])
         for x in producidos:
-            if parecido(ks, set(x["claves"])) >= 0.6:
+            if parecido(ks, set(x["claves"])) >= UMBRAL_TEMA:
                 f.append("AG4 %s: «%s» repite «%s» (producido el %s)" % (s["id"], s["tema"][:50], x["slug"], x["fecha"]))
                 break
         for t_id, t in temas:
-            if parecido(ks, t) >= 0.6:
+            if parecido(ks, t) >= UMBRAL_TEMA:
                 f.append("AG4 %s: «%s» repite el tema de %s en esta agenda" % (s["id"], s["tema"][:50], t_id))
         temas.append((s["id"], ks))
     for s in esp:
@@ -551,17 +670,27 @@ def escribir_md(ruta, A):
          "Instagram Reels, Facebook Reels y YouTube Shorts (9:16) y su 4:5 al feed. Copia el texto de `caption.md`; en Facebook, "
          "la descripción en el estilo que le toca (columna Facebook).",
          "", "| Día | Hora | Espacio | Formato | Pieza o tema | Estado | Producir | Créditos | Facebook | Avisos |", "|---|---|---|---|---|---|---|---|---|---|"]
-    total = 0
+    total, pend, medidos = 0, 0, 0
     for s in A["espacios"]:
         if s["fecha"] < A["desde"]:
             continue
-        total += s.get("creditos") or 0
+        orden = es_orden(s)   # lo ya producido no lleva minutos ni créditos: no hay nada que producir
+        if orden:
+            total += s.get("creditos") or 0
+            pend += 1
+            medidos += origen_de(s, "creditos") != ESTIMADO
         pieza = s["pieza"]["ruta"] if s.get("pieza") and s["pieza"].get("ruta") else (s.get("tema") or "**tema por elegir** · " + (s.get("comando") or ""))
         L.append("| %s %s | %s | %s | %s | %s | %s | %s | %s | %s | %s |" % (
             s["dia"], s["fecha"][5:], s["hora"], s["slot"], s["formato"], pieza, s["estado"],
-            "—" if not s.get("producir_el") else "%s · ~%d min" % (s["producir_el"][5:], s.get("minutos") or 0),
-            s.get("creditos") or "—", (s.get("facebook") or {}).get("estilo") or "—", "; ".join(s.get("avisos") or []) or ""))
-    L += ["", "Créditos de voz estimados para lo que falta producir: ≈ %s." % "{:,}".format(total)]
+            "—" if not orden or not s.get("producir_el") else "%s · ~%d min (%s)" % (s["producir_el"][5:], s.get("minutos") or 0, origen_de(s, "minutos")),
+            "%s (%s)" % ("{:,}".format(s["creditos"]), origen_de(s, "creditos")) if orden and s.get("creditos") else "—",
+            (s.get("facebook") or {}).get("estilo") or "—", "; ".join(s.get("avisos") or []) or ""))
+    L += ["", "Créditos de voz estimados para lo que falta producir: ≈ %s (%d de %d órdenes con la mediana medida de su formato)."
+          % ("{:,}".format(total), medidos, pend),
+          "", "De dónde sale cada número: «mediana de N» es la mediana de las N piezas medidas de ese formato (créditos: `creditos_voz` de "
+          "los registros; minutos: `memoria/costos.json`, que llena `costo.py --registrar`; «solo agentes» = piezas medidas sin el reloj "
+          "hasta la entrega, es decir sin voz ni render: la orden tarda algo más); «estimado» es el fijo de `scripts/agenda.py`, "
+          "que manda mientras hay menos de %d mediciones. `python3 scripts/agenda.py medidas` lo lista por formato." % MIN_MEDICIONES]
     if A.get("pospuestas"):
         L += ["", "## Fechas del calendario que pasan a la semana siguiente", ""]
         L += ["- %s · %s (`%s`)" % (c["fecha"], c["titulo"], c["id"]) for c in A["pospuestas"]]
@@ -578,7 +707,7 @@ def guardar(d, A):
 
 
 NOMBRE_PLAT = {"tiktok": "TikTok", "instagram": "Instagram", "facebook": "Facebook", "youtube": "YouTube"}
-ETIQUETA_SLOT = {"A": "Pieza fuerte", "B": "Noticias", "C": "Carrusel"}
+ETIQUETA_SLOT = {"A": "Pieza fuerte", "B": "Pieza corta", "C": "Carrusel"}
 ETIQUETA_ESTADO = {"propuesto": "sin tema", "tema": "por producir", "producido": "listo para publicar", "publicado": "publicado"}
 
 
@@ -607,7 +736,7 @@ def escribir_html(ruta, A):
     espacios, los archivos por plataforma y los captions con botón de copiar."""
     e = html.escape
     hoy = datetime.date.today().isoformat()
-    total = sum(s.get("creditos") or 0 for s in A["espacios"] if s["fecha"] >= A["desde"])
+    total = sum(s.get("creditos") or 0 for s in A["espacios"] if s["fecha"] >= A["desde"] and es_orden(s))
 
     def bloque_caption(ruta_pieza, fb=None):
         caps = caption_de(ruta_pieza)
@@ -668,8 +797,9 @@ def escribir_html(ruta, A):
                     arch = ("<p class='f'>9:16 → TikTok, Reels, Facebook Reels, Shorts: <code>%s/video.mp4</code><br>4:5 → feed de Instagram y "
                             "Facebook: <code>%s/video_4x5.mp4</code><br>YouTube Studio → Audiencia: «No, no está hecho para niños»</p>" % (e(ruta_p), e(ruta_p)))
             avisos = "".join("<p class='av'>⚠ %s</p>" % e(a) for a in s.get("avisos") or [])
-            prod = "" if not s.get("producir_el") or s["estado"] not in ("propuesto", "tema") else                 "<p class='pr'>Producir el %s · ~%d min · ≈ %s créditos<br><code>%s</code></p>" % (
-                    e(s["producir_el"][8:] + "/" + s["producir_el"][5:7]), s.get("minutos") or 0, "{:,}".format(s.get("creditos") or 0), e(s.get("comando") or ""))
+            prod = "" if not s.get("producir_el") or s["estado"] not in ("propuesto", "tema") else                 "<p class='pr'>Producir el %s · ~%d min (%s) · ≈ %s créditos (%s)<br><code>%s</code></p>" % (
+                    e(s["producir_el"][8:] + "/" + s["producir_el"][5:7]), s.get("minutos") or 0, e(origen_de(s, "minutos")),
+                    "{:,}".format(s.get("creditos") or 0), e(origen_de(s, "creditos")), e(s.get("comando") or ""))
             tarjetas.append('<article class="slot %s %s"><header><span class="h">%s</span><span class="k">%s · %s</span><span class="st">%s</span></header>'
                             '<h4>%s</h4><p class="pl">%s</p>%s%s%s%s</article>' % (
                                 s["slot"], s["estado"], e(s["hora"]), e(ETIQUETA_SLOT.get(s["slot"], s["slot"])), e(s["formato"]),
@@ -757,11 +887,11 @@ def espacio_de(A, sid):
     return s
 
 
-def fijar_tema(s, tema, formato=None):
+def fijar_tema(s, tema, formato=None, med=None):
     if formato:
         s["formato"] = formato
-        com, antes, minutos, cred = FORMATOS[formato]
-        s.update(minutos=minutos, creditos=cred, producir_el=(fecha(s["fecha"]) - datetime.timedelta(days=antes)).isoformat())
+        s["producir_el"] = (fecha(s["fecha"]) - datetime.timedelta(days=FORMATOS[formato][1])).isoformat()
+        presupuestar(s, med)   # otro formato, otros minutos y créditos (la mediana medida o el estimado)
     s["tema"] = tema.strip()
     s["comando"] = FORMATOS[s["formato"]][0].replace("<tema>", s["tema"]).replace("<pista>", s["tema"])
     s["estado"] = "tema"
@@ -777,20 +907,20 @@ def cmd_tema(a):
     if a.formato and a.formato not in formatos_de_slot(s["slot"]):
         print("--formato del espacio %s: %s" % (s["slot"], "|".join(formatos_de_slot(s["slot"]))), file=sys.stderr)
         return 2
+    memdir = os.path.join(RAIZ, A.get("memoria") or "memoria")
     if a.opcion:
         ops = s.get("opciones") or []
         if not 1 <= a.opcion <= len(ops):
             print("--opcion: 1–%d (las opciones de %s)" % (len(ops), s["id"]), file=sys.stderr)
             return 2
         o = ops[a.opcion - 1]
-        fijar_tema(s, o["tema"], a.formato or o.get("formato"))
+        fijar_tema(s, o["tema"], a.formato or o.get("formato"), medidas(memdir))
     elif a.tema:
-        fijar_tema(s, a.tema, a.formato)
+        fijar_tema(s, a.tema, a.formato, medidas(memdir))
     else:
         print("el tema: \"<tema>\" o --opcion N", file=sys.stderr)
         return 2
     s["tema_auto"] = False
-    memdir = os.path.join(RAIZ, A.get("memoria") or "memoria")
     f = [x for x in revisar(A, memdir) if x.startswith("AG4 %s" % s["id"])]
     for x in f:
         print("FALLA", x)
@@ -822,15 +952,15 @@ def cmd_opciones(a):
         print("--opcion «<tema>|<por qué ahora>» de %d a %d veces (formato opcional: «departamento::<nombre>|…»)" % (MIN_OPCIONES, MAX_OPCIONES), file=sys.stderr)
         return 2
     memdir = os.path.join(RAIZ, A.get("memoria") or "memoria")
-    otros = [x for x in A["espacios"] if x is not s and x.get("tema") and x["formato"] not in SIN_AGENDA]
+    otros = [x for x in A["espacios"] if x is not s and x.get("tema") and x["formato"] in FORMATOS]
     f = []
     producidos = [x for x in inventario(memdir) if x.get("fecha") and (fecha(A["desde"]) - fecha(x["fecha"])).days <= DIAS_REPETIDO]
     for k, o in enumerate(ops, 1):
         ks = claves(o["tema"])
-        x = next((x for x in producidos if parecido(ks, set(x["claves"])) >= 0.6), None)
+        x = next((x for x in producidos if parecido(ks, set(x["claves"])) >= UMBRAL_TEMA), None)
         if x:
             f.append("AG4 opción %d «%s» repite «%s» (producido el %s)" % (k, o["tema"][:50], x["slug"], x["fecha"]))
-        y = next((y for y in otros if parecido(ks, claves(y["tema"])) >= 0.6), None)
+        y = next((y for y in otros if parecido(ks, claves(y["tema"])) >= UMBRAL_TEMA), None)
         if y:
             f.append("AG4 opción %d «%s» repite el tema de %s" % (k, o["tema"][:50], y["id"]))
     for x in f:
@@ -839,7 +969,7 @@ def cmd_opciones(a):
         return 1
     s["opciones"] = ops
     if s["estado"] == "propuesto" or s.get("tema_auto") or not s.get("tema"):
-        fijar_tema(s, ops[0]["tema"], ops[0]["formato"] if ops[0]["formato"] != s["formato"] else None)
+        fijar_tema(s, ops[0]["tema"], ops[0]["formato"] if ops[0]["formato"] != s["formato"] else None, medidas(memdir))
         s["tema_auto"] = True
     guardar(d, A)
     print("%s · %d opciones · tema: «%s»%s" % (s["id"], len(ops), s["tema"], " (recomendada)" if s.get("tema_auto") else " (la elegida por el usuario)"))
@@ -853,11 +983,75 @@ def cmd_producido(a):
     if not os.path.isfile(os.path.join(ruta, "guion.json")) and not os.path.isfile(os.path.join(ruta, "carrusel.json")):
         return print("ERROR: %s no es una entrega (sin guion.json ni carrusel.json)" % rel(ruta), file=sys.stderr) or 1
     g = leer(os.path.join(ruta, "guion.json")) or leer(os.path.join(ruta, "carrusel.json")) or {}
-    s.update(pieza={"flujo": FLUJO_DE_FORMATO.get(s["formato"], s["formato"]), "id": g.get("id") or os.path.basename(ruta), "ruta": rel(ruta)},
-             estado="producido")
+    marcar_producido(s, FLUJO_DE_FORMATO.get(s["formato"], s["formato"]), g.get("id") or os.path.basename(ruta), rel(ruta))
     guardar(d, A)
     print("%s producido → %s" % (s["id"], rel(ruta)))
     return 0
+
+
+def marcar_producido(s, flujo, pieza_id, ruta):
+    """El espacio queda ligado a su pieza entregada (lo usan `producido` y ligar_pieza)."""
+    s.update(pieza={"flujo": flujo, "id": pieza_id, "ruta": ruta}, estado="producido")
+
+
+def agendas_vigentes(hoy=None):
+    """Las agendas que no han terminado (las que revisa M18) sobre los registros reales → [(carpeta, agenda)]."""
+    hoy = (hoy or datetime.date.today()).isoformat()
+    out = []
+    for p in sorted(glob.glob(os.path.join(RAIZ, "agenda", "*", "agenda.json"))):
+        A = leer(p) or {}
+        if (A.get("hasta") or "") >= hoy and not A.get("memoria"):   # una agenda sobre otros registros (maqueta) no se toca
+            out.append((os.path.dirname(p), A))
+    return out
+
+
+def ligar_pieza(flujo, pieza_id, ruta, tema="", slug="", parte=None, hoy=None):
+    """m063: la pieza que scripts/memoria.py acaba de registrar marca `producido` el espacio que tenía su tema, para que
+    AG4 no la cuente como un tema repetido. Casa como AG4 (las claves del tema del espacio frente a las del tema y el slug
+    de la pieza, parecido ≥ UMBRAL_TEMA) y solo con espacios de su formato (FLUJO_DE_FORMATO); un espacio que ya lleva
+    esa pieza por id (una parte de serie programada) casa sin mirar el tema. Con `parte`, un espacio que dice «Parte N»
+    solo casa con esa parte. → {estado, espacios, semana}:
+      marcado       un solo espacio casó: queda producido con `ruta` y se guardó la agenda
+      ya            la pieza ya estaba ligada a un espacio producido o publicado
+      ambiguo       casan varios espacios: no se marca ninguno (elige con `producido SLOT --ruta`)
+      otro_formato  casa por tema un espacio de otro formato: no se marca
+      nada          ningún espacio casa (o no hay agenda sin terminar)"""
+    ks = claves(tema, slug or pieza_id)
+    exactos, propios, ajenos = [], [], []
+    for d, A in agendas_vigentes(hoy):
+        for s in A.get("espacios") or []:
+            pz = s.get("pieza") or {}
+            if pz.get("id") == pieza_id and pz.get("flujo") == flujo:
+                exactos.append((d, A, s))
+            elif pz or not es_orden(s) or not s.get("tema") or s.get("formato") not in FORMATOS:
+                continue
+            else:
+                # en una serie, «Parte N (de M)» dice cuál parte es: no es una palabra del tema
+                dice = re.search(r"parte\s+(\d+)(?:\s+de\s+\d+)?", plano(s["tema"]))
+                tema_s = plano(s["tema"]).replace(dice.group(0), " ") if dice and parte is not None else s["tema"]
+                if parecido(claves(tema_s), ks) < UMBRAL_TEMA:
+                    continue
+                if FLUJO_DE_FORMATO.get(s["formato"]) != flujo:
+                    ajenos.append((d, A, s))
+                elif parte is None or not dice or int(dice.group(1)) == int(parte):
+                    propios.append((d, A, s))
+
+    def res(estado, cands):
+        return {"estado": estado, "espacios": [s["id"] for _, _, s in cands], "semana": cands[0][1].get("semana") if cands else None}
+    if exactos:
+        cands = [x for x in exactos if es_orden(x[2])]
+        if not cands:
+            return res("ya", exactos)
+    else:
+        cands = propios
+    if not cands:
+        return res("otro_formato", ajenos) if ajenos and flujo in FLUJO_DE_FORMATO.values() else res("nada", [])
+    if len(cands) > 1:
+        return res("ambiguo", cands)
+    d, A, s = cands[0]
+    marcar_producido(s, flujo, pieza_id, ruta)
+    guardar(d, A)
+    return res("marcado", cands)
 
 
 def cmd_publicado(a):
@@ -938,8 +1132,10 @@ def cmd_hoy(a):
     prod = [s for s in A["espacios"] if s.get("producir_el") and s["producir_el"] <= hoy <= s["fecha"] and s["estado"] in ("propuesto", "tema")]
     print("\n## Producir")
     for s in prod or []:
-        print("- %s (%s %s) · %s · %s" % (s["comando"] if s.get("tema") else "elige el tema primero: /agenda (tema) · " + (s.get("comando") or ""),
-                                         s["dia"], s["hora"], s["formato"], s.get("tema") or "—"))
+        print("- %s (%s %s) · %s · %s · ~%d min (%s) · ≈ %s créditos (%s)" % (
+            s["comando"] if s.get("tema") else "elige el tema primero: /agenda (tema) · " + (s.get("comando") or ""),
+            s["dia"], s["hora"], s["formato"], s.get("tema") or "—", s.get("minutos") or 0, origen_de(s, "minutos"),
+            "{:,}".format(s.get("creditos") or 0), origen_de(s, "creditos")))
     if not prod:
         print("- nada pendiente")
     print("\n## Publicar")
@@ -961,6 +1157,21 @@ def cmd_hoy(a):
                 print("    Facebook · estilo «%s»%s: %s" % (fb["estilo"], "" if fb.get("texto") else " (sin escribir: agenda.py facebook %s --texto …)" % s["id"],
                                                          ESTILOS_FB[fb["estilo"]]))
             print("    después: python3 scripts/agenda.py publicado %s" % s["id"])
+    return 0
+
+
+def cmd_medidas(a):
+    """Por formato: el estimado fijo, cuántas mediciones hay y lo que llevará una orden (solo lectura)."""
+    memdir = os.path.abspath(a.memoria or os.path.join(RAIZ, "memoria"))
+    med = medidas(memdir)
+    def celda(m, k, fijo):
+        if m[k][1] == ESTIMADO:   # el fijo manda: dice cuántas mediciones hay de las que hacen falta
+            return "%s (estimado; %d de %d)" % ("{:,}".format(fijo), m["n"][k], MIN_MEDICIONES)
+        return "%s (%s; fijo %s)" % ("{:,}".format(m[k][0]), m[k][1], "{:,}".format(fijo))
+    print("%-13s %-46s %s" % ("formato", "minutos", "créditos de voz"))
+    for f, (_, _, minutos, creditos) in FORMATOS.items():
+        print("%-13s %-46s %s" % (f, celda(med[f], "minutos", minutos), celda(med[f], "creditos", creditos)))
+    print("[agenda] medidas de %s · mediana con ≥ %d mediciones; si no, el estimado fijo de FORMATOS" % (rel(memdir), MIN_MEDICIONES))
     return 0
 
 
@@ -1015,11 +1226,13 @@ def main():
     q = sub.add_parser("hoy")
     q.add_argument("--fecha")
     q.add_argument("--dir")
+    q = sub.add_parser("medidas", help="por formato: el estimado fijo, las mediciones y la mediana (solo lectura)")
+    q.add_argument("--memoria", help="otra carpeta de registros (la maqueta)")
     a = ap.parse_args()
     if a.check:
         return cmd_check(a)
     fn = {"plan": cmd_plan, "tema": cmd_tema, "producido": cmd_producido, "publicado": cmd_publicado, "hoy": cmd_hoy, "omitir": cmd_omitir,
-          "facebook": cmd_facebook, "opciones": cmd_opciones}.get(a.cmd)
+          "facebook": cmd_facebook, "opciones": cmd_opciones, "medidas": cmd_medidas}.get(a.cmd)
     if not fn:
         ap.print_help()
         return 2

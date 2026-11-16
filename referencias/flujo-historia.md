@@ -38,7 +38,7 @@ preparar (historia.py: TRABAJO = sesiones/historia-<slug>/, paleta provisional y
    desde: "encuadre" → el editor re-encuadra (actos, espina, hilos, personajes sobre la cronología verificada) y salta
    a Guion · desde: "guion" → salta a Guion · desde: "retoque" + notas → salta a Guion (el guionista aplica las notas y
    conserva las voces) → oyente → crítica (1 vuelta) → mejoras → animación; devuelve voces_cambiadas
-→ QA de fotos (historia.py fotos-contacto) → [sin-voz: voz-falsa] | voz (MCP ElevenLabs, como /noticias)
+→ QA de fotos (historia.py fotos-contacto) → [sin-voz: voz-falsa] | voz (MCP ElevenLabs, como /video)
    (un nodo por secuencia de 2–5 escenas; descargar --estado corta cada secuencia en sus escenas)
 → tiempos (V16, V6; V10 solo con el motor propio) → escuchar (V11)
 → Plano (solo con realizacion: mesa) [Workflow plano: video-realizador → plano.json (qué pieza entra con cada oración)
@@ -129,7 +129,7 @@ realizador decide en el plano qué pieza entra con cada oración. `explica`, `ta
 entinta, la página con la frase subrayada, las fichas de persona, la jerarquía). El `titular` de una escena `foto` es el
 golpe de arriba de su mesa (≤ 6 palabras, sin adelantar la cifra).
 
-**Cómo se ve** (estilo Noche, `referencias/diseno/sistema.md`; lo mismo que `/video` y `/noticias`):
+**Cómo se ve** (estilo Noche, `referencias/diseno/sistema.md`; lo mismo que `/video`):
 
 (Motor propio: esta lista describe las páginas `video/*.html`. En la mesa valen la paleta, el grano, la tipografía y el
 acento en una sola cosa; el cuadro, las piezas y sus medidas están en `referencias/flujo-mesa.md` §2–3. No hay fotos a
@@ -153,36 +153,11 @@ mientras la voz la lee. La barra de progreso lleva un tramo por acto y otro para
 - **Barra de progreso por acto** (tres tramos de largo proporcional a su duración; el gancho entra en el primero y el
   cierre en el último).
 
-## Tomas de video (decisión del usuario, 2026-11-05; RETIRADAS el 2026-11-06)
+## Tomas de video (retiradas el 2026-11-07)
 
-**Retiradas**: el tipo `toma` ya no se acepta (TM0). Lo que sigue queda solo como registro de cómo funcionaba.
-
-Las notas de los medios casi siempre traen video. Una **toma** es un tramo corto de ese video, y siempre tiene que ver
-con lo que se narra en su escena:
-- **sin audio** (`mudo`, ≤ 6 s): imagen de contexto (la marcha, la captura, la fachada), con la voz encima, como una foto
-  que se mueve;
-- **con su audio original** (`original`, ≤ 10 s): el sonido es el hecho (alguien declara, se lee una sentencia, se
-  anuncia una votación, la plaza corea). La voz de la escena es solo la entrada («El 21 de agosto, Pérez Molina dijo
-  esto:»); luego suena el clip con sus subtítulos y la música se aparta.
-
-Derechos: cortas y con crédito («Video: <medio>, <fecha>» en pantalla y en `fuentes.md`), todas ≤ 25 % del video, ≤ 2
-con audio, y la toma oficial (MP, Congreso, CICIG, gobierno) antes que la del medio. YouTube, Facebook y TikTok
-detectan solos el material de los noticieros, y con más facilidad el audio.
-
-Pasos (verificador, paso 7 de su rol):
-1. `leer <url>` lista los videos de la nota (`og:video`, iframes de YouTube, JW Player, Brightcove, Vimeo o Facebook,
-   `<video>`, mp4/m3u8, `VideoObject`).
-2. `historia.py video TRABAJO --id <eje>-vNN --de-fuente <url> [--n K]` baja el video con yt-dlp a
-   `sesiones/_descargas/historia/videos/` y deja en `videos/` la ficha, la hoja de contacto (un cuadro cada 2 s) y la
-   transcripción de whisper con su minuto:segundo.
-3. `historia.py toma TRABAJO --video <id> --id <id>-tNN --desde M:SS --hasta M:SS --audio mudo|original --hechos ids
-   [--cita … | --ambiente …]` corta los cuadros a 30 fps (`tomas/<id>/`) y, con audio, el wav nivelado y las palabras
-   del tramo.
-4. `historia.py tomas-contacto TRABAJO` arma la hoja para el QA de la sesión (4 cuadros por toma).
-
-En pantalla, la toma usa la lámina de la foto (`video/noticia.html`): el clip cuadro a cuadro en un canvas. Con
-`encaje: fondo` (por defecto), el clip va entero a todo el ancho sobre sí mismo ampliado, borroso y oscuro; con
-`recorte`, a sangre alrededor de `x`.
+El tipo `toma` (un clip de video de una nota, con o sin su audio) **ya no existe**: el gate TM0 rechaza una escena
+`toma` y el código que bajaba y cortaba los clips se borró el 2026-11-14. Una declaración que importa va como
+**`cita`**: su frase literal en pantalla, leída por la voz, con quién la dijo y dónde.
 
 ## Personas, red y dinamismo (decisión del usuario, 2026-11-06)
 
@@ -241,7 +216,7 @@ respaldo de esas piezas.)
   hecho trae su **año** y cada número del texto. **Wikipedia no cuenta**: es el mapa para llegar a sus referencias.
 - **Qué fuentes cuentan** (`clasificar`, lista cerrada; `leer` avisa «NO CUENTA» al guardar):
   - oficial: gob.gt, MP, CICIG, organismos;
-  - medio: la lista de `/noticias` más prensa internacional y de negocios (Forbes, E&N, Bloomberg y Bloomberg Línea,
+  - medio: la lista de `scripts/fuentes_web.py` (`MEDIOS`) más prensa internacional y de negocios (Forbes, E&N, Bloomberg y Bloomberg Línea,
     NYT, El País, Axios, Chicago Tribune…), un grupo por casa editorial;
   - **agencia**: una nota firmada por AP, EFE, Reuters o AFP («(AP)», «Por/By Associated Press» en el texto guardado)
     cuenta como la agencia aunque la publique otro diario. Dos diarios con el mismo cable no son independientes;
@@ -252,7 +227,7 @@ respaldo de esas piezas.)
   No cuentan: Wikipedia, revistas de curiosidades (Mental Floss), blogs ni foros.
 - Cada número y cada **año** de la voz, la pantalla y los captions están en un hecho, una frase o una cifra
   verificada (H4 + V2 sobre `base/datos.json`).
-- **Casos de justicia**: presunción de inocencia (vocabulario vetado de `/noticias` sin sentencia firme) y el **estado
+- **Casos de justicia**: presunción de inocencia (vocabulario vetado sin sentencia firme: `historia.VETADAS`) y el **estado
   del caso a la fecha de la consulta** de cada persona señalada (`casos[]`).
 - **Fotos**: Wikimedia Commons con licencia libre (dominio público, CC0, CC BY, CC BY-SA; nunca NC ni ND; el script
   lee la licencia y arma el crédito), oficial, la og:image del medio con «Foto: medio» o la de prensa de la empresa;
@@ -262,7 +237,7 @@ respaldo de esas piezas.)
   - **La foto del protagonista es obligatoria** (H12; `--protagonista`, o un `--retrato-de` con su nombre): el gancho
     abre con ella. `hechos --check` falla sin ella e imprime las og:image de fuentes leídas que nombran al
     protagonista; `consolidar` también falla; en el Workflow, un verificador la baja antes de los ganchos.
-  - **Nunca un icono ni un mapa en lugar de la foto** (decisión del usuario, 2026-10-26, como en `/noticias`): cada
+  - **Nunca un icono ni un mapa en lugar de la foto** (decisión del usuario, 2026-10-26): cada
     escena `foto` lleva una foto verificada. Si no hay del hecho, una **de referencia**: el lugar, la institución, la
     persona, el producto o la época (`foto … --referencia`; el crédito dice «Foto de referencia: …» y el chip «De
     referencia» o la época sin año). Si no hay ninguna, ese tramo se cuenta con otra escena (cita, gráfico, golpe).
@@ -427,7 +402,7 @@ del motor propio.
 
 ## Voz y costos
 
-Como `/noticias`, pero por **nodo**: una secuencia de 2–5 escenas o una escena suelta; 1 toma, Scribe por nodo y la
+Como `/video`, pero por **nodo**: una secuencia de 2–5 escenas o una escena suelta; 1 toma, Scribe por nodo y la
 llamada de estado que lee `historia.py descargar --estado`. Las herramientas aceptan ≤ 20 ids por llamada: el estado
 final va en lotes (cada voz con su Scribe) y `descargar --estado A B …` recibe todos. Con pocos nodos el MCP devuelve
 el estado en el chat y no en un archivo: pide el estado con las sesiones de dos partes a la vez (pasa de ~50k caracteres

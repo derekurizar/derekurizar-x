@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "_comentario": "Caso de prueba del mundo «esquema» (receta carretera): una ciudad genérica que cruza una autopista de 4 carriles; la cámara baja desde arriba y recorre la autopista. No es un video: los textos son de relleno.",
+  "estilo": "noche",
+  "paleta": "obsidiana",
+  "fps": 30,
+  "duracion_s": 11.0,
+  "protagonista": "autopista",
+  "mundo": {
+    "escala": "esquema",
+    "receta": "carretera",
+    "semilla": 7,
+    "carriles": 4,
+    "tamano_m": 1600,
+    "lugares": {},
+    "piezas": [
+      {"id": "parques", "tipo": "zona", "area": "parques", "tono": "verde", "opacidad": 0.55, "borde": false},
+      {"id": "calles", "tipo": "calles"},
+      {"id": "autopista", "tipo": "carretera", "camino": "eje"},
+      {"id": "edificios", "tipo": "edificios"}
+    ]
+  },
+  "camara": [
+    {"t": 0.0, "mira": "centro", "dist_m": 1500, "azimut": 0, "elevacion": 62},
+    {"t": 4.0, "mira": [-60, 0], "dist_m": 520, "azimut": 18, "elevacion": 42},
+    {"t": 8.0, "mira": [200, 0], "dist_m": 360, "azimut": 30, "elevacion": 36},
+    {"t": 11.0, "mira": [320, 0], "dist_m": 340, "azimut": 36, "elevacion": 36}
+  ],
+  "eventos": [
+    {"t": 0.0, "dur": 2.6, "tipo": "resaltar", "lugar": "centro"},
+    {"t": 4.6, "dur": 3.0, "tipo": "resaltar", "pieza": "autopista", "elemento": [0, 0]},
+    {"t": 6.2, "dur": 2.4, "tipo": "resaltar", "pieza": "edificios", "elemento": [150, 130]}
+  ],
+  "marcas": [
+    {"t": 4.2, "hasta": 6.2, "lugar": "puente", "texto": "La autopista", "sub": "4 carriles"}
+  ],
+  "capa": {
+    "titulares": [
+      {"t": 0.0, "hasta": 3.0, "kicker": "Maqueta de prueba", "texto": "Una ciudad cualquiera"},
+      {"t": 5.0, "hasta": 8.0, "kicker": "Segundo titular", "texto": "La autopista la cruza"}
+    ],
+    "cifras": [],
+    "palabras": [],
+    "progreso": {"actos": [0.0, 4.0]},
+    "seguir": {"t": 3.0, "dur": 2.0},
+    "aviso": "Esquema · no es un lugar real",
+    "pie": "Ilustración: un esquema genérico, no un lugar real",
+    "handle": "@DerekUrizar",
+    "cierre": {"t": 8.0, "frase": "Esto es una prueba.", "redes": [{"nombre": "TikTok", "handle": "@derekurizargt"}, {"nombre": "X", "handle": "@DerekUrizar"}]}
+  }
+}

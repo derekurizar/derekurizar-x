@@ -1,0 +1,142 @@
+{
+ "version": 1,
+ "mesas": [
+  {
+   "escenas": [
+    "e1"
+   ],
+   "golpes": [
+    {
+     "tipo": "foto",
+     "foto": "ori-f01",
+     "pie": "Así empezó La Espiga"
+    },
+    {
+     "tipo": "termino",
+     "texto": "La Espiga"
+    }
+   ]
+  },
+  {
+   "escenas": [
+    "e2"
+   ],
+   "golpes": [
+    {
+     "tipo": "foto",
+     "dice": "¿Cómo llena",
+     "foto": "cas-f02",
+     "pie": "Un horno de leña"
+    },
+    {
+     "tipo": "fecha",
+     "dice": "1952,",
+     "grande": "1952",
+     "chico": "en"
+    }
+   ]
+  },
+  {
+   "escenas": [
+    "e3"
+   ],
+   "golpes": [
+    {
+     "tipo": "persona",
+     "dice": "Marta Pérez,",
+     "persona": "Marta Pérez",
+     "cargo": "la fundadora de La Espiga"
+    },
+    {
+     "tipo": "cita",
+     "dice": "Cada pan sale",
+     "texto": "Cada pan sale del mismo horno que encendí el primer día",
+     "autor": "Marta Pérez",
+     "cargo": "fundadora de La Espiga"
+    }
+   ]
+  },
+  {
+   "escenas": [
+    "e4"
+   ],
+   "golpes": [
+    {
+     "tipo": "foto",
+     "dice": "Por eso,",
+     "foto": "ori-f04",
+     "pie": "La primera sucursal"
+    },
+    {
+     "tipo": "fecha",
+     "dice": "1958,",
+     "grande": "1958",
+     "chico": "en"
+    }
+   ]
+  },
+  {
+   "escenas": [
+    "e5"
+   ],
+   "golpes": [
+    {
+     "tipo": "foto",
+     "dice": "Pero el",
+     "foto": "ori-f05",
+     "pie": "4,500 panes al día"
+    },
+    {
+     "tipo": "fecha",
+     "dice": "1968,",
+     "grande": "1968",
+     "chico": "en"
+    },
+    {
+     "tipo": "cifra",
+     "dice": "4,500",
+     "valor": "4,500",
+     "rotulo": "panes al"
+    }
+   ]
+  },
+  {
+   "escenas": [
+    "e6"
+   ],
+   "golpes": [
+    {
+     "tipo": "cifra",
+     "dice": "4,500",
+     "valor": "4,500 panes",
+     "rotulo": "cada día, de un solo fuego"
+    }
+   ]
+  },
+  {
+   "escenas": [
+    "e7"
+   ],
+   "golpes": [
+    {
+     "tipo": "foto",
+     "dice": "Entonces llegó",
+     "foto": "ori-f06",
+     "pie": "Cinco sucursales en Xela"
+    },
+    {
+     "tipo": "fecha",
+     "dice": "1971,",
+     "grande": "1971",
+     "chico": "año"
+    },
+    {
+     "tipo": "persona",
+     "dice": "Marta seguía",
+     "persona": "Marta Pérez",
+     "cargo": "la fundadora de La Espiga"
+    }
+   ]
+  }
+ ]
+}

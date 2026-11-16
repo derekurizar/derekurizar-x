@@ -15,11 +15,10 @@
 #        · informe de investigación (ejemplo → PDF en un temporal, negativos I1–I6, P1, P2; catálogo de
 #          gráficos del informe: todos los G.* en papel, panel y media página con --check)
 #        · /video: numeros_es, gate V1–V5+V9 con sus negativos, K2 (efectos fijos), make video-fixture (V6–V8, V10,
-#          ducking medido) · node --check de hilo.js, ideas.js, dato.js, investigacion.js, video.js, noticias.js, historia.js y explica.js · check_workflows.py (W1–W13)
-#        · /noticias: gates N1–N8 sobre la maqueta (negativos) y make noticias-fixture.
-#        · /semana: cosecha (descartes), SM1–SM11 con un negativo por gate, el dato oficial (SM3), W11 con MODOS.semana,
-#          M15, semana.py carrusel → carrusel.py guion --check, make semana-fixture (4:5 1080×1350, ≥ 60 s), entregar
-#          sin voz se niega y memoria.py --semana --dry-run.
+#          ducking medido) · node --check de hilo.js, ideas.js, dato.js, investigacion.js, video.js, historia.js y explica.js · check_workflows.py (W1–W14, sin W11)
+#        · /noticias y /semana se retiraron el 2026-11-14 (con sus pruebas: N1–N8, SM1–SM11, W11 y M15); queda el
+#          histórico (noticias/, memoria/noticias.json: M9) y lo que pasó a fuentes_web.py, verificacion.py, video.py e
+#          historia.py lo cubren las pruebas de /historia y /explica.
 #        · /historia: gates H1–H14 sobre la maqueta (negativos: también foto repetida, retrato, chip, cita en otro idioma,
 #          20 escenas), fotos fundidas y encaje, licencias de Commons, clases de fuente y agencias, M10, make
 #          historia-fixture, entregar y memoria.py --historia.
@@ -30,7 +29,10 @@
 #        · /sabias: gate S1–S3 sobre el dato de prueba (negativos), M13 y make sabias-fixture.
 #        · /video-3d: M3D del motor, C3D1–C3D11 con sus negativos sobre la maqueta corta y make video3d-fixture.
 #        · la maqueta 3D en la mesa de archivo (`maqueta` a nivel de mesa en plano.json): YT20–YT24 / MV15–MV19 con sus
-#          negativos sobre un plano sintético, y make video-fixture-maqueta con los suyos (sin RAPIDO).
+#          negativos sobre un plano sintético; make video-fixture-maqueta (sin RAPIDO).
+#        · la mesa de archivo sobre un plano congelado (scripts/pruebas/mesa_congelada.py, en RAPIDO): un negativo por
+#          gate MV1–MV19 e YT13–YT19 sin render ni trabajos; gates_sin_negativo.py (SE17–SE19, CG8, CG9, C3D5, C3D7);
+#          producir.py (la cadena de producción común).
 #        · /congreso: CG2–CG10 sobre la maqueta de la Ley de Ciberseguridad (negativos), M19 y make congreso-fixture.
 #        · /departamento: canon (--check, --resolver, --directiva), --tablero/--siguiente con memoria de prueba, G1 del
 #          perfil de departamento (y el de grupo, que no lo exige), D1–D9 con un negativo por gate sobre la maqueta de
@@ -715,7 +717,7 @@ paso "numeros_es.py --prueba (cifras → palabras, ida y vuelta)" python3 script
 paso "V21/V22: cámara quieta (un plano y a lo más un corte a la persona); tramos sin cambio; sobrecarga de entradas y efectos" python3 -c '
 import sys; sys.path.insert(0, "scripts"); import video as V
 p, f = V.planos_foto([{"x": .1, "y": .2, "w": .1, "h": .1}, {"x": .7, "y": .2, "w": .1, "h": .1}], 18.0, cortes=[3.4, 7.2, 10.9, 14.6], evitar=[7.0])
-assert V.CAMARA_QUIETA and len(p) == 1 and p[0]["z"] == "amplio", p   # cámara quieta: nada de sub-planos por reloj
+assert len(p) == 1 and p[0]["z"] == "amplio", p   # cámara quieta: nada de sub-planos por reloj
 p2, _ = V.planos_foto(None, 12.0, personas=[(5.0, 1), (8.0, 0)])
 assert len(p2) == 2 and p2[1].get("persona") and p2[1]["t"] == 5.0, p2   # a lo más UN corte: a la cara que nombra la voz
 assert V.tramos_sin_cambio([0.05] * 24 + [0.5] + [0.05] * 4, minimo=4.0) == [(0.0, 7.0)]
@@ -886,7 +888,7 @@ paso "video gate: remate que proyecta una pérdida al futuro → F8" video_neg "
 paso "video gate: remate con «?» → F2" video_neg "F2 un remate no es una pregunta" 'G["cierre"]["final"] = "¿Tu galón pasó de 26 a 46.1 quetzales?"; G["cierre"]["texto"] = "El barril subió y la bomba lo sintió en todo el país. " + G["cierre"]["final"]'
 paso "video gate: «no tenían 2 años» para una edad → V5" video_neg "V5 «no tenían 2 años» no se entiende" 'G["escenas"][2]["texto"] += " Los conductores no tenían 2 años."'
 paso "video gate: forma de cierre desconocida → F1" video_neg "F1 cierre.forma «moraleja»" 'G["cierre"]["forma"] = "moraleja"'
-# Fase 0 (piezas comunes de /carrusel, /departamento, /semana y /serie): piso de duración y V19 palabra clave
+# Fase 0 (piezas comunes de /carrusel, /departamento y /serie): piso de duración y V19 palabra clave
 paso "video.py piso_duracion: 60 s falla con el piso de 61, 75 s pasa, sin piso no corre" python3 -c '
 import sys; sys.path.insert(0, "scripts"); import video as v
 f = v.piso_duracion(60, minimo=61); assert len(f) == 1 and "60.0 s" in f[0] and "61" in f[0], f
@@ -1435,8 +1437,8 @@ for nombre, t in (("igual", igual), ("cifra", cifra), ("palabra", palabra)):
 PY
 export PATH="$B/bin:$PATH"
 FAKE_WHISPER="$B/igual.json" python3 scripts/video.py escuchar "$T" --modelo "$B/modelo.bin" > "$B/igual.out"; grep -q "^E1  ok" "$B/igual.out"
-! FAKE_WHISPER="$B/cifra.json" python3 scripts/video.py escuchar "$T" --modelo "$B/modelo.bin" > "$B/cifra.out" 2>&1; grep -q "^E2  FALLA V11" "$B/cifra.out"; grep -q "rehaz la voz de E2" "$B/cifra.out"
-FAKE_WHISPER="$B/palabra.json" python3 scripts/video.py escuchar "$T" --modelo "$B/modelo.bin" --solo 1 > "$B/palabra.out"; grep -q "^E1  ok .*aviso: esperaba «guatemala», oyó «honduras»" "$B/palabra.out"
+! FAKE_WHISPER="$B/cifra.json" python3 scripts/video.py escuchar "$T" --modelo "$B/modelo.bin" --de-nuevo > "$B/cifra.out" 2>&1; grep -q "^E2  FALLA V11" "$B/cifra.out"; grep -q "rehaz la voz de E2" "$B/cifra.out"
+FAKE_WHISPER="$B/palabra.json" python3 scripts/video.py escuchar "$T" --modelo "$B/modelo.bin" --solo 1 --de-nuevo > "$B/palabra.out"; grep -q "^E1  ok .*aviso: esperaba «guatemala», oyó «honduras»" "$B/palabra.out"
 python3 -c "import json,sys; d=json.load(open(sys.argv[1])); assert d[\"escenas\"][\"1\"][\"avisos\"] and not d[\"escenas\"][\"1\"][\"faltas\"]" "$T/audio/escucha.json"
 rm -f "$T"/audio/escucha*' _ "$TMP"
   paso "escuchar sin whisper-cli: avisa y sale 0" bash -c 'PATH="/usr/bin:/bin" python3 scripts/video.py escuchar sesiones/_fixture_video/trabajo --modelo /no/existe.bin | grep -q "^AVISO V11"'
@@ -1716,114 +1718,21 @@ python3 scripts/video.py tiempos "$D" >/dev/null
 python3 -c "import json,sys; E=json.load(open(sys.argv[1]))[\"escenas\"]; assert not E[1][\"T\"][\"anios\"] and not any(x[\"tipo\"] == \"anio\" for x in E[1][\"eventos\"])" "$D/escenas.json"' _ "$TMP"
 fi
 
-echo "== /noticias (gates N1–N8 sobre la maqueta; sin web ni créditos)"
-NT="$TMP/noticias"
-paso "noticias.py preparar --fixture + guion --check (maqueta)" bash -c "python3 scripts/noticias.py preparar --fecha 2026-10-23 --trabajo '$NT' --fixture >/dev/null && python3 scripts/noticias.py guion '$NT' --check >/dev/null"
-paso "paleta del día: dos días seguidos nunca repiten" python3 -c 'import sys; sys.path.insert(0,"scripts"); import noticias as N, datetime as D; d=D.date(2026,1,1); ps=[N.paleta_del_dia((d+D.timedelta(k)).isoformat()) for k in range(30)]; assert all(a!=b for a,b in zip(ps,ps[1:])) and set(ps)==set(N.PALETAS_CICLO), ps'
-# neg_noticias "nombre" "GATE" "python que muta g (guion.json) o b (noticias.json)"
-neg_noticias() {
-  N=$((N+1)); local nombre="$1" gate="$2" mut="$3" S; S="$(mktemp -d "$TMP/negn.XXXXXX")"
-  cp -R "$NT/." "$S/"
-  python3 -c 'import json,sys; d=sys.argv[1]; g=json.load(open(d+"/guion.json")); b=json.load(open(d+"/noticias.json")); exec(sys.argv[2]); json.dump(g, open(d+"/guion.json","w"), ensure_ascii=False); json.dump(b, open(d+"/noticias.json","w"), ensure_ascii=False)' "$S" "$mut"
-  python3 scripts/noticias.py guion "$S" --check >"$TMP/negn.out" 2>&1; local rc=$?
-  if [[ $rc -eq 1 ]] && grep -q "$gate" "$TMP/negn.out"; then printf 'OK     %s → %s\n' "$nombre" "$gate"
-  else FALLOS=$((FALLOS+1)); printf 'FALLO  %s: esperaba exit 1 con %s (exit %s)\n' "$nombre" "$gate" "$rc"; sed 's/^/       /' "$TMP/negn.out" | tail -6; fi
-}
-neg_noticias "cifra en la voz sin cita" "N4" 'g["noticias"][1]["texto"] = g["noticias"][1]["texto"].replace("Q6,200 millones", "Q9,900 millones")'
-neg_noticias "«culpable» sin sentencia" "N4" 'g["noticias"][0]["texto"] = g["noticias"][0]["texto"].replace("según Conred", "y el alcalde es culpable, según Conred")'
-neg_noticias "guion de más de 70 s" "N5" 'g["noticias"].insert(3, dict(g["noticias"][1], id="n3")); g["noticias"][3]["breve"] = False; g["noticias"] = g["noticias"][:4]; [x.update(texto=g["noticias"][1]["texto"]) for x in g["noticias"][:3]]'
-neg_noticias "cierre sin frase final" "N8" 'g["cierre"]["final"] = ""'
-neg_noticias "noticia sin foto" "N7" 'g["noticias"][2]["foto"] = None'
-neg_noticias "foto de referencia con crédito «Foto:»" "N7" 'g["noticias"][2]["foto"]["credito"] = "Foto: ejemplo"'
-neg_noticias "noticia no confirmada" "N3" 'b["noticias"][2]["estado"] = "no_confirmada"'
-neg_noticias "en desarrollo sin atribuir" "N2" 'b["noticias"][2]["estado"] = "en_desarrollo"; g["noticias"][2]["texto"] = g["noticias"][2]["texto"].replace(", informó el Ministerio de Salud", " en todo el país")'
-neg_noticias "una sola sección" "N3" '[x.update(seccion="Clima") for x in g["noticias"]]'
-verificacion_negativa() {
-  local S="$TMP/vneg"; rm -rf "$S"; cp -R "$NT" "$S"
-  printf 'El Ministerio de Salud informó que los casos de dengue bajan 35 por ciento frente a 2025 en todo el país, según su boletín semanal.\n' > "$S/nota.txt"
-  python3 - "$S" <<'EOF2'
-import json, sys
-S = sys.argv[1]
-base = {"id": "eco-1", "seccion": "Salud", "titular": "Dengue baja", "resumen": "x", "depto": "Guatemala", "icono": "heart-pulse",
-        "hechos": [{"texto": "baja", "cita": "los casos de dengue bajan 35 por ciento", "url": "https://www.mspas.gob.gt/a"}], "cifras": [], "foto": {"archivo": "fotos/eco-1.jpg", "credito": "Foto: Soy502", "origen": "medio"}}
-una = dict(base, estado="confirmada", fuentes=[{"medio": "Soy502", "tipo": "medio", "url": "https://www.soy502.com/a", "fecha": "2026-10-23", "archivo": S + "/nota.txt", "cita": "los casos de dengue bajan 35 por ciento frente a 2025"}])
-json.dump(una, open(S + "/verificacion_eco-1.json", "w"))
-EOF2
-  mkdir -p "$S/fotos" && : > "$S/fotos/eco-1.jpg"
-  python3 scripts/noticias.py verificacion "$S" --check --id eco-1 | grep -q "N2 eco-1: confirmada pide 2 fuentes" || return 1
-  # con una oficial además del medio, pasa
-  python3 -c 'import json,sys; S=sys.argv[1]; v=json.load(open(S+"/verificacion_eco-1.json")); v["fuentes"].append(dict(v["fuentes"][0], medio="MSPAS", tipo="oficial", url="https://www.mspas.gob.gt/a")); json.dump(v, open(S+"/verificacion_eco-1.json","w"))' "$S"
-  python3 scripts/noticias.py verificacion "$S" --check --id eco-1 >/dev/null || return 1
-  # una cita que no está en el texto guardado falla
-  python3 -c 'import json,sys; S=sys.argv[1]; v=json.load(open(S+"/verificacion_eco-1.json")); v["hechos"][0]["cita"]="los casos de dengue suben"; json.dump(v, open(S+"/verificacion_eco-1.json","w"))' "$S"
-  python3 scripts/noticias.py verificacion "$S" --check --id eco-1 | grep -q "no está en el texto" || return 1
-  # una noticia publicable sin foto falla: va una de referencia
-  python3 -c 'import json,sys; S=sys.argv[1]; v=json.load(open(S+"/verificacion_eco-1.json")); v["foto"]=None; json.dump(v, open(S+"/verificacion_eco-1.json","w"))' "$S"
-  python3 scripts/noticias.py verificacion "$S" --check --id eco-1 | grep -q "N7 eco-1: cada noticia lleva foto" || return 1
-}
-paso "noticias.py verificacion --check: una sola fuente no confirma; medio + oficial sí; cita fuera del texto falla (N2); sin foto falla (N7)" verificacion_negativa
-paso "música del día: las 2 pistas de la paleta se alternan cada vez que vuelve el ciclo" python3 -c 'import sys; sys.path.insert(0,"scripts"); import noticias as N, datetime as D; d=D.date(2026,10,23); a=N.musica_del_dia(N.paleta_del_dia(d.isoformat()), d.isoformat())["id"]; e=d+D.timedelta(8); b=N.musica_del_dia(N.paleta_del_dia(e.isoformat()), e.isoformat())["id"]; assert N.paleta_del_dia(d.isoformat())==N.paleta_del_dia(e.isoformat()) and a!=b, (a,b)'
-if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   make noticias-fixture y entregar (RAPIDO=1)"; else
-  paso "make noticias-fixture (maqueta 9:16 y 4:5, V13, V8)" bash -c 'make noticias-fixture >/dev/null && ffprobe -v error -show_entries stream=codec_type,width,height -of csv=p=0 sesiones/_fixture_noticias/trabajo/salida/video_4x5.mp4 | grep -q "video,1080,1350"'
-  entregar_noticias() {
-    local T=sesiones/_fixture_noticias/trabajo D="$TMP/entrega_noticias"
-    python3 scripts/noticias.py entregar "$T" 2>&1 | grep -q "creditos.json" || { echo "entregar sin voz real debía negarse"; return 1; }
-    python3 scripts/noticias.py entregar "$T" --salida "$D" >/dev/null || return 1
-    for f in video.mp4 video_4x5.mp4 caption.md subtitulos.srt guion.json fuentes.md portada.png contacto.png; do [[ -s "$D/$f" ]] || { echo "falta $f"; return 1; }; done
-    [[ ! -d "$D/fotos" ]] || { echo "las fotos de terceros no se entregan"; return 1; }
-    grep -q "https://conred.gob.gt/ejemplo" "$D/fuentes.md" || { echo "fuentes.md sin las urls"; return 1; }
-    python3 scripts/memoria.py --noticias "$D" --dry-run | grep -q "4 noticias"
-  }
-  paso "noticias.py entregar (sin voz real se niega; --salida: 9:16, 4:5, caption, fuentes.md, sin fotos) + memoria.py --noticias --dry-run" entregar_noticias
-fi
-
-echo "== /semana (cosecha, gates SM1–SM11 sobre la maqueta, W11, M15, carrusel; sin web ni créditos)"
-SMT="$TMP/semana"
-paso "semana.py preparar --fixture (cosecha de 3 diarios + dato oficial, consolidar) + guion --check" bash -c "python3 scripts/semana.py preparar --fecha 2026-10-25 --trabajo '$SMT' --fixture >/dev/null && python3 scripts/semana.py guion '$SMT' --check >/dev/null"
-paso "semana.py cosechar descarta en_desarrollo, fuera de ventana y no_confirmada; consolida 6 noticias con sm-c01…sm-c06" python3 - "$SMT" <<'PY'
-import json, sys
-d = sys.argv[1]
-c = json.load(open(d + "/cosecha.json")); b = json.load(open(d + "/noticias.json"))
-desc = {x["id"]: x["motivo"] for x in c["descartadas"]}
-assert "en_desarrollo" in desc["d20-n2"] and "N2" in desc["d20-n3"] and "no_confirmada" in desc["d22-n3"], desc
-assert len(c["noticias"]) == 5 and c["sin_noticiero"] == ["2026-10-19", "2026-10-21", "2026-10-23", "2026-10-25"], c["sin_noticiero"]
-ids = [x["id"] for v in b["noticias"] for x in v["cifras"]]
-assert ids == ["sm-c%02d" % k for k in range(1, 7)], ids
-PY
-paso "semana: domingo_de (sin fecha → el domingo más reciente; una fecha entre semana → su domingo)" python3 -c 'import sys, datetime as D; sys.path.insert(0,"scripts"); import semana as S; assert S.domingo_de("2026-10-21").isoformat()=="2026-10-25" and S.domingo_de("2026-10-25").isoformat()=="2026-10-25" and S.ventana("2026-10-25")==("2026-10-19","2026-10-25"); d=S.domingo_de(); assert d.weekday()==6 and 0 <= (D.date.today()-d).days <= 6'
-paso "semana.py verificacion: el dato oficial con su sola fuente oficial pasa (SM3); con una cifra de otra url, no" bash -c "python3 scripts/semana.py verificacion '$SMT' --check --id ofi-1 >/dev/null && S='$TMP/sem_ofi'; rm -rf \"\$S\"; cp -R '$SMT' \"\$S\"; python3 -c 'import json,sys; p=sys.argv[1]+\"/verificacion_ofi-1.json\"; v=json.load(open(p)); v[\"cifras\"][0][\"url\"]=\"https://www.prensalibre.com/x\"; json.dump(v,open(p,\"w\"))' \"\$S\"; python3 scripts/semana.py verificacion \"\$S\" --check --id ofi-1 | grep -q 'confirmada pide 2 fuentes'"
-# neg_semana "nombre" "texto de la falla" "python que muta g (guion.json) o b (noticias.json)"
-neg_semana() {
-  N=$((N+1)); local nombre="$1" gate="$2" mut="$3" S; S="$(mktemp -d "$TMP/negsm.XXXXXX")"
-  cp -R "$SMT/." "$S/"
-  python3 -c 'import json,sys; d=sys.argv[1]; g=json.load(open(d+"/guion.json")); b=json.load(open(d+"/noticias.json")); C=g["cifras"]; exec(sys.argv[2]); json.dump(g, open(d+"/guion.json","w"), ensure_ascii=False); json.dump(b, open(d+"/noticias.json","w"), ensure_ascii=False)' "$S" "$mut"
-  python3 scripts/semana.py guion "$S" --check >"$TMP/negsm.out" 2>&1; local rc=$?
-  if [[ $rc -eq 1 ]] && grep -q "$gate" "$TMP/negsm.out"; then printf 'OK     %s → %s\n' "$nombre" "$gate"
-  else FALLOS=$((FALLOS+1)); printf 'FALLO  %s: esperaba exit 1 con %s (exit %s)\n' "$nombre" "$gate" "$rc"; grep -E "FALLA|Error" "$TMP/negsm.out" | sed 's/^/       /' | tail -6; fi
-}
-neg_semana "4 cifras" "FALLA SM1 4 cifras" 'del C[0]'
-neg_semana "cifras desordenadas" "FALLA SM1 los puestos" 'C[0]["puesto"], C[1]["puesto"] = 4, 5'
-neg_semana "el gancho dice la #1" "FALLA SM1 el gancho" 'g["gancho"]["texto"] += " La primera: Q148,500 millones."'
-neg_semana "publicada hace 9 días" "FALLA SM2" 'C[0]["publicada"] = "2026-10-16"'
-neg_semana "noticia en desarrollo" "FALLA SM3" '[v.update(estado="en_desarrollo") for v in b["noticias"] if v["id"] == "d22-n2"]'
-neg_semana "2 secciones" "FALLA SM4" '[c.update(seccion=("Clima" if k % 2 else "Salud")) for k, c in enumerate(C)]'
-neg_semana "guion de 50 s" "FALLA SM5 duración estimada" '[c.update(texto=c["texto"].split(".")[0] + ".") for c in C]'
-neg_semana "cifra repetida de una semana anterior" "FALLA SM6" 'C[3].update(noticia="d20-n1", cifra_id="sm-c01", titular="Remesas suben a US$2,150 millones", cifra={"texto": "US$2,150 M", "etiqueta": "remesas"}, publicada="2026-10-20", fuente="Banguat"); C[3].pop("calculo"); C[3].pop("humana")'
-neg_semana "fuente vacía" "FALLA SM7" 'C[2]["fuente"] = ""'
-neg_semana "humana en solo 2 cifras" "FALLA SM8 2 cifras" '[C[k].pop("humana") for k in (0, 1, 2)]'
-neg_semana "cierre de 4 líneas" "FALLA SM10" 'g["cierre"]["resumen"] = g["cierre"]["resumen"][:4]'
-neg_semana "caption de TikTok sin «semana»" "FALLA SM11 caption.tiktok" 'g["caption"]["tiktok"] = "MAQUETA · Las 5 cifras de Guatemala.\n#Guatemala"'
-paso "check_workflows W11: noticias.js MODOS.semana frente a semana.SECCIONES (una sección de más falla)" python3 -c 'import sys; sys.path.insert(0,"scripts"); import check_workflows as CW, semana as S; CW.noticias_workflow(); assert not CW.ERRORES, CW.ERRORES; S.SECCIONES = dict(S.SECCIONES, zzz="x"); CW.noticias_workflow(); assert any("W11" in e and "semana.secciones" in e for e in CW.ERRORES), CW.ERRORES'
-paso "semana.py carrusel sobre la maqueta → TRABAJO de /carrusel (origen semana, 8 láminas) que pasa carrusel.py guion --check" bash -c "python3 scripts/semana.py carrusel '$SMT' --trabajo '$TMP/semana_carrusel' --fixture >/dev/null && python3 scripts/carrusel.py guion '$TMP/semana_carrusel' --check | grep -q '8 láminas' && python3 -c 'import json,sys; e=json.load(open(sys.argv[1]+\"/estado.json\")); assert e[\"origen\"][\"tipo\"]==\"semana\", e' '$TMP/semana_carrusel'"
-paso "validate.py M15: un registro de /semana roto falla" bash -c "R='$TMP/m15'; rm -rf \"\$R\"; mkdir -p \"\$R/memoria\"; printf '{\"semanas\": [{\"id\": \"2026-W43\", \"fecha\": \"2026-10-25\", \"ventana\": [\"2026-10-19\", \"2026-10-25\"], \"ruta\": \"semanas/no-existe\", \"paleta\": \"cielo\", \"musica\": \"cielo-2\", \"duracion_s\": 70, \"estado\": \"listo\", \"cifras\": [{\"puesto\": 1}]}, {\"id\": \"2026-W43\", \"estado\": \"raro\"}]}' > \"\$R/memoria/semanas.json\"; python3 -c 'import sys; sys.path.insert(0,\"scripts\"); import validate as V; V.RAIZ=sys.argv[1]; V.validar_semanas({\"cielo\"}); e=\" | \".join(V.ERRORES); assert \"M15 semanas[1] sin ruta\" in e and \"id repetido\" in e and \"puestos\" in e and \"sin guion.json\" in e and \"estado\" in e and \"sin valor\" in e, e' \"\$R\""
-if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   make semana-fixture y entregar (RAPIDO=1)"; else
-  paso "make semana-fixture (9:16 y 4:5 ≥ 61 s, V13, V8, SM5 real, entrega con --salida)" bash -c 'make semana-fixture >/dev/null && ffprobe -v error -show_entries stream=codec_type,width,height -of csv=p=0 sesiones/_fixture_semana/salida/video_4x5.mp4 | grep -q "video,1080,1350" && python3 -c "import json,subprocess; d=float(subprocess.check_output([\"ffprobe\",\"-v\",\"error\",\"-show_entries\",\"format=duration\",\"-of\",\"csv=p=0\",\"sesiones/_fixture_semana/salida/video.mp4\"])); g=json.load(open(\"sesiones/_fixture_semana/salida/guion.json\")); assert d >= 60 and g[\"tipo\"]==\"semana\" and [c[\"puesto\"] for c in g[\"cifras\"]]==[5,4,3,2,1] and all(c[\"cita\"] and c[\"url\"] for c in g[\"cifras\"]), (d, g.get(\"tipo\"))" && test -s sesiones/_fixture_semana/salida/fuentes.md'
-  paso "semana.py entregar sin voz real se niega (sin --salida)" bash -c 'python3 scripts/semana.py entregar sesiones/_fixture_semana/trabajo 2>&1 | grep -q "creditos.json"'
-  paso "memoria.py --semana --dry-run sobre la entrega de la maqueta (y sin --dry-run no registra un fixture)" bash -c "python3 scripts/memoria.py --semana sesiones/_fixture_semana/salida --dry-run | grep -q '2026-W43' && ! python3 scripts/memoria.py --semana sesiones/_fixture_semana/salida >/dev/null 2>&1"
-fi
-
 echo "== /historia (gates H1–H8 sobre la maqueta; sin web ni créditos)"
 HT="$TMP/historia"
+paso "lo que salió de noticias.py al retirarlo: fuentes_web (dominio, grupo de medios, oficial, cita plana), verificacion.sueltos_prensa («Q148,500 millones»), video.depto_id y KEN_BURNS, historia.VETADAS" python3 -c '
+import sys; sys.path.insert(0, "scripts")
+import fuentes_web as FW, verificacion as VM, video as VD, historia as HI
+assert FW.dominio("https://www.prensalibre.com/x") == "prensalibre.com"
+assert FW.clasificar("https://www.guatevision.com/a") == ("medio", "prensa-libre") and FW.clasificar("https://mspas.gob.gt/b") == ("oficial", "mspas.gob.gt")
+assert FW.clasificar("https://blog.example/c")[0] is None
+assert FW.plano_cita("«Según  el MSPAS», 35 % más") == "segun el mspas, 35 % mas"
+assert FW.fecha_de({"article:published_time": "2026-10-23T08:00:00-06:00"}, []) == "2026-10-23"
+assert VM.sueltos_prensa("Q148,500 millones", [(148500.0, 1e6)]) == [] and VM.sueltos("Q148,500 millones", [(148500.0, 1e6)]) == ["148,500 millones"]
+assert VD.depto_id("Petén") == "GT17" and VD.depto_id("GT05") == "GT05" and VD.depto_id("Atlántida") is None and VD.depto_id(None) is None
+assert len(VD.KEN_BURNS) == 5 and all(min(k["z"]) >= 1.06 for k in VD.KEN_BURNS)
+assert HI.VETADAS.search("el alcalde es culpable") and not HI.VETADAS.search("el alcalde fue señalado")
+assert not any(m in sys.modules for m in ("noticias", "semana"))'
 paso "historia.py preparar --fixture + hechos --check + consolidar + ganchos --usar + guion --check (maqueta)" bash -c "python3 scripts/historia.py preparar 'La Espiga (maqueta)' --slug la-espiga-maqueta --trabajo '$HT' --fixture >/dev/null && python3 scripts/historia.py hechos '$HT' --check >/dev/null && python3 scripts/historia.py consolidar '$HT' >/dev/null && python3 scripts/historia.py ganchos '$HT' --usar >/dev/null && python3 scripts/historia.py guion '$HT' --check >/dev/null"
 # neg_historia "nombre" "GATE" "python que muta g (guion.json)"
 neg_historia() {
@@ -1844,21 +1753,6 @@ neg_historia "un año que no está en la cronología" "H4" 'e[4]["texto"] = e[4]
 neg_historia "un número sin respaldo" "V2" 'e[5]["texto"] = e[5]["texto"].replace("4,500", "4,800")'
 neg_historia "un hecho de parte (alegato en disputa) sin atribuir" "H4 escena 10: cuenta un hecho en disputa o de parte" 'e[9]["texto"] = e[9]["texto"].replace("su familia dice que fue en 2011", "fue en 2011")'
 neg_historia "un hecho de una sola fuente sin la fuente en pantalla" "H4 escena 10: cuenta un hecho de una sola fuente" 'e[9].pop("fuente")'
-paso "historia.py videos_de_html: YouTube, og:video, JW Player, Brightcove, Facebook, <video> y VideoObject, sin repetir; mmss y segundos_de" python3 -c '
-import sys; sys.path.insert(0,"scripts"); import historia as H
-html_ = """<iframe src="https://www.youtube.com/embed/AbCdEfGhIjK?rel=0"></iframe><iframe src="//www.youtube.com/embed/AbCdEfGhIjK"></iframe>
-<div data-src="https://cdn.jwplayer.com/players/Xy12Ab34-Zz99Qq11.js"></div><iframe src="https://players.brightcove.net/123/default_default/index.html?videoId=456"></iframe>
-<iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fprensalibre%2Fvideos%2F789%2F&show_text=0"></iframe>
-<video><source src="/media/clip.mp4" type="video/mp4"></video> {"file":"https:\\/\\/cdn.ejemplo.com\\/hls\\/nota.m3u8"}"""
-ld = ["{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"VideoObject\",\"name\":\"Conferencia\",\"contentUrl\":\"https://ejemplo.com/v/conf.mp4\",\"uploadDate\":\"2015-04-16T10:00:00\"}]}"]
-v = H.videos_de_html(html_, "https://www.prensalibre.com/nota/", {"og:video": "https://ejemplo.com/og.mp4"}, ld)
-u = [x["url"] for x in v]; t = {x["tipo"] for x in v}
-assert u[0] == "https://ejemplo.com/v/conf.mp4" and v[0]["fecha"] == "2015-04-16" and v[0]["titulo"] == "Conferencia", v[0]
-assert u.count("https://www.youtube.com/watch?v=AbCdEfGhIjK") == 1, u
-assert "https://cdn.jwplayer.com/v2/media/Xy12Ab34" in u and any("brightcove" in x for x in u) and "https://www.facebook.com/prensalibre/videos/789/" in u, u
-assert "https://www.prensalibre.com/media/clip.mp4" in u and "https://cdn.ejemplo.com/hls/nota.m3u8" in u and "https://ejemplo.com/og.mp4" in u, u
-assert len(v) <= H.VIDEOS_POR_FUENTE and H.mmss(83.5) == "1:23.5" and H.segundos_de("1:23.5") == 83.5 and H.segundos_de("12") == 12
-assert H.parecido("Cada pan sale del mismo horno", "cada pan sale del mismo horno.") == 1.0 and H.parecido("hola mundo", "adiós") < 0.5'
 neg_historia "una cita sin decir quién habla" "H4 escena 7: la voz no dice quién lo dijo" 'e[6]["texto"] = e[6]["texto"].replace("el Ministerio de Salud, la autoridad sanitaria, entró a la planta. Su informe dice que", "alguien entró a la planta y dijo que")'
 neg_historia "una toma de video (retiradas el 2026-11-06)" "TM0 escena 4: las tomas de video ya no van" 'e[3].update(tipo="toma", toma="ori-v01-t02")'
 neg_historia "«culpable» sin sentencia firme" "H3" 'e[7]["texto"] = e[7]["texto"].replace("la multa:", "la multa y el dueño fue culpable:")'
@@ -2114,6 +2008,7 @@ paso "C3D11 pide separada_de al pin que dice una distancia" v3d_neg 'g["escenas"
 paso "C3D3 rechaza un lugar que la voz nombra y nadie muestra" v3d_neg 'g["escenas"][2]["marcas"]=[]; g["escenas"][2]["camara"][0]["mira"]="epicentro"' "C3D3 escena 3"
 if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   make video3d-fixture (RAPIDO=1)"; else
   paso "make video3d-fixture (render 9:16 con el motor three.js, voz falsa, V8)" bash -c 'make video3d-fixture >/dev/null && ffprobe -v error -show_entries stream=codec_type,width,height -of csv=p=0 sesiones/_fixture_video3d/trabajo/salida/video.mp4 | grep -q "video,1080,1920"'
+  paso "make video3d-fixture dibuja la portada limpia y el .srt" bash -c "test -s sesiones/_fixture_video3d/trabajo/salida/portada.png && ls sesiones/_fixture_video3d/trabajo/salida/*.srt >/dev/null"
   paso "video3d.py entregar no entrega con voz falsa (sin créditos y sin --salida)" bash -c "! python3 scripts/video3d.py entregar sesiones/_fixture_video3d/trabajo >/dev/null 2>&1"
 fi
 # la maqueta 3D como pieza de la mesa de archivo (scripts/mesa.py: `maqueta` a nivel de mesa en plano.json; YT20–YT24 = MV15–MV19)
@@ -2203,10 +2098,10 @@ fi
 
 echo "== /agenda (AG1–AG9 sobre la semana de la maqueta; registros congelados)"
 AGD="$TMP/agenda"
-paso "make agenda-fixture: sin noticieros, 5 piezas fuertes (≥ 3 historias) a las 09:00 y 5 cortas a las 19:30, lo listo primero, estilos de Facebook, AG1–AG9 ok" bash -c "make -s agenda-fixture >/dev/null && python3 -c \"
+paso "make agenda-fixture: 5 piezas fuertes (≥ 3 historias) a las 09:00 y 5 cortas a las 19:30, lo listo primero, estilos de Facebook, AG1–AG9 ok" bash -c "make -s agenda-fixture >/dev/null && python3 -c \"
 import json; A=json.load(open('sesiones/_fixture_agenda/salida/agenda.json')); E=[s for s in A['espacios'] if s['fecha']>='2026-11-04']
 B=[s['formato'] for s in E if s['slot']=='B']; F=[s for s in E if s['slot']=='A']
-assert len(B)==5 and set(B)<={'sabias','departamento'} and B.count('sabias')>=3 and not any(s['formato'] in ('noticias','semana') for s in E), B
+assert len(B)==5 and set(B)<={'sabias','departamento'} and B.count('sabias')>=3, B
 assert len(F)==5 and sum(s['formato']=='historia' for s in F)>=3, [s['formato'] for s in F]
 assert F[0]['estado']=='producido' and any('se parece' in a for s in F for a in s['avisos']), F[:2]
 assert len({s['facebook']['estilo'] for s in E if s['formato']!='carrusel'})>=3\""
@@ -2221,7 +2116,7 @@ PY
   grep -q "FALLA $1" <<<"$out"
 }
 paso "agenda gate: un tercer video el mismo día → AG1" ag_neg "AG1" 'import copy; x=copy.deepcopy([s for s in E if s["id"]=="2026-11-06-A"][0]); x["id"]="2026-11-06-X"; x["slot"]="X"; E.append(x)'
-paso "agenda gate: un noticiero en la agenda (el usuario no los publica) → AG2" ag_neg "AG2" '[s for s in E if s["id"]=="2026-11-05-B"][0]["formato"]="noticias"'
+paso "agenda gate: un formato que la agenda no conoce (inventado o de un flujo retirado) → AG2" ag_neg "AG2 2026-11-05-B: «podcast» no es un formato" '[s for s in E if s["id"]=="2026-11-05-B"][0]["formato"]="podcast"'
 paso "agenda gate: una historia en el espacio corto → AG2" ag_neg "AG2" '[s for s in E if s["id"]=="2026-11-06-B"][0]["formato"]="historia"'
 paso "agenda gate: un video sin estilo de Facebook → AG8" ag_neg "AG8" '[s for s in E if s["id"]=="2026-11-06-A"][0]["facebook"]={"estilo": None}'
 paso "agenda facebook: la descripción en su estilo se guarda y un cebo («comparte») se rechaza (F4)" bash -c "set -e; rm -rf '$TMP/agenda_fb'; cp -R sesiones/_fixture_agenda/salida '$TMP/agenda_fb'; python3 scripts/agenda.py facebook 2026-11-04-A --texto 'Los Lotes no salió a tiempo del Fuego. Esta es la historia de esa tarde.' --dir '$TMP/agenda_fb' >/dev/null; python3 scripts/agenda.py hoy --fecha 2026-11-04 --dir '$TMP/agenda_fb' | grep -q 'caption facebook: Los Lotes no salió'; ! python3 scripts/agenda.py facebook 2026-11-04-A --texto 'Comparte si te dolió' --dir '$TMP/agenda_fb' >/dev/null 2>&1"
@@ -2319,83 +2214,11 @@ assert [w['text'] for w in R['palabras']]==['a','c'] and R['palabras'][1]['start
   paso "W14: un límite de youtube.js distinto del de youtube.py falla en check_workflows" bash -c "cp .claude/workflows/youtube.js '$TMP/yt.js.bak'; sed -i '' 's/PUENTE_CARACTERES = 160/PUENTE_CARACTERES = 150/' .claude/workflows/youtube.js; python3 scripts/check_workflows.py --quiet >/dev/null 2>&1; rc=\$?; cp '$TMP/yt.js.bak' .claude/workflows/youtube.js; [ \$rc -ne 0 ]"
   if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   make youtube-fixture (RAPIDO=1)"; else
     paso "make youtube-fixture (16:9 1920×1080, capítulos desde 0:00, sin «Sígueme» en la voz, entrega)" bash -c 'make youtube-fixture FPS=6 >/dev/null && ffprobe -v error -show_entries stream=codec_type,width,height -of csv=p=0 sesiones/_fixture_youtube/salida/video.mp4 | grep -q "video,1920,1080" && grep -q "^0:00 " sesiones/_fixture_youtube/salida/caption.md && ! grep -qi "sígueme: en la" sesiones/_fixture_youtube/salida/subtitulos.srt'
-    # el plano del 16:9 (YT13–YT19): negativos sobre el plano de la maqueta (en la maqueta el gate avisa en vez de fallar)
-    yp_neg() {  # yp_neg CÓDIGO 'python que muta P (plano.json) o E (escenas.json)'
-      local T="$YF/trabajo" cod="$1" out rc=0
-      cp "$T/plano.json" "$TMP/plano.bak"; cp "$T/escenas.json" "$TMP/escenas.bak"
-      python3 - "$T" "$2" <<'PYEOF'
-import json, sys
-T = sys.argv[1]
-P = json.load(open(T + "/plano.json")); E = json.load(open(T + "/escenas.json"))
-M = next(m for m in P["mesas"] if m["golpes"])
-exec(sys.argv[2])
-json.dump(P, open(T + "/plano.json", "w"), ensure_ascii=False); json.dump(E, open(T + "/escenas.json", "w"), ensure_ascii=False)
-PYEOF
-      out="$(python3 scripts/youtube.py plano "$T" --check 2>&1)"; echo "$out" | grep -q "(maqueta) $cod" || rc=1
-      cp "$TMP/plano.bak" "$T/plano.json"; cp "$TMP/escenas.bak" "$T/escenas.json"
-      [[ $rc == 0 ]] || { echo "$out" | tail -8; return 1; }
-    }
-    paso "plano 16:9: una mesa sin piezas (ninguna oración trae un golpe) → YT14" yp_neg "YT14" 'M["golpes"] = []'
-    paso "plano 16:9: un «dice» que la voz no dice → YT14" yp_neg "YT14" 'M["golpes"][0]["dice"] = "zzz qqq"'
-    paso "plano 16:9: una cifra que la voz no dice y sin respaldo → YT16" yp_neg "YT16" 'M["golpes"].append(dict(tipo="cifra", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=M["golpes"][-1]["dice"], valor="98,765", rotulo="panes"))'
-    paso "plano 16:9: una foto sin ficha → YT16" yp_neg "YT16" 'M["golpes"].append(dict(tipo="foto", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=M["golpes"][-1]["dice"], foto="zzz-f99", pie="Nada"))'
-    paso "plano 16:9: un tipo de pieza desconocido → YT16" yp_neg "YT16" 'M["golpes"][0]["tipo"] = "zoom"'
-    paso "plano 16:9: una escena con saltos de cámara → YT19" yp_neg "YT19" 'E["escenas"][1]["saltos"] = [2.0]'
+    paso "mesa congelada: el fixture no deriva de los trabajos recién generados (serie-fixture y youtube-fixture)" python3 scripts/pruebas/mesa_congelada.py --deriva
     # el vertical como mesa de archivo (scripts/video_hf.py, núcleo scripts/mesa.py): la maqueta y los gates MV sobre su plano
     paso "make video-fixture-mesa (proyectos 9:16 y 4:5, hyperframes check, audio a −14 LUFS)" bash -c 'make video-fixture-mesa FPS=6 >/dev/null && test -s sesiones/_fixture_mesa/trabajo/hf/9x16/index.html && test -s sesiones/_fixture_mesa/trabajo/hf/4x5/index.html && test -s sesiones/_fixture_mesa/trabajo/segs_mesa/mezcla_final.wav && ! grep -q "cdn\.\|https://" sesiones/_fixture_mesa/trabajo/hf/9x16/index.html'
-    mv_neg() {  # mv_neg CÓDIGO 'python que muta P (plano.json) o E (escenas.json)'
-      local T="sesiones/_fixture_mesa/trabajo" cod="$1" out rc=0 antes despues
-      cp "$T/plano.json" "$TMP/plano_v.bak"; cp "$T/escenas.json" "$TMP/escenas_v.bak"
-      antes="$(python3 scripts/video_hf.py plano "$T" --check 2>&1 | grep -c "(maqueta) $cod")"
-      python3 - "$T" "$2" <<'PYEOF'
-import json, sys
-T = sys.argv[1]
-P = json.load(open(T + "/plano.json")); E = json.load(open(T + "/escenas.json"))
-M = next(m for m in P["mesas"] if m["golpes"] and all(g.get("dice") for g in m["golpes"]))  # la mesa 1 abre con piezas sin `dice` (cuadro 0)
-exec(sys.argv[2])
-json.dump(P, open(T + "/plano.json", "w"), ensure_ascii=False); json.dump(E, open(T + "/escenas.json", "w"), ensure_ascii=False)
-PYEOF
-      [[ $? == 0 ]] || rc=1  # una mutación que no se aplicó no prueba nada
-      out="$(python3 scripts/video_hf.py plano "$T" --check 2>&1)"; despues="$(echo "$out" | grep -c "(maqueta) $cod")"
-      cp "$TMP/plano_v.bak" "$T/plano.json"; cp "$TMP/escenas_v.bak" "$T/escenas.json"
-      [[ $despues -gt $antes ]] || rc=1  # la maqueta ya trae avisos MV: cuenta los que AÑADE la mutación
-      [[ $rc == 0 ]] || { echo "$cod: $antes aviso(s) antes, $despues después"; echo "$out" | tail -8 | cut -c1-300; return 1; }
-    }
-    paso "plano vertical: una mesa sin piezas → MV2" mv_neg "MV2" 'M["golpes"] = []'
-    paso "plano vertical: una foto sin ficha → MV4" mv_neg "MV4" 'M["golpes"].append(dict(tipo="foto", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=M["golpes"][-1]["dice"], foto="zzz-f99", pie="Nada"))'
-    paso "plano vertical: una escena con saltos de cámara → MV7" mv_neg "MV7" 'E["escenas"][1]["saltos"] = [2.0]'
-    paso "plano vertical: una ficha con 40 palabras que la voz no dice no da tiempo de leerse → MV8" mv_neg "MV8" 'M["golpes"].insert(0, dict(tipo="institucion", escena=M["golpes"][0].get("escena", M["escenas"][0]), dice=M["golpes"][0]["dice"], nombre="Zzz", kicker="Qué es", rol=" ".join("palabra%d" % i for i in range(40))))'
-    paso "plano vertical: una pieza que no cabe ni a escala → MV11" mv_neg "MV11" 'M["golpes"].insert(0, dict(tipo="cita", escena=M["golpes"][0].get("escena", M["escenas"][0]), dice=M["golpes"][0]["dice"], autor="Zzz", texto=" ".join("palabra%d" % i for i in range(160))))'
-    paso "plano vertical: una jerarquía con un hilo de alegato sin «Según…» → MV12" mv_neg "MV12" 'd = M["golpes"][-1]["dice"]; M["golpes"].append(dict(tipo="red", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=d, nodos=[dict(id="a", nombre="Marta Pérez", nivel=0, dice=d), dict(id="b", nombre="Zzz", nivel=1, dice=d)], aristas=[dict(de="a", a="b", atribuida=True, dice=d)]))'
-    paso "plano vertical: una barra sola (sin con qué compararse) → MV4" mv_neg "MV4" 'M["golpes"].append(dict(tipo="barra", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=M["golpes"][-1]["dice"], barras=[dict(etiqueta="Zzz", valor=1)]))'
-    paso "plano vertical: una barra que dice 900 y mide 10 → MV4" mv_neg "MV4" 'M["golpes"].append(dict(tipo="barra", escena=M["golpes"][-1].get("escena", M["escenas"][0]), dice=M["golpes"][-1]["dice"], barras=[dict(etiqueta="A", valor=10, texto="900"), dict(etiqueta="B", valor=20)]))'
-    paso "make video-fixture-maqueta (una mesa con maqueta 3D: clip real 950×1040 de maqueta3d.py pieza, en los proyectos 9:16 y 4:5, su efecto en la mezcla, el 4:5 reusa el clip)" bash -c 'make video-fixture-maqueta FPS=6 >/dev/null && T=sesiones/_fixture_maqueta/trabajo && ffprobe -v error -show_entries stream=width,height -of csv=p=0 $T/clips_maqueta/m5.mp4 | grep -q "950,1040" && grep -q "\"doble\": false" $T/clips_maqueta/huellas.json && grep -q "assets/maquetas/m5.mp4" $T/hf/9x16/compositions/m5.html && grep -q "assets/maquetas/m5.mp4" $T/hf/4x5/compositions/m5.html && test -s $T/hf/4x5/assets/maquetas/m5.mp4 && grep -q "foco" $T/hf/efectos.json && grep -q "Maqueta · no a escala" $T/hf/9x16/compositions/m5.html && grep -q "maqueta 3D" $T/plano.md && test -s $T/salida/video.mp4 && test -s $T/salida/video_4x5.mp4'
-    mq_neg() {  # mq_neg CÓDIGO 'python que muta P (plano.json), M (la mesa con maqueta) o Q (su maqueta)': la mutación AÑADE un aviso con ese código
-      local T="sesiones/_fixture_maqueta/trabajo" cod="$1" out rc=0 antes despues
-      cp "$T/plano.json" "$TMP/plano_q.bak"
-      antes="$(python3 scripts/video_hf.py plano "$T" --check 2>&1 | grep -c "(maqueta) $cod ")"
-      python3 - "$T" "$2" <<'PYEOF'
-import json, sys
-T = sys.argv[1]
-P = json.load(open(T + "/plano.json")); M = next(m for m in P["mesas"] if m.get("maqueta")); Q = M["maqueta"]
-exec(sys.argv[2])
-json.dump(P, open(T + "/plano.json", "w"), ensure_ascii=False)
-PYEOF
-      [[ $? == 0 ]] || rc=1
-      out="$(python3 scripts/video_hf.py plano "$T" --check 2>&1)"; despues="$(echo "$out" | grep -c "(maqueta) $cod ")"
-      cp "$TMP/plano_q.bak" "$T/plano.json"
-      [[ $despues -gt $antes ]] || rc=1
-      [[ $rc == 0 ]] || { echo "$cod: $antes aviso(s) antes, $despues después"; echo "$out" | tail -8 | cut -c1-300; return 1; }
-    }
+    paso "make video-fixture-maqueta (una mesa con maqueta 3D: clip real 950×1040 de maqueta3d.py pieza, en los proyectos 9:16 y 4:5, su efecto en la mezcla, el 4:5 reusa el clip)" bash -c 'make video-fixture-maqueta FPS=6 >/dev/null && T=sesiones/_fixture_maqueta/trabajo && ffprobe -v error -show_entries stream=width,height -of csv=p=0 $T/clips_maqueta/m5.mp4 | grep -q "950,1040" && grep -q "\"doble\": false" $T/clips_maqueta/huellas.json && grep -q "assets/maquetas/m5.mp4" $T/hf/9x16/compositions/m5.html && grep -q "assets/maquetas/m5.mp4" $T/hf/4x5/compositions/m5.html && test -s $T/hf/4x5/assets/maquetas/m5.mp4 && grep -q "foco" $T/hf/efectos.json && grep -q "Relieve: Mapzen Terrain Tiles" $T/hf/9x16/compositions/m5.html && ! grep -q "Maqueta · no a escala" $T/hf/9x16/compositions/m5.html && grep -q "maqueta 3D" $T/plano.md && test -s $T/salida/video.mp4 && test -s $T/salida/video_4x5.mp4'
     paso "plano con maqueta: la mesa de la maqueta no añade avisos (MV15–MV19 en 0)" bash -c '! python3 scripts/video_hf.py plano sesiones/_fixture_maqueta/trabajo --check 2>&1 | grep -q "(maqueta) MV1[5-9] \|(maqueta) MV[0-9]* m5 "'
-    paso "plano con maqueta: un estilo que no está en el catálogo → MV15" mq_neg "MV15" 'Q["estilo"] = "zzz"'
-    paso "plano con maqueta: la primera clave de cámara con dice → MV15" mq_neg "MV15" 'Q["camara"][0]["dice"] = "Pero el salto"'
-    paso "plano con maqueta: un dice que la voz de la mesa no dice → MV16" mq_neg "MV16" 'Q["marcas"][0]["dice"] = "cinco sucursales"'
-    paso "plano con maqueta: dos maquetas de estilos distintos → MV17" mq_neg "MV17" 'P["mesas"] = [m for m in P["mesas"] if m["escenas"] != ["e7"]] + [dict(escenas=["e7"], titulo="Otra", golpes=[], maqueta=dict(Q, estilo="color", marcas=[], eventos=[], camara=Q["camara"][:1]))]'
-    paso "plano con maqueta: una maqueta de menos de 5 s (y en el gancho) → MV18" mq_neg "MV18" 'P["mesas"] = [m for m in P["mesas"] if m["escenas"] != ["e1"]]; M["escenas"] = ["e1"]; M["golpes"] = []; Q.update(camara=Q["camara"][:1], eventos=[], marcas=[])'
-    paso "plano con maqueta: una cámara que el motor rechaza (M3D3) → MV19" mq_neg "MV19" 'Q["camara"][1]["dist_km"] = 5'
-    paso "plano con maqueta: la cifra que la voz dice, sin su golpe → MV1" mq_neg "MV1" 'M["golpes"] = M["golpes"][:1]'
-    paso "plano con maqueta: una pieza que taparía la maqueta → MV11" mq_neg "MV11" 'M["golpes"][1] = dict(tipo="cita", dice="4,500 panes", autor="Zzz", texto=" ".join("palabra%d" % i for i in range(60)))'
     paso "maquetas con MESA_RENDER=0: un doble 950×1040 de la duración de la mesa, que no se reusa como render" bash -c 'T="'"$TMP"'/maq_doble"; rm -rf "$T"; cp -R sesiones/_fixture_maqueta/trabajo "$T" && rm -rf "$T/clips_maqueta" && MESA_RENDER=0 python3 scripts/video_hf.py maquetas "$T" | grep -q "dobles sin render" && grep -q "\"doble\": true" "$T/clips_maqueta/huellas.json" && ffprobe -v error -show_entries stream=width,height -of csv=p=0 "$T/clips_maqueta/m5.mp4" | grep -q "950,1040" && MESA_RENDER=0 python3 scripts/video_hf.py maquetas "$T" | grep -q "al día"'
     paso "borrador vertical: un gancho de texto cinético (pareja) abre con la nota y la barra ya puestas; el golpe con número es una cifra sin repetir el golpe de arriba" python3 -c '
 import sys; sys.path.insert(0, "scripts"); import video_hf as VH
@@ -2411,18 +2234,18 @@ G = {"tipo": "golpe", "clave": "e3", "palabras": [{"text": w, "start": 0.3 * k, 
      "T": {"pant": {"texto": "1.5 veces", "v": 1.5}, "linea": [{"text": w} for w in "lo de enero".split()]}}
 g = VH.texto_pantalla(G, 2, lambda k0, n=2: "cuesta 1.5", {})
 assert g == [{"tipo": "cifra", "dice": "1.5", "valor": "1.5 veces", "rotulo": "lo de enero"}], g'
-    paso "realizacion: los flujos de video nacen en mesa (menos /noticias y /semana); un TRABAJO del motor propio no lleva plano (exit 2); la maqueta sin render deja su marca" bash -c 'python3 -c "
+    paso "realizacion: los flujos de video nacen en mesa; un TRABAJO del motor propio (la maqueta de /video) no lleva plano (exit 2); la maqueta sin render deja su marca" bash -c 'python3 -c "
 import json, os
 for t in (\"_fixture_serie/trabajo/parte-1\", \"_fixture_mesa/trabajo\", \"_fixture_historia/trabajo\", \"_fixture_explica/trabajo\", \"_fixture_serie_explica/trabajo/parte-1\",
           \"_fixture_sabias/trabajo\", \"_fixture_congreso/trabajo\", \"_fixture_departamento/trabajo\"):
     p = \"sesiones/%s/video.json\" % t
     if os.path.exists(p):
         assert json.load(open(p)).get(\"realizacion\") == \"mesa\", t
-for t in (\"_fixture_noticias/trabajo\", \"_fixture_semana/trabajo\", \"_fixture_video/trabajo\"):   # el banco de pruebas del motor propio
+for t in (\"_fixture_video/trabajo\",):   # el banco de pruebas del motor propio
     p = \"sesiones/%s/video.json\" % t
     if os.path.exists(p):
         assert json.load(open(p)).get(\"realizacion\", \"propio\") == \"propio\", t
-" && test -f sesiones/_fixture_serie/trabajo/parte-1/salida/.maqueta_sin_render && { if test -f sesiones/_fixture_noticias/trabajo/video.json; then python3 scripts/video.py plano sesiones/_fixture_noticias/trabajo >/dev/null 2>&1; test $? -eq 2; fi; }'
+" && test -f sesiones/_fixture_serie/trabajo/parte-1/salida/.maqueta_sin_render && { if test -f sesiones/_fixture_video/trabajo/video.json; then python3 scripts/video.py plano sesiones/_fixture_video/trabajo >/dev/null 2>&1; test $? -eq 2; fi; }'
     paso "plano vertical: sin plano.json, un trabajo real se detiene («falta la fase Plano») y una maqueta usa el borrador" bash -c 'T=sesiones/_fixture_mesa/trabajo; cp $T/plano.json "$TMP/plano_auto.bak"; rm $T/plano.json; python3 scripts/video_hf.py plano $T --auto --check >/dev/null 2>&1; rc=$?; test -s $T/plano.json; ok=$?; cp "$TMP/plano_auto.bak" $T/plano.json; test $rc -eq 0 -a $ok -eq 0'
     paso "el núcleo de la mesa no cambia el 16:9: youtube_hf reexporta mesa.py" python3 -c "
 import sys; sys.path.insert(0, 'scripts')
@@ -2679,17 +2502,43 @@ check_js() {
   node --check "$TMP/check_$1"
 }
 paso "reglas del 2026-11-10 (srt, V25, P6, V5 cifras, tics, H25, H26, SE1, efectos y transiciones del largo)" python3 scripts/pruebas/reglas_2026_11_10.py
+paso "ola 1 · video (gancho y escena 2 con la voz real, música única, rotación sobre el feed, quién eligió, TM0, podar-intermedios)" python3 scripts/pruebas/ola1_video.py
+paso "ola 1 · anclas (un `dice` resuelve igual en la mesa, en /video-3d y en los tableros)" python3 scripts/pruebas/ola1_anclas.py
+paso "ola 1 · mesa (marca de render de prueba por formato, avisos «sin datos», GSAP local, límite del render, notas de /congreso)" python3 scripts/pruebas/ola1_mesa.py
+paso "ola 1 · /video-3d (22 negativos M3D sin render, caption V5, srt, escuchar, 4:5, rotación)" python3 scripts/pruebas/ola1_video3d.py
+paso "ola 1 · métricas (partes de serie y largos, 3D, duracion|promesa|plataforma, vistas por día)" python3 scripts/pruebas/ola1_metricas.py
+paso "mesa congelada (el fixture, los planos curados en 0 fallas, la pila MV9 y un negativo por gate MV1–MV19 e YT13–YT19, sin render ni trabajos)" python3 scripts/pruebas/mesa_congelada.py
+paso "gates sin negativo (SE17–SE19, CG8, CG9, C3D5, C3D7, M3D7; sin render)" python3 scripts/pruebas/gates_sin_negativo.py
+paso "check_docs.py D0–D7 (CLAUDE.md corto, nada perdido, rutas y secciones citadas, anclas, mapa al día, sin flujos retirados, guías por modo)" python3 scripts/check_docs.py
+paso "check_docs.py: cada regla D0–D7 muerde (negativos sobre una raíz fabricada)" python3 scripts/pruebas/check_docs_neg.py
+paso "resto · video (MV13 un solo acento con crema, escucha V11 con caché por huella, glosario y Scribe, cierres con el gate completo y forma obligatoria, título para teclear en caption.md)" python3 scripts/pruebas/resto_video.py
+paso "resto · costos y agenda (costo.py --registrar → memoria/costos.json, M22, medianas medidas en las órdenes, memoria.py marca la agenda al registrar)" python3 scripts/pruebas/resto_costos.py
+paso "maqueta3d.py catalogo --check: design/sets3d/vocabulario.json al día con las fichas" python3 scripts/maqueta3d.py catalogo --check
+paso "vocabulario de la maqueta: catálogo, fichas, validador genérico, Blender solo-three y módulos del proyecto" python3 scripts/pruebas/maqueta_registro.py
+paso "maqueta_orquestacion.py: el lint del constructor muerde, nadie lista tipos a mano, video3d.js y plano.js" python3 scripts/pruebas/maqueta_orquestacion.py
+paso "maqueta_modulo.py check --sin-render sobre eventos/onda y piezas/ruta" bash -c "python3 scripts/maqueta_modulo.py check eventos/onda --sin-render >/dev/null && python3 scripts/maqueta_modulo.py check piezas/ruta --sin-render >/dev/null"
+if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   maqueta_modulo.py pureza con render (RAPIDO=1)"; else
+  paso "maqueta_modulo.py: pureza (seek doble) en eventos/onda y negativo de un módulo impuro (render)" python3 scripts/pruebas/maqueta_orquestacion.py --render
+fi
+paso "maqueta 3D: mundos pais, ciudad y esquema (escalas, recetas deterministas, M3D12, cámara por escala, set capital)" python3 scripts/pruebas/maqueta_mundos.py
+paso "maqueta 3D: los casos de los mundos nuevos pasan M3D1–M3D12" sh -c 'python3 scripts/maqueta3d.py check video/maqueta/fixture/esquema_carretera.json && python3 scripts/maqueta3d.py check video/maqueta/fixture/ciudad_capital.json'
+paso "set de ciudad capital completo" python3 scripts/build_set3d.py capital --check
+paso "maqueta 3D: lo que se mueve (flujo de Newell cerrado en t, cola hacia atrás sin atravesarse, cámara que sigue, anclas, respaldo de anotaciones)" python3 scripts/pruebas/maqueta_movimiento.py
+paso "maqueta 3D: el caso tráfico pasa M3D en 9:16 y 4:5" python3 scripts/maqueta3d.py check video/maqueta/fixture/trafico.json
+if [[ "$RAPIDO" == "1" ]]; then echo "SKIP   maqueta_modulo.py flujo con render (RAPIDO=1)"; else
+  paso "maqueta 3D: módulo flujo (lint, ficha, pureza) sobre el caso tráfico" python3 scripts/maqueta_modulo.py check piezas/flujo --maqueta video/maqueta/fixture/trafico.json
+fi
+paso "producir: la cadena común (mesa, propio, 3D, largo), la pausa por el plano y la reanudación" python3 scripts/pruebas/producir.py
 paso "node --check hilo.js (envuelto en async function)" check_js hilo.js
 paso "node --check ideas.js (envuelto en async function)" check_js ideas.js
 paso "node --check dato.js (envuelto en async function)" check_js dato.js
 paso "node --check investigacion.js (envuelto en async function)" check_js investigacion.js
 paso "node --check video.js (envuelto en async function)" check_js video.js
-paso "node --check noticias.js (envuelto en async function)" check_js noticias.js
 paso "node --check historia.js (envuelto en async function)" check_js historia.js
 paso "node --check explica.js (envuelto en async function)" check_js explica.js
 paso "node --check youtube.js (envuelto en async function)" check_js youtube.js
 paso "node --check plano.js (envuelto en async function)" check_js plano.js
-paso "check_workflows.py (PALETAS, PLANTILLAS, HOOKS, BEATS, REQ, pesoX, MODOS, gráficos del informe W7–W8, bloque común W9, espejos de video.js W10, de noticias.js W11, de historia.js W12 y de explica.js con su tabla MODOS W13)" python3 scripts/check_workflows.py
+paso "check_workflows.py (PALETAS, PLANTILLAS, HOOKS, BEATS, REQ, pesoX, MODOS, gráficos del informe W7–W8, bloque común W9, espejos de video.js W10, de historia.js W12 y de explica.js con su tabla MODOS W13)" python3 scripts/check_workflows.py
 
 echo
 echo "[test] $N pruebas · $FALLOS fallos"

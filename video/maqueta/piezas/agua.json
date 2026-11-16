@@ -1,0 +1,27 @@
+{
+ "tipo": "agua",
+ "clase": "pieza",
+ "cuando": "el agua del lugar: lagos, estanques, el mar de la costa y los ríos",
+ "parametros": {
+  "rios": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "también los ríos (líneas), no solo los polígonos"
+  }
+ },
+ "escalas": [
+  "ciudad",
+  "esquema"
+ ],
+ "motores": [
+  "three"
+ ],
+ "capas": [
+  "agua"
+ ],
+ "ejemplo": {
+  "id": "agua",
+  "tipo": "agua"
+ }
+}

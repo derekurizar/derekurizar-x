@@ -1,0 +1,26 @@
+{
+ "tipo": "pais",
+ "clase": "mundo",
+ "cuando": "un país o una región real en relieve (km): dónde pasa algo, por dónde corre, hasta dónde llega",
+ "parametros": {
+  "set": {
+   "tipo": "texto",
+   "requerido": true,
+   "descripcion": "el set de geodatos de escala pais (design/sets3d/<set>/: relieve, lugares, fallas, frontera; maqueta3d.py sets)"
+  },
+  "exageracion": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [1, 20],
+   "defecto": 5.0,
+   "descripcion": "cuántas veces se exagera la altura del relieve"
+  }
+ },
+ "escalas": ["pais"],
+ "motores": ["three", "blender"],
+ "capas": ["relieve"],
+ "unidad_m": 1000,
+ "camara": {"campo": "dist_km", "unidad": "km", "rango": [15, 1600], "despeje": 1.5, "cerca": 0.5, "lejos": 40000, "niebla": [700, 3.2, 2200, 10]},
+ "plano": {"y": -0.15, "lado": 30000},
+ "ejemplo": {"escala": "pais", "set": "guatemala", "exageracion": 5.0}
+}

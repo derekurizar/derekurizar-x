@@ -35,11 +35,40 @@
   const seg = document.querySelector('#seguir .vseguir'), segBt = seg && seg.querySelector('.bt'), segCam = seg && seg.querySelector('.cam');
   const velo = document.querySelector('#velo .velo'), cie = $('cierre');
   const FRASE = cie ? [...cie.querySelectorAll('.frase span')] : [], sigue = cie && cie.querySelector('.sigue'), cieBt = cie && cie.querySelector('.bt');
+  // ANOTACIONES (pulso, medida, etiqueta, reloj…): la capa 2D atada al 3D. Cada tipo es un módulo de
+  // video/maqueta/anotaciones/<tipo>.js (MAQ.ANOTACIONES, ficha en el catálogo) que dibuja en la capa SVG (#anot svg) o en la
+  // de texto (#anot .anot-txt). Se arman la primera vez que el motor pide un cuadro (los módulos cargan después de este
+  // archivo) y reciben `A` (abajo): dónde cae un ancla en t, un círculo en el suelo proyectado, crear elementos. Solo con el
+  // motor three (el tercer argumento de __capa: el mundo); en modo placa no hay anotaciones.
+  const ANOT = M.anotaciones || [], svgAnot = document.querySelector('#anot svg'), txtAnot = document.querySelector('#anot .anot-txt');
+  let anotEst = null;
+  const A = {
+    M, Z, clamp, eo, vida, p: null, mundo: null,
+    svg(tag, clase) { const el = document.createElementNS(svgAnot.namespaceURI, tag); if (clase) el.setAttribute('class', clase); svgAnot.appendChild(el); return el; },
+    div(clase, texto) { const el = document.createElement('div'); el.className = clase; if (texto !== undefined) el.textContent = texto; txtAnot.appendChild(el); return el; },
+    // un ancla resuelta → {px, py, x, y, z, dx, dy, v, vis} en t (px null si cae detrás de la cámara)
+    ancla(an, t) { const q = A.mundo.ancla(an, t), z = A.mundo.altura(q.x, q.y) + (q.lev || 0) + A.mundo.metros(0.3), p = A.p(q.x, q.y, z);
+      return Object.assign(q, { z, px: p ? p[0] : null, py: p ? p[1] : null }); },
+    // un círculo de r METROS sobre el suelo alrededor de (x, y), proyectado: [[px, py], …] (null si una parte cae detrás)
+    suelo(x, y, r, n = 48, lev = 0.3) { const ru = A.mundo.metros(r), out = [];
+      for (let i = 0; i <= n; i++) { const a = i / n * Math.PI * 2, X = x + Math.cos(a) * ru, Y = y + Math.sin(a) * ru;
+        const p = A.p(X, Y, A.mundo.altura(X, Y) + A.mundo.metros(lev)); if (!p) return null; out.push(p); }
+      return out; },
+    d(pts) { return pts ? 'M' + pts.map((q) => q[0].toFixed(1) + ' ' + q[1].toFixed(1)).join('L') : ''; },
+  };
   let medidas = null;
   const medir = () => { medidas = { tit: TIT.map((x) => x.el.offsetTop + x.el.offsetHeight), card: MAR.map((x) => [x.card.offsetWidth, x.card.offsetHeight]) }; };
 
-  window.__capa = function (t, proyectar) {
+  window.__capa = function (t, proyectar, mundo) {
     if (!medidas) medir();
+    if (ANOT.length && mundo && svgAnot) {
+      A.p = proyectar; A.mundo = mundo;
+      if (!anotEst) { anotEst = []; const R = window.MAQ && window.MAQ.ANOTACIONES || {};
+        for (const tipo of [...new Set(ANOT.map((o) => o.tipo))]) { const def = R[tipo];
+          if (!def) throw new Error('anotación sin módulo: ' + tipo + ' (video/maqueta/anotaciones/' + tipo + '.js)');
+          const lista = ANOT.filter((o) => o.tipo === tipo); anotEst.push({ def, lista, st: def.armar ? def.armar(A, lista) : null }); } }
+      for (const x of anotEst) x.def.en(t, x.st, A, x.lista);
+    }
     // barra de progreso
     BARRAS.forEach((b, i) => { const a = ACTOS[i], z = i + 1 < ACTOS.length ? ACTOS[i + 1] : M.dur; b.style.width = (clamp((t - a) / Math.max(0.01, z - a)) * 100).toFixed(2) + '%'; });
     // titulares: suben 26 px y aparecen; salen desvaneciéndose
