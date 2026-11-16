@@ -725,7 +725,9 @@ def validar_video3d(paletas):
             err("M21 videos3d[%d] música %r no está en el catálogo" % (i, v.get("musica")))
         if estilos and v.get("estilo") not in estilos:
             err("M21 videos3d[%d] estilo %r no está en design/sets3d/estilos.json (un solo estilo por video)" % (i, v.get("estilo")))
-        if not os.path.isdir(os.path.join(RAIZ, "design", "sets3d", str(v.get("set")))):
+        if v.get("set") is None and v.get("mundos"):   # un video con varios mundos, todos esquema: no usa set de geodatos
+            pass
+        elif not os.path.isdir(os.path.join(RAIZ, "design", "sets3d", str(v.get("set")))):
             err("M21 videos3d[%d] set %r no existe en design/sets3d/" % (i, v.get("set")))
         r = str(v.get("ruta", ""))
         if os.path.isabs(r):

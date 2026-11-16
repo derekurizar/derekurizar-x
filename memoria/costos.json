@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "_comentario": "Lo que midió scripts/costo.py de cada corrida de Workflow (tokens, minutos, agentes por rol y por modelo), ligado a su pieza. Lo escribe SOLO scripts/memoria.py --costo ARCHIVO (lo llama `costo.py --registrar --pieza P --flujo F`); registrar la misma corrida reemplaza. scripts/agenda.py lo lee para los minutos de cada orden de producción (la mediana del flujo con ≥ 3 piezas medidas). Los créditos de voz están en el registro de cada pieza (creditos_voz).",
+  "costos": [
+    {
+      "pieza": "video3d-cafe-huehuetenango-taza",
+      "flujo": "video3d",
+      "run": "wf_66be3807-ad4",
+      "workflow": "video3d",
+      "fecha": "2026-11-15",
+      "inicio": "2026-11-16T05:10:48.502000+00:00",
+      "fin": "2026-11-16T14:20:12.852000+00:00",
+      "minutos": 549.4,
+      "agentes": 14,
+      "completados": 14,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 642,
+        "output": 313217,
+        "cache_read": 33679094,
+        "cache_create": 1752577,
+        "total": 35745530
+      },
+      "herramientas": 334,
+      "pico_alto": 2,
+      "por_rol": {
+        "video3d-director": {
+          "agentes": 7,
+          "tokens": 22863585,
+          "salida": 183994,
+          "minutos": 39.1
+        },
+        "maqueta-constructor": {
+          "agentes": 4,
+          "tokens": 8321784,
+          "salida": 72673,
+          "minutos": 13.6
+        },
+        "video-critico": {
+          "agentes": 3,
+          "tokens": 4560161,
+          "salida": 56550,
+          "minutos": 9.2
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 14,
+          "tokens": 35745530,
+          "salida": 313217
+        }
+      },
+      "entrega": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "minutos_pieza": 593.8,
+      "registrado": "2026-11-16"
+    }
+  ]
+}

@@ -34,6 +34,39 @@
       "estado": "listo"
     },
     {
+      "id": "video3d-cafe-huehuetenango-taza",
+      "slug": "cafe-huehuetenango-taza",
+      "tema": "El café de una finca de Huehuetenango hasta una taza en otro país",
+      "fecha": "2026-11-15",
+      "ruta": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "estilo": "noche",
+      "motor": "three",
+      "set": "guatemala",
+      "mundos": [
+        "esquema:campo",
+        "esquema:costa",
+        "esquema:plaza",
+        "pais:guatemala"
+      ],
+      "idea_visual": "Una cereza roja es lo único encendido en una ladera a oscuras de Huehuetenango, y la seguimos de mundo en mundo (el beneficio, el camión, el mapa, el barco) hasta que vuelve a encenderse como una taza humeante en otro país.",
+      "gancho": {
+        "id": "g2",
+        "familia": "revelacion",
+        "elegido_por": "usuario",
+        "texto": "En una ladera de Huehuetenango, Guatemala, el café empieza como una cereza roja."
+      },
+      "cierre": {
+        "texto": "Lo que allá se paga por una taza empezó aquí, en una ladera de Huehuetenango, como una cereza roja.",
+        "final": "Cada taza de allá empezó como una cereza de aquí."
+      },
+      "paleta": "cacao",
+      "musica": "cacao-2",
+      "duracion_s": 112.3,
+      "creditos_voz": 1655.83,
+      "desde": null,
+      "estado": "listo"
+    },
+    {
       "id": "video3d-frontera-recta",
       "slug": "frontera-recta",
       "tema": "¿Por qué la frontera con México es una línea recta en medio de la selva?",

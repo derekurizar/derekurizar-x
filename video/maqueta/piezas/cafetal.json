@@ -1,0 +1,115 @@
+{
+ "tipo": "cafetal",
+ "clase": "pieza",
+ "cuando": "una ladera de cafetal en terrazas: hileras de cafetos (arbustos de hoja verde oscuro) con racimos de cereza; las maduras en rojo, que se avivan al resaltar",
+ "parametros": {
+  "area": {
+   "tipo": "texto",
+   "requerido": false,
+   "capa": "zonas",
+   "descripcion": "el id de una zona del mundo donde va la ladera (o `puntos`)"
+  },
+  "puntos": {
+   "tipo": "puntos",
+   "requerido": false,
+   "min": 3,
+   "descripcion": "o el polígono de la ladera: [x, y] en metros en un esquema (≥ 20 m de lado)"
+  },
+  "hileras": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    3,
+    40
+   ],
+   "defecto": 12,
+   "descripcion": "cuántas terrazas (una hilera de cafetos en cada una)"
+  },
+  "pendiente_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    200
+   ],
+   "defecto": 60,
+   "descripcion": "cuánto sube la ladera de su borde bajo al alto, en metros (un actor de pie en la terraza k, 0 = la de abajo, va con lev_m = pendiente_m · k / hileras)"
+  },
+  "rumbo": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    360
+   ],
+   "defecto": 0,
+   "descripcion": "hacia dónde sube (grados; 0 = este, 90 = norte); la ladera se ve de frente con la cámara en azimut ≈ rumbo − 90"
+  },
+  "maduras": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0.8,
+   "descripcion": "la parte de las cerezas que están maduras (rojas, en el «mal» del estilo; nunca el acento); el resto, verdes"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "el azar fijo de cómo caen los cafetos y las cerezas"
+  },
+  "personas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    6
+   ],
+   "defecto": 0,
+   "descripcion": "recolectores (el objeto persona) de pie entre las hileras, repartidos por la ladera"
+  }
+ },
+ "escalas": [
+  "esquema"
+ ],
+ "motores": [
+  "three"
+ ],
+ "usa": [
+  "persona"
+ ],
+ "ejemplo": {
+  "id": "cafetal",
+  "tipo": "cafetal",
+  "puntos": [
+   [
+    -110,
+    -90
+   ],
+   [
+    110,
+    -90
+   ],
+   [
+    120,
+    100
+   ],
+   [
+    -100,
+    110
+   ]
+  ],
+  "hileras": 12,
+  "pendiente_m": 60,
+  "rumbo": 90,
+  "maduras": 0.8,
+  "personas": 1
+ }
+}

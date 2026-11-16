@@ -15,7 +15,8 @@
    "descripcion": "qué vehículos y en qué proporción ({\"carro\": 0.8, \"bus\": 0.1, \"camion\": 0.1})",
    "defecto": {
     "carro": 1
-   }
+   },
+   "valores_de": "objetos"
   },
   "densidad": {
    "tipo": "numero",
@@ -112,5 +113,6 @@
   ],
   "densidad": 20,
   "vel_kmh": 70
- }
+ },
+ "usa_objetos": true
 }

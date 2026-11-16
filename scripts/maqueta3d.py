@@ -1345,15 +1345,16 @@ def escribir_proyecto(m, formato, destino, fotos=None, placa_externa=False):
                       '<div class="pin" style="--alto: %dpx"><div class="stem"></div><div class="dot"></div><div class="card"><b>%s</b>%s</div></div>' % (k["alto"], esc(k["texto"]), sub)))
     p0 = 6 + max(1, len(libres))
     fila = ('<span class="aviso">%s</span>' % esc(C["aviso"]) if C["aviso"] else "") + ('<span class="handle">%s</span>' % esc(C["handle"]) if C["handle"] else "")
+    D_fila = ci["t"] if ci else D   # el cierre ya muestra las redes: la fila (aviso y handle) se va cuando entra
     if C.get("aviso_ventanas") is not None and C["aviso"]:   # tramos: el aviso solo en sus ventanas; fuera, el handle solo
         solo = '<span class="handle">%s</span>' % esc(C["handle"]) if C["handle"] else ""
-        cortes = sorted({0.0, D} | {min(D, max(0.0, float(x))) for v in C["aviso_ventanas"] for x in v})
+        cortes = sorted({0.0, D_fila} | {min(D_fila, max(0.0, float(x))) for v in C["aviso_ventanas"] for x in v})
         for i, (a0, a1) in enumerate(zip(cortes, cortes[1:])):
             con = any(v[0] <= (a0 + a1) / 2 < v[1] for v in C["aviso_ventanas"])
             if a1 - a0 > 1e-3 and (con or solo):
                 L.append(clip("filac-%d" % i, a0, a1 - a0, p0, '<div id="fila">%s</div>' % (fila if con else solo)))
     elif fila:   # sin aviso, el handle ocupa su lugar
-        L.append(clip("filac", 0, D, p0, '<div id="fila">%s</div>' % fila))
+        L.append(clip("filac", 0, D_fila, p0, '<div id="fila">%s</div>' % fila))
     if C["palabras"]:
         L.append(clip("subsc", 0, D, p0 + 1, '<div id="subs"></div>'))
     if C["pie"]:
@@ -1697,7 +1698,7 @@ def cmd_pieza(a):
 
 # ---------- el catálogo del vocabulario (design/sets3d/vocabulario.json) ----------
 CLAVES_FICHA = ("tipo", "clase", "cuando", "parametros", "escalas", "motores", "ejemplo")
-CLAVES_PARAM = {"tipo", "requerido", "descripcion", "rango", "valores", "defecto", "min", "todos", "piezas", "capa"}
+CLAVES_PARAM = {"tipo", "requerido", "descripcion", "rango", "valores", "defecto", "min", "todos", "piezas", "capa", "valores_de"}   # valores_de: "objetos" (los del catálogo, con usa_objetos)
 REGISTRO_JS = {"pieza": "PIEZAS", "evento": "EVENTOS", "objeto": "OBJETOS", "anotacion": "ANOTACIONES", "mundo": "MUNDOS"}
 
 
@@ -1793,6 +1794,18 @@ def revisar_ficha_mundo(fi, que, tipo):
     return f
 
 
+def expandir_objetos(entradas):
+    """`usa_objetos`: la pieza acepta CUALQUIER objeto del catálogo (actor, flujo): su `usa` y los parámetros con
+    `valores_de: "objetos"` salen de los objetos registrados (también al inyectar uno nuevo en memoria: maqueta_modulo.py)."""
+    objetos = sorted(e["tipo"] for e in entradas if e["clase"] == "objeto")
+    for e in entradas:
+        if e.get("usa_objetos"):
+            e["usa"] = list(objetos)
+            for d in (e.get("parametros") or {}).values():
+                if isinstance(d, dict) and d.get("valores_de") == "objetos":
+                    d["valores"] = list(objetos)
+
+
 def generar_catalogo():
     """Las fichas de video/maqueta/<clase>/ → (catálogo, fallas). Cada módulo con su ficha y cada ficha con su módulo."""
     entradas, f, vistos = [], [], {}
@@ -1819,6 +1832,9 @@ def generar_catalogo():
                 e["modulo"] = "%s/%s.js" % (carpeta, t)
                 e["reglas"] = "scripts/maqueta_tipos/%s.py" % t if os.path.isfile(os.path.join(REGLAS_DIR, t + ".py")) else None
                 entradas.append(e)
+    # `usa_objetos`: la pieza acepta CUALQUIER objeto del catálogo (actor, flujo): su lista de objetos y su `usa` salen de lo
+    # registrado, así un objeto nuevo del constructor sirve sin tocar la ficha a mano
+    expandir_objetos(entradas)
     for e in entradas:
         f += ["%s: `usa` «%s», que no está en el catálogo" % (e["modulo"], u) for u in e.get("usa") or [] if u not in vistos]
     sueltas = sorted(n[:-3] for n in os.listdir(REGLAS_DIR) if n.endswith(".py") and not n.startswith("_") and n[:-3] not in vistos) if os.path.isdir(REGLAS_DIR) else []

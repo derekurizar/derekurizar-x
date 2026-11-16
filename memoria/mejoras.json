@@ -2740,6 +2740,94 @@
       "problema": "Los agentes de /historia esperan un encuadre.json y ids `<eje>-cNN`; sin un brief explícito, el verificador inventó ids que fallan H1 y tuvo que renumerar.",
       "propuesta": "En la guía del paso 3: plantilla del brief para investigador y verificador en /video-3d (ids `<eje>-cNN`, sin fotos, formato de cifras de `datos --sumar`).",
       "estado": "pendiente"
+    },
+    {
+      "id": "m250",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "motor",
+      "archivo": "scripts/maqueta3d.py · video/maqueta/mundos/esquema.js · video/maqueta/piezas/cafetal.js",
+      "problema": "El suelo de un esquema es plano (ctx.altura = 0) y una pieza no puede publicar su propio relieve: la recolectora entre las terrazas del cafetal se sube a mano con lev_m = pendiente_m·k/hileras.",
+      "propuesta": "Que una pieza publique alturas o lugares propios con su elevación (`_alturas`/`_lugares`, como `_caminos`) y que ctx.altura y X.lugar los tengan en cuenta.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m251",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "motor",
+      "archivo": "scripts/maqueta3d.py (cámara) · video/maqueta/motor.js",
+      "problema": "`mira` es siempre un punto en el suelo: en un primer plano de una ladera (dist_m < ~100) la cámara puede quedar dentro del cerro o mirar a la base.",
+      "propuesta": "Un `mira_lev_m` en la clave de cámara (o la altura de la pieza en ese punto), en el motor y en la proyección de los gates.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m252",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "constructor",
+      "archivo": "scripts/maqueta_modulo.py (check)",
+      "problema": "`check` vacía sesiones/_modulos/<tipo>/ antes de escribir y borra la maqueta de prueba que la guía del constructor pide guardar ahí.",
+      "propuesta": "Conservar `maqueta.json` de esa carpeta, o que la guía pida guardarla en sesiones/_modulos/<tipo>.maqueta.json.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m253",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "motor",
+      "archivo": "scripts/maqueta_tipos/_movimiento.py (flujo)",
+      "problema": "Los vehículos de un flujo pueden empezar con S mayor que el largo del carril (campo: 1866–2232 m en un camino de 1676 m): una cámara que sigue a {flujo, n: 0} no ve nada.",
+      "propuesta": "Envolver S módulo el largo del camino, o que M3D3 avise cuando el ancla de una cámara que sigue cae fuera del camino.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m254",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "orquestacion",
+      "archivo": ".claude/workflows/video3d.js · referencias/roles/video-critico/3d.md",
+      "problema": "El Workflow llegó a los cierres con un storyboard que pasaba todos los gates pero donde los mundos de esquema no se leían (la finca parecía franjas de luces, el camión diminuto, la taza no se veía); hizo falta una pasada de corrección del director y dos constructores a mano. Las mejoras que el crítico ya había probado quedaron sin aplicar.",
+      "propuesta": "Que el crítico en «Modo 3D» puntúe la legibilidad de cada mundo en el storyboard (¿se reconoce el objeto protagonista de cada tramo a tamaño de teléfono?) y que un puntaje ≤ 2 vuelva al director/constructor; y que las mejoras probadas se apliquen solas antes de los cierres (como en /historia).",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m255",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "tramos",
+      "archivo": "scripts/maqueta_tramos.py (cuadro)",
+      "problema": "En un fundido, `cuadro` muestra solo el tramo de ese segundo: el storyboard no deja ver cómo se cruzan los dos mundos.",
+      "propuesta": "En la ventana de un fundido, grabar los dos tramos y mezclarlos con el mismo peso que el xfade.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m256",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "guion",
+      "archivo": "scripts/video3d.py (construir → pie)",
+      "problema": "El pie automático usa el texto completo del set (incluye «Fallas: GEM») aunque el video no dibuje fallas.",
+      "propuesta": "Armar el pie con solo las claves que M3D7 pide para las capas usadas (fuente.json → pie_claves).",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m257",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "entrega",
+      "archivo": "scripts/video3d.py (entregar)",
+      "problema": "La carpeta de entrega lleva la fecha de `preparar` (2026-11-15) y no la de la entrega (2026-11-16).",
+      "propuesta": "Usar la fecha del día en que se entrega, o preguntar si cambió.",
+      "estado": "pendiente"
     }
   ]
 }

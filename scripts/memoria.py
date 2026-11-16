@@ -844,7 +844,8 @@ def registrar_video3d(d, estado, dry_run=False):
     gancho = dict(g.get("gancho") or {}, texto=(escenas[0].get("texto") if escenas else ""))
     cierre = dict(g.get("cierre") or {}, texto=(escenas[-1].get("texto") if escenas else ""), final=(escenas[-1].get("final") if escenas else ""))
     reg = {"id": g["id"], "slug": g["slug"], "tema": g.get("tema", ""), "fecha": g["fecha"], "ruta": ruta,
-           "estilo": (g.get("estilo") or {}).get("id"), "motor": g.get("motor"), "set": (g.get("mundo") or {}).get("set"),
+           "estilo": (g.get("estilo") or {}).get("id"), "motor": g.get("motor"), "set": (g.get("mundo") or {}).get("set") or next((m.get("set") for m in (g.get("mundos") or {}).values() if m.get("set")), None),
+           "mundos": sorted({"%s:%s" % (m.get("escala") or "pais", m.get("set") or m.get("receta") or "") for m in (g.get("mundos") or {}).values()}) or None,
            "idea_visual": g.get("idea_visual", ""), "gancho": gancho, "cierre": cierre, "paleta": g["paleta"], "musica": g["musica"],
            "duracion_s": g["duracion_s"], "creditos_voz": g.get("creditos_voz"), "desde": g.get("desde"), "estado": estado}
     ms = leer(VIDEOS3D, obligatorio=False) or json.loads(json.dumps(VACIO_VIDEOS3D))

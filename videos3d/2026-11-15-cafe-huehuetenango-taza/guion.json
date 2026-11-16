@@ -1,0 +1,959 @@
+{
+  "tipo": "video3d",
+  "version": 1,
+  "escenas": [
+    {
+      "mundo": "finca",
+      "secuencia": 1,
+      "texto": "En una ladera de Huehuetenango, Guatemala, el café empieza como una cereza roja.",
+      "titular": {
+        "kicker": "HUEHUETENANGO, GUATEMALA",
+        "texto": "Una taza de café empieza aquí"
+      },
+      "camara": [
+        {
+          "mira": [
+            0,
+            -4
+          ],
+          "dist_m": 70,
+          "azimut": 0,
+          "elevacion": 20
+        },
+        {
+          "al": "fin",
+          "mira": "ladera",
+          "dist_m": 50,
+          "azimut": 4,
+          "elevacion": 17
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "resaltar",
+          "pieza": "cafetal",
+          "dur": 4.5,
+          "sfx": "pulso"
+        }
+      ],
+      "n": 1,
+      "tipo": "gancho",
+      "acto": 1
+    },
+    {
+      "n": 2,
+      "tipo": "toma",
+      "mundo": "finca",
+      "acto": 1,
+      "secuencia": 1,
+      "texto": "Para llegar a una taza en otro país, va a perder la mayor parte de su peso.",
+      "camara": [
+        {
+          "al": "fin",
+          "mira": [
+            6,
+            -4
+          ],
+          "dist_m": 44,
+          "azimut": 8,
+          "elevacion": 15
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "su peso",
+          "tipo": "resaltar",
+          "pieza": "cafetal",
+          "dur": 2.0
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "tipo": "toma",
+      "mundo": "finca",
+      "acto": 1,
+      "secuencia": 1,
+      "texto": "Casi siempre la cuida gente con poca tierra: en el país, el 97 % de quienes producen café son pequeños productores. La cereza cosechada va al beneficio húmedo. Ahí se vuelve pergamino, y empieza a adelgazar: 4.74 kilos de cereza dan un kilo de pergamino.",
+      "camara": [
+        {
+          "dice": "gente con poca tierra",
+          "mira": [
+            6,
+            -9
+          ],
+          "dist_m": 28,
+          "azimut": 6,
+          "elevacion": 14
+        },
+        {
+          "dice": "pequeños productores",
+          "mira": [
+            6,
+            -9
+          ],
+          "dist_m": 32,
+          "azimut": 0,
+          "elevacion": 16
+        },
+        {
+          "dice": "beneficio húmedo",
+          "mira": [
+            74,
+            -42
+          ],
+          "dist_m": 80,
+          "azimut": -22,
+          "elevacion": 24
+        },
+        {
+          "dice": "4.74",
+          "mira": [
+            78,
+            -46
+          ],
+          "dist_m": 68,
+          "azimut": -16,
+          "elevacion": 28
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "beneficio húmedo",
+          "tipo": "resaltar",
+          "pieza": "beneficio-humedo",
+          "dur": 3.0
+        }
+      ],
+      "anotaciones": [
+        {
+          "dice": "gente con poca tierra",
+          "tipo": "pulso",
+          "sobre": [
+            [
+              6,
+              -9
+            ]
+          ],
+          "radio_m": 3,
+          "hasta_dice": "97 %"
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "beneficio húmedo",
+          "lugar": "beneficio",
+          "texto": "Beneficio húmedo",
+          "sub": "Cereza → pergamino"
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "97 %",
+          "valor": "97 %",
+          "rotulo": "de quienes producen café son pequeños productores",
+          "cifra": "taza-c10",
+          "fuente": "USDA",
+          "hasta_dice": "beneficio húmedo"
+        },
+        {
+          "dice": "4.74",
+          "valor": "4.74 kg",
+          "rotulo": "de cereza por cada kilo de pergamino",
+          "cifra": "ruta-c11",
+          "fuente": "MAGA (estimación)"
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "tipo": "toma",
+      "mundo": "carretera",
+      "acto": 2,
+      "secuencia": 2,
+      "texto": "Luego, el pergamino sale por carretera. En un beneficio seco, la trilla lo convierte en café oro. Otra vez pierde peso: hacen falta 1.24 kilos de pergamino para un kilo de oro.",
+      "transicion": "fundido",
+      "fundido_s": 0.6,
+      "camara": [
+        {
+          "mira": {
+            "actor": "camion-cafe"
+          },
+          "dist_m": 55,
+          "azimut": -50,
+          "elevacion": 22
+        },
+        {
+          "dice": "sale por carretera",
+          "mira": {
+            "actor": "camion-cafe"
+          },
+          "dist_m": 50,
+          "azimut": -35,
+          "elevacion": 22
+        },
+        {
+          "dice": "trilla",
+          "mira": {
+            "actor": "camion-cafe"
+          },
+          "dist_m": 70,
+          "azimut": -15,
+          "elevacion": 28
+        },
+        {
+          "dice": "1.24",
+          "mira": {
+            "actor": "camion-cafe"
+          },
+          "dist_m": 80,
+          "azimut": -5,
+          "elevacion": 32
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "sale por carretera",
+          "tipo": "mover",
+          "actor": "camion-cafe",
+          "a": "bodega",
+          "dur": 5.0
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "café oro",
+          "lugar": "bodega",
+          "texto": "Beneficio seco",
+          "sub": "Trilla: pergamino → oro"
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "1.24",
+          "valor": "1.24 kg",
+          "rotulo": "de pergamino por cada kilo de café oro",
+          "cifra": "ruta-c12",
+          "fuente": "MAGA (estimación)"
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "tipo": "toma",
+      "mundo": "pais",
+      "acto": 2,
+      "secuencia": 2,
+      "texto": "Vista desde arriba, esa ladera está en Huehuetenango: sus cafetales crecen desde 1,500 metros sobre el mar, en montañas que no son volcánicas.",
+      "transicion": "fundido",
+      "fundido_s": 0.6,
+      "camara": [
+        {
+          "mira": "huehuetenango",
+          "dist_km": 140,
+          "azimut": 0,
+          "elevacion": 55
+        },
+        {
+          "dice": "1,500 metros",
+          "mira": "huehuetenango",
+          "dist_km": 95,
+          "azimut": 15,
+          "elevacion": 42
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "Huehuetenango",
+          "tipo": "resaltar",
+          "lugar": "huehuetenango",
+          "dur": 2.5
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "Huehuetenango",
+          "lugar": "huehuetenango",
+          "texto": "Huehuetenango",
+          "hasta_dice": "sus cafetales"
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "1,500 metros",
+          "valor": "1,500",
+          "rotulo": "metros sobre el mar: desde ahí crecen sus cafetales",
+          "cifra": "ruta-c01",
+          "fuente": "MAGA"
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "tipo": "toma",
+      "mundo": "pais",
+      "acto": 2,
+      "secuencia": 3,
+      "texto": "Y por el Atlántico, en 2022, más de 72 millones de kilos de café pasaron por Puerto Barrios. En 2025, Guatemala exportó 170.6 millones de kilos de café.",
+      "titular": {
+        "kicker": "PUERTO BARRIOS, IZABAL",
+        "texto": "Café que pasó por el Atlántico"
+      },
+      "camara": [
+        {
+          "dice": "por el Atlántico",
+          "mira": [
+            -90.4,
+            15.4
+          ],
+          "dist_km": 420,
+          "azimut": 10,
+          "elevacion": 55
+        },
+        {
+          "dice": "Puerto Barrios",
+          "mira": "puerto-barrios",
+          "dist_km": 200,
+          "azimut": 0,
+          "elevacion": 50
+        },
+        {
+          "dice": "170.6 millones",
+          "mira": [
+            -89.6,
+            15.4
+          ],
+          "dist_km": 600,
+          "azimut": 0,
+          "elevacion": 62
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "Puerto Barrios",
+          "tipo": "resaltar",
+          "lugar": "puerto-barrios",
+          "dur": 3.0
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "Puerto Barrios",
+          "lugar": "puerto-barrios",
+          "texto": "Puerto Barrios",
+          "dura": 3.6
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "72 millones",
+          "hasta_dice": "Puerto Barrios",
+          "valor": "72 M",
+          "rotulo": "kilos de café pasaron por Puerto Barrios en 2022",
+          "cifra": "ruta-c07kg",
+          "fuente": "CPN"
+        },
+        {
+          "dice": "170.6 millones",
+          "valor": "170.6 M",
+          "rotulo": "millones de kilos de café exportados en 2025",
+          "cifra": "dat-c02",
+          "fuente": "Banguat"
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "tipo": "toma",
+      "mundo": "puerto",
+      "acto": 2,
+      "secuencia": 3,
+      "texto": "Cruza el mar en contenedores, y el 42 % va a Estados Unidos, su primer destino. Detrás, en la última cosecha, vienen Japón, Canadá y Bélgica. Cada kilo salió, en promedio, a 7.66 dólares.",
+      "transicion": "fundido",
+      "fundido_s": 0.6,
+      "camara": [
+        {
+          "mira": "mar",
+          "dist_m": 650,
+          "azimut": 10,
+          "elevacion": 34
+        },
+        {
+          "dice": "42 %",
+          "mira": {
+            "actor": "buque"
+          },
+          "dist_m": 480,
+          "azimut": 15,
+          "elevacion": 28
+        },
+        {
+          "dice": "primer destino",
+          "mira": {
+            "actor": "buque"
+          },
+          "dist_m": 600,
+          "azimut": 22,
+          "elevacion": 28
+        },
+        {
+          "dice": "Japón",
+          "mira": {
+            "actor": "buque"
+          },
+          "dist_m": 760,
+          "azimut": 30,
+          "elevacion": 32
+        },
+        {
+          "dice": "en promedio",
+          "mira": {
+            "actor": "buque"
+          },
+          "dist_m": 900,
+          "azimut": 36,
+          "elevacion": 36
+        },
+        {
+          "dice": "7.66 dólares",
+          "mira": {
+            "actor": "buque"
+          },
+          "dist_m": 1050,
+          "azimut": 40,
+          "elevacion": 40
+        }
+      ],
+      "titular": {
+        "dice": "Japón",
+        "kicker": "DETRÁS DE EE. UU.",
+        "texto": "Japón, Canadá y Bélgica"
+      },
+      "cifras": [
+        {
+          "dice": "42 %",
+          "hasta_dice": "Bélgica",
+          "valor": "42 %",
+          "rotulo": "va a Estados Unidos, su primer destino",
+          "cifra": "taza-c01",
+          "fuente": "USDA y Banguat"
+        },
+        {
+          "dice": "7.66 dólares",
+          "valor": "US$7.66",
+          "rotulo": "por kilo exportado, en promedio",
+          "cifra": "dat-c03",
+          "fuente": "Banguat"
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "Cruza el mar",
+          "tipo": "aparecer",
+          "pieza": "buque",
+          "dur": 0.6
+        },
+        {
+          "dice": "Cruza el mar",
+          "tipo": "mover",
+          "actor": "buque",
+          "a": "mar",
+          "dur": 12.0
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "tipo": "toma",
+      "mundo": "taza",
+      "acto": 3,
+      "secuencia": 4,
+      "texto": "Allá lo tuestan, y adelgaza una vez más: pierde entre el 12 y el 20 % de su peso, según el tueste. De casi 6 kilos de cereza queda menos de un kilo de café tostado. Y en una cafetería de Estados Unidos, un café normal cuesta, en la mediana, 3.52 dólares.",
+      "transicion": "oscuro",
+      "fundido_s": 0.6,
+      "camara": [
+        {
+          "mira": [
+            -6,
+            52
+          ],
+          "dist_m": 62,
+          "azimut": 0,
+          "elevacion": 20
+        },
+        {
+          "dice": "según el tueste",
+          "mira": [
+            -6,
+            53
+          ],
+          "dist_m": 54,
+          "azimut": 6,
+          "elevacion": 19
+        },
+        {
+          "dice": "casi 6 kilos",
+          "mira": [
+            -1,
+            57
+          ],
+          "dist_m": 36,
+          "azimut": 10,
+          "elevacion": 18
+        },
+        {
+          "dice": "café tostado",
+          "mira": [
+            3,
+            62.5
+          ],
+          "dist_m": 20,
+          "azimut": 15,
+          "elevacion": 17
+        },
+        {
+          "dice": "cafetería",
+          "mira": [
+            3,
+            62.5
+          ],
+          "dist_m": 18,
+          "azimut": 20,
+          "elevacion": 16
+        },
+        {
+          "dice": "3.52 dólares",
+          "mira": [
+            3,
+            62.5
+          ],
+          "dist_m": 16,
+          "azimut": 24,
+          "elevacion": 16
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "menos de un kilo",
+          "tipo": "aparecer",
+          "pieza": "taza",
+          "dur": 0.8
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "lo tuestan",
+          "lugar": "tostador",
+          "texto": "Tostador",
+          "hasta_dice": "según el tueste"
+        }
+      ],
+      "anotaciones": [
+        {
+          "dice": "cafetería",
+          "tipo": "pulso",
+          "sobre": [
+            [
+              3,
+              62
+            ]
+          ],
+          "radio_m": 3
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "12",
+          "valor": "12 a 20 %",
+          "rotulo": "del peso se pierde al tostar",
+          "cifra": "taza-c16",
+          "fuente": "un estudio (estimación)",
+          "dura": 3.5
+        },
+        {
+          "dice": "casi 6 kilos",
+          "valor": "5.88 kg",
+          "rotulo": "de cereza por cada kilo de café oro, antes del tueste",
+          "cifra": "ruta-c11x12",
+          "fuente": "MAGA (cálculo)",
+          "hasta_dice": "un café normal"
+        },
+        {
+          "dice": "3.52 dólares",
+          "valor": "US$3.52",
+          "rotulo": "un café normal en EE. UU. (mediana de menús)",
+          "cifra": "taza-c18",
+          "fuente": "Toast",
+          "dura": 3.8
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "tipo": "cierre",
+      "mundo": "finca",
+      "acto": 3,
+      "secuencia": 4,
+      "texto": "Lo que allá se paga por una taza empezó aquí, en una ladera de Huehuetenango, como una cereza roja.",
+      "transicion": "fundido",
+      "fundido_s": 0.6,
+      "final": "Cada taza de allá empezó como una cereza de aquí.",
+      "camara": [
+        {
+          "mira": "ladera",
+          "dist_m": 50,
+          "azimut": 4,
+          "elevacion": 17
+        },
+        {
+          "al": "fin",
+          "mira": [
+            0,
+            -4
+          ],
+          "dist_m": 70,
+          "azimut": 0,
+          "elevacion": 20
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "cereza roja",
+          "tipo": "resaltar",
+          "pieza": "cafetal",
+          "dur": 3.0
+        }
+      ]
+    }
+  ],
+  "estilo": {
+    "id": "noche",
+    "razon": "La idea visual es una sola cosa encendida (la cereza, luego el camión, la ruta, el barco y la taza) sobre mundos a oscuras: es exactamente lo que hace noche, y lo eligió el usuario. Dibuja en three.js las escalas esquema y pais, así que sirve para los cinco mundos (un estilo de Blender solo dibuja pais).",
+    "confianza": "alta",
+    "candidatos": [
+      "noche"
+    ]
+  },
+  "idea_visual": "Una cereza roja es lo único encendido en una ladera a oscuras de Huehuetenango, y la seguimos de mundo en mundo (el beneficio, el camión, el mapa, el barco) hasta que vuelve a encenderse como una taza humeante en otro país.",
+  "protagonista": "cafetal",
+  "mundos": {
+    "finca": {
+      "escala": "esquema",
+      "receta": "campo",
+      "semilla": 11,
+      "tamano_m": 1200,
+      "lugares": {
+        "ladera": {
+          "x": 0,
+          "y": 0,
+          "nombre": "Ladera"
+        },
+        "beneficio": {
+          "x": 80,
+          "y": -48,
+          "nombre": "Beneficio húmedo"
+        }
+      },
+      "piezas": [
+        {
+          "id": "cafetal",
+          "tipo": "cafetal",
+          "puntos": [
+            [
+              -40,
+              -25
+            ],
+            [
+              40,
+              -25
+            ],
+            [
+              42,
+              25
+            ],
+            [
+              -38,
+              27
+            ]
+          ],
+          "hileras": 10,
+          "pendiente_m": 20,
+          "rumbo": 90,
+          "maduras": 0.8,
+          "personas": 2,
+          "semilla": 3
+        },
+        {
+          "id": "recolectora",
+          "tipo": "actor",
+          "objeto": "persona",
+          "lugar": [
+            6,
+            -9
+          ],
+          "rumbo": 270,
+          "lev_m": 6,
+          "tamano": 1.8
+        },
+        {
+          "id": "beneficio-humedo",
+          "tipo": "zona",
+          "puntos": [
+            [
+              68,
+              -36
+            ],
+            [
+              92,
+              -36
+            ],
+            [
+              92,
+              -60
+            ],
+            [
+              68,
+              -60
+            ]
+          ],
+          "tono": "secundario",
+          "opacidad": 0.12
+        },
+        {
+          "id": "casa-beneficio",
+          "tipo": "actor",
+          "objeto": "casa",
+          "lugar": "beneficio",
+          "rumbo": 270,
+          "tamano": 3
+        }
+      ],
+      "protagonista": "cafetal"
+    },
+    "carretera": {
+      "escala": "esquema",
+      "receta": "campo",
+      "semilla": 4,
+      "tamano_m": 1200,
+      "lugares": {
+        "bodega": {
+          "x": 72,
+          "y": 14,
+          "nombre": "Beneficio seco"
+        }
+      },
+      "piezas": [
+        {
+          "id": "camino",
+          "tipo": "calles"
+        },
+        {
+          "id": "rio",
+          "tipo": "agua"
+        },
+        {
+          "id": "camion-cafe",
+          "tipo": "actor",
+          "objeto": "camionsacos",
+          "camino": "camino",
+          "claves": [
+            {
+              "t": 0,
+              "s": 600
+            }
+          ],
+          "tamano": 2
+        },
+        {
+          "id": "beneficio-seco",
+          "tipo": "actor",
+          "objeto": "casa",
+          "lugar": "bodega",
+          "rumbo": 270,
+          "tamano": 3
+        }
+      ],
+      "protagonista": "camion-cafe"
+    },
+    "pais": {
+      "escala": "pais",
+      "set": "guatemala",
+      "exageracion": 5,
+      "piezas": [
+        {
+          "id": "frontera",
+          "tipo": "frontera",
+          "vecinos": true
+        },
+        {
+          "id": "pueblos",
+          "tipo": "luces",
+          "lugares": "todos"
+        }
+      ]
+    },
+    "puerto": {
+      "escala": "esquema",
+      "receta": "costa",
+      "semilla": 5,
+      "tamano_m": 2400,
+      "lugares": {
+        "muelle": {
+          "x": 0,
+          "y": -380,
+          "nombre": "Muelle"
+        }
+      },
+      "piezas": [
+        {
+          "id": "agua",
+          "tipo": "agua"
+        },
+        {
+          "id": "calles",
+          "tipo": "calles"
+        },
+        {
+          "id": "edificios",
+          "tipo": "edificios"
+        },
+        {
+          "id": "camion-puerto",
+          "tipo": "actor",
+          "objeto": "camionsacos",
+          "lugar": "muelle",
+          "rumbo": 270
+        },
+        {
+          "id": "buque",
+          "tipo": "actor",
+          "objeto": "barco",
+          "puntos": [
+            [
+              30,
+              -480
+            ],
+            [
+              15,
+              -640
+            ],
+            [
+              0,
+              -792
+            ],
+            [
+              0,
+              -1080
+            ]
+          ],
+          "claves": [
+            {
+              "t": 0,
+              "s": "0%"
+            }
+          ]
+        }
+      ],
+      "protagonista": "buque"
+    },
+    "taza": {
+      "escala": "esquema",
+      "receta": "plaza",
+      "semilla": 3,
+      "tamano_m": 900,
+      "piezas": [
+        {
+          "id": "calles",
+          "tipo": "calles"
+        },
+        {
+          "id": "edificios",
+          "tipo": "edificios"
+        },
+        {
+          "id": "tostadora",
+          "tipo": "actor",
+          "objeto": "casa",
+          "lugar": "tostador",
+          "rumbo": 270,
+          "tamano": 3
+        },
+        {
+          "id": "cliente",
+          "tipo": "actor",
+          "objeto": "persona",
+          "lugar": [
+            0,
+            60
+          ],
+          "rumbo": 270,
+          "tamano": 1
+        },
+        {
+          "id": "taza",
+          "tipo": "actor",
+          "objeto": "taza",
+          "lugar": [
+            3,
+            62
+          ],
+          "tamano": 8,
+          "rumbo": 30
+        }
+      ],
+      "protagonista": "taza",
+      "lugares": {
+        "tostador": {
+          "x": -16,
+          "y": 50,
+          "nombre": "Tostador"
+        }
+      }
+    }
+  },
+  "gancho": {
+    "id": "g2",
+    "familia": "revelacion",
+    "elegido_por": "usuario"
+  },
+  "narracion": "En una ladera de Huehuetenango, Guatemala, el café empieza como una cereza roja. Para llegar a una taza en otro país, va a perder la mayor parte de su peso. Casi siempre la cuida gente con poca tierra: en el país, el 97 % de quienes producen café son pequeños productores. La cereza cosechada va al beneficio húmedo. Ahí se vuelve pergamino, y empieza a adelgazar: 4.74 kilos de cereza dan un kilo de pergamino. Luego, el pergamino sale por carretera. En un beneficio seco, la trilla lo convierte en café oro. Otra vez pierde peso: hacen falta 1.24 kilos de pergamino para un kilo de oro. Vista desde arriba, esa ladera está en Huehuetenango: sus cafetales crecen desde 1,500 metros sobre el mar, en montañas que no son volcánicas. Y por el Atlántico, en 2022, más de 72 millones de kilos de café pasaron por Puerto Barrios. En 2025, Guatemala exportó 170.6 millones de kilos de café. Cruza el mar en contenedores, y el 42 % va a Estados Unidos, su primer destino. Detrás, en la última cosecha, vienen Japón, Canadá y Bélgica. Cada kilo salió, en promedio, a 7.66 dólares. Allá lo tuestan, y adelgaza una vez más: pierde entre el 12 y el 20 % de su peso, según el tueste. De casi 6 kilos de cereza queda menos de un kilo de café tostado. Y en una cafetería de Estados Unidos, un café normal cuesta, en la mediana, 3.52 dólares. Lo que allá se paga por una taza empezó aquí, en una ladera de Huehuetenango, como una cereza roja.",
+  "promesa": {
+    "forma": "presagio",
+    "texto": "Para llegar a una taza en otro país, va a perder la mayor parte de su peso.",
+    "pago": "escenas 3, 4 y 8: pierde peso al volverse pergamino, al trillarse y al tostarse"
+  },
+  "no_afirmar": [
+    "Por qué puerto sale el café de Huehuetenango, ni en qué proporción (el mapa no dibuja ruta: la voz dice el café que pasó por Puerto Barrios y el del país)",
+    "Kilómetros por carretera desde la finca o desde Huehuetenango hasta el puerto",
+    "Días de barco hasta el destino",
+    "Dónde se hace la trilla (el beneficio seco es una casa genérica en un esquema, sin lugar)",
+    "Que todo el café pase por la capital (la ruta no toca la Ciudad de Guatemala)",
+    "El mes exacto de la cosecha (en disputa)",
+    "La altitud máxima de los cafetales (1,900 MAGA frente a 2,000 Anacafé: en disputa); solo «desde 1,500 metros»",
+    "Que la cosecha sea a mano o que la cereza se despulpe o se seque en un patio (no está en lo verificado: la recolectora y el beneficio ilustran)",
+    "Cuántas tazas salen de un kilo o cuánto recibe el productor por taza (no hay cálculo verificado; la voz no compara 7.66 con 3.52)",
+    "El tamaño del contenedor en la voz o en pantalla («20 pies» está verificado como hecho pero no hay cifra con id en datos.json)",
+    "Nombres reales (Huehuetenango, EE. UU., Japón) como marcas o lugares de un mundo esquema: van en la voz, el kicker o el rótulo de una cifra",
+    "Hectáreas de café de Huehuetenango y su parte del área nacional (en disputa: Anacafé 34,910 ha frente a 86,026 ha del Gobierno)",
+    "Que los 72 millones de kilos (72,316 t) de Puerto Barrios fueran exportación ni que vinieran de Huehuetenango: la CPN dice que pasaron por el puerto",
+    "El peso exacto del café tostado: de 5.88 kg de cereza sale 1 kg de oro, y al tostarlo pierde del 12 al 20 % (0.80–0.88 kg); la voz solo dice «menos de un kilo»",
+    "La medida de café por litro de agua (taza-c15) ya no se dice ni se dibuja; la taza ilustra"
+  ],
+  "caption": {
+    "tiktok": "De una ladera de Huehuetenango a una taza en Estados Unidos: el café pierde peso en cada paso. 4.74 kg de cereza dan 1 kg de pergamino, y hacen falta 1.24 kg de pergamino para 1 kg de oro. En 2025, Guatemala exportó 170.6 millones de kilos de café; el 42 % va a EE. UU.\n\nFuentes: MAGA, Banguat, USDA, CPN, Toast.\n\n#Guatemala #Café #Huehuetenango #Exportaciones",
+    "instagram": "De una ladera de Huehuetenango a una taza en otro país.\n\nEl café pierde peso en cada paso: 4.74 kg de cereza dan 1 kg de pergamino; 1.24 kg de pergamino dan 1 kg de café oro; al tostarlo pierde entre el 12 y el 20 %.\n\nEn 2025, Guatemala exportó 170.6 millones de kilos de café por US$1,307.3 millones. El 42 % va a Estados Unidos, su primer destino. Allá, un café normal cuesta US$3.52 en la mediana de los menús.\n\nFuentes: MAGA, Banguat, USDA, CPN, Toast.\n\n#Guatemala #Café #Huehuetenango #CaféDeGuatemala",
+    "facebook": "Esa taza de café en Estados Unidos empezó como una cereza roja en una ladera de Huehuetenango.\n\nEn el camino pierde peso tres veces: 4.74 kg de cereza dan 1 kg de pergamino, 1.24 kg de pergamino dan 1 kg de café oro, y al tostarlo pierde entre el 12 y el 20 %. En 2025, Guatemala exportó 170.6 millones de kilos de café, a US$7.66 el kilo en promedio; el 42 % va a EE. UU.\n\nFuentes: MAGA, Banguat, USDA, CPN y Toast.",
+    "shorts": "Del cafetal de Huehuetenango a una taza en otro país\n\nEl café pierde peso en cada paso: 4.74 kg de cereza dan 1 kg de pergamino. En 2025, Guatemala exportó 170.6 millones de kilos; el 42 % va a EE. UU.\n\nFuentes: MAGA, Banguat, USDA.\n\n#Shorts #Guatemala #Café"
+  },
+  "aviso": "Esquema · no es un lugar real",
+  "id": "video3d-cafe-huehuetenango-taza",
+  "slug": "cafe-huehuetenango-taza",
+  "tema": "El café de una finca de Huehuetenango hasta una taza en otro país",
+  "fecha": "2026-11-15",
+  "paleta": "cacao",
+  "musica": "cacao-2",
+  "desde": null,
+  "motor": "three",
+  "duracion_s": 112.3,
+  "creditos_voz": 1655.83
+}

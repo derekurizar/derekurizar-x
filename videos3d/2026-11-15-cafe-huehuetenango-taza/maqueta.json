@@ -1,0 +1,2182 @@
+{
+  "version": 1,
+  "estilo": "noche",
+  "paleta": "cacao",
+  "fps": 30,
+  "duracion_s": 112.3,
+  "protagonista": "cafetal",
+  "capa": {
+    "titulares": [
+      {
+        "t": 0.0,
+        "kicker": "HUEHUETENANGO, GUATEMALA",
+        "texto": "Una taza de café empieza aquí",
+        "hasta": 4.9667
+      },
+      {
+        "t": 52.3333,
+        "kicker": "PUERTO BARRIOS, IZABAL",
+        "texto": "Café que pasó por el Atlántico",
+        "hasta": 65.9667
+      },
+      {
+        "t": 74.2,
+        "kicker": "DETRÁS DE EE. UU.",
+        "texto": "Japón, Canadá y Bélgica",
+        "hasta": 82.4667
+      }
+    ],
+    "cifras": [
+      {
+        "valor": "97 %",
+        "rotulo": "de quienes producen café son pequeños productores",
+        "fuente": "USDA",
+        "t": 13.7667,
+        "hasta": 21.4
+      },
+      {
+        "valor": "4.74 kg",
+        "rotulo": "de cereza por cada kilo de pergamino",
+        "fuente": "MAGA (estimación)",
+        "t": 24.7667,
+        "hasta": 30.0
+      },
+      {
+        "valor": "1.24 kg",
+        "rotulo": "de pergamino por cada kilo de café oro",
+        "fuente": "MAGA (estimación)",
+        "t": 38.6333,
+        "hasta": 42.5333
+      },
+      {
+        "valor": "1,500",
+        "rotulo": "metros sobre el mar: desde ahí crecen sus cafetales",
+        "fuente": "MAGA",
+        "t": 47.1333,
+        "hasta": 52.3333
+      },
+      {
+        "valor": "72 M",
+        "rotulo": "kilos de café pasaron por Puerto Barrios en 2022",
+        "fuente": "CPN",
+        "t": 54.8667,
+        "hasta": 59.2
+      },
+      {
+        "valor": "170.6 M",
+        "rotulo": "millones de kilos de café exportados en 2025",
+        "fuente": "Banguat",
+        "t": 61.8333,
+        "hasta": 65.9667
+      },
+      {
+        "valor": "42 %",
+        "rotulo": "va a Estados Unidos, su primer destino",
+        "fuente": "USDA y Banguat",
+        "t": 68.0333,
+        "hasta": 77.2
+      },
+      {
+        "valor": "US$7.66",
+        "rotulo": "por kilo exportado, en promedio",
+        "fuente": "Banguat",
+        "t": 78.8,
+        "hasta": 82.4667
+      },
+      {
+        "valor": "12 a 20 %",
+        "rotulo": "del peso se pierde al tostar",
+        "fuente": "un estudio (estimación)",
+        "t": 86.3667,
+        "hasta": 89.8667
+      },
+      {
+        "valor": "5.88 kg",
+        "rotulo": "de cereza por cada kilo de café oro, antes del tueste",
+        "fuente": "MAGA (cálculo)",
+        "t": 90.9333,
+        "hasta": 99.4
+      },
+      {
+        "valor": "US$3.52",
+        "rotulo": "un café normal en EE. UU. (mediana de menús)",
+        "fuente": "Toast",
+        "t": 100.1333,
+        "hasta": 103.9333
+      }
+    ],
+    "palabras": [
+      {
+        "text": "En",
+        "start": 0.0,
+        "end": 0.137
+      },
+      {
+        "text": "una",
+        "start": 0.19,
+        "end": 0.316
+      },
+      {
+        "text": "ladera",
+        "start": 0.359,
+        "end": 0.665
+      },
+      {
+        "text": "de",
+        "start": 0.717,
+        "end": 0.813
+      },
+      {
+        "text": "Huehuetenango,",
+        "start": 0.876,
+        "end": 1.689
+      },
+      {
+        "text": "Guatemala,",
+        "start": 1.72,
+        "end": 2.375
+      },
+      {
+        "text": "el",
+        "start": 2.427,
+        "end": 2.523
+      },
+      {
+        "text": "café",
+        "start": 2.575,
+        "end": 2.755
+      },
+      {
+        "text": "empieza",
+        "start": 2.775,
+        "end": 3.145
+      },
+      {
+        "text": "como",
+        "start": 3.187,
+        "end": 3.367
+      },
+      {
+        "text": "una",
+        "start": 3.441,
+        "end": 3.61
+      },
+      {
+        "text": "cereza",
+        "start": 3.663,
+        "end": 4.105
+      },
+      {
+        "text": "roja.",
+        "start": 4.19,
+        "end": 4.749
+      },
+      {
+        "text": "Para",
+        "start": 5.168,
+        "end": 5.358
+      },
+      {
+        "text": "llegar",
+        "start": 5.379,
+        "end": 5.621
+      },
+      {
+        "text": "a",
+        "start": 5.653,
+        "end": 5.674
+      },
+      {
+        "text": "una",
+        "start": 5.716,
+        "end": 5.864
+      },
+      {
+        "text": "taza",
+        "start": 5.906,
+        "end": 6.191
+      },
+      {
+        "text": "en",
+        "start": 6.244,
+        "end": 6.308
+      },
+      {
+        "text": "otro",
+        "start": 6.36,
+        "end": 6.55
+      },
+      {
+        "text": "país,",
+        "start": 6.592,
+        "end": 7.046
+      },
+      {
+        "text": "va",
+        "start": 7.078,
+        "end": 7.247
+      },
+      {
+        "text": "a",
+        "start": 7.289,
+        "end": 7.309
+      },
+      {
+        "text": "perder",
+        "start": 7.363,
+        "end": 7.721
+      },
+      {
+        "text": "la",
+        "start": 7.806,
+        "end": 7.879
+      },
+      {
+        "text": "mayor",
+        "start": 7.932,
+        "end": 8.259
+      },
+      {
+        "text": "parte",
+        "start": 8.323,
+        "end": 8.598
+      },
+      {
+        "text": "de",
+        "start": 8.639,
+        "end": 8.703
+      },
+      {
+        "text": "su",
+        "start": 8.745,
+        "end": 8.851
+      },
+      {
+        "text": "peso.",
+        "start": 8.904,
+        "end": 9.431
+      },
+      {
+        "text": "Casi",
+        "start": 9.975,
+        "end": 10.249
+      },
+      {
+        "text": "siempre",
+        "start": 10.302,
+        "end": 10.692
+      },
+      {
+        "text": "la",
+        "start": 10.735,
+        "end": 10.808
+      },
+      {
+        "text": "cuida",
+        "start": 10.861,
+        "end": 11.188
+      },
+      {
+        "text": "gente",
+        "start": 11.262,
+        "end": 11.632
+      },
+      {
+        "text": "con",
+        "start": 11.674,
+        "end": 11.79
+      },
+      {
+        "text": "poca",
+        "start": 11.843,
+        "end": 12.065
+      },
+      {
+        "text": "tierra:",
+        "start": 12.106,
+        "end": 12.687
+      },
+      {
+        "text": "en",
+        "start": 13.088,
+        "end": 13.183
+      },
+      {
+        "text": "el",
+        "start": 13.235,
+        "end": 13.288
+      },
+      {
+        "text": "país,",
+        "start": 13.341,
+        "end": 13.774
+      },
+      {
+        "text": "el",
+        "start": 13.816,
+        "end": 13.933
+      },
+      {
+        "text": "97 %",
+        "start": 14.006,
+        "end": 15.389
+      },
+      {
+        "text": "de",
+        "start": 15.452,
+        "end": 15.515
+      },
+      {
+        "text": "quienes",
+        "start": 15.557,
+        "end": 15.769
+      },
+      {
+        "text": "producen",
+        "start": 15.822,
+        "end": 16.234
+      },
+      {
+        "text": "café",
+        "start": 16.275,
+        "end": 16.592
+      },
+      {
+        "text": "son",
+        "start": 16.666,
+        "end": 16.793
+      },
+      {
+        "text": "pequeños",
+        "start": 16.845,
+        "end": 17.342
+      },
+      {
+        "text": "productores.",
+        "start": 17.384,
+        "end": 18.185
+      },
+      {
+        "text": "La",
+        "start": 18.587,
+        "end": 18.693
+      },
+      {
+        "text": "cereza",
+        "start": 18.714,
+        "end": 18.998
+      },
+      {
+        "text": "cosechada",
+        "start": 19.041,
+        "end": 19.547
+      },
+      {
+        "text": "va",
+        "start": 19.611,
+        "end": 19.695
+      },
+      {
+        "text": "al",
+        "start": 19.737,
+        "end": 19.801
+      },
+      {
+        "text": "beneficio",
+        "start": 19.854,
+        "end": 20.392
+      },
+      {
+        "text": "húmedo.",
+        "start": 20.413,
+        "end": 21.004
+      },
+      {
+        "text": "Ahí",
+        "start": 21.468,
+        "end": 21.711
+      },
+      {
+        "text": "se",
+        "start": 21.816,
+        "end": 21.912
+      },
+      {
+        "text": "vuelve",
+        "start": 21.954,
+        "end": 22.239
+      },
+      {
+        "text": "pergamino,",
+        "start": 22.281,
+        "end": 23.02
+      },
+      {
+        "text": "y",
+        "start": 23.178,
+        "end": 23.231
+      },
+      {
+        "text": "empieza",
+        "start": 23.295,
+        "end": 23.854
+      },
+      {
+        "text": "a",
+        "start": 23.906,
+        "end": 23.948
+      },
+      {
+        "text": "adelgazar:",
+        "start": 23.97,
+        "end": 24.793
+      },
+      {
+        "text": "4.74",
+        "start": 25.015,
+        "end": 26.672
+      },
+      {
+        "text": "kilos",
+        "start": 26.725,
+        "end": 26.999
+      },
+      {
+        "text": "de",
+        "start": 27.041,
+        "end": 27.094
+      },
+      {
+        "text": "cereza",
+        "start": 27.136,
+        "end": 27.59
+      },
+      {
+        "text": "dan",
+        "start": 27.78,
+        "end": 27.98
+      },
+      {
+        "text": "un",
+        "start": 28.086,
+        "end": 28.149
+      },
+      {
+        "text": "kilo",
+        "start": 28.255,
+        "end": 28.561
+      },
+      {
+        "text": "de",
+        "start": 28.614,
+        "end": 28.677
+      },
+      {
+        "text": "pergamino.",
+        "start": 28.719,
+        "end": 29.564
+      },
+      {
+        "text": "Luego,",
+        "start": 30.0,
+        "end": 30.506
+      },
+      {
+        "text": "el",
+        "start": 30.549,
+        "end": 30.623
+      },
+      {
+        "text": "pergamino",
+        "start": 30.675,
+        "end": 31.14
+      },
+      {
+        "text": "sale",
+        "start": 31.225,
+        "end": 31.509
+      },
+      {
+        "text": "por",
+        "start": 31.562,
+        "end": 31.678
+      },
+      {
+        "text": "carretera.",
+        "start": 31.731,
+        "end": 32.449
+      },
+      {
+        "text": "En",
+        "start": 32.745,
+        "end": 32.871
+      },
+      {
+        "text": "un",
+        "start": 32.935,
+        "end": 32.976
+      },
+      {
+        "text": "beneficio",
+        "start": 33.018,
+        "end": 33.525
+      },
+      {
+        "text": "seco,",
+        "start": 33.578,
+        "end": 34.032
+      },
+      {
+        "text": "la",
+        "start": 34.169,
+        "end": 34.254
+      },
+      {
+        "text": "trilla",
+        "start": 34.285,
+        "end": 34.538
+      },
+      {
+        "text": "lo",
+        "start": 34.581,
+        "end": 34.644
+      },
+      {
+        "text": "convierte",
+        "start": 34.686,
+        "end": 35.129
+      },
+      {
+        "text": "en",
+        "start": 35.161,
+        "end": 35.225
+      },
+      {
+        "text": "café",
+        "start": 35.298,
+        "end": 35.689
+      },
+      {
+        "text": "oro.",
+        "start": 35.752,
+        "end": 36.185
+      },
+      {
+        "text": "Otra",
+        "start": 36.586,
+        "end": 36.903
+      },
+      {
+        "text": "vez",
+        "start": 36.955,
+        "end": 37.135
+      },
+      {
+        "text": "pierde",
+        "start": 37.198,
+        "end": 37.473
+      },
+      {
+        "text": "peso:",
+        "start": 37.525,
+        "end": 38.032
+      },
+      {
+        "text": "hacen",
+        "start": 38.169,
+        "end": 38.433
+      },
+      {
+        "text": "falta",
+        "start": 38.485,
+        "end": 38.782
+      },
+      {
+        "text": "1.24",
+        "start": 38.887,
+        "end": 40.048
+      },
+      {
+        "text": "kilos",
+        "start": 40.111,
+        "end": 40.385
+      },
+      {
+        "text": "de",
+        "start": 40.417,
+        "end": 40.459
+      },
+      {
+        "text": "pergamino",
+        "start": 40.502,
+        "end": 40.998
+      },
+      {
+        "text": "para",
+        "start": 41.051,
+        "end": 41.219
+      },
+      {
+        "text": "un",
+        "start": 41.304,
+        "end": 41.42
+      },
+      {
+        "text": "kilo",
+        "start": 41.494,
+        "end": 41.779
+      },
+      {
+        "text": "de",
+        "start": 41.832,
+        "end": 41.905
+      },
+      {
+        "text": "oro.",
+        "start": 41.969,
+        "end": 42.327
+      },
+      {
+        "text": "Vista",
+        "start": 42.734,
+        "end": 43.04
+      },
+      {
+        "text": "desde",
+        "start": 43.082,
+        "end": 43.293
+      },
+      {
+        "text": "arriba,",
+        "start": 43.335,
+        "end": 43.705
+      },
+      {
+        "text": "esa",
+        "start": 43.758,
+        "end": 43.98
+      },
+      {
+        "text": "ladera",
+        "start": 44.021,
+        "end": 44.328
+      },
+      {
+        "text": "está",
+        "start": 44.381,
+        "end": 44.581
+      },
+      {
+        "text": "en",
+        "start": 44.645,
+        "end": 44.719
+      },
+      {
+        "text": "Huehuetenango:",
+        "start": 44.761,
+        "end": 45.669
+      },
+      {
+        "text": "sus",
+        "start": 45.964,
+        "end": 46.111
+      },
+      {
+        "text": "cafetales",
+        "start": 46.143,
+        "end": 46.608
+      },
+      {
+        "text": "crecen",
+        "start": 46.65,
+        "end": 46.977
+      },
+      {
+        "text": "desde",
+        "start": 47.03,
+        "end": 47.262
+      },
+      {
+        "text": "1,500",
+        "start": 47.368,
+        "end": 48.212
+      },
+      {
+        "text": "metros",
+        "start": 48.297,
+        "end": 48.645
+      },
+      {
+        "text": "sobre",
+        "start": 48.666,
+        "end": 48.909
+      },
+      {
+        "text": "el",
+        "start": 48.93,
+        "end": 48.982
+      },
+      {
+        "text": "mar,",
+        "start": 49.046,
+        "end": 49.405
+      },
+      {
+        "text": "en",
+        "start": 49.542,
+        "end": 49.658
+      },
+      {
+        "text": "montañas",
+        "start": 49.711,
+        "end": 50.249
+      },
+      {
+        "text": "que",
+        "start": 50.301,
+        "end": 50.376
+      },
+      {
+        "text": "no",
+        "start": 50.481,
+        "end": 50.608
+      },
+      {
+        "text": "son",
+        "start": 50.671,
+        "end": 50.83
+      },
+      {
+        "text": "volcánicas.",
+        "start": 50.871,
+        "end": 51.874
+      },
+      {
+        "text": "Y",
+        "start": 52.333,
+        "end": 52.407
+      },
+      {
+        "text": "por",
+        "start": 52.481,
+        "end": 52.597
+      },
+      {
+        "text": "el",
+        "start": 52.629,
+        "end": 52.671
+      },
+      {
+        "text": "Atlántico,",
+        "start": 52.734,
+        "end": 53.315
+      },
+      {
+        "text": "en",
+        "start": 53.347,
+        "end": 53.421
+      },
+      {
+        "text": "2022,",
+        "start": 53.473,
+        "end": 54.645
+      },
+      {
+        "text": "más",
+        "start": 54.761,
+        "end": 54.982
+      },
+      {
+        "text": "de",
+        "start": 55.014,
+        "end": 55.067
+      },
+      {
+        "text": "72",
+        "start": 55.109,
+        "end": 55.784
+      },
+      {
+        "text": "millones",
+        "start": 55.859,
+        "end": 56.312
+      },
+      {
+        "text": "de",
+        "start": 56.354,
+        "end": 56.418
+      },
+      {
+        "text": "kilos",
+        "start": 56.471,
+        "end": 56.766
+      },
+      {
+        "text": "de",
+        "start": 56.809,
+        "end": 56.861
+      },
+      {
+        "text": "café",
+        "start": 56.903,
+        "end": 57.22
+      },
+      {
+        "text": "pasaron",
+        "start": 57.294,
+        "end": 57.652
+      },
+      {
+        "text": "por",
+        "start": 57.695,
+        "end": 57.811
+      },
+      {
+        "text": "Puerto",
+        "start": 57.885,
+        "end": 58.181
+      },
+      {
+        "text": "Barrios.",
+        "start": 58.222,
+        "end": 58.803
+      },
+      {
+        "text": "En",
+        "start": 59.352,
+        "end": 59.49
+      },
+      {
+        "text": "2025,",
+        "start": 59.531,
+        "end": 60.851
+      },
+      {
+        "text": "Guatemala",
+        "start": 61.009,
+        "end": 61.452
+      },
+      {
+        "text": "exportó",
+        "start": 61.473,
+        "end": 61.991
+      },
+      {
+        "text": "170.6 millones de",
+        "start": 62.075,
+        "end": 64.618
+      },
+      {
+        "text": "kilos",
+        "start": 64.723,
+        "end": 65.051
+      },
+      {
+        "text": "de",
+        "start": 65.103,
+        "end": 65.156
+      },
+      {
+        "text": "café.",
+        "start": 65.198,
+        "end": 65.704
+      },
+      {
+        "text": "Cruza",
+        "start": 66.241,
+        "end": 66.579
+      },
+      {
+        "text": "el",
+        "start": 66.621,
+        "end": 66.685
+      },
+      {
+        "text": "mar",
+        "start": 66.759,
+        "end": 66.939
+      },
+      {
+        "text": "en",
+        "start": 66.98,
+        "end": 67.023
+      },
+      {
+        "text": "contenedores,",
+        "start": 67.076,
+        "end": 67.889
+      },
+      {
+        "text": "y",
+        "start": 68.026,
+        "end": 68.089
+      },
+      {
+        "text": "el",
+        "start": 68.163,
+        "end": 68.226
+      },
+      {
+        "text": "42 %",
+        "start": 68.279,
+        "end": 69.545
+      },
+      {
+        "text": "va",
+        "start": 69.619,
+        "end": 69.735
+      },
+      {
+        "text": "a",
+        "start": 69.767,
+        "end": 69.809
+      },
+      {
+        "text": "Estados",
+        "start": 69.883,
+        "end": 70.295
+      },
+      {
+        "text": "Unidos,",
+        "start": 70.379,
+        "end": 70.886
+      },
+      {
+        "text": "su",
+        "start": 71.044,
+        "end": 71.17
+      },
+      {
+        "text": "primer",
+        "start": 71.213,
+        "end": 71.488
+      },
+      {
+        "text": "destino.",
+        "start": 71.55,
+        "end": 72.163
+      },
+      {
+        "text": "Detrás,",
+        "start": 72.564,
+        "end": 73.039
+      },
+      {
+        "text": "en",
+        "start": 73.06,
+        "end": 73.113
+      },
+      {
+        "text": "la",
+        "start": 73.166,
+        "end": 73.219
+      },
+      {
+        "text": "última",
+        "start": 73.281,
+        "end": 73.609
+      },
+      {
+        "text": "cosecha,",
+        "start": 73.651,
+        "end": 74.105
+      },
+      {
+        "text": "vienen",
+        "start": 74.126,
+        "end": 74.4
+      },
+      {
+        "text": "Japón,",
+        "start": 74.464,
+        "end": 75.076
+      },
+      {
+        "text": "Canadá",
+        "start": 75.213,
+        "end": 75.719
+      },
+      {
+        "text": "y",
+        "start": 75.941,
+        "end": 76.047
+      },
+      {
+        "text": "Bélgica.",
+        "start": 76.131,
+        "end": 76.807
+      },
+      {
+        "text": "Cada",
+        "start": 77.271,
+        "end": 77.514
+      },
+      {
+        "text": "kilo",
+        "start": 77.556,
+        "end": 77.757
+      },
+      {
+        "text": "salió,",
+        "start": 77.809,
+        "end": 78.179
+      },
+      {
+        "text": "en",
+        "start": 78.2,
+        "end": 78.263
+      },
+      {
+        "text": "promedio,",
+        "start": 78.316,
+        "end": 78.876
+      },
+      {
+        "text": "a",
+        "start": 78.918,
+        "end": 78.991
+      },
+      {
+        "text": "7.66 dólares.",
+        "start": 79.066,
+        "end": 82.02
+      },
+      {
+        "text": "Allá",
+        "start": 82.467,
+        "end": 82.847
+      },
+      {
+        "text": "lo",
+        "start": 82.92,
+        "end": 83.005
+      },
+      {
+        "text": "tuestan,",
+        "start": 83.058,
+        "end": 83.628
+      },
+      {
+        "text": "y",
+        "start": 83.786,
+        "end": 83.829
+      },
+      {
+        "text": "adelgaza",
+        "start": 83.881,
+        "end": 84.399
+      },
+      {
+        "text": "una",
+        "start": 84.504,
+        "end": 84.672
+      },
+      {
+        "text": "vez",
+        "start": 84.715,
+        "end": 84.852
+      },
+      {
+        "text": "más:",
+        "start": 84.916,
+        "end": 85.306
+      },
+      {
+        "text": "pierde",
+        "start": 85.77,
+        "end": 86.15
+      },
+      {
+        "text": "entre",
+        "start": 86.192,
+        "end": 86.446
+      },
+      {
+        "text": "el",
+        "start": 86.467,
+        "end": 86.53
+      },
+      {
+        "text": "12",
+        "start": 86.604,
+        "end": 87.005
+      },
+      {
+        "text": "y",
+        "start": 87.079,
+        "end": 87.142
+      },
+      {
+        "text": "el",
+        "start": 87.195,
+        "end": 87.259
+      },
+      {
+        "text": "20 %",
+        "start": 87.311,
+        "end": 88.229
+      },
+      {
+        "text": "de",
+        "start": 88.282,
+        "end": 88.335
+      },
+      {
+        "text": "su",
+        "start": 88.378,
+        "end": 88.483
+      },
+      {
+        "text": "peso,",
+        "start": 88.536,
+        "end": 89.01
+      },
+      {
+        "text": "según",
+        "start": 89.169,
+        "end": 89.539
+      },
+      {
+        "text": "el",
+        "start": 89.591,
+        "end": 89.654
+      },
+      {
+        "text": "tueste.",
+        "start": 89.718,
+        "end": 90.309
+      },
+      {
+        "text": "De",
+        "start": 91.048,
+        "end": 91.153
+      },
+      {
+        "text": "casi",
+        "start": 91.195,
+        "end": 91.449
+      },
+      {
+        "text": "6",
+        "start": 91.522,
+        "end": 91.808
+      },
+      {
+        "text": "kilos",
+        "start": 91.881,
+        "end": 92.198
+      },
+      {
+        "text": "de",
+        "start": 92.229,
+        "end": 92.293
+      },
+      {
+        "text": "cereza",
+        "start": 92.325,
+        "end": 92.747
+      },
+      {
+        "text": "queda",
+        "start": 92.82,
+        "end": 93.021
+      },
+      {
+        "text": "menos",
+        "start": 93.106,
+        "end": 93.412
+      },
+      {
+        "text": "de",
+        "start": 93.465,
+        "end": 93.518
+      },
+      {
+        "text": "un",
+        "start": 93.602,
+        "end": 93.686
+      },
+      {
+        "text": "kilo",
+        "start": 93.76,
+        "end": 94.035
+      },
+      {
+        "text": "de",
+        "start": 94.088,
+        "end": 94.15
+      },
+      {
+        "text": "café",
+        "start": 94.193,
+        "end": 94.489
+      },
+      {
+        "text": "tostado.",
+        "start": 94.541,
+        "end": 95.249
+      },
+      {
+        "text": "Y",
+        "start": 95.797,
+        "end": 95.871
+      },
+      {
+        "text": "en",
+        "start": 95.934,
+        "end": 95.977
+      },
+      {
+        "text": "una",
+        "start": 96.039,
+        "end": 96.146
+      },
+      {
+        "text": "cafetería",
+        "start": 96.188,
+        "end": 96.747
+      },
+      {
+        "text": "de",
+        "start": 96.799,
+        "end": 96.884
+      },
+      {
+        "text": "Estados",
+        "start": 96.916,
+        "end": 97.328
+      },
+      {
+        "text": "Unidos,",
+        "start": 97.412,
+        "end": 97.908
+      },
+      {
+        "text": "un",
+        "start": 98.045,
+        "end": 98.182
+      },
+      {
+        "text": "café",
+        "start": 98.257,
+        "end": 98.541
+      },
+      {
+        "text": "normal",
+        "start": 98.594,
+        "end": 98.984
+      },
+      {
+        "text": "cuesta,",
+        "start": 99.059,
+        "end": 99.575
+      },
+      {
+        "text": "en",
+        "start": 99.618,
+        "end": 99.712
+      },
+      {
+        "text": "la",
+        "start": 99.755,
+        "end": 99.808
+      },
+      {
+        "text": "mediana,",
+        "start": 99.849,
+        "end": 100.346
+      },
+      {
+        "text": "3.52 dólares.",
+        "start": 100.399,
+        "end": 102.816
+      },
+      {
+        "text": "Lo",
+        "start": 103.175,
+        "end": 103.291
+      },
+      {
+        "text": "que",
+        "start": 103.333,
+        "end": 103.406
+      },
+      {
+        "text": "allá",
+        "start": 103.438,
+        "end": 103.617
+      },
+      {
+        "text": "se",
+        "start": 103.692,
+        "end": 103.786
+      },
+      {
+        "text": "paga",
+        "start": 103.839,
+        "end": 104.082
+      },
+      {
+        "text": "por",
+        "start": 104.135,
+        "end": 104.24
+      },
+      {
+        "text": "una",
+        "start": 104.304,
+        "end": 104.43
+      },
+      {
+        "text": "taza",
+        "start": 104.494,
+        "end": 104.8
+      },
+      {
+        "text": "empezó",
+        "start": 104.842,
+        "end": 105.295
+      },
+      {
+        "text": "aquí,",
+        "start": 105.338,
+        "end": 105.728
+      },
+      {
+        "text": "en",
+        "start": 105.95,
+        "end": 106.045
+      },
+      {
+        "text": "una",
+        "start": 106.119,
+        "end": 106.256
+      },
+      {
+        "text": "ladera",
+        "start": 106.309,
+        "end": 106.657
+      },
+      {
+        "text": "de",
+        "start": 106.731,
+        "end": 106.847
+      },
+      {
+        "text": "Huehuetenango,",
+        "start": 106.911,
+        "end": 107.734
+      },
+      {
+        "text": "como",
+        "start": 107.765,
+        "end": 107.998
+      },
+      {
+        "text": "una",
+        "start": 108.082,
+        "end": 108.272
+      },
+      {
+        "text": "cereza",
+        "start": 108.325,
+        "end": 108.736
+      },
+      {
+        "text": "roja.",
+        "start": 108.811,
+        "end": 109.496
+      }
+    ],
+    "progreso": {
+      "actos": [
+        0.0,
+        30.0,
+        82.4667
+      ]
+    },
+    "seguir": {
+      "t": 48.3,
+      "dur": 3.0
+    },
+    "pie": "Relieve: Mapzen Terrain Tiles · Fallas: GEM (CC BY-SA 4.0) · Frontera: Natural Earth · Lugares: © OpenStreetMap",
+    "handle": "@DerekUrizar",
+    "aviso": "Esquema · no es un lugar real",
+    "cierre": {
+      "t": 104.2,
+      "frase": "Cada taza de allá empezó como una cereza de aquí.",
+      "redes": [
+        {
+          "nombre": "TikTok",
+          "handle": "@derekurizargt"
+        },
+        {
+          "nombre": "Instagram",
+          "handle": "@derekurizargt"
+        },
+        {
+          "nombre": "Facebook",
+          "handle": "Derek Urizar"
+        },
+        {
+          "nombre": "YouTube",
+          "handle": "@derekurizar"
+        },
+        {
+          "nombre": "X",
+          "handle": "@DerekUrizar"
+        }
+      ]
+    }
+  },
+  "mundos": {
+    "finca": {
+      "escala": "esquema",
+      "receta": "campo",
+      "semilla": 11,
+      "tamano_m": 1200,
+      "lugares": {
+        "ladera": {
+          "x": 0,
+          "y": 0,
+          "nombre": "Ladera"
+        },
+        "beneficio": {
+          "x": 80,
+          "y": -48,
+          "nombre": "Beneficio húmedo"
+        }
+      },
+      "piezas": [
+        {
+          "id": "cafetal",
+          "tipo": "cafetal",
+          "puntos": [
+            [
+              -40,
+              -25
+            ],
+            [
+              40,
+              -25
+            ],
+            [
+              42,
+              25
+            ],
+            [
+              -38,
+              27
+            ]
+          ],
+          "hileras": 10,
+          "pendiente_m": 20,
+          "rumbo": 90,
+          "maduras": 0.8,
+          "personas": 2,
+          "semilla": 3
+        },
+        {
+          "id": "recolectora",
+          "tipo": "actor",
+          "objeto": "persona",
+          "lugar": [
+            6,
+            -9
+          ],
+          "rumbo": 270,
+          "lev_m": 6,
+          "tamano": 1.8
+        },
+        {
+          "id": "beneficio-humedo",
+          "tipo": "zona",
+          "puntos": [
+            [
+              68,
+              -36
+            ],
+            [
+              92,
+              -36
+            ],
+            [
+              92,
+              -60
+            ],
+            [
+              68,
+              -60
+            ]
+          ],
+          "tono": "secundario",
+          "opacidad": 0.12
+        },
+        {
+          "id": "casa-beneficio",
+          "tipo": "actor",
+          "objeto": "casa",
+          "lugar": "beneficio",
+          "rumbo": 270,
+          "tamano": 3
+        }
+      ],
+      "protagonista": "cafetal"
+    },
+    "carretera": {
+      "escala": "esquema",
+      "receta": "campo",
+      "semilla": 4,
+      "tamano_m": 1200,
+      "lugares": {
+        "bodega": {
+          "x": 72,
+          "y": 14,
+          "nombre": "Beneficio seco"
+        }
+      },
+      "piezas": [
+        {
+          "id": "camino",
+          "tipo": "calles"
+        },
+        {
+          "id": "rio",
+          "tipo": "agua"
+        },
+        {
+          "id": "camion-cafe",
+          "tipo": "actor",
+          "objeto": "camionsacos",
+          "camino": "camino",
+          "claves": [
+            {
+              "t": 0,
+              "s": 600
+            }
+          ],
+          "tamano": 2
+        },
+        {
+          "id": "beneficio-seco",
+          "tipo": "actor",
+          "objeto": "casa",
+          "lugar": "bodega",
+          "rumbo": 270,
+          "tamano": 3
+        }
+      ],
+      "protagonista": "camion-cafe"
+    },
+    "pais": {
+      "escala": "pais",
+      "set": "guatemala",
+      "exageracion": 5,
+      "piezas": [
+        {
+          "id": "frontera",
+          "tipo": "frontera",
+          "vecinos": true
+        },
+        {
+          "id": "pueblos",
+          "tipo": "luces",
+          "lugares": "todos"
+        }
+      ]
+    },
+    "puerto": {
+      "escala": "esquema",
+      "receta": "costa",
+      "semilla": 5,
+      "tamano_m": 2400,
+      "lugares": {
+        "muelle": {
+          "x": 0,
+          "y": -380,
+          "nombre": "Muelle"
+        }
+      },
+      "piezas": [
+        {
+          "id": "agua",
+          "tipo": "agua"
+        },
+        {
+          "id": "calles",
+          "tipo": "calles"
+        },
+        {
+          "id": "edificios",
+          "tipo": "edificios"
+        },
+        {
+          "id": "camion-puerto",
+          "tipo": "actor",
+          "objeto": "camionsacos",
+          "lugar": "muelle",
+          "rumbo": 270
+        },
+        {
+          "id": "buque",
+          "tipo": "actor",
+          "objeto": "barco",
+          "puntos": [
+            [
+              30,
+              -480
+            ],
+            [
+              15,
+              -640
+            ],
+            [
+              0,
+              -792
+            ],
+            [
+              0,
+              -1080
+            ]
+          ],
+          "claves": [
+            {
+              "t": 0,
+              "s": "0%"
+            }
+          ]
+        }
+      ],
+      "protagonista": "buque"
+    },
+    "taza": {
+      "escala": "esquema",
+      "receta": "plaza",
+      "semilla": 3,
+      "tamano_m": 900,
+      "piezas": [
+        {
+          "id": "calles",
+          "tipo": "calles"
+        },
+        {
+          "id": "edificios",
+          "tipo": "edificios"
+        },
+        {
+          "id": "tostadora",
+          "tipo": "actor",
+          "objeto": "casa",
+          "lugar": "tostador",
+          "rumbo": 270,
+          "tamano": 3
+        },
+        {
+          "id": "cliente",
+          "tipo": "actor",
+          "objeto": "persona",
+          "lugar": [
+            0,
+            60
+          ],
+          "rumbo": 270,
+          "tamano": 1
+        },
+        {
+          "id": "taza",
+          "tipo": "actor",
+          "objeto": "taza",
+          "lugar": [
+            3,
+            62
+          ],
+          "tamano": 8,
+          "rumbo": 30
+        }
+      ],
+      "protagonista": "taza",
+      "lugares": {
+        "tostador": {
+          "x": -16,
+          "y": 50,
+          "nombre": "Tostador"
+        }
+      }
+    }
+  },
+  "tramos": [
+    {
+      "id": "finca-1",
+      "mundo": "finca",
+      "desde": 0.0,
+      "hasta": 30.0,
+      "camara": [
+        {
+          "mira": [
+            0,
+            -4
+          ],
+          "dist_m": 70,
+          "azimut": 0,
+          "elevacion": 20,
+          "t": 0.0
+        },
+        {
+          "mira": "ladera",
+          "dist_m": 50,
+          "azimut": 4,
+          "elevacion": 17,
+          "t": 4.7333
+        },
+        {
+          "mira": [
+            6,
+            -4
+          ],
+          "dist_m": 44,
+          "azimut": 8,
+          "elevacion": 15,
+          "t": 9.4333
+        },
+        {
+          "mira": [
+            6,
+            -9
+          ],
+          "dist_m": 28,
+          "azimut": 6,
+          "elevacion": 14,
+          "t": 11.2667
+        },
+        {
+          "mira": [
+            6,
+            -9
+          ],
+          "dist_m": 32,
+          "azimut": 0,
+          "elevacion": 16,
+          "t": 16.8333
+        },
+        {
+          "mira": [
+            74,
+            -42
+          ],
+          "dist_m": 80,
+          "azimut": -22,
+          "elevacion": 24,
+          "t": 19.8667
+        },
+        {
+          "mira": [
+            78,
+            -46
+          ],
+          "dist_m": 68,
+          "azimut": -16,
+          "elevacion": 28,
+          "t": 25.0
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "resaltar",
+          "pieza": "cafetal",
+          "dur": 4.5,
+          "sfx": "pulso",
+          "t": 0.0
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "cafetal",
+          "dur": 2.0,
+          "t": 8.7333
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "beneficio-humedo",
+          "dur": 3.0,
+          "t": 19.8667
+        }
+      ],
+      "marcas": [
+        {
+          "lugar": "beneficio",
+          "texto": "Beneficio húmedo",
+          "sub": "Cereza → pergamino",
+          "t": 19.6,
+          "hasta": 30.0
+        }
+      ],
+      "anotaciones": [
+        {
+          "tipo": "pulso",
+          "sobre": [
+            [
+              6,
+              -9
+            ]
+          ],
+          "radio_m": 3,
+          "t": 11.0,
+          "hasta": 15.8
+        }
+      ]
+    },
+    {
+      "id": "carretera-2",
+      "mundo": "carretera",
+      "desde": 30.0,
+      "hasta": 42.5333,
+      "camara": [
+        {
+          "mira": {
+            "actor": "camion-cafe"
+          },
+          "dist_m": 55,
+          "azimut": -50,
+          "elevacion": 22,
+          "t": 30.0
+        },
+        {
+          "mira": {
+            "actor": "camion-cafe"
+          },
+          "dist_m": 50,
+          "azimut": -35,
+          "elevacion": 22,
+          "t": 31.2333
+        },
+        {
+          "mira": {
+            "actor": "camion-cafe"
+          },
+          "dist_m": 70,
+          "azimut": -15,
+          "elevacion": 28,
+          "t": 34.3
+        },
+        {
+          "mira": {
+            "actor": "camion-cafe"
+          },
+          "dist_m": 80,
+          "azimut": -5,
+          "elevacion": 32,
+          "t": 38.9
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "mover",
+          "actor": "camion-cafe",
+          "a": "bodega",
+          "dur": 5.0,
+          "t": 31.2333
+        }
+      ],
+      "marcas": [
+        {
+          "lugar": "bodega",
+          "texto": "Beneficio seco",
+          "sub": "Trilla: pergamino → oro",
+          "t": 35.0333,
+          "hasta": 42.5333
+        }
+      ],
+      "transicion": "fundido",
+      "fundido_s": 0.6
+    },
+    {
+      "id": "pais-3",
+      "mundo": "pais",
+      "desde": 42.5333,
+      "hasta": 65.9667,
+      "camara": [
+        {
+          "mira": "huehuetenango",
+          "dist_km": 140,
+          "azimut": 0,
+          "elevacion": 55,
+          "t": 42.5333
+        },
+        {
+          "mira": "huehuetenango",
+          "dist_km": 95,
+          "azimut": 15,
+          "elevacion": 42,
+          "t": 47.3667
+        },
+        {
+          "mira": [
+            -90.4,
+            15.4
+          ],
+          "dist_km": 420,
+          "azimut": 10,
+          "elevacion": 55,
+          "t": 52.4667
+        },
+        {
+          "mira": "puerto-barrios",
+          "dist_km": 200,
+          "azimut": 0,
+          "elevacion": 50,
+          "t": 57.9
+        },
+        {
+          "mira": [
+            -89.6,
+            15.4
+          ],
+          "dist_km": 600,
+          "azimut": 0,
+          "elevacion": 62,
+          "t": 62.0667
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "resaltar",
+          "lugar": "huehuetenango",
+          "dur": 2.5,
+          "t": 44.7667
+        },
+        {
+          "tipo": "resaltar",
+          "lugar": "puerto-barrios",
+          "dur": 3.0,
+          "t": 57.9
+        }
+      ],
+      "marcas": [
+        {
+          "lugar": "huehuetenango",
+          "texto": "Huehuetenango",
+          "t": 44.5,
+          "hasta": 47.0
+        },
+        {
+          "lugar": "puerto-barrios",
+          "texto": "Puerto Barrios",
+          "t": 57.6333,
+          "hasta": 61.2333
+        }
+      ],
+      "transicion": "fundido",
+      "fundido_s": 0.6
+    },
+    {
+      "id": "puerto-4",
+      "mundo": "puerto",
+      "desde": 65.9667,
+      "hasta": 82.4667,
+      "camara": [
+        {
+          "mira": "mar",
+          "dist_m": 650,
+          "azimut": 10,
+          "elevacion": 34,
+          "t": 65.9667
+        },
+        {
+          "mira": {
+            "actor": "buque"
+          },
+          "dist_m": 480,
+          "azimut": 15,
+          "elevacion": 28,
+          "t": 68.2667
+        },
+        {
+          "mira": {
+            "actor": "buque"
+          },
+          "dist_m": 600,
+          "azimut": 22,
+          "elevacion": 28,
+          "t": 71.2
+        },
+        {
+          "mira": {
+            "actor": "buque"
+          },
+          "dist_m": 760,
+          "azimut": 30,
+          "elevacion": 32,
+          "t": 74.4667
+        },
+        {
+          "mira": {
+            "actor": "buque"
+          },
+          "dist_m": 900,
+          "azimut": 36,
+          "elevacion": 36,
+          "t": 78.2
+        },
+        {
+          "mira": {
+            "actor": "buque"
+          },
+          "dist_m": 1050,
+          "azimut": 40,
+          "elevacion": 40,
+          "t": 79.0667
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "aparecer",
+          "pieza": "buque",
+          "dur": 0.6,
+          "t": 66.2333
+        },
+        {
+          "tipo": "mover",
+          "actor": "buque",
+          "a": "mar",
+          "dur": 12.0,
+          "t": 66.2333
+        }
+      ],
+      "transicion": "fundido",
+      "fundido_s": 0.6
+    },
+    {
+      "id": "taza-5",
+      "mundo": "taza",
+      "desde": 82.4667,
+      "hasta": 103.0,
+      "camara": [
+        {
+          "mira": [
+            -6,
+            52
+          ],
+          "dist_m": 62,
+          "azimut": 0,
+          "elevacion": 20,
+          "t": 82.4667
+        },
+        {
+          "mira": [
+            -6,
+            53
+          ],
+          "dist_m": 54,
+          "azimut": 6,
+          "elevacion": 19,
+          "t": 89.1667
+        },
+        {
+          "mira": [
+            -1,
+            57
+          ],
+          "dist_m": 36,
+          "azimut": 10,
+          "elevacion": 18,
+          "t": 91.2
+        },
+        {
+          "mira": [
+            3,
+            62.5
+          ],
+          "dist_m": 20,
+          "azimut": 15,
+          "elevacion": 17,
+          "t": 94.2
+        },
+        {
+          "mira": [
+            3,
+            62.5
+          ],
+          "dist_m": 18,
+          "azimut": 20,
+          "elevacion": 16,
+          "t": 96.2
+        },
+        {
+          "mira": [
+            3,
+            62.5
+          ],
+          "dist_m": 16,
+          "azimut": 24,
+          "elevacion": 16,
+          "t": 100.4
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "aparecer",
+          "pieza": "taza",
+          "dur": 0.8,
+          "t": 93.1
+        }
+      ],
+      "marcas": [
+        {
+          "lugar": "tostador",
+          "texto": "Tostador",
+          "t": 82.6667,
+          "hasta": 90.7
+        }
+      ],
+      "anotaciones": [
+        {
+          "tipo": "pulso",
+          "sobre": [
+            [
+              3,
+              62
+            ]
+          ],
+          "radio_m": 3,
+          "t": 95.9333,
+          "hasta": 103.0
+        }
+      ],
+      "transicion": "oscuro",
+      "fundido_s": 0.6
+    },
+    {
+      "id": "finca-6",
+      "mundo": "finca",
+      "desde": 103.0,
+      "hasta": 112.3,
+      "camara": [
+        {
+          "mira": "ladera",
+          "dist_m": 50,
+          "azimut": 4,
+          "elevacion": 17,
+          "t": 103.0
+        },
+        {
+          "mira": [
+            0,
+            -4
+          ],
+          "dist_m": 70,
+          "azimut": 0,
+          "elevacion": 20,
+          "t": 109.5
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "resaltar",
+          "pieza": "cafetal",
+          "dur": 3.0,
+          "t": 108.3333
+        }
+      ],
+      "transicion": "fundido",
+      "fundido_s": 0.6
+    }
+  ]
+}

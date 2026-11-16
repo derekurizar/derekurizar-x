@@ -118,6 +118,9 @@ def inyectar(fi, carpeta, tipo):
     e["modulo"] = "%s/%s.js" % (carpeta, tipo)
     e["reglas"] = "scripts/maqueta_tipos/%s.py" % tipo if os.path.isfile(os.path.join(M3.REGLAS_DIR, tipo + ".py")) else None
     v[tipo] = e
+    import copy
+    v = {k: copy.deepcopy(x) for k, x in v.items()}
+    M3.expandir_objetos(list(v.values()))   # actor y flujo aceptan el objeto nuevo antes de registrarlo
     M3._VOCAB["v"] = v
     M3._REGLAS.pop(tipo, None)
 

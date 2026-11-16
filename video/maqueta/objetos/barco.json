@@ -1,0 +1,21 @@
+{
+ "tipo": "barco",
+ "clase": "objeto",
+ "cuando": "un buque portacontenedores: la carga que sale por mar, la exportación que cruza a otro país, el puerto al que llega",
+ "parametros": {},
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "medidas": {
+  "largo_m": 180.0,
+  "ancho_m": 28.0,
+  "alto_m": 40.0
+ },
+ "ejemplo": {
+  "objeto": "barco"
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "tipo": "taza",
+ "clase": "objeto",
+ "cuando": "una taza de café con su plato y vapor, en grande (el café que se toma, la receta, la medida de una preparación): con `tamano` 8 se lee junto a una persona",
+ "parametros": {},
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "medidas": {
+  "largo_m": 0.44,
+  "ancho_m": 0.44,
+  "alto_m": 0.55
+ },
+ "ejemplo": {
+  "objeto": "taza"
+ }
+}

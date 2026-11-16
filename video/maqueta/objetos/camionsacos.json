@@ -1,0 +1,21 @@
+{
+ "tipo": "camionsacos",
+ "clase": "objeto",
+ "cuando": "un camión de plataforma con sacos de yute apilados a la vista: la cosecha que sale de la finca, el café o el grano camino al beneficio o al puerto",
+ "parametros": {},
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "medidas": {
+  "largo_m": 9.0,
+  "ancho_m": 2.5,
+  "alto_m": 2.9
+ },
+ "ejemplo": {
+  "objeto": "camionsacos"
+ }
+}

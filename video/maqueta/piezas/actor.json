@@ -10,6 +10,7 @@
    "defecto": "carro",
    "valores": [
     "arbol",
+    "barco",
     "bus",
     "camion",
     "carro",
@@ -17,9 +18,11 @@
     "moto",
     "persona",
     "pin",
+    "taza",
     "telefono",
     "torre"
-   ]
+   ],
+   "valores_de": "objetos"
   },
   "camino": {
    "tipo": "texto",
@@ -111,6 +114,7 @@
  ],
  "usa": [
   "arbol",
+  "barco",
   "bus",
   "camion",
   "carro",
@@ -118,6 +122,7 @@
   "moto",
   "persona",
   "pin",
+  "taza",
   "telefono",
   "torre"
  ],
@@ -133,5 +138,6 @@
     "vel_kmh": 60
    }
   ]
- }
+ },
+ "usa_objetos": true
 }
