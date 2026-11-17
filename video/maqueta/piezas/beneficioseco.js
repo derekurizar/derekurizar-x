@@ -507,10 +507,12 @@
         const c0 = Math.floor(hz(2, 65) * 4);
         const PS = 6.4, F1 = hz(3, 66), F3 = hz(4, 67);
         // [u, v, hacia u, hacia v, pose]
-        const SLOTS = [[0.4, -13.0, 0, -1, { nombre: "cargar", periodo: PS, fase: F1 }],
-          [XU - XA - 0.45, XV - 0.4, 1, 0, "atender"],
+        // quien descarga toma el costal sobre la baranda del camión (1.72 m del patio = 1.46 en sus medidas: va a ×1.1 y
+        // levantado H0) a 0.95 m (0.86); quien clasifica, frente a la mesa de 0.88 m (0.8 en sus medidas)
+        const SLOTS = [[0.4, -13.0, 0, -1, { nombre: "descargar", periodo: PS * 1.1, fase: F1, alto: 1.46, alcance: 0.86 }],
+          [XU - XA - 0.45, XV - 0.4, 1, 0, { nombre: "clasificar", mesa: 0.8 }],
           [TU, TV - TA - 0.25, 0, 1, { nombre: "cargar", periodo: PS * 0.92, fase: F3 }],
-          [XU - XA - 0.45, XV + 0.7, 1, 0.1, "atender"]].slice(0, NP);
+          [XU - XA - 0.45, XV + 0.7, 1, 0.1, { nombre: "clasificar", mesa: 0.8 }]].slice(0, NP);
         const flP = NP ? ctx.flota("persona", NP, { tamano: K * PG, lev: H0 * K, orden: 6, semilla: (p.semilla * 11 + np * 5) % 997,
           color: (i) => camisas[(i + c0) % 4], pose: (i) => SLOTS[i][4] }) : null;
         // el chorro de pergamino de quien vacía en la tolva: solo en la fase en que inclina el costal

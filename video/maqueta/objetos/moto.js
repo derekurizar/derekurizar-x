@@ -6,6 +6,7 @@
   const B = (T, l, h, w, x, y, z) => new T.BoxGeometry(l, h, w).translate(x, y + h / 2, z);   // caja con la base en y
   MAQ.OBJETOS.moto = {
     medidas: { largo_m: 2.1, ancho_m: 0.8, alto_m: 1.6 },
+    cabecea: true,                       // sobre el relieve de una pieza se inclina con la pendiente (motor.js: flota)
     faros: [[1.05, 0.95, 0]], pilotos: [[-1.05, 0.85, 0]],
     variantes: (ctx) => ctx.tonos.vehiculos,
     partes(ctx) {

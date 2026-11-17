@@ -9,6 +9,10 @@ opcional: un tipo sin archivo se resuelve con su ficha sola (los parámetros val
                                   defectos. X: m3 (el módulo maqueta3d: Falla, helpers, topes), S (el set), lugar(ref, que)
                                   → {x, y, nombre, peso}, propios (mundo.lugares), piezas y por_id (las ya resueltas),
                                   avisos (lista), alt_km(x, y). Falla: raise X.m3.Falla("M3D2", "…")
+                                  Lo que una pieza PUBLICA para las demás (claves que no viajan con ella al motor):
+                                  `_caminos` {nombre: cadena} · `_lugares` {id: {x, y, nombre, peso}} en unidades de la
+                                  escena (→ lugares del mundo «<id>» y «<pieza>.<id>»; mundo.lugares manda) · `_alturas`
+                                  [campos de _relieve.py: perfil | plano | malla] (su relieve: lo pisa todo lo demás)
   cerrar(lista, X)                las reglas sobre todas las de su tipo juntas (un tope, una simplificación)
   # para los gates (G: R = el maqueta.json resuelto, por_id, m3)
   tramos(pz) → [[(x, y, salto)]]  pieza que es una LÍNEA: se puede declarar `separada_de` ella (M3D11)

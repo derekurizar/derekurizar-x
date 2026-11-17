@@ -8,10 +8,10 @@
 // lanza de vapor, las tazas arriba), el MOLINO (tolva con grano), la CAJA DE DESECHO y las jarras; el azulejo, las repisas
 // (tazas y bolsas lisas) y una pizarra con rayas (no letras); tres lámparas colgantes; y la BARISTA (persona, pose atender).
 // AFUERA, en la acera de losetas: tres mesitas redondas pegadas a la fachada, cada una con dos sillas (la silla debajo de quien
-// se sienta), los CLIENTES sentados con su taza humeante; una SOMBRILLA sobre la tercera mesa; la JARDINERA con sus matas;
+// se sienta), los CLIENTES sentados con su taza humeante (persona, pose sentado_sorber: la sube a la boca); una SOMBRILLA sobre la tercera mesa; la JARDINERA con sus matas;
 // el PASO LIBRE entre las mesas y el bordillo, por donde salen los PASEANTES con su vaso liso (persona, pose sorber, camina);
 // un árbol en su alcorque, un basurero y una farola en el bordillo; la calle con su línea discontinua.
-// Lo que se mueve (puro de t): la barista atiende, quien sale camina y sorbe, el vapor de las tazas y la lanza de la máquina.
+// Lo que se mueve (puro de t): la barista atiende, los clientes sorben su taza, quien sale camina y sorbe, el vapor de las tazas y la lanza de la máquina.
 // De noche (ctx.ES.noche): las lámparas y el vidrio encendidos, la luz que cae en la acera y la farola. Sin colores escritos.
 (function (MAQ) {
   MAQ.PIEZAS.cafeteriacalle = {
@@ -346,7 +346,7 @@
           for (const b of [-0.18, 0.18]) { const [x, y] = P(-0.2, b); barra(muebles, E(x, y, H0 + 0.41), E(x, y, H0 + 0.84), 0.016 * M, cNegro); }
           for (const h of [0.6, 0.76]) sq(-0.22, -0.19, -0.2, 0.2, H0 + h, H0 + h + 0.06, col);       // el respaldo de dos tablillas
         };
-        const tazasMesa = [];
+        const tazasMesa = [], SORBO = [];
         MESAS.forEach((vT, m) => {
           cil(muebles, UT, vT, H0, H0 + 0.03, 0.22, 14, cNegro, cNegro);
           cil(muebles, UT, vT, H0 + 0.03, H0 + HT - 0.03, 0.03, 8, cNegro, null);
@@ -393,15 +393,14 @@
         cono(muebles, FU - 0.85, FV, 4.55, 4.78, 0.24, 0.08, 14, cNegro, null, noche ? cLuz : cNegro);
         cil(focos, FU - 0.85, FV, 4.52, 4.56, 0.12, 12, noche ? cLuz : cTaza.clone().multiplyScalar(0.7), noche ? cLuz : null);
 
-        // ================= las tazas de los clientes (una por quien se sienta: aparecen con él)
+        // ================= los platos de los clientes (uno por quien se sienta: aparece con él); la taza es de la persona
+        // (sentado_sorber: la sube a la boca y la regresa al plato), con su ciclo y su fase de aquí
         const NC = clamp(p.clientes | 0, 0, 6), ORDEN = [0, 5, 2, 1, 4, 3];   // a quién se sienta primero: mesa 0, 2, 1…
         const ocupados = ORDEN.slice(0, NC).map((k) => asientos[k]);
         for (const [u, v, , dy, m, s] of ocupados) {
           const tv = MESAS[m] + s * 0.17, tu = UT + 0.06 * (hz(m * 2 + s, 33) - 0.5);
           cil(muebles, tu, tv, H0 + HT, H0 + HT + 0.008, 0.075, 14, cTaza.clone().multiplyScalar(0.9), cTaza);                // el plato
-          cono(muebles, tu, tv, H0 + HT + 0.008, H0 + HT + 0.09, 0.04, 0.05, 14, cTaza, cCafe);                                 // la taza
-          barra(muebles, E(tu + 0.05, tv, H0 + HT + 0.07), E(tu + 0.07, tv, H0 + HT + 0.03), 0.008 * M, cTaza);               // el asa
-          tazasMesa.push([tu, tv, H0 + HT + 0.09]);
+          tazasMesa.push([tu, tv, H0 + HT + 0.09]); SORBO.push({ periodo: 4 + 2 * hz(m * 2 + s, 40), fase: hz(m * 2 + s, 41) });
         }
 
         // ================= la luz: de noche, la que sale por la vidriera a la acera, la de las lámparas y la farola
@@ -475,7 +474,8 @@
           for (let i = 0; i < NV; i++, j++) {
             const tz = tazasMesa[Math.floor(i / 3)], q = (((t / 2.6 + hz(i, 35) + (i % 3) / 3) % 1) + 1) % 1;
             const P = E(tz[0] + 0.03 * Math.sin(TAU * (q + hz(i, 36))), tz[1] + 0.03 * Math.cos(TAU * q * 1.3), tz[2] + 0.02 + 0.32 * q);
-            posP.set(P, j * 3); aP[j] = Math.sin(Math.PI * q) * 0.8;
+            const S = SORBO[Math.floor(i / 3)], arriba = MAQ.OBJETOS.persona.tazaArriba(t, S.periodo, S.fase);   // sin vapor si la taza no está
+            posP.set(P, j * 3); aP[j] = Math.sin(Math.PI * q) * 0.8 * (1 - arriba);
           }
           // la lanza: un soplo de 1.6 s cada 7 s
           const f = (((t / 7 + FL) % 1) + 1) % 1, on = f < 0.23 ? Math.sin(Math.PI * f / 0.23) : 0;
@@ -493,7 +493,7 @@
           lin(COL.costa).multiplyScalar(0.85), tonos.medio.clone().multiplyScalar(0.9), lin(COL.tierra_media).multiplyScalar(0.85), tonos.secundario.clone()];
         const flP = ctx.flota("persona", NPER, { tamano: K, lev: H0 * K, orden: 6, semilla: (p.semilla * 11 + np * 5) % 991,
           color: (i) => (i === 0 ? cNegro.clone().multiplyScalar(1.6) : camisas[(i + Math.floor(hz(1, 38) * camisas.length)) % camisas.length]),
-          pose: (i) => (i === 0 ? "atender" : i <= NC ? { nombre: "sentado", banco: false } : "sorber") });
+          pose: (i) => (i === 0 ? "atender" : i <= NC ? { nombre: "sentado_sorber", banco: false, mesa: HT, tazax: 0.51, ...SORBO[i - 1] } : "sorber") });
         // el recorrido de quien sale: de adentro, por la puerta, al paso libre y por la acera hasta la orilla
         const VEL = 1.15, caminos = [];
         for (let i = 0; i < NPA; i++) {

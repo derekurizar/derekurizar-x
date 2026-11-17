@@ -58,6 +58,10 @@ Escribe `<TRABAJO>/direccion.json`:
   (colinas, montañas, ciudad); elige el horizonte que corresponde al lugar real (`"horizonte": "montanas"` en una finca de
   la sierra). En el mapa, suma las capas de agua y de caminos del catálogo cuando ayuden a ubicar (y dilo en el pie: «OpenStreetMap»).
   La cámara puede bajar a 6 m y mirar a una altura (`mira_lev_m`): acércate a la gente.
+  Una pieza con relieve propio (`caminomontana`, `cafetal`) ya sube lo que le pongas encima: un `actor` o un `flujo` en
+  los carriles del camino («<id>.carril-1»), gente de pie o caminando por la ladera, y `mira_lev_m` medido desde ese
+  suelo. Si el camión de la historia es un actor (para seguirlo con `mira: {actor: id}`), pide el camino con `camion: false`.
+  El aviso M3D20 dice cuándo el rótulo de una marca tapa al actor que señala: súbele el `alto` o ánclala al lado.
 - **La gente hace su oficio:** un actor `persona` lleva `pose` (las de su ficha: cosechar, rastrillar, cargar, sorber,
   sentado, atender…); los escenarios traen la suya. Nadie se desliza ni se queda de pie sin hacer nada.
 - **Detalle y dinamismo** (usuario, 2026-11-16: «hace falta más detalle… re usaste muchas escenas… el barco se traba»):

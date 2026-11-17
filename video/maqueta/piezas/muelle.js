@@ -633,7 +633,7 @@
           const [cu, cv] = loc(g.gu, GV, phi, 3.9, 0); luz(E(cu, cv, HD + 21.4), 0.55, 1);
         }
         // ---- el barco amarrado
-        if (s.flB) { const [x, y] = s.W(s.BCU, s.BCV); s.flB.poner(0, x, y, s.ux, s.uy, 1, 0); s.flB.listo(); }
+        if (s.flB) { const [x, y] = s.W(s.BCU, s.BCV); s.flB.poner(0, x, y, s.ux, s.uy, 1, 0, 0); s.flB.listo(); }   // vel 0: amarrado, sin estela
         // ---- los camiones: los del circuito avanzan (posición = función de t); los de la fila esperan en la calle de acceso
         for (const c of s.camiones) {
           let cu, cv, ch, h, tu, tv, th, ht;

@@ -319,6 +319,31 @@ const malla = {
   poner(acc, mat, orden = 0) { const m = new THREE.Mesh(malla.geometria(acc), mat); m.frustumCulled = false; m.renderOrder = orden; scene.add(m); return m; },
 };
 
+// ---------- el RELIEVE DE PIEZA (MAQUETA.mundo.alturas; el mismo cálculo que scripts/maqueta_tipos/_relieve.py) ----------
+// Lo que una pieza le suma al suelo del mundo (un camino que sube, una ladera sembrada, una plataforma): desde que el mundo
+// carga, ctx.altura = el suelo del mundo (ctx.suelo) + el campo más alto que cubre el punto. Lo pisan la flota (que además
+// inclina con la pendiente los objetos que `cabecea`n: los vehículos), la cámara que mira o sigue, las marcas y las anotaciones.
+const CAMPOS = MU.alturas || [];
+const dentroPol = (pol, x, y) => { let c = false; const n = pol.length >> 1;
+  for (let i = 0; i < n; i++) { const j = (i + 1) % n, ax = pol[2 * i], ay = pol[2 * i + 1], bx = pol[2 * j], by = pol[2 * j + 1];
+    if ((ay > y) !== (by > y) && x < (bx - ax) * (y - ay) / ((by - ay) || 1e-9) + ax) c = !c; }
+  return c; };
+function campoEn(c, x, y) {                                       // la altura del campo en (x, y); null si no lo cubre
+  const [x0, y0, x1, y1] = c.caja; if (x < x0 || x > x1 || y < y0 || y > y1) return null;
+  if (c.tipo === "plano") return dentroPol(c.poligono, x, y) ? c.z : null;
+  if (c.tipo === "malla") { if (c.poligono && !dentroPol(c.poligono, x, y)) return null;
+    const fx = (x - x0) / ((x1 - x0) || 1e-9) * (c.nx - 1), fy = (y - y0) / ((y1 - y0) || 1e-9) * (c.ny - 1);
+    const i = Math.min(c.nx - 2, Math.max(0, Math.floor(fx))), j = Math.min(c.ny - 2, Math.max(0, Math.floor(fy))), u = fx - i, v = fy - j, z = c.z, k = j * c.nx + i;
+    return (z[k] * (1 - u) + z[k + 1] * u) * (1 - v) + (z[k + c.nx] * (1 - u) + z[k + c.nx + 1] * u) * v; }
+  if (c.tipo === "perfil") { let mejor = Infinity, zm = null; const P = c.puntos;
+    for (let i = 0; i + 1 < P.length; i++) { const a = P[i], b = P[i + 1], dx = b[0] - a[0], dy = b[1] - a[1];
+      const h = Math.min(1, Math.max(0, ((x - a[0]) * dx + (y - a[1]) * dy) / ((dx * dx + dy * dy) || 1e-9))), d = Math.hypot(x - a[0] - dx * h, y - a[1] - dy * h);
+      if (d < mejor) { mejor = d; zm = a[2] + (b[2] - a[2]) * h; } }
+    return mejor <= c.ancho ? zm : null; }
+  return null;
+}
+function relieve(x, y) { let h = null; for (const c of CAMPOS) { const v = campoEn(c, x, y); if (v !== null && (h === null || v > h)) h = v; } return h || 0; }
+
 // ---------- lo que se mueve (piezas actor y flujo): trayectorias, móviles y la flota de objetos ----------
 // Una trayectoria es s(t) lineal por tramos (T, S: la calcula scripts/maqueta_tipos/_movimiento.py, que también la usan
 // los gates); aquí solo se EVALÚA, suavizada con una ventana de ±h s: s̄(t) = (F(t+h) − F(t−h)) / 2h con F = ∫ s dt (forma
@@ -429,6 +454,10 @@ function flota(tipo, n, op = {}) {
     sombra = { mesh: sh, l: (md.largo_m || 2) * 1.25, w: (md.ancho_m || 2) * 1.35, largo, dx: hx / hn, dz: hz / hn };
   }
   const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), e = new THREE.Vector3(), sc = new THREE.Vector3(), Y = new THREE.Vector3(0, 1, 0), k2 = new THREE.Vector3();
+  // EL CABECEO: sobre el relieve de una pieza, un objeto que `cabecea` (los vehículos: su módulo lo dice) va posado en sus
+  // dos ejes y se inclina con la pendiente. `op.cabeceo: false` lo quita (la pieza que ya lo inclina ella misma).
+  const cabecea = CAMPOS.length > 0 && O.cabecea === true && op.cabeceo !== false, ejes = 0.35 * ((O.medidas || {}).largo_m || 2) * k0;
+  const qC = new THREE.Quaternion(), Zd = new THREE.Vector3(0, 0, 1);
   // de noche: faros (cálidos) y pilotos (en el tono «mal», más vivos al frenar) como puntos, y el cono de los faros en el suelo
   let luces = null;
   if (ES.noche && op.luces !== false && (O.faros || []).length) {
@@ -455,8 +484,11 @@ function flota(tipo, n, op = {}) {
     n: N1, mesh: im,
     // el objeto i en (x, y) mirando hacia (dx, dy), con escala k (0 = no se ve) y freno 0–1 (aviva los pilotos)
     poner(i, x, y, dx, dy, k = 1, freno = 0, vel = null) {   // vel: m/s de quien la lleva (la pose de un objeto articulado la puede usar)
-      const z = altura(x, y) + (op.lev || 0) * um;
-      q.setFromAxisAngle(Y, Math.atan2(dy, dx)); e.set(x, z, -y); sc.setScalar(k0 * k);
+      let z = altura(x, y) + (op.lev || 0) * um, sub = 0;         // sub: lo que sube por metro hacia adelante (la pendiente)
+      q.setFromAxisAngle(Y, Math.atan2(dy, dx));
+      if (cabecea && k > 0) { const h = ejes * k, za = altura(x + dx * h, y + dy * h), zb = altura(x - dx * h, y - dy * h);
+        z = (za + zb) / 2 + (op.lev || 0) * um; sub = (za - zb) / (2 * h); q.multiply(qC.setFromAxisAngle(Zd, Math.atan(sub))); }
+      e.set(x, z, -y); sc.setScalar(k0 * k);
       m4.compose(e, q, sc);
       // `op.semilla` (el actor la pasa desde su id): cada instancia de cada pieza con su propio desfase en la pose
       const pose = mallas.length > 1 && O.pose ? (O.pose((ctx.cuadro || {}).t || 0, i + (op.semilla || 0), ctx, { vel, pose: typeof op.pose === "function" ? op.pose(i) : op.pose || null }) || {}) : {};
@@ -487,11 +519,11 @@ function flota(tipo, n, op = {}) {
       if (!luces) return;
       const A = luces.pts.geometry.attributes, base = i * (luces.NF + luces.NP);
       const pon = (j, l, kk, cc) => { const lx = l[0] * k0, ly = l[1] * k0, lz = l[2] * k0;   // local (adelante, arriba, derecha) → escena
-        A.position.setXYZ(base + j, x + dx * lx + dy * lz, z + ly, -(y + dy * lx - dx * lz)); A.aK.setX(base + j, kk); A.aCol.setX(base + j, cc); };
+        A.position.setXYZ(base + j, x + dx * lx + dy * lz, z + ly + lx * sub, -(y + dy * lx - dx * lz)); A.aK.setX(base + j, kk); A.aCol.setX(base + j, cc); };
       O.faros.forEach((l, j) => pon(j, l, k > 0 ? 0.85 : 0, 0));
       (O.pilotos || []).forEach((l, j) => pon(luces.NF + j, l, k > 0 ? 0.22 + 0.78 * freno : 0, 1));
       const f = O.faros[0][0] * k0;
-      k2.set(x + dx * f, z + 0.08 * um, -(y + dy * f)); sc.set(18 * k0, 1, 7 * k0);
+      k2.set(x + dx * f, z + f * sub + 0.08 * um, -(y + dy * f)); sc.set(18 * k0, 1, 7 * k0);
       luces.cono.setMatrixAt(i, k > 0 ? m4.compose(k2, q, sc) : cero);
     },
     listo() {
@@ -562,6 +594,7 @@ const ctx = {
   // (pais y ciudad; null en esquema) · km = geo (nombre de antes). Lo que el resolver ya trae: unidad_m (metros por
   // unidad), caja [x0, y0, x1, y1], caminos {nombre: [[x, y, s, 0], …]} y lugares {id: {x, y, nombre}}
   altura: null, geo: null, km: null, V3,                         // V3(x, y, lev) → Vector3 sobre el suelo
+  suelo: null, relieve,                                          // suelo(x, y): el del mundo SIN el relieve de pieza (altura = suelo + relieve)
   escala: MU.escala, unidad_m: MU.unidad_m, metros: (v) => v / MU.unidad_m,   // metros reales → unidades de la escena
   caja: MU.caja, caminos: MU.caminos || {}, lugares: MU.lugares || {},
   camino: (nombre) => (MU.caminos || {})[nombre] || null,
@@ -571,7 +604,7 @@ const ctx = {
   geoCinta, pegar, cinta: cintaSimple,
   tonos: TONOS, sombra, malla,                                   // superficies de mundo (ciudad, esquema): colores, luz y geometría
   // lo que se mueve: tray (evaluar una trayectoria T/S suavizada), moviles (id → (t, n) → {x, y, dx, dy, v, vis}: lo registran
-  // actor y flujo; lo siguen la cámara y las anotaciones), ancla(A, t) y flota(tipo, n, {tamano, lev, luces, color, orden})
+  // actor y flujo; lo siguen la cámara y las anotaciones), ancla(A, t) y flota(tipo, n, {tamano, lev, luces, color, orden, cabeceo})
   tray, moviles: MOVILES, ancla: (A, t) => anclaEn(A, t), flota,
   linea: (id, cn) => { LINEAS[id] = cn; },                       // una cinta que «resaltar» sube por el id de su pieza
   fallas: [], idxFalla: () => -1,                                // los pone piezas/falla.js (la superficie y voxel los leen)
@@ -706,6 +739,8 @@ window.__hf.buildReady = window.__hf.buildReady || {};
 window.__hf.buildReady["maqueta"] = (async () => {
   const [est] = await Promise.all([MUNDO.cargar ? MUNDO.cargar(ctx) : null, ...(window.__capaFuentes || []).map((f) => document.fonts.load(f))]);
   MUNDO_EST = est;
+  ctx.suelo = ctx.altura;                                         // el suelo del mundo, sin el relieve de pieza
+  if (CAMPOS.length) ctx.altura = (x, y) => ctx.suelo(x, y) + relieve(x, y);
   await document.fonts.ready;
   if (MUNDO.armar) MUNDO.armar(ctx, MUNDO_EST);
   armarVocabulario();

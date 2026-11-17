@@ -42,7 +42,7 @@ entrega) y `scripts/maqueta3d.py` (gates M3D, cuadros sueltos, render).
 | 6 | Storyboard: un cuadro por clave de cámara y evento (y uno en el cruce de cada fundido), más **una hoja y la medida de cada mundo** en `escenas/`; limpia sus carpetas antes de escribir | Workflow: `storyboard` (`--sin-escenas` deja solo la hoja) |
 | 7 | Crítico (retención y concordancia) y cierre: **el usuario elige el cierre** | Workflow: `video-critico` en «Modo 3D» → 5 cierres (`elegir_cierre`) |
 | 7b | **Revisión de escenas:** una hoja por mundo y su medida; el crítico puntúa detalle, vida, realismo y claridad; ≤ 2 vuelve al director o al constructor. Las mejoras probadas se aplican solas | `maqueta3d.py escena --hoja` · Workflow |
-| — | **Retoque visual** (la voz ya existe): cambia solo lo que se ve; lo que el crítico ve se corrige en la misma corrida (una pasada del director; `correcciones` suma lo que se vio en las hojas) | Workflow con `desde: "retoque_visual"` + `notas` [+ `mundos`, `correcciones`] |
+| — | **Retoque visual** (la voz ya existe): cambia solo lo que se ve; lo que el crítico ve se corrige en la misma corrida (una pasada del director; `correcciones` suma lo que se vio en las hojas) y, si algo cambió, el crítico vuelve a mirar solo esos mundos (`segunda_lectura`: los puntajes del retorno son los de después de corregir). Con 5 o más mundos de cerca en `mundos`, el director trabaja de 3 en 3 | Workflow con `desde: "retoque_visual"` + `notas` [+ `mundos`, `correcciones`] |
 | 8 | Voz (ElevenLabs, El Faraon 4) y escucha independiente (V11) | `voz` → MCP → `descargar --estado` (o `--nodos` si el estado llegó en el chat) → `escuchar` |
 | 9 | Tiempos reales | `tiempos` |
 | 10 | Render en 9:16 y 4:5 | `render` |

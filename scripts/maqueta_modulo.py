@@ -145,18 +145,25 @@ def inyectar(fi, carpeta, tipo):
     M3._REGLAS.pop(tipo, None)
 
 
-def base_de(escala):
-    """La maqueta base de una escala: la de prueba del motor (pais) o un fixture cuyo mundo.escala sea esa."""
+def bases_de(escala):
+    """Las maquetas base de una escala → [(maqueta, ruta)]: la de prueba del motor (pais) y los fixtures de UN mundo cuyo
+    mundo.escala sea esa (en orden de nombre)."""
     cand = [M3.FIXTURE] + sorted(os.path.join(os.path.dirname(M3.FIXTURE), n) for n in os.listdir(os.path.dirname(M3.FIXTURE))
                                  if n.endswith(".json") and os.path.join(os.path.dirname(M3.FIXTURE), n) != M3.FIXTURE)
+    out = []
     for ruta in cand:
         try:
             m = M3.cargar_json(ruta)
         except (OSError, ValueError):
             continue
-        if ((m.get("mundo") or {}).get("escala") or "pais") == escala:
-            return m, ruta
-    return None, None
+        if isinstance(m.get("mundo"), dict) and (m["mundo"].get("escala") or "pais") == escala:
+            out.append((m, ruta))
+    return out
+
+
+def base_de(escala):
+    """La primera maqueta base de una escala (o None, None)."""
+    return (bases_de(escala) or [(None, None)])[0]
 
 
 def maqueta_minima(clase, tipo, fi):
@@ -172,13 +179,28 @@ def maqueta_minima(clase, tipo, fi):
         return maqueta_minima("pieza", duenas[0], fd)[:3] + ("objeto probado con la pieza «%s»" % duenas[0],)
     if clase == "mundo":
         return None, 0, [], "un mundo se prueba con --maqueta (una maqueta que lo use)"
-    m = None
-    for esc in fi["escalas"]:
-        m, ruta = base_de(esc)
-        if m:
-            break
-    if not m:
+    # la base: la primera, entre las de sus escalas, sobre la que el ejemplo SE RESUELVE (un ejemplo de esquema —un camino
+    # «eje», una receta— no existe en el set de una ciudad): si ninguna lo resuelve, la primera (el check dirá por qué)
+    bases = [b for esc in fi["escalas"] for b in bases_de(esc)]
+    if not bases:
         return None, 0, [], "no hay maqueta base de escala %s (video/maqueta/fixture/*.json con mundo.escala): pasa --maqueta" % "/".join(fi["escalas"])
+    primera = None
+    for base, ruta in bases:
+        r = _minima_sobre(base, ruta, clase, tipo, fi, V)
+        if r[0] is None:
+            return r
+        primera = primera or r
+        try:
+            with contextlib.redirect_stdout(io.StringIO()):
+                M3.resolver(copy.deepcopy(r[0]), "9:16", [])
+            return r
+        except Exception:
+            continue
+    return primera
+
+
+def _minima_sobre(m, ruta, clase, tipo, fi, V):
+    """El ejemplo de la ficha sobre UNA maqueta base → (maqueta, t_foco, tiempos de la hoja, nota)."""
     m = copy.deepcopy(m)
     ej = copy.deepcopy(fi["ejemplo"])
     piezas = []

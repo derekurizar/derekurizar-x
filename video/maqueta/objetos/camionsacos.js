@@ -12,6 +12,7 @@
     .rotateY(giro).translate(x, y + 0.18, z);
   MAQ.OBJETOS.camionsacos = {
     medidas: { largo_m: 9.0, ancho_m: 2.5, alto_m: 2.9 },
+    cabecea: true,                       // sobre el relieve de una pieza se inclina con la pendiente (motor.js: flota)
     faros: [[4.45, 0.85, -0.95], [4.45, 0.85, 0.95]], pilotos: [[-4.3, 0.95, -1.05], [-4.3, 0.95, 1.05]],
     variantes: (ctx) => ctx.tonos.vehiculos,
     partes(ctx) {

@@ -536,7 +536,7 @@
       200
      ],
      "defecto": 60,
-     "descripcion": "cuánto sube la ladera de su borde bajo al alto, en metros (un actor de pie al comienzo de la hilera k, 0 = la de abajo, va con lev_m = pendiente_m · k / hileras)"
+     "descripcion": "cuánto sube la ladera de su borde bajo al alto, en metros. La pieza publica su relieve: un actor dentro del polígono (de pie o caminando), la cámara y las marcas quedan sobre la ladera, sin `lev_m`"
     },
     "rumbo": {
      "tipo": "numero",
@@ -835,7 +835,7 @@
       360
      ],
      "defecto": 0,
-     "descripcion": "hacia dónde sube el camino (grados; 0 = este, 90 = norte). El monte y el talud quedan a la izquierda de quien sube; el guardavía y el barranco, a su derecha. Para verlo entero desde el valle: mira el lugar «curva», dist_m 120–260, elevación 15–30°, azimut ≈ rumbo − 90 (y mira_lev_m ≈ 5 · tamano + pendiente_m / 2: la cámara mira al suelo del mundo y el camino va en alto)"
+     "descripcion": "hacia dónde sube el camino (grados; 0 = este, 90 = norte). El monte y el talud quedan a la izquierda de quien sube; el guardavía y el barranco, a su derecha. Para verlo entero desde el valle: mira el lugar «curva» (ya está a la altura del camino), dist_m 120–260, elevación 15–30°, azimut ≈ rumbo − 90"
     },
     "tamano": {
      "tipo": "numero",
@@ -865,7 +865,7 @@
       80
      ],
      "defecto": 30,
-     "descripcion": "cuánto sube el camino de punta a punta (m; el pie va 5 m sobre el suelo). Los vehículos se inclinan con la pendiente"
+     "descripcion": "cuánto sube el camino de punta a punta (m; el pie va 5 m sobre el suelo). La pieza publica su relieve: los vehículos (los suyos, y un actor o un flujo en «<id>.carril-1» o «<id>.carril-2») suben y se inclinan con la pendiente"
     },
     "guardavia": {
      "tipo": "bool",
@@ -881,7 +881,13 @@
       6
      ],
      "defecto": 3,
-     "descripcion": "vehículos además del camión de sacos, en este orden: carro, moto, carro, camión, carro, moto; los impares bajan por el carril-2 (≈ 40 km/h) y los pares suben detrás del camión por el carril-1 (≈ 27 km/h), sin alcanzarse"
+     "descripcion": "vehículos además del camión de sacos, en este orden: carro, moto, carro, camión, carro, moto; los impares bajan por el carril-2 (≈ 40 km/h) y los pares suben detrás del camión por el carril-1 (≈ 27 km/h), sin alcanzarse. Con 0 (y `camion: false`), el tráfico lo pone un `flujo` o un `actor` en sus carriles"
+    },
+    "camion": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "el camión de sacos propio de la pieza (va en el acento). false: sin él, cuando el camión de la historia es un `actor` en «<id>.carril-1» (la cámara lo puede seguir con mira: {actor: id})"
     },
     "camion_s": {
      "tipo": "numero",
@@ -2646,14 +2652,19 @@
    "nivel": "objeto",
    "contiene": [
     "contenedores en cubierta",
-    "puente de mando"
+    "puente de mando",
+    "estela de espuma"
    ],
-   "animado": false,
+   "animado": "la estela se abre con la marcha: franjas de espuma en V tras la popa, el lavado del centro y los bigotes de proa crecen suave con la velocidad (nada amarrado, completa desde ~5 m/s) y se mecen despacio",
    "gente": false,
    "distancia_m": [
     150,
     1500
    ],
+   "poses": [
+    "sin_estela"
+   ],
+   "notas": "Amarrado (vel ≤ 0.3 m/s) no lleva estela; sin velocidad dada (null) va completa; la pose `sin_estela` la apaga siempre. Una pieza que lo pone quieto con ctx.flota debe pasar vel 0 en poner (o pose: \"sin_estela\").",
    "modulo": "objetos/barco.js",
    "reglas": null
   },
@@ -3071,7 +3082,7 @@
   {
    "tipo": "persona",
    "clase": "objeto",
-   "cuando": "una persona con pose: camina, espera, cosecha, rastrilla, carga un saco, sorbe café, sentada o atendiendo (calle, plaza, finca, beneficio, terraza)",
+   "cuando": "una persona con pose: camina, espera, cosecha, rastrilla, carga o descarga sacos, clasifica grano, sorbe café de pie o sentada, atiende",
    "parametros": {},
    "escalas": [
     "esquema",
@@ -3088,10 +3099,10 @@
    "ejemplo": {
     "objeto": "persona"
    },
-   "notas": "Articulada con esqueleto anidado (cuerpo → torso → cabeza, brazos con codo, piernas con rodilla; IK de dos huesos para las manos). La pose la pide el actor con su parámetro `pose` (validado contra `poses`) o una pieza con ctx.flota(\"persona\", n, {pose: nombre | (i) => nombre | {nombre, periodo, fase, saco: false, banco: false}}): el objeto sincroniza el ciclo con lo de la pieza (fase y periodo) y apaga el accesorio que ella dibuja. Sin pose: caminar si vel > 0.3 m/s o si nadie da la velocidad (lo de antes), de_pie si no. Accesorios que solo salen en su pose: sombrero de ala (cosechar, rastrillar), costal (cosechar), rastrillo (rastrillar), saco (cargar; ciclo ~6 s con fases 0.1 · 0.3 · 0.76 · 0.9, como el saco de la tostaduría), vaso para llevar (sorber), delantal (atender), banco (sentado). sentado: cadera a 0.47 m, rodillas a 90°; trae su banco salvo `banco: false` (la terraza con sus sillas).",
+   "notas": "Articulada con esqueleto anidado (cuerpo → torso → cabeza, brazos con codo, piernas con rodilla; IK de dos huesos para las manos). La pose la pide el actor con su parámetro `pose` (validado contra `poses`) o una pieza con ctx.flota(\"persona\", n, {pose: nombre | (i) => nombre | {nombre, periodo, fase, saco: false, banco: false}}): el objeto sincroniza el ciclo con lo de la pieza (fase y periodo) y apaga el accesorio que ella dibuja. Sin pose: caminar si vel > 0.3 m/s o si nadie da la velocidad (lo de antes), de_pie si no. Accesorios que solo salen en su pose: sombrero de ala (cosechar, rastrillar), costal (cosechar), rastrillo (rastrillar), saco (cargar; ciclo ~6 s con fases 0.1 · 0.3 · 0.76 · 0.9, como el saco de la tostaduría), vaso para llevar (sorber), delantal (atender), banco (sentado, sentado_sorber), taza con asa (sentado_sorber); descargar reusa el saco.  sentado: cadera a 0.47 m, rodillas a 90°; trae su banco salvo `banco: false` (la terraza con sus sillas). clasificar: de pie frente a una mesa de altura `mesa` (0.85 m; la orilla a ≈ 0.4 m), torso inclinado, las manos alternan barridas cortas a la altura de la mesa (periodo 1.3–1.7 s). descargar: `alto` (1.3 m) = dónde toma el costal (la plataforma o la baranda), `alcance` (0.75 m) = a cuánto está la orilla de donde se puso, `trecho` (0.9 m) = cuánto camina con él; ciclo ~7 s: se arrima y lo toma (0–0.1), lo jala al hombro (–0.28), se voltea (–0.36), camina (–0.56), se agacha y lo deja caer al frente (–0.7), se voltea y vuelve (–0.96); el costal queda en el suelo y se va en 0.9–1; `saco: false` lo apaga. sentado_sorber: como sentado (y `banco: false`), la taza en una mesa de altura `mesa` (0.74 m) a `tazax` (0.5 m) al frente, al centro; sube a la boca 0.8 s, sorbe 1.1 s, baja 0.8 s, cada 4–6 s; `taza: false` la apaga. El objeto exporta tazaArriba(t, periodo, fase) (0 en la mesa, 1 en la boca) para que la pieza que le pasa periodo y fase apague el vapor de su plato mientras la taza no está.",
    "nivel": "objeto",
    "contiene": [],
-   "animado": "según la pose: camina (piernas con rodilla y brazos), respira y mira alrededor de pie, cosecha (el brazo sube a la rama y baja al costal), rastrilla (el rastrillo va y viene), carga un saco hasta una tolva alta, sorbe un vaso cada 4–6 s, atiende con las manos al frente",
+   "animado": "según la pose: camina (piernas con rodilla y brazos), respira y mira alrededor de pie, cosecha (el brazo sube a la rama y baja al costal), rastrilla (el rastrillo va y viene), carga un saco hasta una tolva alta, descarga un costal de un camión (lo jala al hombro, se voltea, camina dos pasos, lo deja y vuelve), clasifica grano en una mesa (las manos alternan barridas cortas, la cabeza baja), sorbe un vaso cada 4–6 s, sentada sube la taza de la mesa a la boca cada 4–6 s, atiende con las manos al frente",
    "gente": true,
    "distancia_m": [
     5,
@@ -3105,7 +3116,10 @@
     "cargar",
     "sorber",
     "sentado",
-    "atender"
+    "atender",
+    "clasificar",
+    "descargar",
+    "sentado_sorber"
    ],
    "modulo": "objetos/persona.js",
    "reglas": null

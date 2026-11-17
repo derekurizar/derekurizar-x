@@ -81,8 +81,9 @@ def cosas(M3, R, t):
     um = 1.0 / R["mundo"]["unidad_m"]
     mov, out = R.get("_moviles") or {}, []
 
-    def cosa(clave, fi, x, y, l, a, h, dx=1.0, dy=0.0, lev=0.0, mueve=False):
-        out.append({"clave": clave, "tipo": fi.get("tipo", clave), "clase": fi.get("clase"), "x": x, "y": y, "lev": lev, "l": l, "a": a, "h": h,
+    def cosa(clave, fi, x, y, l, a, h, dx=1.0, dy=0.0, lev=0.0, mueve=False, base=False):
+        # base: la pieza que publica relieve propio (cafetal, caminomontana) se mide desde el suelo del mundo, no desde el suyo
+        out.append({"base": base, "clave": clave, "tipo": fi.get("tipo", clave), "clase": fi.get("clase"), "x": x, "y": y, "lev": lev, "l": l, "a": a, "h": h,
                     "dx": dx, "dy": dy, "mueve": bool(mueve or fi.get("animado")), "gente": bool(fi.get("gente")), "nivel": fi.get("nivel") or "objeto",
                     "contiene": list(fi.get("contiene") or []), "animado": bool(fi.get("animado")), "dist": fi.get("distancia_m")})
 
@@ -119,22 +120,22 @@ def cosas(M3, R, t):
             if xs and isinstance(xs[0], (list, tuple)):
                 xs, ys = [q[0] for q in pz["poligono"]], [q[1] for q in pz["poligono"]]
             alto = _caja_de(fi)[2] * um + float(pz.get("pendiente_m", 0)) * um
-            cosa(tipo, fi, (min(xs) + max(xs)) / 2, (min(ys) + max(ys)) / 2, max(xs) - min(xs), max(ys) - min(ys), alto)
+            cosa(tipo, fi, (min(xs) + max(xs)) / 2, (min(ys) + max(ys)) / 2, max(xs) - min(xs), max(ys) - min(ys), alto, base=bool(pz.get("relieve")))
         elif "x" in pz and "y" in pz and tipo not in PLANAS:   # una pieza puesta en un lugar (beneficio, tostaduría)
             l, a, h = (c * um for c in _caja_de(fi, float(pz.get("tamano", 1))))
             r = math.radians(float(pz.get("rumbo", 0)))
-            cosa(tipo, fi, pz["x"], pz["y"], l, a, h, math.cos(r), math.sin(r))
+            cosa(tipo, fi, pz["x"], pz["y"], l, a, h, math.cos(r), math.sin(r), base=bool(pz.get("relieve")))
         elif tipo in PLANAS:
             cosa(tipo, fi, 0.0, 0.0, 0.0, 0.0, 0.0)
     return out
 
 
-def _rect(c, pr, alt):
+def _rect(c, pr, S):
     """El rectángulo en pantalla (x0, y0, x1, y1) de la caja de una cosa: el que encierra los puntos de su caja que caen
     delante de la cámara (una rejilla de 3 × 3 × 2: con la cámara dentro o pegada a un escenario, las esquinas de atrás no
     se proyectan y las demás sí). None si ninguno se ve."""
     hx, hy = c["l"] / 2, c["a"] / 2
-    z0 = alt(c["x"], c["y"]) + c["lev"]
+    z0 = (getattr(S, "suelo_base", S.suelo) if c.get("base") else S.suelo)(c["x"], c["y"]) + c["lev"]
     pts = []
     for sx in (-1, 0, 1):
         for sy in (-1, 0, 1):
@@ -168,7 +169,7 @@ def muestra(M3, R, t, pr=None):
         if c["nivel"] == "fondo" or c["h"] <= 0:   # el tejido del mundo: todo junto, una cosa
             claves.add("(fondo)")
             continue
-        r = _rect(c, pr, S.suelo)
+        r = _rect(c, pr, S)
         if not r or r[2] < x0 or r[0] > x1 or r[3] < y0 or r[1] > y1:
             continue
         if (min(r[2], x1) - max(r[0], x0)) * (min(r[3], y1) - max(r[1], y0)) < 24 * 24:   # un punto en el horizonte no cuenta

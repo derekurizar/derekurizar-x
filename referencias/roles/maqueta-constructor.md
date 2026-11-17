@@ -34,7 +34,13 @@ Tres archivos con el mismo nombre (`<tipo>`: minúsculas, sin tildes ni guiones;
   y el realizador al elegir), `parametros` con tipo, rango y `descripcion`, `escalas`, `motores: ["three"]` (Blender no
   usa módulos), `adelanto` si el evento puede abrir un gancho, y un `ejemplo` que se vea en la maqueta mínima.
 - `scripts/maqueta_tipos/<tipo>.py` — solo si hace falta (resolver lugares o caminos propios, un tope, dónde pasa para
-  los gates M3D6/M3D9/M3D11).
+  los gates M3D6/M3D9/M3D11). Lo que la pieza publica para las demás sale de su `resolver` en tres claves: `_caminos`
+  (caminos que un actor o un flujo siguen), `_lugares` ({id: {x, y, nombre, peso}} en unidades de la escena: sus
+  estaciones con nombre, en esquema y en ciudad) y `_alturas` (su relieve: `perfil`, `plano` o `malla` de
+  `maqueta_tipos/_relieve.py`; si el piso de tu pieza no es el del mundo —una rampa, una tarima, una ladera—, publícalo
+  y usa `ctx.suelo` para tu base: así la gente y los vehículos de otros quedan encima). Nunca escribas en `X.propios`.
+- **La cámara**: `azimut: 0` deja el ojo al sur mirando al norte y positivo lo gira hacia el este (el ojo queda en
+  `mira + d·(sen az, −cos az)` en este y norte); para ver de frente una pieza que mira hacia su `rumbo` r, `azimut = 90 − r`.
 
 Reglas del módulo (las revisa el lint):
 - **Seek puro**: lo que se ve en `t` se calcula de `t`. Nada de acumular entre cuadros (ni contadores, ni posiciones que

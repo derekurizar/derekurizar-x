@@ -2810,7 +2810,7 @@
           "dist_m": 13,
           "azimut": -12,
           "elevacion": 11,
-          "mira_lev_m": 1.3,
+          "mira_lev_m": 0.96,
           "t": 0.0
         },
         {
@@ -2821,7 +2821,7 @@
           "dist_m": 9,
           "azimut": 8,
           "elevacion": 9,
-          "mira_lev_m": 1.4,
+          "mira_lev_m": 1.12,
           "t": 4.7333
         },
         {
@@ -2843,7 +2843,7 @@
           "dist_m": 46,
           "azimut": -40,
           "elevacion": 24,
-          "mira_lev_m": 3,
+          "mira_lev_m": 0.46,
           "t": 9.4333
         }
       ],
@@ -2889,7 +2889,8 @@
           "dist_m": 82,
           "azimut": -10,
           "elevacion": 42,
-          "t": 13.1
+          "t": 13.1,
+          "mira_lev_m": -2.16
         },
         {
           "mira": [
@@ -3042,7 +3043,7 @@
           "dist_m": 95,
           "azimut": 270,
           "elevacion": 22,
-          "mira_lev_m": 14,
+          "mira_lev_m": 1.44,
           "t": 30.0
         },
         {
@@ -3050,7 +3051,7 @@
           "dist_m": 80,
           "azimut": 282,
           "elevacion": 20,
-          "mira_lev_m": 14,
+          "mira_lev_m": 1.44,
           "t": 31.2333
         }
       ],
@@ -3628,7 +3629,7 @@
           "dist_m": 70,
           "azimut": 16,
           "elevacion": 28,
-          "mira_lev_m": 5,
+          "mira_lev_m": 0.64,
           "t": 103.0
         },
         {
@@ -3639,7 +3640,7 @@
           "dist_m": 22,
           "azimut": -4,
           "elevacion": 14,
-          "mira_lev_m": 1.3,
+          "mira_lev_m": 0.6,
           "t": 105.9333
         },
         {
@@ -3647,7 +3648,7 @@
           "dist_m": 13,
           "azimut": -12,
           "elevacion": 11,
-          "mira_lev_m": 1.3,
+          "mira_lev_m": 0.96,
           "t": 109.5
         }
       ],

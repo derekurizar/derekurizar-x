@@ -11,9 +11,10 @@
 // - La vegetación de sierra: pinos en grupos, matorral sobre la berma y el borde del corte, y arriba un CAFETAL en hileras
 //   bajo árboles de sombra (copas anchas y planas) con matas de banano. Al fondo, la sierra en tres filas redondeadas (sin
 //   conos volcánicos).
-// - Los VEHÍCULOS los trae la pieza (un actor del núcleo va a la altura del suelo, no a la del camino): el camión de sacos
-//   (objeto camionsacos, en el acento) y `vehiculos` más (carro, moto, carro, camión…), cada uno una flota de uno metida en
-//   un grupo que lo sube a la altura del camino y lo inclina con la pendiente. Posición = función de t (seek puro).
+// - Los VEHÍCULOS propios: el camión de sacos (objeto camionsacos, en el acento; `camion: false` lo quita) y `vehiculos` más
+//   (carro, moto, carro, camión…), cada uno una flota de uno metida en un grupo que lo sube a la altura del camino y lo
+//   inclina con la pendiente. Posición = función de t (seek puro). Además la pieza PUBLICA su relieve (caminomontana.py →
+//   `_alturas`): un actor o un flujo del núcleo en «<id>.carril-1» / «<id>.carril-2» sube e inclina igual (motor.js: flota).
 // - De noche (ES.noche): faros y pilotos de los vehículos (los pone la flota) y captafaros en el guardavía.
 // Sin colores escritos (ctx.tonos, ctx.COL); sin texto, km ni señales.
 (function (MAQ) {
@@ -116,10 +117,10 @@
         const K = p.tamano, M = metros(1) * K;
         const r = p.rumbo * Math.PI / 180, ux = Math.cos(r), uy = Math.sin(r);
         const sem = p.semilla * 7919 + np * 104729, hz = (i, k) => hash(i + sem, k);
-        const base0 = ctx.altura(p.x, p.y);
+        const base0 = ctx.suelo(p.x, p.y);                                   // el suelo del mundo (sin el relieve que esta pieza publica)
         const W2 = (u, v) => [p.x + (u * ux - v * uy) * M, p.y + (u * uy + v * ux) * M];
         const E = (u, v, h) => { const [x, y] = W2(u, v); return [x, base0 + h * M, -y]; };
-        const piso = (u, v) => (ctx.altura(...W2(u, v)) - base0) / M;
+        const piso = (u, v) => (ctx.suelo(...W2(u, v)) - base0) / M;
         const ruido = (x, y, cel, k) => {
           const fx = x / cel, fy = y / cel, ix = Math.floor(fx), iy = Math.floor(fy), tx = fx - ix, ty = fy - iy;
           const v = (a, b) => hz((a & 4095) * 4099 + (b & 4095), k), sx = tx * tx * (3 - 2 * tx), sy = ty * ty * (3 - 2 * ty);
@@ -379,7 +380,7 @@
 
         // ================= los vehículos: cada uno una flota de uno dentro de un grupo que lo sube al camino y lo inclina
         const NV2 = clamp(p.vehiculos | 0, 0, 6);
-        const lista = [{ tipo: "camionsacos", carril: 1, prot: true }].concat(OTROS.slice(0, NV2).map((t, i) => ({ tipo: t, carril: i % 2 === 0 ? 2 : 1 })));
+        const lista = (p.camion === false ? [] : [{ tipo: "camionsacos", carril: 1, prot: true }]).concat(OTROS.slice(0, NV2).map((t, i) => ({ tipo: t, carril: i % 2 === 0 ? 2 : 1 })));
         const LC = LT + 40, VEL = { 1: 7.5, 2: 11 };
         const s0P = clamp(p.camion_s, 0, 1) * LT;
         const enCarril = lista.map((x) => x.carril);
@@ -387,7 +388,7 @@
         let i1 = 0, i2 = 0;
         const veh = lista.map((x, i) => {
           const antes = new Set(scene.children);
-          const fl = ctx.flota(x.tipo, 1, { tamano: K, orden: 5, luces: true, semilla: (p.semilla + i * 7) % 991,
+          const fl = ctx.flota(x.tipo, 1, { tamano: K, orden: 5, luces: true, cabeceo: false, semilla: (p.semilla + i * 7) % 991,
             color: (j, vs) => (x.prot ? tonos.acento : vs[(i + p.semilla) % vs.length]) });
           const g = new THREE.Group(); g.matrixAutoUpdate = false; scene.add(g);
           for (const o of scene.children.filter((o) => !antes.has(o) && o !== g)) { scene.remove(o); g.add(o); }

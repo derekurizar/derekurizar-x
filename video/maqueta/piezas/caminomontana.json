@@ -16,7 +16,7 @@
     360
    ],
    "defecto": 0,
-   "descripcion": "hacia dónde sube el camino (grados; 0 = este, 90 = norte). El monte y el talud quedan a la izquierda de quien sube; el guardavía y el barranco, a su derecha. Para verlo entero desde el valle: mira el lugar «curva», dist_m 120–260, elevación 15–30°, azimut ≈ rumbo − 90 (y mira_lev_m ≈ 5 · tamano + pendiente_m / 2: la cámara mira al suelo del mundo y el camino va en alto)"
+   "descripcion": "hacia dónde sube el camino (grados; 0 = este, 90 = norte). El monte y el talud quedan a la izquierda de quien sube; el guardavía y el barranco, a su derecha. Para verlo entero desde el valle: mira el lugar «curva» (ya está a la altura del camino), dist_m 120–260, elevación 15–30°, azimut ≈ rumbo − 90"
   },
   "tamano": {
    "tipo": "numero",
@@ -46,7 +46,7 @@
     80
    ],
    "defecto": 30,
-   "descripcion": "cuánto sube el camino de punta a punta (m; el pie va 5 m sobre el suelo). Los vehículos se inclinan con la pendiente"
+   "descripcion": "cuánto sube el camino de punta a punta (m; el pie va 5 m sobre el suelo). La pieza publica su relieve: los vehículos (los suyos, y un actor o un flujo en «<id>.carril-1» o «<id>.carril-2») suben y se inclinan con la pendiente"
   },
   "guardavia": {
    "tipo": "bool",
@@ -62,7 +62,13 @@
     6
    ],
    "defecto": 3,
-   "descripcion": "vehículos además del camión de sacos, en este orden: carro, moto, carro, camión, carro, moto; los impares bajan por el carril-2 (≈ 40 km/h) y los pares suben detrás del camión por el carril-1 (≈ 27 km/h), sin alcanzarse"
+   "descripcion": "vehículos además del camión de sacos, en este orden: carro, moto, carro, camión, carro, moto; los impares bajan por el carril-2 (≈ 40 km/h) y los pares suben detrás del camión por el carril-1 (≈ 27 km/h), sin alcanzarse. Con 0 (y `camion: false`), el tráfico lo pone un `flujo` o un `actor` en sus carriles"
+  },
+  "camion": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "el camión de sacos propio de la pieza (va en el acento). false: sin él, cuando el camión de la historia es un `actor` en «<id>.carril-1» (la cámara lo puede seguir con mira: {actor: id})"
   },
   "camion_s": {
    "tipo": "numero",

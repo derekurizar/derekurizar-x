@@ -21,12 +21,17 @@
  "nivel": "objeto",
  "contiene": [
   "contenedores en cubierta",
-  "puente de mando"
+  "puente de mando",
+  "estela de espuma"
  ],
- "animado": false,
+ "animado": "la estela se abre con la marcha: franjas de espuma en V tras la popa, el lavado del centro y los bigotes de proa crecen suave con la velocidad (nada amarrado, completa desde ~5 m/s) y se mecen despacio",
  "gente": false,
  "distancia_m": [
   150,
   1500
- ]
+ ],
+ "poses": [
+  "sin_estela"
+ ],
+ "notas": "Amarrado (vel ≤ 0.3 m/s) no lleva estela; sin velocidad dada (null) va completa; la pose `sin_estela` la apaga siempre. Una pieza que lo pone quieto con ctx.flota debe pasar vel 0 en poner (o pose: \"sin_estela\")."
 }

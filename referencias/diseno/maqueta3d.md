@@ -117,7 +117,9 @@ pasan los mismos gates y dejan las mismas salidas (ver «Motor Blender»).
   cámara lo sigue, § «La cámara que sigue»), `cenital: true` (atajo de `elevacion: 89`), `dist_km` (del ojo al punto que mira; 15–1600) en un mundo `pais`, o **`dist_m`** en
   `ciudad` (40–9000 m) y `esquema` (15–5000 m): la unidad y el rango los fija la ficha del mundo (`camara`) y M3D3 los
   revisa, `azimut` (grados; 0 = el ojo al sur del punto, mirando al norte;
-  positivo gira el ojo hacia el este), `elevacion` (grados sobre el horizonte; 8–89) y `fov` opcional (vertical, 50 por
+  positivo gira el ojo hacia el este: el ojo queda en `mira + d·(sen az, −cos az)` en (este, norte), con `d` la distancia
+  en planta. Así, `azimut: 90` pone el ojo al este mirando al oeste, `−90` al oeste mirando al este y `180` al norte
+  mirando al sur; para ver de frente algo que mira hacia el rumbo `r` de una pieza (0 = este, 90 = norte), `azimut = 90 − r`), `elevacion` (grados sobre el horizonte; 8–89) y `fov` opcional (vertical, 50 por
   defecto; 20–75). El punto que mira está a la altura del relieve ahí (ya exagerada). Entre claves se interpola cada
   parámetro (también esa altura) con `e = -(cos(pi*u) - 1)/2`; antes de la primera y después de la última, la cámara
   queda en esa clave. La misma función vive en `video/maqueta/motor.js` y en `maqueta3d.py` (para proyectar pines y
@@ -212,6 +214,7 @@ el motor y la proyección de los gates.
 | M3D10 | Todo lo anterior se cumple en los dos formatos (9:16 y 4:5 encuadran distinto) |
 | M3D12 | Un `esquema` no se lee como un lugar real: lleva `capa.aviso` con «Esquema» (en modo pieza sin capa lo pone la mesa que lo aloja: aviso), y ni sus lugares (id y nombre, los de la receta y los de `mundo.lugares`) ni el texto de sus marcas llevan el nombre de un lugar real de `design/sets3d/guatemala/lugares.json` |
 | M3D13 | Tramos (un video con varios mundos, «Varios mundos: tramos»): `mundos` es {id: mundo} y no hay `mundo`; los tramos van seguidos de 0 a `duracion_s`, sin hueco ni encime, cada uno ≥ 2.5 s, en un mundo que existe; `transicion` es `corte`, `fundido` u `oscuro` (`fundido_s` 0.3–0.8, ≤ la mitad de cada tramo vecino); cámara, eventos, marcas y anotaciones viven dentro de su tramo; todo mundo se usa |
+| M3D20 (aviso) | El rótulo no tapa lo que señala: la tarjeta de una marca no cubre más de la mitad del tiempo que comparten en pantalla al actor que la cámara sigue, al protagonista ni a un actor que está junto a su ancla. No falla: propone subir `alto` o anclarla a un lado |
 | M3D11 | Separación: una marca con `separada_de` guarda ≥ 60 px en pantalla entre su ancla y el punto más cercano de esa pieza en ≥ 80 % de su ventana (en 9:16 y 4:5, o en el lienzo de la pieza). La falla dice cuántos px hubo y propone una cámara más cenital o más cercana |
 
 Cada falla dice el gate, el formato, la pieza y cómo arreglarlo. Los avisos (no fallan): una ruptura que pide más
@@ -354,7 +357,11 @@ freno)` y `listo()`), `tonos.bien|medio|mal` y `tonos.vehiculos`;
 
 **Las reglas** (`scripts/maqueta_tipos/<tipo>.py`, todas opcionales; la referencia de cada función está en
 `scripts/maqueta_tipos/__init__.py`): `resolver(o, X, que)` (lo que el tipo añade al maqueta.json resuelto; sin él, los
-parámetros pasan tal cual con los lugares en km), `cerrar(lista, X)` (reglas sobre todas las de su tipo: el tope de 4
+parámetros pasan tal cual con los lugares en km; lo que una pieza PUBLICA para las demás va en tres claves que no viajan
+al motor con ella: `_caminos` ({nombre: cadena}: caminos que un actor o un flujo pueden seguir), `_lugares` ({id: {x, y,
+nombre, peso}} en unidades de la escena: quedan como lugares del mundo con su id y siempre como «<id de la pieza>.<id>»;
+uno del mismo id en `mundo.lugares` manda; sirve en esquema y en ciudad) y `_alturas` (su relieve, § «El relieve de
+pieza»)), `cerrar(lista, X)` (reglas sobre todas las de su tipo: el tope de 4
 rupturas, la simplificación de las fallas), y para los gates `tramos(pieza)` (es una línea: vale para `separada_de`,
 M3D11), `centro(pieza, G)`, `puntos(evento, u, G)` (M3D6) y `origen(evento, G)` (M3D9).
 
@@ -531,6 +538,18 @@ estilo que declare `horas` en `design/sets3d/estilos.json` (hoy, `dia`). Sin `ho
   plano). El segundo del cuadro llega a todos los shaders en `uT` (`GLSL_COMUN`), y `ruido2()` da ruido suave.
 - **Cámara de cerca:** en un esquema la distancia va de 6 m (antes 15) y el ojo puede bajar a 1.2 m del suelo; una clave
   puede mirar a una altura con **`mira_lev_m`** (la copa de un árbol, la pluma de una grúa, media ladera).
+- **El relieve de pieza** (m250, m270; `scripts/maqueta_tipos/_relieve.py`): una pieza puede sumarle alturas al suelo del
+  mundo y todo lo demás las pisa. Su resolver publica `_alturas`, una lista de campos en unidades de la escena:
+  `RL.perfil(puntos [[x, y, z]…], ancho)` (la altura a lo largo de una línea: un camino, una rampa), `RL.plano(poligono, z)`
+  (una plataforma) o `RL.malla(caja, nx, ny, f, poligono)` (cualquier otra forma, muestreada). Desde ahí `S.suelo(x, y)` en
+  Python y `ctx.altura(x, y)` en el motor devuelven el suelo del mundo **más** el campo más alto que cubre el punto: un
+  actor o un flujo en sus caminos sube con ellos, la gente queda de pie sobre la ladera, y la cámara (`mira`, `sigue`), las
+  marcas, las anotaciones y los gates lo ven igual. Los objetos cuyo módulo dice `cabecea: true` (carro, camión, camión de
+  sacos, bus, moto) van posados en sus dos ejes y se inclinan con la pendiente; `flota(…, {cabeceo: false})` lo quita. La
+  pieza dueña del relieve usa `ctx.suelo(x, y)` (el suelo sin relieve) para no contarse dos veces. Hoy lo publican
+  `caminomontana` (su calzada: un `actor` o un `flujo` en «<id>.carril-1» / «<id>.carril-2»; `vehiculos: 0` y
+  `camion: false` quitan los suyos) y `cafetal` (su ladera: ya no hace falta `lev_m` para pararse entre las hileras).
+  **`mira_lev_m` se mide desde ese suelo** (en una maqueta anterior al relieve había que restarle la altura de la pieza).
 - **El mapa también:** piezas `rios`, `lagos` y `carreteras` (escala `pais`, set `guatemala`; OpenStreetMap, ODbL: el pie
   dice «OpenStreetMap», M3D7). `nombres` elige cuáles; una segunda pieza con un solo nombre se puede `resaltar`.
 
@@ -647,7 +666,8 @@ exterior) y `capas` (las del set que usa siempre: el pie las nombra, M3D7); sus 
 objeto que el resolver y los gates usan (`suelo`, `dentro`, `punto`, `lugares`, `caminos`, `capa(nombre)`…).
 
 **Lo que el mundo da a las piezas** (la API de la Fase 2: carros y gente que siguen caminos):
-- `ctx.altura(x, y)`: la altura del suelo en unidades de la escena (ya exagerada); `ctx.V3(x, y, lev)` el punto en three.
+- `ctx.altura(x, y)`: la altura del suelo en unidades de la escena (ya exagerada), con el relieve que publican las piezas;
+  `ctx.suelo(x, y)`: el del mundo solo; `ctx.V3(x, y, lev)` el punto en three.
 - `ctx.geo(lon, lat) → [x, y]` (pais en km; ciudad en metros; `null` en esquema, donde todo va en metros desde el centro).
 - `ctx.unidad_m` (metros por unidad: 1000 en pais, 1 en ciudad y esquema) y `ctx.metros(v)` (metros → unidades).
 - `ctx.caja = [x0, y0, x1, y1]`.

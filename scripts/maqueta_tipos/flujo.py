@@ -5,6 +5,8 @@ de Newell de scripts/maqueta_tipos/_movimiento.py (lo explica su cabecera). Todo
 y viaja resuelto a motor.js: por vehículo, su carril, su tipo, su variante de color y su trayectoria (T, S).
 
 Resuelta: {carriles: [nombres], largos, tipos: [objetos], vehiculos: [[carril, tipo, variante, T, S]], h, tamano, luces, usa}.
+Los vehículos van por carril, del de más adelante al último, y solo los que en algún momento del video están en su carril
+(`{flujo: id, n: 0}` es el primero que se ve; para seguir a uno con la cámara, mejor `cerca: <lugar>, t: <segundo>`).
 """
 import math
 
@@ -79,7 +81,11 @@ def con_eventos(lista, eventos, X):
             raise X.m3.Falla("M3D2", "pieza «%s»: densidad %g vehículos por km y carril no cabe a %g km/h (con τ = %g s, el tope es %.1f): bájala o baja `vel_kmh`"
                              % (pz["id"], p["densidad"], max(c.vmax() for c in carriles) * u / MV.KMH, p["reaccion_s"], tope))
         MV.flujo(carriles, vehs, p["reaccion_s"], X.dur)
-        planos = [v for lista_c in vehs for v in lista_c]
+        # solo viajan los vehículos que ALGUNA VEZ están en su carril entre 0 y el final (los que arrancan ya pasados del
+        # final o no alcanzan a entrar no se ven nunca): así `n: 0` es el de más adelante que sí se ve, no uno fuera del camino
+        movil = MV.movil_de([(v["c"], v["T"], v["S"]) for lista_c in vehs for v in lista_c], cads, pz["h"], X)
+        planos = [v for n, v in enumerate(v for lista_c in vehs for v in lista_c)
+                  if movil.s_en(0.0, n)[0] <= carriles[v["c"]].largo + 1e-6 and movil.s_en(X.dur, n)[0] >= -1e-6]
         tipos = pz["tipos"]
         pz["vehiculos"] = [[v["c"], tipos.index(v["o"]), v["var"], v["T"], v["S"]] for v in planos]
         X.moviles[pz["id"]] = MV.movil_de([(v["c"], v["T"], v["S"]) for v in planos], cads, pz["h"], X)

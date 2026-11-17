@@ -23,6 +23,7 @@ const GANCHO_VOZ_S = 6.0
 const DURACION_MIN_S = 20, DURACION_MAX_S = 180
 const CANDIDATOS = 5, CIERRES_N = 5, BRIEFS_MAX = 12, BRIEFS_POR_MUNDO = 3, CONSTRUCTORES_MAX = 3   // encargos al constructor: ≤ 3 por mundo, ≤ 12 por video, 3 a la vez
 const BRIEFS_CORRECCION = 2   // lo que la corrección de un retoque puede pedir al constructor
+const TANDA_MUNDOS = 3, TANDA_DESDE = 5   // retoque: con 5 o más mundos de cerca, el director trabaja de 3 en 3 (una pasada con 7 llegó a 325 K de contexto)
 const ESCENAS_TOPE = Math.max(ESCENAS_MAX, Math.floor(DURACION_MAX_S / 7))   // un video largo lleva las que necesite (video3d.py: SEG_POR_ESCENA)
 const VERIFICADORES_MAX = 3, PUNTAJE_ESCENA_MIN = 3
 const PUNTAJES_ESCENA = ['detalle', 'vida', 'realismo', 'claridad']
@@ -244,7 +245,8 @@ const referenciar = async (cerca, deDonde) => {
       .catch((e) => { avisar(`AVISO: la referencia visual del mundo ${m.id} no terminó (${String(e.message).split('\n')[0]}): ese mundo se dibuja genérico (escena.ilustrativa) o con lo ya verificado.`); return null })))
     refs.push(...tanda.filter(Boolean))
   }
-  return { refs, txt: refs.map((r) => `[${r.mundo}] se puede dibujar: ${r.se_puede_dibujar.map((x) => `${x.que} (${x.hecho})`).join('; ') || 'nada verificado'} · no afirmar: ${(r.no_afirmar || []).join('; ') || '—'}`).join(' ‖ ') }
+  const linea = (r) => `[${r.mundo}] se puede dibujar: ${r.se_puede_dibujar.map((x) => `${x.que} (${x.hecho})`).join('; ') || 'nada verificado'} · no afirmar: ${(r.no_afirmar || []).join('; ') || '—'}`
+  return { refs, txt: refs.map(linea).join(' ‖ '), por: Object.fromEntries(refs.map((r) => [r.mundo, linea(r)])) }
 }
 
 // ── RETOQUE VISUAL (args.desde: "retoque_visual" + args.notas): la voz ya existe y NO se toca; cambia solo lo que se ve ──
@@ -255,24 +257,37 @@ if (A.desde === 'retoque_visual') {
   if (!notas) fail('args.notas: qué quiere el usuario que cambie en lo que se ve.')
   // args.mundos [{id, escala, para}]: los lugares de cerca que el video tiene o va a tener (la sesión los lee del guion y
   // de las notas); cada uno pasa por la referencia visual antes de que el director toque nada
-  let REFERENCIA_TXT = ''
+  let REFERENCIA_TXT = '', REFERENCIA_POR = {}
   const cercaR = (Array.isArray(A.mundos) ? A.mundos : []).filter((m) => m && m.id && m.escala !== 'pais')
   if (cercaR.length && !A.sin_referencia && !A.fixture) {
     phase('Referencia visual')
     const RV = await referenciar(cercaR, `Lee ${trabajo}/guion.json (ese mundo y las escenas que pasan en él) y estas notas del usuario: «${notas}»`)
     REFERENCIA_TXT = RV.txt
+    REFERENCIA_POR = RV.por
     log(`Referencia visual: ${RV.refs.length}/${cercaR.length} mundos`)
   }
   phase('Guion')
-  const directivaRetoque = (extra) => DIRECTOR +
+  // Con TANDA_DESDE o más mundos de cerca, el director trabaja por TANDAS de TANDA_MUNDOS (una pasada tras otra, cada una
+  // con sus mundos y solo la referencia de esos mundos): el contexto de cada pasada queda acotado.
+  const tandasR = cercaR.length >= TANDA_DESDE ? cercaR.map((_, i) => i).filter((i) => i % TANDA_MUNDOS === 0).map((i) => cercaR.slice(i, i + TANDA_MUNDOS)) : [null]
+  const referenciaDe = (tanda) => tanda ? tanda.map((m) => REFERENCIA_POR[m.id]).filter(Boolean).join(' ‖ ') : REFERENCIA_TXT
+  const directivaRetoque = (extra, tanda, n) => DIRECTOR +
     `MODO RETOQUE VISUAL. LA VOZ YA ESTÁ GRABADA Y NO SE REGRABA: no cambies ni una palabra de ningún \`texto\`, ni el número de escenas, ni n, tipo, acto, secuencia, el titular y la voz del gancho ni el \`final\` del cierre. Cambia SOLO lo visual (mundos con su ficha \`escena\`, su hora y su estilo; el mundo de cada escena y sus \`cambios\`; cámaras, eventos, marcas, anotaciones). NOTAS DEL USUARIO: «${notas}». ` +
     `Itera con python3 scripts/video3d.py guion ${trabajo} --check hasta 0, LUEGO python3 scripts/video3d.py tiempos ${trabajo} (la voz real: tiene que quedar en 0), python3 scripts/video3d.py storyboard ${trabajo} y python3 scripts/maqueta3d.py escena ${trabajo}/maqueta.json --hoja --salida ${trabajo}/escenas; mira la hoja de cada mundo. ` +
-    (REFERENCIA_TXT ? `REFERENCIA VISUAL (usa sus ids en escena.sostiene; lo que no esté ahí es \`generico\` o va a no_afirmar; suma sus verificacion_visual_<mundo>.json con video3d.py datos si traen cifras): ${REFERENCIA_TXT} ` : '') +
+    (tanda ? `EN ESTA PASADA (${n + 1} de ${tandasR.length}) trabaja SOLO estos mundos y las escenas que pasan en ellos: ${tanda.map((m) => m.id).join(', ')}. Los demás mundos y sus escenas NO se tocan (los hace otra pasada); las hojas, solo las de tus mundos. ` : '') +
+    (referenciaDe(tanda) ? `REFERENCIA VISUAL (usa sus ids en escena.sostiene; lo que no esté ahí es \`generico\` o va a no_afirmar; suma sus verificacion_visual_<mundo>.json con video3d.py datos si traen cifras): ${referenciaDe(tanda)} ` : '') +
     `Lo que el catálogo no tenga, en briefs (≤ ${BRIEFS_POR_MUNDO} por mundo, con su \`mundo\`; ESCENARIOS completos antes que objetos sueltos). ` + (extra || '') +
     'Retorno: {archivo, gate, fallas[], escenas, estimado_s, tipos_usados[], storyboard, briefs[], aplicadas[]}.'
-  let GR = await conReparacion('Retoque visual', (fallos) => agentRol(directivaRetoque(fallos.length ? `REPARACIÓN: ${fallos.join('; ')}. ` : ''),
-    { agentType: 'video3d-director', schema: S.guion, phase: 'Guion', label: 'retoque-visual' }),
-    (r) => r.gate !== 'ok' ? fallasDe(r, 'video3d.py guion --check y tiempos') : [...archivoEs(r, 'guion.json'), ...(!r.storyboard ? ['devuelve la ruta de la hoja del storyboard'] : [])], 2)
+  let GR = null
+  const briefsT = [], aplicadasT = []
+  for (const [n, tanda] of tandasR.entries()) {
+    GR = await conReparacion(tanda ? `Retoque visual (${tanda.map((m) => m.id).join(', ')})` : 'Retoque visual', (fallos) => agentRol(directivaRetoque(fallos.length ? `REPARACIÓN: ${fallos.join('; ')}. ` : '', tanda, n),
+      { agentType: 'video3d-director', schema: S.guion, phase: 'Guion', label: tanda ? `retoque-visual-${n + 1}` : 'retoque-visual' }),
+      (r) => r.gate !== 'ok' ? fallasDe(r, 'video3d.py guion --check y tiempos') : [...archivoEs(r, 'guion.json'), ...(!r.storyboard ? ['devuelve la ruta de la hoja del storyboard'] : [])], 2)
+    briefsT.push(...(GR.briefs || [])); aplicadasT.push(...(GR.aplicadas || []))
+  }
+  GR = { ...GR, briefs: briefsT, aplicadas: [...new Set(aplicadasT)] }
+  if (tandasR.length > 1) log(`Retoque visual: ${tandasR.length} pasadas del director (${cercaR.length} mundos de cerca, de ${TANDA_MUNDOS} en ${TANDA_MUNDOS})`)
   if (GR.briefs.length) {
     const lista = GR.briefs.slice(0, BRIEFS_MAX), hechosR = []
     for (let i = 0; i < lista.length; i += CONSTRUCTORES_MAX) {
@@ -348,8 +363,28 @@ if (A.desde === 'retoque_visual') {
       }
     }
   }
-  return { trabajo, tema, veredicto: flojasR.length || CR.faltas.some((x) => x.gravedad === 'bloquea') ? 'corregir' : 'retoque_listo', etapa: 'retoque_visual',
-    escenas: CR.escenas || [], faltas_pendientes: CR.faltas.filter((x) => x.gravedad === 'bloquea'), mejoras: CR.faltas.filter((x) => x.gravedad === 'mejora'),
+  // SEGUNDA LECTURA (corta): si la corrección cambió algo, el crítico vuelve a mirar SOLO los mundos que cambiaron o que
+  // estaban flojos; sus puntajes y sus faltas reemplazan a los de antes (el retorno ya no trae la nota de lo ya corregido).
+  let escenasR = CR.escenas || [], faltasR = CR.faltas, segunda = false
+  if (aplicadasR.length) {
+    const CR2 = await agentRol(
+      `MODO 3D (${guia('video-critico', '3d')}), SEGUNDA LECTURA CORTA de un retoque visual ya corregido: TRABAJO = ${trabajo}. La voz y el texto no se juzgan. ` +
+        `Tu primera lectura está en ${trabajo}/critica.json (no la reescribas). El director corrigió estas escenas: ${JSON.stringify(aplicadasR)}${flojasR.length ? `; los mundos con un puntaje bajo eran: ${flojasR.map((e) => e.mundo).join(', ')}` : ''}. ` +
+        `Mira SOLO la hoja de los mundos de esas escenas y de esos mundos flojos (${trabajo}/escenas/<tramo>/hoja_9x16.jpg; python3 scripts/maqueta3d.py escena ${trabajo}/maqueta.json imprime la medida de cada tramo). ` +
+        'Puntúa de nuevo SOLO esos mundos en escenas[] (detalle, vida, realismo, claridad; 1–5, con que_falta) y deja en faltas[] SOLO lo que sigue mal en ellos tras la corrección (lo ya corregido no se repite; no propongas rehacer lo que no viste). ' +
+        `Escribe ${trabajo}/critica_2.json.`,
+      { agentType: 'video-critico', schema: S.critica, phase: 'Crítica', label: 'critica-retoque-2' })
+      .catch((e) => { avisar(`AVISO: la segunda lectura del crítico no terminó (${String(e.message).split('\n')[0]}): los puntajes son los de antes de corregir.`); return null })
+    if (CR2) {
+      const vistos = new Set((CR2.escenas || []).map((e) => e.mundo))
+      escenasR = [...escenasR.filter((e) => !vistos.has(e.mundo)), ...(CR2.escenas || [])]
+      faltasR = CR2.faltas || []
+      segunda = true
+    }
+  }
+  const flojasFin = escenasR.filter((e) => PUNTAJES_ESCENA.some((k) => e[k] < PUNTAJE_ESCENA_MIN))
+  return { trabajo, tema, veredicto: flojasFin.length || faltasR.some((x) => x.gravedad === 'bloquea') ? 'corregir' : 'retoque_listo', etapa: 'retoque_visual',
+    escenas: escenasR, segunda_lectura: segunda, faltas_pendientes: faltasR.filter((x) => x.gravedad === 'bloquea'), mejoras: faltasR.filter((x) => x.gravedad === 'mejora'),
     corregidas: aplicadasR, sin_aplicar: sinAplicarR,
     storyboard: GR.storyboard, tipos_usados: GR.tipos_usados, avisos: AVISOS_WF }
 }

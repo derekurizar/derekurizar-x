@@ -46,14 +46,14 @@
         };
         // ---- el perfil de la ladera: talud suave. En cada hilera, g(x) sube de 0 a 1 con la parte más plana donde van los
         // cafetos (x ≈ C0) y la más empinada en la calle de en medio (1.6 × la pendiente media: nunca un muro). Al comienzo
-        // de la hilera k la altura es pendiente_m · k / hileras (el contrato de lev_m de un actor de pie ahí).
+        // de la hilera k la altura es pendiente_m · k / hileras. El mismo perfil está en cafetal.py (`ladera`: el relieve que publica).
         const BETA = 0.6, C0 = 0.12, g0 = Math.sin(-TAU * C0), XP = 0.14, XC = 0.62;          // XP: cafetos · XC: la calle
         const g = (x) => x - BETA * (Math.sin(TAU * (x - C0)) - g0) / TAU;
         const prof = (s) => { const u = clamp((s - s0) / L * N, 0, N), k = Math.min(N - 1, Math.floor(u)); return P / N * (k + g(u - k)); };
         const AMP = 0.16 * RS, fase = hz(0, 90) * TAU, lam0 = 1.7 * Math.max(WS, M1);
         const curva = (w) => AMP * Math.sin(TAU * (w - w0) / lam0 + fase);             // las hileras siguen la ladera
         const LEV = metros(0.15), alto = (s, w) => LEV + prof(s - curva(w));
-        const base0 = ctx.altura(...xy(s0 + L / 2, (w0 + w1) / 2));
+        const base0 = ctx.suelo(...xy(s0 + L / 2, (w0 + w1) / 2));          // el suelo del mundo (sin el relieve que esta pieza publica)
         // ---- ruido de valor fijo (para el suelo): bilineal sobre una cuadrícula de `cel` metros, de 0 a 1
         const ruido = (x, y, cel, k) => {
           const fx = x / cel, fy = y / cel, ix = Math.floor(fx), iy = Math.floor(fy), tx = fx - ix, ty = fy - iy;
@@ -190,7 +190,7 @@
           const punto = (q) => {                          // arriba (en la ladera), el hombro y el pie en el suelo del mundo
             const [s, w] = sw(q[0], q[1]), h = alto(clamp(s, s0, s1), w), run = (h * 1.35 + metros(0.6)) * q[4];
             const xo = q[0] + q[2] * run, yo = q[1] + q[3] * run, xh = q[0] + q[2] * run * 0.42, yh = q[1] + q[3] * run * 0.42;
-            return [[q[0], q[1], h], [xh, yh, h * 0.66], [xo, yo, ctx.altura(xo, yo) - base0 - metros(0.05)]];
+            return [[q[0], q[1], h], [xh, yh, h * 0.66], [xo, yo, ctx.suelo(xo, yo) - base0 - metros(0.05)]];
           };
           let prev = punto(per[0]);
           for (let i = 1; i < per.length; i++) {

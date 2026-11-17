@@ -36,6 +36,7 @@ import versiones             # noqa: E402  (la versión de HyperFrames, en un so
 import maqueta_tramos as TR  # noqa: E402  (varios mundos en un video: tramos)
 import maqueta_escena as ESC  # noqa: E402  (la escena viva: M3D15–M3D19)
 from maqueta_tipos import _movimiento as MV  # noqa: E402  (lo que se mueve: actor, flujo; la cámara que sigue)
+from maqueta_tipos import _relieve as RL     # noqa: E402  (el relieve de pieza: `_alturas`)
 
 HF = list(versiones.HF)      # ["npx", "--yes", "hyperframes@<versión>"]
 MOTOR = os.path.join(RAIZ, "video", "maqueta")
@@ -608,6 +609,11 @@ def resolver(m, formato, avisos=None):
         raise Falla("M3D1", "paleta «%s» no está en design/tokens.json → noche.paletas (hay: %s)" % (m.get("paleta"), ", ".join(tokens["noche"]["paletas"])))
     mundo = m.get("mundo") or {}
     S = mundo_de(mundo, est, avisos)                     # el mundo de su escala (pais: el Set de siempre)
+    # EL RELIEVE DE PIEZA (`_alturas`, maqueta_tipos/_relieve.py): S.suelo = el suelo del mundo + lo que publican las piezas
+    S.alturas = []
+    if not hasattr(S, "suelo_base"):
+        S.suelo_base = S.suelo
+        S.suelo = (lambda W: lambda x, y: W.suelo_base(x, y) + RL.en(W.alturas, x, y))(S)
     exag = S.exag
     roles = {"@fondo": pal["fondo"], "@fondo2": pal["fondo_acto2"], "@fondo3": pal["fondo_golpe"], "@acento": pal["acento"],
              "@texto": tokens["noche"]["texto"], "@tinta": tokens["noche"]["tinta_sobre_acento"]}
@@ -615,12 +621,17 @@ def resolver(m, formato, avisos=None):
     Z = zona_de(formato); Z["velo"] = est["capa"]["velo"]
     alt_km = S.suelo                                     # altura del suelo en unidades del mundo (pais: km), ya exagerada
 
-    # lugares: los del set más los de mundo.lugares (que mandan)
+    # lugares: los del set, los que PUBLICAN las piezas (`_lugares`: «<id de la pieza>.<lugar>» siempre y «<lugar>» si
+    # nadie más lo usa) y los de mundo.lugares (que mandan sobre todos)
     propios = mundo.get("lugares") or {}
+    publicados = {}
 
     def lugar(ref, que):
         if isinstance(ref, (list, tuple)) and len(ref) == 2 and all(isinstance(v, (int, float)) for v in ref):
             (x, y), nombre, donde = S.punto(ref[0], ref[1]), "", tuple(ref)
+        elif isinstance(ref, str) and ref in publicados and ref not in propios:
+            l = publicados[ref]
+            return {"x": l["x"], "y": l["y"], "nombre": l["nombre"], "peso": l["peso"]}
         elif isinstance(ref, str) and (ref in propios or ref in S.lugares):
             l = propios.get(ref) or S.lugares[ref]
             try:
@@ -636,7 +647,7 @@ def resolver(m, formato, avisos=None):
 
     # piezas: cada una contra su ficha (validador genérico) y las reglas de su tipo (scripts/maqueta_tipos/<tipo>.py)
     import types
-    X = types.SimpleNamespace(m3=sys.modules[__name__], S=S, lugar=lugar, propios=propios, avisos=avisos, alt_km=alt_km, piezas=[], por_id={},
+    X = types.SimpleNamespace(m3=sys.modules[__name__], S=S, lugar=lugar, propios=propios, publicados=publicados, avisos=avisos, alt_km=alt_km, piezas=[], por_id={},
                               eventos=[], moviles={}, dur=float(m.get("duracion_s", 0) or 0))
     piezas, ids = X.piezas, set()
     # EL AMBIENTE: un esquema nace vestido (vegetación, cercas, postes, farolas: la pieza `ambiente`). Si el mundo no la
@@ -669,7 +680,21 @@ def resolver(m, formato, avisos=None):
             raise Falla("M3D2", "la pieza %d no tiene `id` o lo repite (%r)" % (n, pid))
         ids.add(pid)
         f = tipo_conocido(tipo, "pieza", est, que, S.escala)
-        piezas.append(resolver_entrada(validar_campos(p, f, que, avisos=avisos), f, que, X, {"id": pid, "tipo": tipo}))
+        pz = resolver_entrada(validar_campos(p, f, que, avisos=avisos), f, que, X, {"id": pid, "tipo": tipo})
+        if pz.get("_alturas"):                              # su relieve: desde aquí lo pisa todo lo demás
+            RL.revisar(pz["_alturas"], que, Falla)
+            S.alturas.extend(pz["_alturas"])
+            pz["relieve"] = True                            # (los gates la miden desde el suelo del mundo, no desde el suyo)
+        for i, l in (pz.get("_lugares") or {}).items():     # sus lugares con nombre, en unidades de la escena
+            try:
+                l = {"x": round(float(l["x"]), 3), "y": round(float(l["y"]), 3), "nombre": str(l.get("nombre") or i), "peso": float(l.get("peso", 0.5))}
+            except (KeyError, TypeError, ValueError):
+                raise Falla("M3D2", "%s: publica el lugar «%s» mal formado (va {x, y, nombre, peso} en unidades de la escena)" % (que, i))
+            if not S.dentro(l["x"], l["y"]):
+                continue
+            publicados["%s.%s" % (pid, i)] = l
+            publicados.setdefault(i, l)
+        piezas.append(pz)
     for tipo in dict.fromkeys(p["tipo"] for p in piezas):
         rg = reglas(tipo)
         if rg and hasattr(rg, "cerrar"):
@@ -847,18 +872,19 @@ def resolver(m, formato, avisos=None):
         "mundo": dict(S.datos_mundo(), escala=S.escala, set=S.id, unidad_m=S.unidad_m, km=S.km, caja=[round(v, 3) for v in S.caja],
                       camara={"cerca": CF["cerca"], "lejos": CF["lejos"], "niebla": CF["niebla"]}, plano=S.ficha["plano"],
                       caminos=dict(S.caminos, **{k: v for p in piezas for k, v in (p.get("_caminos") or {}).items()}),
-                      lugares=lugares_ctx(S, propios, lugar)),
-        "piezas": [{k: v for k, v in p.items() if k != "_caminos"} for p in piezas], "camara": camara, "eventos": eventos, "marcas": marcas, "capa": capa,
+                      alturas=list(S.alturas), lugares=lugares_ctx(S, propios, lugar, publicados)),
+        "piezas": [{k: v for k, v in p.items() if k not in ("_caminos", "_alturas", "_lugares")} for p in piezas], "camara": camara, "eventos": eventos, "marcas": marcas, "capa": capa,
         "anotaciones": anotaciones, "_set": S, "_pie_claves": S.fuente.get("pie_claves", {}), "_moviles": X.moviles,
     }
 
 
-def lugares_ctx(S, propios, lugar):
+def lugares_ctx(S, propios, lugar, publicados=None):
     """Los lugares con nombre que el mundo le da a las piezas (ctx.lugares: {id: {x, y, nombre}}): los del mundo de
-    esquema y de ciudad (los de un set de país son cientos: las piezas ya los reciben resueltos) y los de mundo.lugares."""
+    esquema y de ciudad (los de un set de país son cientos: las piezas ya los reciben resueltos), los que publican las
+    piezas (`_lugares`) y los de mundo.lugares."""
     ids = list(S.lugares) if S.escala != "pais" else []
     out = {}
-    for i in dict.fromkeys(ids + list(propios)):
+    for i in dict.fromkeys(ids + list(publicados or {}) + list(propios)):
         l = lugar(i, "mundo.lugares «%s»" % i)
         out[i] = {"x": l["x"], "y": l["y"], "nombre": l["nombre"]}
     return out
@@ -982,6 +1008,38 @@ def gates_formato(m, R):
             peor = max(motivo, key=motivo.get)
             F("M3D4", "%s: solo se ve bien %d %% de su ventana (mínimo 80 %%): %s. Mueve su ventana a cuando la cámara lo encuadra, cambia la clave de cámara, o ajusta `alto`"
               % (que, round(100 * ok / tot), peor))
+    # M3D20 (aviso) · el rótulo no tapa lo que señala: la tarjeta de una marca no cubre al actor que la cámara sigue, al
+    # protagonista ni a un actor que está junto a su ancla más de la mitad del tiempo que comparten en pantalla
+    actores = [pz for pz in R["piezas"] if pz["tipo"] == "actor" and pz["id"] in R["_moviles"]]
+    um = 1.0 / R["mundo"]["unidad_m"]
+    for k in marcas if actores else ():
+        if not (0 <= k["t"] < k["hasta"] <= dur + 1e-6):
+            continue
+        cuenta = {}
+        t = k["t"]
+        while t < k["hasta"]:
+            c = camara_en(cam, t); pr = proyector(c, W, H, H / 2 - Z["centro_y"])
+            p = pr(k["x"], k["y"], k["z"])
+            if p is not None:
+                tj = caja_tarjeta(R, k, p[0], p[1])
+                sigue = next((q["sigue"].get("movil") for q in reversed(cam) if q["t"] <= t + 1e-6 and q.get("sigue")), None) if any(q.get("sigue") for q in cam) else None
+                for pz in actores:
+                    x, y, dx, dy, v, vis = R["_moviles"][pz["id"]].en(t, 0)
+                    if not vis or not (pz["id"] == sigue or pz.get("protagonista") or math.hypot(x - k["x"], y - k["y"]) <= 0.15 * c["dist"]):
+                        continue
+                    l, a, h = (d * um for d in ESC._caja_de(ficha(pz["objeto"], "objeto") or {}, float(pz.get("tamano", 1))))
+                    r = ESC._rect({"x": x, "y": y, "l": l, "a": a, "h": h, "dx": dx, "dy": dy, "lev": float(pz.get("lev", 0)) * um}, pr, S)
+                    if not r or r[2] < 0 or r[0] > W or r[3] < 0 or r[1] > H:
+                        continue
+                    area = max(1.0, (r[2] - r[0]) * (r[3] - r[1]))
+                    comun = max(0.0, min(r[2], tj[2]) - max(r[0], tj[0])) * max(0.0, min(r[3], tj[3]) - max(r[1], tj[1]))
+                    n_v, n_c = cuenta.get(pz["id"], (0, 0))
+                    cuenta[pz["id"]] = (n_v + 1, n_c + (comun / area >= 0.5))
+            t += 0.1
+        for pid, (n_v, n_c) in cuenta.items():
+            if n_v >= 3 and n_c / float(n_v) > 0.5:
+                R.setdefault("_avisos_formato", []).append("M3D20 la marca «%s» tapa a «%s» %d %% del tiempo que comparten en pantalla: sube su `alto` (p. ej. %d) o ánclala a un lugar al lado"
+                                                           % (k["texto"], pid, round(100 * n_c / float(n_v)), int(k["alto"]) + 120))
     t = 0.0
     while t < dur:
         vivas = [k for k in marcas if k["t"] <= t < k["hasta"]]
@@ -1322,6 +1380,8 @@ def revisar_m(m, formatos):
             fallas += ["%s %s" % x for x in gates_comunes(m, R, avisos)]
             comunes = True
         fallas += ["%s [%s] %s" % (g, f, msg) for g, msg in gates_formato(m, R)]
+        # lo que los gates de este formato avisan sin fallar (M3D18: fuera de su distancia; M3D20: un rótulo que tapa)
+        avisos += ["%s [%s] %s" % (x.split(" ", 1)[0], f, x.split(" ", 1)[1]) for x in (R.get("_avisos_escena") or []) + (R.get("_avisos_formato") or [])]
     if len(formatos) < 2 and not es_pieza(formatos[0]):
         avisos.append("M3D10 pide los dos formatos: se revisó solo %s (corre check sin --formato o con --formato ambos)" % formatos[0])
     return fallas, list(dict.fromkeys(avisos))
