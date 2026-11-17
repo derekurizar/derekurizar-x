@@ -46,8 +46,47 @@
         "esquema:campo",
         "esquema:ciudad",
         "esquema:costa",
+        "esquema:plaza",
         "pais:guatemala"
       ],
+      "estilos": [
+        "color",
+        "dia"
+      ],
+      "por_mundo": {
+        "finca": {
+          "estilo": "dia",
+          "hora": "amanecer"
+        },
+        "beneficio": {
+          "estilo": "dia",
+          "hora": "dia"
+        },
+        "carretera": {
+          "estilo": "dia",
+          "hora": "dia"
+        },
+        "seco": {
+          "estilo": "dia",
+          "hora": "dia"
+        },
+        "pais": {
+          "estilo": "color",
+          "hora": "dia"
+        },
+        "puerto": {
+          "estilo": "dia",
+          "hora": "atardecer"
+        },
+        "tostaduria": {
+          "estilo": "dia",
+          "hora": "dia"
+        },
+        "ciudad": {
+          "estilo": "dia",
+          "hora": "dia"
+        }
+      },
       "idea_visual": "Seguimos el café de día, paso por paso y cada paso en su lugar: la ladera de Huehuetenango bajo sombra con gente cosechando, el beneficio donde se vuelve pergamino, la carretera y la trilla, el mapa desde arriba, la grúa que lo sube al barco y la tostadora junto a una taza humeante, hasta volver a la misma ladera.",
       "gancho": {
         "id": "g2",

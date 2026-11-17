@@ -1,0 +1,203 @@
+{
+ "version": 1,
+ "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+ "fecha": "2026-11-16",
+ "regla": "sobre el tramo más flojo de la referencia: ocupación = 70 % de su mediana (y baja de punto en punto hasta que la referencia cumpla con 5 puntos de holgura); variedad = la suya − 1; parte del tramo que cumple = la suya − 5 puntos (70–90 %); nunca por debajo de los umbrales de partida",
+ "umbral": {
+  "ocupacion": 0.46,
+  "variedad": 5,
+  "muestras_ok": 0.77
+ },
+ "partida": {
+  "ocupacion": 0.35,
+  "variedad": 4,
+  "muestras_ok": 0.7
+ },
+ "tramos": [
+  {
+   "id": "finca-1",
+   "mundo": "finca",
+   "dur_s": 9.7,
+   "escala": "esquema",
+   "hora": "amanecer",
+   "9:16": {
+    "ocupacion": 1.0,
+    "lleno": 1.0,
+    "variedad": 6,
+    "variado": 1.0,
+    "vida": 1.0,
+    "gente_max": 4
+   },
+   "4:5": {
+    "ocupacion": 1.0,
+    "lleno": 1.0,
+    "variedad": 6,
+    "variado": 1.0,
+    "vida": 1.0,
+    "gente_max": 4
+   }
+  },
+  {
+   "id": "beneficio-2",
+   "mundo": "beneficio",
+   "dur_s": 20.3,
+   "escala": "esquema",
+   "9:16": {
+    "ocupacion": 0.98,
+    "lleno": 1.0,
+    "variedad": 9,
+    "variado": 1.0,
+    "vida": 1.0,
+    "gente_max": 6
+   },
+   "4:5": {
+    "ocupacion": 0.925,
+    "lleno": 1.0,
+    "variedad": 14,
+    "variado": 1.0,
+    "vida": 1.0,
+    "gente_max": 7
+   }
+  },
+  {
+   "id": "carretera-3",
+   "mundo": "carretera",
+   "dur_s": 2.73,
+   "escala": "esquema",
+   "9:16": {
+    "ocupacion": 1.0,
+    "lleno": 1.0,
+    "variedad": 10,
+    "variado": 1.0,
+    "vida": 1.0,
+    "gente_max": 0
+   },
+   "4:5": {
+    "ocupacion": 1.0,
+    "lleno": 1.0,
+    "variedad": 10,
+    "variado": 1.0,
+    "vida": 1.0,
+    "gente_max": 0
+   }
+  },
+  {
+   "id": "seco-4",
+   "mundo": "seco",
+   "dur_s": 9.8,
+   "escala": "esquema",
+   "9:16": {
+    "ocupacion": 1.0,
+    "lleno": 1.0,
+    "variedad": 17,
+    "variado": 1.0,
+    "vida": 1.0,
+    "gente_max": 2
+   },
+   "4:5": {
+    "ocupacion": 1.0,
+    "lleno": 1.0,
+    "variedad": 17,
+    "variado": 1.0,
+    "vida": 1.0,
+    "gente_max": 2
+   }
+  },
+  {
+   "id": "pais-5",
+   "mundo": "pais",
+   "dur_s": 23.43,
+   "escala": "pais"
+  },
+  {
+   "id": "puerto-6",
+   "mundo": "puerto",
+   "dur_s": 16.5,
+   "escala": "esquema",
+   "hora": "atardecer",
+   "9:16": {
+    "ocupacion": 0.889,
+    "lleno": 0.857,
+    "variedad": 15,
+    "variado": 0.971,
+    "vida": 1.0,
+    "gente_max": 5
+   },
+   "4:5": {
+    "ocupacion": 0.778,
+    "lleno": 0.914,
+    "variedad": 15,
+    "variado": 1.0,
+    "vida": 1.0,
+    "gente_max": 6
+   }
+  },
+  {
+   "id": "tostaduria-7",
+   "mundo": "tostaduria",
+   "dur_s": 13.33,
+   "escala": "esquema",
+   "9:16": {
+    "ocupacion": 1.0,
+    "lleno": 1.0,
+    "variedad": 9,
+    "variado": 1.0,
+    "vida": 1.0,
+    "gente_max": 2
+   },
+   "4:5": {
+    "ocupacion": 1.0,
+    "lleno": 1.0,
+    "variedad": 9,
+    "variado": 1.0,
+    "vida": 1.0,
+    "gente_max": 2
+   }
+  },
+  {
+   "id": "ciudad-8",
+   "mundo": "ciudad",
+   "dur_s": 7.2,
+   "escala": "esquema",
+   "9:16": {
+    "ocupacion": 1.0,
+    "lleno": 1.0,
+    "variedad": 11,
+    "variado": 1.0,
+    "vida": 1.0,
+    "gente_max": 1
+   },
+   "4:5": {
+    "ocupacion": 1.0,
+    "lleno": 1.0,
+    "variedad": 12,
+    "variado": 1.0,
+    "vida": 1.0,
+    "gente_max": 2
+   }
+  },
+  {
+   "id": "finca-9",
+   "mundo": "finca",
+   "dur_s": 9.3,
+   "escala": "esquema",
+   "hora": "amanecer",
+   "9:16": {
+    "ocupacion": 1.0,
+    "lleno": 1.0,
+    "variedad": 6,
+    "variado": 1.0,
+    "vida": 1.0,
+    "gente_max": 4
+   },
+   "4:5": {
+    "ocupacion": 1.0,
+    "lleno": 1.0,
+    "variedad": 6,
+    "variado": 1.0,
+    "vida": 1.0,
+    "gente_max": 5
+   }
+  }
+ ]
+}

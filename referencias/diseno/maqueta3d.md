@@ -476,7 +476,16 @@ y los casos de prueba de un mundo no se miden: los gates corren cuando el maquet
 | `caja_m` | `[largo, ancho, alto]`: cuánto cuadro ocupa (por defecto, sus `medidas`) |
 
 **Gates** (una muestra cada 0.5 s del tramo; los umbrales están en `maqueta_escena.UMBRAL` y la vara aprobada los ajusta
-en `referencias/diseno/vara3d.json`):
+en `referencias/diseno/vara3d.json`; los números de la tabla son los de partida):
+
+**La vara** la fija un video que el usuario aprobó como referencia: `maqueta3d.py escena <su maqueta.json> --vara
+<carpeta de entrega>` mide cada tramo de cerca en 9:16 y 4:5 y escribe `vara3d.json` con las medidas y los umbrales
+nuevos. La regla mira el tramo más flojo de la referencia: ocupación = 70 % de su mediana (y baja de punto en punto hasta
+que la referencia cumpla con 5 puntos de holgura), variedad = la suya menos 1 y la parte del tramo que cumple = la suya
+menos 5 puntos (entre 70 y 90 %). La vara sube, nunca baja de los umbrales de partida; una prueba
+(`scripts/pruebas/maqueta_escena.py`) exige que la referencia la siga pasando. **Vara vigente** (el café rehecho,
+`videos3d/2026-11-15-cafe-huehuetenango-taza`, aprobado el 2026-11-16): cuadro lleno ≥ 46 %, ≥ 5 cosas distintas, en
+≥ 77 % de las muestras de cada tramo de cerca.
 
 | Gate | Qué exige en cada tramo de cerca |
 |---|---|
@@ -530,8 +539,8 @@ desde la luz (2048², ortográfico, centrado en lo que mira la cámara y alinead
 leen en `niebla()` (`enSombra(pos)` en `GLSL_COMUN`): ningún módulo cambia. La normal de la cara sale de las derivadas, así
 solo se oscurecen las caras que miran a la luz. Proyectan sombra las mallas opacas (ni líneas, ni puntos, ni lo
 transparente; `userData.sinSombra` la quita). Es una función pura del cuadro. Con sombras reales, la de contacto baja de
-fuerza. Costo medido (24 cuadros sueltos, cafetal y beneficio): ≈ +0.01 s por cuadro; el del render completo se anota
-con el primer video que las use.
+fuerza. Costo medido (24 cuadros sueltos, cafetal y beneficio): ≈ +0.01 s por cuadro; en el render completo del
+café (112 s, 9 tramos) el video entero tardó ≈ +20–40 % frente a la versión sin sombras (`flujo-video3d.md` → Costos).
 
 **Luz con volumen** (`cfg.volumen`, con las sombras): el cielo aclara lo que mira hacia arriba y lo que mira al suelo
 queda más oscuro (la misma normal por derivadas). **Resplandor** (`cfg.resplandor`; hoy la hora `noche` del estilo `dia`):

@@ -2916,6 +2916,138 @@
       "problema": "En `dia` los edificios del fondo de una ciudad salen pálidos y la mitad baja del cuadro es asfalto liso.",
       "propuesta": "Algo más de contraste en los muros lejanos de `dia` y textura (juntas, manchas) en el asfalto y las aceras.",
       "estado": "pendiente"
+    },
+    {
+      "id": "m266",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "capa",
+      "archivo": "scripts/maqueta_tramos.py · scripts/maqueta3d.py",
+      "problema": "El pie con las fuentes de los geodatos (Mapzen, Natural Earth, OpenStreetMap) salía también sobre los mundos esquema, que no usan ningún geodato.",
+      "propuesta": "pie_ventanas: el pie sale solo mientras se ve un mapa; el tramo de un esquema no lo lleva ni M3D7 se lo pide.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m267",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "workflow",
+      "archivo": ".claude/workflows/video3d.js",
+      "problema": "En modo retoque visual las faltas y mejoras del crítico volvían en el reporte y nadie las aplicaba: la sesión tenía que hacer otra pasada a mano.",
+      "propuesta": "Una pasada de correcciones del director en la misma corrida (args.correcciones suma lo visto en las hojas); puede pedir hasta 2 módulos al constructor y los pone.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m268",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "motor",
+      "archivo": "video/maqueta/piezas/carretera.js",
+      "problema": "En un esquema el asfalto quedaba 0.6 m sobre el suelo (se tragaba las ruedas) y las rayas flotaban 0.5 m más arriba: con la cámara baja se dibujaban por delante del camión (lo vio el usuario).",
+      "propuesta": "En esquema, el asfalto casi a ras (0.12 m) y las rayas pegadas a él (0.16 m); en ciudad, igual que antes.",
+      "estado": "hecha"
+    },
+    {
+      "id": "m269",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "gates",
+      "archivo": "scripts/maqueta_escena.py · scripts/maqueta3d.py (escena --vara)",
+      "problema": "Los umbrales de la escena viva (M3D15–M3D17) eran de partida: no había forma de fijarlos con un video aprobado.",
+      "propuesta": "maqueta3d.py escena MAQUETA --vara ENTREGA escribe referencias/diseno/vara3d.json con las medidas por tramo y los umbrales (la referencia siempre pasa su vara; nunca bajan). Vara vigente: el café rehecho (46 %, 5 cosas, 77 %).",
+      "estado": "hecha"
+    },
+    {
+      "id": "m270",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "motor",
+      "archivo": "video/maqueta/motor.js (ctx.flota, ctx.caminos, lugares de una pieza)",
+      "problema": "Un actor o un flujo no pueden seguir una vía que sube: flota.poner pone el objeto a la altura del suelo del mundo y sin cabeceo, los caminos son 2D y los lugares que publica una pieza no llevan altura. El escenario caminomontana tuvo que traer sus propios vehículos en un grupo aparte, así que actor, flujo, frenar, mover y la mira al actor no sirven sobre sus carriles.",
+      "propuesta": "Altura por punto en los caminos (cuarta componente), altura y cabeceo por instancia en la flota, y altura en los lugares publicados; es la parte que falta de m250 (relieve por pieza).",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m271",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "vocabulario",
+      "archivo": "video/maqueta/objetos/barco.js",
+      "problema": "El barco siempre dibuja su estela (no se puede quitar para un barco amarrado) y al atardecer la estela sale como una mancha rosada plana.",
+      "propuesta": "Parámetro estela: false y una estela con espuma (franjas claras que se abren) en vez de un polígono liso teñido por la hora.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m272",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "vocabulario",
+      "archivo": "video/maqueta/objetos/persona.js",
+      "problema": "Faltan poses que tres escenarios pidieron: clasificar (manos sobre la mesa que separan el grano), descargar (bajar un costal de la plataforma al hombro) y sentado_sorber (sentado, el brazo sube la taza cada 4–6 s). Se aproximaron con atender, cargar y sentado.",
+      "propuesta": "Sumar las tres poses al objeto persona y a su ficha.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m273",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "contrato",
+      "archivo": "scripts/maqueta_tipos/ (X.propios) · referencias/diseno/maqueta3d.md",
+      "problema": "Una pieza publica sus lugares con nombre añadiendo entradas a X.propios con setdefault: funciona por el orden en que se resuelve, no está documentado y en escala ciudad no se publican.",
+      "propuesta": "Una forma documentada para que el resolver de una pieza publique lugares (_lugares, como _caminos), que sirva en esquema y en ciudad.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m274",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "docs",
+      "archivo": "referencias/diseno/maqueta3d.md",
+      "problema": "El contrato no dice la convención del azimut de la cámara (la cámara queda en mira + (sin az, −cos az)·d en este y norte): el constructor la dedujo mirando hojas.",
+      "propuesta": "Una línea con la convención y un ejemplo (azimut 0 = la cámara al sur mirando al norte).",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m275",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "constructor",
+      "archivo": "scripts/maqueta_modulo.py (maqueta mínima)",
+      "problema": "maqueta_modulo.py check piezas/carretera falla antes de medir nada: arma la maqueta mínima sobre el fixture de ciudad con el ejemplo de la ficha, que es de esquema («eje» no es una arteria del set capital).",
+      "propuesta": "Elegir el fixture por la escala del ejemplo (o un ejemplo por escala en la ficha).",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m276",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "workflow",
+      "archivo": ".claude/workflows/video3d.js (retoque visual)",
+      "problema": "Tras la pasada de correcciones el retorno trae los puntajes del crítico de ANTES de corregir (carretera 3/3/3 aunque ya es un camino de montaña) y el director del retoque llegó a 325 K de contexto en una sola pasada con siete mundos.",
+      "propuesta": "Una segunda lectura corta del crítico solo sobre los mundos corregidos, y repartir el retoque por mundo (un director por tanda de 3 mundos) cuando haya más de cuatro mundos de cerca.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m277",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "gates",
+      "archivo": "scripts/maqueta3d.py (marcas)",
+      "problema": "El rótulo de una marca puede quedar encima de lo que señala (en el camino de montaña tapa el camión en un par de cuadros) y ningún gate lo mide.",
+      "propuesta": "Un aviso M3D cuando la tarjeta de una marca cubre el protagonista o el actor que la cámara sigue en más de la mitad de su tiempo en pantalla; el pin puede subir (alto) o anclarse al lado.",
+      "estado": "pendiente"
     }
   ]
 }

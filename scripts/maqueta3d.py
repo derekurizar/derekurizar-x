@@ -26,7 +26,7 @@ cámara y la proyección): nunca miden píxeles, y valen igual para los dos moto
 
 Salida: 0 ok · 1 gate o paso fallido · 2 uso incorrecto. Python stdlib; HyperFrames por npx (su versión: scripts/versiones.py), un solo proceso.
 """
-import argparse, html, json, math, os, re, shutil, subprocess, sys, time, unicodedata
+import argparse, datetime, html, json, math, os, re, shutil, subprocess, sys, time, unicodedata
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(AQUI)
@@ -1694,6 +1694,42 @@ def cmd_cuadro(a):
     return 0
 
 
+def fijar_vara(a, m, partes):
+    """`escena MAQUETA --vara PIEZA`: el video de referencia que el usuario aprobó fija la vara de la escena viva →
+    referencias/diseno/vara3d.json {pieza, fecha, regla, umbral, tramos[]}. Mide cada tramo de cerca en 9:16 y 4:5 con los
+    umbrales de partida (sin la vara anterior) y aplica la regla de maqueta_escena.vara_de sobre el tramo más flojo."""
+    M3, base, medidas, tramos = sys.modules[__name__], ESC.umbrales(base=True), [], []
+    for info, sub in partes:
+        fila = {"id": info["id"], "mundo": info["mundo"], "dur_s": round(info["hasta"] - info["desde"], 2)}
+        for fmt in ("9:16", "4:5"):
+            R = resolver(sub, fmt)
+            if R["mundo"]["escala"] not in ESC.ESCALAS_CERCA:
+                fila["escala"] = R["mundo"]["escala"]
+                break
+            r = ESC.medir(M3, sub, R, base)
+            medidas.append(r)
+            fila.setdefault("escala", R["mundo"]["escala"])
+            if (m.get("mundos") or {}).get(info["mundo"], {}).get("hora"):
+                fila["hora"] = m["mundos"][info["mundo"]]["hora"]
+            fila[fmt] = {k: r[k] for k in ("ocupacion", "lleno", "variedad", "variado", "vida", "gente_max")}
+        tramos.append(fila)
+    if not medidas:
+        print("  FALLA la referencia no tiene ningún tramo de cerca: no fija la vara"); return 1
+    u = ESC.vara_de(medidas)
+    vara = {"version": 1, "pieza": a.vara, "fecha": datetime.date.today().isoformat(),
+            "regla": "sobre el tramo más flojo de la referencia: ocupación = 70 % de su mediana (y baja de punto en punto hasta que la referencia cumpla con 5 puntos de holgura); variedad = la suya − 1; parte del tramo que cumple = la suya − 5 puntos (70–90 %); nunca por debajo de los umbrales de partida",
+            "umbral": {k: u[k] for k in ("ocupacion", "variedad", "muestras_ok")}, "partida": {k: base[k] for k in ("ocupacion", "variedad", "muestras_ok")},
+            "tramos": tramos}
+    ruta = a.vara_salida or ESC.ruta_vara()
+    with open(ruta, "w", encoding="utf-8") as f:
+        json.dump(vara, f, ensure_ascii=False, indent=1)
+        f.write("\n")
+    print("vara: %s · ocupación ≥ %d %% · variedad ≥ %d · en ≥ %d %% del tramo (de partida: %d %%, %d, %d %%) · %d tramos de cerca"
+          % (os.path.relpath(ruta, RAIZ) if ruta.startswith(RAIZ) else ruta, round(100 * u["ocupacion"]), u["variedad"], round(100 * u["muestras_ok"]),
+             round(100 * base["ocupacion"]), base["variedad"], round(100 * base["muestras_ok"]), sum(1 for t in tramos if t.get("9:16"))))
+    return 0
+
+
 def cmd_escena(a):
     """LA ESCENA VIVA: la medida de cada tramo de cerca (cuánto cuadro llenan sus cosas, cuántas distintas se ven, si algo se
     mueve: scripts/maqueta_escena.py) y, con --hoja, 6 cuadros de cada mundo para mirarlo (el director, el crítico, el usuario)."""
@@ -1716,6 +1752,10 @@ def cmd_escena(a):
         for x in fallas:
             print("    FALLA " + x)
         rc |= 1 if fallas else 0
+    if getattr(a, "vara", None):
+        if rc:
+            print("  FALLA la referencia no pasa sus propios gates: no fija la vara"); return 1
+        return fijar_vara(a, m, partes)
     if a.hoja:
         os.makedirs(a.salida, exist_ok=True)
         for info, sub in partes:
@@ -2275,6 +2315,8 @@ def main():
     p = sub.add_parser("escena", help="la escena viva: mide cada tramo de cerca (M3D15–M3D19) y, con --hoja, 6 cuadros por mundo"); p.add_argument("maqueta")
     p.add_argument("--mundo", help="solo ese mundo"); p.add_argument("--formato", default="9:16", **fmt)
     p.add_argument("--hoja", action="store_true", help="dibuja 6 cuadros de cada mundo en --salida/<tramo>/"); p.add_argument("--salida", default=os.path.join(RAIZ, "sesiones", "_video3d", "escenas"))
+    p.add_argument("--vara", metavar="PIEZA", help="el video de referencia aprobado por el usuario fija la vara (referencias/diseno/vara3d.json); PIEZA = su carpeta de entrega")
+    p.add_argument("--vara-salida", help="otra ruta para la vara (pruebas)")
     p = sub.add_parser("proyecto", help="escribe el proyecto de HyperFrames"); p.add_argument("maqueta"); p.add_argument("--dir", required=True); p.add_argument("--formato", default="ambos", **fmt)
     p = sub.add_parser("render", help="DIR/<9x16|4x5>/video.mp4 + DIR/efectos.json"); p.add_argument("maqueta"); p.add_argument("--dir", required=True); p.add_argument("--formato", default="ambos", **fmt)
     p.add_argument("--borrador", action="store_true", help="sin gates: un candidato para mirar, nunca para entregar")

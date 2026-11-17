@@ -9,6 +9,7 @@
   M3D18     la cámara lejísimos de lo que mira falla «a su distancia»
   M3D19     un actor levantado sin nada debajo falla «nada flota»
   video     sin `video: true` (una pieza, un caso de prueba de un mundo) los gates no corren
+  vara      la regla que fija los umbrales desde un video aprobado (nunca bajan) y, si hay vara, su referencia la pasa
   guion     video3d.py: C3D14 (ficha de escena), C3D15 (sostiene con hecho verificado o genérico), C3D17 (gente),
             C3D18 (un objeto, un papel)
 Exit 0 ok · 1 falla. Uso: python3 scripts/pruebas/maqueta_escena.py"""
@@ -131,6 +132,25 @@ dos = {"a": {"escala": "esquema", "receta": "campo", "escena": dict(ESCENA, quie
              "piezas": [{"id": "c1", "tipo": "actor", "objeto": "casa", "lugar": [0, 0]}, {"id": "c2", "tipo": "actor", "objeto": "casa", "lugar": [50, 0]}]}}
 g2 = {"mundos": dos, "escenas": [{"n": 1, "mundo": "a", "marcas": [{"lugar": [0, 0], "texto": "Beneficio húmedo"}, {"lugar": [50, 0], "texto": "Tostador"}]}]}
 ok(any(x.startswith("C3D18") for x in V3.revisar_escenas(g2, dos, T)[0]), "C3D18: la misma casa rotulada como dos cosas debía fallar")
+
+# ---------- la vara: la fija un video aprobado (maqueta3d.py escena --vara) y nunca baja de los umbrales de partida ----------
+PARTIDA = ESC.umbrales(base=True)
+_muestras = lambda oc, n_cosas: [{"ocupacion": oc, "claves": list(range(n_cosas)), "escenarios": 1, "objetos": 3, "mueve": True, "gente": 2} for _ in range(10)]
+u = ESC.vara_de([ESC._medida(_muestras(0.8, 7), PARTIDA), ESC._medida(_muestras(1.0, 12), PARTIDA)])
+ok(abs(u["ocupacion"] - 0.56) < 1e-9 and u["variedad"] == 6 and abs(u["muestras_ok"] - 0.9) < 1e-9,
+   "vara: del tramo más flojo (80 %% y 7 cosas) debían salir 56 %%, 6 y 90 %%: %s" % {k: u[k] for k in ("ocupacion", "variedad", "muestras_ok")})
+u = ESC.vara_de([ESC._medida(_muestras(0.4, 4), PARTIDA)])
+ok(u["ocupacion"] == PARTIDA["ocupacion"] and u["variedad"] == PARTIDA["variedad"] and u["muestras_ok"] >= PARTIDA["muestras_ok"],
+   "vara: una referencia floja (40 %% y 4 cosas) no baja los umbrales de partida: %s" % u)
+ok(ESC.vara_de([]) == PARTIDA, "vara: sin tramos de cerca quedan los umbrales de partida")
+if os.path.exists(ESC.VARA):   # la vara aprobada: sube los umbrales y su video de referencia la pasa
+    vara = M3.cargar_json(ESC.VARA)
+    ok(all(vara["umbral"][k] >= PARTIDA[k] for k in ("ocupacion", "variedad", "muestras_ok")), "vara3d.json: un umbral quedó por debajo del de partida: %s" % vara["umbral"])
+    ref = os.path.join(RAIZ, vara.get("pieza") or "", "maqueta.json")
+    ok(os.path.exists(ref), "vara3d.json: no está la maqueta del video de referencia (%s)" % vara.get("pieza"))
+    if os.path.exists(ref):
+        f = [x for x in M3.revisar_m(M3.cargar_json(ref), ["9:16", "4:5"])[0] if any(g in x for g in ("M3D15", "M3D16", "M3D17"))]
+        ok(not f, "vara3d.json: el video de referencia no pasa su propia vara: %s" % [x[:110] for x in f[:3]])
 
 shutil.rmtree(T, ignore_errors=True)
 for x in F:

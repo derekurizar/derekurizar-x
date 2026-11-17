@@ -21,4 +21,4 @@
 - **3.52 US$ por taza** · Precio mediano de un café caliente normal en cafeterías de EE. UU. · https://pos.toasttab.com/blog/data/coffee-prices-trends-by-state
   > The national median price for a regular hot coffee was $3.52 in August 2025, while cold brew was $5.47.
 
-Geodatos: Relieve: Mapzen Terrain Tiles · Fallas: GEM (CC BY-SA 4.0) · Frontera: Natural Earth · Lugares: © OpenStreetMap
+Geodatos: Relieve: Mapzen Terrain Tiles · Frontera: Natural Earth · Lugares, ríos, lagos y carreteras: © OpenStreetMap

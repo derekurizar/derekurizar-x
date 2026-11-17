@@ -40,11 +40,18 @@ PLANAS = ("calles", "agua", "zona", "carretera", "trazo")   # piezas sin volumen
 # objeto; todo el fondo junto suma UNA cosa a la variedad. Lo que llena es lo que la historia puso ahí.
 
 
-def umbrales():
-    """UMBRAL con lo que diga la vara aprobada (referencias/diseno/vara3d.json → umbral), si existe."""
+def ruta_vara():
+    """Dónde vive la vara (MAQUETA_VARA la cambia: las pruebas miden con una vara propia o sin ninguna)."""
+    return os.environ.get("MAQUETA_VARA") or VARA
+
+
+def umbrales(base=False):
+    """UMBRAL con lo que diga la vara aprobada (referencias/diseno/vara3d.json → umbral), si existe. base: sin la vara."""
     u = dict(UMBRAL)
+    if base:
+        return u
     try:
-        with open(VARA, encoding="utf-8") as f:
+        with open(ruta_vara(), encoding="utf-8") as f:
             u.update({k: v for k, v in (json.load(f).get("umbral") or {}).items() if k in u})
     except (OSError, ValueError):
         pass
@@ -181,11 +188,15 @@ def muestra(M3, R, t, pr=None):
             "gente": gente, "mueve": mueve, "dist_m": cam["dist"] * R["mundo"]["unidad_m"], "mira": (cam["x"], cam["y"])}
 
 
-def medir(M3, m, R):
+def medir(M3, m, R, U=None):
     """El tramo entero → {muestras, ocupacion (mediana), lleno, variedad (mediana), variado, vida, gente_max}."""
-    U, dur = umbrales(), R["dur"]
+    U, dur = U or umbrales(), R["dur"]
     ts = [min(dur, PASO_S * k) for k in range(int(dur / PASO_S) + 1)] or [0.0]
     M = [muestra(M3, R, t) for t in ts]
+    return _medida(M, U)
+
+
+def _medida(M, U):
     n = float(len(M))
     med = lambda v: sorted(v)[len(v) // 2]
     return {"muestras": M, "n": len(M),
@@ -252,6 +263,27 @@ def gates(M3, m, R):
             F("M3D19", "«%s» está a %.1f m del suelo sin nada debajo que lo sostenga: ponlo sobre algo (una mesa, una tarima, otra pieza) o bájalo"
               % (c["clave"], c["lev"] * R["mundo"]["unidad_m"]))
     return out
+
+
+def vara_de(medidas):
+    """Los umbrales que fija un video de referencia aprobado. medidas: lo que devolvió `medir` para cada tramo de cerca (en
+    cada formato). La regla, sobre el tramo MÁS FLOJO de la referencia: ocupación = 70 % de su mediana; variedad = la suya
+    menos 1; y, ya con esos dos, la parte del tramo que tiene que cumplir = la suya menos 5 puntos (entre 70 y 90 %). Si con
+    esa ocupación algún tramo de la referencia no llegara a cumplir con 5 puntos de holgura, la ocupación baja de punto en
+    punto hasta que sí: la referencia SIEMPRE pasa su vara. Nunca por debajo de los umbrales de partida: la vara sube, no baja."""
+    u = umbrales(base=True)
+    if not medidas:
+        return u
+    piso, holgura = u["ocupacion"], 0.05
+    peor = lambda: min(min(r["lleno"], r["variado"], r["vida"]) for r in (_medida(r["muestras"], u) for r in medidas))
+    u["variedad"] = max(u["variedad"], min(r["variedad"] for r in medidas) - 1)
+    if peor() < u["muestras_ok"] + holgura:      # ni la variedad de partida le da holgura: se queda la de partida
+        u["variedad"] = umbrales(base=True)["variedad"]
+    u["ocupacion"] = max(piso, math.floor(70 * min(r["ocupacion"] for r in medidas)) / 100.0)
+    while u["ocupacion"] > piso and peor() < u["muestras_ok"] + holgura:
+        u["ocupacion"] = max(piso, round(u["ocupacion"] - 0.01, 2))
+    u["muestras_ok"] = min(0.9, max(u["muestras_ok"], math.floor(round(100 * (peor() - holgura), 6)) / 100.0))
+    return u
 
 
 def resumen(M3, m, R):

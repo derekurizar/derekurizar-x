@@ -53,6 +53,69 @@
       "entrega": "videos3d/2026-11-15-cafe-huehuetenango-taza",
       "minutos_pieza": 593.8,
       "registrado": "2026-11-16"
+    },
+    {
+      "pieza": "video3d-cafe-huehuetenango-taza",
+      "flujo": "video3d",
+      "run": "wf_796a3388-e75",
+      "workflow": "video3d",
+      "fecha": "2026-11-16",
+      "inicio": "2026-11-16T20:13:59.449000+00:00",
+      "fin": "2026-11-16T23:01:50.965000+00:00",
+      "minutos": 167.9,
+      "agentes": 16,
+      "completados": 16,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 1306,
+        "output": 706776,
+        "cache_read": 65948955,
+        "cache_create": 2780397,
+        "total": 69437434
+      },
+      "herramientas": 693,
+      "pico_alto": 8,
+      "por_rol": {
+        "historia-verificador": {
+          "agentes": 6,
+          "tokens": 8939511,
+          "salida": 116748,
+          "minutos": 21.0
+        },
+        "video3d-director": {
+          "agentes": 5,
+          "tokens": 46190307,
+          "salida": 305422,
+          "minutos": 111.5
+        },
+        "maqueta-constructor": {
+          "agentes": 4,
+          "tokens": 12672616,
+          "salida": 264160,
+          "minutos": 46.0
+        },
+        "video-critico": {
+          "agentes": 1,
+          "tokens": 1635000,
+          "salida": 20446,
+          "minutos": 3.3
+        }
+      },
+      "por_modelo": {
+        "claude-sonnet-5-5": {
+          "agentes": 6,
+          "tokens": 8939511,
+          "salida": 116748
+        },
+        "claude-opus-5-5": {
+          "agentes": 10,
+          "tokens": 60497923,
+          "salida": 590028
+        }
+      },
+      "entrega": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "minutos_pieza": 218.7,
+      "registrado": "2026-11-16"
     }
   ]
 }

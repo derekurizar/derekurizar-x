@@ -1,5 +1,6 @@
 {
   "version": 1,
+  "video": true,
   "estilo": "dia",
   "paleta": "cacao",
   "fps": 30,
@@ -12,6 +13,12 @@
         "kicker": "HUEHUETENANGO, GUATEMALA",
         "texto": "Una taza de café empieza aquí",
         "hasta": 4.9667
+      },
+      {
+        "t": 9.7,
+        "kicker": "UNA FINCA DE CAFÉ",
+        "texto": "Parcelas, casas y su beneficio húmedo",
+        "hasta": 14.1667
       },
       {
         "t": 52.3333,
@@ -74,7 +81,7 @@
         "rotulo": "va a Estados Unidos, su primer destino",
         "fuente": "USDA y Banguat",
         "t": 68.0333,
-        "hasta": 77.2
+        "hasta": 71.3
       },
       {
         "valor": "US$7.66",
@@ -1398,7 +1405,7 @@
       "t": 48.3,
       "dur": 3.0
     },
-    "pie": "Relieve: Mapzen Terrain Tiles · Fallas: GEM (CC BY-SA 4.0) · Frontera: Natural Earth · Lugares: © OpenStreetMap",
+    "pie": "Relieve: Mapzen Terrain Tiles · Frontera: Natural Earth · Lugares, ríos, lagos y carreteras: © OpenStreetMap",
     "handle": "@DerekUrizar",
     "aviso": "Esquema · no es un lugar real",
     "cierre": {
@@ -1434,12 +1441,20 @@
       "receta": "campo",
       "semilla": 11,
       "tamano_m": 1200,
+      "horizonte": "montanas",
       "estilo": "dia",
+      "hora": "amanecer",
+      "hora_razon": "Ambientación, no un dato: la primera luz abre el día del café sobre la ladera; ninguna fuente fija la hora del corte (va en no_afirmar, sin voz ni rótulo).",
       "lugares": {
         "ladera": {
           "x": 2,
-          "y": -26,
+          "y": -27.5,
           "nombre": "Ladera"
+        },
+        "sendero": {
+          "x": -7,
+          "y": -34,
+          "nombre": "Sendero"
         }
       },
       "piezas": [
@@ -1448,76 +1463,238 @@
           "tipo": "cafetal",
           "puntos": [
             [
-              -40,
+              -46,
               -30
             ],
             [
-              40,
+              46,
               -30
             ],
             [
-              42,
-              30
+              48,
+              34
             ],
             [
-              -38,
-              28
+              -44,
+              32
             ]
           ],
-          "hileras": 10,
-          "pendiente_m": 10,
+          "hileras": 12,
+          "pendiente_m": 12,
           "rumbo": 90,
-          "maduras": 0.8,
-          "sombra": 0.45,
+          "maduras": 0.75,
+          "sombra": 0.5,
           "personas": 4,
           "semilla": 3
         },
         {
-          "id": "cosechador-1",
+          "id": "cosecha-1",
           "tipo": "actor",
-          "objeto": "cosechador",
+          "objeto": "persona",
           "lugar": [
             3,
-            -28
+            -29
           ],
           "rumbo": 300,
-          "tamano": 1.2
+          "tamano": 1.15,
+          "pose": "cosechar",
+          "variante": 1
         },
         {
-          "id": "cosechador-2",
+          "id": "cosecha-2",
           "tipo": "actor",
-          "objeto": "cosechador",
+          "objeto": "persona",
           "lugar": [
             -6,
-            -26
+            -29.2
           ],
           "rumbo": 250,
-          "tamano": 1.2
+          "tamano": 1.15,
+          "pose": "cosechar",
+          "variante": 4
+        },
+        {
+          "id": "cosecha-3",
+          "tipo": "actor",
+          "objeto": "persona",
+          "lugar": [
+            11,
+            -29.4
+          ],
+          "rumbo": 280,
+          "tamano": 1.15,
+          "pose": "cosechar",
+          "variante": 7
+        },
+        {
+          "id": "cargador",
+          "tipo": "actor",
+          "objeto": "persona",
+          "desde": [
+            -3,
+            -31
+          ],
+          "hacia": "sendero",
+          "tamano": 1.15,
+          "pose": "cargar",
+          "variante": 2
+        },
+        {
+          "id": "casa-1",
+          "tipo": "actor",
+          "objeto": "casa",
+          "lugar": [
+            -72,
+            -64
+          ],
+          "rumbo": 20
+        },
+        {
+          "id": "casa-2",
+          "tipo": "actor",
+          "objeto": "casa",
+          "lugar": [
+            -60,
+            -80
+          ],
+          "rumbo": 8
+        },
+        {
+          "id": "casa-3",
+          "tipo": "actor",
+          "objeto": "casa",
+          "lugar": [
+            -84,
+            -46
+          ],
+          "rumbo": 350
+        },
+        {
+          "id": "cargador-2",
+          "tipo": "actor",
+          "objeto": "persona",
+          "desde": [
+            14,
+            -32
+          ],
+          "hacia": [
+            34,
+            -44
+          ],
+          "tamano": 1.15,
+          "pose": "cargar",
+          "variante": 6
+        },
+        {
+          "id": "camina-1",
+          "tipo": "actor",
+          "objeto": "persona",
+          "desde": [
+            -30,
+            -50
+          ],
+          "hacia": [
+            -12,
+            -36
+          ],
+          "tamano": 1.15,
+          "pose": "caminar",
+          "variante": 9
+        },
+        {
+          "id": "ambiente",
+          "tipo": "ambiente",
+          "ambiente": "campo",
+          "densidad": 0.75,
+          "radio_m": 340,
+          "semilla": 3
         }
       ],
-      "protagonista": "cafetal"
+      "protagonista": "cafetal",
+      "escena": {
+        "que_pasa": "La cosecha a mano en una ladera de cafetal bajo árboles de sombra: se corta la cereza madura (roja) y se deja la verde; alguien baja con el costal lleno por el sendero.",
+        "quien": "Cosechadores (muñecos sin rostro con sombrero y costal) que cortan cereza, dos personas que cargan el costal y alguien que sube por el sendero",
+        "con_que": "Costales; cafetos en hileras sobre un talud sin muros; árboles altos de sombra",
+        "se_mueve": "Los brazos suben a la rama y bajan al costal; dos personas bajan con el costal lleno por el sendero y alguien sube hacia la ladera; las copas se mecen",
+        "sostiene": [
+          {
+            "que": "cafetal bajo árboles de sombra, dos estratos",
+            "hecho": "visual-finca-h01"
+          },
+          {
+            "que": "ladera inclinada en hileras, sin terrazas",
+            "hecho": "visual-finca-h04"
+          },
+          {
+            "que": "cosecha manual de la cereza madura",
+            "hecho": "visual-finca-h02"
+          },
+          {
+            "que": "costal para cosechar",
+            "hecho": "visual-finca-h03"
+          },
+          {
+            "que": "montañas altas al horizonte, sin volcanes",
+            "hecho": "visual-finca-h05"
+          },
+          {
+            "que": "la luz del amanecer (ambientación)",
+            "generico": true
+          },
+          {
+            "que": "casas y vegetación alrededor",
+            "generico": true
+          }
+        ]
+      }
     },
     "beneficio": {
       "escala": "esquema",
       "receta": "campo",
       "semilla": 8,
       "tamano_m": 1200,
+      "horizonte": "montanas",
       "estilo": "dia",
       "lugares": {
         "parcela": {
           "x": -48,
-          "y": -116,
-          "nombre": "Parcela"
+          "y": -100,
+          "nombre": "Parcelas"
+        },
+        "entrega": {
+          "x": -32,
+          "y": -123,
+          "nombre": "Entrega"
         },
         "recibo": {
-          "x": -8,
-          "y": -116,
+          "x": -27,
+          "y": -121,
           "nombre": "Recibo"
         },
+        "despulpadora": {
+          "x": -20,
+          "y": -121,
+          "nombre": "Despulpadora"
+        },
+        "pilas": {
+          "x": -13,
+          "y": -116,
+          "nombre": "Pilas"
+        },
+        "lavado": {
+          "x": -4,
+          "y": -116,
+          "nombre": "Canal"
+        },
         "patio": {
-          "x": 20,
+          "x": 7,
           "y": -116,
           "nombre": "Patio"
+        },
+        "beneficio": {
+          "x": -28,
+          "y": -121,
+          "nombre": "Beneficio húmedo"
         }
       },
       "piezas": [
@@ -1526,19 +1703,19 @@
           "tipo": "cafetal",
           "puntos": [
             [
-              -60,
+              -62,
               -127
             ],
             [
-              -36,
+              -38,
               -127
             ],
             [
-              -36,
+              -38,
               -107
             ],
             [
-              -60,
+              -62,
               -107
             ]
           ],
@@ -1546,8 +1723,8 @@
           "pendiente_m": 3,
           "rumbo": 90,
           "maduras": 0.8,
-          "sombra": 0.45,
-          "personas": 0,
+          "sombra": 0,
+          "personas": 1,
           "semilla": 5
         },
         {
@@ -1555,19 +1732,19 @@
           "tipo": "cafetal",
           "puntos": [
             [
-              -60,
+              -62,
               -71
             ],
             [
-              -36,
+              -38,
               -71
             ],
             [
-              -36,
+              -38,
               -51
             ],
             [
-              -60,
+              -62,
               -51
             ]
           ],
@@ -1584,19 +1761,19 @@
           "tipo": "cafetal",
           "puntos": [
             [
-              -60,
+              -62,
               -99
             ],
             [
-              -36,
+              -38,
               -99
             ],
             [
-              -36,
+              -38,
               -79
             ],
             [
-              -60,
+              -62,
               -79
             ]
           ],
@@ -1613,7 +1790,7 @@
           "tipo": "actor",
           "objeto": "casa",
           "lugar": [
-            -72,
+            -74,
             -116
           ],
           "rumbo": 0
@@ -1623,7 +1800,7 @@
           "tipo": "actor",
           "objeto": "casa",
           "lugar": [
-            -72,
+            -74,
             -60
           ],
           "rumbo": 0
@@ -1633,7 +1810,7 @@
           "tipo": "actor",
           "objeto": "casa",
           "lugar": [
-            -72,
+            -74,
             -88
           ],
           "rumbo": 0
@@ -1641,13 +1818,44 @@
         {
           "id": "productora",
           "tipo": "actor",
-          "objeto": "cosechador",
-          "lugar": [
+          "objeto": "persona",
+          "desde": [
             -46,
-            -128
+            -122
           ],
-          "rumbo": 290,
-          "tamano": 1.2
+          "hacia": "entrega",
+          "tamano": 1.45,
+          "pose": "cargar",
+          "variante": 3
+        },
+        {
+          "id": "productor-2",
+          "tipo": "actor",
+          "objeto": "persona",
+          "desde": [
+            -44,
+            -126
+          ],
+          "hacia": [
+            -33,
+            -126.5
+          ],
+          "tamano": 1.45,
+          "pose": "cargar",
+          "variante": 6
+        },
+        {
+          "id": "recibe",
+          "tipo": "actor",
+          "objeto": "persona",
+          "lugar": [
+            -30.5,
+            -125.5
+          ],
+          "rumbo": 180,
+          "tamano": 1.45,
+          "pose": "atender",
+          "variante": 5
         },
         {
           "id": "beneficio",
@@ -1658,56 +1866,327 @@
           ],
           "rumbo": 0,
           "tamano": 1,
-          "personas": 2,
+          "personas": 3,
           "semilla": 4
+        },
+        {
+          "id": "rastrilla-x",
+          "tipo": "actor",
+          "objeto": "persona",
+          "lugar": [
+            24,
+            -119
+          ],
+          "rumbo": 90,
+          "tamano": 1.45,
+          "pose": "rastrillar",
+          "variante": 2
+        },
+        {
+          "id": "rastrilla-y",
+          "tipo": "actor",
+          "objeto": "persona",
+          "lugar": [
+            16,
+            -110
+          ],
+          "rumbo": 270,
+          "tamano": 1.45,
+          "pose": "rastrillar",
+          "variante": 7
+        },
+        {
+          "id": "ambiente",
+          "tipo": "ambiente",
+          "ambiente": "campo",
+          "densidad": 0.7,
+          "radio_m": 320,
+          "centro": [
+            -20,
+            -110
+          ],
+          "semilla": 8
         }
       ],
-      "protagonista": "beneficio"
+      "protagonista": "beneficio",
+      "escena": {
+        "que_pasa": "El beneficio húmedo de la finca, junto a las casas y las parcelas: la gente llega con su cereza, se recibe, se despulpa, fermenta en pilas, se lava en el canal y el pergamino se seca al sol en el patio.",
+        "quien": "Pequeños productores que llegan con sus costales, quien recibe y anota, y gente que rastrilla el pergamino y carga sacos",
+        "con_que": "Pila de recibo, despulpadora, pilas de fermento, canal de correteo, patio de cemento y rastrillos",
+        "se_mueve": "La gente llega con sus costales, quien recibe atiende, la cereza cae a la despulpadora, el agua corre por el canal, cuatro personas rastrillan el pergamino y una carga sacos; quienes cosechan en las parcelas",
+        "sostiene": [
+          {
+            "que": "beneficio en la finca, junto a casas y parcelas",
+            "hecho": "visual-finca-h06"
+          },
+          {
+            "que": "pasos en orden: recibo, despulpado, mucílago, lavado, secado",
+            "hecho": "visual-finca-h07"
+          },
+          {
+            "que": "recepción de la cereza en la pila de recibo",
+            "hecho": "visual-beneficio-h01"
+          },
+          {
+            "que": "gente que llega con su cosecha y quien anota lo entregado",
+            "hecho": "visual-beneficio-h16"
+          },
+          {
+            "que": "despulpadora con la cereza que cae",
+            "hecho": "visual-beneficio-h03"
+          },
+          {
+            "que": "pilas de fermento",
+            "hecho": "visual-beneficio-h05"
+          },
+          {
+            "que": "canal de correteo con agua",
+            "hecho": "visual-beneficio-h08"
+          },
+          {
+            "que": "patio de cemento con el pergamino en capa delgada",
+            "hecho": "visual-beneficio-h10"
+          },
+          {
+            "que": "rastrillo en el patio",
+            "hecho": "visual-beneficio-h11"
+          },
+          {
+            "que": "secado de día al sol",
+            "hecho": "visual-beneficio-h14"
+          },
+          {
+            "que": "parcelas chicas con su casa (ilustran poca tierra)",
+            "generico": true
+          },
+          {
+            "que": "materiales, colores y forma del beneficio",
+            "generico": true
+          }
+        ]
+      }
     },
     "carretera": {
       "escala": "esquema",
       "receta": "campo",
       "semilla": 4,
       "tamano_m": 1200,
+      "horizonte": "montanas",
+      "estilo": "dia",
+      "piezas": [
+        {
+          "id": "camino",
+          "tipo": "caminomontana",
+          "lugar": [
+            0,
+            0
+          ],
+          "rumbo": 0,
+          "tamano": 1,
+          "curvas": 2,
+          "pendiente_m": 30,
+          "guardavia": true,
+          "vehiculos": 3,
+          "camion_s": 0.22,
+          "semilla": 2
+        }
+      ],
+      "protagonista": "camino",
+      "escena": {
+        "que_pasa": "El pergamino seco sale en costales por un camino de montaña pavimentado, con cafetal en la ladera de arriba.",
+        "quien": "nadie",
+        "con_que": "Camión de plataforma con costales de pergamino; un carro y una moto que bajan, otro carro que sube detrás del camión",
+        "se_mueve": "El camión sube por la curva del camino de montaña con un carro detrás; una moto y un carro bajan en sentido contrario",
+        "sostiene": [
+          {
+            "que": "el pergamino sale seco y almacenado en costales",
+            "hecho": "visual-carretera-h08"
+          },
+          {
+            "que": "cafetales bajo sombra junto al camino",
+            "hecho": "visual-carretera-h09"
+          },
+          {
+            "que": "montañas al horizonte, sin volcanes",
+            "hecho": "visual-finca-h05"
+          },
+          {
+            "que": "camino de montaña pavimentado",
+            "generico": true
+          },
+          {
+            "que": "tipo y color del camión y del carro",
+            "generico": true
+          }
+        ]
+      },
+      "lugares": {
+        "curva": {
+          "x": -85.0,
+          "y": 28.0,
+          "nombre": "Curva"
+        }
+      }
+    },
+    "seco": {
+      "escala": "esquema",
+      "receta": "campo",
+      "semilla": 9,
+      "tamano_m": 1200,
+      "horizonte": "montanas",
       "estilo": "dia",
       "lugares": {
-        "bodega": {
-          "x": 20,
-          "y": -8,
+        "galera": {
+          "x": 0,
+          "y": 0,
           "nombre": "Beneficio seco"
         },
-        "puerta": {
-          "x": 33,
-          "y": 12,
-          "nombre": "Puerta"
+        "recibo": {
+          "x": 1,
+          "y": -9,
+          "nombre": "Recibo"
+        },
+        "limpieza": {
+          "x": -2.2,
+          "y": -5.2,
+          "nombre": "Limpieza"
+        },
+        "trilla": {
+          "x": -2.2,
+          "y": -0.5,
+          "nombre": "Trilla"
+        },
+        "clasificacion": {
+          "x": 0,
+          "y": 4,
+          "nombre": "Clasificación"
+        },
+        "empaque": {
+          "x": -3.2,
+          "y": 9.5,
+          "nombre": "Empaque"
         }
       },
       "piezas": [
         {
-          "id": "camino",
-          "tipo": "calles"
+          "id": "beneficioseco",
+          "tipo": "beneficioseco",
+          "lugar": [
+            0,
+            0
+          ],
+          "rumbo": 0,
+          "tamano": 1,
+          "personas": 4,
+          "semilla": 4
         },
         {
-          "id": "camion-cafe",
+          "id": "camion-espera",
           "tipo": "actor",
           "objeto": "camionsacos",
-          "camino": "camino",
-          "claves": [
-            {
-              "t": 0,
-              "s": 625
-            }
-          ]
+          "lugar": [
+            -16,
+            -24
+          ],
+          "rumbo": 90
         },
         {
-          "id": "bodega",
+          "id": "cafetal",
+          "tipo": "cafetal",
+          "puntos": [
+            [
+              -44,
+              30
+            ],
+            [
+              24,
+              30
+            ],
+            [
+              26,
+              62
+            ],
+            [
+              -46,
+              60
+            ]
+          ],
+          "hileras": 6,
+          "pendiente_m": 10,
+          "rumbo": 90,
+          "maduras": 0.5,
+          "sombra": 0.55,
+          "personas": 2,
+          "semilla": 31
+        },
+        {
+          "id": "casa-1",
           "tipo": "actor",
-          "objeto": "bodega",
-          "lugar": "bodega",
-          "rumbo": 58
+          "objeto": "casa",
+          "lugar": [
+            -34,
+            -26
+          ],
+          "rumbo": 90
+        },
+        {
+          "id": "ambiente",
+          "tipo": "ambiente",
+          "ambiente": "campo",
+          "densidad": 0.7,
+          "radio_m": 260,
+          "semilla": 9
         }
       ],
-      "protagonista": "bodega"
+      "protagonista": "beneficioseco",
+      "escena": {
+        "que_pasa": "El beneficio seco por dentro: el pergamino llega en costales y se pesa, se vacía en la tolva, se limpia, la trilla le quita la cáscara y sale el café oro, las zarandas y el cilindro de cribas lo clasifican, se revisa a mano y se empaca en sacos de yute sin marca.",
+        "quien": "Quien descarga costales del camión, quien los vacía en la tolva y dos personas que revisan el grano a mano",
+        "con_que": "Galera de lámina abierta, báscula, tolva, prelimpiadora, trilladora, zarandas, cilindro de cribas, mesa de revisión y sacos de yute; camiones con costales",
+        "se_mueve": "La gente descarga y vacía costales, las poleas de la trilla giran y sale el café oro, las zarandas vibran, el cilindro gira y el saco se llena",
+        "sostiene": [
+          {
+            "que": "beneficio seco: pergamino a café oro, con su rótulo",
+            "hecho": "visual-carretera-h01"
+          },
+          {
+            "que": "pesaje en báscula y recibo en tolva",
+            "hecho": "visual-carretera-h02"
+          },
+          {
+            "que": "pasos: limpieza, trilla, clasificación, empaque",
+            "hecho": "visual-finca-h11"
+          },
+          {
+            "que": "prelimpiadora y trilladora en línea",
+            "hecho": "visual-carretera-h03"
+          },
+          {
+            "que": "zarandas vibratorias y cilindro de cribas",
+            "hecho": "visual-carretera-h04"
+          },
+          {
+            "que": "revisión a mano y sacos de yute cosidos sin texto",
+            "hecho": "visual-carretera-h06"
+          },
+          {
+            "que": "saco de yute de exportación como remate",
+            "hecho": "visual-carretera-h07"
+          },
+          {
+            "que": "el pergamino llega en costales desde el beneficio húmedo",
+            "hecho": "visual-carretera-h08"
+          },
+          {
+            "que": "cafetales bajo sombra alrededor",
+            "hecho": "visual-carretera-h09"
+          },
+          {
+            "que": "materiales, tamaño y forma de la galera; las máquinas y los camiones",
+            "generico": true
+          }
+        ]
+      }
     },
     "pais": {
       "escala": "pais",
@@ -1719,6 +2198,22 @@
           "id": "frontera",
           "tipo": "frontera",
           "vecinos": true
+        },
+        {
+          "id": "rios",
+          "tipo": "rios",
+          "hasta_orden": 2,
+          "grosor": 2.2
+        },
+        {
+          "id": "lagos",
+          "tipo": "lagos"
+        },
+        {
+          "id": "carreteras",
+          "tipo": "carreteras",
+          "clase": "troncal",
+          "grosor": 2.4
         }
       ]
     },
@@ -1726,18 +2221,51 @@
       "escala": "esquema",
       "receta": "costa",
       "semilla": 5,
-      "tamano_m": 1200,
+      "tamano_m": 1600,
+      "horizonte": "mar",
       "estilo": "dia",
+      "hora": "atardecer",
+      "hora_razon": "El puerto opera con tres turnos, de día y de noche (visual-puerto-h04): el atardecer es una elección de la maqueta dentro de esos turnos (se leen el patio, las grúas y la gente), no la hora en que sale el café; ambientación sin voz ni rótulo, entra con oscuro.",
       "lugares": {
         "muelle": {
-          "x": 0,
-          "y": -244,
+          "x": -10,
+          "y": -470,
           "nombre": "Muelle"
         },
+        "frente": {
+          "x": -8,
+          "y": -450,
+          "nombre": "Frente"
+        },
+        "grua": {
+          "x": -22,
+          "y": -465,
+          "nombre": "Grúa"
+        },
+        "patio": {
+          "x": -45,
+          "y": -372,
+          "nombre": "Patio"
+        },
+        "puerta": {
+          "x": -120,
+          "y": -300,
+          "nombre": "Entrada"
+        },
+        "bahia": {
+          "x": 120,
+          "y": -700,
+          "nombre": "Bahía"
+        },
         "mar": {
-          "x": 230,
-          "y": -330,
+          "x": 30,
+          "y": -510,
           "nombre": "Mar"
+        },
+        "atraque": {
+          "x": 20,
+          "y": -500,
+          "nombre": "Atraque"
         }
       },
       "piezas": [
@@ -1746,121 +2274,225 @@
           "tipo": "agua"
         },
         {
-          "id": "calles",
-          "tipo": "calles"
+          "id": "muelle",
+          "tipo": "muelle",
+          "lugar": [
+            0,
+            -330
+          ],
+          "rumbo": 270,
+          "tamano": 1,
+          "gruas": 2,
+          "personas": 4,
+          "camiones": 6,
+          "barcos": 2,
+          "semilla": 4
         },
         {
-          "id": "edificios",
-          "tipo": "edificios"
-        },
-        {
-          "id": "grua",
-          "tipo": "actor",
-          "objeto": "grua",
-          "lugar": "muelle",
-          "rumbo": 270
-        },
-        {
-          "id": "buque",
+          "id": "fondeo-1",
           "tipo": "actor",
           "objeto": "barco",
-          "puntos": [
-            [
-              -30,
-              -276
-            ],
-            [
-              60,
-              -278
-            ],
-            [
-              160,
-              -300
-            ],
-            [
-              260,
-              -350
-            ],
-            [
-              360,
-              -420
-            ],
-            [
-              460,
-              -500
-            ]
+          "rumbo": 100,
+          "desde": [
+            70,
+            -560
           ],
-          "claves": [
-            {
-              "t": 0,
-              "s": 0
-            }
+          "hacia": [
+            150,
+            -635
           ]
         },
         {
-          "id": "pila-1",
+          "id": "fondeo-2",
           "tipo": "actor",
-          "objeto": "contenedor",
+          "objeto": "barco",
           "lugar": [
-            24,
-            -228
+            -230,
+            -780
           ],
-          "rumbo": 0
+          "rumbo": 160
         },
         {
-          "id": "pila-2",
+          "id": "estiba-1",
           "tipo": "actor",
-          "objeto": "contenedor",
+          "objeto": "persona",
           "lugar": [
-            24,
-            -228
+            -6,
+            -452
           ],
-          "rumbo": 0,
-          "lev_m": 2.6
+          "rumbo": 200,
+          "tamano": 2.4,
+          "pose": "cargar",
+          "variante": 2
         },
         {
-          "id": "pila-3",
+          "id": "estiba-2",
           "tipo": "actor",
-          "objeto": "contenedor",
+          "objeto": "persona",
           "lugar": [
-            24,
-            -224.8
+            -16,
+            -449
           ],
-          "rumbo": 0
+          "rumbo": 160,
+          "tamano": 2.4,
+          "pose": "cargar",
+          "variante": 5
         },
         {
-          "id": "pila-4",
+          "id": "camina-patio",
           "tipo": "actor",
-          "objeto": "contenedor",
-          "lugar": [
-            31,
-            -228
+          "objeto": "persona",
+          "desde": [
+            -40,
+            -400
           ],
-          "rumbo": 0
+          "hacia": [
+            -52,
+            -392
+          ],
+          "tamano": 2.4,
+          "pose": "caminar",
+          "variante": 8
         },
         {
-          "id": "pila-5",
+          "id": "grua-1",
           "tipo": "actor",
-          "objeto": "contenedor",
+          "objeto": "persona",
           "lugar": [
-            31,
-            -224.8
+            -30,
+            -458
           ],
-          "rumbo": 0
+          "rumbo": 90,
+          "tamano": 2.4,
+          "pose": "cargar",
+          "variante": 1
         },
         {
-          "id": "pila-6",
+          "id": "patio-1",
           "tipo": "actor",
-          "objeto": "contenedor",
+          "objeto": "persona",
           "lugar": [
-            31,
-            -224.8
+            -48,
+            -394
           ],
-          "rumbo": 0,
-          "lev_m": 2.6
+          "rumbo": 200,
+          "tamano": 2.4,
+          "pose": "cargar",
+          "variante": 3
+        },
+        {
+          "id": "patio-2",
+          "tipo": "actor",
+          "objeto": "persona",
+          "desde": [
+            -60,
+            -398
+          ],
+          "hacia": [
+            -40,
+            -400
+          ],
+          "tamano": 2.4,
+          "pose": "caminar",
+          "variante": 6
+        },
+        {
+          "id": "patio-3",
+          "tipo": "actor",
+          "objeto": "persona",
+          "lugar": [
+            -36,
+            -392
+          ],
+          "rumbo": 160,
+          "tamano": 2.4,
+          "pose": "atender",
+          "variante": 8
+        },
+        {
+          "id": "camion-patio",
+          "tipo": "actor",
+          "objeto": "camion",
+          "desde": [
+            -68,
+            -388
+          ],
+          "hacia": [
+            -46,
+            -388
+          ],
+          "tamano": 1.6
+        },
+        {
+          "id": "ambiente",
+          "tipo": "ambiente",
+          "ambiente": "costa",
+          "densidad": 0.6,
+          "radio_m": 500,
+          "semilla": 5
         }
       ],
-      "protagonista": "buque"
+      "protagonista": "muelle",
+      "escena": {
+        "que_pasa": "Un muelle del Atlántico trabajando al atardecer: camiones con contenedor esperan en la puerta y dan la vuelta del patio al muelle, el apilador mueve contenedores en el patio, las grúas móviles los suben al portacontenedores amarrado, una barcaza de carga general en el otro costado y dos barcos esperan anclados en la bahía.",
+        "quien": "Estibadores que reciben la carga junto a la grúa, un supervisor de pie y alguien que camina por el muelle; choferes dentro de los camiones",
+        "con_que": "Grúas móviles de puerto, apilador, contenedores de 20 pies secos y refrigerados sin marca, camiones con contenedor, puerta techada, bodega de carga general, portacontenedores y barcaza, postes de luz",
+        "se_mueve": "Las grúas giran y suben el contenedor al barco, el apilador sube y baja, los camiones van y vuelven, las plumas de la puerta suben y bajan, la gente camina",
+        "sostiene": [
+          {
+            "que": "puerto en la costa Atlántica con bahía al horizonte",
+            "hecho": "visual-finca-h13"
+          },
+          {
+            "que": "muelle de concreto con atraques a los dos costados y carga variada",
+            "hecho": "visual-puerto-h01"
+          },
+          {
+            "que": "grúas móviles de muelle, no pórtico",
+            "hecho": "visual-puerto-h02"
+          },
+          {
+            "que": "patio con contenedores secos y refrigerados y apilador",
+            "hecho": "visual-puerto-h03"
+          },
+          {
+            "que": "contenedores de 20 pies sin marca",
+            "hecho": "visual-finca-h15"
+          },
+          {
+            "que": "camiones del muelle al patio",
+            "hecho": "visual-puerto-h06"
+          },
+          {
+            "que": "camiones en fila en la puerta de entrada",
+            "hecho": "visual-puerto-h05"
+          },
+          {
+            "que": "área techada en la entrada (decorado)",
+            "hecho": "visual-puerto-h07"
+          },
+          {
+            "que": "estibadores y supervisor",
+            "hecho": "visual-puerto-h10"
+          },
+          {
+            "que": "barcos anclados esperando turno en la bahía",
+            "hecho": "visual-puerto-h08"
+          },
+          {
+            "que": "puerto de uso general: contenedores y carga general",
+            "hecho": "visual-puerto-h09"
+          },
+          {
+            "que": "puerto trabajando al atardecer (tres turnos)",
+            "hecho": "visual-puerto-h04"
+          },
+          {
+            "que": "la luz del atardecer y los colores de contenedores, barcos y camiones, sin marca",
+            "generico": true
+          }
+        ]
+      }
     },
     "tostaduria": {
       "escala": "esquema",
@@ -1868,6 +2500,7 @@
       "semilla": 23,
       "tamano_m": 600,
       "altura_max_m": 12,
+      "horizonte": "ciudad",
       "estilo": "dia",
       "lugares": {
         "sacos": {
@@ -1884,6 +2517,11 @@
           "x": -0.9,
           "y": 1.2,
           "nombre": "Bandeja"
+        },
+        "mesa-cata": {
+          "x": 5.5,
+          "y": -3.5,
+          "nombre": "Mesa"
         }
       },
       "piezas": [
@@ -1907,323 +2545,257 @@
           "tostadoras": 2,
           "personas": 3,
           "semilla": 7
+        },
+        {
+          "id": "carga-saco",
+          "tipo": "actor",
+          "objeto": "persona",
+          "desde": [
+            -12,
+            9.5
+          ],
+          "hacia": [
+            -9,
+            6
+          ],
+          "tamano": 1.1,
+          "pose": "cargar",
+          "variante": 4
+        },
+        {
+          "id": "ambiente",
+          "tipo": "ambiente",
+          "ambiente": "ciudad",
+          "densidad": 0.6,
+          "radio_m": 200,
+          "semilla": 23
         }
       ],
-      "protagonista": "tostaduria"
+      "protagonista": "tostaduria",
+      "escena": {
+        "que_pasa": "Una tostaduría por dentro: los sacos de café verde se vacían en la tolva, el tambor gira sobre el fuego, el café cae a la bandeja de enfriado y alguien cata en una mesa.",
+        "quien": "Quien vacía el saco en la tolva, quien vigila la bandeja, quien cata y quien acarrea sacos",
+        "con_que": "Tostadoras de tambor genéricas, bandeja de enfriado, sacos de yute sin texto, mesa de cata",
+        "se_mueve": "Los tambores giran, el saco se vacía, el humo sube, la gente carga y revisa",
+        "sostiene": [
+          {
+            "que": "tostadora de tambor con tolva y fuego debajo",
+            "hecho": "visual-tostaduria-h01"
+          },
+          {
+            "que": "quien vigila el color del grano",
+            "hecho": "visual-tostaduria-h02"
+          },
+          {
+            "que": "bandeja de enfriado",
+            "hecho": "visual-tostaduria-h03"
+          },
+          {
+            "que": "el grano pasa de verde a marrón",
+            "hecho": "visual-tostaduria-h04"
+          },
+          {
+            "que": "tostar, enfriar, moler y empacar",
+            "hecho": "visual-finca-h12"
+          },
+          {
+            "que": "sacos de café verde al recibo",
+            "hecho": "visual-tostaduria-h06"
+          },
+          {
+            "que": "mesa de cata (solo ambientación)",
+            "generico": true
+          },
+          {
+            "que": "la ciudad alrededor, sin nombre",
+            "generico": true
+          }
+        ]
+      }
     },
     "ciudad": {
       "escala": "esquema",
-      "receta": "ciudad",
+      "receta": "plaza",
       "semilla": 25,
-      "tamano_m": 600,
-      "manzana_m": 40,
-      "altura_max_m": 18,
+      "tamano_m": 1600,
+      "horizonte": "ciudad",
       "estilo": "dia",
       "lugares": {
         "cafeteria": {
-          "x": 10.5,
-          "y": 13,
+          "x": -1,
+          "y": 1.2,
           "nombre": "Cafetería"
         },
         "mesa": {
-          "x": 9.0,
-          "y": 14.8,
+          "x": 1.2,
+          "y": 1.0,
           "nombre": "Mesa"
         }
       },
       "piezas": [
         {
-          "id": "calles",
-          "tipo": "calles"
+          "id": "cafeteria",
+          "tipo": "cafeteriacalle",
+          "lugar": [
+            0,
+            0
+          ],
+          "rumbo": 0,
+          "tamano": 1,
+          "clientes": 5,
+          "paseantes": 3,
+          "semilla": 3
         },
         {
-          "id": "edificios",
-          "tipo": "edificios"
-        },
-        {
-          "id": "plazuela",
-          "tipo": "zona",
+          "id": "carro-1",
+          "tipo": "actor",
+          "objeto": "carro",
           "puntos": [
             [
-              -16,
-              -16
+              8.5,
+              -40
             ],
             [
-              16,
-              -16
-            ],
-            [
-              16,
-              3
-            ],
-            [
-              3,
-              3
-            ],
-            [
-              3,
-              16
-            ],
-            [
-              -16,
-              16
+              8.5,
+              40
             ]
           ],
-          "tono": "verde",
-          "opacidad": 0.55,
-          "borde": false
-        },
-        {
-          "id": "avenida",
-          "tipo": "carretera",
-          "camino": "eo-0",
-          "carriles": 4,
-          "ancho_carril_m": 3.5
-        },
-        {
-          "id": "trafico",
-          "tipo": "flujo",
-          "carriles": [
-            "avenida.carril-1",
-            "avenida.carril-2",
-            "avenida.carril-3",
-            "avenida.carril-4"
+          "claves": [
+            {
+              "t": 95.8,
+              "s": "52%",
+              "vel_kmh": 15
+            }
           ],
-          "tipos": {
-            "carro": 0.72,
-            "bus": 0.14,
-            "moto": 0.14
-          },
-          "densidad": 16,
-          "vel_kmh": 35,
-          "semilla": 5
+          "variante": 2
         },
         {
-          "id": "cafeteria",
+          "id": "bus-1",
           "tipo": "actor",
-          "objeto": "cafeteria",
-          "lugar": [
-            10.5,
-            10.5
+          "objeto": "bus",
+          "puntos": [
+            [
+              11.5,
+              40
+            ],
+            [
+              11.5,
+              -40
+            ]
           ],
-          "rumbo": 90,
+          "claves": [
+            {
+              "t": 95.8,
+              "s": "30%",
+              "vel_kmh": 14
+            }
+          ],
           "variante": 1
-        },
-        {
-          "id": "taza",
-          "tipo": "actor",
-          "objeto": "taza",
-          "lugar": "mesa",
-          "rumbo": 30,
-          "tamano": 1.8,
-          "lev_m": 0.76
         },
         {
           "id": "cliente-1",
           "tipo": "actor",
           "objeto": "cliente",
-          "lugar": [
-            7.8,
-            15.6
+          "puntos": [
+            [
+              15,
+              -30
+            ],
+            [
+              15,
+              30
+            ]
           ],
-          "rumbo": 30,
-          "variante": 2
+          "claves": [
+            {
+              "t": 95.8,
+              "s": "30%",
+              "vel_kmh": 4.4
+            }
+          ],
+          "variante": 1
         },
         {
           "id": "cliente-2",
           "tipo": "actor",
           "objeto": "cliente",
-          "lugar": [
-            16.1,
-            15.8
-          ],
-          "rumbo": 200,
-          "variante": 5
-        },
-        {
-          "id": "cliente-3",
-          "tipo": "actor",
-          "objeto": "cliente",
           "puntos": [
             [
-              18,
-              17.8
+              15.6,
+              30
             ],
             [
-              -15,
-              17.8
+              15.6,
+              -30
             ]
           ],
           "claves": [
             {
-              "t": 0,
-              "s": 0,
-              "vel_kmh": 4.5
-            }
-          ],
-          "variante": 3
-        },
-        {
-          "id": "peaton-1",
-          "tipo": "actor",
-          "objeto": "persona",
-          "puntos": [
-            [
-              17.8,
-              -4
-            ],
-            [
-              17.8,
-              17
-            ]
-          ],
-          "claves": [
-            {
-              "t": 0,
-              "s": 0,
-              "vel_kmh": 4.5
+              "t": 95.8,
+              "s": "30%",
+              "vel_kmh": 4.0
             }
           ],
           "variante": 4
         },
         {
-          "id": "peaton-2",
-          "tipo": "actor",
-          "objeto": "persona",
-          "puntos": [
-            [
-              0,
-              34.3
-            ],
-            [
-              60,
-              34.3
-            ]
-          ],
-          "claves": [
-            {
-              "t": 0,
-              "s": 0,
-              "vel_kmh": 4.8
-            }
-          ],
-          "variante": 6
-        },
-        {
-          "id": "peaton-3",
-          "tipo": "actor",
-          "objeto": "cliente",
-          "puntos": [
-            [
-              50,
-              34
-            ],
-            [
-              -10,
-              34
-            ]
-          ],
-          "claves": [
-            {
-              "t": 0,
-              "s": 0,
-              "vel_kmh": 4.2
-            }
-          ],
-          "variante": 7
-        },
-        {
-          "id": "arbol-1",
-          "tipo": "actor",
-          "objeto": "arbol",
-          "lugar": [
-            -4,
-            17.8
-          ]
-        },
-        {
-          "id": "arbol-2",
-          "tipo": "actor",
-          "objeto": "arbol",
-          "lugar": [
-            -14,
-            17.8
-          ]
-        },
-        {
-          "id": "arbol-3",
-          "tipo": "actor",
-          "objeto": "arbol",
-          "lugar": [
-            8,
-            34.6
-          ]
-        },
-        {
-          "id": "arbol-4",
-          "tipo": "actor",
-          "objeto": "arbol",
-          "lugar": [
-            22,
-            34.6
-          ]
-        },
-        {
-          "id": "arbol-5",
-          "tipo": "actor",
-          "objeto": "arbol",
-          "lugar": [
-            -10,
-            10
-          ]
-        },
-        {
-          "id": "arbol-6",
-          "tipo": "actor",
-          "objeto": "arbol",
-          "lugar": [
-            -13,
-            -5
-          ]
-        },
-        {
-          "id": "arbol-7",
-          "tipo": "actor",
-          "objeto": "arbol",
-          "lugar": [
+          "id": "ambiente",
+          "tipo": "ambiente",
+          "ambiente": "ciudad",
+          "densidad": 0.5,
+          "radio_m": 160,
+          "centro": [
             0,
-            -12
-          ]
-        },
-        {
-          "id": "arbol-8",
-          "tipo": "actor",
-          "objeto": "arbol",
-          "lugar": [
-            -3,
-            3
-          ]
-        },
-        {
-          "id": "arbol-9",
-          "tipo": "actor",
-          "objeto": "arbol",
-          "lugar": [
-            12,
-            -8
-          ]
-        },
-        {
-          "id": "arbol-10",
-          "tipo": "actor",
-          "objeto": "arbol",
-          "lugar": [
-            17.8,
-            -12
-          ]
+            60
+          ],
+          "semilla": 25
         }
       ],
-      "protagonista": "taza"
+      "protagonista": "cafeteria",
+      "escena": {
+        "que_pasa": "Una cafetería de mostrador abierta a la calle, en una ciudad cualquiera: la barista prepara el café en la barra, clientes lo toman en las mesitas de la acera y otros salen con su vaso para llevar; pasan carros y un bus.",
+        "quien": "La barista que atiende, clientes sentados con su taza, gente que sale con su vaso y peatones que pasan",
+        "con_que": "Fachada con vidriera sin texto, barra con máquina de espresso y molino, mesitas y sillas en la acera, sombrilla y jardinera, vasos lisos con tapa, carros y un bus",
+        "se_mueve": "La barista atiende, la gente sale sorbiendo su vaso, las tazas humean, la lanza suelta vapor, pasan carros, un bus y peatones",
+        "sostiene": [
+          {
+            "que": "cafetería de mostrador con vidriera, sin marca ni texto",
+            "hecho": "visual-ciudad-h01"
+          },
+          {
+            "que": "barista detrás de la barra",
+            "hecho": "visual-ciudad-h02"
+          },
+          {
+            "que": "máquina de espresso, molino y caja de desecho",
+            "hecho": "visual-ciudad-h03"
+          },
+          {
+            "que": "vaso para llevar liso con tapa",
+            "hecho": "visual-ciudad-h04"
+          },
+          {
+            "que": "mesas y sillas en la acera",
+            "hecho": "visual-ciudad-h05"
+          },
+          {
+            "que": "paso libre de peatones",
+            "hecho": "visual-ciudad-h06"
+          },
+          {
+            "que": "sombrilla y jardinera",
+            "hecho": "visual-ciudad-h07"
+          },
+          {
+            "que": "cafetería genérica, sin nombre de ciudad",
+            "generico": true
+          },
+          {
+            "que": "la ciudad, el tráfico y cuántos clientes hay",
+            "generico": true
+          }
+        ]
+      }
     }
   },
   "tramos": [
@@ -2235,39 +2807,43 @@
       "camara": [
         {
           "mira": "ladera",
-          "dist_m": 26,
-          "azimut": -10,
-          "elevacion": 16,
+          "dist_m": 13,
+          "azimut": -12,
+          "elevacion": 11,
+          "mira_lev_m": 1.3,
           "t": 0.0
         },
         {
           "mira": [
-            0,
-            -25
+            2,
+            -28
           ],
-          "dist_m": 19,
-          "azimut": -2,
-          "elevacion": 14,
+          "dist_m": 9,
+          "azimut": 8,
+          "elevacion": 9,
+          "mira_lev_m": 1.4,
           "t": 4.7333
+        },
+        {
+          "mira": [
+            -6,
+            -33.5
+          ],
+          "dist_m": 16,
+          "azimut": -25,
+          "elevacion": 16,
+          "mira_lev_m": 1.0,
+          "t": 7.0667
         },
         {
           "mira": [
             0,
             -16
           ],
-          "dist_m": 40,
-          "azimut": 6,
-          "elevacion": 26,
-          "t": 6.2333
-        },
-        {
-          "mira": [
-            0,
-            -2
-          ],
-          "dist_m": 68,
-          "azimut": 14,
-          "elevacion": 34,
+          "dist_m": 46,
+          "azimut": -40,
+          "elevacion": 24,
+          "mira_lev_m": 3,
           "t": 9.4333
         }
       ],
@@ -2280,9 +2856,10 @@
           "t": 0.0
         },
         {
-          "tipo": "resaltar",
-          "pieza": "cafetal",
-          "dur": 1.8,
+          "tipo": "mover",
+          "actor": "cargador",
+          "a": "sendero",
+          "dur": 2.2,
           "t": 7.0667
         }
       ]
@@ -2295,221 +2872,324 @@
       "camara": [
         {
           "mira": [
-            -46,
-            -134
+            -28,
+            -108
           ],
-          "dist_m": 18,
-          "azimut": -10,
-          "elevacion": 18,
+          "dist_m": 72,
+          "azimut": -78,
+          "elevacion": 44,
+          "mira_lev_m": 1.0,
           "t": 9.7
         },
         {
           "mira": [
-            -46,
-            -133
+            -50,
+            -86
           ],
-          "dist_m": 20,
-          "azimut": -4,
-          "elevacion": 20,
+          "dist_m": 82,
+          "azimut": -10,
+          "elevacion": 42,
           "t": 13.1
         },
         {
           "mira": [
-            -48,
-            -102
+            -32,
+            -123
           ],
-          "dist_m": 64,
-          "azimut": -5,
-          "elevacion": 44,
-          "t": 15.4667
+          "dist_m": 36,
+          "azimut": -92,
+          "elevacion": 26,
+          "mira_lev_m": 1.0,
+          "t": 18.6
         },
         {
-          "mira": [
-            -46,
-            -104
-          ],
-          "dist_m": 62,
-          "azimut": -16,
-          "elevacion": 42,
-          "t": 16.8333
-        },
-        {
-          "mira": [
-            -10,
-            -116
-          ],
-          "dist_m": 40,
-          "azimut": -42,
+          "mira": "beneficio",
+          "dist_m": 32,
+          "azimut": -90,
           "elevacion": 26,
           "t": 19.8667
         },
         {
           "mira": [
-            -2,
-            -116
+            -26,
+            -120
           ],
-          "dist_m": 36,
-          "azimut": -30,
-          "elevacion": 32,
-          "t": 22.2667
+          "dist_m": 30,
+          "azimut": -88,
+          "elevacion": 40,
+          "t": 21.4667
         },
         {
           "mira": [
-            20,
-            -116
+            -20,
+            -119
           ],
-          "dist_m": 40,
-          "azimut": -20,
-          "elevacion": 52,
+          "dist_m": 30,
+          "azimut": -86,
+          "elevacion": 40,
+          "t": 23.1667
+        },
+        {
+          "mira": [
+            -4,
+            -117
+          ],
+          "dist_m": 30,
+          "azimut": -84,
+          "elevacion": 40,
+          "mira_lev_m": 0,
           "t": 25.0
         },
         {
           "mira": [
-            22,
-            -116
+            -2,
+            -117
           ],
-          "dist_m": 36,
-          "azimut": -12,
-          "elevacion": 56,
+          "dist_m": 30,
+          "azimut": -82,
+          "elevacion": 40,
+          "t": 27.7667
+        },
+        {
+          "mira": [
+            10,
+            -117
+          ],
+          "dist_m": 30,
+          "azimut": -80,
+          "elevacion": 40,
           "t": 29.5667
         }
       ],
       "eventos": [
         {
           "tipo": "resaltar",
-          "pieza": "parcela-1",
-          "dur": 3.0,
-          "t": 9.7
-        },
-        {
-          "tipo": "resaltar",
           "pieza": "parcela-3",
           "dur": 2.2,
-          "t": 15.4667
+          "t": 13.1
+        },
+        {
+          "tipo": "mover",
+          "actor": "productora",
+          "a": "entrega",
+          "dur": 2.4,
+          "t": 18.6
+        },
+        {
+          "tipo": "mover",
+          "actor": "productor-2",
+          "a": [
+            -33,
+            -126.5
+          ],
+          "dur": 2.6,
+          "t": 18.6
         },
         {
           "tipo": "resaltar",
-          "pieza": "parcela-2",
-          "dur": 2.2,
-          "t": 15.4667
-        },
-        {
-          "tipo": "resaltar",
-          "pieza": "beneficio",
-          "dur": 3.0,
-          "t": 19.8667
+          "lugar": "despulpadora",
+          "dur": 1.6,
+          "t": 21.4667
         }
       ],
       "marcas": [
         {
           "lugar": "recibo",
-          "texto": "Beneficio húmedo",
-          "sub": "Cereza → pergamino",
-          "t": 19.6,
-          "hasta": 23.4333
-        }
-      ],
-      "anotaciones": [
+          "texto": "Recibo",
+          "sub": "Llega la cereza",
+          "t": 18.3333,
+          "hasta": 22.6333
+        },
         {
-          "tipo": "pulso",
-          "sobre": [
-            [
-              -46,
-              -128
-            ]
-          ],
-          "radio_m": 3,
-          "t": 11.0,
-          "hasta": 14.1667
+          "lugar": "despulpadora",
+          "texto": "Despulpado",
+          "t": 21.2333,
+          "hasta": 22.4667
+        },
+        {
+          "lugar": "pilas",
+          "texto": "Mucílago",
+          "sub": "En las pilas",
+          "t": 22.0333,
+          "hasta": 24.2667
+        },
+        {
+          "lugar": "lavado",
+          "texto": "Lavado",
+          "alto": 190,
+          "t": 24.7667,
+          "hasta": 28.9667
+        },
+        {
+          "lugar": "patio",
+          "texto": "Secado",
+          "sub": "Pergamino al sol",
+          "t": 27.5333,
+          "hasta": 30.0
         }
       ],
-      "transicion": "fundido",
+      "transicion": "oscuro",
       "fundido_s": 0.6
     },
     {
       "id": "carretera-3",
       "mundo": "carretera",
       "desde": 30.0,
-      "hasta": 42.5333,
+      "hasta": 32.7333,
       "camara": [
         {
-          "mira": {
-            "actor": "camion-cafe"
-          },
-          "dist_m": 30,
-          "azimut": 150,
-          "elevacion": 18,
+          "mira": "curva",
+          "dist_m": 95,
+          "azimut": 270,
+          "elevacion": 22,
+          "mira_lev_m": 14,
           "t": 30.0
         },
         {
-          "mira": {
-            "actor": "camion-cafe"
-          },
-          "dist_m": 34,
-          "azimut": 140,
+          "mira": "curva",
+          "dist_m": 80,
+          "azimut": 282,
           "elevacion": 20,
+          "mira_lev_m": 14,
           "t": 31.2333
-        },
-        {
-          "mira": [
-            22,
-            -4
-          ],
-          "dist_m": 34,
-          "azimut": 148,
-          "elevacion": 20,
-          "t": 34.3
-        },
-        {
-          "mira": [
-            20,
-            -8
-          ],
-          "dist_m": 20,
-          "azimut": 160,
-          "elevacion": 15,
-          "t": 37.2
-        },
-        {
-          "mira": [
-            19,
-            -9
-          ],
-          "dist_m": 17,
-          "azimut": 172,
-          "elevacion": 14,
-          "t": 42.3333
         }
       ],
-      "eventos": [
-        {
-          "tipo": "mover",
-          "actor": "camion-cafe",
-          "a": "puerta",
-          "t": 30.0,
-          "dur": 4.032
-        },
-        {
-          "tipo": "resaltar",
-          "pieza": "bodega",
-          "dur": 2.5,
-          "t": 34.1667
-        }
-      ],
+      "eventos": [],
       "marcas": [
         {
-          "lugar": "bodega",
-          "texto": "Beneficio seco",
-          "sub": "Trilla: pergamino → oro",
-          "t": 32.5,
-          "hasta": 42.5333
+          "lugar": "curva",
+          "texto": "Camino de montaña",
+          "sub": "Pergamino en costales",
+          "t": 30.0,
+          "hasta": 32.7333
         }
       ],
       "transicion": "fundido",
       "fundido_s": 0.6
     },
     {
-      "id": "pais-4",
+      "id": "seco-4",
+      "mundo": "seco",
+      "desde": 32.7333,
+      "hasta": 42.5333,
+      "camara": [
+        {
+          "mira": [
+            3,
+            0
+          ],
+          "dist_m": 32,
+          "azimut": 55,
+          "elevacion": 36,
+          "mira_lev_m": 1,
+          "t": 32.7333
+        },
+        {
+          "mira": [
+            0,
+            -4
+          ],
+          "dist_m": 30,
+          "azimut": 55,
+          "elevacion": 36,
+          "mira_lev_m": 1,
+          "t": 34.1667
+        },
+        {
+          "mira": [
+            -1.5,
+            -1
+          ],
+          "dist_m": 26,
+          "azimut": 59,
+          "elevacion": 28,
+          "mira_lev_m": 1,
+          "t": 36.6
+        },
+        {
+          "mira": [
+            -2,
+            4
+          ],
+          "dist_m": 24,
+          "azimut": 62,
+          "elevacion": 27,
+          "mira_lev_m": 0.8,
+          "t": 40.1
+        },
+        {
+          "mira": [
+            -2,
+            5
+          ],
+          "dist_m": 22,
+          "azimut": 64,
+          "elevacion": 26,
+          "mira_lev_m": 0.8,
+          "t": 42.3333
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "resaltar",
+          "lugar": "limpieza",
+          "dur": 1.4,
+          "t": 34.1667
+        },
+        {
+          "tipo": "resaltar",
+          "lugar": "trilla",
+          "dur": 1.8,
+          "t": 35.3
+        },
+        {
+          "tipo": "resaltar",
+          "lugar": "clasificacion",
+          "dur": 1.8,
+          "t": 36.6
+        }
+      ],
+      "marcas": [
+        {
+          "lugar": "galera",
+          "texto": "Beneficio seco",
+          "sub": "Pergamino → oro",
+          "alto": 240,
+          "t": 32.7333,
+          "hasta": 34.9333
+        },
+        {
+          "lugar": "limpieza",
+          "texto": "Limpieza",
+          "t": 34.3333,
+          "hasta": 36.6
+        },
+        {
+          "lugar": "trilla",
+          "texto": "Trilla",
+          "sub": "Café oro",
+          "t": 35.0333,
+          "hasta": 37.5333
+        },
+        {
+          "lugar": "clasificacion",
+          "texto": "Clasificación",
+          "alto": 150,
+          "t": 36.3333,
+          "hasta": 41.4
+        },
+        {
+          "lugar": "empaque",
+          "texto": "Empaque",
+          "sub": "Sacos de yute",
+          "t": 39.8667,
+          "hasta": 42.5333
+        }
+      ],
+      "transicion": "fundido"
+    },
+    {
+      "id": "pais-5",
       "mundo": "pais",
       "desde": 42.5333,
       "hasta": 65.9667,
@@ -2530,7 +3210,7 @@
         },
         {
           "mira": "huehuetenango",
-          "dist_km": 100,
+          "dist_km": 95,
           "azimut": 34,
           "elevacion": 30,
           "t": 51.8667
@@ -2601,80 +3281,162 @@
       "fundido_s": 0.6
     },
     {
-      "id": "puerto-5",
+      "id": "puerto-6",
       "mundo": "puerto",
       "desde": 65.9667,
       "hasta": 82.4667,
       "camara": [
         {
-          "mira": [
-            0,
-            -262
-          ],
-          "dist_m": 120,
-          "azimut": 160,
-          "elevacion": 22,
+          "mira": "mar",
+          "dist_m": 250,
+          "azimut": 185,
+          "elevacion": 24,
+          "mira_lev_m": 4,
           "t": 65.9667
         },
         {
           "mira": [
-            0,
-            -266
+            60,
+            -560
+          ],
+          "dist_m": 250,
+          "azimut": 165,
+          "elevacion": 24,
+          "mira_lev_m": 4,
+          "t": 69.8667
+        },
+        {
+          "mira": [
+            -22,
+            -462
           ],
           "dist_m": 100,
-          "azimut": 168,
-          "elevacion": 24,
-          "t": 66.9667
+          "azimut": 80,
+          "elevacion": 30,
+          "mira_lev_m": 8,
+          "t": 73.2667
         },
         {
-          "mira": {
-            "actor": "buque"
-          },
-          "dist_m": 170,
-          "azimut": 150,
-          "elevacion": 24,
-          "t": 68.2667
-        },
-        {
-          "mira": {
-            "actor": "buque"
-          },
-          "dist_m": 320,
-          "azimut": 125,
-          "elevacion": 28,
+          "mira": [
+            -25,
+            -455
+          ],
+          "dist_m": 110,
+          "azimut": 55,
+          "elevacion": 36,
+          "mira_lev_m": 6,
           "t": 74.4667
         },
         {
-          "mira": {
-            "actor": "buque"
-          },
-          "dist_m": 470,
-          "azimut": 105,
-          "elevacion": 32,
-          "t": 78.2
+          "mira": [
+            -45,
+            -392
+          ],
+          "dist_m": 80,
+          "azimut": 10,
+          "elevacion": 36,
+          "mira_lev_m": 2,
+          "t": 77.2667
         },
         {
-          "mira": "mar",
-          "dist_m": 520,
-          "azimut": 95,
-          "elevacion": 34,
+          "mira": [
+            -45,
+            -394
+          ],
+          "dist_m": 62,
+          "azimut": -6,
+          "elevacion": 32,
+          "mira_lev_m": 2,
+          "t": 78.3
+        },
+        {
+          "mira": [
+            -44,
+            -398
+          ],
+          "dist_m": 42,
+          "azimut": -18,
+          "elevacion": 30,
+          "mira_lev_m": 2,
           "t": 82.0333
         }
       ],
       "eventos": [
         {
+          "tipo": "resaltar",
+          "lugar": "frente",
+          "dur": 2.0,
+          "t": 65.9667
+        },
+        {
           "tipo": "mover",
-          "actor": "buque",
-          "a": "mar",
-          "t": 69.6333,
-          "dur": 12.401
+          "actor": "fondeo-1",
+          "a": [
+            150,
+            -635
+          ],
+          "dur": 5.0,
+          "t": 66.2333
+        },
+        {
+          "tipo": "resaltar",
+          "lugar": "patio",
+          "dur": 1.6,
+          "t": 77.2667
+        },
+        {
+          "tipo": "mover",
+          "actor": "camina-patio",
+          "a": [
+            -52,
+            -392
+          ],
+          "dur": 4.0,
+          "t": 77.2667
+        },
+        {
+          "tipo": "mover",
+          "actor": "patio-2",
+          "a": [
+            -40,
+            -400
+          ],
+          "dur": 4.5,
+          "t": 77.2667
+        },
+        {
+          "tipo": "mover",
+          "actor": "camion-patio",
+          "a": [
+            -46,
+            -388
+          ],
+          "dur": 4.7,
+          "t": 77.2667
         }
       ],
-      "transicion": "fundido",
+      "marcas": [
+        {
+          "lugar": "atraque",
+          "texto": "Un muelle",
+          "sub": "Del Atlántico",
+          "alto": 120,
+          "t": 65.9667,
+          "hasta": 68.3
+        },
+        {
+          "lugar": "grua",
+          "texto": "Grúa de muelle",
+          "sub": "Del muelle al barco",
+          "t": 72.3,
+          "hasta": 75.4667
+        }
+      ],
+      "transicion": "oscuro",
       "fundido_s": 0.6
     },
     {
-      "id": "tostaduria-6",
+      "id": "tostaduria-7",
       "mundo": "tostaduria",
       "desde": 82.4667,
       "hasta": 95.8,
@@ -2682,146 +3444,159 @@
         {
           "mira": [
             -4,
-            1.5
+            2.5
           ],
-          "dist_m": 24,
-          "azimut": 40,
-          "elevacion": 32,
+          "dist_m": 26,
+          "azimut": 32,
+          "elevacion": 38,
+          "mira_lev_m": 0.2,
           "t": 82.4667
         },
         {
           "mira": [
-            -7,
-            3
+            -4,
+            2.5
           ],
-          "dist_m": 16,
-          "azimut": 50,
-          "elevacion": 26,
+          "dist_m": 17,
+          "azimut": 20,
+          "elevacion": 32,
+          "mira_lev_m": 1.2,
           "t": 83.8667
         },
         {
-          "mira": [
-            -2.6,
-            1.2
-          ],
-          "dist_m": 15,
-          "azimut": 35,
-          "elevacion": 22,
+          "mira": "tostadora",
+          "dist_m": 11,
+          "azimut": 60,
+          "elevacion": 30,
+          "mira_lev_m": 0.6,
           "t": 85.7667
         },
         {
           "mira": [
-            -1.9,
-            -1.0
+            -1.4,
+            1.2
           ],
-          "dist_m": 15,
-          "azimut": 25,
-          "elevacion": 20,
+          "dist_m": 11,
+          "azimut": 65,
+          "elevacion": 34,
+          "mira_lev_m": 0.5,
           "t": 89.1667
         },
         {
           "mira": "bandeja",
-          "dist_m": 15,
-          "azimut": 60,
-          "elevacion": 34,
+          "dist_m": 12,
+          "azimut": 70,
+          "elevacion": 28,
+          "mira_lev_m": 0.5,
           "t": 91.2
         },
         {
-          "mira": "bandeja",
-          "dist_m": 15,
-          "azimut": 72,
-          "elevacion": 30,
+          "mira": [
+            1,
+            -1
+          ],
+          "dist_m": 14,
+          "azimut": 80,
+          "elevacion": 28,
+          "mira_lev_m": 0.5,
           "t": 94.2
         }
       ],
       "eventos": [
         {
-          "tipo": "resaltar",
-          "pieza": "tostaduria",
-          "dur": 2.5,
+          "tipo": "mover",
+          "actor": "carga-saco",
+          "a": [
+            -9,
+            6
+          ],
+          "dur": 3.0,
           "t": 82.4667
+        },
+        {
+          "tipo": "resaltar",
+          "lugar": "tostadora",
+          "dur": 1.8,
+          "t": 85.7667
         }
       ],
       "marcas": [
         {
           "lugar": "sacos",
-          "texto": "Café verde",
+          "texto": "Tostaduría",
+          "sub": "Café verde en sacos",
+          "alto": 60,
           "t": 82.6667,
           "hasta": 86.8333
         },
         {
           "lugar": "tostadora",
-          "texto": "Tostadora",
+          "texto": "Tueste",
           "t": 85.5333,
-          "hasta": 90.7
+          "hasta": 89.4
+        },
+        {
+          "lugar": "bandeja",
+          "texto": "Enfriado",
+          "alto": 190,
+          "t": 90.8,
+          "hasta": 95.8
         }
       ],
       "transicion": "oscuro",
       "fundido_s": 0.6
     },
     {
-      "id": "ciudad-7",
+      "id": "ciudad-8",
       "mundo": "ciudad",
       "desde": 95.8,
       "hasta": 103.0,
       "camara": [
         {
           "mira": [
-            10.5,
-            14
+            8,
+            0
           ],
-          "dist_m": 38,
-          "azimut": 115,
-          "elevacion": 10,
+          "dist_m": 36,
+          "azimut": 72,
+          "elevacion": 28,
+          "mira_lev_m": 2,
           "t": 95.8
         },
         {
           "mira": [
-            10.5,
-            14
+            0,
+            1.2
           ],
-          "dist_m": 38,
-          "azimut": 115,
-          "elevacion": 10,
-          "t": 96.2
-        },
-        {
-          "mira": [
-            10.5,
-            14.5
-          ],
-          "dist_m": 26,
-          "azimut": 130,
-          "elevacion": 12,
+          "dist_m": 22,
+          "azimut": 92,
+          "elevacion": 24,
+          "mira_lev_m": 1.4,
           "t": 96.9
         },
         {
           "mira": "mesa",
-          "dist_m": 15,
-          "azimut": 135,
-          "elevacion": 26,
+          "dist_m": 12,
+          "azimut": 115,
+          "elevacion": 18,
+          "mira_lev_m": 0.9,
           "t": 98.0333
         },
         {
           "mira": "mesa",
-          "dist_m": 15,
-          "azimut": 145,
-          "elevacion": 30,
+          "dist_m": 10,
+          "azimut": 130,
+          "elevacion": 20,
+          "mira_lev_m": 0.9,
           "t": 102.8
         }
       ],
-      "eventos": [
-        {
-          "tipo": "aparecer",
-          "pieza": "taza",
-          "dur": 0.8,
-          "t": 98.0333
-        }
-      ],
+      "eventos": [],
       "marcas": [
         {
           "lugar": "cafeteria",
           "texto": "Una cafetería cualquiera",
+          "sub": "En otro país",
           "t": 95.9333,
           "hasta": 99.4
         }
@@ -2832,7 +3607,7 @@
           "sobre": [
             "mesa"
           ],
-          "radio_m": 1.6,
+          "radio_m": 1.4,
           "t": 97.8,
           "hasta": 103.0
         }
@@ -2840,7 +3615,7 @@
       "transicion": "fundido"
     },
     {
-      "id": "finca-8",
+      "id": "finca-9",
       "mundo": "finca",
       "desde": 103.0,
       "hasta": 112.3,
@@ -2848,28 +3623,31 @@
         {
           "mira": [
             0,
-            -2
+            -6
           ],
-          "dist_m": 64,
-          "azimut": 12,
-          "elevacion": 32,
+          "dist_m": 70,
+          "azimut": 16,
+          "elevacion": 28,
+          "mira_lev_m": 5,
           "t": 103.0
         },
         {
           "mira": [
             1,
-            -22
+            -26
           ],
-          "dist_m": 32,
-          "azimut": -6,
-          "elevacion": 18,
+          "dist_m": 22,
+          "azimut": -4,
+          "elevacion": 14,
+          "mira_lev_m": 1.3,
           "t": 105.9333
         },
         {
           "mira": "ladera",
-          "dist_m": 26,
-          "azimut": -10,
-          "elevacion": 16,
+          "dist_m": 13,
+          "azimut": -12,
+          "elevacion": 11,
+          "mira_lev_m": 1.3,
           "t": 109.5
         }
       ],
@@ -2881,7 +3659,7 @@
           "t": 108.3333
         }
       ],
-      "transicion": "fundido",
+      "transicion": "oscuro",
       "fundido_s": 0.6
     }
   ]

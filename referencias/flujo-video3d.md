@@ -254,6 +254,9 @@ se lee tres veces). Prueba cada arreglo en una copia del TRABAJO antes de propon
 
 - Voz: ≈ 1 crédito por carácter (45 s ≈ 700 créditos).
 - Render three.js en HyperFrames: ≈ 1.7× la duración por formato (45 s ≈ 80 s; 3 min ≈ 5 min por formato).
+- Con mundos de cerca llenos y sombras reales (el café, 2026-11-16: 112 s en 9 tramos): 1.7–2.1 s por segundo de video
+  en cada tramo y, con el encadenado y la placa de la capa, 402 s en 9:16 y 313 s en 4:5 (≈ 3.6× y 2.8× la duración).
+  El mismo video sin sombras y con 6 tramos tardaba 331 s y 222 s: el detalle y las sombras cuestan ≈ +20–40 %.
 - Render Blender (`arquitecto`, `diorama`, `papel`): 0.5–0.85 s por cuadro de placa más ≈ 5 s de capa 2D por segundo
   de video: un video de 45 s tarda ≈ 16–22 min por formato (3 min ≈ 65–90 min por formato) (12–16 veces más que three.js). Elige un estilo de Blender
   cuando la forma o la luz lo valgan, no por costumbre. La primera vez, Cycles compila sus kernels (≈ 3.5 min).
