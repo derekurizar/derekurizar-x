@@ -92,7 +92,7 @@
         const sem = (p.semilla || 1) * 7919 + np * 104729, hz = (i, k) => hash(i + sem, k);
         const I = p.items || {};
         const cada = (clase, fn) => { const a = I[clase] || []; for (let i = 0, n = 0; i + 3 < a.length; i += 4, n++) fn(a[i], a[i + 1], a[i + 2], a[i + 3], n); };
-        const H0 = (x, y) => ctx.altura(x, y);
+        const H0 = (x, y) => ctx.suelo(x, y);     // el suelo del mundo: el ambiente no se sube al relieve de otra pieza
         // ---------------- vegetación
         const copa = (x, y, r, e, n, k0) => {
           const h = H0(x, y), alto = 2.4 * e, R = 2.1 * e, col = cCopa[Math.floor(hz(n, k0) * 3) % 3], f = hz(n, k0 + 1) * TAU;

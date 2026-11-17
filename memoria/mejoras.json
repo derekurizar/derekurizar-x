@@ -2750,7 +2750,7 @@
       "archivo": "scripts/maqueta3d.py · video/maqueta/mundos/esquema.js · video/maqueta/piezas/cafetal.js",
       "problema": "El suelo de un esquema es plano (ctx.altura = 0) y una pieza no puede publicar su propio relieve: la recolectora entre las terrazas del cafetal se sube a mano con lev_m = pendiente_m·k/hileras.",
       "propuesta": "Que una pieza publique alturas o lugares propios con su elevación (`_alturas`/`_lugares`, como `_caminos`) y que ctx.altura y X.lugar los tengan en cuenta.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m251",
@@ -2783,7 +2783,7 @@
       "archivo": "scripts/maqueta_tipos/_movimiento.py (flujo)",
       "problema": "Los vehículos de un flujo pueden empezar con S mayor que el largo del carril (campo: 1866–2232 m en un camino de 1676 m): una cámara que sigue a {flujo, n: 0} no ve nada.",
       "propuesta": "Envolver S módulo el largo del camino, o que M3D3 avise cuando el ancla de una cámara que sigue cae fuera del camino.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m254",
@@ -2970,7 +2970,7 @@
       "archivo": "video/maqueta/motor.js (ctx.flota, ctx.caminos, lugares de una pieza)",
       "problema": "Un actor o un flujo no pueden seguir una vía que sube: flota.poner pone el objeto a la altura del suelo del mundo y sin cabeceo, los caminos son 2D y los lugares que publica una pieza no llevan altura. El escenario caminomontana tuvo que traer sus propios vehículos en un grupo aparte, así que actor, flujo, frenar, mover y la mira al actor no sirven sobre sus carriles.",
       "propuesta": "Altura por punto en los caminos (cuarta componente), altura y cabeceo por instancia en la flota, y altura en los lugares publicados; es la parte que falta de m250 (relieve por pieza).",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m271",
@@ -2981,7 +2981,7 @@
       "archivo": "video/maqueta/objetos/barco.js",
       "problema": "El barco siempre dibuja su estela (no se puede quitar para un barco amarrado) y al atardecer la estela sale como una mancha rosada plana.",
       "propuesta": "Parámetro estela: false y una estela con espuma (franjas claras que se abren) en vez de un polígono liso teñido por la hora.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m272",
@@ -2992,7 +2992,7 @@
       "archivo": "video/maqueta/objetos/persona.js",
       "problema": "Faltan poses que tres escenarios pidieron: clasificar (manos sobre la mesa que separan el grano), descargar (bajar un costal de la plataforma al hombro) y sentado_sorber (sentado, el brazo sube la taza cada 4–6 s). Se aproximaron con atender, cargar y sentado.",
       "propuesta": "Sumar las tres poses al objeto persona y a su ficha.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m273",
@@ -3003,7 +3003,7 @@
       "archivo": "scripts/maqueta_tipos/ (X.propios) · referencias/diseno/maqueta3d.md",
       "problema": "Una pieza publica sus lugares con nombre añadiendo entradas a X.propios con setdefault: funciona por el orden en que se resuelve, no está documentado y en escala ciudad no se publican.",
       "propuesta": "Una forma documentada para que el resolver de una pieza publique lugares (_lugares, como _caminos), que sirva en esquema y en ciudad.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m274",
@@ -3014,7 +3014,7 @@
       "archivo": "referencias/diseno/maqueta3d.md",
       "problema": "El contrato no dice la convención del azimut de la cámara (la cámara queda en mira + (sin az, −cos az)·d en este y norte): el constructor la dedujo mirando hojas.",
       "propuesta": "Una línea con la convención y un ejemplo (azimut 0 = la cámara al sur mirando al norte).",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m275",
@@ -3025,7 +3025,7 @@
       "archivo": "scripts/maqueta_modulo.py (maqueta mínima)",
       "problema": "maqueta_modulo.py check piezas/carretera falla antes de medir nada: arma la maqueta mínima sobre el fixture de ciudad con el ejemplo de la ficha, que es de esquema («eje» no es una arteria del set capital).",
       "propuesta": "Elegir el fixture por la escala del ejemplo (o un ejemplo por escala en la ficha).",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m276",
@@ -3036,7 +3036,7 @@
       "archivo": ".claude/workflows/video3d.js (retoque visual)",
       "problema": "Tras la pasada de correcciones el retorno trae los puntajes del crítico de ANTES de corregir (carretera 3/3/3 aunque ya es un camino de montaña) y el director del retoque llegó a 325 K de contexto en una sola pasada con siete mundos.",
       "propuesta": "Una segunda lectura corta del crítico solo sobre los mundos corregidos, y repartir el retoque por mundo (un director por tanda de 3 mundos) cuando haya más de cuatro mundos de cerca.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m277",
@@ -3047,7 +3047,7 @@
       "archivo": "scripts/maqueta3d.py (marcas)",
       "problema": "El rótulo de una marca puede quedar encima de lo que señala (en el camino de montaña tapa el camión en un par de cuadros) y ningún gate lo mide.",
       "propuesta": "Un aviso M3D cuando la tarjeta de una marca cubre el protagonista o el actor que la cámara sigue en más de la mitad de su tiempo en pantalla; el pin puede subir (alto) o anclarse al lado.",
-      "estado": "pendiente"
+      "estado": "hecha"
     },
     {
       "id": "m278",
@@ -3059,6 +3059,50 @@
       "problema": "El encuadre dio por hecho que el nombre viene de Santa Catarina Pinula; los tres verificadores lo descartaron (la única fuente, fuera de la lista, decía San José Pinula), pero consolidar copió la premisa a la espina, un hilo, un acto, un personaje, una revelación y una foto clave, el digesto del guionista y del crítico no mostraba los descartados y el gate solo vetaba números: la voz lo insinuó («suena a Santa Catarina Pinula») y el plano puso el pin. Lo mismo con «Spring Valley, Nueva York» (solo Guate.News).",
       "propuesta": "H34 en consolidar/premisas --check + paso «Premisas» del Workflow (el editor quita el nombre del encuadre); sección «Descartado por la verificación» y ⚠ en fotos en los digestos; H4n veta en voz y pantalla los nombres propios de los descartados sin respaldo publicable (insinuar cuenta); MV20 en el plano; roles de editor, guionista y crítico; dos pruebas en test.sh.",
       "estado": "hecha"
+    },
+    {
+      "id": "m279",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "constructor",
+      "archivo": "scripts/maqueta_modulo.py (maqueta mínima, hojas)",
+      "problema": "La hoja del banco de pruebas no sirve para juzgar una pieza: la cámara de la maqueta base no la encuadra (la de beneficioseco sale vacía, el barco del muelle se ve diminuto) y la hoja de «otra hora» sale «dia · dia», así que no prueba la noche ni el atardecer. Los dos agentes que hicieron m271 y m272 armaron sus propias maquetas de cerca.",
+      "propuesta": "Que la maqueta mínima encuadre la pieza con su `distancia_m` y su `centro` (la cámara mira el ejemplo, a media distancia de lectura) y que la otra hora sea de verdad otra (noche si el estilo la tiene).",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m280",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "constructor",
+      "archivo": "scripts/maqueta_modulo.py (maqueta mínima) · video/maqueta/eventos/encender.json · parpadear.json",
+      "problema": "La maqueta mínima de los eventos encender y parpadear no se resuelve: su ejemplo nombra luces de una pieza `luces` que la maqueta mínima no trae (solo añade las piezas de los parámetros de tipo `pieza`).",
+      "propuesta": "Una clave de ficha `necesita` (tipos de pieza cuyo ejemplo entra en la maqueta mínima), o que el banco añada `luces` cuando el evento lleva `lugares`.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m281",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "vocabulario",
+      "archivo": "video/maqueta/piezas/beneficioseco.js · video/maqueta/objetos/persona.js",
+      "problema": "Detalles que quedaron aproximados al sumar las poses: quien descarga junto al camión flota unos 8 cm (va con el `lev` de la galera estando en el patio); en `descargar` el costal del suelo se encoge al final del ciclo y los costales apilados del camión no bajan; el paso de `caminar` va por reloj y los pies resbalan un poco.",
+      "propuesta": "`lev` por persona en la flota del beneficio seco; que el costal descargado se quede en una pila que crece; el paso de `caminar` ligado a la distancia recorrida cuando hay `vel`.",
+      "estado": "pendiente"
+    },
+    {
+      "id": "m282",
+      "fecha": "2026-11-16",
+      "flujo": "video3d",
+      "pieza": "videos3d/2026-11-15-cafe-huehuetenango-taza",
+      "area": "motor",
+      "archivo": "video/maqueta/piezas/ambiente.js · scripts/maqueta3d.py (evitar)",
+      "problema": "El ambiente no esquiva las piezas que van sobre un polígono (el cafetal): siembra cosas dentro y quedan enterradas en la ladera (se dejó así para no cambiar el video aprobado).",
+      "propuesta": "Que `evitar` incluya el polígono de esas piezas, o que el ambiente suba sus cosas al relieve de la pieza.",
+      "estado": "pendiente"
     }
   ]
 }

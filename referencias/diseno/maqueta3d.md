@@ -546,7 +546,9 @@ estilo que declare `horas` en `design/sets3d/estilos.json` (hoy, `dia`). Sin `ho
   actor o un flujo en sus caminos sube con ellos, la gente queda de pie sobre la ladera, y la cámara (`mira`, `sigue`), las
   marcas, las anotaciones y los gates lo ven igual. Los objetos cuyo módulo dice `cabecea: true` (carro, camión, camión de
   sacos, bus, moto) van posados en sus dos ejes y se inclinan con la pendiente; `flota(…, {cabeceo: false})` lo quita. La
-  pieza dueña del relieve usa `ctx.suelo(x, y)` (el suelo sin relieve) para no contarse dos veces. Hoy lo publican
+  pieza dueña del relieve usa `ctx.suelo(x, y)` (el suelo sin relieve) para no contarse dos veces. Las superficies del
+  suelo (`malla.banda` y `malla.poligono`: suelos de la receta, calles, zonas, agua) y la pieza `ambiente` se quedan en el
+  suelo del mundo: no se suben al relieve de otra pieza. Hoy lo publican
   `caminomontana` (su calzada: un `actor` o un `flujo` en «<id>.carril-1» / «<id>.carril-2»; `vehiculos: 0` y
   `camion: false` quitan los suyos) y `cafetal` (su ladera: ya no hace falta `lev_m` para pararse entre las hileras).
   **`mira_lev_m` se mide desde ese suelo** (en una maqueta anterior al relieve había que restarle la altura de la pieza).

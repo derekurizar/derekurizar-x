@@ -285,17 +285,18 @@ const malla = {
     for (let i = 0; i < d.length; i++) {
       const a = d[Math.max(0, i - 1)], b = d[Math.min(d.length - 1, i + 1)], L = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1;
       const nx = -(b[1] - a[1]) / L * h, ny = (b[0] - a[0]) / L * h, [x, y] = d[i];
-      for (const s of [1, -1]) { const px = x + nx * s, py = y + ny * s; acc.pos.push(px, ctx.altura(px, py) + lev, -py); acc.col.push(color.r, color.g, color.b); }
+      for (const s of [1, -1]) { const px = x + nx * s, py = y + ny * s; acc.pos.push(px, ctx.suelo(px, py) + lev, -py); acc.col.push(color.r, color.g, color.b); }
       if (i) { const q = base + 2 * i; acc.idx.push(q - 2, q - 1, q, q - 1, q + 1, q); }
     }
   },
-  // un polígono [x0, y0, x1, y1, …] relleno, posado sobre el suelo + lev (cada vértice a su altura)
+  // un polígono [x0, y0, x1, y1, …] relleno, posado sobre el suelo DEL MUNDO + lev (cada vértice a su altura). Las superficies
+  // (banda y polígono: suelos, calles, zonas, agua) no siguen el relieve de una pieza: son triángulos grandes y saldrían como losas
   poligono(acc, flat, lev, color) {
     const pts = []; for (let i = 0; i + 1 < flat.length; i += 2) pts.push(new THREE.Vector2(flat[i], flat[i + 1]));
     if (pts.length < 3) return;
     if (THREE.ShapeUtils.isClockWise(pts)) pts.reverse();
     const base = acc.pos.length / 3;
-    for (const p of pts) { acc.pos.push(p.x, ctx.altura(p.x, p.y) + lev, -p.y); acc.col.push(color.r, color.g, color.b); }
+    for (const p of pts) { acc.pos.push(p.x, ctx.suelo(p.x, p.y) + lev, -p.y); acc.col.push(color.r, color.g, color.b); }
     for (const t of THREE.ShapeUtils.triangulateShape(pts, [])) acc.idx.push(base + t[0], base + t[1], base + t[2]);
   },
   geometria(acc) {
