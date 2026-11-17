@@ -6,6 +6,7 @@ export const meta = {
     { title: 'Encuadre', detail: 'historia-editor: encuadre.json con la pregunta central, el protagonista, las revelaciones (lo que el video paga y el gancho no dice), fotos_clave (la primera es la imagen del protagonista), el arco, tres actos (planteamiento, nudo, desenlace) con la espina (detonante, punto medio, clímax, resolución), 2–6 hilos (lo que la historia abre), personajes con su presentación, 2–5 periodos que reparten 2–3 ejes de investigación, paleta, no_afirma y lo sensible (justicia); gate historia.py encuadre --check. En desde: encuadre, re-encuadra una cronología ya verificada' },
     { title: 'Investigación', detail: 'un historia-investigador por eje en paralelo: hechos con fecha y cita literal del texto guardado (historia.py leer: HTML, PDF o Wayback), cifras, frases literales y fotos candidatas → hallazgos_<eje>.json' },
     { title: 'Verificación', detail: 'un historia-verificador por eje en cuanto su investigador termina: segunda fuente independiente por hecho; cuatro veredictos (confirmado | una_fuente | en_disputa | no_confirmado) y tipo_hecho (acto | alegato | estimacion | opinion); fechas en conflicto, estado actual de los casos, fotos con licencia (historia.py foto; la og:image de las notas leídas con --de-fuente; la del protagonista con --protagonista) → verificacion_<eje>.json; gate historia.py hechos --check (H1–H3, H7, H12); si ninguna muestra al protagonista, un verificador la baja antes de los ganchos' },
+    { title: 'Premisas', detail: 'historia-editor: tras verificar, historia.py premisas --check (H34): lo que el encuadre daba por hecho (espina, hilos, actos, personajes, revelaciones, fotos clave) y la verificación descartó sale del encuadre; si no hay, termina en una llamada' },
     { title: 'Reparto', detail: '/serie modo caso: tras consolidar, el editor reparte los ids de hechos, cifras y citas por parte (serie.columna, partes[].tema/hechos/obligatorio, serie.fuera) y pasa serie.py plan --check (SE10–SE11)' },
     { title: 'Ganchos', detail: 'video-gancho en modo historia: consolidar (cronología y base) y 5 candidatos de familias de historia (resultado, paradoja, contraste, misterio, personaje, lugar, pregunta, escala), todos con la foto del protagonista a sangre y sin adelantar una revelación; gate historia.py ganchos --check (R1–R9, H10, H12, H13)' },
     { title: 'Selección', detail: 'video-critico en modo selección: en silencio y con la voz; puntúa silencio, reserva (no regala una revelación), tension, alineacion, honestidad, novedad; ganador y segundo en seleccion.json; si ninguno llega a 3, video-gancho rehace una vez' },
@@ -298,7 +299,7 @@ const fallasDe = (r, gate) => (r.fallas && r.fallas.length) ? r.fallas : [`el ga
 let ENC = null, ver = [], K = { candidatos: [] }, SEL = { ganador: null, segundo: null, por_que: `${DESDE}: el gancho ya estaba elegido (seleccion.json)`, faltas: [] }
 const directivaEncuadre = REENCUADRE
   ? `RE-ENCUADRE (lee «Re-encuadre» en referencias/roles/historia-editor.md): ${trabajo}/encuadre.json ya existe y la cronología está verificada: lee SOLO python3 scripts/historia.py digesto ${trabajo} --para editor. ` +
-    `Conserva tema, slug, pregunta, protagonista, revelaciones, fotos_clave, arco, ejes, paleta, dominios_propios, sensibles y no_afirma; renombra capitulos → periodos (y ejes[].capitulos → ejes[].periodos) y AÑADE actos, espina, hilos y personajes. `
+    `Conserva tema, slug, pregunta, protagonista, revelaciones, fotos_clave, arco, ejes, paleta, dominios_propios, sensibles y no_afirma; renombra capitulos → periodos (y ejes[].capitulos → ejes[].periodos) y AÑADE actos, espina, hilos y personajes. Lo que el digesto lista en «Premisas que la verificación tumbó» NO se conserva: quita ese nombre de donde aparezca (H34; python3 scripts/historia.py premisas ${trabajo} --check en 0). `
   : (angulo ? `${ANGULO} El encuadre (pregunta, actos, ejes, revelaciones) sigue ese ángulo; una cifra que el usuario pide para el gancho NO va en revelaciones (H13 vetaría sus dígitos). ` : '') +
     `Escribe ${trabajo}/encuadre.json: pregunta central, protagonista (1–3 nombres con que se nombra a quien protagoniza: la marca, la persona, la empresa; el gancho lo nombra), ` +
     `revelaciones (3–5 frases: lo que el video revela y el gancho NO puede decir —la respuesta a la pregunta, de qué está hecho, quién lo hizo, cómo terminó— con sus números tal cual: el gate veta esos dígitos en el gancho), ` +
@@ -375,6 +376,22 @@ if (ver.reduce((s, v) => s + (v.protagonista || 0), 0) === 0) {
     .catch((e) => { avisar(`AVISO: sigue sin foto del protagonista (${String(e.message).split('\n')[0]}); consolidar fallará H12: bájala tú y relanza.`); return null })
   if (F) log(`Foto del protagonista: ${F.protagonista} (eje ${F.eje})`)
 }
+// ── 3c. Premisas (H34, 2026-11-16, Pinulito): el encuadre no puede dar por hecho lo que la verificación descartó ─────
+// (el editor encuadró «Santa Catarina Pinula»; los tres verificadores lo descartaron y aun así llegó a la voz). Si
+// premisas --check sale en 0 el editor termina en una llamada; si no, quita el nombre del encuadre y repite.
+phase('Premisas')
+const PREM = await conReparacion('Premisas', (fallos) => agentRol(
+  `Eres el editor de /historia (lee «Premisas caídas» en referencias/roles/historia-editor.md). TRABAJO = ${trabajo} · «${tema}». SOLO UNA TAREA: ` +
+    `corre python3 scripts/historia.py premisas ${trabajo} --check. Si sale 0, devuelve {gate: "ok", cambios: 0} sin leer nada más. ` +
+    `Si falla H34, lee python3 scripts/historia.py digesto ${trabajo} --para editor («Premisas que la verificación tumbó» y «Descartado por la verificación») y edita SOLO esos textos de ${trabajo}/encuadre.json: ` +
+    `quita el nombre descartado (o cámbialo por lo que la cronología verificada sí dice), deja la pregunta sin él («¿de dónde sale el nombre?»), borra el personaje o la foto clave que solo existía por la premisa y añade a no_afirma lo que no se pudo confirmar. ` +
+    `No cambies ejes, periodos, paleta ni protagonista. Repite premisas --check y encuadre --check hasta 0. Retorno: {gate: "ok"|"falla", cambios (cuántos textos tocaste), fallas: []}.` +
+    (fallos.length ? ` REPARACIÓN: ${fallos.join('; ')}.` : ''),
+  { agentType: 'historia-editor', phase: 'Premisas', label: 'editor-premisas',
+    schema: { type: 'object', properties: { gate: { type: 'string', enum: ['ok', 'falla'] }, cambios: { type: 'integer' }, fallas: { type: 'array', items: { type: 'string' } } }, required: ['gate', 'fallas'] } }),
+(r) => (r.gate === 'ok' ? [] : (r.fallas.length ? r.fallas : ['historia.py premisas --check no pasó'])), 2)
+  .catch((e) => fail(`H34: el encuadre sigue dando por hecho lo que la verificación descartó (${String(e.message).split('\n')[0]}). Corre python3 scripts/historia.py premisas ${trabajo} --check y re-encuadra (desde: encuadre).`))
+if (PREM && PREM.cambios) log(`Premisas: ${PREM.cambios} textos del encuadre corregidos (H34)`)
 // /serie modo caso: el REPARTO de los ids por parte va DESPUÉS de consolidar (al encuadrar todavía no existen los ids)
 if (HASTA === 'consolidar' && SERIE && SERIE.caso) {
   phase('Reparto')

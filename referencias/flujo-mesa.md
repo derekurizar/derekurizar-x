@@ -220,6 +220,7 @@ de /serie con una mesa de maqueta, de punta a punta.
 | MV13 | un solo acento al frente a la vez: falla si una cifra o una barra comparte el acento con otra o con una nota; otras dos piezas en acento a la vez, aviso (§ 5b); `crema` solo en `cifra`, `termino` y `barra` |
 | MV14 | el cuadro 0 abre con ≥ 2 piezas ya puestas (el gancho no lleva maqueta) |
 | MV15–MV19 | la maqueta 3D de una mesa: forma, concordancia con la voz, un solo estilo, carga y los gates del motor (§ 3b) |
+| MV20 | ninguna pieza escribe un nombre que la verificación descartó (`historia.nombres_vetados`; solo con `historia.json`); el pie de una foto de Commons u oficial que repite lo que muestra no cuenta (2026-11-16, Pinulito) |
 
 MV1–MV7 son YT13–YT19 del núcleo con las constantes del vertical (`REGLAS`), y MV15–MV19 son YT20–YT24. `hyperframes check` añade sus propios
 avisos (texto bajo 28 px, texto sin tiempo de lectura, tramos sin cambio): se leen en `video_hf.py revisar`.

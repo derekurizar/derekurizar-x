@@ -3048,6 +3048,17 @@
       "problema": "El rótulo de una marca puede quedar encima de lo que señala (en el camino de montaña tapa el camión en un par de cuadros) y ningún gate lo mide.",
       "propuesta": "Un aviso M3D cuando la tarjeta de una marca cubre el protagonista o el actor que la cámara sigue en más de la mitad de su tiempo en pantalla; el pin puede subir (alto) o anclarse al lado.",
       "estado": "pendiente"
+    },
+    {
+      "id": "m278",
+      "fecha": "2026-11-16",
+      "flujo": "historia",
+      "pieza": "historias/2026-11-15-pollo-pinulito",
+      "area": "verificacion",
+      "archivo": "scripts/historia.py (consolidar, digesto, estructura_historia) · .claude/workflows/historia.js · scripts/video_hf.py",
+      "problema": "El encuadre dio por hecho que el nombre viene de Santa Catarina Pinula; los tres verificadores lo descartaron (la única fuente, fuera de la lista, decía San José Pinula), pero consolidar copió la premisa a la espina, un hilo, un acto, un personaje, una revelación y una foto clave, el digesto del guionista y del crítico no mostraba los descartados y el gate solo vetaba números: la voz lo insinuó («suena a Santa Catarina Pinula») y el plano puso el pin. Lo mismo con «Spring Valley, Nueva York» (solo Guate.News).",
+      "propuesta": "H34 en consolidar/premisas --check + paso «Premisas» del Workflow (el editor quita el nombre del encuadre); sección «Descartado por la verificación» y ⚠ en fotos en los digestos; H4n veta en voz y pantalla los nombres propios de los descartados sin respaldo publicable (insinuar cuenta); MV20 en el plano; roles de editor, guionista y crítico; dos pruebas en test.sh.",
+      "estado": "hecha"
     }
   ]
 }

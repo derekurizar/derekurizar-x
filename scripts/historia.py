@@ -27,6 +27,8 @@ Subcomandos (TRABAJO = sesiones/historia-<slug>/):
   hechos TRABAJO --reclasificar [--aplicar]   los en_disputa de un solo grupo sin discrepancia en la nota → una_fuente (v3)
   encuadre TRABAJO --check     la estructura por actos del encuadre (actos, espina, hilos, personajes, periodos)
   consolidar TRABAJO           verificaciones + fotos → historia.json, base/ (hilo.json, datos.json) y la paleta del encuadre
+                               (H34: falla si el encuadre nombra algo que la verificación descartó)
+  premisas TRABAJO --check     solo H34 (consolida y lista lo del encuadre que la verificación tumbó; 0 = nada)
   digesto TRABAJO --para investigador|verificador --eje E | gancho | guionista | critico | oyente | editor
         (oyente: la narración de corrido y luego la voz con lo que hay en pantalla, sin cronología ni ids; editor: re-encuadre)
   ganchos TRABAJO --check | --opciones | --elegir ID | --usar [ID] [--segundo ID]   → video.py ganchos con las familias y el visual foto de historia
@@ -1203,6 +1205,9 @@ def consolidar(trabajo):
         H["casos"] += v.get("casos") or []
         H["descartados"] += [dict(x, eje=v.get("eje")) for x in v.get("descartados") or []]
     H["hechos"].sort(key=lambda h: (str(h.get("fecha")), h.get("id")))
+    # H4n/H34: los nombres vetados se calculan con TODO lo publicable, antes de que /serie guarde lo posterior a la parte
+    # (un nombre de un hecho reservado no está descartado: solo se cuenta después)
+    H["vetados"] = nombres_vetados(H)
     # /serie: una parte solo ve lo que pasó hasta el fin de su periodo (lo posterior lo revelan las partes siguientes)
     ser_st = VD.serie_de(st)
     hasta = str((ser_st.get("periodo") or {}).get("hasta") or "")
@@ -1263,6 +1268,21 @@ def consolidar(trabajo):
     return H
 
 
+def cmd_premisas(a):
+    """H34 sola: consolida (rehace historia.json con el encuadre de ahora) y lista las premisas caídas."""
+    trabajo = os.path.abspath(a.trabajo)
+    H = consolidar(trabajo)
+    caidas = premisas_caidas(H, encuadre(trabajo))
+    for c in caidas:
+        print("FALLA H34 %s: «%s» nombra «%s», que la verificación descartó (%s)" % (c["donde"], c["texto"], c["nombre"], c["motivo"]))
+    vet = nombres_vetados(H)
+    print("nombres vetados (H4n): %s" % (", ".join("«%s»" % n for n in sorted(vet)) or "ninguno"))
+    if caidas:
+        return falla("H34 %d textos del encuadre nombran algo descartado: quita el nombre (o cámbialo por lo verificado) y repite" % len(caidas))
+    print("H34 ok: el encuadre no da por hecho nada descartado")
+    return 0
+
+
 def cmd_consolidar(a):
     trabajo = os.path.abspath(a.trabajo)
     f = revisar_encuadre(encuadre(trabajo))
@@ -1292,6 +1312,13 @@ def cmd_consolidar(a):
     if len(H["hechos"]) < HECHOS_MIN:
         return falla("H1 solo %d hechos publicables (van ≥ %d para contar una historia de 2–3 min)" % (len(H["hechos"]), HECHOS_MIN))
     prot = protagonistas(trabajo)
+    caidas = premisas_caidas(H, encuadre(trabajo))
+    if caidas:
+        for c in caidas:
+            print("FALLA H34 %s: «%s» nombra «%s», que la verificación descartó (%s)" % (c["donde"], c["texto"], c["nombre"], c["motivo"]))
+        return falla("H34 el encuadre da por hecho lo que la verificación tumbó: el editor lo re-encuadra (Workflow historia, paso "
+                     "Premisas, o desde: encuadre): quita el nombre de la espina, los hilos, los actos, los personajes, las revelaciones y las fotos clave (la pregunta puede quedar sin él: «¿de dónde sale el nombre?»); python3 scripts/historia.py premisas %s --check"
+                     % VD.rel(trabajo))
     if prot and not any(es_protagonista(r, prot) for r in H["fotos"].values()):
         return falla("H12 ninguna foto muestra al protagonista: python3 scripts/historia.py hechos %s --check imprime las candidatas "
                      "(og:image de fuentes leídas) y el comando foto --de-fuente … --protagonista" % VD.rel(trabajo))
@@ -1497,6 +1524,133 @@ def revisar_tomas(g):
             for i, e in enumerate(g.get("escenas") or [], 1) if e.get("tipo") == "toma"]
 
 
+# ---------- H34 y H4n (2026-11-16, Pinulito): lo que la verificación descartó no llega al video ----------
+# El editor encuadró «Santa Catarina Pinula» como origen del nombre; los tres verificadores lo descartaron (la única fuente
+# decía San José Pinula y no contaba), pero la premisa siguió en la espina, un hilo, un personaje y una revelación, y la voz
+# la insinuó («suena a Santa Catarina Pinula»). Los nombres propios de lo descartado que ningún hecho,
+# cita o cifra publicable respalda quedan vetados: en el encuadre (H34, al consolidar) y en el guion (H4n).
+_MAY = r"[A-ZÁÉÍÓÚÑÜ][A-Za-zÁÉÍÓÚÑÜáéíóúñü'’\.-]*"
+RE_NOMBRE_PROPIO = re.compile(r"%s(?:\s+(?:(?:de|del|la|las|los|y)\s+)*%s)+" % (_MAY, _MAY))
+ARTICULOS_INICIALES = ("el", "la", "los", "las", "un", "una", "que", "en", "su", "sus", "segun")
+
+
+def nombres_propios(texto):
+    """Los nombres propios de dos o más palabras de un texto («Santa Catarina Pinula», «Mario Roberto Méndez»), en plano y
+    sin el artículo o la palabra de inicio de oración que los antecede («El Pollo Pinulito» → «pollo pinulito»)."""
+    out = []
+    for m in RE_NOMBRE_PROPIO.finditer(str(texto or "")):
+        ws = VD._plano(m.group()).split()
+        while ws and ws[0] in ARTICULOS_INICIALES:
+            ws = ws[1:]
+        while ws and ws[-1] in ("de", "del", "la", "las", "los", "y"):
+            ws = ws[:-1]
+        if len(ws) >= 2:
+            out.append(" ".join(ws))
+    return out
+
+
+def _contiene(plano_texto, nombre):
+    return bool(re.search(r"(?<![a-z0-9])%s(?![a-z0-9])" % re.escape(nombre), plano_texto))
+
+
+def corpus_publicable(H):
+    """Todo lo que la verificación deja decir, en plano: hechos, cifras y citas publicables con sus fuentes, autores,
+    lugares y casos, más el protagonista."""
+    partes = list(H.get("protagonista") or [])
+    for k in ("hechos", "cifras", "citas"):
+        for x in H.get(k) or []:
+            partes += [str(x.get(c) or "") for c in ("texto", "concepto", "autor", "cargo", "lugar", "actores", "nota")]
+            partes += [str(f.get(c) or "") for f in x.get("fuentes") or [] for c in ("medio", "titulo")]
+    partes += [str(c.get(k) or "") for c in H.get("casos") or [] for k in ("persona", "estado_actual")]
+    return VD._plano(" ".join(partes))
+
+
+def nombres_vetados(H):
+    """{nombre en plano: motivo}: los nombres propios de los descartados por la verificación que ningún hecho, cifra o
+    cita publicable nombra. Si consolidar ya los guardó (H["vetados"], con lo reservado de /serie incluido), esos."""
+    if isinstance(H.get("vetados"), dict):
+        return H["vetados"]
+    corpus = corpus_publicable(H)
+    vet = {}
+    fuentes = [(d.get("texto") or d.get("hecho") or "", "descartado del eje %s: %s" % (d.get("eje") or "?", (d.get("motivo") or "sin motivo")[:90]))
+               for d in H.get("descartados") or []]
+    # no_afirma NO: veta una afirmación sobre alguien («que Pérez Molina…»), no su nombre
+    for texto, motivo in fuentes:
+        for n in nombres_propios(texto):
+            if not _contiene(corpus, n):
+                vet.setdefault(n, motivo)
+    return vet
+
+
+def textos_encuadre(enc):
+    """[(dónde, texto)] de lo que el encuadre le pasa como verdad al gancho, al guionista y al crítico."""
+    out = [("revelaciones[%d]" % k, r) for k, r in enumerate(enc.get("revelaciones") or [], 1)]
+    out += [("espina.%s" % k, (v or {}).get("frase")) for k, v in (enc.get("espina") or {}).items() if isinstance(v, dict)]
+    out += [("hilo %s" % (h.get("id") or k), h.get("pregunta")) for k, h in enumerate(enc.get("hilos") or [], 1)]
+    for a in enc.get("actos") or []:
+        out += [("acto %s.%s" % (a.get("n"), c), a.get(c)) for c in ("titulo", "que_cuenta", "termina_en")]
+    for p in enc.get("personajes") or []:
+        out += [("personaje «%s»" % p.get("nombre"), "%s %s" % (p.get("nombre") or "", p.get("presentacion") or ""))]
+    out += [("pregunta", enc.get("pregunta"))]
+    out += [("fotos_clave[%d]" % k, f if isinstance(f, str) else json.dumps(f, ensure_ascii=False)) for k, f in enumerate(enc.get("fotos_clave") or [], 1)]
+    return [(d, str(t)) for d, t in out if t]
+
+
+def premisas_caidas(H, enc):
+    """H34: [{donde, texto, nombre, motivo}] por cada texto del encuadre que nombra algo que la verificación descartó."""
+    vet = nombres_vetados(H)
+    out = []
+    for donde, texto in textos_encuadre(enc):
+        p = VD._plano(texto)
+        for n, motivo in vet.items():
+            if _contiene(p, n):
+                out.append({"donde": donde, "texto": texto[:160], "nombre": n, "motivo": motivo})
+    return out
+
+
+def lineas_descartados(H):
+    """«## Descartado por la verificación»: para el guionista y el crítico (H-C5), con los nombres que H4n veta."""
+    ds = H.get("descartados") or []
+    if not ds:
+        return []
+    vet = nombres_vetados(H)
+    return ["", "## Descartado por la verificación (NO se dice, ni se insinúa: «suena a», «recuerda a», «se diría que» cuentan como afirmarlo)"] + \
+        ["- %s — %s [%s]" % ((d.get("texto") or d.get("hecho") or "")[:160], (d.get("motivo") or "")[:120], d.get("eje") or "?") for d in ds] + \
+        (["- Nombres vetados en voz, pantalla, fotos y lugares (H4n): %s" % ", ".join("«%s»" % n for n in sorted(vet))] if vet else [])
+
+
+def revisar_vetados(g, H, fotos):
+    """H4n: ninguna escena nombra (en voz, pantalla, línea, titular, rótulo o cierre) ni muestra (foto cuyo lugar o
+    descripción lo nombra) algo que la verificación descartó."""
+    vet = nombres_vetados(H)
+    if not vet:
+        return []
+    f = []
+    escenas = list(enumerate(g.get("escenas") or [], 1)) + [("cierre", g.get("cierre") or {})]
+    for i, e in escenas:
+        rot = e.get("rotulo") if isinstance(e.get("rotulo"), dict) else {}
+        ids = [x for x in (e.get("foto"), (e.get("visual_datos") or {}).get("foto"), e.get("retrato")) if x]
+        # el pie de una foto de Commons u oficial describe la imagen (no la historia): su lugar en el chip no cuenta
+        pie_libre = VD._plano(" ".join("%s %s" % ((fotos.get(x) or {}).get("lugar") or "", (fotos.get(x) or {}).get("descripcion") or "")
+                                       for x in ids if (fotos.get(x) or {}).get("origen") in ("commons", "oficial")))
+        dichos = [e.get(k) for k in ("texto", "pantalla", "linea", "titular", "golpe")] + [rot.get("titulo")] + list(e.get("resumen") or [])
+        chips = [x for x in (e.get("lugar"), e.get("fecha"), rot.get("lugar")) if x]
+        p = VD._plano(" ".join(str(x) for x in dichos if x))
+        pc = VD._plano(" ".join(str(x) for x in chips))
+        for n, motivo in vet.items():
+            if _contiene(p, n) or (_contiene(pc, n) and not _contiene(pie_libre, n)):
+                f.append("H4n escena %s: nombra «%s», que la verificación descartó (%s). Insinuarlo («suena a…») también "
+                         "cuenta: quítalo de la voz y la pantalla" % (i, n, motivo))
+        for fid in ids:
+            fo = fotos.get(fid) or {}
+            pf = VD._plano("%s %s" % (fo.get("lugar") or "", fo.get("descripcion") or ""))
+            for n, motivo in vet.items():
+                if _contiene(pf, n):
+                    print("AVISO H4n escena %s: la foto %s muestra «%s», que la verificación descartó (%s): en el QA de fotos, "
+                          "mira si la imagen insinúa lo que la voz no puede decir" % (i, fid, n, motivo))
+    return f
+
+
 def estructura_historia(g, st, dur, tarjetas):
     f = [x for x in ORIGINALES["estructura"](g, st, dur, tarjetas) if not V9_de_video(x)]
     escenas = g.get("escenas") or []
@@ -1519,6 +1673,7 @@ def estructura_historia(g, st, dur, tarjetas):
             # solo cantidades ≥ 100 y no años: un 2 o un 13 coinciden con cualquier cosa
             if n in vetados and float(n) >= 100 and not re.fullmatch(r"(1[89]|20)\d\d", n):
                 print("AVISO H4 escena %d: «%s» coincide con un %s: si la atribución no basta, quítalo (m041)" % (i, m.group(), vetados[n]))
+    f += revisar_vetados(g, H, fotos)
     if len(escenas) > ESCENAS_MAX:
         f.append("H8 %d escenas: van ≤ %d (más el cierre son los 20 nodos que ElevenLabs genera de una vez)" % (len(escenas), ESCENAS_MAX))
     for i, e in enumerate(escenas, 1):
@@ -4243,7 +4398,11 @@ def cmd_digesto(a):
                "- Pregunta: %s · arco: %s" % (H.get("pregunta"), H.get("arco")),
                "- Protagonista: %s" % " / ".join(H.get("protagonista") or []),
                "- Revelaciones:"] + ["  R%d. %s" % (k, r) for k, r in enumerate(H.get("revelaciones") or [], 1)] + \
-              ["- No afirma: %s" % "; ".join(H.get("no_afirma") or []), "", "## Cronología verificada (id · fecha · estado — hecho [fuentes])"] + lineas_hechos(H) + \
+              ["- No afirma: %s" % "; ".join(H.get("no_afirma") or [])] + \
+              (["", "## Premisas que la verificación tumbó (H34: quita el nombre de donde aparezca; la pregunta puede quedar sin él)"] +
+               ["- %s: «%s» → «%s» (%s)" % (c["donde"], c["texto"], c["nombre"], c["motivo"]) for c in premisas_caidas(H, enc)]
+               if premisas_caidas(H, enc) else []) + lineas_descartados(H) + \
+              ["", "## Cronología verificada (id · fecha · estado — hecho [fuentes])"] + lineas_hechos(H) + \
               ["", "## Citas literales"] + ["- %s · %s · %s — «%s»" % (q["id"], q.get("autor"), q.get("cuando"), q.get("texto")) for q in H.get("citas") or []] + \
               (["", "## Casos"] + ["- %s: %s" % (x.get("persona"), x.get("estado_actual")) for x in H.get("casos") or []] if H.get("casos") else []) + \
               ["", "## Encuadre actual (encuadre.json)", "```json", json.dumps(enc, ensure_ascii=False, indent=1), "```"]
@@ -4304,6 +4463,7 @@ def cmd_digesto(a):
         return digesto_oyente(trabajo, H)
     rec_g = st.get("ganchos_recientes") or {}
     prot = protagonistas(trabajo)
+    vet_d = nombres_vetados(H)
     base = ["# Historia · %s (paleta %s, música %s)" % (st.get("tema"), st["paleta"], st["musica"]), "",
             "- Pregunta: %s · arco: %s" % (H.get("pregunta"), H.get("arco")),
             "- Protagonista: %s" % (" / ".join(H.get("protagonista") or encuadre(trabajo).get("protagonista") or []) or "FALTA en el encuadre")] + \
@@ -4312,7 +4472,8 @@ def cmd_digesto(a):
          "(promesa.revela: 1, 2…) y la escena del pago la cuenta con sus palabras (H14)):"] + \
         (["  R%d. %s" % (k, r) for k, r in enumerate(H.get("revelaciones") or encuadre(trabajo).get("revelaciones") or [], 1)]
          or ["  (el encuadre no trae revelaciones: H13 y H14 no corren)"]) + \
-        ["- No afirma: %s" % "; ".join(H.get("no_afirma") or []), "", "## Cronología verificada (id · fecha · estado — hecho [fuentes])"] + \
+        ["- No afirma: %s" % "; ".join(H.get("no_afirma") or [])] + lineas_descartados(H) + \
+        ["", "## Cronología verificada (id · fecha · estado — hecho [fuentes])"] + \
         lineas_hechos(H) + (["", "## Conflictos de fecha"] + ["- %s y %s" % tuple(x) for x in H["conflictos"]] if H.get("conflictos") else []) + \
         ["", "## Cifras (id · texto · valor)"] + ["- %s · %s · %s %s (%s)" % (c["id"], c.get("texto"), c["valor"], c.get("unidad", ""), c.get("anio") or "")
                                                 for c in H.get("cifras") or []] + \
@@ -4322,7 +4483,8 @@ def cmd_digesto(a):
         ["", "## Fotos verificadas (id · qué muestra · crédito · origen; PROTAGONISTA = la que puede abrir el gancho, H12)"] + \
         ["- %s · %s · %s (%s)%s%s" % (k, f.get("descripcion"), f.get("credito"), f.get("origen"),
                                       " · %s %s" % (f.get("fecha") or "", f.get("lugar") or "") if f.get("fecha") or f.get("lugar") else "",
-                                      " · PROTAGONISTA" if es_protagonista(f, prot) else "")
+                                      " · PROTAGONISTA" if es_protagonista(f, prot) else "") +
+         ("".join(" · ⚠ nombra un descartado («%s»)" % n for n in vet_d if _contiene(VD._plano("%s %s" % (f.get("lugar") or "", f.get("descripcion") or "")), n)))
          for k, f in sorted((H.get("fotos") or {}).items())] + \
         (["", "## Casos (estado a la fecha de consulta)"] + ["- %s: %s (consultado %s)%s" % (x.get("persona"), x.get("estado_actual"), x.get("fecha_consulta"),
                                                             " · sentencia firme" if x.get("sentencia_firme") else "") for x in H.get("casos") or []]
@@ -4758,6 +4920,9 @@ def main():
     q.add_argument("--aplicar", action="store_true", help="con --reclasificar: escribe los cambios y repite el check")
     q.add_argument("--eje")
     sub.add_parser("consolidar").add_argument("trabajo")
+    q = sub.add_parser("premisas", help="H34: lo que el encuadre da por hecho y la verificación descartó")
+    q.add_argument("trabajo")
+    q.add_argument("--check", action="store_true", required=True)
     q = sub.add_parser("encuadre", help="la estructura v3 del encuadre: actos, espina, hilos, personajes, periodos")
     q.add_argument("trabajo")
     q.add_argument("--check", action="store_true", required=True)
@@ -4809,7 +4974,7 @@ def main():
     if getattr(a, "trabajo", None) and a.cmd != "preparar":
         aplicar_formato(os.path.abspath(a.trabajo))
     return {"preparar": cmd_preparar, "leer": cmd_leer, "commons": cmd_commons, "foto": cmd_foto, "hechos": cmd_hechos,
-            "consolidar": cmd_consolidar, "encuadre": cmd_encuadre, "narracion": cmd_narracion, "digesto": cmd_digesto,
+            "consolidar": cmd_consolidar, "premisas": cmd_premisas, "encuadre": cmd_encuadre, "narracion": cmd_narracion, "digesto": cmd_digesto,
             "ganchos": cmd_ganchos, "cierres": cmd_cierres, "tarjetas": cmd_tarjetas, "guion": cmd_guion, "probar": cmd_probar, "aplicar": cmd_aplicar, "tiempos": cmd_tiempos,
             "fotos-contacto": cmd_fotos_contacto, "entregar": cmd_entregar, "focos": cmd_focos, "pagina": cmd_pagina}[a.cmd](a)
 

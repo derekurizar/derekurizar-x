@@ -42,6 +42,10 @@ se volvió exportador de algo, un caso de justicia desde que se descubrió hasta
 - **`musica_tema`**: la música va por el **tema**, no por el color (regla del usuario 2026-11-09): uno de `video.MUSICA_TEMAS` (`corrupcion`, `politica`, `justicia`, `crimen`, `finanzas`, `economia`, `comercio`, `agro`, `sociedad`, `salud`, `ambiente`, `movimiento`, `desastre`). Un caso de corrupción, una red criminal o la caída de un banco por manejos irregulares va con `corrupcion` (o `finanzas`, `justicia`); la marca que nació en un garaje, con `comercio`. `consolidar` elige la pista de ese tema usada hace más tiempo; `encuadre --check` falla con H8m si falta.
 - **`no_afirma`**: lo que la historia NO dice aunque tiente (una causa única, un culpable sin sentencia, una cifra
   que nadie publicó).
+- **Una corazonada no es un hecho del encuadre.** Lo que todavía no tiene fuente (de dónde sale un nombre, en qué
+  pueblo nació la marca) va en la espina, los hilos, los actos, los personajes, las revelaciones y las fotos clave solo
+  como **pregunta sin el candidato** («¿de dónde sale el nombre?»), nunca nombrándolo. Si lo nombras y la verificación lo
+  descarta, `consolidar` falla con H34 y el paso «Premisas» te devuelve el encuadre.
 - **`sensibles`**: `{justicia: true|false, personas: [señaladas en un caso, vivas]}`. Con `justicia: true`, los
   verificadores deben traer el **estado actual del caso** de cada persona señalada.
 
@@ -94,7 +98,22 @@ insumo es `python3 scripts/historia.py digesto <TRABAJO> --para editor` (el encu
 hay búsquedas. Conserva tal cual `tema`, `slug`, `protagonista`, `revelaciones`, `fotos_clave`, `ejes`, `periodos`,
 `paleta`, `sensibles` y `no_afirma`; añade `actos`, `espina`, `hilos` y `personajes` a partir de lo que la cronología
 ya sostiene (un hilo cuya respuesta no está en los hechos se paga como «nunca se supo»). Nadie vuelve a investigar:
-lo que sigue es el guion.
+lo que sigue es el guion. Excepción: lo que el digesto lista en «Premisas que la verificación tumbó» no se conserva
+(ver abajo).
+
+## Premisas caídas (H34; 2026-11-16, Pinulito)
+
+El encuadre de Pinulito decía que el nombre venía de **Santa Catarina Pinula**. Los tres verificadores lo descartaron
+(la única fuente decía San José Pinula y no estaba en la lista), pero la premisa siguió en la espina, un hilo, un acto,
+un personaje, una revelación y una foto clave, y la voz la insinuó. Tras la verificación, el Workflow corre
+`python3 scripts/historia.py premisas <TRABAJO> --check`. Si falla, tu única tarea es editar en `encuadre.json` los
+textos que lista «Premisas que la verificación tumbó» (`digesto --para editor`):
+- quita el nombre descartado, o cámbialo por lo que la cronología verificada sí dice;
+- la pregunta queda sin él («¿de dónde sale el nombre?»);
+- borra el personaje o la foto clave que solo existían por la premisa;
+- añade a `no_afirma` lo que no se pudo confirmar.
+
+No toques ejes, periodos, paleta ni protagonista. Repite `premisas --check` y `encuadre --check` hasta 0.
 
 ## Modo serie (`/serie`, `args.serie = {partes: M}` y `hasta: "consolidar"`)
 

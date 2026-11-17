@@ -222,7 +222,10 @@ el resto de la voz (quién habla, lo que sigue) va antes o después de la frase,
   `fotos/<id>.json`) va solo en la escena cuya voz nombra a esa persona y cuenta ese proceso; nunca ilustra el tamaño
   de un banco, una transferencia ni un alegato de otro: insinúa culpa por imagen. Para lo genérico, el lugar o la
   institución.
-- Nada de lo que `no_afirma` prohíbe; nada de los `huecos`.
+- Nada de lo que `no_afirma` prohíbe; nada de los `huecos`; nada de «Descartado por la verificación» del digesto.
+  **Insinuar es afirmar** (H4n, 2026-11-16, Pinulito): «suena a», «recuerda a», «se diría que», «quizá por» sobre algo
+  descartado cuentan como decirlo. Si el origen de algo no está verificado, la voz no nombra un candidato: dice que
+  no se sabe. El gate falla si la voz, la pantalla, un titular o un rótulo nombran un nombre vetado.
 - Un nombre propio con dígitos («Soy502») no va en la voz: el script no lo lee; di «la prensa», el medio por su
   nombre hablado o atribúyelo en pantalla (`fuente`).
 

@@ -1783,6 +1783,46 @@ def hoja_v(ctx, mesas):
     return "\n".join(L) + "\n"
 
 
+MV20_SIN_TEXTO = ("foto", "id", "url", "archivo", "mapa", "depto", "tipo", "retrato", "pagina", "maqueta")
+
+
+def vetados_plano(trabajo, P):
+    """MV20 (2026-11-16, Pinulito): ninguna pieza del plano escribe en pantalla un nombre que la verificación descartó
+    (historia.nombres_vetados: el pin «Santa Catarina Pinula» entró así). El pie de una foto de Commons u oficial que
+    repite lo que la foto muestra no cuenta. Solo corre si el TRABAJO tiene historia.json (/historia, /serie)."""
+    ruta = os.path.join(trabajo, "historia.json")
+    if not os.path.exists(ruta):
+        return []
+    import historia as HI   # noqa: E402  (historia importa video: aquí, no arriba)
+    H = leer(ruta)
+    vet = HI.nombres_vetados(H)
+    if not vet:
+        return []
+    fotos = H.get("fotos") or {}
+    f = []
+    for k, M in enumerate(P.get("mesas") or [], 1):
+        for j, g in enumerate(M.get("golpes") or [], 1):
+            fo = fotos.get(g.get("foto")) or {}
+            libre = VD._plano("%s %s" % (fo.get("lugar") or "", fo.get("descripcion") or "")) if fo.get("origen") in ("commons", "oficial") else ""
+
+            def textos(x):
+                if isinstance(x, str):
+                    yield x
+                elif isinstance(x, dict):
+                    for kk, v in x.items():
+                        if kk not in MV20_SIN_TEXTO:
+                            yield from textos(v)
+                elif isinstance(x, list):
+                    for v in x:
+                        yield from textos(v)
+            p = VD._plano(" ".join(textos(g)))
+            for n, motivo in vet.items():
+                if HI._contiene(p, n) and not (libre and HI._contiene(libre, n) and not HI._contiene(VD._plano(str(g.get("rotulo") or "")), n)):
+                    f.append("MV20 mesa %d golpe %d (%s): escribe «%s», que la verificación descartó (%s): quítalo de la pieza"
+                             % (k, j, g.get("tipo"), n, motivo))
+    return f
+
+
 def cmd_plano(a):
     trabajo = os.path.abspath(a.trabajo)
     ctx = contexto_v(trabajo)
@@ -1806,6 +1846,7 @@ def cmd_plano(a):
         escribir(fp, P)
     mesas, f0 = resolver_v(ctx, P)
     f, av, med = revisar_v(ctx, P, mesas, f0)
+    f += vetados_plano(trabajo, P)
     if a.hoja:
         open(os.path.join(trabajo, "plano.md"), "w", encoding="utf-8").write(hoja_v(ctx, mesas))
         print("hoja de golpes → %s" % rel(os.path.join(trabajo, "plano.md")))

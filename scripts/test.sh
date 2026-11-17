@@ -1788,6 +1788,26 @@ neg_historia "la misma fuente dos veces en voz" "H19 «según soy502» 2 veces" 
 neg_historia "una secuencia que cruza actos con el giro en medio" "H20 secuencia 1" 'g["secuencias"] = [[5, 6, 7]]'
 neg_historia "secuencias solapadas" "V9 secuencia 2: escenas repetidas" 'g["secuencias"] = [[2, 3], [3, 4]]'
 neg_historia "una secuencia con el gancho" "V9 secuencia 1: escenas entre 2 y" 'g["secuencias"] = [[1, 2]]'
+# H4n y H34 (2026-11-16, Pinulito): un nombre que la verificación descartó no llega al encuadre ni a la voz, ni insinuado
+DESC='{"texto": "La Espiga nació en San Lucas Sacatepéquez", "motivo": "ninguna fuente lo dice", "eje": "cas"}'
+vetado_voz() {
+  local S="$TMP/hvet"; rm -rf "$S"; cp -R "$HT" "$S"; rm -f "$S/locucion.json"
+  python3 -c 'import json,sys; d=sys.argv[1]; H=json.load(open(d+"/historia.json")); H["descartados"].append(json.loads(sys.argv[2])); H.pop("vetados", None); json.dump(H, open(d+"/historia.json","w"), ensure_ascii=False)
+g=json.load(open(d+"/guion.json")); g["escenas"][3]["texto"] = "Su nombre suena a San Lucas Sacatepéquez. " + g["escenas"][3]["texto"]; json.dump(g, open(d+"/guion.json","w"), ensure_ascii=False)' "$S" "$DESC"
+  python3 scripts/historia.py guion "$S" --check >"$TMP/hvet.out" 2>&1 && return 1
+  grep -q "FALLA H4n escena 4: nombra «san lucas sacatepequez»" "$TMP/hvet.out"
+}
+premisa_caida() {
+  local S="$TMP/hprem"; rm -rf "$S"; cp -R "$HT" "$S"
+  python3 -c 'import json,sys,glob; d=sys.argv[1]; v=sorted(glob.glob(d+"/verificacion_*.json"))[0]; V=json.load(open(v)); V.setdefault("descartados", []).append(json.loads(sys.argv[2])); json.dump(V, open(v,"w"), ensure_ascii=False)
+E=json.load(open(d+"/encuadre.json")); E["revelaciones"].append("La Espiga nació en San Lucas Sacatepéquez"); json.dump(E, open(d+"/encuadre.json","w"), ensure_ascii=False)' "$S" "$DESC"
+  python3 scripts/historia.py premisas "$S" --check >"$TMP/hprem.out" 2>&1 && return 1
+  grep -q "FALLA H34 revelaciones\[[0-9]*\]: «La Espiga nació en San Lucas Sacatepéquez» nombra «san lucas sacatepequez»" "$TMP/hprem.out" || return 1
+  python3 scripts/historia.py consolidar "$S" >/dev/null 2>&1 && return 1
+  python3 scripts/historia.py digesto "$S" --para guionista | grep -q "Nombres vetados.*san lucas sacatepequez"
+}
+paso "historia.py guion --check rechaza: un nombre descartado insinuado en la voz («suena a…») (H4n)" vetado_voz
+paso "historia.py premisas --check y consolidar rechazan un encuadre que da por hecho un descartado (H34) y el digesto lo lista" premisa_caida
 capitulo_compat() {
   local S="$TMP/hcap"; rm -rf "$S"; cp -R "$HT" "$S"; rm -f "$S/locucion.json"
   python3 -c 'import json,sys; d=sys.argv[1]; g=json.load(open(d+"/guion.json")); e=g["escenas"]; b=g["bisagra"]["texto"]; e[5]["texto"]=e[5]["texto"].replace(" "+b,""); e[6]["texto"]=b+" "+e[6]["texto"]
