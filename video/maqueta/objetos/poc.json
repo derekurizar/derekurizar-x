@@ -1,0 +1,47 @@
+{
+ "tipo": "poc",
+ "clase": "objeto",
+ "cuando": "el poc de Atitlán: zambullidor oscuro de pico pálido que nada junto al tul y se zambulle de cabeza; con `tamano` 3–4 se lee junto al tul",
+ "parametros": {},
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "medidas": {
+  "largo_m": 0.52,
+  "ancho_m": 0.22,
+  "alto_m": 0.3
+ },
+ "ejemplo": {
+  "objeto": "poc"
+ },
+ "nivel": "objeto",
+ "contiene": [
+  "cuerpo redondo que flota bajo, lomo más oscuro y pecho más claro",
+  "alas pequeñas plegadas y cola corta esponjada",
+  "cuello corto, cabeza redonda con coronilla y ojos",
+  "pico grueso y pálido con su marca negra",
+  "anillos de onda al zambullirse y al salir",
+  "estela en V al nadar"
+ ],
+ "animado": "nada cabeceando con cada patada y mira a los lados; cada 5–8 s se encoge, brinca y se hunde de cabeza (anillos que se abren), sigue bajo el agua ≈ 3 s (pose `bucear`: ≈ 20 s, el ritmo de la referencia) y sale con una sacudida; `flotar`: descansa con el cuello recogido; la estela crece con la velocidad",
+ "gente": false,
+ "distancia_m": [
+  2,
+  40
+ ],
+ "caja_m": [
+  0.55,
+  0.3,
+  0.24
+ ],
+ "poses": [
+  "nadar",
+  "bucear",
+  "flotar"
+ ],
+ "notas": "Va sobre el agua (actor con `puntos`, `desde`/`hacia` o `lugar` sobre un lago; el origen es la línea de flotación). Real: un macho medía 525 mm (`tamano` 1); junto al tul de `orillalago`, `tamano` 3–4. El tiempo bajo el agua de `nadar` (≈ 3 s) está abreviado para que la zambullida se lea en un plano; `bucear` usa el de la referencia (≈ 20 s). No vuela (el vuelo solo está «reportado»: no hay pose). Cuántos pocs se dibujan es ilustrativo: no cuenta una población. Sin luces de noche."
+}

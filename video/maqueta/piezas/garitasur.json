@@ -1,0 +1,177 @@
+{
+ "tipo": "garitasur",
+ "clase": "pieza",
+ "cuando": "la entrada de una ciudad del siglo XIX por su garita: puerta de madera, tranca, mulas y carretas en fila que pasan, cantón trazado en el potrero",
+ "parametros": {
+  "lugar": {
+   "tipo": "lugar",
+   "requerido": true,
+   "descripcion": "dónde está la puerta (un lugar del mundo o [lon, lat]; en un esquema, [x, y] en metros): el camino real llega de 300 m afuera y sigue 140 m hacia la ciudad; la huella es ≈ 440 × 300 m"
+  },
+  "rumbo": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    360
+   ],
+   "defecto": 0,
+   "descripcion": "hacia dónde entra el camino a la ciudad (grados; 0 = este, 90 = norte). El cantón queda adentro a la IZQUIERDA del camino y el potrero abierto a la derecha. Para ver la fila de frente desde afuera: mira el lugar «<id>.tranca», dist_m 90–220, elevación 14–25°, azimut = 90 − rumbo; desde arriba, elevación 60–80°"
+  },
+  "tamano": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0.6,
+    2
+   ],
+   "defecto": 1,
+   "descripcion": "escala de todo (1 = medidas reales: puerta de ≈ 9 m de vano, carretas de ≈ 3.2 m; la gente va ×1.25 para leerse de lejos)"
+  },
+  "carretas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    6
+   ],
+   "defecto": 3,
+   "descripcion": "carretas de dos ruedas con carga (bultos y sacos, sin marca) tiradas por una pareja de animales de tiro genéricos; esperan en la fila y pasan una por vez"
+  },
+  "mulas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    8
+   ],
+   "defecto": 4,
+   "descripcion": "mulas de carga con su aparejo y dos bultos, en recuas de dos (una detrás de otra), alternadas con las carretas en la fila"
+  },
+  "arrieros": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    8
+   ],
+   "defecto": 4,
+   "descripcion": "personas sin rostro que caminan junto a las carretas y las recuas (de noche, sentadas junto a una fogata a la orilla del camino). Sin vestimenta de un pueblo"
+  },
+  "guardas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    3
+   ],
+   "defecto": 2,
+   "descripcion": "1 = quien atiende la tranca; 2 = y quien espera junto a la ramada; 3 = y quien camina adentro de la puerta. Sin uniforme ni armas: guardas genéricos, no soldados"
+  },
+  "canton": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0,
+   "descripcion": "ILUSTRATIVO: 0 = las manzanas solo trazadas sobre el potrero (faja rastrillada de 3 m, línea de cal de 1.1 m, estacas con punta encalada y cordel: se leen a 120–160 m); hasta 1 = la fracción de los solares con casas genéricas de un piso con techo de teja (no es la forma verificada de ningún cantón)"
+  },
+  "vecinos": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    9
+   ],
+   "defecto": 0,
+   "descripcion": "ILUSTRATIVO: gente genérica del cantón trabajando dentro de las manzanas trazadas, de día (de noche no hay nadie): uno de cada tres rastrilla la faja del trazo de ida y vuelta, otro toma sacos de cal de una tarima y el otro ata el cordel a una estaca. Úsalo con canton bajo y «resaltar» sobre la pieza"
+  },
+  "tranca_s": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    5,
+    20
+   ],
+   "defecto": 8,
+   "descripcion": "cada cuántos segundos pasa uno por la tranca: sube, pasa la carreta o la recua del frente, baja y la fila avanza (de día; de noche la puerta está cerrada y nadie pasa)"
+  },
+  "tren": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": false,
+   "descripcion": "un ramal de vía férrea genérico con su estación de madera, adentro a la derecha. Ojo con la época: no lo combines con la garita en funciones sin matizarlo en la voz"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "el azar fijo: el tono de cada animal y de cada carga, las matas del potrero, los árboles y qué solares tienen casa"
+  }
+ },
+ "escalas": [
+  "ciudad",
+  "esquema"
+ ],
+ "motores": [
+  "three"
+ ],
+ "usa": [
+  "persona"
+ ],
+ "ejemplo": {
+  "id": "garita",
+  "tipo": "garitasur",
+  "lugar": "el-trebol",
+  "rumbo": 80,
+  "tamano": 1,
+  "carretas": 3,
+  "mulas": 4,
+  "arrieros": 4,
+  "guardas": 2,
+  "canton": 0,
+  "tranca_s": 8,
+  "vecinos": 3
+ },
+ "nivel": "escenario",
+ "contiene": [
+  "camino real de tierra con roderas y dos ramales que convergen afuera (tres caminos, sin rótulos)",
+  "puerta de madera de dos hojas entre dos postes, sin muro ni cerca (abierta de día, cerrada de noche)",
+  "tranca con su contrapeso que sube y baja",
+  "ramada genérica con banca, mesa y farol",
+  "carretas de dos ruedas con carga, tiradas por animales de tiro genéricos",
+  "recuas de mulas con aparejo y bultos",
+  "arrieros y guardas sin rostro",
+  "potrero con matas de pasto, árboles y una siembra en surcos",
+  "manzanas trazadas: faja rastrillada, línea de cal, estacas encaladas, cordel y montones de cal (y, con canton > 0, casas genéricas de teja)",
+  "fogata de los arrieros de noche",
+  "con tren: vía, andén y estación de madera",
+  "con vecinos: gente que rastrilla, acarrea cal y ata el cordel dentro del cantón"
+ ],
+ "animado": "la tranca sube, pasa la carreta o la recua del frente (patas que caminan, ruedas que giran), baja y la fila avanza; los arrieros caminan a su lado, un guarda camina adentro, el ganado del potrero pasta; de noche la puerta cerrada, la fogata y el farol titilan; con vecinos, en el cantón uno rastrilla de ida y vuelta, otro toma y deja sacos de cal, otro ata el cordel",
+ "gente": true,
+ "poses": [
+  "atender",
+  "caminar",
+  "clasificar",
+  "de_pie",
+  "descargar",
+  "rastrillar",
+  "sentado"
+ ],
+ "distancia_m": [
+  40,
+  400
+ ],
+ "caja_m": [
+  440,
+  300,
+  6
+ ]
+}

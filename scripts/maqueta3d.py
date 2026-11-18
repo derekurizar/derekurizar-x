@@ -2084,17 +2084,21 @@ def expandir_objetos(entradas):
                     d["valores"] = list(objetos)
 
 
-def generar_catalogo():
-    """Las fichas de video/maqueta/<clase>/ → (catálogo, fallas). Cada módulo con su ficha y cada ficha con su módulo."""
+def generar_catalogo(a_medias=None):
+    """Las fichas de video/maqueta/<clase>/ → (catálogo, fallas). Cada módulo con su ficha y cada ficha con su módulo.
+    a_medias (una lista): lo que está A MEDIO HACER (un módulo sin ficha, una ficha sin módulo, unas reglas sin ninguno de
+    los dos: lo que deja otra sesión que construye en paralelo) va ahí y no a las fallas; nunca está en el catálogo, así
+    que dejarlo fuera no quita nada (m305). Una ficha con errores sigue fallando."""
     entradas, f, vistos = [], [], {}
+    pend = a_medias if isinstance(a_medias, list) else f
     for clase, carpeta in CLASES.items():
         d = os.path.join(MOTOR, carpeta)
         if not os.path.isdir(d):
             continue
         nombres = sorted(os.listdir(d))
         js, fj = {n[:-3] for n in nombres if n.endswith(".js")}, {n[:-5] for n in nombres if n.endswith(".json")}
-        f += ["%s/%s.js no tiene ficha (%s.json)" % (carpeta, t, t) for t in sorted(js - fj)]
-        f += ["%s/%s.json no tiene módulo (%s.js)" % (carpeta, t, t) for t in sorted(fj - js)]
+        pend += ["%s/%s.js no tiene ficha (%s.json)" % (carpeta, t, t) for t in sorted(js - fj)]
+        pend += ["%s/%s.json no tiene módulo (%s.js)" % (carpeta, t, t) for t in sorted(fj - js)]
         for t in sorted(js & fj):
             try:
                 fi = cargar_json(os.path.join(d, t + ".json"))
@@ -2116,7 +2120,7 @@ def generar_catalogo():
     for e in entradas:
         f += ["%s: `usa` «%s», que no está en el catálogo" % (e["modulo"], u) for u in e.get("usa") or [] if u not in vistos]
     sueltas = sorted(n[:-3] for n in os.listdir(REGLAS_DIR) if n.endswith(".py") and not n.startswith("_") and n[:-3] not in vistos) if os.path.isdir(REGLAS_DIR) else []
-    f += ["scripts/maqueta_tipos/%s.py no tiene módulo ni ficha en video/maqueta/" % t for t in sueltas]
+    pend += ["scripts/maqueta_tipos/%s.py no tiene módulo ni ficha en video/maqueta/" % t for t in sueltas]
     orden = list(CLASES)
     entradas.sort(key=lambda e: (orden.index(e["clase"]), e["tipo"]))
     return {"version": 1, "nota": "Lo escribe SOLO `python3 scripts/maqueta3d.py catalogo --registrar` desde las fichas video/maqueta/<clase>/<tipo>.json "
@@ -2201,7 +2205,10 @@ def lineas_catalogo(para="sesion", escala=None, motor=None):
 
 def cmd_catalogo(a):
     if a.registrar or a.check:
-        cat, fallas = generar_catalogo()
+        medias = [] if getattr(a, "ignorar_a_medias", False) else None
+        cat, fallas = generar_catalogo(medias)
+        for x in medias or []:
+            print("  AVISO catálogo (a medio hacer, fuera del catálogo) %s" % x)
         for x in fallas:
             print("  FALLA catálogo %s" % x)
         if fallas:
@@ -2385,6 +2392,8 @@ def main():
     p.add_argument("--escala", choices=list(ESCALAS), help="solo lo de esa escala"); p.add_argument("--motor", choices=list(MOTORES), help="solo lo que dibuja ese motor")
     p.add_argument("--registrar", action="store_true", help="revisa las fichas y escribe design/sets3d/vocabulario.json (el único escritor)")
     p.add_argument("--check", action="store_true", help="falla si vocabulario.json no está al día con las fichas")
+    p.add_argument("--ignorar-a-medias", dest="ignorar_a_medias", action="store_true",
+                   help="con --registrar: un módulo sin ficha, una ficha sin módulo o unas reglas sueltas (otra sesión construyendo) avisan y quedan fuera, en vez de fallar")
     sub.add_parser("estilos", help="el catálogo de estilos")
     sub.add_parser("sets", help="los sets de geodatos")
     p = sub.add_parser("prueba", help="check + hoja + render del fixture (y un cuadro del motor blender, si Blender está instalado)")

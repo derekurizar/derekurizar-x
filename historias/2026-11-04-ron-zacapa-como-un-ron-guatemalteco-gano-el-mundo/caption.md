@@ -11,7 +11,7 @@ Ron Zacapa nació en 1976 para el centenario de un pueblo de oriente y madura a 
 
 ## Instagram Reels (y feed con video_4x5.mp4)
 ```
-Ron Zacapa: de un ron para la feria de un pueblo de Guatemala a las barras del mundo, y por qué madura sobre las nubes de Xela. #Guatemala #RonZacapa
+Ron Zacapa: de un ron para la feria de un pueblo de Guatemala a las barras del mundo, y por qué madura sobre las nubes de Xela. #Guatemala #RonZacapa #historia
 ```
 
 ## Facebook Reels (y feed con video_4x5.mp4)
@@ -23,7 +23,7 @@ Ron Zacapa: de un ron para la feria de un pueblo de Guatemala a las barras del m
 Título (primera línea, ≤ 100 caracteres) y descripción.
 ```
 Ron Zacapa: cómo un ron de Guatemala llegó al mundo #Shorts
-Nació en 1976 para una feria y madura a 2,300 metros en Xela.
+Nació en 1976 para una feria y madura a 2,300 metros en Xela. #Guatemala
 ```
 
 Sígueme: TikTok @derekurizargt · Instagram @derekurizargt · Facebook Derek Urizar · YouTube @derekurizar · X @DerekUrizar

@@ -1,0 +1,162 @@
+{
+ "tipo": "palacionacional",
+ "clase": "pieza",
+ "cuando": "el Palacio Nacional simplificado (volumen verde de 127 × 70 × 30 m junto a su plaza) que se vuelve cristal: «ponlo sobre el Palacio»",
+ "parametros": {
+  "lugar": {
+   "tipo": "lugar",
+   "requerido": true,
+   "descripcion": "el centro de la planta del palacio (un lugar del mundo, o [x, y] en metros en un esquema): la caja va 35 m hacia el frente y hacia atrás y 63.5 m a cada lado; con entorno, la plaza llega a 87 m hacia el frente"
+  },
+  "rumbo": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    360
+   ],
+   "defecto": 0,
+   "descripcion": "hacia dónde mira la fachada que da a la plaza, en grados (0 = este, 90 = norte); el lado real no está verificado: es una decisión de puesta en escena. Para verla de frente desde la plaza: azimut ≈ rumbo + 90 (de tres cuartos, rumbo + 50…60 o + 120…130), elevación 10–25°, dist_m 160–320 mirando al centro; desde arriba, elevación 50–70°"
+  },
+  "tamano": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0.8,
+    1.2
+   ],
+   "defecto": 1,
+   "descripcion": "escala de todo (1 = medidas del brief: 127 × 70 × 30 m; la gente 1.75 m)"
+  },
+  "cristal": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0,
+   "descripcion": "cuánto se vuelve cristal: 0 macizo, 1 solo la caja (las caras del palacio casi invisibles; quedan un volumen liso translúcido de 127 × 70 × 30 m con el techo un poco más denso, sus aristas en tinta con un halo de contraste —la de arriba, a 30 m, la más gruesa— y las líneas de los pisos a 10, 18.5 y 27.4 m)"
+  },
+  "cristal_desde": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    600
+   ],
+   "defecto": 0,
+   "descripcion": "segundo en que empieza a volverse cristal (0 = ya está en `cristal` desde el inicio): ponlo en la frase que dice qué lo llena"
+  },
+  "cristal_dur": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0.2,
+    6
+   ],
+   "defecto": 1.2,
+   "descripcion": "cuántos segundos tarda en pasar de macizo a `cristal`"
+  },
+  "aristas": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 1,
+   "descripcion": "cuánto pesa la caja en cristal: el grueso y la fuerza de las aristas (la de arriba siempre la más gruesa) y la densidad del volumen translúcido; 0 = aristas finas y sin volumen, 1 = la caja bien marcada para medir lo que se pone adentro contra los 30 m"
+  },
+  "personas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    12
+   ],
+   "defecto": 6,
+   "descripcion": "gente genérica: tres de cada cuatro caminan por la acera de enfrente (a 1.05–1.45 m/s, en los dos sentidos) y el resto está de pie en la plaza; sin entorno, por la acera del frente; camisas oscuras sobre losetas claras y claras sobre oscuras, para que se distingan a tamaño de teléfono"
+  },
+  "gente_tamano": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    1,
+    2
+   ],
+   "defecto": 1,
+   "descripcion": "escala de la gente (1 = 1.75 m reales); con la cámara lejos (≥ 300 m) súbela a 1.3–1.6 para que se distinga en el teléfono (exagera la gente: la maqueta no queda a escala en ella)"
+  },
+  "entorno": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "dibuja al frente la calle de adoquín, la acera de enfrente y una franja de plaza de 30 m con bancas, farolas y árboles, y calles de asfalto a los lados y atrás; false = solo el palacio con su acera (en una ciudad cuyas calles ya dibuja otra pieza)"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "el azar fijo: qué ventanas se encienden de noche, las camisas y los recorridos de la gente, el tono de las losas y de los árboles"
+  }
+ },
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "usa": [
+  "persona"
+ ],
+ "ejemplo": {
+  "id": "palacio",
+  "tipo": "palacionacional",
+  "lugar": [
+   0,
+   0
+  ],
+  "rumbo": 0,
+  "tamano": 1,
+  "cristal": 1,
+  "cristal_desde": 1.8,
+  "cristal_dur": 1.2,
+  "aristas": 1,
+  "personas": 8,
+  "gente_tamano": 1.3
+ },
+ "nivel": "escenario",
+ "contiene": [
+  "el volumen del palacio de 127 × 70 × 30 m en color verde (el tono es del estilo): cuerpo central y cuatro pabellones de esquina apenas salientes, sin torre ni reloj",
+  "zócalo, pilastras con basa y capitel, cordones entre los tres pisos, friso de rombos y dentículos bajo la cornisa volada",
+  "ventanas en arco con clave en la planta baja, con balcón de barandal y frontón recto en el primer piso y con marco y repisa en el segundo",
+  "el portal del frente: tres arcos altos con columnas pareadas, entablamento y gradas",
+  "la terraza con su balaustrada y los áticos de los pabellones y del cuerpo central",
+  "el modo cristal: caras translúcidas y la caja de 127 × 70 × 30 m que queda para medir: volumen liso translúcido con techo más denso, aristas en tinta con halo de contraste (la de arriba la más gruesa) y las líneas de los pisos (y el piso del palacio a la vista)",
+  "la acera de losetas con su bordillo alrededor",
+  "al frente, una calle de adoquín, la acera de enfrente y una franja de plaza con bancas, farolas, basureros y árboles en su alcorque",
+  "calles de asfalto con su línea a los lados y atrás",
+  "gente que camina por la acera de enfrente y alguna de pie en la plaza"
+ ],
+ "animado": "la gente camina por la acera de enfrente en los dos sentidos (posición = función de t); el palacio se vuelve cristal entre `cristal_desde` y `cristal_desde + cristal_dur` (la caja de 30 m aparece mientras las caras se van); «resaltar» lo tiñe y enciende sus aristas en el acento; de noche, ventanas encendidas y farolas con su charco de luz",
+ "gente": true,
+ "distancia_m": [
+  120,
+  450
+ ],
+ "caja_m": [
+  127,
+  70,
+  30
+ ],
+ "poses": [
+  "caminar",
+  "de_pie"
+ ]
+}

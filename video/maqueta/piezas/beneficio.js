@@ -266,10 +266,10 @@
         gAg.setAttribute("aF", new THREE.BufferAttribute(new Float32Array(ag.f), 3));
         gAg.setIndex(ag.idx);
         const shAgua = (col) => new THREE.ShaderMaterial({
-          uniforms: { ...uComun(), uT: { value: 0 }, uBrillo: { value: 1 }, uLuz: { value: sombra(0, 1, 0) }, cA: { value: col.clone() }, cB: { value: cLuz.clone() }, cG: { value: cPerg.clone() } },
+          uniforms: { ...uComun(), uBrillo: { value: 1 }, uLuz: { value: sombra(0, 1, 0) }, cA: { value: col.clone() }, cB: { value: cLuz.clone() }, cG: { value: cPerg.clone() } },
           side: THREE.DoubleSide,
           vertexShader: "attribute vec3 aF; varying vec3 vPos, vF; void main(){ vF = aF; vPos = (modelMatrix * vec4(position, 1.0)).xyz; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }",
-          fragmentShader: GLSL_COMUN + "uniform float uT, uBrillo, uLuz; uniform vec3 cA, cB, cG; varying vec3 vPos, vF;" +
+          fragmentShader: GLSL_COMUN + "uniform float uBrillo, uLuz; uniform vec3 cA, cB, cG; varying vec3 vPos, vF;" +
             "void main(){ float s = vF.x - uT * vF.z, w = vF.y, corre = step(0.5, vF.z);" +
             " float ola = 0.5 + 0.5 * sin(s * 3.1 + w * 4.0) * sin(s * 1.3 - w * 2.6 + 1.7);" +
             " vec3 c = cA * uLuz * (0.84 + 0.26 * ola);" +
@@ -383,7 +383,6 @@
     en(t, lista, ctx) {
       for (const s of lista) {
         const b = ctx.cuadro.brillo[s.id], k = b ? ctx.clamp((b - 1) / 0.9, 0, 1.2) : 0;
-        s.matCanal.uniforms.uT.value = t; s.matPila.uniforms.uT.value = t;
         s.matCanal.uniforms.uBrillo.value = 1 + 0.3 * k; s.matPila.uniforms.uBrillo.value = 1 + 0.2 * k;
         s.matPerg.uniforms.uBrillo.value = 1 + 0.25 * k;
         s.matFruta.uniforms.uBrillo.value = 1 + 0.5 * k; s.matBaya.uniforms.uBrillo.value = 1 + 0.6 * k;

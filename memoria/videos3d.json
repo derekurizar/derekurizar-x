@@ -135,6 +135,367 @@
       "creditos_voz": 809.92,
       "desde": null,
       "estado": "listo"
+    },
+    {
+      "id": "video3d-cuatro-capitales",
+      "slug": "cuatro-capitales",
+      "tema": "¿Por qué Guatemala tuvo cuatro capitales?",
+      "fecha": "2026-11-16",
+      "ruta": "videos3d/2026-11-16-cuatro-capitales",
+      "estilo": "color",
+      "motor": "three",
+      "set": "guatemala",
+      "mundos": [
+        "esquema:campo",
+        "pais:guatemala"
+      ],
+      "estilos": [
+        "color",
+        "dia"
+      ],
+      "por_mundo": {
+        "valle": {
+          "estilo": "color",
+          "hora": "dia"
+        },
+        "ladera": {
+          "estilo": "dia",
+          "hora": "noche"
+        },
+        "panchoy": {
+          "estilo": "dia",
+          "hora": "dia"
+        },
+        "cabildo": {
+          "estilo": "dia",
+          "hora": "dia"
+        }
+      },
+      "idea_visual": "Un volcán que entierra a una capital sin hacer erupción, y una luz que se muda por el relieve hasta quedar lejos de los tres conos: la misma ciudad, empujada por una guerra, un volcán y la tierra.",
+      "gancho": {
+        "id": "g2",
+        "familia": "ruptura",
+        "elegido_por": "usuario",
+        "texto": "Un volcán de Guatemala sepultó a su capital sin hacer erupción."
+      },
+      "cierre": {
+        "texto": "Desde entonces no se ha vuelto a mover: la ciudad que el volcán enterró vive hoy lejos de él.",
+        "final": "La ciudad que el volcán enterró vive hoy lejos de él."
+      },
+      "paleta": "obsidiana",
+      "musica": "obsidiana-2",
+      "duracion_s": 103.6,
+      "creditos_voz": 1531.85,
+      "desde": null,
+      "estado": "listo"
+    },
+    {
+      "id": "video3d-volcanes-en-fila",
+      "slug": "volcanes-en-fila",
+      "tema": "¿Por qué casi todos los volcanes de Guatemala están en una sola fila? La placa de Cocos se hunde bajo la del Caribe y el magma sube a la misma distancia de la fosa: el arco volcánico",
+      "fecha": "2026-11-16",
+      "ruta": "videos3d/2026-11-16-volcanes-en-fila",
+      "estilo": "noche",
+      "motor": "three",
+      "set": "guatemala",
+      "mundos": [
+        "esquema:campo",
+        "pais:guatemala"
+      ],
+      "estilos": [
+        "noche"
+      ],
+      "por_mundo": {
+        "fila": {
+          "estilo": "noche",
+          "hora": "dia"
+        },
+        "corte": {
+          "estilo": "noche",
+          "hora": "dia"
+        },
+        "oriente": {
+          "estilo": "noche",
+          "hora": "dia"
+        }
+      },
+      "idea_visual": "La fila de volcanes es lo único encendido: trece cráteres que se prenden uno tras otro de Tacaná a Chingo sobre el país a oscuras, paralelos a una fosa mar adentro; un corte de la Tierra muestra la placa que baja y el magma que sube justo debajo de esa fila.",
+      "gancho": {
+        "id": "g1",
+        "familia": "caida",
+        "elegido_por": "usuario",
+        "texto": "Casi todos los volcanes de Guatemala están en una sola fila."
+      },
+      "cierre": {
+        "texto": "Esa fila es la huella, en la superficie, de una placa que se hunde bajo Guatemala.",
+        "final": "La fila es la huella de una placa que se hunde."
+      },
+      "paleta": "obsidiana",
+      "musica": "obsidiana-2",
+      "duracion_s": 83.6,
+      "creditos_voz": 1164,
+      "desde": null,
+      "estado": "listo"
+    },
+    {
+      "id": "video3d-atitlan-antes-de-los-hoteles",
+      "slug": "atitlan-antes-de-los-hoteles",
+      "tema": "El lago de Atitlán antes de los hoteles: cómo cambiaron sus orillas con el turismo, los chalets y los hoteles",
+      "fecha": "2026-11-17",
+      "ruta": "videos3d/2026-11-17-atitlan-antes-de-los-hoteles",
+      "estilo": "color",
+      "motor": "three",
+      "set": "guatemala",
+      "mundos": [
+        "esquema:campo",
+        "pais:guatemala"
+      ],
+      "estilos": [
+        "color",
+        "dia"
+      ],
+      "por_mundo": {
+        "lago": {
+          "estilo": "color",
+          "hora": "dia"
+        },
+        "costa-de-oro": {
+          "estilo": "dia",
+          "hora": "dia"
+        },
+        "tular": {
+          "estilo": "dia",
+          "hora": "amanecer"
+        },
+        "orilla-hoy": {
+          "estilo": "dia",
+          "hora": "dia"
+        },
+        "drenaje-hoy": {
+          "estilo": "dia",
+          "hora": "dia"
+        }
+      },
+      "idea_visual": "El lago de Atitlán entre sus volcanes, y de cerca su orilla: el tul verde donde nadaba el poc se seca y se vacía mientras la playa se llena de casas con los años corriendo en pantalla.",
+      "gancho": {
+        "id": "g1",
+        "familia": "revelacion",
+        "elegido_por": "usuario",
+        "texto": "La NASA fotografió el lago de Atitlán, en Guatemala, verde de cianobacterias."
+      },
+      "cierre": {
+        "texto": "El tul sigue a trozos en la orilla. El pato que vivía en él, no.",
+        "final": "El tul sigue a trozos. El poc, no."
+      },
+      "paleta": "jade",
+      "musica": "jade-1",
+      "duracion_s": 105.7,
+      "creditos_voz": 1521,
+      "desde": null,
+      "estado": "listo"
+    },
+    {
+      "id": "video3d-avenida-reforma",
+      "slug": "avenida-reforma",
+      "tema": "La Avenida La Reforma de la Ciudad de Guatemala, antes y después: el bulevar de 1890 en las afueras y la avenida de hoy",
+      "fecha": "2026-11-17",
+      "ruta": "videos3d/2026-11-17-avenida-reforma",
+      "estilo": "dia",
+      "motor": "three",
+      "set": "capital",
+      "mundos": [
+        "ciudad:capital"
+      ],
+      "estilos": [
+        "contorno",
+        "dia"
+      ],
+      "por_mundo": {
+        "bulevar": {
+          "estilo": "contorno",
+          "hora": "dia"
+        },
+        "avenida": {
+          "estilo": "dia",
+          "hora": "dia"
+        }
+      },
+      "idea_visual": "El mismo trazo de la Reforma en dos estados: el bulevar de carruajes, estatuas y palacio al sur de la ciudad de 1890, que se funde en la avenida de hoy entre torres, con su arriate de jacarandas y el Obelisco donde estuvo el palacio.",
+      "gancho": {
+        "id": "g5",
+        "familia": "recorrido",
+        "elegido_por": "usuario",
+        "texto": "Por la Reforma de Guatemala no pasaban carros: pasaban carruajes."
+      },
+      "cierre": {
+        "texto": "La calle de los carruajes vuelve a ser de quien camina.",
+        "final": "La calle de los carruajes vuelve a ser de quien camina."
+      },
+      "paleta": "jacaranda",
+      "musica": "atitlan-1",
+      "duracion_s": 64.5,
+      "creditos_voz": 927.9,
+      "desde": null,
+      "estado": "listo"
+    },
+    {
+      "id": "video3d-biosfera-maya-satelite",
+      "slug": "biosfera-maya-satelite",
+      "tema": "La Biósfera Maya desde el satélite, año por año: cuánto bosque de la reserva se perdió de 2001 a hoy y dónde",
+      "fecha": "2026-11-17",
+      "ruta": "videos3d/2026-11-17-biosfera-maya-satelite",
+      "estilo": "noche",
+      "motor": "three",
+      "set": "guatemala",
+      "mundos": [
+        "esquema:campo",
+        "pais:guatemala"
+      ],
+      "estilos": [
+        "dia",
+        "noche"
+      ],
+      "por_mundo": {
+        "peten": {
+          "estilo": "noche",
+          "hora": "dia"
+        },
+        "anios": {
+          "estilo": "noche",
+          "hora": "dia"
+        },
+        "pixel": {
+          "estilo": "dia",
+          "hora": "dia"
+        }
+      },
+      "idea_visual": "La Reserva de la Biosfera Maya es un tapiz de cuadros verdes encendidos sobre el norte de Guatemala a oscuras y, mientras el año corre en pantalla, sus cuadros se apagan, más rápido en el oeste que en el este.",
+      "gancho": {
+        "id": "g2",
+        "familia": "contraste",
+        "elegido_por": "usuario",
+        "texto": "Mira cómo se apaga, año por año, el área protegida más grande de Guatemala."
+      },
+      "cierre": {
+        "texto": "Lo que sigue encendido es el bosque que todavía queda, y el oeste es por donde más rápido se apaga.",
+        "final": "Lo encendido es lo que todavía queda."
+      },
+      "paleta": "jade",
+      "musica": "jade-1",
+      "duracion_s": 88.6,
+      "creditos_voz": 1294,
+      "desde": "sesiones/video3d-frontera-recta",
+      "estado": "listo"
+    },
+    {
+      "id": "video3d-fuego-antes-despues-2018",
+      "slug": "fuego-antes-despues-2018",
+      "tema": "El volcán de Fuego antes y después de 2018: cómo el flujo piroclástico del 3 de junio cambió el lugar (barranca Las Lajas, San Miguel Los Lotes, El Rodeo, la RN-14) y qué hay ahí hoy",
+      "fecha": "2026-11-17",
+      "ruta": "videos3d/2026-11-17-fuego-antes-despues-2018",
+      "estilo": "noche",
+      "motor": "three",
+      "set": "guatemala",
+      "mundos": [
+        "esquema:campo",
+        "pais:guatemala"
+      ],
+      "estilos": [
+        "color",
+        "dia",
+        "noche"
+      ],
+      "por_mundo": {
+        "lajas2018": {
+          "estilo": "color",
+          "hora": "dia"
+        },
+        "lotes": {
+          "estilo": "dia",
+          "hora": "dia"
+        },
+        "lajas2026": {
+          "estilo": "noche",
+          "hora": "dia"
+        }
+      },
+      "idea_visual": "Una sola barranca encendida: Las Lajas baja del cráter del Fuego hasta una aldea que en 2018 quedó enterrada y apagada, y en 2026 la misma barranca vuelve a encenderse con la aldea ya vacía al pie.",
+      "gancho": {
+        "id": "g2",
+        "familia": "recorrido",
+        "elegido_por": "usuario",
+        "texto": "Así bajó el volcán de Fuego por esta barranca de Guatemala."
+      },
+      "cierre": {
+        "id": "c5",
+        "tipo": "pregunta",
+        "forma": "porque",
+        "elegido_por": "usuario",
+        "recomendado": "c2",
+        "texto": "Los Lotes quedó inhabitable y Las Lajas sigue activa. ¿Por qué crees que tanta gente sigue viviendo al pie del Fuego?",
+        "final": "¿Por qué crees que tanta gente sigue viviendo al pie del Fuego?"
+      },
+      "paleta": "obsidiana",
+      "musica": "obsidiana-1",
+      "duracion_s": 67.2,
+      "creditos_voz": 969,
+      "desde": null,
+      "estado": "listo"
+    },
+    {
+      "id": "video3d-plastico-amatitlan",
+      "slug": "plastico-amatitlan",
+      "tema": "El plástico que llega al lago de Amatitlán: la cifra hecha objeto",
+      "fecha": "2026-11-17",
+      "ruta": "videos3d/2026-11-17-plastico-amatitlan",
+      "estilo": "color",
+      "motor": "three",
+      "set": "capital",
+      "mundos": [
+        "ciudad:capital",
+        "esquema:campo",
+        "esquema:carretera",
+        "pais:guatemala"
+      ],
+      "estilos": [
+        "color",
+        "dia"
+      ],
+      "por_mundo": {
+        "palacio": {
+          "estilo": "color",
+          "hora": "dia"
+        },
+        "volteos": {
+          "estilo": "dia",
+          "hora": "dia"
+        },
+        "cuenca": {
+          "estilo": "color",
+          "hora": "dia"
+        },
+        "lago": {
+          "estilo": "dia",
+          "hora": "dia"
+        }
+      },
+      "idea_visual": "Un año de basura del lago de Amatitlán hecho objeto: una pila que crece, capa por capa con la voz, dentro de la caja de cristal del Palacio Nacional hasta 5.06 m, y después el río que la trae y el pez que la lleva dentro.",
+      "gancho": {
+        "id": "g1",
+        "familia": "escala",
+        "elegido_por": "usuario",
+        "texto": "Pon sobre el Palacio Nacional un año de basura del lago de Amatitlán, en Guatemala."
+      },
+      "cierre": {
+        "texto": "Y cada año empieza a caer otra pila igual.",
+        "final": "Cada año, otra pila igual."
+      },
+      "paleta": "jade",
+      "musica": "jade-1",
+      "duracion_s": 62.3,
+      "creditos_voz": 890,
+      "desde": null,
+      "estado": "listo"
     }
   ]
 }

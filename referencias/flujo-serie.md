@@ -129,7 +129,7 @@ lo que pasó, y con impacto (termina en lo que más pesa).
   check (P6, 2026-11-10: la pregunta aparece cuando el dato ya se ve).
 - **SE1 `partes[].en_juego`**: qué se puede perder en cada parte y a quién alcanza; no se repite. Que suba de parte en
   parte lo juzga el crítico en «modo serie completa».
-- **SE19**: una misma foto sale en ≤ 2 partes (en Bancafé, la del edificio de la SIB salió 7 veces).
+- **SE19**: una misma foto sale en ≤ 2 partes (en Bancafé, la del edificio de la SIB salió 7 veces). La foto del protagonista en el **gancho** no cuenta (H12 la pide en cada parte; caso Rosenberg, 2026-11-17); en el cuerpo, sí.
 - **SE5**: la paleta es la de la serie; la música es de su **familia** (las pistas de `musica_tema`), una distinta por
   parte (`serie.py parte` la asigna). Sin tema o con una sola pista, la de la serie.
 - Costos reales del modo caso (Bancafé, 5 partes): 141–169 s y ≈ 2,100–2,450 créditos de voz por parte.

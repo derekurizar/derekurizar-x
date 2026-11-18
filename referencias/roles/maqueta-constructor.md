@@ -38,7 +38,9 @@ Tres archivos con el mismo nombre (`<tipo>`: minúsculas, sin tildes ni guiones;
   (caminos que un actor o un flujo siguen), `_lugares` ({id: {x, y, nombre, peso}} en unidades de la escena: sus
   estaciones con nombre, en esquema y en ciudad) y `_alturas` (su relieve: `perfil`, `plano` o `malla` de
   `maqueta_tipos/_relieve.py`; si el piso de tu pieza no es el del mundo —una rampa, una tarima, una ladera—, publícalo
-  y usa `ctx.suelo` para tu base: así la gente y los vehículos de otros quedan encima). Nunca escribas en `X.propios`.
+  y usa `ctx.suelo` para tu base: así la gente y los vehículos de otros quedan encima). Una pieza sin `x`/`y` ni
+  `poligono` (armada sobre un trazo) publica también `_cosas` (`maqueta_escena.cosas_pieza`/`agrupar`: sus partes con volumen),
+  o M3D15–M3D16 la miden en 0 %. Nunca escribas en `X.propios`.
 - **La cámara**: `azimut: 0` deja el ojo al sur mirando al norte y positivo lo gira hacia el este (el ojo queda en
   `mira + d·(sen az, −cos az)` en este y norte); para ver de frente una pieza que mira hacia su `rumbo` r, `azimut = 90 − r`.
 

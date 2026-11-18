@@ -1,7 +1,7 @@
 export const meta = {
   name: 'video3d',
   description: 'Guion de /video-3d: director (dirección visual por frase con el catálogo de la maqueta) → constructor por cada brief → ganchos 3D → selección → el usuario elige → guion y storyboard → crítico en modo 3D (≤ 2 pasadas) → 5 cierres. 0 créditos.',
-  whenToUse: 'Tras `video3d.py preparar` (y la investigación). Se detiene con elegir_estilo (confianza baja; reanuda con args.estilo) y con elegir_gancho (reanuda con args.gancho); al final devuelve 5 cierres. args: {trabajo, tema, angulo, estilo, gancho, auto, fixture, sin_referencia, desde, notas, mundos, correcciones, permitir_fallback}. desde: "retoque_visual" + notas = la voz ya existe: cambia solo lo que se ve, aplica lo que el crítico vio (y args.correcciones) y devuelve retoque_listo. La voz y el render los hace la sesión.',
+  whenToUse: 'Tras `video3d.py preparar` (y la investigación). Se detiene con elegir_estilo (confianza baja; reanuda con args.estilo) y con elegir_gancho (reanuda con args.gancho); al final devuelve 5 cierres. args: {trabajo, tema, angulo, estilo, gancho, datos, auto, fixture, sin_referencia, desde, notas, mundos, correcciones, permitir_fallback}. Con faltan_datos (al guion le falta una cifra en base/datos.json): la sesión la suma y reanuda con args.datos. desde: "retoque_visual" + notas = la voz ya existe: cambia solo lo que se ve, aplica lo que el crítico vio (y args.correcciones) y devuelve retoque_listo. La voz y el render los hace la sesión.',
   phases: [
     { title: 'Dirección', detail: 'video3d-director: direccion.json con la idea visual, el criterio (lugar o mecanismo), los mundos que la historia necesite (cada uno con su escala: pais, ciudad o esquema; tantos como haga falta, y se puede volver a uno), el estilo con razón y confianza, el borrador de la narración y el verbo visual del catálogo por frase; lo que el catálogo no tiene va en briefs[]' },
     { title: 'Referencia visual', detail: 'un historia-verificador por mundo de cerca (≤ 3 a la vez): cómo se ve ese lugar en la realidad, qué pasa ahí, con qué, y qué no se puede afirmar → verificacion_visual_<mundo>.json (los hechos que sostienen cada escena, C3D15)' },
@@ -173,7 +173,9 @@ const S = {
     properties: { archivo: { type: 'string', pattern: 'guion\\.json$' }, gate: { type: 'string', enum: ['ok', 'falla'] },
       fallas: { type: 'array', items: { type: 'string' } }, escenas: { type: 'integer' }, estimado_s: { type: 'number' },
       tipos_usados: { type: 'array', items: { type: 'string' } }, storyboard: { type: 'string' },
-      briefs: { type: 'array', items: { type: 'object' } }, aplicadas: { type: 'array', items: { type: 'integer' } } },
+      briefs: { type: 'array', items: { type: 'object' } }, aplicadas: { type: 'array', items: { type: 'integer' } },
+      // m301: lo que el director no puede arreglar (falta una cifra en base/datos.json, que no escribe)
+      faltan_datos: { type: 'array', items: { type: 'string' } }, archivo_datos: { type: 'string' } },
   },
   critica: {
     type: 'object', required: ['archivo', 'vuelta', 'veredicto', 'puntajes', 'faltas'],
@@ -481,27 +483,38 @@ const elegidoPor = A.gancho ? 'usuario' : 'critico'
 
 // ── 5. Guion (+ storyboard; los briefs nuevos van al constructor UNA vez) ───────────────────────────────────────
 phase('Guion')
-const validarGuion = (r) => r.gate !== 'ok' ? fallasDe(r, 'video3d.py guion --check') : [
+// m301: un guion que solo falla porque falta una cifra en base/datos.json no se repara (el director no escribe en
+// base/): el Workflow se detiene con `faltan_datos`, la sesión suma lo verificado (video3d.py datos --sumar) y reanuda
+// con args.datos (lo que sumó), que cambia la directiva y no deja que la caché repita el rechazo.
+let FALTAN = null
+const validarGuion = (r) => (r.faltan_datos || []).length ? (FALTAN = r, []) : r.gate !== 'ok' ? fallasDe(r, 'video3d.py guion --check') : [
   ...archivoEs(r, 'guion.json'),
   ...(r.escenas < ESCENAS_MIN || r.escenas > ESCENAS_TOPE ? [`${r.escenas} escenas; van ${ESCENAS_MIN}–${ESCENAS_TOPE} (≈ una cada 7 s del objetivo)`] : []),
   ...(r.estimado_s > DURACION_MAX_S * 1.2 ? [`estimado ${r.estimado_s} s: el tope es ${DURACION_MAX_S} s`] : []),
   ...(!r.storyboard ? ['corre python3 scripts/video3d.py storyboard y devuelve la ruta de la hoja'] : []),
 ]
 const directivaGuion = (extra) => DIRECTOR +
+  (A.datos ? `DATOS SUMADOS POR LA SESIÓN desde la pasada anterior (base/datos.json): ${A.datos}. Si guion.json ya existe y ahora pasa guion --check, no lo reescribas: corre storyboard y las hojas. ` : '') +
   `MODO GUION: el gancho es «${gancho}» (python3 scripts/video3d.py ganchos ${trabajo} --usar ${gancho} --por ${elegidoPor}); estilo «${estilo}». ` +
   `Escribe PRIMERO la narración de corrido (guion.narracion), actualiza direccion.json → frases con ella y DESPUÉS repártela sin cambiar una palabra en las escenas que necesite (≥ ${ESCENAS_MIN}; ≈ una cada 7 s) con camara, eventos, marcas y cifras con anclas dice, el cierre y el caption. Cada mundo de cerca con su ficha \`escena\` (C3D14–C3D18) y su hora (C3D19). ` +
   (REFERENCIA_TXT ? `REFERENCIA VISUAL (usa sus ids en escena.sostiene; lo que no esté ahí es \`generico\` o va a no_afirmar): ${REFERENCIA_TXT} ` : '') +
   `Corre python3 scripts/video3d.py guion ${trabajo} --check hasta 0 fallas (C3D1–C3D19, M3D1–M3D19: cada escena de cerca llena, variada y viva), luego python3 scripts/video3d.py storyboard ${trabajo}, python3 scripts/maqueta3d.py escena ${trabajo}/maqueta.json --hoja --salida ${trabajo}/escenas, y mira la hoja del storyboard y UNA hoja por mundo. ` +
   (construidos.length ? `Tipos del constructor: ${resumenConstruidos(construidos) || 'ninguno usable'}. ` : '') +
-  `Si aparece algo que el catálogo no tiene, cuéntalo con lo que hay y devuélvelo en briefs (≤ ${BRIEFS_POR_MUNDO} por mundo, con su \`mundo\`). ` + (extra || '') +
-  'Retorno: {archivo, gate, fallas[], escenas, estimado_s, tipos_usados[] (los tipos del catálogo que usa), storyboard (ruta de la hoja), briefs[], aplicadas[]}.'
+  `Si aparece algo que el catálogo no tiene, cuéntalo con lo que hay y devuélvelo en briefs (≤ ${BRIEFS_POR_MUNDO} por mundo, con su \`mundo\`). ` +
+  'Si guion --check falla SOLO porque a un número de la voz o de la pantalla (V2, C3D5; también un año) le falta su cifra en base/datos.json, no lo esquives ni reescribas: tú no escribes en base/. Devuelve gate falla, `faltan_datos` (cada número con su escena: «1541 · escena 2») y, si preparaste un archivo {cifras: […]} con su url y cita literal para que la sesión lo sume, `archivo_datos`. ' + (extra || '') +
+  'Retorno: {archivo, gate, fallas[], escenas, estimado_s, tipos_usados[] (los tipos del catálogo que usa), storyboard (ruta de la hoja), briefs[], aplicadas[], faltan_datos?[], archivo_datos?}.'
+const faltanDatos = (r) => ({ trabajo, tema, veredicto: 'faltan_datos', etapa: 'guion', gancho, estilo, faltan: r.faltan_datos, archivo_datos: r.archivo_datos || null,
+  nota: `Revisa y suma lo verificado: python3 scripts/video3d.py datos ${trabajo} --sumar <verificacion_*.json${r.archivo_datos ? ' o ' + r.archivo_datos : ''}> (suma también el año de cada hecho fechado); luego reanuda con resumeFromRunId y args.datos = lo que sumaste.`,
+  avisos: AVISOS_WF })
 let G = await conReparacion('Guion', (fallos) => agentRol(directivaGuion(fallos.length ? `REPARACIÓN: ${fallos.join('; ')}. ` : ''),
   { agentType: 'video3d-director', schema: S.guion, phase: 'Guion', label: 'guion' }), validarGuion, 2)
+if (FALTAN) return faltanDatos(FALTAN)
 if (G.briefs.length) {
   const H2 = await construir(G.briefs, 'guion')
   if (resumenConstruidos(H2)) {
     G = await conReparacion('Guion (con lo construido)', (fallos) => agentRol(directivaGuion(`El constructor registró lo que pediste: usa esos tipos en las frases de sus briefs (no pidas más). ${fallos.length ? `REPARACIÓN: ${fallos.join('; ')}. ` : ''}`),
       { agentType: 'video3d-director', schema: S.guion, phase: 'Guion', label: 'guion-construido' }), validarGuion, 1)
+    if (FALTAN) return faltanDatos(FALTAN)
   }
 }
 log(`Guion: ${G.escenas} escenas · ≈ ${G.estimado_s} s · tipos ${G.tipos_usados.join(', ')}`)

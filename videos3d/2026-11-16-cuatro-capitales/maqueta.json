@@ -1,0 +1,2246 @@
+{
+  "version": 1,
+  "video": true,
+  "estilo": "color",
+  "paleta": "obsidiana",
+  "fps": 30,
+  "duracion_s": 103.6333,
+  "protagonista": "sedes",
+  "capa": {
+    "titulares": [
+      {
+        "t": 0.0,
+        "kicker": "VOLCÁN DE AGUA, GUATEMALA",
+        "texto": "La capital, bajo el lodo",
+        "hasta": 3.8
+      },
+      {
+        "t": 3.8,
+        "kicker": "NOCHE DEL 10 AL 11 DE SEPTIEMBRE DE 1541",
+        "texto": "Tras días de lluvia",
+        "hasta": 11.7
+      },
+      {
+        "t": 11.7,
+        "kicker": "1527–1541 · VALLE DE ALMOLONGA",
+        "texto": "Santiago de Guatemala",
+        "hasta": 21.1667
+      },
+      {
+        "t": 29.4333,
+        "kicker": "1543 · VALLE DE PANCHOY",
+        "texto": "Hoy, Antigua Guatemala",
+        "hasta": 37.3
+      },
+      {
+        "t": 37.3,
+        "kicker": "29 DE JULIO DE 1773",
+        "texto": "Los terremotos de Santa Marta",
+        "hasta": 47.7
+      },
+      {
+        "t": 47.7,
+        "kicker": "21 DE SEPTIEMBRE DE 1775",
+        "texto": "Al valle de la Ermita",
+        "hasta": 55.3667
+      },
+      {
+        "t": 55.3667,
+        "kicker": "2 DE ENERO DE 1776",
+        "texto": "El primer cabildo",
+        "hasta": 63.1667
+      },
+      {
+        "t": 63.1667,
+        "kicker": "1524 · TECPÁN, CHIMALTENANGO",
+        "texto": "La primera mudanza: una guerra",
+        "hasta": 71.8
+      }
+    ],
+    "cifras": [
+      {
+        "valor": "Más de 600",
+        "rotulo": "muertos",
+        "fuente": "USGS",
+        "t": 22.0,
+        "hasta": 29.4333
+      },
+      {
+        "valor": "230",
+        "rotulo": "años en Panchoy",
+        "t": 34.9333,
+        "hasta": 37.3
+      },
+      {
+        "valor": "1524",
+        "rotulo": "la ciudad nace junto a Iximché",
+        "t": 66.3,
+        "hasta": 68.9
+      }
+    ],
+    "palabras": [
+      {
+        "text": "Un",
+        "start": 0.0,
+        "end": 0.137
+      },
+      {
+        "text": "volcán",
+        "start": 0.179,
+        "end": 0.517
+      },
+      {
+        "text": "de",
+        "start": 0.57,
+        "end": 0.634
+      },
+      {
+        "text": "Guatemala",
+        "start": 0.665,
+        "end": 1.161
+      },
+      {
+        "text": "sepultó",
+        "start": 1.214,
+        "end": 1.72
+      },
+      {
+        "text": "a",
+        "start": 1.763,
+        "end": 1.784
+      },
+      {
+        "text": "su",
+        "start": 1.826,
+        "end": 1.91
+      },
+      {
+        "text": "capital",
+        "start": 1.963,
+        "end": 2.395
+      },
+      {
+        "text": "sin",
+        "start": 2.459,
+        "end": 2.585
+      },
+      {
+        "text": "hacer",
+        "start": 2.617,
+        "end": 2.892
+      },
+      {
+        "text": "erupción.",
+        "start": 2.935,
+        "end": 3.599
+      },
+      {
+        "text": "Tras",
+        "start": 4.001,
+        "end": 4.223
+      },
+      {
+        "text": "días",
+        "start": 4.275,
+        "end": 4.518
+      },
+      {
+        "text": "de",
+        "start": 4.561,
+        "end": 4.624
+      },
+      {
+        "text": "lluvia,",
+        "start": 4.645,
+        "end": 5.025
+      },
+      {
+        "text": "la",
+        "start": 5.088,
+        "end": 5.183
+      },
+      {
+        "text": "noche",
+        "start": 5.246,
+        "end": 5.542
+      },
+      {
+        "text": "del",
+        "start": 5.595,
+        "end": 5.732
+      },
+      {
+        "text": "10",
+        "start": 5.805,
+        "end": 6.102
+      },
+      {
+        "text": "al",
+        "start": 6.207,
+        "end": 6.345
+      },
+      {
+        "text": "11",
+        "start": 6.428,
+        "end": 6.661
+      },
+      {
+        "text": "de",
+        "start": 6.714,
+        "end": 6.777
+      },
+      {
+        "text": "septiembre",
+        "start": 6.819,
+        "end": 7.289
+      },
+      {
+        "text": "de",
+        "start": 7.332,
+        "end": 7.405
+      },
+      {
+        "text": "1541,",
+        "start": 7.479,
+        "end": 9.242
+      },
+      {
+        "text": "lo",
+        "start": 9.495,
+        "end": 9.622
+      },
+      {
+        "text": "alto",
+        "start": 9.664,
+        "end": 9.875
+      },
+      {
+        "text": "de",
+        "start": 9.917,
+        "end": 9.97
+      },
+      {
+        "text": "la",
+        "start": 10.013,
+        "end": 10.075
+      },
+      {
+        "text": "ladera",
+        "start": 10.118,
+        "end": 10.435
+      },
+      {
+        "text": "se",
+        "start": 10.487,
+        "end": 10.561
+      },
+      {
+        "text": "desprendió.",
+        "start": 10.614,
+        "end": 11.416
+      },
+      {
+        "text": "Un",
+        "start": 11.975,
+        "end": 12.165
+      },
+      {
+        "text": "alud",
+        "start": 12.228,
+        "end": 12.524
+      },
+      {
+        "text": "de",
+        "start": 12.597,
+        "end": 12.672
+      },
+      {
+        "text": "lodo,",
+        "start": 12.725,
+        "end": 13.22
+      },
+      {
+        "text": "piedras",
+        "start": 13.357,
+        "end": 13.822
+      },
+      {
+        "text": "y",
+        "start": 13.895,
+        "end": 13.927
+      },
+      {
+        "text": "árboles",
+        "start": 14.012,
+        "end": 14.486
+      },
+      {
+        "text": "bajó",
+        "start": 14.708,
+        "end": 15.025
+      },
+      {
+        "text": "sobre",
+        "start": 15.077,
+        "end": 15.299
+      },
+      {
+        "text": "Santiago",
+        "start": 15.342,
+        "end": 15.837
+      },
+      {
+        "text": "de",
+        "start": 15.88,
+        "end": 15.933
+      },
+      {
+        "text": "Guatemala,",
+        "start": 15.975,
+        "end": 16.682
+      },
+      {
+        "text": "asentada",
+        "start": 16.787,
+        "end": 17.368
+      },
+      {
+        "text": "desde",
+        "start": 17.421,
+        "end": 17.664
+      },
+      {
+        "text": "1527",
+        "start": 17.748,
+        "end": 19.31
+      },
+      {
+        "text": "al",
+        "start": 19.352,
+        "end": 19.426
+      },
+      {
+        "text": "pie",
+        "start": 19.5,
+        "end": 19.679
+      },
+      {
+        "text": "del",
+        "start": 19.722,
+        "end": 19.837
+      },
+      {
+        "text": "volcán",
+        "start": 19.88,
+        "end": 20.26
+      },
+      {
+        "text": "de",
+        "start": 20.313,
+        "end": 20.386
+      },
+      {
+        "text": "Agua.",
+        "start": 20.45,
+        "end": 20.904
+      },
+      {
+        "text": "Murieron",
+        "start": 21.441,
+        "end": 21.853
+      },
+      {
+        "text": "más",
+        "start": 21.916,
+        "end": 22.106
+      },
+      {
+        "text": "de",
+        "start": 22.149,
+        "end": 22.201
+      },
+      {
+        "text": "600",
+        "start": 22.254,
+        "end": 22.802
+      },
+      {
+        "text": "personas,",
+        "start": 22.866,
+        "end": 23.531
+      },
+      {
+        "text": "según",
+        "start": 23.668,
+        "end": 24.09
+      },
+      {
+        "text": "el",
+        "start": 24.196,
+        "end": 24.354
+      },
+      {
+        "text": "USGS.",
+        "start": 24.459,
+        "end": 25.684
+      },
+      {
+        "text": "Y",
+        "start": 26.149,
+        "end": 26.222
+      },
+      {
+        "text": "era",
+        "start": 26.275,
+        "end": 26.38
+      },
+      {
+        "text": "la",
+        "start": 26.423,
+        "end": 26.486
+      },
+      {
+        "text": "segunda",
+        "start": 26.529,
+        "end": 26.866
+      },
+      {
+        "text": "vez",
+        "start": 26.909,
+        "end": 27.046
+      },
+      {
+        "text": "que",
+        "start": 27.109,
+        "end": 27.183
+      },
+      {
+        "text": "esa",
+        "start": 27.225,
+        "end": 27.373
+      },
+      {
+        "text": "ciudad",
+        "start": 27.404,
+        "end": 27.742
+      },
+      {
+        "text": "tenía",
+        "start": 27.774,
+        "end": 28.09
+      },
+      {
+        "text": "que",
+        "start": 28.143,
+        "end": 28.239
+      },
+      {
+        "text": "irse.",
+        "start": 28.301,
+        "end": 28.977
+      },
+      {
+        "text": "La",
+        "start": 29.433,
+        "end": 29.581
+      },
+      {
+        "text": "rehicieron",
+        "start": 29.655,
+        "end": 30.193
+      },
+      {
+        "text": "en",
+        "start": 30.246,
+        "end": 30.288
+      },
+      {
+        "text": "el",
+        "start": 30.341,
+        "end": 30.394
+      },
+      {
+        "text": "valle",
+        "start": 30.457,
+        "end": 30.711
+      },
+      {
+        "text": "de",
+        "start": 30.763,
+        "end": 30.816
+      },
+      {
+        "text": "Panchoy,",
+        "start": 30.858,
+        "end": 31.418
+      },
+      {
+        "text": "hoy",
+        "start": 31.439,
+        "end": 31.661
+      },
+      {
+        "text": "Antigua,",
+        "start": 31.713,
+        "end": 32.315
+      },
+      {
+        "text": "con",
+        "start": 32.451,
+        "end": 32.579
+      },
+      {
+        "text": "el",
+        "start": 32.621,
+        "end": 32.673
+      },
+      {
+        "text": "mismo",
+        "start": 32.737,
+        "end": 33.043
+      },
+      {
+        "text": "volcán",
+        "start": 33.085,
+        "end": 33.465
+      },
+      {
+        "text": "de",
+        "start": 33.518,
+        "end": 33.581
+      },
+      {
+        "text": "fondo,",
+        "start": 33.634,
+        "end": 34.172
+      },
+      {
+        "text": "y",
+        "start": 34.426,
+        "end": 34.468
+      },
+      {
+        "text": "ahí",
+        "start": 34.521,
+        "end": 34.615
+      },
+      {
+        "text": "duró",
+        "start": 34.647,
+        "end": 34.869
+      },
+      {
+        "text": "unos",
+        "start": 34.921,
+        "end": 35.132
+      },
+      {
+        "text": "230",
+        "start": 35.196,
+        "end": 36.41
+      },
+      {
+        "text": "años.",
+        "start": 36.452,
+        "end": 37.053
+      },
+      {
+        "text": "Hasta",
+        "start": 37.533,
+        "end": 37.807
+      },
+      {
+        "text": "que",
+        "start": 37.85,
+        "end": 37.913
+      },
+      {
+        "text": "la",
+        "start": 37.955,
+        "end": 38.018
+      },
+      {
+        "text": "tierra",
+        "start": 38.071,
+        "end": 38.409
+      },
+      {
+        "text": "la",
+        "start": 38.451,
+        "end": 38.515
+      },
+      {
+        "text": "sacudió",
+        "start": 38.556,
+        "end": 39.053
+      },
+      {
+        "text": "desde",
+        "start": 39.116,
+        "end": 39.348
+      },
+      {
+        "text": "abajo:",
+        "start": 39.38,
+        "end": 39.982
+      },
+      {
+        "text": "los",
+        "start": 40.33,
+        "end": 40.467
+      },
+      {
+        "text": "terremotos",
+        "start": 40.509,
+        "end": 41.047
+      },
+      {
+        "text": "de",
+        "start": 41.079,
+        "end": 41.132
+      },
+      {
+        "text": "Santa",
+        "start": 41.175,
+        "end": 41.459
+      },
+      {
+        "text": "Marta,",
+        "start": 41.523,
+        "end": 42.018
+      },
+      {
+        "text": "en",
+        "start": 42.125,
+        "end": 42.24
+      },
+      {
+        "text": "julio",
+        "start": 42.293,
+        "end": 42.61
+      },
+      {
+        "text": "de",
+        "start": 42.663,
+        "end": 42.747
+      },
+      {
+        "text": "1773,",
+        "start": 42.853,
+        "end": 44.868
+      },
+      {
+        "text": "rajaron",
+        "start": 45.026,
+        "end": 45.438
+      },
+      {
+        "text": "muros",
+        "start": 45.512,
+        "end": 45.818
+      },
+      {
+        "text": "y",
+        "start": 45.882,
+        "end": 45.903
+      },
+      {
+        "text": "tumbaron",
+        "start": 45.945,
+        "end": 46.42
+      },
+      {
+        "text": "techos.",
+        "start": 46.484,
+        "end": 47.222
+      },
+      {
+        "text": "En",
+        "start": 47.7,
+        "end": 47.837
+      },
+      {
+        "text": "1775,",
+        "start": 47.879,
+        "end": 49.843
+      },
+      {
+        "text": "la",
+        "start": 49.948,
+        "end": 50.022
+      },
+      {
+        "text": "corona",
+        "start": 50.075,
+        "end": 50.328
+      },
+      {
+        "text": "ordenó",
+        "start": 50.36,
+        "end": 50.635
+      },
+      {
+        "text": "trasladarla",
+        "start": 50.665,
+        "end": 51.215
+      },
+      {
+        "text": "al",
+        "start": 51.246,
+        "end": 51.31
+      },
+      {
+        "text": "valle",
+        "start": 51.373,
+        "end": 51.605
+      },
+      {
+        "text": "de",
+        "start": 51.658,
+        "end": 51.711
+      },
+      {
+        "text": "la",
+        "start": 51.753,
+        "end": 51.805
+      },
+      {
+        "text": "Ermita,",
+        "start": 51.826,
+        "end": 52.386
+      },
+      {
+        "text": "buscando",
+        "start": 52.524,
+        "end": 52.977
+      },
+      {
+        "text": "seguridad",
+        "start": 53.03,
+        "end": 53.621
+      },
+      {
+        "text": "lejos",
+        "start": 53.726,
+        "end": 54.117
+      },
+      {
+        "text": "de",
+        "start": 54.149,
+        "end": 54.191
+      },
+      {
+        "text": "los",
+        "start": 54.234,
+        "end": 54.339
+      },
+      {
+        "text": "volcanes.",
+        "start": 54.381,
+        "end": 55.067
+      },
+      {
+        "text": "El",
+        "start": 55.641,
+        "end": 55.789
+      },
+      {
+        "text": "2",
+        "start": 55.842,
+        "end": 55.979
+      },
+      {
+        "text": "de",
+        "start": 56.021,
+        "end": 56.085
+      },
+      {
+        "text": "enero",
+        "start": 56.128,
+        "end": 56.38
+      },
+      {
+        "text": "de",
+        "start": 56.423,
+        "end": 56.518
+      },
+      {
+        "text": "1776,",
+        "start": 56.623,
+        "end": 58.629
+      },
+      {
+        "text": "el",
+        "start": 58.766,
+        "end": 58.882
+      },
+      {
+        "text": "cabildo",
+        "start": 58.924,
+        "end": 59.219
+      },
+      {
+        "text": "se",
+        "start": 59.272,
+        "end": 59.336
+      },
+      {
+        "text": "reunió",
+        "start": 59.399,
+        "end": 59.748
+      },
+      {
+        "text": "ahí",
+        "start": 59.789,
+        "end": 59.917
+      },
+      {
+        "text": "por",
+        "start": 59.99,
+        "end": 60.106
+      },
+      {
+        "text": "primera",
+        "start": 60.159,
+        "end": 60.549
+      },
+      {
+        "text": "vez,",
+        "start": 60.602,
+        "end": 60.972
+      },
+      {
+        "text": "en",
+        "start": 61.109,
+        "end": 61.215
+      },
+      {
+        "text": "un",
+        "start": 61.32,
+        "end": 61.394
+      },
+      {
+        "text": "rancho",
+        "start": 61.51,
+        "end": 61.89
+      },
+      {
+        "text": "de",
+        "start": 61.932,
+        "end": 61.996
+      },
+      {
+        "text": "paja.",
+        "start": 62.049,
+        "end": 62.713
+      },
+      {
+        "text": "La",
+        "start": 63.167,
+        "end": 63.389
+      },
+      {
+        "text": "primera",
+        "start": 63.42,
+        "end": 63.663
+      },
+      {
+        "text": "mudanza",
+        "start": 63.705,
+        "end": 64.128
+      },
+      {
+        "text": "la",
+        "start": 64.201,
+        "end": 64.264
+      },
+      {
+        "text": "había",
+        "start": 64.286,
+        "end": 64.507
+      },
+      {
+        "text": "empujado",
+        "start": 64.529,
+        "end": 65.077
+      },
+      {
+        "text": "una",
+        "start": 65.151,
+        "end": 65.309
+      },
+      {
+        "text": "guerra:",
+        "start": 65.372,
+        "end": 65.911
+      },
+      {
+        "text": "en",
+        "start": 66.312,
+        "end": 66.459
+      },
+      {
+        "text": "1524,",
+        "start": 66.534,
+        "end": 68.011
+      },
+      {
+        "text": "la",
+        "start": 68.064,
+        "end": 68.159
+      },
+      {
+        "text": "ciudad",
+        "start": 68.18,
+        "end": 68.455
+      },
+      {
+        "text": "nació",
+        "start": 68.497,
+        "end": 68.813
+      },
+      {
+        "text": "junto",
+        "start": 68.877,
+        "end": 69.14
+      },
+      {
+        "text": "a",
+        "start": 69.172,
+        "end": 69.193
+      },
+      {
+        "text": "Iximché,",
+        "start": 69.215,
+        "end": 69.9
+      },
+      {
+        "text": "la",
+        "start": 70.059,
+        "end": 70.133
+      },
+      {
+        "text": "capital",
+        "start": 70.175,
+        "end": 70.639
+      },
+      {
+        "text": "kaqchikel.",
+        "start": 70.745,
+        "end": 71.515
+      },
+      {
+        "text": "Unos",
+        "start": 72.075,
+        "end": 72.36
+      },
+      {
+        "text": "la",
+        "start": 72.423,
+        "end": 72.475
+      },
+      {
+        "text": "cuentan",
+        "start": 72.518,
+        "end": 72.835
+      },
+      {
+        "text": "como",
+        "start": 72.887,
+        "end": 73.056
+      },
+      {
+        "text": "primera",
+        "start": 73.088,
+        "end": 73.457
+      },
+      {
+        "text": "capital;",
+        "start": 73.5,
+        "end": 74.133
+      },
+      {
+        "text": "otros,",
+        "start": 74.428,
+        "end": 74.966
+      },
+      {
+        "text": "como",
+        "start": 75.051,
+        "end": 75.241
+      },
+      {
+        "text": "un",
+        "start": 75.284,
+        "end": 75.336
+      },
+      {
+        "text": "campamento.",
+        "start": 75.389,
+        "end": 76.18
+      },
+      {
+        "text": "Ese",
+        "start": 76.529,
+        "end": 76.74
+      },
+      {
+        "text": "mismo",
+        "start": 76.782,
+        "end": 77.015
+      },
+      {
+        "text": "año,",
+        "start": 77.056,
+        "end": 77.331
+      },
+      {
+        "text": "los",
+        "start": 77.373,
+        "end": 77.489
+      },
+      {
+        "text": "kaqchikeles",
+        "start": 77.531,
+        "end": 78.123
+      },
+      {
+        "text": "rompieron",
+        "start": 78.228,
+        "end": 78.629
+      },
+      {
+        "text": "la",
+        "start": 78.671,
+        "end": 78.735
+      },
+      {
+        "text": "alianza,",
+        "start": 78.776,
+        "end": 79.442
+      },
+      {
+        "text": "dejaron",
+        "start": 79.6,
+        "end": 79.938
+      },
+      {
+        "text": "Iximché",
+        "start": 79.991,
+        "end": 80.561
+      },
+      {
+        "text": "y",
+        "start": 80.635,
+        "end": 80.708
+      },
+      {
+        "text": "se",
+        "start": 80.814,
+        "end": 80.898
+      },
+      {
+        "text": "alzaron.",
+        "start": 80.94,
+        "end": 81.637
+      },
+      {
+        "text": "Una",
+        "start": 82.099,
+        "end": 82.319
+      },
+      {
+        "text": "guerra,",
+        "start": 82.372,
+        "end": 82.879
+      },
+      {
+        "text": "un",
+        "start": 83.017,
+        "end": 83.122
+      },
+      {
+        "text": "volcán",
+        "start": 83.164,
+        "end": 83.67
+      },
+      {
+        "text": "y",
+        "start": 83.892,
+        "end": 83.977
+      },
+      {
+        "text": "la",
+        "start": 84.05,
+        "end": 84.103
+      },
+      {
+        "text": "tierra",
+        "start": 84.146,
+        "end": 84.378
+      },
+      {
+        "text": "la",
+        "start": 84.42,
+        "end": 84.473
+      },
+      {
+        "text": "movieron",
+        "start": 84.515,
+        "end": 84.832
+      },
+      {
+        "text": "por",
+        "start": 84.874,
+        "end": 84.99
+      },
+      {
+        "text": "cuatro",
+        "start": 85.075,
+        "end": 85.412
+      },
+      {
+        "text": "sitios.",
+        "start": 85.455,
+        "end": 86.056
+      },
+      {
+        "text": "Antigua",
+        "start": 86.351,
+        "end": 86.848
+      },
+      {
+        "text": "quedó",
+        "start": 86.9,
+        "end": 87.101
+      },
+      {
+        "text": "a",
+        "start": 87.164,
+        "end": 87.186
+      },
+      {
+        "text": "10.3 km",
+        "start": 87.228,
+        "end": 88.61
+      },
+      {
+        "text": "de",
+        "start": 88.631,
+        "end": 88.674
+      },
+      {
+        "text": "la",
+        "start": 88.716,
+        "end": 88.779
+      },
+      {
+        "text": "cumbre",
+        "start": 88.832,
+        "end": 89.128
+      },
+      {
+        "text": "del",
+        "start": 89.169,
+        "end": 89.275
+      },
+      {
+        "text": "Agua;",
+        "start": 89.349,
+        "end": 89.824
+      },
+      {
+        "text": "la",
+        "start": 90.172,
+        "end": 90.236
+      },
+      {
+        "text": "capital",
+        "start": 90.278,
+        "end": 90.637
+      },
+      {
+        "text": "de",
+        "start": 90.7,
+        "end": 90.763
+      },
+      {
+        "text": "hoy",
+        "start": 90.795,
+        "end": 90.921
+      },
+      {
+        "text": "está",
+        "start": 90.985,
+        "end": 91.196
+      },
+      {
+        "text": "a",
+        "start": 91.249,
+        "end": 91.27
+      },
+      {
+        "text": "31.6 km",
+        "start": 91.312,
+        "end": 93.329
+      },
+      {
+        "text": "de",
+        "start": 93.37,
+        "end": 93.434
+      },
+      {
+        "text": "ella.",
+        "start": 93.508,
+        "end": 93.919
+      },
+      {
+        "text": "Desde",
+        "start": 94.399,
+        "end": 94.641
+      },
+      {
+        "text": "entonces",
+        "start": 94.673,
+        "end": 95.2
+      },
+      {
+        "text": "no",
+        "start": 95.422,
+        "end": 95.549
+      },
+      {
+        "text": "se",
+        "start": 95.601,
+        "end": 95.686
+      },
+      {
+        "text": "ha",
+        "start": 95.729,
+        "end": 95.781
+      },
+      {
+        "text": "vuelto",
+        "start": 95.823,
+        "end": 96.182
+      },
+      {
+        "text": "a",
+        "start": 96.224,
+        "end": 96.246
+      },
+      {
+        "text": "mover:",
+        "start": 96.288,
+        "end": 96.741
+      },
+      {
+        "text": "la",
+        "start": 97.089,
+        "end": 97.174
+      },
+      {
+        "text": "ciudad",
+        "start": 97.206,
+        "end": 97.586
+      },
+      {
+        "text": "que",
+        "start": 97.649,
+        "end": 97.723
+      },
+      {
+        "text": "el",
+        "start": 97.744,
+        "end": 97.808
+      },
+      {
+        "text": "volcán",
+        "start": 97.849,
+        "end": 98.219
+      },
+      {
+        "text": "enterró",
+        "start": 98.261,
+        "end": 98.747
+      },
+      {
+        "text": "vive",
+        "start": 99.042,
+        "end": 99.338
+      },
+      {
+        "text": "hoy",
+        "start": 99.359,
+        "end": 99.559
+      },
+      {
+        "text": "lejos",
+        "start": 99.665,
+        "end": 100.045
+      },
+      {
+        "text": "de",
+        "start": 100.098,
+        "end": 100.193
+      },
+      {
+        "text": "él.",
+        "start": 100.246,
+        "end": 100.805
+      }
+    ],
+    "progreso": {
+      "actos": [
+        0.0,
+        29.4333,
+        63.1667
+      ]
+    },
+    "seguir": {
+      "t": 72.5333,
+      "dur": 3.0
+    },
+    "pie": "Relieve: Mapzen Terrain Tiles · Lugares y lagos: © OpenStreetMap",
+    "handle": "@DerekUrizar",
+    "aviso": "Esquema",
+    "cierre": {
+      "t": 95.3667,
+      "frase": "La ciudad que el volcán enterró vive hoy lejos de él.",
+      "redes": [
+        {
+          "nombre": "TikTok",
+          "handle": "@derekurizargt"
+        },
+        {
+          "nombre": "Instagram",
+          "handle": "@derekurizargt"
+        },
+        {
+          "nombre": "Facebook",
+          "handle": "Derek Urizar"
+        },
+        {
+          "nombre": "YouTube",
+          "handle": "@derekurizar"
+        },
+        {
+          "nombre": "X",
+          "handle": "@DerekUrizar"
+        }
+      ]
+    }
+  },
+  "mundos": {
+    "valle": {
+      "escala": "pais",
+      "set": "guatemala",
+      "exageracion": 3.0,
+      "estilo": "color",
+      "protagonista": "sedes",
+      "lugares": {
+        "iximche": {
+          "lon": -90.9943492,
+          "lat": 14.7338052,
+          "nombre": "Iximché"
+        },
+        "cumbre-agua": {
+          "lon": -90.743,
+          "lat": 14.465,
+          "nombre": "Volcán de Agua"
+        },
+        "cumbre-fuego": {
+          "lon": -90.8806,
+          "lat": 14.4748,
+          "nombre": "Volcán de Fuego"
+        },
+        "cumbre-acatenango": {
+          "lon": -90.87556,
+          "lat": 14.50056,
+          "nombre": "Volcán Acatenango"
+        }
+      },
+      "piezas": [
+        {
+          "id": "lagos",
+          "tipo": "lagos",
+          "nombres": [
+            "Lago de Atitlán"
+          ]
+        },
+        {
+          "id": "sedes",
+          "tipo": "luces",
+          "lugares": [
+            "iximche",
+            "ciudad-vieja",
+            "antigua-guatemala",
+            "guatemala"
+          ],
+          "encendidas": false
+        },
+        {
+          "id": "volcanes",
+          "tipo": "volcanes",
+          "lugares": [
+            "cumbre-agua",
+            "cumbre-fuego",
+            "cumbre-acatenango"
+          ],
+          "radio_km": 6,
+          "alto_m": {
+            "0": 3760,
+            "1": 3763,
+            "2": 3976
+          }
+        }
+      ]
+    },
+    "ladera": {
+      "escala": "esquema",
+      "receta": "campo",
+      "horizonte": "llano",
+      "semilla": 1541,
+      "tamano_m": 2400,
+      "estilo": "dia",
+      "hora": "noche",
+      "hora_razon": "El alud cayó de noche, unas dos horas después de oscurecer (visual-ladera-h06, «dos horas de noche»; sin hora en voz ni en pantalla): las ventanas del pueblo son lo que el lodo apaga.",
+      "protagonista": "falda",
+      "piezas": [
+        {
+          "id": "falda",
+          "tipo": "faldavolcan",
+          "lugar": [
+            0,
+            0
+          ],
+          "rumbo": 90,
+          "tamano": 1,
+          "casas": 24,
+          "lluvia": 0.3,
+          "ventanas": true,
+          "personas": 4,
+          "teja": 0.05,
+          "traza": 0.15,
+          "semilla": 1
+        }
+      ],
+      "escena": {
+        "que_pasa": "Tras días de lluvia, de noche, la parte alta de la ladera de un volcán se desprende y un flujo de lodo, piedras y árboles baja por la falda y sepulta el pueblo que está al pie; no hay erupción.",
+        "quien": "nadie en primer plano: es de noche; unos pocos vecinos en la plaza y el resto dentro de las casas (puntos de luz)",
+        "con_que": "lodo, piedras y árboles arrastrados; casas de adobe, caña y paja, una iglesia y una plaza genéricas",
+        "se_mueve": "cae una lluvia ligera con viento; el frente del alud baja de la ladera alta al pueblo, arranca árboles y cubre casas",
+        "sostiene": [
+          {
+            "que": "días de lluvia antes del alud",
+            "hecho": "visual-ladera-h04"
+          },
+          {
+            "que": "de noche, unas dos horas después de oscurecer",
+            "hecho": "visual-ladera-h06"
+          },
+          {
+            "que": "lodo, piedras y árboles arrastrados",
+            "hecho": "visual-ladera-h07"
+          },
+          {
+            "que": "alud de lodo, piedras y árboles tras fuertes lluvias, sin erupción",
+            "hecho": "traslados-h10"
+          },
+          {
+            "que": "el flujo se ve como concreto que fluye",
+            "hecho": "visual-ladera-h10"
+          },
+          {
+            "que": "se desprende en la parte alta de la ladera",
+            "hecho": "lugares-h13"
+          },
+          {
+            "que": "aldea poco delimitada, casas de adobe, caña y paja",
+            "hecho": "visual-ladera-h03"
+          },
+          {
+            "que": "la forma del cono, el trazo del lodo, la iglesia y la plaza",
+            "generico": true
+          },
+          {
+            "que": "las ventanas encendidas (puntos de luz)",
+            "generico": true
+          }
+        ],
+        "ilustrativa": "Es el mecanismo del alud en un volcán y un pueblo cualquiera: ni la ladera, ni el trazo del lodo, ni la forma de Almolonga se afirman."
+      },
+      "lugares": {
+        "falda.cumbre": {
+          "x": 0.0,
+          "y": 760.0,
+          "nombre": "Cumbre"
+        },
+        "falda.ladera-alta": {
+          "x": -8.68,
+          "y": 619.47,
+          "nombre": "Ladera alta"
+        },
+        "falda.barranco": {
+          "x": -36.93,
+          "y": 409.94,
+          "nombre": "Barranco"
+        },
+        "falda.pueblo": {
+          "x": -4.0,
+          "y": -58.0,
+          "nombre": "Pueblo"
+        },
+        "falda.plaza": {
+          "x": 0.0,
+          "y": 0.0,
+          "nombre": "Plaza"
+        },
+        "falda.iglesia": {
+          "x": 0.0,
+          "y": 42.0,
+          "nombre": "Iglesia"
+        }
+      }
+    },
+    "panchoy": {
+      "escala": "esquema",
+      "receta": "campo",
+      "horizonte": "llano",
+      "semilla": 1773,
+      "tamano_m": 3600,
+      "estilo": "dia",
+      "hora": "dia",
+      "protagonista": "ciudad",
+      "piezas": [
+        {
+          "id": "ciudad",
+          "tipo": "ciudadcolonial",
+          "lugar": [
+            0,
+            0
+          ],
+          "rumbo": 270,
+          "tamano": 1,
+          "manzanas": 12,
+          "personas": 14,
+          "volcan_fondo": true,
+          "semilla": 1
+        }
+      ],
+      "escena": {
+        "que_pasa": "La ciudad colonial en damero con su plaza mayor (fuente, mercado, portales de comercio) y el volcán al sur; el terremoto la sacude: muros que se hienden y caen, techos que se desploman, polvo, y la gente que sale a los espacios abiertos.",
+        "quien": "vecinos en la plaza y las calles: gente que camina y compra en el mercado",
+        "con_que": "catedral, palacio y cabildo con portales; casas de un piso con teja o azotea; fuente y puestos del mercado",
+        "se_mueve": "la gente camina; con el terremoto todo tiembla, caen muros y techos, sube el polvo y la gente corre a un espacio abierto",
+        "sostiene": [
+          {
+            "que": "plaza casi cuadrada con fuente y mercado",
+            "hecho": "visual-panchoy-h01"
+          },
+          {
+            "que": "catedral, palacio y cabildo con portales en la plaza",
+            "hecho": "visual-panchoy-h02"
+          },
+          {
+            "que": "casas de un piso, damero empedrado",
+            "hecho": "visual-panchoy-h03"
+          },
+          {
+            "que": "el volcán de Agua al sur de la plaza",
+            "hecho": "visual-panchoy-h08"
+          },
+          {
+            "que": "muros que se hienden y caen, techos rotos",
+            "hecho": "visual-panchoy-h12"
+          },
+          {
+            "que": "la nube de polvo",
+            "hecho": "visual-panchoy-h10"
+          },
+          {
+            "que": "la gente sale a calles y plazas",
+            "hecho": "visual-panchoy-h11"
+          },
+          {
+            "que": "la forma de la catedral, las casas, el volcán y qué pieza cae",
+            "generico": true
+          }
+        ]
+      },
+      "lugares": {
+        "ciudad.plaza": {
+          "x": 0.0,
+          "y": 0.0,
+          "nombre": "Plaza"
+        },
+        "ciudad.fuente": {
+          "x": 0.0,
+          "y": 0.0,
+          "nombre": "Fuente"
+        },
+        "ciudad.mercado": {
+          "x": -21.0,
+          "y": 0.0,
+          "nombre": "Mercado"
+        },
+        "ciudad.catedral": {
+          "x": 63.0,
+          "y": -15.0,
+          "nombre": "Catedral"
+        },
+        "ciudad.palacio": {
+          "x": 0.0,
+          "y": -50.0,
+          "nombre": "Palacio"
+        },
+        "ciudad.cabildo": {
+          "x": 0.0,
+          "y": 49.0,
+          "nombre": "Cabildo"
+        },
+        "ciudad.portal": {
+          "x": -47.0,
+          "y": 0.0,
+          "nombre": "Portal"
+        },
+        "ciudad.volcan": {
+          "x": 0.0,
+          "y": -1750.0,
+          "nombre": "Cono"
+        }
+      }
+    },
+    "cabildo": {
+      "escala": "esquema",
+      "receta": "campo",
+      "horizonte": "colinas",
+      "semilla": 1776,
+      "tamano_m": 1200,
+      "estilo": "dia",
+      "hora": "dia",
+      "protagonista": "cabildo",
+      "piezas": [
+        {
+          "id": "cabildo",
+          "tipo": "cabildoranchos",
+          "lugar": [
+            0,
+            0
+          ],
+          "rumbo": 180,
+          "tamano": 1,
+          "ranchos": 5,
+          "enlucidas": 1,
+          "cabildantes": 5,
+          "llegan": 2,
+          "vecinos": 6,
+          "mulas": 0,
+          "carretas": 0,
+          "iglesia": true,
+          "llegada_s": 11,
+          "semilla": 1
+        },
+        {
+          "id": "vecino-1",
+          "tipo": "actor",
+          "objeto": "persona",
+          "pose": "cargar",
+          "desde": [
+            70,
+            -45
+          ],
+          "hacia": [
+            14,
+            -22
+          ],
+          "claves": [
+            {
+              "t": 0,
+              "vel_kmh": 2.6
+            }
+          ]
+        },
+        {
+          "id": "vecino-2",
+          "tipo": "actor",
+          "objeto": "persona",
+          "pose": "caminar",
+          "desde": [
+            -45,
+            35
+          ],
+          "hacia": [
+            -2,
+            10
+          ],
+          "claves": [
+            {
+              "t": 0,
+              "vel_kmh": 3
+            }
+          ]
+        }
+      ],
+      "escena": {
+        "que_pasa": "En un llano, la ciudad naciente es un rancherío de paja con pocas casas enlucidas; los capitulares salen de sus ranchos y caminan a otro rancho de paja que desde esa mañana hace de casa del cabildo, y ahí celebran la primera sesión.",
+        "quien": "los capitulares (uno escribe) y vecinos del rancherío",
+        "con_que": "ranchos de paja con paredes de caña o bajareque, unas pocas casas enlucidas con teja, una ermita sencilla, una mesa",
+        "se_mueve": "dos capitulares llegan caminando sin prisa; los demás deliberan y uno escribe; los vecinos van y vienen",
+        "sostiene": [
+          {
+            "que": "la primera sesión en un rancho de paja",
+            "hecho": "visual-cabildo-h01"
+          },
+          {
+            "que": "capitulares que caminan sin prisa al rancho (según Laparte)",
+            "hecho": "visual-cabildo-h02"
+          },
+          {
+            "que": "rancherío pajizo con pocas casas enlucidas y una ermita sencilla",
+            "hecho": "visual-cabildo-h03"
+          },
+          {
+            "que": "de mañana, el 2 de enero de 1776",
+            "hecho": "visual-cabildo-h07"
+          },
+          {
+            "que": "la forma del rancho, la mesa, la ropa y la ermita",
+            "generico": true
+          }
+        ]
+      },
+      "lugares": {
+        "cabildo.rancho": {
+          "x": 4.6,
+          "y": 0.0,
+          "nombre": "Rancho"
+        },
+        "cabildo.mesa": {
+          "x": 0.0,
+          "y": 0.0,
+          "nombre": "Mesa"
+        },
+        "cabildo.llegada": {
+          "x": 17.77,
+          "y": 3.75,
+          "nombre": "Llegada"
+        },
+        "cabildo.ranchos": {
+          "x": 10.0,
+          "y": -21.0,
+          "nombre": "Ranchos"
+        },
+        "cabildo.llano": {
+          "x": 28.0,
+          "y": -8.0,
+          "nombre": "Llano"
+        },
+        "cabildo.iglesia": {
+          "x": -58.0,
+          "y": -20.0,
+          "nombre": "Iglesia"
+        }
+      }
+    }
+  },
+  "tramos": [
+    {
+      "id": "ladera-1",
+      "mundo": "ladera",
+      "desde": 0.0,
+      "hasta": 29.4333,
+      "camara": [
+        {
+          "mira": [
+            0,
+            230
+          ],
+          "dist_m": 1150,
+          "azimut": 0,
+          "elevacion": 13,
+          "t": 0.0
+        },
+        {
+          "mira": [
+            0,
+            0
+          ],
+          "dist_m": 520,
+          "azimut": 12,
+          "elevacion": 18,
+          "t": 3.6
+        },
+        {
+          "mira": "falda.ladera-alta",
+          "dist_m": 1000,
+          "azimut": 5,
+          "elevacion": 14,
+          "t": 6.8333
+        },
+        {
+          "mira": "falda.ladera-alta",
+          "dist_m": 700,
+          "azimut": -5,
+          "elevacion": 18,
+          "t": 10.4333
+        },
+        {
+          "mira": "falda.barranco",
+          "dist_m": 520,
+          "azimut": 10,
+          "elevacion": 18,
+          "t": 11.9667
+        },
+        {
+          "mira": "falda.plaza",
+          "dist_m": 400,
+          "azimut": 18,
+          "elevacion": 30,
+          "t": 15.3333
+        },
+        {
+          "mira": "falda.barranco",
+          "dist_m": 1400,
+          "azimut": -8,
+          "elevacion": 12,
+          "t": 20.2667
+        },
+        {
+          "mira": "falda.pueblo",
+          "dist_m": 650,
+          "azimut": 18,
+          "elevacion": 26,
+          "t": 27.0333
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "alud",
+          "pieza": "falda",
+          "desde": "ladera-alta",
+          "hacia": "pueblo",
+          "ancho_m": 120,
+          "cubre": 0.7,
+          "arboles": 12,
+          "dur": 5.0,
+          "sfx": "grave",
+          "t": 0.0
+        },
+        {
+          "tipo": "resaltar",
+          "lugar": "falda.ladera-alta",
+          "dur": 2.5,
+          "t": 9.5
+        },
+        {
+          "tipo": "resaltar",
+          "lugar": "falda.pueblo",
+          "dur": 2.5,
+          "t": 15.3333
+        }
+      ],
+      "marcas": [
+        {
+          "lugar": "falda.ladera-alta",
+          "texto": "Ladera alta",
+          "t": 9.2333,
+          "hasta": 11.2333
+        },
+        {
+          "lugar": "falda.pueblo",
+          "texto": "La ciudad",
+          "sub": "bajo el lodo",
+          "t": 15.1,
+          "hasta": 17.7
+        }
+      ]
+    },
+    {
+      "id": "panchoy-2",
+      "mundo": "panchoy",
+      "desde": 29.4333,
+      "hasta": 47.7,
+      "camara": [
+        {
+          "mira": "ciudad.plaza",
+          "dist_m": 750,
+          "azimut": 180,
+          "elevacion": 16,
+          "t": 29.4333
+        },
+        {
+          "mira": "ciudad.plaza",
+          "dist_m": 480,
+          "azimut": 180,
+          "elevacion": 11,
+          "t": 32.4667
+        },
+        {
+          "mira": "ciudad.plaza",
+          "dist_m": 300,
+          "azimut": 185,
+          "elevacion": 14,
+          "t": 36.4
+        },
+        {
+          "mira": [
+            -70,
+            0
+          ],
+          "dist_m": 300,
+          "azimut": 175,
+          "elevacion": 17,
+          "t": 40.3333
+        },
+        {
+          "mira": [
+            -120,
+            0
+          ],
+          "dist_m": 240,
+          "azimut": 170,
+          "elevacion": 19,
+          "t": 45.8333
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "resaltar",
+          "lugar": "ciudad.volcan",
+          "dur": 2.5,
+          "t": 32.4667
+        },
+        {
+          "tipo": "terremoto",
+          "pieza": "ciudad",
+          "intensidad": 0.8,
+          "danos": 0.6,
+          "polvo": true,
+          "previo": true,
+          "personas": 14,
+          "radio_m": 150,
+          "centro": [
+            -120,
+            0
+          ],
+          "refugio": [
+            -58,
+            170
+          ],
+          "radio_refugio_m": 18,
+          "dur": 7.5,
+          "sfx": "impacto",
+          "t": 38.4667
+        }
+      ],
+      "transicion": "oscuro",
+      "fundido_s": 0.6
+    },
+    {
+      "id": "cabildo-3",
+      "mundo": "cabildo",
+      "desde": 47.7,
+      "hasta": 63.1667,
+      "camara": [
+        {
+          "mira": "cabildo.ranchos",
+          "dist_m": 170,
+          "azimut": 90,
+          "elevacion": 22,
+          "t": 47.7
+        },
+        {
+          "mira": "cabildo.rancho",
+          "dist_m": 70,
+          "azimut": 75,
+          "elevacion": 14,
+          "t": 55.0667
+        },
+        {
+          "mira": "cabildo.rancho",
+          "dist_m": 45,
+          "azimut": 100,
+          "elevacion": 12,
+          "t": 58.7667
+        },
+        {
+          "mira": "cabildo.rancho",
+          "dist_m": 26,
+          "azimut": 95,
+          "elevacion": 10,
+          "t": 62.7
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "resaltar",
+          "lugar": "cabildo.ranchos",
+          "dur": 2.5,
+          "t": 50.6667
+        },
+        {
+          "tipo": "resaltar",
+          "lugar": "cabildo.rancho",
+          "dur": 2.5,
+          "t": 59.2667
+        }
+      ],
+      "marcas": [
+        {
+          "lugar": "cabildo.rancho",
+          "texto": "Rancho de paja",
+          "sub": "casa del cabildo",
+          "t": 59.0333,
+          "hasta": 62.2333
+        }
+      ],
+      "transicion": "fundido",
+      "fundido_s": 0.6
+    },
+    {
+      "id": "valle-4",
+      "mundo": "valle",
+      "desde": 63.1667,
+      "hasta": 103.6333,
+      "camara": [
+        {
+          "mira": [
+            -90.9,
+            14.61
+          ],
+          "dist_km": 85,
+          "azimut": -90,
+          "elevacion": 46,
+          "t": 63.1667
+        },
+        {
+          "mira": "iximche",
+          "dist_km": 48,
+          "azimut": -90,
+          "elevacion": 40,
+          "t": 66.3
+        },
+        {
+          "mira": "iximche",
+          "dist_km": 28,
+          "azimut": -90,
+          "elevacion": 36,
+          "t": 69.9
+        },
+        {
+          "mira": "iximche",
+          "dist_km": 26,
+          "azimut": -90,
+          "elevacion": 36,
+          "t": 71.8
+        },
+        {
+          "mira": "iximche",
+          "dist_km": 22,
+          "azimut": -75,
+          "elevacion": 32,
+          "t": 74.4333
+        },
+        {
+          "mira": "iximche",
+          "dist_km": 40,
+          "azimut": -90,
+          "elevacion": 40,
+          "t": 79.4333
+        },
+        {
+          "mira": [
+            -90.75,
+            14.6
+          ],
+          "dist_km": 120,
+          "azimut": -90,
+          "elevacion": 52,
+          "t": 82.1
+        },
+        {
+          "mira": [
+            -90.7,
+            14.53
+          ],
+          "dist_km": 80,
+          "azimut": -90,
+          "elevacion": 55,
+          "t": 86.3667
+        },
+        {
+          "mira": [
+            -90.64,
+            14.56
+          ],
+          "dist_km": 125,
+          "azimut": -90,
+          "elevacion": 58,
+          "t": 92.7
+        },
+        {
+          "mira": [
+            -90.64,
+            14.56
+          ],
+          "dist_km": 125,
+          "azimut": -90,
+          "elevacion": 58,
+          "t": 100.8
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "encender",
+          "lugares": [
+            "iximche"
+          ],
+          "dur": 1.4,
+          "t": 68.0667
+        },
+        {
+          "tipo": "resaltar",
+          "lugar": "iximche",
+          "dur": 2.4,
+          "t": 69.2
+        },
+        {
+          "tipo": "parpadear",
+          "lugares": [
+            "iximche"
+          ],
+          "dur": 2.0,
+          "t": 78.2333
+        },
+        {
+          "tipo": "apagar",
+          "lugares": [
+            "iximche"
+          ],
+          "dur": 1.5,
+          "t": 79.6
+        },
+        {
+          "tipo": "mudar",
+          "desde": "iximche",
+          "hacia": "ciudad-vieja",
+          "pieza": "sedes",
+          "altura_km": 10,
+          "dur": 1.4,
+          "t": 82.1
+        },
+        {
+          "tipo": "mudar",
+          "desde": "ciudad-vieja",
+          "hacia": "antigua-guatemala",
+          "pieza": "sedes",
+          "altura_km": 5,
+          "dur": 1.2,
+          "t": 83.0333
+        },
+        {
+          "tipo": "mudar",
+          "desde": "antigua-guatemala",
+          "hacia": "guatemala",
+          "pieza": "sedes",
+          "altura_km": 10,
+          "dur": 1.4,
+          "t": 84.0667
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "volcanes",
+          "elemento": [
+            -90.743,
+            14.465
+          ],
+          "dur": 2.0,
+          "t": 88.8333
+        },
+        {
+          "tipo": "resaltar",
+          "lugar": "guatemala",
+          "dur": 2.0,
+          "t": 99.0333
+        }
+      ],
+      "marcas": [
+        {
+          "lugar": "iximche",
+          "texto": "Iximché",
+          "sub": "capital kaqchikel",
+          "t": 68.9667,
+          "hasta": 71.8
+        },
+        {
+          "lugar": "iximche",
+          "texto": "¿Capital o campamento?",
+          "sub": "AGN · Prensa Libre",
+          "t": 71.8333,
+          "hasta": 77.7333
+        },
+        {
+          "lugar": "iximche",
+          "texto": "La rebelión",
+          "sub": "kaqchikel, 1524",
+          "t": 77.9667,
+          "hasta": 81.8667
+        },
+        {
+          "lugar": "guatemala",
+          "texto": "Valle de la Ermita",
+          "sub": "hoy Ciudad de Guatemala",
+          "t": 83.8,
+          "hasta": 87.0
+        },
+        {
+          "lugar": "antigua-guatemala",
+          "texto": "Antigua",
+          "t": 86.1,
+          "hasta": 94.1667
+        }
+      ],
+      "anotaciones": [
+        {
+          "tipo": "pulso",
+          "sobre": [
+            "iximche"
+          ],
+          "radio_m": 4000,
+          "anillos": 2,
+          "t": 64.9,
+          "hasta": 69.2
+        },
+        {
+          "tipo": "pulso",
+          "sobre": [
+            "ciudad-vieja"
+          ],
+          "radio_m": 1500,
+          "anillos": 2,
+          "t": 81.8667,
+          "hasta": 94.1667
+        },
+        {
+          "tipo": "medida",
+          "en": "cumbre-agua",
+          "radio_m": 10300,
+          "rotulo": "10.3 km",
+          "t": 86.9667,
+          "hasta": 94.1667
+        },
+        {
+          "tipo": "medida",
+          "en": "cumbre-agua",
+          "radio_m": 31600,
+          "rotulo": "31.6 km",
+          "t": 91.0667,
+          "hasta": 94.1667
+        }
+      ],
+      "transicion": "fundido",
+      "fundido_s": 0.6
+    }
+  ]
+}

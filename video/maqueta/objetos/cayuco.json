@@ -1,0 +1,47 @@
+{
+ "tipo": "cayuco",
+ "clase": "objeto",
+ "cuando": "cayuco de tronco con un remero sin rostro que rema y se mece: el cruce de un lago en canoa; con la pose `tul`, cargado de manojos de tul",
+ "parametros": {},
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "medidas": {
+  "largo_m": 5.2,
+  "ancho_m": 0.8,
+  "alto_m": 1.25
+ },
+ "ejemplo": {
+  "objeto": "cayuco"
+ },
+ "nivel": "objeto",
+ "contiene": [
+  "casco excavado en un tronco (hueco, borda y tajamar)",
+  "remero sentado a popa con sombrero",
+  "pala de remo con su hoja",
+  "manojos de tul atados (pose tul)",
+  "estela y remolino de la pala"
+ ],
+ "animado": "rema: la pala entra a proa, jala bajo el agua y vuelve por el aire (ciclo de 1.5–1.9 s, escalado por la velocidad); el torso se inclina y gira con la palada; el casco se mece en balance, cabeceo y arfada; la estela crece con la marcha",
+ "gente": true,
+ "distancia_m": [
+  6,
+  70
+ ],
+ "caja_m": [
+  5.6,
+  1.3,
+  1.25
+ ],
+ "poses": [
+  "remar",
+  "tul",
+  "quieto",
+  "tul_quieto"
+ ],
+ "notas": "Va sobre el agua (actor con `puntos` o `desde`/`hacia` sobre el lago o el mar; el origen es la línea de flotación). Sin pose: rema si avanza (> 0.3 m/s) o si nadie da la velocidad, quieto si no. La `variante` elige la madera del casco (no la carga): la carga de tul sale con la pose `tul` o `tul_quieto`. Sin redes ni aparejo de pesca: es transporte. Sin luces de noche."
+}

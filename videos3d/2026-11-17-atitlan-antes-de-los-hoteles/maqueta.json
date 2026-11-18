@@ -1,0 +1,2393 @@
+{
+  "version": 1,
+  "video": true,
+  "estilo": "color",
+  "paleta": "jade",
+  "fps": 30,
+  "duracion_s": 105.7333,
+  "protagonista": "lagos",
+  "capa": {
+    "titulares": [
+      {
+        "t": 0.0,
+        "kicker": "22 NOV 2009 · NASA",
+        "texto": "Atitlán se puso verde",
+        "hasta": 5.6333
+      },
+      {
+        "t": 5.6333,
+        "kicker": "PANAJACHEL · 1934 · ALDOUS HUXLEY",
+        "texto": "«Como el lago de Como»",
+        "hasta": 11.8667
+      },
+      {
+        "t": 11.8667,
+        "kicker": "AÑOS 30 · SEGÚN SOL TAX",
+        "texto": "La «costa de oro»",
+        "hasta": 19.8
+      },
+      {
+        "t": 26.7,
+        "kicker": "LAGO DE ATITLÁN",
+        "texto": "El tular de la orilla",
+        "hasta": 36.0333
+      },
+      {
+        "t": 36.0333,
+        "kicker": "SEGÚN CORNELL (1996)",
+        "texto": "Llega la lobina",
+        "hasta": 44.2
+      },
+      {
+        "t": 44.2,
+        "kicker": "1965 · ANNE LABASTILLE",
+        "texto": "Lo que acorralaba al poc",
+        "hasta": 55.6
+      },
+      {
+        "t": 55.6,
+        "kicker": "1976 · SEGÚN CORNELL",
+        "texto": "El lago bajó",
+        "hasta": 63.2
+      },
+      {
+        "t": 70.5,
+        "kicker": "LAGO DE ATITLÁN · HASTA HOY",
+        "texto": "La orilla se llena",
+        "hasta": 83.3
+      },
+      {
+        "t": 83.3,
+        "kicker": "AMSCLAE · 2018",
+        "texto": "El agua de los poblados",
+        "hasta": 98.5667
+      }
+    ],
+    "cifras": [
+      {
+        "valor": "200",
+        "rotulo": "pocs hacia 1960",
+        "t": 34.7667,
+        "hasta": 36.9667
+      },
+      {
+        "valor": "83 %",
+        "rotulo": "de los juncos, perdidos",
+        "fuente": "Cornell (1996)",
+        "t": 60.5,
+        "hasta": 63.2
+      },
+      {
+        "valor": "50",
+        "rotulo": "pocs en 1983",
+        "fuente": "LaBastille, según Hunter (1988)",
+        "t": 65.9,
+        "hasta": 70.5
+      },
+      {
+        "valor": "8,167",
+        "rotulo": "metros con tul, de 42,193 de orilla en seis municipios",
+        "fuente": "AMSCLAE (2025)",
+        "t": 77.1333,
+        "hasta": 83.3
+      },
+      {
+        "valor": "28 %",
+        "rotulo": "del agua residual entra a una planta",
+        "fuente": "AMSCLAE",
+        "t": 85.3667,
+        "hasta": 88.8667
+      },
+      {
+        "valor": "46 %",
+        "rotulo": "de la gente, sin drenaje",
+        "fuente": "AMSCLAE",
+        "t": 90.7333,
+        "hasta": 98.5667
+      }
+    ],
+    "palabras": [
+      {
+        "text": "La",
+        "start": 0.0,
+        "end": 0.148
+      },
+      {
+        "text": "NASA",
+        "start": 0.201,
+        "end": 0.517
+      },
+      {
+        "text": "fotografió",
+        "start": 0.559,
+        "end": 1.204
+      },
+      {
+        "text": "el",
+        "start": 1.287,
+        "end": 1.34
+      },
+      {
+        "text": "lago",
+        "start": 1.415,
+        "end": 1.667
+      },
+      {
+        "text": "de",
+        "start": 1.72,
+        "end": 1.795
+      },
+      {
+        "text": "Atitlán,",
+        "start": 1.847,
+        "end": 2.449
+      },
+      {
+        "text": "en",
+        "start": 2.48,
+        "end": 2.585
+      },
+      {
+        "text": "Guatemala,",
+        "start": 2.638,
+        "end": 3.325
+      },
+      {
+        "text": "verde",
+        "start": 3.546,
+        "end": 3.874
+      },
+      {
+        "text": "de",
+        "start": 3.926,
+        "end": 4.0
+      },
+      {
+        "text": "cianobacterias.",
+        "start": 4.032,
+        "end": 5.193
+      },
+      {
+        "text": "Antes,",
+        "start": 5.633,
+        "end": 6.098
+      },
+      {
+        "text": "en",
+        "start": 6.13,
+        "end": 6.267
+      },
+      {
+        "text": "1934,",
+        "start": 6.33,
+        "end": 8.008
+      },
+      {
+        "text": "el",
+        "start": 8.051,
+        "end": 8.145
+      },
+      {
+        "text": "escritor",
+        "start": 8.188,
+        "end": 8.578
+      },
+      {
+        "text": "Aldous",
+        "start": 8.662,
+        "end": 9.031
+      },
+      {
+        "text": "Huxley",
+        "start": 9.116,
+        "end": 9.517
+      },
+      {
+        "text": "lo",
+        "start": 9.707,
+        "end": 9.802
+      },
+      {
+        "text": "comparó",
+        "start": 9.844,
+        "end": 10.171
+      },
+      {
+        "text": "con",
+        "start": 10.214,
+        "end": 10.32
+      },
+      {
+        "text": "el",
+        "start": 10.372,
+        "end": 10.425
+      },
+      {
+        "text": "lago",
+        "start": 10.499,
+        "end": 10.805
+      },
+      {
+        "text": "de",
+        "start": 10.89,
+        "end": 10.974
+      },
+      {
+        "text": "Como.",
+        "start": 11.048,
+        "end": 11.575
+      },
+      {
+        "text": "En",
+        "start": 12.141,
+        "end": 12.247
+      },
+      {
+        "text": "Panajachel,",
+        "start": 12.299,
+        "end": 13.049
+      },
+      {
+        "text": "cuenta",
+        "start": 13.112,
+        "end": 13.45
+      },
+      {
+        "text": "el",
+        "start": 13.482,
+        "end": 13.535
+      },
+      {
+        "text": "antropólogo",
+        "start": 13.588,
+        "end": 14.305
+      },
+      {
+        "text": "Sol",
+        "start": 14.41,
+        "end": 14.653
+      },
+      {
+        "text": "Tax,",
+        "start": 14.728,
+        "end": 15.255
+      },
+      {
+        "text": "ya",
+        "start": 15.445,
+        "end": 15.614
+      },
+      {
+        "text": "había",
+        "start": 15.646,
+        "end": 15.962
+      },
+      {
+        "text": "hoteles",
+        "start": 15.994,
+        "end": 16.542
+      },
+      {
+        "text": "y",
+        "start": 16.627,
+        "end": 16.649
+      },
+      {
+        "text": "casas",
+        "start": 16.754,
+        "end": 17.049
+      },
+      {
+        "text": "de",
+        "start": 17.091,
+        "end": 17.144
+      },
+      {
+        "text": "campo",
+        "start": 17.187,
+        "end": 17.45
+      },
+      {
+        "text": "de",
+        "start": 17.492,
+        "end": 17.567
+      },
+      {
+        "text": "ricos",
+        "start": 17.672,
+        "end": 17.999
+      },
+      {
+        "text": "y",
+        "start": 18.073,
+        "end": 18.094
+      },
+      {
+        "text": "extranjeros",
+        "start": 18.126,
+        "end": 18.801
+      },
+      {
+        "text": "en",
+        "start": 18.854,
+        "end": 18.907
+      },
+      {
+        "text": "la",
+        "start": 18.959,
+        "end": 19.002
+      },
+      {
+        "text": "orilla.",
+        "start": 19.044,
+        "end": 19.561
+      },
+      {
+        "text": "La",
+        "start": 20.032,
+        "end": 20.126
+      },
+      {
+        "text": "carretera",
+        "start": 20.169,
+        "end": 20.602
+      },
+      {
+        "text": "era",
+        "start": 20.655,
+        "end": 20.792
+      },
+      {
+        "text": "de",
+        "start": 20.845,
+        "end": 20.918
+      },
+      {
+        "text": "tierra,",
+        "start": 20.961,
+        "end": 21.456
+      },
+      {
+        "text": "y",
+        "start": 21.594,
+        "end": 21.731
+      },
+      {
+        "text": "la",
+        "start": 21.836,
+        "end": 21.911
+      },
+      {
+        "text": "gente",
+        "start": 21.953,
+        "end": 22.259
+      },
+      {
+        "text": "vivía",
+        "start": 22.312,
+        "end": 22.628
+      },
+      {
+        "text": "de",
+        "start": 22.67,
+        "end": 22.734
+      },
+      {
+        "text": "vender",
+        "start": 22.776,
+        "end": 23.166
+      },
+      {
+        "text": "cebolla,",
+        "start": 23.251,
+        "end": 23.905
+      },
+      {
+        "text": "ajo,",
+        "start": 24.127,
+        "end": 24.613
+      },
+      {
+        "text": "fruta",
+        "start": 24.771,
+        "end": 25.245
+      },
+      {
+        "text": "y",
+        "start": 25.435,
+        "end": 25.52
+      },
+      {
+        "text": "café.",
+        "start": 25.605,
+        "end": 26.259
+      },
+      {
+        "text": "Entre",
+        "start": 26.7,
+        "end": 26.995
+      },
+      {
+        "text": "el",
+        "start": 27.016,
+        "end": 27.069
+      },
+      {
+        "text": "tul",
+        "start": 27.144,
+        "end": 27.396
+      },
+      {
+        "text": "de",
+        "start": 27.502,
+        "end": 27.576
+      },
+      {
+        "text": "la",
+        "start": 27.618,
+        "end": 27.682
+      },
+      {
+        "text": "orilla",
+        "start": 27.735,
+        "end": 28.083
+      },
+      {
+        "text": "vivía",
+        "start": 28.188,
+        "end": 28.547
+      },
+      {
+        "text": "el",
+        "start": 28.568,
+        "end": 28.632
+      },
+      {
+        "text": "pato",
+        "start": 28.716,
+        "end": 29.001
+      },
+      {
+        "text": "poc,",
+        "start": 29.075,
+        "end": 29.518
+      },
+      {
+        "text": "que",
+        "start": 29.708,
+        "end": 29.803
+      },
+      {
+        "text": "no",
+        "start": 29.866,
+        "end": 29.961
+      },
+      {
+        "text": "existía",
+        "start": 30.004,
+        "end": 30.468
+      },
+      {
+        "text": "en",
+        "start": 30.5,
+        "end": 30.553
+      },
+      {
+        "text": "ningún",
+        "start": 30.584,
+        "end": 30.964
+      },
+      {
+        "text": "otro",
+        "start": 31.027,
+        "end": 31.228
+      },
+      {
+        "text": "lugar:",
+        "start": 31.27,
+        "end": 31.819
+      },
+      {
+        "text": "hacia",
+        "start": 32.368,
+        "end": 32.726
+      },
+      {
+        "text": "1960",
+        "start": 32.811,
+        "end": 34.278
+      },
+      {
+        "text": "quedaban",
+        "start": 34.342,
+        "end": 34.69
+      },
+      {
+        "text": "unos",
+        "start": 34.775,
+        "end": 34.965
+      },
+      {
+        "text": "200.",
+        "start": 35.006,
+        "end": 35.83
+      },
+      {
+        "text": "A",
+        "start": 36.233,
+        "end": 36.296
+      },
+      {
+        "text": "finales",
+        "start": 36.371,
+        "end": 36.698
+      },
+      {
+        "text": "de",
+        "start": 36.729,
+        "end": 36.771
+      },
+      {
+        "text": "los",
+        "start": 36.803,
+        "end": 36.909
+      },
+      {
+        "text": "cincuenta",
+        "start": 36.93,
+        "end": 37.521
+      },
+      {
+        "text": "sembraron",
+        "start": 37.679,
+        "end": 38.122
+      },
+      {
+        "text": "lobina",
+        "start": 38.196,
+        "end": 38.566
+      },
+      {
+        "text": "negra",
+        "start": 38.671,
+        "end": 39.009
+      },
+      {
+        "text": "para",
+        "start": 39.061,
+        "end": 39.231
+      },
+      {
+        "text": "pesca",
+        "start": 39.294,
+        "end": 39.611
+      },
+      {
+        "text": "deportiva;",
+        "start": 39.652,
+        "end": 40.371
+      },
+      {
+        "text": "según",
+        "start": 40.624,
+        "end": 40.961
+      },
+      {
+        "text": "Cornell,",
+        "start": 41.046,
+        "end": 41.595
+      },
+      {
+        "text": "idea",
+        "start": 41.732,
+        "end": 42.071
+      },
+      {
+        "text": "de",
+        "start": 42.112,
+        "end": 42.176
+      },
+      {
+        "text": "hoteleros",
+        "start": 42.207,
+        "end": 42.735
+      },
+      {
+        "text": "y",
+        "start": 42.841,
+        "end": 42.883
+      },
+      {
+        "text": "una",
+        "start": 42.989,
+        "end": 43.21
+      },
+      {
+        "text": "aerolínea.",
+        "start": 43.231,
+        "end": 43.97
+      },
+      {
+        "text": "En",
+        "start": 44.433,
+        "end": 44.591
+      },
+      {
+        "text": "1965,",
+        "start": 44.634,
+        "end": 46.534
+      },
+      {
+        "text": "la",
+        "start": 46.649,
+        "end": 46.734
+      },
+      {
+        "text": "bióloga",
+        "start": 46.776,
+        "end": 47.219
+      },
+      {
+        "text": "Anne",
+        "start": 47.325,
+        "end": 47.599
+      },
+      {
+        "text": "LaBastille",
+        "start": 47.652,
+        "end": 48.317
+      },
+      {
+        "text": "anotó",
+        "start": 48.475,
+        "end": 48.771
+      },
+      {
+        "text": "lo",
+        "start": 48.813,
+        "end": 48.887
+      },
+      {
+        "text": "que",
+        "start": 48.918,
+        "end": 48.982
+      },
+      {
+        "text": "acorralaba",
+        "start": 49.014,
+        "end": 49.594
+      },
+      {
+        "text": "al",
+        "start": 49.615,
+        "end": 49.689
+      },
+      {
+        "text": "poc:",
+        "start": 49.763,
+        "end": 50.396
+      },
+      {
+        "text": "el",
+        "start": 50.797,
+        "end": 50.924
+      },
+      {
+        "text": "corte",
+        "start": 50.998,
+        "end": 51.272
+      },
+      {
+        "text": "del",
+        "start": 51.325,
+        "end": 51.441
+      },
+      {
+        "text": "tul,",
+        "start": 51.525,
+        "end": 51.99
+      },
+      {
+        "text": "las",
+        "start": 52.148,
+        "end": 52.285
+      },
+      {
+        "text": "casas",
+        "start": 52.338,
+        "end": 52.645
+      },
+      {
+        "text": "nuevas,",
+        "start": 52.707,
+        "end": 53.267
+      },
+      {
+        "text": "las",
+        "start": 53.425,
+        "end": 53.573
+      },
+      {
+        "text": "lanchas",
+        "start": 53.647,
+        "end": 54.09
+      },
+      {
+        "text": "y",
+        "start": 54.28,
+        "end": 54.355
+      },
+      {
+        "text": "el",
+        "start": 54.407,
+        "end": 54.449
+      },
+      {
+        "text": "nivel",
+        "start": 54.502,
+        "end": 54.735
+      },
+      {
+        "text": "del",
+        "start": 54.787,
+        "end": 54.903
+      },
+      {
+        "text": "agua.",
+        "start": 54.955,
+        "end": 55.41
+      },
+      {
+        "text": "Tras",
+        "start": 55.801,
+        "end": 56.023
+      },
+      {
+        "text": "el",
+        "start": 56.065,
+        "end": 56.117
+      },
+      {
+        "text": "terremoto",
+        "start": 56.159,
+        "end": 56.592
+      },
+      {
+        "text": "de",
+        "start": 56.645,
+        "end": 56.719
+      },
+      {
+        "text": "1976",
+        "start": 56.793,
+        "end": 58.672
+      },
+      {
+        "text": "el",
+        "start": 58.894,
+        "end": 59.031
+      },
+      {
+        "text": "lago",
+        "start": 59.094,
+        "end": 59.305
+      },
+      {
+        "text": "bajó,",
+        "start": 59.336,
+        "end": 59.833
+      },
+      {
+        "text": "y",
+        "start": 60.023,
+        "end": 60.075
+      },
+      {
+        "text": "se",
+        "start": 60.149,
+        "end": 60.223
+      },
+      {
+        "text": "perdió",
+        "start": 60.265,
+        "end": 60.614
+      },
+      {
+        "text": "el",
+        "start": 60.655,
+        "end": 60.698
+      },
+      {
+        "text": "83 %",
+        "start": 60.762,
+        "end": 62.017
+      },
+      {
+        "text": "de",
+        "start": 62.07,
+        "end": 62.123
+      },
+      {
+        "text": "los",
+        "start": 62.155,
+        "end": 62.271
+      },
+      {
+        "text": "juncos.",
+        "start": 62.324,
+        "end": 62.894
+      },
+      {
+        "text": "En",
+        "start": 63.475,
+        "end": 63.611
+      },
+      {
+        "text": "1983",
+        "start": 63.654,
+        "end": 65.342
+      },
+      {
+        "text": "quedaban",
+        "start": 65.532,
+        "end": 65.891
+      },
+      {
+        "text": "unos",
+        "start": 65.944,
+        "end": 66.124
+      },
+      {
+        "text": "50,",
+        "start": 66.145,
+        "end": 66.873
+      },
+      {
+        "text": "y",
+        "start": 67.095,
+        "end": 67.147
+      },
+      {
+        "text": "a",
+        "start": 67.2,
+        "end": 67.221
+      },
+      {
+        "text": "finales",
+        "start": 67.264,
+        "end": 67.622
+      },
+      {
+        "text": "de",
+        "start": 67.654,
+        "end": 67.696
+      },
+      {
+        "text": "los",
+        "start": 67.738,
+        "end": 67.833
+      },
+      {
+        "text": "ochenta",
+        "start": 67.896,
+        "end": 68.382
+      },
+      {
+        "text": "ya",
+        "start": 68.604,
+        "end": 68.752
+      },
+      {
+        "text": "no",
+        "start": 68.805,
+        "end": 68.888
+      },
+      {
+        "text": "se",
+        "start": 68.941,
+        "end": 69.015
+      },
+      {
+        "text": "halló",
+        "start": 69.047,
+        "end": 69.268
+      },
+      {
+        "text": "ninguno.",
+        "start": 69.332,
+        "end": 70.039
+      },
+      {
+        "text": "La",
+        "start": 70.5,
+        "end": 70.648
+      },
+      {
+        "text": "orilla",
+        "start": 70.679,
+        "end": 70.996
+      },
+      {
+        "text": "siguió",
+        "start": 71.102,
+        "end": 71.355
+      },
+      {
+        "text": "llenándose",
+        "start": 71.376,
+        "end": 71.915
+      },
+      {
+        "text": "de",
+        "start": 71.967,
+        "end": 72.03
+      },
+      {
+        "text": "casas",
+        "start": 72.073,
+        "end": 72.379
+      },
+      {
+        "text": "de",
+        "start": 72.41,
+        "end": 72.463
+      },
+      {
+        "text": "verano",
+        "start": 72.505,
+        "end": 72.949
+      },
+      {
+        "text": "y",
+        "start": 73.055,
+        "end": 73.096
+      },
+      {
+        "text": "de",
+        "start": 73.181,
+        "end": 73.245
+      },
+      {
+        "text": "hoteles.",
+        "start": 73.286,
+        "end": 73.92
+      },
+      {
+        "text": "En",
+        "start": 74.384,
+        "end": 74.532
+      },
+      {
+        "text": "2025,",
+        "start": 74.574,
+        "end": 75.619
+      },
+      {
+        "text": "AMSCLAE",
+        "start": 75.672,
+        "end": 76.379
+      },
+      {
+        "text": "halló",
+        "start": 76.4,
+        "end": 76.695
+      },
+      {
+        "text": "tul",
+        "start": 76.801,
+        "end": 77.075
+      },
+      {
+        "text": "en",
+        "start": 77.16,
+        "end": 77.286
+      },
+      {
+        "text": "8,167",
+        "start": 77.371,
+        "end": 79.365
+      },
+      {
+        "text": "de",
+        "start": 79.587,
+        "end": 79.693
+      },
+      {
+        "text": "42,193",
+        "start": 79.735,
+        "end": 81.867
+      },
+      {
+        "text": "metros",
+        "start": 81.973,
+        "end": 82.321
+      },
+      {
+        "text": "de",
+        "start": 82.364,
+        "end": 82.416
+      },
+      {
+        "text": "orilla.",
+        "start": 82.458,
+        "end": 83.017
+      },
+      {
+        "text": "En",
+        "start": 83.575,
+        "end": 83.701
+      },
+      {
+        "text": "2018,",
+        "start": 83.744,
+        "end": 84.957
+      },
+      {
+        "text": "solo",
+        "start": 85.095,
+        "end": 85.4
+      },
+      {
+        "text": "el",
+        "start": 85.485,
+        "end": 85.58
+      },
+      {
+        "text": "28 %",
+        "start": 85.633,
+        "end": 86.773
+      },
+      {
+        "text": "del",
+        "start": 86.825,
+        "end": 86.941
+      },
+      {
+        "text": "agua",
+        "start": 86.984,
+        "end": 87.163
+      },
+      {
+        "text": "residual",
+        "start": 87.215,
+        "end": 87.638
+      },
+      {
+        "text": "de",
+        "start": 87.691,
+        "end": 87.744
+      },
+      {
+        "text": "los",
+        "start": 87.775,
+        "end": 87.87
+      },
+      {
+        "text": "poblados",
+        "start": 87.923,
+        "end": 88.376
+      },
+      {
+        "text": "de",
+        "start": 88.408,
+        "end": 88.461
+      },
+      {
+        "text": "la",
+        "start": 88.504,
+        "end": 88.556
+      },
+      {
+        "text": "orilla",
+        "start": 88.598,
+        "end": 88.946
+      },
+      {
+        "text": "entraba",
+        "start": 89.052,
+        "end": 89.548
+      },
+      {
+        "text": "a",
+        "start": 89.58,
+        "end": 89.601
+      },
+      {
+        "text": "una",
+        "start": 89.675,
+        "end": 89.844
+      },
+      {
+        "text": "planta,",
+        "start": 89.886,
+        "end": 90.519
+      },
+      {
+        "text": "y",
+        "start": 90.741,
+        "end": 90.805
+      },
+      {
+        "text": "el",
+        "start": 90.857,
+        "end": 90.92
+      },
+      {
+        "text": "46 %",
+        "start": 90.973,
+        "end": 92.419
+      },
+      {
+        "text": "de",
+        "start": 92.472,
+        "end": 92.525
+      },
+      {
+        "text": "su",
+        "start": 92.566,
+        "end": 92.673
+      },
+      {
+        "text": "gente",
+        "start": 92.725,
+        "end": 93.147
+      },
+      {
+        "text": "no",
+        "start": 93.369,
+        "end": 93.527
+      },
+      {
+        "text": "tenía",
+        "start": 93.591,
+        "end": 93.949
+      },
+      {
+        "text": "drenaje.",
+        "start": 93.992,
+        "end": 94.667
+      },
+      {
+        "text": "Y",
+        "start": 95.3,
+        "end": 95.364
+      },
+      {
+        "text": "el",
+        "start": 95.448,
+        "end": 95.501
+      },
+      {
+        "text": "lago",
+        "start": 95.565,
+        "end": 95.955
+      },
+      {
+        "text": "no",
+        "start": 96.06,
+        "end": 96.187
+      },
+      {
+        "text": "tiene",
+        "start": 96.24,
+        "end": 96.451
+      },
+      {
+        "text": "salida",
+        "start": 96.493,
+        "end": 96.936
+      },
+      {
+        "text": "por",
+        "start": 96.989,
+        "end": 97.115
+      },
+      {
+        "text": "ningún",
+        "start": 97.179,
+        "end": 97.464
+      },
+      {
+        "text": "río.",
+        "start": 97.57,
+        "end": 98.118
+      },
+      {
+        "text": "El",
+        "start": 98.567,
+        "end": 98.715
+      },
+      {
+        "text": "tul",
+        "start": 98.789,
+        "end": 98.999
+      },
+      {
+        "text": "sigue",
+        "start": 99.084,
+        "end": 99.348
+      },
+      {
+        "text": "a",
+        "start": 99.39,
+        "end": 99.411
+      },
+      {
+        "text": "trozos",
+        "start": 99.453,
+        "end": 99.812
+      },
+      {
+        "text": "en",
+        "start": 99.865,
+        "end": 99.918
+      },
+      {
+        "text": "la",
+        "start": 99.96,
+        "end": 100.013
+      },
+      {
+        "text": "orilla.",
+        "start": 100.034,
+        "end": 100.509
+      },
+      {
+        "text": "El",
+        "start": 100.909,
+        "end": 101.037
+      },
+      {
+        "text": "pato",
+        "start": 101.089,
+        "end": 101.332
+      },
+      {
+        "text": "que",
+        "start": 101.374,
+        "end": 101.438
+      },
+      {
+        "text": "vivía",
+        "start": 101.479,
+        "end": 101.797
+      },
+      {
+        "text": "en",
+        "start": 101.828,
+        "end": 101.902
+      },
+      {
+        "text": "él,",
+        "start": 101.976,
+        "end": 102.25
+      },
+      {
+        "text": "no.",
+        "start": 102.44,
+        "end": 102.915
+      }
+    ],
+    "progreso": {
+      "actos": [
+        0.0,
+        26.7,
+        70.5
+      ]
+    },
+    "seguir": {
+      "t": 56.0333,
+      "dur": 3.0
+    },
+    "pie": "Relieve: Mapzen Terrain Tiles · Lugares y lagos: © OpenStreetMap",
+    "handle": "@DerekUrizar",
+    "aviso": "Esquema",
+    "cierre": {
+      "t": 99.7667,
+      "frase": "El tul sigue a trozos. El poc, no.",
+      "redes": [
+        {
+          "nombre": "TikTok",
+          "handle": "@derekurizargt"
+        },
+        {
+          "nombre": "Instagram",
+          "handle": "@derekurizargt"
+        },
+        {
+          "nombre": "Facebook",
+          "handle": "Derek Urizar"
+        },
+        {
+          "nombre": "YouTube",
+          "handle": "@derekurizar"
+        },
+        {
+          "nombre": "X",
+          "handle": "@DerekUrizar"
+        }
+      ]
+    }
+  },
+  "mundos": {
+    "lago": {
+      "escala": "pais",
+      "set": "guatemala",
+      "exageracion": 3,
+      "estilo": "color",
+      "protagonista": "lagos",
+      "lugares": {
+        "panajachel": {
+          "lon": -91.1559757,
+          "lat": 14.7421699,
+          "nombre": "Panajachel"
+        },
+        "santiago": {
+          "lon": -91.2295526,
+          "lat": 14.6388934,
+          "nombre": "Santiago Atitlán"
+        },
+        "san-pedro": {
+          "lon": -91.2615284,
+          "lat": 14.6541186,
+          "nombre": "San Pedro La Laguna"
+        },
+        "san-marcos": {
+          "lon": -91.2593697,
+          "lat": 14.735498,
+          "nombre": "San Marcos La Laguna"
+        },
+        "centro-lago": {
+          "lon": -91.186161,
+          "lat": 14.6801463,
+          "nombre": "Lago de Atitlán"
+        },
+        "v-atitlan": {
+          "lon": -91.186,
+          "lat": 14.583,
+          "nombre": "Volcán Atitlán"
+        },
+        "v-toliman": {
+          "lon": -91.189,
+          "lat": 14.612,
+          "nombre": "Volcán Tolimán"
+        }
+      },
+      "piezas": [
+        {
+          "id": "lagos",
+          "tipo": "lagos",
+          "nombres": [
+            "atitlan"
+          ]
+        },
+        {
+          "id": "volcanes",
+          "tipo": "volcanes",
+          "lugares": [
+            "v-atitlan",
+            "v-toliman"
+          ],
+          "radio_km": 4,
+          "crater": true,
+          "forma": "cono",
+          "encendido": "queda"
+        },
+        {
+          "id": "pueblos",
+          "tipo": "luces",
+          "lugares": [
+            "panajachel",
+            "santiago",
+            "san-pedro",
+            "san-marcos"
+          ]
+        }
+      ]
+    },
+    "costa-de-oro": {
+      "escala": "esquema",
+      "receta": "campo",
+      "horizonte": "montanas",
+      "semilla": 11,
+      "tamano_m": 1600,
+      "estilo": "dia",
+      "hora": "dia",
+      "protagonista": "orilla",
+      "piezas": [
+        {
+          "id": "orilla",
+          "tipo": "orillalago",
+          "lugar": [
+            0,
+            0
+          ],
+          "rumbo": 0,
+          "tamano": 1,
+          "tul": 0.6,
+          "seco": 0,
+          "construcciones": 0.6,
+          "epoca": "antes",
+          "camino": "tierra",
+          "personas": 6,
+          "cayucos": 2,
+          "lanchas": 2,
+          "aves": 0,
+          "semilla": 1,
+          "cargadores": 4,
+          "vendedoras": 4,
+          "dispersion": 0.8,
+          "gente_escala": 1.7
+        }
+      ],
+      "escena": {
+        "que_pasa": "Años 30, según Sol Tax: en la orilla del delta de Panajachel hay hoteles y casas de campo bajas; detrás pasa el camino de tierra con gente a pie que carga y vende, un camión-bus y carros; cayucos y lanchas de gasolina cruzan el lago desde el muelle",
+        "quien": "vendedoras en el muelle y la playa, cargadores con mecapal que caminan por el camino, un remero en su cayuco",
+        "con_que": "mecapal, cayucos de tronco, lanchas de gasolina, un camión-bus y un carro genéricos",
+        "se_mueve": "los cayucos y las lanchas que cruzan, los cargadores que caminan, el carro y el camión-bus por el camino de tierra",
+        "sostiene": [
+          {
+            "que": "hoteles y casas de campo bajos y genéricos en la orilla",
+            "hecho": "visual-costa-de-oro-h01"
+          },
+          {
+            "que": "camino ancho de tierra, adoquín solo en el centro del pueblo",
+            "hecho": "visual-costa-de-oro-h02"
+          },
+          {
+            "que": "gente a pie con carga, camiones, camión-bus y carros por el camino",
+            "hecho": "visual-costa-de-oro-h03"
+          },
+          {
+            "que": "cargadores con mecapal, sin sacos concretos",
+            "hecho": "visual-costa-de-oro-h05"
+          },
+          {
+            "que": "casas indígenas de caña y adobe con paja entre cafetales",
+            "hecho": "visual-costa-de-oro-h06"
+          },
+          {
+            "que": "casas ladinas de adobe encalado con teja y reja",
+            "hecho": "visual-costa-de-oro-h07"
+          },
+          {
+            "que": "mujeres que venden en el muelle y los caminos",
+            "hecho": "visual-costa-de-oro-h08"
+          },
+          {
+            "que": "lanchas de gasolina y cayucos que cruzan el lago",
+            "hecho": "visual-costa-de-oro-h09"
+          },
+          {
+            "que": "cayuco de tronco como transporte, no para pescar",
+            "hecho": "visual-costa-de-oro-h10"
+          },
+          {
+            "que": "forma, techos y número de hoteles y casas; modelo del carro y del camión-bus",
+            "generico": true
+          }
+        ]
+      }
+    },
+    "tular": {
+      "escala": "esquema",
+      "receta": "campo",
+      "horizonte": "montanas",
+      "semilla": 23,
+      "tamano_m": 1600,
+      "estilo": "dia",
+      "hora": "amanecer",
+      "hora_razon": "el poc come cerca de la orilla en la mañana y descansa al abrigo del tul (visual-tular-h02): la primera luz es cuando se le ve",
+      "protagonista": "orilla-tul",
+      "piezas": [
+        {
+          "id": "orilla-tul",
+          "tipo": "orillalago",
+          "lugar": [
+            0,
+            0
+          ],
+          "rumbo": 0,
+          "tamano": 1,
+          "tul": 0,
+          "seco": 0,
+          "construcciones": 0.2,
+          "epoca": "antes",
+          "camino": "tierra",
+          "personas": 6,
+          "cayucos": 0,
+          "lanchas": 1,
+          "aves": 0,
+          "semilla": 3
+        },
+        {
+          "id": "poc-1",
+          "tipo": "actor",
+          "objeto": "poc",
+          "puntos": [
+            [
+              50,
+              92
+            ],
+            [
+              54,
+              104
+            ]
+          ],
+          "claves": [
+            {
+              "t": 0,
+              "s": 0,
+              "vel_kmh": 0.9
+            }
+          ],
+          "tamano": 4,
+          "pose": "nadar"
+        },
+        {
+          "id": "poc-2",
+          "tipo": "actor",
+          "objeto": "poc",
+          "puntos": [
+            [
+              56,
+              118
+            ],
+            [
+              52,
+              108
+            ]
+          ],
+          "claves": [
+            {
+              "t": 0,
+              "s": 0,
+              "vel_kmh": 0.8
+            }
+          ],
+          "tamano": 4,
+          "pose": "nadar"
+        },
+        {
+          "id": "poc-3",
+          "tipo": "actor",
+          "objeto": "poc",
+          "puntos": [
+            [
+              49,
+              82
+            ],
+            [
+              52,
+              86
+            ]
+          ],
+          "claves": [
+            {
+              "t": 0,
+              "s": 0,
+              "vel_kmh": 0.3
+            }
+          ],
+          "tamano": 4,
+          "pose": "nadar"
+        },
+        {
+          "id": "cayuco-tul",
+          "tipo": "actor",
+          "objeto": "cayuco",
+          "puntos": [
+            [
+              60,
+              150
+            ],
+            [
+              70,
+              60
+            ]
+          ],
+          "claves": [
+            {
+              "t": 0,
+              "s": 0,
+              "vel_kmh": 3
+            }
+          ],
+          "pose": "tul",
+          "variante": 1
+        },
+        {
+          "id": "lobina-1",
+          "tipo": "actor",
+          "objeto": "lobina",
+          "puntos": [
+            [
+              46,
+              96
+            ],
+            [
+              52,
+              106
+            ]
+          ],
+          "claves": [
+            {
+              "t": 0,
+              "s": 0,
+              "vel_kmh": 1.6
+            }
+          ],
+          "lev_m": 0.08,
+          "tamano": 2,
+          "variante": 0
+        },
+        {
+          "id": "lobina-2",
+          "tipo": "actor",
+          "objeto": "lobina",
+          "lugar": [
+            50,
+            100
+          ],
+          "rumbo": 200,
+          "lev_m": 0.08,
+          "tamano": 2,
+          "variante": 2,
+          "pose": "quieto"
+        }
+      ],
+      "escena": {
+        "que_pasa": "El tular de la orilla donde el poc come y descansa; la gente corta tul para petates y lo lleva en cayuco; entra la lobina; LaBastille anota lo que acorrala al poc; tras 1976 el lago baja y el tul queda en seco; los pocs dejan de verse",
+        "quien": "quien corta tul de pie en el agua baja, un remero con su cayuco cargado de tul, vendedoras y cargadores en la orilla",
+        "con_que": "manojos de tul, cayuco de tronco, una lancha de motor genérica",
+        "se_mueve": "los pocs que nadan y se zambullen, el cayuco con tul, las lobinas a flor de agua, la lancha que cruza, el agua que se retira y el tul que se seca y se dobla",
+        "sostiene": [
+          {
+            "que": "el poc: zambullidor oscuro y robusto de pico pálido",
+            "hecho": "visual-tular-h01"
+          },
+          {
+            "que": "el poc que come cerca de la orilla y descansa al abrigo del tul",
+            "hecho": "visual-tular-h02"
+          },
+          {
+            "que": "pocs entre manchas de tul y enea, con una lancha cerca",
+            "hecho": "visual-tular-h04"
+          },
+          {
+            "que": "tul y enea (petates, sopladores, amarres)",
+            "hecho": "visual-tular-h05"
+          },
+          {
+            "que": "quien corta tul junto a donde vive el poc",
+            "hecho": "visual-tular-h06"
+          },
+          {
+            "que": "la lobina: pez alargado, oscuro y grande",
+            "hecho": "visual-tular-h07"
+          },
+          {
+            "que": "el tul que queda en seco al bajar el agua, sin medida",
+            "hecho": "visual-tular-h08"
+          },
+          {
+            "que": "color, altura y forma del tul; la lancha; cuántos pocs se dibujan",
+            "generico": true
+          }
+        ]
+      }
+    },
+    "orilla-hoy": {
+      "escala": "esquema",
+      "receta": "campo",
+      "horizonte": "montanas",
+      "semilla": 37,
+      "tamano_m": 1600,
+      "estilo": "dia",
+      "hora": "dia",
+      "protagonista": "orilla-hoy",
+      "piezas": [
+        {
+          "id": "orilla-hoy",
+          "tipo": "orillalago",
+          "lugar": [
+            0,
+            0
+          ],
+          "rumbo": 90,
+          "tamano": 1,
+          "tul": 0.3,
+          "seco": 0,
+          "construcciones": 0,
+          "epoca": "hoy",
+          "camino": "asfalto",
+          "personas": 6,
+          "cayucos": 1,
+          "lanchas": 3,
+          "aves": 0,
+          "semilla": 1
+        }
+      ],
+      "escena": {
+        "que_pasa": "La orilla se va llenando de casas de verano y hoteles; las lanchas salen del muelle y la gente camina por la playa y el camino",
+        "quien": "vendedoras, paseantes y un huésped en la orilla, lancheros",
+        "con_que": "lanchas de motor genéricas, un cayuco, carros por el camino asfaltado",
+        "se_mueve": "las construcciones que brotan lote a lote, las lanchas que cruzan con su estela, la gente que camina",
+        "sostiene": [
+          {
+            "que": "casas de verano y hoteles que se multiplican en la orilla, genéricos",
+            "hecho": "visual-orilla-hoy-h07"
+          },
+          {
+            "que": "lanchas con motor que salen del muelle",
+            "hecho": "visual-orilla-hoy-h08"
+          },
+          {
+            "que": "cuántas construcciones brotan, su estilo y su material; el tipo de lancha",
+            "generico": true
+          }
+        ]
+      }
+    },
+    "drenaje-hoy": {
+      "escala": "esquema",
+      "receta": "campo",
+      "horizonte": "montanas",
+      "semilla": 41,
+      "tamano_m": 1600,
+      "estilo": "dia",
+      "hora": "dia",
+      "protagonista": "drenaje",
+      "piezas": [
+        {
+          "id": "drenaje",
+          "tipo": "drenajeorilla",
+          "lugar": [
+            0,
+            0
+          ],
+          "rumbo": 90,
+          "tamano": 1,
+          "a_planta": 0.3,
+          "sin_drenaje": 0.45,
+          "personas": 4,
+          "semilla": 1
+        }
+      ],
+      "escena": {
+        "que_pasa": "El agua residual de un pueblo de la orilla: una parte entra a una planta de tratamiento; otra baja cruda a la orilla por los desagües; las casas sin drenaje la dejan en fosas; el lago no tiene río de salida",
+        "quien": "vecinos que caminan por la calle del pueblo",
+        "con_que": "tubos de las casas, desagües en la playa, fosas, una planta de tratamiento genérica",
+        "se_mueve": "el agua residual en pulsos por los tubos, los chorros de los desagües, la mancha turbia que se abre en el agua, la gente en la calle",
+        "sostiene": [
+          {
+            "que": "28 % a planta, el resto crudo a la orilla o infiltrado; la mancha solo frente a las descargas crudas",
+            "hecho": "visual-orilla-hoy-h01"
+          },
+          {
+            "que": "varias descargas que bajan a la orilla, el punto más bajo",
+            "hecho": "visual-orilla-hoy-h02"
+          },
+          {
+            "que": "planta de tratamiento genérica con tanques",
+            "hecho": "visual-orilla-hoy-h03"
+          },
+          {
+            "que": "la salida de la planta no se pinta como agua limpia",
+            "hecho": "visual-orilla-hoy-h05"
+          },
+          {
+            "que": "un lago sin río de salida",
+            "hecho": "visual-orilla-hoy-h09"
+          },
+          {
+            "que": "la forma de las casas, los tubos y la planta; la proporción dibujada",
+            "generico": true
+          }
+        ]
+      }
+    }
+  },
+  "tramos": [
+    {
+      "id": "lago-1",
+      "mundo": "lago",
+      "desde": 0.0,
+      "hasta": 5.6333,
+      "camara": [
+        {
+          "mira": "centro-lago",
+          "dist_km": 24,
+          "azimut": 180,
+          "elevacion": 30,
+          "t": 0.0
+        },
+        {
+          "mira": "centro-lago",
+          "dist_km": 21,
+          "azimut": 174,
+          "elevacion": 28,
+          "t": 5.2
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "florecer",
+          "pieza": "lagos",
+          "lago": "atitlan",
+          "cobertura": 0.35,
+          "dur": 4.5,
+          "semilla": 1,
+          "t": 0.0
+        }
+      ]
+    },
+    {
+      "id": "costa-de-oro-2",
+      "mundo": "costa-de-oro",
+      "desde": 5.6333,
+      "hasta": 26.7,
+      "camara": [
+        {
+          "mira": [
+            -10,
+            -10
+          ],
+          "dist_m": 360,
+          "azimut": 255,
+          "elevacion": 14,
+          "t": 5.6333
+        },
+        {
+          "mira": [
+            -10,
+            -10
+          ],
+          "dist_m": 320,
+          "azimut": 245,
+          "elevacion": 13,
+          "t": 8.6667
+        },
+        {
+          "mira": [
+            -15,
+            -15
+          ],
+          "dist_m": 280,
+          "azimut": 232,
+          "elevacion": 15,
+          "t": 11.5667
+        },
+        {
+          "mira": [
+            -45,
+            -20
+          ],
+          "dist_m": 260,
+          "azimut": 182,
+          "elevacion": 30,
+          "t": 15.4333
+        },
+        {
+          "mira": [
+            -85,
+            -20
+          ],
+          "dist_m": 70,
+          "azimut": 200,
+          "elevacion": 20,
+          "t": 21.8333
+        },
+        {
+          "mira": [
+            -88,
+            -28
+          ],
+          "dist_m": 55,
+          "azimut": 208,
+          "elevacion": 18,
+          "t": 26.2667
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "resaltar",
+          "pieza": "orilla",
+          "dur": 2,
+          "t": 10.5
+        }
+      ],
+      "marcas": [
+        {
+          "lugar": [
+            -46,
+            -20
+          ],
+          "texto": "Hoteles y casas de campo",
+          "sub": "En la orilla",
+          "t": 15.7333,
+          "hasta": 19.8
+        },
+        {
+          "lugar": [
+            -95,
+            -10
+          ],
+          "texto": "Camino de tierra",
+          "t": 20.4,
+          "hasta": 24.3
+        },
+        {
+          "lugar": [
+            -95,
+            -40
+          ],
+          "texto": "Cebolla, ajo, fruta y café",
+          "t": 23.0,
+          "hasta": 25.6
+        }
+      ],
+      "transicion": "oscuro",
+      "fundido_s": 0.8
+    },
+    {
+      "id": "tular-3",
+      "mundo": "tular",
+      "desde": 26.7,
+      "hasta": 70.5,
+      "camara": [
+        {
+          "mira": [
+            40,
+            85
+          ],
+          "dist_m": 90,
+          "azimut": 250,
+          "elevacion": 16,
+          "t": 26.7
+        },
+        {
+          "mira": [
+            52,
+            98
+          ],
+          "dist_m": 38,
+          "azimut": 262,
+          "elevacion": 9,
+          "t": 28.2
+        },
+        {
+          "mira": [
+            52,
+            100
+          ],
+          "dist_m": 60,
+          "azimut": 245,
+          "elevacion": 14,
+          "t": 32.3667
+        },
+        {
+          "mira": [
+            50,
+            101
+          ],
+          "dist_m": 22,
+          "azimut": 285,
+          "elevacion": 24,
+          "t": 38.2
+        },
+        {
+          "mira": [
+            50,
+            100
+          ],
+          "dist_m": 45,
+          "azimut": 255,
+          "elevacion": 18,
+          "t": 40.6333
+        },
+        {
+          "mira": [
+            30,
+            90
+          ],
+          "dist_m": 170,
+          "azimut": 240,
+          "elevacion": 22,
+          "t": 44.2
+        },
+        {
+          "mira": [
+            30,
+            92
+          ],
+          "dist_m": 155,
+          "azimut": 236,
+          "elevacion": 22,
+          "t": 49.0
+        },
+        {
+          "mira": [
+            30,
+            92
+          ],
+          "dist_m": 150,
+          "azimut": 232,
+          "elevacion": 21,
+          "t": 54.4
+        },
+        {
+          "mira": [
+            30,
+            90
+          ],
+          "dist_m": 140,
+          "azimut": 230,
+          "elevacion": 20,
+          "t": 58.9
+        },
+        {
+          "mira": [
+            45,
+            100
+          ],
+          "dist_m": 120,
+          "azimut": 245,
+          "elevacion": 17,
+          "t": 62.9
+        },
+        {
+          "mira": [
+            52,
+            95
+          ],
+          "dist_m": 50,
+          "azimut": 258,
+          "elevacion": 14,
+          "t": 65.5333
+        },
+        {
+          "mira": [
+            50,
+            98
+          ],
+          "dist_m": 90,
+          "azimut": 250,
+          "elevacion": 18,
+          "t": 70.0333
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "aparecer",
+          "pieza": "lobina-1",
+          "dur": 0.6,
+          "t": 38.2
+        },
+        {
+          "tipo": "aparecer",
+          "pieza": "lobina-2",
+          "dur": 0.6,
+          "t": 38.2
+        },
+        {
+          "tipo": "bajarlago",
+          "pieza": "orilla-tul",
+          "baja": 0.5,
+          "seca": 1,
+          "tul": 0.8,
+          "dur": 5,
+          "semilla": 1,
+          "t": 58.9
+        },
+        {
+          "tipo": "desaparecer",
+          "pieza": "poc-3",
+          "dur": 0.8,
+          "t": 65.9333
+        },
+        {
+          "tipo": "desaparecer",
+          "pieza": "poc-1",
+          "dur": 0.8,
+          "t": 68.6
+        },
+        {
+          "tipo": "desaparecer",
+          "pieza": "poc-2",
+          "dur": 0.8,
+          "t": 68.6
+        }
+      ],
+      "marcas": [
+        {
+          "lugar": [
+            52,
+            98
+          ],
+          "texto": "Poc",
+          "sub": "Solo vivía en Atitlán",
+          "t": 28.4667,
+          "hasta": 34.6667
+        },
+        {
+          "lugar": [
+            50,
+            101
+          ],
+          "texto": "Lobina negra",
+          "sub": "Pez sembrado",
+          "t": 37.9333,
+          "hasta": 44.2
+        },
+        {
+          "lugar": [
+            24,
+            92
+          ],
+          "texto": "Corte de tul",
+          "t": 50.5333,
+          "hasta": 54.5
+        },
+        {
+          "lugar": [
+            40,
+            100
+          ],
+          "texto": "Nivel del agua",
+          "alto": 190,
+          "t": 54.1667,
+          "hasta": 55.6
+        }
+      ],
+      "transicion": "oscuro",
+      "fundido_s": 0.8
+    },
+    {
+      "id": "orilla-hoy-4",
+      "mundo": "orilla-hoy",
+      "desde": 70.5,
+      "hasta": 83.3,
+      "camara": [
+        {
+          "mira": [
+            0,
+            -35
+          ],
+          "dist_m": 320,
+          "azimut": 180,
+          "elevacion": 22,
+          "t": 70.5
+        },
+        {
+          "mira": [
+            -10,
+            -35
+          ],
+          "dist_m": 290,
+          "azimut": 188,
+          "elevacion": 20,
+          "t": 73.1667
+        },
+        {
+          "mira": [
+            -200,
+            12
+          ],
+          "dist_m": 60,
+          "azimut": 170,
+          "elevacion": 12,
+          "t": 76.4
+        },
+        {
+          "mira": [
+            -185,
+            8
+          ],
+          "dist_m": 150,
+          "azimut": 178,
+          "elevacion": 18,
+          "t": 81.9667
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "poblar",
+          "pieza": "orilla-hoy",
+          "de": 0.05,
+          "a": 0.85,
+          "orden": "izquierda-derecha",
+          "epoca": "hoy",
+          "dur": 3.6,
+          "semilla": 1,
+          "t": 70.5
+        }
+      ],
+      "marcas": [
+        {
+          "lugar": [
+            -200,
+            12
+          ],
+          "texto": "Tul",
+          "sub": "A trozos en la orilla",
+          "t": 76.1333,
+          "hasta": 83.3
+        }
+      ],
+      "transicion": "oscuro",
+      "fundido_s": 0.8
+    },
+    {
+      "id": "drenaje-hoy-5",
+      "mundo": "drenaje-hoy",
+      "desde": 83.3,
+      "hasta": 98.5667,
+      "camara": [
+        {
+          "mira": [
+            30,
+            0
+          ],
+          "dist_m": 220,
+          "azimut": 180,
+          "elevacion": 26,
+          "t": 83.3
+        },
+        {
+          "mira": [
+            30,
+            0
+          ],
+          "dist_m": 220,
+          "azimut": 180,
+          "elevacion": 26,
+          "t": 87.7
+        },
+        {
+          "mira": [
+            -84,
+            -33
+          ],
+          "dist_m": 150,
+          "azimut": 182,
+          "elevacion": 24,
+          "t": 89.0667
+        },
+        {
+          "mira": [
+            -84,
+            -33
+          ],
+          "dist_m": 150,
+          "azimut": 182,
+          "elevacion": 24,
+          "t": 90.7333
+        },
+        {
+          "mira": [
+            0,
+            -15
+          ],
+          "dist_m": 200,
+          "azimut": 180,
+          "elevacion": 26,
+          "t": 93.3667
+        },
+        {
+          "mira": [
+            10,
+            20
+          ],
+          "dist_m": 380,
+          "azimut": 180,
+          "elevacion": 30,
+          "t": 95.4333
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "verter",
+          "pieza": "drenaje",
+          "mancha": 0.6,
+          "vel": 1.2,
+          "dur": 6,
+          "t": 83.3
+        }
+      ],
+      "marcas": [
+        {
+          "lugar": [
+            27.5,
+            5
+          ],
+          "texto": "Descarga sin tratar",
+          "t": 86.5667,
+          "hasta": 88.5667
+        },
+        {
+          "lugar": [
+            -84,
+            -33
+          ],
+          "texto": "Planta de tratamiento",
+          "t": 88.8,
+          "hasta": 91.2
+        },
+        {
+          "lugar": [
+            10,
+            60
+          ],
+          "texto": "Sin río de salida",
+          "t": 95.2,
+          "hasta": 98.5667
+        }
+      ],
+      "transicion": "fundido",
+      "fundido_s": 0.6
+    },
+    {
+      "id": "lago-6",
+      "mundo": "lago",
+      "desde": 98.5667,
+      "hasta": 105.7333,
+      "camara": [
+        {
+          "mira": "centro-lago",
+          "dist_km": 28,
+          "azimut": 168,
+          "elevacion": 34,
+          "t": 98.5667
+        },
+        {
+          "mira": [
+            -91.19,
+            14.665
+          ],
+          "dist_km": 25,
+          "azimut": 172,
+          "elevacion": 31,
+          "t": 100.9
+        },
+        {
+          "mira": "centro-lago",
+          "dist_km": 24,
+          "azimut": 180,
+          "elevacion": 30,
+          "t": 102.9
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "resaltar",
+          "pieza": "lagos",
+          "dur": 2.5,
+          "t": 98.5667
+        }
+      ],
+      "transicion": "fundido",
+      "fundido_s": 0.8
+    }
+  ]
+}

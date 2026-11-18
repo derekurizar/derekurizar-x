@@ -1,0 +1,47 @@
+{
+ "tipo": "magma",
+ "clase": "evento",
+ "cuando": "el magma que nace en una subduccion: el manto de encima se enciende, sube por el conducto al cráter y la fila de cráteres se enciende",
+ "parametros": {
+  "pieza": {
+   "tipo": "pieza",
+   "piezas": [
+    "subduccion"
+   ],
+   "requerido": true,
+   "descripcion": "el bloque de subducción sobre cuya cara del corte pasa todo (mejor con su `magma: false`, para que la secuencia sea solo la del evento). Míralo de frente: azimut ≈ rumbo, mira «<pieza>.placa-100» con mira_lev_m ≈ 300 × tamano y dist_m ≈ 1400 × tamano; para la fila, mira «<pieza>.fila» desde más arriba"
+  },
+  "fila": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": false,
+   "descripcion": "tras el cráter del frente, los cráteres de toda la fila se encienden uno tras otro, paralelos a la fosa, y quedan encendidos (con fila, el ascenso usa la primera mitad de `dur`)"
+  },
+  "orden": {
+   "tipo": "texto",
+   "valores": [
+    "frente-fondo",
+    "fondo-frente"
+   ],
+   "requerido": false,
+   "defecto": "frente-fondo",
+   "descripcion": "en qué orden se enciende la fila: del cono partido por el corte hacia el fondo, o del fondo hacia el corte"
+  }
+ },
+ "escalas": [
+  "esquema"
+ ],
+ "motores": [
+  "three"
+ ],
+ "usa": [],
+ "animado": "gotas de agua que salen de la placa, la cuña de manto de encima que se enciende y late (la placa no), una gota de magma con su cola que sube a la bolsa y por el conducto y deja un hilo tibio, el cráter del frente que se enciende en el acento con su halo y, con fila, los cráteres que se encienden uno tras otro; después del evento todo lo encendido sigue encendido; de noche brilla más (todo función de t; didáctico: ni velocidad ni duración del ascenso)",
+ "ejemplo": {
+  "t": 0.6,
+  "dur": 6.0,
+  "tipo": "magma",
+  "pieza": "corte",
+  "fila": true,
+  "orden": "frente-fondo"
+ }
+}

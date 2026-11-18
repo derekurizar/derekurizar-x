@@ -1,0 +1,1914 @@
+{
+  "version": 1,
+  "video": true,
+  "estilo": "noche",
+  "paleta": "jade",
+  "fps": 30,
+  "duracion_s": 88.6333,
+  "protagonista": "bosque",
+  "capa": {
+    "titulares": [
+      {
+        "t": 0.0,
+        "kicker": "SEGÚN EL SATÉLITE",
+        "texto": "El bosque de la reserva, año por año",
+        "hasta": 4.8667
+      },
+      {
+        "t": 64.2333,
+        "kicker": "DE CERCA",
+        "texto": "Un cuadro del satélite",
+        "hasta": 75.1667
+      }
+    ],
+    "cifras": [
+      {
+        "valor": "2,090,667 ha",
+        "rotulo": "la quinta parte de Guatemala",
+        "fuente": "CONAP",
+        "t": 7.1667,
+        "hasta": 14.2333
+      },
+      {
+        "valor": "508,697 ha",
+        "rotulo": "perdieron cobertura · aprox., según el satélite",
+        "fuente": "Hansen/UMD",
+        "t": 36.5667,
+        "hasta": 40.5667
+      },
+      {
+        "valor": "26.8 %",
+        "rotulo": "del bosque que había en 2000",
+        "fuente": "Hansen/UMD",
+        "t": 41.1,
+        "hasta": 44.3667
+      },
+      {
+        "valor": "30",
+        "rotulo": "metros por lado, cada cuadro",
+        "t": 68.9667,
+        "hasta": 75.1667
+      }
+    ],
+    "palabras": [
+      {
+        "text": "Mira",
+        "start": 0.0,
+        "end": 0.254
+      },
+      {
+        "text": "cómo",
+        "start": 0.306,
+        "end": 0.506
+      },
+      {
+        "text": "se",
+        "start": 0.549,
+        "end": 0.623
+      },
+      {
+        "text": "apaga,",
+        "start": 0.665,
+        "end": 1.097
+      },
+      {
+        "text": "año",
+        "start": 1.15,
+        "end": 1.499
+      },
+      {
+        "text": "por",
+        "start": 1.552,
+        "end": 1.699
+      },
+      {
+        "text": "año,",
+        "start": 1.742,
+        "end": 2.111
+      },
+      {
+        "text": "el",
+        "start": 2.153,
+        "end": 2.259
+      },
+      {
+        "text": "área",
+        "start": 2.312,
+        "end": 2.47
+      },
+      {
+        "text": "protegida",
+        "start": 2.502,
+        "end": 3.04
+      },
+      {
+        "text": "más",
+        "start": 3.114,
+        "end": 3.315
+      },
+      {
+        "text": "grande",
+        "start": 3.367,
+        "end": 3.684
+      },
+      {
+        "text": "de",
+        "start": 3.736,
+        "end": 3.8
+      },
+      {
+        "text": "Guatemala.",
+        "start": 3.842,
+        "end": 4.581
+      },
+      {
+        "text": "Es",
+        "start": 5.14,
+        "end": 5.352
+      },
+      {
+        "text": "la",
+        "start": 5.405,
+        "end": 5.468
+      },
+      {
+        "text": "Reserva",
+        "start": 5.531,
+        "end": 5.943
+      },
+      {
+        "text": "de",
+        "start": 5.985,
+        "end": 6.038
+      },
+      {
+        "text": "la",
+        "start": 6.08,
+        "end": 6.133
+      },
+      {
+        "text": "Biosfera",
+        "start": 6.175,
+        "end": 6.66
+      },
+      {
+        "text": "Maya:",
+        "start": 6.724,
+        "end": 7.241
+      },
+      {
+        "text": "la",
+        "start": 7.431,
+        "end": 7.516
+      },
+      {
+        "text": "quinta",
+        "start": 7.579,
+        "end": 7.917
+      },
+      {
+        "text": "parte",
+        "start": 7.98,
+        "end": 8.265
+      },
+      {
+        "text": "del",
+        "start": 8.307,
+        "end": 8.413
+      },
+      {
+        "text": "país.",
+        "start": 8.466,
+        "end": 9.004
+      },
+      {
+        "text": "Cada",
+        "start": 9.299,
+        "end": 9.584
+      },
+      {
+        "text": "cuadro",
+        "start": 9.648,
+        "end": 9.943
+      },
+      {
+        "text": "encendido",
+        "start": 9.964,
+        "end": 10.566
+      },
+      {
+        "text": "es",
+        "start": 10.671,
+        "end": 10.819
+      },
+      {
+        "text": "bosque",
+        "start": 10.882,
+        "end": 11.189
+      },
+      {
+        "text": "que",
+        "start": 11.241,
+        "end": 11.315
+      },
+      {
+        "text": "el",
+        "start": 11.337,
+        "end": 11.389
+      },
+      {
+        "text": "satélite",
+        "start": 11.442,
+        "end": 11.949
+      },
+      {
+        "text": "vio",
+        "start": 11.99,
+        "end": 12.233
+      },
+      {
+        "text": "en",
+        "start": 12.276,
+        "end": 12.339
+      },
+      {
+        "text": "el",
+        "start": 12.391,
+        "end": 12.466
+      },
+      {
+        "text": "año",
+        "start": 12.498,
+        "end": 12.846
+      },
+      {
+        "text": "2000.",
+        "start": 12.919,
+        "end": 13.774
+      },
+      {
+        "text": "Ahora",
+        "start": 14.233,
+        "end": 14.592
+      },
+      {
+        "text": "corre",
+        "start": 14.666,
+        "end": 14.951
+      },
+      {
+        "text": "el",
+        "start": 14.972,
+        "end": 15.035
+      },
+      {
+        "text": "tiempo:",
+        "start": 15.11,
+        "end": 15.721
+      },
+      {
+        "text": "el",
+        "start": 16.017,
+        "end": 16.154
+      },
+      {
+        "text": "año",
+        "start": 16.196,
+        "end": 16.513
+      },
+      {
+        "text": "en",
+        "start": 16.576,
+        "end": 16.64
+      },
+      {
+        "text": "que",
+        "start": 16.703,
+        "end": 16.788
+      },
+      {
+        "text": "un",
+        "start": 16.893,
+        "end": 16.988
+      },
+      {
+        "text": "cuadro",
+        "start": 17.061,
+        "end": 17.431
+      },
+      {
+        "text": "pierde",
+        "start": 17.484,
+        "end": 17.811
+      },
+      {
+        "text": "su",
+        "start": 17.853,
+        "end": 17.949
+      },
+      {
+        "text": "bosque,",
+        "start": 17.991,
+        "end": 18.476
+      },
+      {
+        "text": "se",
+        "start": 18.634,
+        "end": 18.761
+      },
+      {
+        "text": "apaga.",
+        "start": 18.824,
+        "end": 19.362
+      },
+      {
+        "text": "En",
+        "start": 19.827,
+        "end": 19.954
+      },
+      {
+        "text": "2003",
+        "start": 19.996,
+        "end": 20.767
+      },
+      {
+        "text": "y",
+        "start": 20.957,
+        "end": 21.031
+      },
+      {
+        "text": "en",
+        "start": 21.093,
+        "end": 21.136
+      },
+      {
+        "text": "2005",
+        "start": 21.178,
+        "end": 21.991
+      },
+      {
+        "text": "se",
+        "start": 22.181,
+        "end": 22.286
+      },
+      {
+        "text": "apaga",
+        "start": 22.329,
+        "end": 22.592
+      },
+      {
+        "text": "mucho",
+        "start": 22.677,
+        "end": 22.993
+      },
+      {
+        "text": "más,",
+        "start": 23.036,
+        "end": 23.469
+      },
+      {
+        "text": "y",
+        "start": 23.606,
+        "end": 23.68
+      },
+      {
+        "text": "2007",
+        "start": 23.753,
+        "end": 24.545
+      },
+      {
+        "text": "es",
+        "start": 24.619,
+        "end": 24.756
+      },
+      {
+        "text": "el",
+        "start": 24.83,
+        "end": 24.893
+      },
+      {
+        "text": "año",
+        "start": 24.936,
+        "end": 25.2
+      },
+      {
+        "text": "que",
+        "start": 25.241,
+        "end": 25.326
+      },
+      {
+        "text": "más",
+        "start": 25.411,
+        "end": 25.642
+      },
+      {
+        "text": "pierde.",
+        "start": 25.706,
+        "end": 26.244
+      },
+      {
+        "text": "Después",
+        "start": 26.699,
+        "end": 27.068
+      },
+      {
+        "text": "baja,",
+        "start": 27.131,
+        "end": 27.659
+      },
+      {
+        "text": "pero",
+        "start": 27.796,
+        "end": 27.986
+      },
+      {
+        "text": "2016,",
+        "start": 28.029,
+        "end": 29.284
+      },
+      {
+        "text": "2020",
+        "start": 29.443,
+        "end": 30.382
+      },
+      {
+        "text": "y",
+        "start": 30.572,
+        "end": 30.646
+      },
+      {
+        "text": "2024",
+        "start": 30.719,
+        "end": 31.743
+      },
+      {
+        "text": "vuelven",
+        "start": 31.796,
+        "end": 32.145
+      },
+      {
+        "text": "a",
+        "start": 32.187,
+        "end": 32.208
+      },
+      {
+        "text": "subir:",
+        "start": 32.25,
+        "end": 32.746
+      },
+      {
+        "text": "coinciden",
+        "start": 32.999,
+        "end": 33.517
+      },
+      {
+        "text": "con",
+        "start": 33.58,
+        "end": 33.707
+      },
+      {
+        "text": "temporadas",
+        "start": 33.749,
+        "end": 34.287
+      },
+      {
+        "text": "de",
+        "start": 34.329,
+        "end": 34.393
+      },
+      {
+        "text": "grandes",
+        "start": 34.456,
+        "end": 34.868
+      },
+      {
+        "text": "incendios.",
+        "start": 34.941,
+        "end": 35.628
+      },
+      {
+        "text": "En",
+        "start": 36.099,
+        "end": 36.215
+      },
+      {
+        "text": "total,",
+        "start": 36.269,
+        "end": 36.722
+      },
+      {
+        "text": "más",
+        "start": 36.807,
+        "end": 37.007
+      },
+      {
+        "text": "de",
+        "start": 37.049,
+        "end": 37.112
+      },
+      {
+        "text": "medio",
+        "start": 37.218,
+        "end": 37.556
+      },
+      {
+        "text": "millón",
+        "start": 37.609,
+        "end": 37.957
+      },
+      {
+        "text": "de",
+        "start": 37.999,
+        "end": 38.083
+      },
+      {
+        "text": "hectáreas",
+        "start": 38.105,
+        "end": 38.611
+      },
+      {
+        "text": "perdieron",
+        "start": 38.675,
+        "end": 39.065
+      },
+      {
+        "text": "su",
+        "start": 39.108,
+        "end": 39.191
+      },
+      {
+        "text": "cobertura",
+        "start": 39.234,
+        "end": 39.73
+      },
+      {
+        "text": "según",
+        "start": 39.783,
+        "end": 40.12
+      },
+      {
+        "text": "el",
+        "start": 40.163,
+        "end": 40.226
+      },
+      {
+        "text": "satélite:",
+        "start": 40.279,
+        "end": 41.007
+      },
+      {
+        "text": "más",
+        "start": 41.356,
+        "end": 41.567
+      },
+      {
+        "text": "de",
+        "start": 41.609,
+        "end": 41.651
+      },
+      {
+        "text": "la",
+        "start": 41.693,
+        "end": 41.757
+      },
+      {
+        "text": "cuarta",
+        "start": 41.819,
+        "end": 42.179
+      },
+      {
+        "text": "parte",
+        "start": 42.242,
+        "end": 42.527
+      },
+      {
+        "text": "del",
+        "start": 42.569,
+        "end": 42.685
+      },
+      {
+        "text": "bosque",
+        "start": 42.749,
+        "end": 43.065
+      },
+      {
+        "text": "que",
+        "start": 43.118,
+        "end": 43.192
+      },
+      {
+        "text": "había.",
+        "start": 43.234,
+        "end": 43.909
+      },
+      {
+        "text": "¿Y",
+        "start": 44.367,
+        "end": 44.536
+      },
+      {
+        "text": "dónde?",
+        "start": 44.609,
+        "end": 45.148
+      },
+      {
+        "text": "El",
+        "start": 45.549,
+        "end": 45.686
+      },
+      {
+        "text": "oeste",
+        "start": 45.729,
+        "end": 45.981
+      },
+      {
+        "text": "se",
+        "start": 46.034,
+        "end": 46.109
+      },
+      {
+        "text": "apaga",
+        "start": 46.15,
+        "end": 46.446
+      },
+      {
+        "text": "más",
+        "start": 46.489,
+        "end": 46.626
+      },
+      {
+        "text": "rápido:",
+        "start": 46.731,
+        "end": 47.301
+      },
+      {
+        "text": "Laguna",
+        "start": 47.649,
+        "end": 48.06
+      },
+      {
+        "text": "del",
+        "start": 48.103,
+        "end": 48.219
+      },
+      {
+        "text": "Tigre",
+        "start": 48.266,
+        "end": 48.624
+      },
+      {
+        "text": "y",
+        "start": 48.666,
+        "end": 48.698
+      },
+      {
+        "text": "Sierra",
+        "start": 48.803,
+        "end": 49.141
+      },
+      {
+        "text": "del",
+        "start": 49.183,
+        "end": 49.289
+      },
+      {
+        "text": "Lacandón,",
+        "start": 49.331,
+        "end": 50.028
+      },
+      {
+        "text": "parques",
+        "start": 50.186,
+        "end": 50.566
+      },
+      {
+        "text": "con",
+        "start": 50.619,
+        "end": 50.724
+      },
+      {
+        "text": "las",
+        "start": 50.756,
+        "end": 50.851
+      },
+      {
+        "text": "reglas",
+        "start": 50.935,
+        "end": 51.22
+      },
+      {
+        "text": "más",
+        "start": 51.284,
+        "end": 51.442
+      },
+      {
+        "text": "estrictas,",
+        "start": 51.505,
+        "end": 52.128
+      },
+      {
+        "text": "están",
+        "start": 52.233,
+        "end": 52.498
+      },
+      {
+        "text": "entre",
+        "start": 52.55,
+        "end": 52.729
+      },
+      {
+        "text": "las",
+        "start": 52.761,
+        "end": 52.867
+      },
+      {
+        "text": "pérdidas",
+        "start": 52.93,
+        "end": 53.342
+      },
+      {
+        "text": "más",
+        "start": 53.416,
+        "end": 53.574
+      },
+      {
+        "text": "rápidas",
+        "start": 53.69,
+        "end": 54.08
+      },
+      {
+        "text": "de",
+        "start": 54.123,
+        "end": 54.176
+      },
+      {
+        "text": "América",
+        "start": 54.208,
+        "end": 54.566
+      },
+      {
+        "text": "Latina,",
+        "start": 54.619,
+        "end": 54.999
+      },
+      {
+        "text": "según",
+        "start": 55.03,
+        "end": 55.337
+      },
+      {
+        "text": "la",
+        "start": 55.389,
+        "end": 55.453
+      },
+      {
+        "text": "NASA.",
+        "start": 55.516,
+        "end": 56.044
+      },
+      {
+        "text": "Al",
+        "start": 56.608,
+        "end": 56.756
+      },
+      {
+        "text": "este,",
+        "start": 56.82,
+        "end": 57.125
+      },
+      {
+        "text": "donde",
+        "start": 57.147,
+        "end": 57.379
+      },
+      {
+        "text": "comunidades",
+        "start": 57.431,
+        "end": 58.075
+      },
+      {
+        "text": "manejan",
+        "start": 58.128,
+        "end": 58.487
+      },
+      {
+        "text": "el",
+        "start": 58.54,
+        "end": 58.592
+      },
+      {
+        "text": "bosque",
+        "start": 58.656,
+        "end": 58.931
+      },
+      {
+        "text": "en",
+        "start": 58.951,
+        "end": 59.004
+      },
+      {
+        "text": "concesiones,",
+        "start": 59.057,
+        "end": 59.743
+      },
+      {
+        "text": "como",
+        "start": 59.764,
+        "end": 60.07
+      },
+      {
+        "text": "Uaxactún",
+        "start": 60.291,
+        "end": 60.894
+      },
+      {
+        "text": "y",
+        "start": 60.968,
+        "end": 61.041
+      },
+      {
+        "text": "Carmelita,",
+        "start": 61.116,
+        "end": 61.77
+      },
+      {
+        "text": "el",
+        "start": 61.96,
+        "end": 62.055
+      },
+      {
+        "text": "bosque",
+        "start": 62.108,
+        "end": 62.319
+      },
+      {
+        "text": "resiste",
+        "start": 62.361,
+        "end": 62.72
+      },
+      {
+        "text": "mucho",
+        "start": 62.783,
+        "end": 63.058
+      },
+      {
+        "text": "mejor.",
+        "start": 63.1,
+        "end": 63.765
+      },
+      {
+        "text": "Pero",
+        "start": 64.233,
+        "end": 64.455
+      },
+      {
+        "text": "un",
+        "start": 64.487,
+        "end": 64.54
+      },
+      {
+        "text": "cuadro",
+        "start": 64.602,
+        "end": 64.888
+      },
+      {
+        "text": "apagado",
+        "start": 64.909,
+        "end": 65.405
+      },
+      {
+        "text": "no",
+        "start": 65.563,
+        "end": 65.68
+      },
+      {
+        "text": "siempre",
+        "start": 65.721,
+        "end": 66.049
+      },
+      {
+        "text": "es",
+        "start": 66.07,
+        "end": 66.133
+      },
+      {
+        "text": "un",
+        "start": 66.239,
+        "end": 66.302
+      },
+      {
+        "text": "árbol",
+        "start": 66.376,
+        "end": 66.64
+      },
+      {
+        "text": "cortado.",
+        "start": 66.703,
+        "end": 67.326
+      },
+      {
+        "text": "El",
+        "start": 67.727,
+        "end": 67.874
+      },
+      {
+        "text": "satélite",
+        "start": 67.927,
+        "end": 68.391
+      },
+      {
+        "text": "mira",
+        "start": 68.455,
+        "end": 68.645
+      },
+      {
+        "text": "el",
+        "start": 68.666,
+        "end": 68.719
+      },
+      {
+        "text": "bosque",
+        "start": 68.782,
+        "end": 69.067
+      },
+      {
+        "text": "en",
+        "start": 69.11,
+        "end": 69.162
+      },
+      {
+        "text": "cuadros",
+        "start": 69.226,
+        "end": 69.616
+      },
+      {
+        "text": "de",
+        "start": 69.648,
+        "end": 69.701
+      },
+      {
+        "text": "30",
+        "start": 69.742,
+        "end": 70.081
+      },
+      {
+        "text": "metros",
+        "start": 70.122,
+        "end": 70.524
+      },
+      {
+        "text": "y",
+        "start": 70.714,
+        "end": 70.798
+      },
+      {
+        "text": "marca",
+        "start": 70.882,
+        "end": 71.178
+      },
+      {
+        "text": "el",
+        "start": 71.2,
+        "end": 71.262
+      },
+      {
+        "text": "que",
+        "start": 71.315,
+        "end": 71.39
+      },
+      {
+        "text": "pierde",
+        "start": 71.431,
+        "end": 71.727
+      },
+      {
+        "text": "su",
+        "start": 71.759,
+        "end": 71.853
+      },
+      {
+        "text": "dosel",
+        "start": 71.917,
+        "end": 72.233
+      },
+      {
+        "text": "por",
+        "start": 72.297,
+        "end": 72.423
+      },
+      {
+        "text": "tala,",
+        "start": 72.498,
+        "end": 72.983
+      },
+      {
+        "text": "por",
+        "start": 73.121,
+        "end": 73.268
+      },
+      {
+        "text": "fuego",
+        "start": 73.352,
+        "end": 73.774
+      },
+      {
+        "text": "o",
+        "start": 73.964,
+        "end": 74.039
+      },
+      {
+        "text": "por",
+        "start": 74.091,
+        "end": 74.218
+      },
+      {
+        "text": "tormenta.",
+        "start": 74.271,
+        "end": 74.999
+      },
+      {
+        "text": "Y",
+        "start": 75.34,
+        "end": 75.415
+      },
+      {
+        "text": "después",
+        "start": 75.499,
+        "end": 75.848
+      },
+      {
+        "text": "de",
+        "start": 75.889,
+        "end": 75.942
+      },
+      {
+        "text": "una",
+        "start": 76.016,
+        "end": 76.174
+      },
+      {
+        "text": "pérdida,",
+        "start": 76.228,
+        "end": 76.797
+      },
+      {
+        "text": "el",
+        "start": 76.934,
+        "end": 77.071
+      },
+      {
+        "text": "bosque",
+        "start": 77.124,
+        "end": 77.451
+      },
+      {
+        "text": "vuelve",
+        "start": 77.536,
+        "end": 77.916
+      },
+      {
+        "text": "a",
+        "start": 77.937,
+        "end": 77.959
+      },
+      {
+        "text": "empezar",
+        "start": 77.989,
+        "end": 78.507
+      },
+      {
+        "text": "su",
+        "start": 78.57,
+        "end": 78.676
+      },
+      {
+        "text": "ciclo.",
+        "start": 78.718,
+        "end": 79.425
+      },
+      {
+        "text": "Lo",
+        "start": 79.867,
+        "end": 80.015
+      },
+      {
+        "text": "que",
+        "start": 80.046,
+        "end": 80.12
+      },
+      {
+        "text": "sigue",
+        "start": 80.162,
+        "end": 80.363
+      },
+      {
+        "text": "encendido",
+        "start": 80.384,
+        "end": 80.986
+      },
+      {
+        "text": "es",
+        "start": 81.07,
+        "end": 81.207
+      },
+      {
+        "text": "el",
+        "start": 81.27,
+        "end": 81.334
+      },
+      {
+        "text": "bosque",
+        "start": 81.397,
+        "end": 81.693
+      },
+      {
+        "text": "que",
+        "start": 81.746,
+        "end": 81.809
+      },
+      {
+        "text": "todavía",
+        "start": 81.851,
+        "end": 82.294
+      },
+      {
+        "text": "queda,",
+        "start": 82.358,
+        "end": 82.769
+      },
+      {
+        "text": "y",
+        "start": 82.991,
+        "end": 83.054
+      },
+      {
+        "text": "el",
+        "start": 83.107,
+        "end": 83.159
+      },
+      {
+        "text": "oeste",
+        "start": 83.223,
+        "end": 83.539
+      },
+      {
+        "text": "es",
+        "start": 83.592,
+        "end": 83.677
+      },
+      {
+        "text": "por",
+        "start": 83.74,
+        "end": 83.867
+      },
+      {
+        "text": "donde",
+        "start": 83.93,
+        "end": 84.173
+      },
+      {
+        "text": "más",
+        "start": 84.247,
+        "end": 84.469
+      },
+      {
+        "text": "rápido",
+        "start": 84.585,
+        "end": 84.943
+      },
+      {
+        "text": "se",
+        "start": 84.996,
+        "end": 85.07
+      },
+      {
+        "text": "apaga.",
+        "start": 85.102,
+        "end": 85.819
+      }
+    ],
+    "progreso": {
+      "actos": [
+        0.0,
+        14.2333,
+        64.2333
+      ]
+    },
+    "seguir": {
+      "t": 44.3,
+      "dur": 3.0
+    },
+    "pie": "Relieve: Mapzen · Bosque: Hansen/UMD/Google/USGS/NASA (CC BY 4.0) · Límite y lagos: © OpenStreetMap",
+    "handle": "@DerekUrizar",
+    "aviso": "Esquema",
+    "cierre": {
+      "t": 81.0667,
+      "frase": "Lo encendido es lo que todavía queda.",
+      "redes": [
+        {
+          "nombre": "TikTok",
+          "handle": "@derekurizargt"
+        },
+        {
+          "nombre": "Instagram",
+          "handle": "@derekurizargt"
+        },
+        {
+          "nombre": "Facebook",
+          "handle": "Derek Urizar"
+        },
+        {
+          "nombre": "YouTube",
+          "handle": "@derekurizar"
+        },
+        {
+          "nombre": "X",
+          "handle": "@DerekUrizar"
+        }
+      ]
+    }
+  },
+  "mundos": {
+    "peten": {
+      "escala": "pais",
+      "set": "guatemala",
+      "exageracion": 4,
+      "lugares": {
+        "laguna-del-tigre": {
+          "lon": -90.683,
+          "lat": 17.471,
+          "nombre": "Laguna del Tigre"
+        },
+        "sierra-del-lacandon": {
+          "lon": -90.97,
+          "lat": 17.031,
+          "nombre": "Sierra del Lacandón"
+        },
+        "uaxactun": {
+          "lon": -89.635,
+          "lat": 17.392,
+          "nombre": "Uaxactún"
+        },
+        "carmelita": {
+          "lon": -90.055,
+          "lat": 17.461,
+          "nombre": "Carmelita"
+        },
+        "rbm-centro": {
+          "lon": -90.31,
+          "lat": 17.246,
+          "nombre": "Reserva de la Biosfera Maya"
+        }
+      },
+      "piezas": [
+        {
+          "id": "frontera",
+          "tipo": "frontera",
+          "vecinos": true
+        },
+        {
+          "id": "lagos",
+          "tipo": "lagos",
+          "nombres": [
+            "peten-itza"
+          ]
+        },
+        {
+          "id": "bosque",
+          "tipo": "coberturaceldas",
+          "datos": "sesiones/video3d-biosfera-maya-satelite/geodatos/perdida_hansen.json",
+          "contorno": "sesiones/video3d-biosfera-maya-satelite/_nominatim_rbm.geojson",
+          "anio_base": 2000,
+          "anio": 2000,
+          "tono": "acento",
+          "apagado": 0.05,
+          "destello": true,
+          "contorno_grosor": 1.5
+        }
+      ],
+      "protagonista": "bosque",
+      "estilo": "noche"
+    },
+    "anios": {
+      "escala": "pais",
+      "set": "guatemala",
+      "exageracion": 4,
+      "lugares": {
+        "laguna-del-tigre": {
+          "lon": -90.683,
+          "lat": 17.471,
+          "nombre": "Laguna del Tigre"
+        },
+        "sierra-del-lacandon": {
+          "lon": -90.97,
+          "lat": 17.031,
+          "nombre": "Sierra del Lacandón"
+        },
+        "uaxactun": {
+          "lon": -89.635,
+          "lat": 17.392,
+          "nombre": "Uaxactún"
+        },
+        "carmelita": {
+          "lon": -90.055,
+          "lat": 17.461,
+          "nombre": "Carmelita"
+        },
+        "rbm-centro": {
+          "lon": -90.31,
+          "lat": 17.246,
+          "nombre": "Reserva de la Biosfera Maya"
+        }
+      },
+      "piezas": [
+        {
+          "id": "frontera",
+          "tipo": "frontera",
+          "vecinos": true
+        },
+        {
+          "id": "lagos",
+          "tipo": "lagos",
+          "nombres": [
+            "peten-itza"
+          ]
+        },
+        {
+          "id": "bosque",
+          "tipo": "coberturaceldas",
+          "datos": "sesiones/video3d-biosfera-maya-satelite/geodatos/perdida_hansen.json",
+          "contorno": "sesiones/video3d-biosfera-maya-satelite/_nominatim_rbm.geojson",
+          "anio_base": 2000,
+          "anio": 2000,
+          "tono": "acento",
+          "apagado": 0.05,
+          "destello": true,
+          "contorno_grosor": 1.5
+        }
+      ],
+      "protagonista": "bosque",
+      "estilo": "noche"
+    },
+    "pixel": {
+      "escala": "esquema",
+      "receta": "campo",
+      "horizonte": "llano",
+      "tamano_m": 600,
+      "estilo": "dia",
+      "estilo_razon": "Es el cuadro de 30 m visto de cerca, como una foto de satélite de día: copas, troncos, humo y rebrote se leen con sol y sombra; de noche no se distinguiría el fuego de la tala ni el rebrote.",
+      "hora": "dia",
+      "piezas": [
+        {
+          "id": "ambiente",
+          "tipo": "ambiente",
+          "ambiente": "campo",
+          "densidad": 0.8,
+          "radio_m": 300,
+          "semilla": 5
+        },
+        {
+          "id": "dosel",
+          "tipo": "doselcuadricula",
+          "lugar": [
+            0,
+            0
+          ],
+          "rumbo": 0,
+          "celdas_lado": 5,
+          "celda_m": 30,
+          "densidad": 0.9,
+          "emergentes": 0.15,
+          "cuadricula": true,
+          "cuadricula_desde": 0.4,
+          "cuadros": [
+            "2-2:tala@7.6",
+            "2-4:fuego@8.2",
+            "4-3:viento@8.9",
+            "2-4:rebrote@11.6"
+          ],
+          "tinte": 0.3,
+          "semilla": 1
+        }
+      ],
+      "protagonista": "dosel",
+      "escena": {
+        "que_pasa": "El mapa del satélite divide el bosque en cuadros de 30 m; un cuadro que pasa de bosque a no bosque queda marcado como pérdida de cobertura (por tala, fuego o tormenta, sin decir cuál pesa más) y después el bosque reinicia su ciclo.",
+        "quien": "nadie",
+        "con_que": "el dosel visto desde arriba, la cuadrícula de 30 m, un cuadro talado con tocones, uno con llama y humo genéricos que deja su cicatriz, uno con árboles volcados por viento y plantas jóvenes que empiezan a brotar",
+        "se_mueve": "la cuadrícula se dibuja sobre las copas; en tres cuadros el dosel cae (llamas y humo, árboles talados, árboles volcados) y el cuadro cambia de color; luego brotan plantas jóvenes en uno de ellos",
+        "sostiene": [
+          {
+            "que": "la cuadrícula de cuadros de 30 m sobre las copas",
+            "hecho": "visual-pixel-h01"
+          },
+          {
+            "que": "el dosel como copas de vegetación, sin altura ni escala vertical",
+            "hecho": "visual-pixel-h02"
+          },
+          {
+            "que": "el cuadro que pasa de bosque a no bosque cambia de tinte",
+            "hecho": "visual-pixel-h03"
+          },
+          {
+            "que": "tres cuadros pierden el dosel (tala, fuego, viento) sin proporciones ni causa por lugar",
+            "hecho": "visual-pixel-h04"
+          },
+          {
+            "que": "árboles volcados por viento, genéricos, como tipo de perturbación del método",
+            "hecho": "visual-pixel-h04"
+          },
+          {
+            "que": "el cuadro con fuego, sin año ni lugar",
+            "hecho": "visual-pixel-h05"
+          },
+          {
+            "que": "la cicatriz oscura que deja el fuego",
+            "hecho": "visual-pixel-h06"
+          },
+          {
+            "que": "el cuadro talado y limpio, sin actor ni máquina",
+            "hecho": "visual-pixel-h07"
+          },
+          {
+            "que": "el rebrote que empieza en un cuadro perdido",
+            "hecho": "visual-pixel-h08"
+          },
+          {
+            "que": "la forma de los árboles y el color del dosel",
+            "generico": true
+          }
+        ],
+        "ilustrativa": "Mecanismo de la medición: un bosque cualquiera, sin nombrar un lugar real ni asignar causas a ningún sitio."
+      }
+    }
+  },
+  "tramos": [
+    {
+      "id": "peten-1",
+      "mundo": "peten",
+      "desde": 0.0,
+      "hasta": 4.8667,
+      "camara": [
+        {
+          "mira": "rbm-centro",
+          "dist_km": 350,
+          "azimut": 0,
+          "elevacion": 60,
+          "t": 0.0
+        },
+        {
+          "mira": "rbm-centro",
+          "dist_km": 320,
+          "azimut": -10,
+          "elevacion": 48,
+          "t": 4.5667
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "correranios",
+          "pieza": "bosque",
+          "de": 2001,
+          "a": 2024,
+          "dur": 4.4,
+          "pos": "arriba",
+          "rotulo": "Año",
+          "queda": true,
+          "cifra_por_anio": "anio-",
+          "t": 0.0
+        }
+      ]
+    },
+    {
+      "id": "anios-2",
+      "mundo": "anios",
+      "desde": 4.8667,
+      "hasta": 64.2333,
+      "camara": [
+        {
+          "mira": "rbm-centro",
+          "dist_km": 300,
+          "azimut": 0,
+          "elevacion": 58,
+          "t": 4.8667
+        },
+        {
+          "mira": [
+            -90.25,
+            16.5
+          ],
+          "dist_km": 560,
+          "azimut": 0,
+          "elevacion": 62,
+          "t": 7.4333
+        },
+        {
+          "mira": "rbm-centro",
+          "dist_km": 230,
+          "azimut": -12,
+          "elevacion": 50,
+          "t": 10.5667
+        },
+        {
+          "mira": "rbm-centro",
+          "dist_km": 225,
+          "azimut": -14,
+          "elevacion": 50,
+          "t": 14.2333
+        },
+        {
+          "mira": [
+            -90.4,
+            17.25
+          ],
+          "dist_km": 200,
+          "azimut": -24,
+          "elevacion": 46,
+          "t": 26.2333
+        },
+        {
+          "mira": [
+            -90.35,
+            17.25
+          ],
+          "dist_km": 225,
+          "azimut": -6,
+          "elevacion": 50,
+          "t": 27.8
+        },
+        {
+          "mira": "rbm-centro",
+          "dist_km": 240,
+          "azimut": 8,
+          "elevacion": 52,
+          "t": 35.6333
+        },
+        {
+          "mira": "rbm-centro",
+          "dist_km": 260,
+          "azimut": 4,
+          "elevacion": 56,
+          "t": 38.6667
+        },
+        {
+          "mira": "rbm-centro",
+          "dist_km": 330,
+          "azimut": 0,
+          "elevacion": 60,
+          "t": 43.9
+        },
+        {
+          "mira": [
+            -90.8,
+            17.5
+          ],
+          "dist_km": 200,
+          "azimut": -24,
+          "elevacion": 50,
+          "t": 45.5333
+        },
+        {
+          "mira": [
+            -90.85,
+            17.5
+          ],
+          "dist_km": 260,
+          "azimut": -18,
+          "elevacion": 54,
+          "t": 48.8
+        },
+        {
+          "mira": [
+            -90.8,
+            17.5
+          ],
+          "dist_km": 275,
+          "azimut": -14,
+          "elevacion": 56,
+          "t": 55.0333
+        },
+        {
+          "mira": [
+            -89.85,
+            17.5
+          ],
+          "dist_km": 200,
+          "azimut": 18,
+          "elevacion": 50,
+          "t": 59.7667
+        },
+        {
+          "mira": [
+            -89.85,
+            17.5
+          ],
+          "dist_km": 175,
+          "azimut": 26,
+          "elevacion": 47,
+          "t": 63.7667
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "resaltar",
+          "pieza": "bosque",
+          "dur": 2.2,
+          "t": 5.5333
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "bosque",
+          "dur": 2.0,
+          "t": 9.3
+        },
+        {
+          "tipo": "correranios",
+          "pieza": "bosque",
+          "de": 2001,
+          "a": 2002,
+          "dur": 2.4,
+          "pos": "arriba",
+          "rotulo": "Perdió cobertura en",
+          "queda": true,
+          "cifra_por_anio": "anio-",
+          "t": 14.2333
+        },
+        {
+          "tipo": "correranios",
+          "pieza": "bosque",
+          "de": 2003,
+          "a": 2005,
+          "dur": 2.0,
+          "pos": "arriba",
+          "rotulo": "Perdió cobertura en",
+          "queda": true,
+          "cifra_por_anio": "anio-",
+          "t": 19.8333
+        },
+        {
+          "tipo": "correranios",
+          "pieza": "bosque",
+          "de": 2006,
+          "a": 2007,
+          "dur": 0.7,
+          "pos": "arriba",
+          "rotulo": "Perdió cobertura en",
+          "queda": true,
+          "cifra_por_anio": "anio-",
+          "t": 23.6
+        },
+        {
+          "tipo": "correranios",
+          "pieza": "bosque",
+          "de": 2008,
+          "a": 2015,
+          "dur": 0.8,
+          "pos": "arriba",
+          "rotulo": "Perdió cobertura en",
+          "queda": true,
+          "cifra_por_anio": "anio-",
+          "t": 26.7
+        },
+        {
+          "tipo": "correranios",
+          "pieza": "bosque",
+          "de": 2016,
+          "a": 2019,
+          "dur": 0.7,
+          "pos": "arriba",
+          "rotulo": "Perdió cobertura en",
+          "queda": true,
+          "cifra_por_anio": "anio-",
+          "t": 27.8
+        },
+        {
+          "tipo": "correranios",
+          "pieza": "bosque",
+          "de": 2020,
+          "a": 2023,
+          "dur": 0.7,
+          "pos": "arriba",
+          "rotulo": "Perdió cobertura en",
+          "queda": true,
+          "cifra_por_anio": "anio-",
+          "t": 29.4333
+        },
+        {
+          "tipo": "correranios",
+          "pieza": "bosque",
+          "de": 2024,
+          "a": 2024,
+          "dur": 0.4,
+          "pos": "arriba",
+          "rotulo": "Perdió cobertura en",
+          "queda": true,
+          "cifra_por_anio": "anio-",
+          "t": 30.5667
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "bosque",
+          "dur": 2.4,
+          "t": 36.8
+        },
+        {
+          "tipo": "resaltar",
+          "lugar": "laguna-del-tigre",
+          "dur": 2.0,
+          "t": 47.6333
+        },
+        {
+          "tipo": "resaltar",
+          "lugar": "sierra-del-lacandon",
+          "dur": 2.0,
+          "t": 48.8
+        },
+        {
+          "tipo": "resaltar",
+          "lugar": "uaxactun",
+          "dur": 1.6,
+          "t": 59.7667
+        },
+        {
+          "tipo": "resaltar",
+          "lugar": "carmelita",
+          "dur": 1.6,
+          "t": 60.9667
+        }
+      ],
+      "marcas": [
+        {
+          "lugar": "rbm-centro",
+          "texto": "Reserva de la Biosfera Maya",
+          "sub": "Petén",
+          "t": 5.2667,
+          "hasta": 10.9667
+        },
+        {
+          "lugar": "laguna-del-tigre",
+          "texto": "Laguna del Tigre",
+          "sub": "Parque nacional",
+          "t": 47.4,
+          "hasta": 56.3333
+        },
+        {
+          "lugar": "sierra-del-lacandon",
+          "texto": "Sierra del Lacandón",
+          "sub": "Parque nacional · según la NASA",
+          "t": 48.5667,
+          "hasta": 56.3333
+        },
+        {
+          "lugar": "uaxactun",
+          "texto": "Uaxactún",
+          "sub": "Concesión comunitaria",
+          "t": 59.5,
+          "hasta": 64.2333
+        },
+        {
+          "lugar": "carmelita",
+          "texto": "Carmelita",
+          "sub": "Concesión comunitaria",
+          "t": 60.7333,
+          "hasta": 64.2333
+        }
+      ],
+      "transicion": "fundido",
+      "fundido_s": 0.6
+    },
+    {
+      "id": "pixel-3",
+      "mundo": "pixel",
+      "desde": 64.2333,
+      "hasta": 79.8667,
+      "camara": [
+        {
+          "mira": [
+            0,
+            0
+          ],
+          "dist_m": 330,
+          "azimut": 0,
+          "elevacion": 78,
+          "t": 64.2333
+        },
+        {
+          "mira": [
+            0,
+            0
+          ],
+          "dist_m": 240,
+          "azimut": 10,
+          "elevacion": 66,
+          "t": 69.2333
+        },
+        {
+          "mira": [
+            0,
+            5
+          ],
+          "dist_m": 175,
+          "azimut": 22,
+          "elevacion": 46,
+          "t": 72.9667
+        },
+        {
+          "mira": [
+            0,
+            5
+          ],
+          "dist_m": 150,
+          "azimut": 30,
+          "elevacion": 40,
+          "t": 75.1667
+        },
+        {
+          "mira": [
+            0,
+            0
+          ],
+          "dist_m": 300,
+          "azimut": 10,
+          "elevacion": 74,
+          "t": 79.4333
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "resaltar",
+          "pieza": "dosel",
+          "dur": 2.0,
+          "t": 69.2333
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "dosel",
+          "elemento": "c-2-4",
+          "dur": 2.0,
+          "t": 77.5333
+        }
+      ],
+      "transicion": "fundido",
+      "fundido_s": 0.6
+    },
+    {
+      "id": "peten-4",
+      "mundo": "peten",
+      "desde": 79.8667,
+      "hasta": 88.6333,
+      "camara": [
+        {
+          "mira": "rbm-centro",
+          "dist_km": 330,
+          "azimut": -10,
+          "elevacion": 50,
+          "t": 79.8667
+        },
+        {
+          "mira": [
+            -90.6,
+            17.3
+          ],
+          "dist_km": 300,
+          "azimut": -16,
+          "elevacion": 52,
+          "t": 83.0
+        },
+        {
+          "mira": "rbm-centro",
+          "dist_km": 350,
+          "azimut": 0,
+          "elevacion": 60,
+          "t": 85.8333
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "correranios",
+          "pieza": "bosque",
+          "de": 2024,
+          "a": 2024,
+          "dur": 0.4,
+          "queda": true,
+          "cifra_por_anio": "anio-",
+          "contador": false,
+          "t": 79.8667
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "bosque",
+          "dur": 2.4,
+          "t": 79.8667
+        },
+        {
+          "tipo": "resaltar",
+          "lugar": "laguna-del-tigre",
+          "dur": 2.0,
+          "t": 83.0
+        }
+      ],
+      "transicion": "fundido",
+      "fundido_s": 0.6
+    }
+  ]
+}

@@ -1,0 +1,1795 @@
+{
+  "version": 1,
+  "video": true,
+  "estilo": "noche",
+  "paleta": "obsidiana",
+  "fps": 30,
+  "duracion_s": 67.1667,
+  "protagonista": "lajas",
+  "capa": {
+    "titulares": [
+      {
+        "t": 0.0,
+        "kicker": "VOLCÁN DE FUEGO · 2018",
+        "texto": "Por dónde bajó: Las Lajas",
+        "hasta": 3.6
+      },
+      {
+        "t": 12.0667,
+        "kicker": "ANTES DE 2018",
+        "texto": "Una aldea al pie de la barranca",
+        "hasta": 17.9333
+      },
+      {
+        "t": 17.9333,
+        "kicker": "3 DE JUNIO DE 2018",
+        "texto": "Baja por la barranca",
+        "hasta": 25.8333
+      },
+      {
+        "t": 34.3,
+        "kicker": "DESPUÉS · ZONA INHABITABLE",
+        "texto": "Sobrevivientes: a La Dignidad",
+        "hasta": 44.0667
+      },
+      {
+        "t": 44.0667,
+        "kicker": "AGOSTO DE 2026",
+        "texto": "Alerta roja",
+        "hasta": 57.2333
+      }
+    ],
+    "cifras": [
+      {
+        "valor": "10 km",
+        "rotulo": "de la cumbre a Los Lotes y El Rodeo",
+        "fuente": "Smithsonian GVP",
+        "t": 5.9667,
+        "hasta": 12.0667
+      },
+      {
+        "valor": "229",
+        "rotulo": "desaparecidos (cifra oficial)",
+        "t": 31.4333,
+        "hasta": 34.3
+      },
+      {
+        "valor": "1,700",
+        "rotulo": "evacuados, cerca de",
+        "fuente": "Conred",
+        "t": 53.9667,
+        "hasta": 57.2333
+      }
+    ],
+    "palabras": [
+      {
+        "text": "Así",
+        "start": 0.0,
+        "end": 0.369
+      },
+      {
+        "text": "bajó",
+        "start": 0.475,
+        "end": 0.76
+      },
+      {
+        "text": "el",
+        "start": 0.792,
+        "end": 0.834
+      },
+      {
+        "text": "volcán",
+        "start": 0.886,
+        "end": 1.287
+      },
+      {
+        "text": "de",
+        "start": 1.34,
+        "end": 1.404
+      },
+      {
+        "text": "Fuego",
+        "start": 1.467,
+        "end": 1.763
+      },
+      {
+        "text": "por",
+        "start": 1.805,
+        "end": 1.932
+      },
+      {
+        "text": "esta",
+        "start": 1.985,
+        "end": 2.143
+      },
+      {
+        "text": "barranca",
+        "start": 2.185,
+        "end": 2.607
+      },
+      {
+        "text": "de",
+        "start": 2.649,
+        "end": 2.702
+      },
+      {
+        "text": "Guatemala.",
+        "start": 2.745,
+        "end": 3.441
+      },
+      {
+        "text": "Se",
+        "start": 3.747,
+        "end": 3.885
+      },
+      {
+        "text": "llama",
+        "start": 3.905,
+        "end": 4.306
+      },
+      {
+        "text": "Las",
+        "start": 4.391,
+        "end": 4.602
+      },
+      {
+        "text": "Lajas.",
+        "start": 4.686,
+        "end": 5.246
+      },
+      {
+        "text": "A",
+        "start": 5.795,
+        "end": 5.847
+      },
+      {
+        "text": "unos",
+        "start": 5.922,
+        "end": 6.143
+      },
+      {
+        "text": "10",
+        "start": 6.217,
+        "end": 6.428
+      },
+      {
+        "text": "kilómetros",
+        "start": 6.481,
+        "end": 7.061
+      },
+      {
+        "text": "de",
+        "start": 7.093,
+        "end": 7.145
+      },
+      {
+        "text": "la",
+        "start": 7.188,
+        "end": 7.251
+      },
+      {
+        "text": "cumbre,",
+        "start": 7.304,
+        "end": 7.726
+      },
+      {
+        "text": "a",
+        "start": 7.779,
+        "end": 7.832
+      },
+      {
+        "text": "su",
+        "start": 7.885,
+        "end": 8.011
+      },
+      {
+        "text": "pie,",
+        "start": 8.064,
+        "end": 8.423
+      },
+      {
+        "text": "estaban",
+        "start": 8.56,
+        "end": 9.088
+      },
+      {
+        "text": "San",
+        "start": 9.162,
+        "end": 9.341
+      },
+      {
+        "text": "Miguel",
+        "start": 9.405,
+        "end": 9.721
+      },
+      {
+        "text": "Los",
+        "start": 9.795,
+        "end": 9.932
+      },
+      {
+        "text": "Lotes",
+        "start": 9.995,
+        "end": 10.396
+      },
+      {
+        "text": "y",
+        "start": 10.618,
+        "end": 10.692
+      },
+      {
+        "text": "El",
+        "start": 10.776,
+        "end": 10.819
+      },
+      {
+        "text": "Rodeo.",
+        "start": 10.893,
+        "end": 11.621
+      },
+      {
+        "text": "Los",
+        "start": 12.067,
+        "end": 12.257
+      },
+      {
+        "text": "Lotes",
+        "start": 12.309,
+        "end": 12.626
+      },
+      {
+        "text": "era",
+        "start": 12.7,
+        "end": 12.879
+      },
+      {
+        "text": "una",
+        "start": 12.921,
+        "end": 13.069
+      },
+      {
+        "text": "aldea",
+        "start": 13.09,
+        "end": 13.429
+      },
+      {
+        "text": "de",
+        "start": 13.481,
+        "end": 13.534
+      },
+      {
+        "text": "cortadores",
+        "start": 13.576,
+        "end": 14.093
+      },
+      {
+        "text": "de",
+        "start": 14.125,
+        "end": 14.178
+      },
+      {
+        "text": "café,",
+        "start": 14.219,
+        "end": 14.789
+      },
+      {
+        "text": "con",
+        "start": 14.927,
+        "end": 15.064
+      },
+      {
+        "text": "casas",
+        "start": 15.128,
+        "end": 15.444
+      },
+      {
+        "text": "de",
+        "start": 15.487,
+        "end": 15.539
+      },
+      {
+        "text": "lámina,",
+        "start": 15.592,
+        "end": 16.236
+      },
+      {
+        "text": "block",
+        "start": 16.394,
+        "end": 16.753
+      },
+      {
+        "text": "y",
+        "start": 16.943,
+        "end": 17.017
+      },
+      {
+        "text": "ladrillo.",
+        "start": 17.09,
+        "end": 17.756
+      },
+      {
+        "text": "El",
+        "start": 18.081,
+        "end": 18.207
+      },
+      {
+        "text": "3",
+        "start": 18.25,
+        "end": 18.397
+      },
+      {
+        "text": "de",
+        "start": 18.429,
+        "end": 18.481
+      },
+      {
+        "text": "junio",
+        "start": 18.513,
+        "end": 18.788
+      },
+      {
+        "text": "de",
+        "start": 18.83,
+        "end": 18.882
+      },
+      {
+        "text": "2018,",
+        "start": 18.935,
+        "end": 20.001
+      },
+      {
+        "text": "el",
+        "start": 20.043,
+        "end": 20.139
+      },
+      {
+        "text": "flujo",
+        "start": 20.201,
+        "end": 20.476
+      },
+      {
+        "text": "piroclástico",
+        "start": 20.519,
+        "end": 21.183
+      },
+      {
+        "text": "bajó",
+        "start": 21.236,
+        "end": 21.574
+      },
+      {
+        "text": "en",
+        "start": 21.616,
+        "end": 21.669
+      },
+      {
+        "text": "pulsos,",
+        "start": 21.732,
+        "end": 22.366
+      },
+      {
+        "text": "se",
+        "start": 22.502,
+        "end": 22.598
+      },
+      {
+        "text": "desbordó",
+        "start": 22.651,
+        "end": 23.136
+      },
+      {
+        "text": "junto",
+        "start": 23.189,
+        "end": 23.421
+      },
+      {
+        "text": "al",
+        "start": 23.452,
+        "end": 23.495
+      },
+      {
+        "text": "puente",
+        "start": 23.548,
+        "end": 23.97
+      },
+      {
+        "text": "y",
+        "start": 24.128,
+        "end": 24.191
+      },
+      {
+        "text": "entró",
+        "start": 24.276,
+        "end": 24.645
+      },
+      {
+        "text": "a",
+        "start": 24.709,
+        "end": 24.73
+      },
+      {
+        "text": "la",
+        "start": 24.782,
+        "end": 24.856
+      },
+      {
+        "text": "aldea.",
+        "start": 24.888,
+        "end": 25.501
+      },
+      {
+        "text": "Enterró",
+        "start": 26.15,
+        "end": 26.541
+      },
+      {
+        "text": "gran",
+        "start": 26.582,
+        "end": 26.772
+      },
+      {
+        "text": "parte",
+        "start": 26.835,
+        "end": 27.089
+      },
+      {
+        "text": "de",
+        "start": 27.131,
+        "end": 27.184
+      },
+      {
+        "text": "Los",
+        "start": 27.215,
+        "end": 27.331
+      },
+      {
+        "text": "Lotes",
+        "start": 27.405,
+        "end": 27.732
+      },
+      {
+        "text": "hasta",
+        "start": 27.785,
+        "end": 27.965
+      },
+      {
+        "text": "los",
+        "start": 28.007,
+        "end": 28.123
+      },
+      {
+        "text": "techos.",
+        "start": 28.176,
+        "end": 28.703
+      },
+      {
+        "text": "Murieron",
+        "start": 29.105,
+        "end": 29.516
+      },
+      {
+        "text": "más",
+        "start": 29.591,
+        "end": 29.781
+      },
+      {
+        "text": "de",
+        "start": 29.822,
+        "end": 29.865
+      },
+      {
+        "text": "doscientas",
+        "start": 29.907,
+        "end": 30.434
+      },
+      {
+        "text": "personas,",
+        "start": 30.488,
+        "end": 31.152
+      },
+      {
+        "text": "y",
+        "start": 31.29,
+        "end": 31.342
+      },
+      {
+        "text": "hubo",
+        "start": 31.384,
+        "end": 31.606
+      },
+      {
+        "text": "229",
+        "start": 31.67,
+        "end": 33.041
+      },
+      {
+        "text": "desaparecidos.",
+        "start": 33.084,
+        "end": 34.044
+      },
+      {
+        "text": "Conred",
+        "start": 34.533,
+        "end": 34.976
+      },
+      {
+        "text": "declaró",
+        "start": 35.05,
+        "end": 35.398
+      },
+      {
+        "text": "la",
+        "start": 35.44,
+        "end": 35.515
+      },
+      {
+        "text": "zona",
+        "start": 35.577,
+        "end": 35.831
+      },
+      {
+        "text": "inhabitable;",
+        "start": 35.873,
+        "end": 36.696
+      },
+      {
+        "text": "los",
+        "start": 37.097,
+        "end": 37.235
+      },
+      {
+        "text": "sobrevivientes",
+        "start": 37.255,
+        "end": 38.015
+      },
+      {
+        "text": "fueron",
+        "start": 38.079,
+        "end": 38.311
+      },
+      {
+        "text": "trasladados",
+        "start": 38.343,
+        "end": 38.976
+      },
+      {
+        "text": "a",
+        "start": 39.061,
+        "end": 39.103
+      },
+      {
+        "text": "La",
+        "start": 39.166,
+        "end": 39.229
+      },
+      {
+        "text": "Dignidad.",
+        "start": 39.272,
+        "end": 39.979
+      },
+      {
+        "text": "Con",
+        "start": 40.444,
+        "end": 40.591
+      },
+      {
+        "text": "la",
+        "start": 40.634,
+        "end": 40.696
+      },
+      {
+        "text": "lluvia,",
+        "start": 40.728,
+        "end": 41.097
+      },
+      {
+        "text": "la",
+        "start": 41.15,
+        "end": 41.235
+      },
+      {
+        "text": "ceniza",
+        "start": 41.277,
+        "end": 41.72
+      },
+      {
+        "text": "se",
+        "start": 41.773,
+        "end": 41.857
+      },
+      {
+        "text": "endureció",
+        "start": 41.878,
+        "end": 42.47
+      },
+      {
+        "text": "como",
+        "start": 42.533,
+        "end": 42.702
+      },
+      {
+        "text": "concreto.",
+        "start": 42.744,
+        "end": 43.588
+      },
+      {
+        "text": "Pero",
+        "start": 44.067,
+        "end": 44.299
+      },
+      {
+        "text": "el",
+        "start": 44.32,
+        "end": 44.362
+      },
+      {
+        "text": "Fuego",
+        "start": 44.426,
+        "end": 44.689
+      },
+      {
+        "text": "sigue",
+        "start": 44.753,
+        "end": 44.953
+      },
+      {
+        "text": "bajando",
+        "start": 44.996,
+        "end": 45.407
+      },
+      {
+        "text": "por",
+        "start": 45.46,
+        "end": 45.649
+      },
+      {
+        "text": "Las",
+        "start": 45.724,
+        "end": 45.861
+      },
+      {
+        "text": "Lajas.",
+        "start": 45.924,
+        "end": 46.441
+      },
+      {
+        "text": "En",
+        "start": 46.599,
+        "end": 46.727
+      },
+      {
+        "text": "agosto",
+        "start": 46.769,
+        "end": 47.128
+      },
+      {
+        "text": "de",
+        "start": 47.18,
+        "end": 47.233
+      },
+      {
+        "text": "2026,",
+        "start": 47.286,
+        "end": 48.489
+      },
+      {
+        "text": "con",
+        "start": 48.542,
+        "end": 48.7
+      },
+      {
+        "text": "alerta",
+        "start": 48.753,
+        "end": 49.101
+      },
+      {
+        "text": "roja,",
+        "start": 49.175,
+        "end": 49.65
+      },
+      {
+        "text": "se",
+        "start": 49.756,
+        "end": 49.861
+      },
+      {
+        "text": "cerró",
+        "start": 49.903,
+        "end": 50.125
+      },
+      {
+        "text": "la",
+        "start": 50.178,
+        "end": 50.283
+      },
+      {
+        "text": "RN-14",
+        "start": 50.42,
+        "end": 51.339
+      },
+      {
+        "text": "en",
+        "start": 51.381,
+        "end": 51.444
+      },
+      {
+        "text": "el",
+        "start": 51.508,
+        "end": 51.56
+      },
+      {
+        "text": "kilómetro",
+        "start": 51.613,
+        "end": 52.162
+      },
+      {
+        "text": "83",
+        "start": 52.226,
+        "end": 53.186
+      },
+      {
+        "text": "y",
+        "start": 53.481,
+        "end": 53.587
+      },
+      {
+        "text": "cerca",
+        "start": 53.66,
+        "end": 53.999
+      },
+      {
+        "text": "de",
+        "start": 54.051,
+        "end": 54.125
+      },
+      {
+        "text": "1,700",
+        "start": 54.23,
+        "end": 55.18
+      },
+      {
+        "text": "personas",
+        "start": 55.233,
+        "end": 55.761
+      },
+      {
+        "text": "fueron",
+        "start": 55.846,
+        "end": 56.173
+      },
+      {
+        "text": "evacuadas.",
+        "start": 56.226,
+        "end": 56.975
+      },
+      {
+        "text": "Los",
+        "start": 57.466,
+        "end": 57.624
+      },
+      {
+        "text": "Lotes",
+        "start": 57.688,
+        "end": 58.036
+      },
+      {
+        "text": "quedó",
+        "start": 58.089,
+        "end": 58.3
+      },
+      {
+        "text": "inhabitable",
+        "start": 58.352,
+        "end": 59.007
+      },
+      {
+        "text": "y",
+        "start": 59.071,
+        "end": 59.144
+      },
+      {
+        "text": "Las",
+        "start": 59.25,
+        "end": 59.366
+      },
+      {
+        "text": "Lajas",
+        "start": 59.43,
+        "end": 59.735
+      },
+      {
+        "text": "sigue",
+        "start": 59.767,
+        "end": 60.052
+      },
+      {
+        "text": "activa.",
+        "start": 60.105,
+        "end": 60.675
+      },
+      {
+        "text": "¿Por",
+        "start": 60.971,
+        "end": 61.192
+      },
+      {
+        "text": "qué",
+        "start": 61.234,
+        "end": 61.308
+      },
+      {
+        "text": "crees",
+        "start": 61.34,
+        "end": 61.53
+      },
+      {
+        "text": "que",
+        "start": 61.572,
+        "end": 61.646
+      },
+      {
+        "text": "tanta",
+        "start": 61.699,
+        "end": 61.983
+      },
+      {
+        "text": "gente",
+        "start": 62.036,
+        "end": 62.374
+      },
+      {
+        "text": "sigue",
+        "start": 62.416,
+        "end": 62.649
+      },
+      {
+        "text": "viviendo",
+        "start": 62.691,
+        "end": 63.102
+      },
+      {
+        "text": "al",
+        "start": 63.134,
+        "end": 63.197
+      },
+      {
+        "text": "pie",
+        "start": 63.281,
+        "end": 63.44
+      },
+      {
+        "text": "del",
+        "start": 63.482,
+        "end": 63.599
+      },
+      {
+        "text": "Fuego?",
+        "start": 63.672,
+        "end": 64.359
+      }
+    ],
+    "progreso": {
+      "actos": [
+        0.0,
+        12.0667,
+        44.0667
+      ]
+    },
+    "seguir": {
+      "t": 30.9,
+      "dur": 3.0
+    },
+    "pie": "Relieve: Mapzen Terrain Tiles · Lugares y carreteras: © OpenStreetMap · Volcanes: Smithsonian GVP · Barranca: traza esquemática",
+    "handle": "@DerekUrizar",
+    "aviso": "Esquema · no es un lugar real",
+    "cierre": {
+      "t": 58.4333,
+      "frase": "¿Por qué crees que tanta gente sigue viviendo al pie del Fuego?",
+      "redes": [
+        {
+          "nombre": "TikTok",
+          "handle": "@derekurizargt"
+        },
+        {
+          "nombre": "Instagram",
+          "handle": "@derekurizargt"
+        },
+        {
+          "nombre": "Facebook",
+          "handle": "Derek Urizar"
+        },
+        {
+          "nombre": "YouTube",
+          "handle": "@derekurizar"
+        },
+        {
+          "nombre": "X",
+          "handle": "@DerekUrizar"
+        }
+      ]
+    }
+  },
+  "mundos": {
+    "lajas2018": {
+      "escala": "pais",
+      "set": "guatemala",
+      "exageracion": 3.0,
+      "estilo": "color",
+      "protagonista": "lajas",
+      "lugares": {
+        "cumbre-fuego": {
+          "lon": -90.8806,
+          "lat": 14.4748,
+          "nombre": "Volcán de Fuego"
+        },
+        "cumbre-acatenango": {
+          "lon": -90.876,
+          "lat": 14.501,
+          "nombre": "Volcán Acatenango"
+        },
+        "cumbre-agua": {
+          "lon": -90.741761,
+          "lat": 14.4663275,
+          "nombre": "Volcán de Agua"
+        },
+        "lajas-cauce": {
+          "lon": -90.846289,
+          "lat": 14.4494516,
+          "nombre": "Barranca Las Lajas"
+        },
+        "puente-lajas": {
+          "lon": -90.825713,
+          "lat": 14.418597,
+          "nombre": "Puente Las Lajas (RN-14)"
+        },
+        "los-lotes": {
+          "lon": -90.828253,
+          "lat": 14.4083069,
+          "nombre": "San Miguel Los Lotes"
+        },
+        "el-rodeo": {
+          "lon": -90.8315451,
+          "lat": 14.3922753,
+          "nombre": "El Rodeo"
+        },
+        "vista": {
+          "lon": -90.856,
+          "lat": 14.442,
+          "nombre": "Las Lajas"
+        },
+        "vista-alta": {
+          "lon": -90.868,
+          "lat": 14.458,
+          "nombre": "Las Lajas"
+        },
+        "norte-aloten": {
+          "lon": -90.818,
+          "lat": 14.512,
+          "nombre": "Alotenango"
+        },
+        "entre": {
+          "lon": -90.805,
+          "lat": 14.415,
+          "nombre": "El Porvenir"
+        },
+        "aldeas-pie": {
+          "lon": -90.83,
+          "lat": 14.4,
+          "nombre": "Los Lotes y El Rodeo"
+        }
+      },
+      "piezas": [
+        {
+          "id": "volcanes",
+          "tipo": "volcanes",
+          "lugares": [
+            "cumbre-fuego",
+            "cumbre-acatenango",
+            "cumbre-agua"
+          ],
+          "radio_km": 5,
+          "crater": true
+        },
+        {
+          "id": "lajas",
+          "tipo": "barranca",
+          "nombre": "Barranca Las Lajas",
+          "puntos": [
+            [
+              -90.8806,
+              14.4748
+            ],
+            [
+              -90.846289,
+              14.4494516
+            ],
+            [
+              -90.825713,
+              14.418597
+            ],
+            [
+              -90.828253,
+              14.4083069
+            ]
+          ],
+          "esquematica": true,
+          "ancho_km": 0.3,
+          "profundidad_m": 40
+        },
+        {
+          "id": "rn14",
+          "tipo": "carreteras",
+          "nombres": [
+            "RN-14"
+          ],
+          "grosor": 1.2
+        },
+        {
+          "id": "pueblos",
+          "tipo": "luces",
+          "lugares": [
+            "los-lotes",
+            "el-rodeo",
+            "alotenango",
+            "escuintla"
+          ]
+        }
+      ]
+    },
+    "lotes": {
+      "escala": "esquema",
+      "receta": "campo",
+      "horizonte": "llano",
+      "semilla": 2018,
+      "tamano_m": 3400,
+      "estilo": "dia",
+      "protagonista": "aldea",
+      "piezas": [
+        {
+          "id": "aldea",
+          "tipo": "aldeabarranca",
+          "lugar": [
+            0,
+            0
+          ],
+          "rumbo": 0,
+          "tamano": 1,
+          "casas": 40,
+          "personas": 0,
+          "vehiculos": 0,
+          "ancho_barranca_m": 80,
+          "semilla": 1
+        },
+        {
+          "id": "vecina-1",
+          "tipo": "actor",
+          "objeto": "persona",
+          "pose": "caminar",
+          "puntos": [
+            [
+              10,
+              -35
+            ],
+            [
+              25,
+              -320
+            ]
+          ],
+          "claves": [
+            {
+              "t": 0,
+              "s": "0%",
+              "vel_kmh": 4
+            }
+          ]
+        },
+        {
+          "id": "vecino-2",
+          "tipo": "actor",
+          "objeto": "persona",
+          "pose": "caminar",
+          "puntos": [
+            [
+              18,
+              -30
+            ],
+            [
+              35,
+              -320
+            ]
+          ],
+          "claves": [
+            {
+              "t": 0,
+              "s": "0%",
+              "vel_kmh": 4
+            }
+          ]
+        },
+        {
+          "id": "cafetal",
+          "tipo": "cafetal",
+          "puntos": [
+            [
+              -460,
+              -200
+            ],
+            [
+              -200,
+              -200
+            ],
+            [
+              -200,
+              -90
+            ],
+            [
+              -460,
+              -90
+            ]
+          ]
+        },
+        {
+          "id": "cortador-1",
+          "tipo": "actor",
+          "objeto": "cosechador",
+          "lugar": [
+            -400,
+            -150
+          ]
+        },
+        {
+          "id": "cortador-2",
+          "tipo": "actor",
+          "objeto": "cosechador",
+          "lugar": [
+            -320,
+            -130
+          ]
+        },
+        {
+          "id": "cortador-3",
+          "tipo": "actor",
+          "objeto": "cosechador",
+          "lugar": [
+            -250,
+            -170
+          ]
+        }
+      ],
+      "escena": {
+        "que_pasa": "Una aldea de cortadores de café al pie de una barranca honda. El 3 de junio de 2018, de tarde, el flujo piroclástico baja en pulsos por la barranca, se desborda junto al puente, cruza la carretera y entra a la aldea por el lado de la barranca: entierra casas hasta el techo con ceniza gris y bloques; las del otro lado quedan en pie. Después, el depósito humea y se endurece; la zona queda declarada inhabitable.",
+        "quien": "vecinos de la aldea que caminan por sus calles antes del flujo y la dejan antes de que llegue; después, nadie en la calle",
+        "con_que": "casas mezcladas (lámina sobre postes, block, ladrillo), calles de tierra, la carretera que cruza la barranca por un puente, el cafetal; el flujo: nube gris con base densa, ceniza y bloques de piedra",
+        "se_mueve": "los vecinos que caminan y se van; los pulsos grises que bajan por la barranca, el último que se desborda junto al puente y avanza sobre las casas; bloques que ruedan; el humo del depósito; la cámara que baja entre los techos enterrados",
+        "sostiene": [
+          {
+            "que": "aldea de cortadores de café de las fincas cercanas",
+            "hecho": "visual-lotes-h01"
+          },
+          {
+            "que": "casas mezcladas: champas de lámina sobre postes, block y ladrillo; escuela y cisterna",
+            "hecho": "visual-lotes-h02"
+          },
+          {
+            "que": "la barranca honda a un lado (norte) de la aldea, en un valle estrecho",
+            "hecho": "visual-lotes-h04"
+          },
+          {
+            "que": "pulsos que se desbordan junto al puente hacia la carretera y entran por el lado de la barranca",
+            "hecho": "visual-lotes-h06"
+          },
+          {
+            "que": "de tarde (sin reloj en pantalla)",
+            "hecho": "visual-lotes-h10"
+          },
+          {
+            "que": "depósito gris oscuro de bloques, lapilli y ceniza, con bloques rojizos",
+            "hecho": "visual-lotes-h07"
+          },
+          {
+            "que": "casas enterradas hasta el techo",
+            "hecho": "visual-lotes-h08"
+          },
+          {
+            "que": "casas del otro lado en pie",
+            "hecho": "visual-lotes-h15"
+          },
+          {
+            "que": "salón comunal en pie y dañado",
+            "hecho": "visual-lotes-h03"
+          },
+          {
+            "que": "café alrededor",
+            "hecho": "visual-lotes-h09"
+          },
+          {
+            "que": "la ceniza endurecida como concreto",
+            "hecho": "visual-lotes-h12"
+          },
+          {
+            "que": "zona declarada inhabitable",
+            "hecho": "cambio-h10"
+          },
+          {
+            "que": "trazo de la aldea, cuántas casas y el orden de sus calles",
+            "generico": true
+          },
+          {
+            "que": "cuántos vecinos caminan y por dónde",
+            "generico": true
+          },
+          {
+            "que": "el puente, dibujado entero (su colapso no está confirmado)",
+            "generico": true
+          },
+          {
+            "que": "la forma del cono al fondo y la distancia puente–aldea",
+            "generico": true
+          }
+        ],
+        "ilustrativa": "La aldea es un esquema: ni el trazo de Los Lotes ni cuántas casas tenía se afirman; la ubicación real se ve en los tramos de mapa."
+      },
+      "hora": "dia",
+      "lugares": {
+        "aldea.puente": {
+          "x": 170.35,
+          "y": 105.0,
+          "nombre": "Puente"
+        },
+        "aldea.aldea": {
+          "x": -20.0,
+          "y": -20.0,
+          "nombre": "Aldea"
+        },
+        "aldea.lado-barranca": {
+          "x": -60.0,
+          "y": 59.59,
+          "nombre": "Lado de la barranca"
+        },
+        "aldea.escuela": {
+          "x": 26.0,
+          "y": -44.0,
+          "nombre": "Escuela"
+        },
+        "aldea.salon": {
+          "x": -90.0,
+          "y": 22.0,
+          "nombre": "Salón comunal"
+        },
+        "aldea.cisterna": {
+          "x": -62.0,
+          "y": 30.0,
+          "nombre": "Cisterna"
+        },
+        "aldea.carretera": {
+          "x": 158.0,
+          "y": -260.0,
+          "nombre": "Carretera"
+        }
+      }
+    },
+    "lajas2026": {
+      "escala": "pais",
+      "set": "guatemala",
+      "exageracion": 3.0,
+      "estilo": "noche",
+      "hora_razon": "La RN-14 se cerró la noche del 3 de agosto de 2026 en el km 83 por el descenso de material en Las Lajas (cambio-h26) y la alerta se activó esa noche (cambio-h25); entra con transición «oscuro»: salto de 2018 a 2026.",
+      "protagonista": "lajas",
+      "lugares": {
+        "cumbre-fuego": {
+          "lon": -90.8806,
+          "lat": 14.4748,
+          "nombre": "Volcán de Fuego"
+        },
+        "cumbre-acatenango": {
+          "lon": -90.876,
+          "lat": 14.501,
+          "nombre": "Volcán Acatenango"
+        },
+        "cumbre-agua": {
+          "lon": -90.741761,
+          "lat": 14.4663275,
+          "nombre": "Volcán de Agua"
+        },
+        "lajas-cauce": {
+          "lon": -90.846289,
+          "lat": 14.4494516,
+          "nombre": "Barranca Las Lajas"
+        },
+        "puente-lajas": {
+          "lon": -90.825713,
+          "lat": 14.418597,
+          "nombre": "Puente Las Lajas (RN-14)"
+        },
+        "los-lotes": {
+          "lon": -90.828253,
+          "lat": 14.4083069,
+          "nombre": "San Miguel Los Lotes"
+        },
+        "el-rodeo": {
+          "lon": -90.8315451,
+          "lat": 14.3922753,
+          "nombre": "El Rodeo"
+        },
+        "aldea-el-porvenir": {
+          "lon": -90.8203697,
+          "lat": 14.429963,
+          "nombre": "El Porvenir (Alotenango)"
+        },
+        "vista": {
+          "lon": -90.856,
+          "lat": 14.442,
+          "nombre": "Las Lajas"
+        },
+        "vista-alta": {
+          "lon": -90.868,
+          "lat": 14.458,
+          "nombre": "Las Lajas"
+        },
+        "norte-aloten": {
+          "lon": -90.818,
+          "lat": 14.512,
+          "nombre": "Alotenango"
+        },
+        "entre": {
+          "lon": -90.805,
+          "lat": 14.415,
+          "nombre": "El Porvenir"
+        },
+        "aldeas-pie": {
+          "lon": -90.83,
+          "lat": 14.4,
+          "nombre": "Los Lotes y El Rodeo"
+        }
+      },
+      "piezas": [
+        {
+          "id": "volcanes",
+          "tipo": "volcanes",
+          "lugares": [
+            "cumbre-fuego",
+            "cumbre-acatenango",
+            "cumbre-agua"
+          ],
+          "radio_km": 5,
+          "crater": true
+        },
+        {
+          "id": "lajas",
+          "tipo": "barranca",
+          "nombre": "Barranca Las Lajas",
+          "puntos": [
+            [
+              -90.8806,
+              14.4748
+            ],
+            [
+              -90.846289,
+              14.4494516
+            ],
+            [
+              -90.825713,
+              14.418597
+            ],
+            [
+              -90.828253,
+              14.4083069
+            ]
+          ],
+          "esquematica": true,
+          "ancho_km": 0.3,
+          "profundidad_m": 40
+        },
+        {
+          "id": "rn14",
+          "tipo": "carreteras",
+          "nombres": [
+            "RN-14"
+          ],
+          "grosor": 1.2
+        },
+        {
+          "id": "pueblos",
+          "tipo": "luces",
+          "lugares": [
+            "alotenango",
+            "aldea-el-porvenir",
+            "el-rodeo",
+            "escuintla"
+          ]
+        }
+      ]
+    }
+  },
+  "tramos": [
+    {
+      "id": "lajas2018-1",
+      "mundo": "lajas2018",
+      "desde": 0.0,
+      "hasta": 12.0667,
+      "camara": [
+        {
+          "mira": "vista-alta",
+          "dist_km": 27,
+          "azimut": -30,
+          "elevacion": 62,
+          "t": 0.0
+        },
+        {
+          "mira": "vista-alta",
+          "dist_km": 25,
+          "azimut": -28,
+          "elevacion": 62,
+          "t": 3.4333
+        },
+        {
+          "mira": "vista-alta",
+          "dist_km": 23,
+          "azimut": -26,
+          "elevacion": 62,
+          "t": 4.4
+        },
+        {
+          "mira": "aldeas-pie",
+          "dist_km": 17,
+          "azimut": -20,
+          "elevacion": 62,
+          "t": 7.7667
+        },
+        {
+          "mira": "aldeas-pie",
+          "dist_km": 16,
+          "azimut": -18,
+          "elevacion": 62,
+          "t": 11.6333
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "descenso",
+          "pieza": "lajas",
+          "pulsos": 3,
+          "hasta": 0.85,
+          "queda": true,
+          "dur": 4.5,
+          "sfx": "grave",
+          "t": 0.0
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "lajas",
+          "dur": 2.2,
+          "t": 4.4
+        },
+        {
+          "tipo": "resaltar",
+          "lugar": "los-lotes",
+          "dur": 1.6,
+          "t": 9.1667
+        },
+        {
+          "tipo": "resaltar",
+          "lugar": "el-rodeo",
+          "dur": 1.3,
+          "t": 10.7667
+        }
+      ],
+      "marcas": [
+        {
+          "lugar": "cumbre-fuego",
+          "texto": "Volcán de Fuego",
+          "alto": 40,
+          "t": 0.6333,
+          "hasta": 3.6
+        },
+        {
+          "lugar": "puente-lajas",
+          "texto": "Barranca Las Lajas",
+          "sub": "Flanco sureste",
+          "alto": 40,
+          "t": 4.1333,
+          "hasta": 8.1333
+        },
+        {
+          "lugar": "los-lotes",
+          "texto": "San Miguel Los Lotes",
+          "t": 8.9,
+          "hasta": 12.0667
+        },
+        {
+          "lugar": "el-rodeo",
+          "texto": "El Rodeo",
+          "t": 10.5333,
+          "hasta": 12.0667
+        }
+      ]
+    },
+    {
+      "id": "lotes-2",
+      "mundo": "lotes",
+      "desde": 12.0667,
+      "hasta": 44.0667,
+      "camara": [
+        {
+          "mira": [
+            -175,
+            -80
+          ],
+          "dist_m": 600,
+          "azimut": -95,
+          "elevacion": 20,
+          "t": 12.0667
+        },
+        {
+          "mira": [
+            -310,
+            -140
+          ],
+          "dist_m": 215,
+          "azimut": -90,
+          "elevacion": 14,
+          "mira_lev_m": 1,
+          "t": 13.5667
+        },
+        {
+          "mira": [
+            -320,
+            -140
+          ],
+          "dist_m": 75,
+          "azimut": -80,
+          "elevacion": 9,
+          "mira_lev_m": 1,
+          "t": 15.1333
+        },
+        {
+          "mira": "aldea.puente",
+          "dist_m": 700,
+          "azimut": -100,
+          "elevacion": 18,
+          "t": 21.2333
+        },
+        {
+          "mira": "aldea.puente",
+          "dist_m": 600,
+          "azimut": -105,
+          "elevacion": 20,
+          "t": 22.5
+        },
+        {
+          "mira": "aldea.aldea",
+          "dist_m": 450,
+          "azimut": -85,
+          "elevacion": 24,
+          "t": 25.5
+        },
+        {
+          "mira": "aldea.lado-barranca",
+          "dist_m": 220,
+          "azimut": -60,
+          "elevacion": 16,
+          "t": 27.8
+        },
+        {
+          "mira": "aldea.lado-barranca",
+          "dist_m": 320,
+          "azimut": -50,
+          "elevacion": 26,
+          "t": 29.1
+        },
+        {
+          "mira": "aldea.lado-barranca",
+          "dist_m": 300,
+          "azimut": -40,
+          "elevacion": 22,
+          "t": 34.3
+        },
+        {
+          "mira": "aldea.escuela",
+          "dist_m": 360,
+          "azimut": -32,
+          "elevacion": 22,
+          "t": 39.1667
+        },
+        {
+          "mira": [
+            40,
+            -10
+          ],
+          "dist_m": 440,
+          "azimut": -28,
+          "elevacion": 25,
+          "t": 40.4333
+        },
+        {
+          "mira": [
+            40,
+            -10
+          ],
+          "dist_m": 400,
+          "azimut": -22,
+          "elevacion": 22,
+          "t": 43.6
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "resaltar",
+          "pieza": "aldea",
+          "dur": 2.0,
+          "t": 12.9333
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "cafetal",
+          "dur": 1.0,
+          "t": 13.5667
+        },
+        {
+          "tipo": "piroclastico",
+          "pieza": "aldea",
+          "pulsos": 3,
+          "desborde": 0.8,
+          "cubre": 0.6,
+          "bloques": 15,
+          "humo": true,
+          "vacia": true,
+          "gente": 8,
+          "queda": true,
+          "semilla": 1,
+          "dur": 7.5,
+          "sfx": "grave",
+          "t": 20.0333
+        },
+        {
+          "tipo": "endurecer",
+          "pieza": "aldea",
+          "lluvia": 0.8,
+          "costra": 0.85,
+          "grietas": 0.6,
+          "semilla": 1,
+          "dur": 3.2,
+          "t": 40.4333
+        }
+      ],
+      "marcas": [
+        {
+          "lugar": "aldea.aldea",
+          "texto": "La aldea",
+          "sub": "Esquema",
+          "alto": 20,
+          "t": 12.0667,
+          "hasta": 13.5667
+        },
+        {
+          "lugar": "aldea.puente",
+          "texto": "El puente",
+          "t": 22.9333,
+          "hasta": 25.9
+        },
+        {
+          "lugar": "aldea.lado-barranca",
+          "texto": "Enterrada hasta el techo",
+          "alto": 40,
+          "t": 27.5333,
+          "hasta": 29.9
+        }
+      ],
+      "transicion": "fundido",
+      "fundido_s": 0.6
+    },
+    {
+      "id": "lajas2026-3",
+      "mundo": "lajas2026",
+      "desde": 44.0667,
+      "hasta": 67.1667,
+      "camara": [
+        {
+          "mira": "vista-alta",
+          "dist_km": 25,
+          "azimut": -28,
+          "elevacion": 62,
+          "t": 44.0667
+        },
+        {
+          "mira": "vista",
+          "dist_km": 22,
+          "azimut": -36,
+          "elevacion": 50,
+          "t": 46.6
+        },
+        {
+          "mira": "norte-aloten",
+          "dist_km": 20,
+          "azimut": -12,
+          "elevacion": 62,
+          "t": 50.1667
+        },
+        {
+          "mira": "norte-aloten",
+          "dist_km": 19,
+          "azimut": -12,
+          "elevacion": 62,
+          "t": 51.5
+        },
+        {
+          "mira": "entre",
+          "dist_km": 19,
+          "azimut": -14,
+          "elevacion": 60,
+          "t": 55.2333
+        },
+        {
+          "mira": "los-lotes",
+          "dist_km": 16,
+          "azimut": -15,
+          "elevacion": 40,
+          "t": 57.4667
+        },
+        {
+          "mira": "vista-alta",
+          "dist_km": 25,
+          "azimut": -28,
+          "elevacion": 62,
+          "t": 64.3667
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "descenso",
+          "pieza": "lajas",
+          "pulsos": 2,
+          "hasta": 0.55,
+          "queda": true,
+          "dur": 4.0,
+          "sfx": "grave",
+          "t": 44.0667
+        },
+        {
+          "tipo": "resaltar",
+          "lugar": "alotenango",
+          "dur": 2.6,
+          "t": 50.1667
+        },
+        {
+          "tipo": "resaltar",
+          "lugar": "aldea-el-porvenir",
+          "dur": 2.0,
+          "t": 55.2333
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "lajas",
+          "dur": 3.0,
+          "t": 59.2333
+        }
+      ],
+      "marcas": [
+        {
+          "lugar": "alotenango",
+          "texto": "RN-14 cerrada",
+          "sub": "Entrada de Alotenango",
+          "alto": 30,
+          "t": 49.9333,
+          "hasta": 54.4
+        },
+        {
+          "lugar": "aldea-el-porvenir",
+          "texto": "El Porvenir",
+          "sub": "Aldea evacuada",
+          "t": 54.9667,
+          "hasta": 57.2333
+        },
+        {
+          "lugar": "los-lotes",
+          "texto": "San Miguel Los Lotes",
+          "sub": "Zona inhabitable",
+          "t": 57.2333,
+          "hasta": 60.1333
+        }
+      ],
+      "transicion": "oscuro",
+      "fundido_s": 0.6
+    }
+  ]
+}

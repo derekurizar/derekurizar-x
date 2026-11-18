@@ -1,0 +1,425 @@
+{
+ "id": "2026-11-17-litegua",
+ "tipo": "historia",
+ "slug": "litegua",
+ "tema": "litegua",
+ "fecha": "2026-11-17",
+ "pregunta": "¿Cómo una línea de buses se volvió el camino de la capital al Caribe de Guatemala?",
+ "arco": "origen y permanencia: una ruta que cambia de dueño (del tren a la carretera) y la empresa que se queda con ella",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "1959",
+   "titulo": "Llega la carretera",
+   "escena": 7
+  },
+  {
+   "numero": 3,
+   "anio": "2002",
+   "titulo": "La línea de hoy",
+   "escena": 13
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "Litegua llegó al Caribe de Guatemala antes que la carretera. Rumbo al mar, el bus y el tren se jugaban los mismos pasajeros. Mucho antes del bus estuvo el tren: a inicios de los 1900, el presidente Manuel Estrada Cabrera concesionó por 99 años la línea del Atlántico a una compañía estadounidense. Después, en 1912, nació la International Railways of Central America, la Irca, la compañía que operó el tren al Atlántico. Casi cuarenta años después, en 1950, nació Litegua, con dos buses y dos agencias, en la capital y en Puerto Barrios. Su historia lo cuenta así: Se funda Líneas Terrestres Guatemaltecas S.A. prestando servicios únicamente a Izabal. Pero todavía no había carretera al Atlántico: empezó a construirse en 1951, bajo Jacobo Árbenz."
+  },
+  {
+   "acto": 2,
+   "texto": "Ocho años después, en 1959, el presidente Miguel Ydígoras Fuentes inauguró la carretera al Atlántico: 300 kilómetros hasta Puerto Barrios. Antonio Meneses, el ingeniero que supervisó la obra por el gobierno, habló del mérito indiscutible de haber empezado a traslucir como realidad el sueño hermoso y benéfico de la gran ruta del Atlántico. El historiador Miguel Álvarez dijo que esa carretera le quitó al tren el monopolio del transporte y explica buena parte de su decadencia. La carretera ya era del país, pero el tren seguía en manos de una compañía extranjera. Entonces, en 1968, el ferrocarril pasó de la Irca al Estado, y nació Ferrocarriles de Guatemala, Fegua, la empresa estatal del tren. Casi tres décadas después, a mediados de los 90, Litegua sumó Santo Tomás, Río Dulce y Morales, con 30 buses. El tren, en cambio, se encogía. Hasta que en marzo de 1996, el presidente Álvaro Arzú decidió cerrar las operaciones de Fegua. Ese año, según Prensa Libre, el tren al Atlántico dejó de llevar pasajeros."
+  },
+  {
+   "acto": 3,
+   "texto": "Seis años después, en 2002, Litegua ya tenía más de 50 buses, con salidas cada 30 minutos. Dieciocho años después, en 2020, la pandemia la paró cinco meses; en agosto fue la primera línea entre ciudades en volver a rodar. Aun así, ninguna fuente dice quién la fundó, quién la maneja ni cómo llegaba sin carretera. Nació con dos buses antes que la carretera al Atlántico. Hoy, las familias todavía suben a un Litegua para llegar al Caribe."
+  }
+ ],
+ "hilos": [
+  {
+   "id": "h1",
+   "sin_respuesta": "Quién fundó Litegua, ninguna fuente publicada lo dice"
+  },
+  {
+   "id": "h2",
+   "escena": 5
+  },
+  {
+   "id": "h3",
+   "escena": 12
+  },
+  {
+   "id": "h4",
+   "escena": 7
+  },
+  {
+   "id": "h5",
+   "sin_respuesta": "Quién maneja Litegua hoy, ninguna fuente publicada lo dice"
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3,
+   4
+  ],
+  [
+   5,
+   6
+  ],
+  [
+   7,
+   8,
+   9
+  ],
+  [
+   10,
+   11,
+   12
+  ],
+  [
+   13,
+   14,
+   15
+  ]
+ ],
+ "paleta": "atitlan",
+ "musica": "atitlan-1",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2408,
+ "duracion_s": 164.4,
+ "critica": {
+  "veredicto": "corregir",
+  "vuelta": 2,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 3,
+   "claridad": 3,
+   "flujo": 3,
+   "precision": 4,
+   "cierre": 4,
+   "recompensa": 3
+  }
+ },
+ "gancho": {
+  "familia": "paradoja",
+  "visual": "foto",
+  "pantalla": "Antes que la carretera",
+  "linea": "llegó al Caribe antes que la carretera",
+  "id": "g1",
+  "elegido_por": "usuario",
+  "recomendado": "g1"
+ },
+ "promesa": {
+  "pregunta": "¿Qué le pasó al tren que competía con Litegua?",
+  "texto": "Rumbo al mar, el bus y el tren se jugaban los mismos pasajeros.",
+  "forma": "apuesta",
+  "en": 2,
+  "pago": 12,
+  "revela": 2
+ },
+ "bisagra": {
+  "texto": "La carretera ya era del país, pero el tren seguía en manos de una compañía extranjera.",
+  "forma": "contradiccion",
+  "en": 9,
+  "pago": 10
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "Litegua llegó al Caribe de Guatemala antes que la carretera.",
+   "voz": "Litegua llegó al Caribe de Guatemala antes que la carretera.",
+   "dur": 4.17,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Litegua vía Bookaway",
+     "origen": "empresa",
+     "licencia": "© Litegua vía Bookaway (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Rumbo al mar, el bus y el tren se jugaban los mismos pasajeros.",
+   "voz": "Rumbo al mar, el bus y el tren se jugaban los mismos pasajeros.",
+   "dur": 4.964,
+   "hechos": [
+    "ori-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Soy502",
+     "origen": "medio",
+     "licencia": "© Soy502 (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "foto",
+   "pantalla": "Mucho antes del bus estuvo el tren: a inicios de los 1900, el presidente Manuel Estrada Cabrera concesionó por 99 años la línea del Atlántico a una compañía estadounidense.",
+   "voz": "Mucho antes del bus estuvo el tren: a inicios de los mil novecientos, el presidente Manuel Estrada Cabrera concesionó por noventa y nueve años la línea del Atlántico a una compañía estadounidense.",
+   "dur": 12.777,
+   "hechos": [
+    "ruta-h04"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Joaquín Méndez; Felipe Estrada Paniag… ·",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "foto",
+   "pantalla": "Después, en 1912, nació la International Railways of Central America, la Irca, la compañía que operó el tren al Atlántico.",
+   "voz": "Después, en mil novecientos doce, nació la International Railways of Central America, la Irca, la compañía que operó el tren al Atlántico.",
+   "dur": 9.593,
+   "hechos": [
+    "ori-h04"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: La Ilustración Guatemalteca · Public dom",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "cita",
+   "pantalla": "Casi cuarenta años después, en 1950, nació Litegua, con dos buses y dos agencias, en la capital y en Puerto Barrios. Su historia lo cuenta así: Se funda Líneas Terrestres Guatemaltecas S.A. prestando servicios únicamente a Izabal.",
+   "voz": "Casi cuarenta años después, en mil novecientos cincuenta, nació Litegua, con dos buses y dos agencias, en la capital y en Puerto Barrios. Su historia lo cuenta así: Se funda Líneas Terrestres Guatemaltecas S.A. prestando servicios únicamente a Izabal.",
+   "dur": 18.202,
+   "hechos": [
+    "hoy-h03",
+    "ori-h02",
+    "ori-h03"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "golpe",
+   "pantalla": "Pero todavía no había carretera al Atlántico: empezó a construirse en 1951, bajo Jacobo Árbenz.",
+   "voz": "Pero todavía no había carretera al Atlántico: empezó a construirse en mil novecientos cincuenta y uno, bajo Jacobo Árbenz.",
+   "dur": 9.204,
+   "hechos": [
+    "ruta-h02"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "foto",
+   "pantalla": "Ocho años después, en 1959, el presidente Miguel Ydígoras Fuentes inauguró la carretera al Atlántico: 300 kilómetros hasta Puerto Barrios.",
+   "voz": "Ocho años después, en mil novecientos cincuenta y nueve, el presidente Miguel Ydígoras Fuentes inauguró la carretera al Atlántico: trescientos kilómetros hasta Puerto Barrios.",
+   "dur": 11.815,
+   "hechos": [
+    "ruta-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Luis-Ro Martinez · CC BY-SA 3.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 3.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "cita",
+   "pantalla": "Antonio Meneses, el ingeniero que supervisó la obra por el gobierno, habló del mérito indiscutible de haber empezado a traslucir como realidad el sueño hermoso y benéfico de la gran ruta del Atlántico.",
+   "voz": "Antonio Meneses, el ingeniero que supervisó la obra por el gobierno, habló del mérito indiscutible de haber empezado a traslucir como realidad el sueño hermoso y benéfico de la gran ruta del Atlántico.",
+   "dur": 13.099,
+   "hechos": [
+    "ruta-h01"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "foto",
+   "pantalla": "El historiador Miguel Álvarez dijo que esa carretera le quitó al tren el monopolio del transporte y explica buena parte de su decadencia. La carretera ya era del país, pero el tren seguía en manos de una compañía extranjera.",
+   "voz": "El historiador Miguel Álvarez dijo que esa carretera le quitó al tren el monopolio del transporte y explica buena parte de su decadencia. La carretera ya era del país, pero el tren seguía en manos de una compañía extranjera.",
+   "dur": 14.291,
+   "hechos": [
+    "ruta-h08"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: La Ilustración Guatemalteca · Public dom",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "foto",
+   "pantalla": "Entonces, en 1968, el ferrocarril pasó de la Irca al Estado, y nació Ferrocarriles de Guatemala, Fegua, la empresa estatal del tren.",
+   "voz": "Entonces, en mil novecientos sesenta y ocho, el ferrocarril pasó de la Irca al Estado, y nació Ferrocarriles de Guatemala, Fegua, la empresa estatal del tren.",
+   "dur": 10.512,
+   "hechos": [
+    "ruta-h05"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Joaquín Méndez; Felipe Estrada Paniag… ·",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "foto",
+   "pantalla": "Casi tres décadas después, a mediados de los 90, Litegua sumó Santo Tomás, Río Dulce y Morales, con 30 buses.",
+   "voz": "Casi tres décadas después, a mediados de los noventa, Litegua sumó Santo Tomás, Río Dulce y Morales, con treinta buses.",
+   "dur": 8.948,
+   "hechos": [
+    "hoy-h04"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Chapinlandia999 · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "explica",
+   "pantalla": "El tren, en cambio, se encogía. Hasta que en marzo de 1996, el presidente Álvaro Arzú decidió cerrar las operaciones de Fegua. Ese año, según Prensa Libre, el tren al Atlántico dejó de llevar pasajeros.",
+   "voz": "El tren, en cambio, se encogía. Hasta que en marzo de mil novecientos noventa y seis, el presidente Álvaro Arzú decidió cerrar las operaciones de Fegua. Ese año, según Prensa Libre, el tren al Atlántico dejó de llevar pasajeros.",
+   "dur": 15.97,
+   "hechos": [
+    "ruta-h06",
+    "ruta-h07"
+   ],
+   "fotos": [],
+   "animacion": "vagones-apagan",
+   "mecanismo": "cronologia"
+  },
+  {
+   "n": 13,
+   "tipo": "foto",
+   "pantalla": "Seis años después, en 2002, Litegua ya tenía más de 50 buses, con salidas cada 30 minutos.",
+   "voz": "Seis años después, en dos mil dos, Litegua ya tenía más de cincuenta buses, con salidas cada treinta minutos.",
+   "dur": 7.461,
+   "hechos": [
+    "hoy-h05"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Soy502",
+     "origen": "medio",
+     "licencia": "© Soy502 (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "foto",
+   "pantalla": "Dieciocho años después, en 2020, la pandemia la paró cinco meses; en agosto fue la primera línea entre ciudades en volver a rodar.",
+   "voz": "Dieciocho años después, en dos mil veinte, la pandemia la paró cinco meses; en agosto fue la primera línea entre ciudades en volver a rodar.",
+   "dur": 9.655,
+   "hechos": [
+    "hoy-h07"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Publinews",
+     "origen": "medio",
+     "licencia": "© Publinews (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 15,
+   "tipo": "golpe",
+   "pantalla": "Aun así, ninguna fuente dice quién la fundó, quién la maneja ni cómo llegaba sin carretera.",
+   "voz": "Aun así, ninguna fuente dice quién la fundó, quién la maneja ni cómo llegaba sin carretera.",
+   "dur": 6.59,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 16,
+   "tipo": "cierre",
+   "pantalla": "Nació con dos buses antes que la carretera al Atlántico. Hoy, las familias todavía suben a un Litegua para llegar al Caribe.",
+   "voz": "Nació con dos buses antes que la carretera al Atlántico. Hoy, las familias todavía suben a un Litegua para llegar al Caribe.",
+   "dur": 11.057,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que dejó",
+  "resumen": [
+   "Nació en 1950 con dos buses",
+   "El tren se detuvo en 1996",
+   "Sigue en la ruta al Caribe"
+  ],
+  "texto": "Nació con dos buses antes que la carretera al Atlántico. Hoy, las familias todavía suben a un Litegua para llegar al Caribe.",
+  "tipo": "remate",
+  "forma": "legado",
+  "final": "Hoy, las familias todavía suben a un Litegua para llegar al Caribe.",
+  "consecuencia": {
+   "quien": "familias",
+   "verbo": "suben"
+  },
+  "id": "c1",
+  "elegido_por": "usuario",
+  "recomendado": "c1"
+ },
+ "caption": {
+  "tiktok": "Litegua salió hacia Izabal en 1950, nueve años antes de que se inaugurara la carretera al Atlántico. Mientras sus buses crecían, el tren al Caribe se apagó. #Guatemala #Historia #Litegua",
+  "instagram": "Litegua nació en 1950 con dos buses y servicio solo a Izabal. La carretera al Atlántico se inauguró en 1959; el tren pasó al Estado en 1968 y dejó de llevar pasajeros a mediados de los 90. Hoy sus buses siguen rumbo al Caribe. #Guatemala #Litegua #PuertoBarrios",
+  "facebook": "La historia de Litegua: dos buses en 1950, una carretera que llegó en 1959 y un tren al Atlántico que se detuvo en 1996. Fuentes en el primer comentario.",
+  "shorts": "Litegua llegó al Caribe antes que su carretera #Shorts\nDe dos buses en 1950 a la ruta de la capital a Puerto Barrios."
+ }
+}

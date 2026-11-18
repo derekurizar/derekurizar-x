@@ -23,7 +23,7 @@ Pollo Pinulito nació para pelearle el barrio a Pollo Campero: locales de tres p
 Título (primera línea, ≤ 100 caracteres) y descripción.
 ```
 Pollo Pinulito contra Pollo Campero: la historia #Shorts
-Del barrio en Guatemala a Nueva York.
+Del barrio en Guatemala a Nueva York. #Guatemala
 ```
 
 Sígueme: TikTok @derekurizargt · Instagram @derekurizargt · Facebook Derek Urizar · YouTube @derekurizar · X @DerekUrizar

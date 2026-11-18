@@ -1,0 +1,412 @@
+{
+ "id": "2026-11-17-banco-industrial",
+ "tipo": "historia",
+ "slug": "banco-industrial",
+ "tema": "Banco Industrial",
+ "fecha": "2026-11-17",
+ "pregunta": "¿Cómo un banco que abrieron los industriales en 1968 terminó siendo el banco más grande de Guatemala?",
+ "arco": "ascenso: de banco de un gremio a banco de todo el país",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "1978",
+   "titulo": "Lo que nadie hacía",
+   "escena": 6
+  },
+  {
+   "numero": 3,
+   "anio": "2007–2026",
+   "titulo": "Más allá de Guatemala",
+   "escena": 11
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "Banco Industrial hizo lo que ningún banco de Guatemala hacía. Nació para las fábricas, pero un día compraría bancos fuera del país. Abrió en junio de 1968, impulsado por los industriales guatemaltecos. Su primer presidente, cuenta el diario La Hora, fue Ramiro Castillo Love, hoy nombre de una plaza del banco. Años después, Diego Pulido, director corporativo del banco, lo explicó así: No era un negocio, sino una forma de colaborar para que la industria tuviera crédito. Pulido había entrado en junio de 1973, y recuerda que era un banco de US$20 millones de activos y unos 200 empleados."
+  },
+  {
+   "acto": 2,
+   "texto": "Cinco años después, en 1978, hizo lo que ningún banco hacía: la revista Estrategia y Negocios cuenta que los bancos cerraban a las tres de la tarde, y el BI, a las ocho de la noche. En 1999 fue el primer banco del país calificado por Fitch Ratings, la agencia que mide su solidez. Era pionero, pero no el más viejo: había otro con mucha más historia. Se llamaba Banco de Occidente, y había surgido emitiendo sus propios billetes. En 2006, el Banco Industrial lo compró y lo absorbió. José Molina Calderón, columnista de Prensa Libre, afirmó que Occidente cumplía 125 años y era el banco más antiguo del país. Tanta historia tuvo su precio: una tesis de la USAC estima que esa compra costó US$136 millones."
+  },
+  {
+   "acto": 3,
+   "texto": "Un año después, en 2007, el BI cruzó la frontera: Estrategia y Negocios cuenta que compró la mayoría de Banpaís, un banco de Honduras. Un ejecutivo del BI dijo que en 2011 abrió en El Salvador. En 2016, Corporación BI, el grupo financiero que nació del banco, abrió en Panamá su filial Bi-Bank. Para 2024 superó por primera vez los US$20,000 millones en activos, y el ranking regional de 2026 estima que hoy es el banco más grande de Centroamérica. Si es el mayor de la región, también lo es de Guatemala. Pero ninguna fuente dice cuándo llegó a ser el primero del país, ni qué pasó con las agencias de Occidente tras la compra. Cuánto concentra hoy, tampoco: el propio banco dice que en 2016 tenía el 29 % de los activos. Falta esa cifra, pero el banco de las fábricas sí cruzó fronteras. Hoy, los guatemaltecos guardan sus ahorros en el banco que abrieron los industriales."
+  }
+ ],
+ "hilos": [
+  {
+   "id": "h1",
+   "escena": 3
+  },
+  {
+   "id": "h2",
+   "sin_respuesta": "ninguna fuente dice cuándo llegó a ser el primero del país"
+  },
+  {
+   "id": "h3",
+   "sin_respuesta": "ni qué pasó con las agencias de Occidente"
+  },
+  {
+   "id": "h4",
+   "sin_respuesta": "Cuánto concentra hoy, tampoco"
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3,
+   4,
+   5
+  ],
+  [
+   6,
+   7
+  ],
+  [
+   8,
+   9,
+   10
+  ],
+  [
+   11,
+   12,
+   13,
+   14
+  ]
+ ],
+ "paleta": "cielo",
+ "musica": "cielo-1",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2443,
+ "duracion_s": 161.5,
+ "critica": {
+  "veredicto": "pasa",
+  "vuelta": 1,
+  "puntajes": {
+   "gancho": 3,
+   "tension": 3,
+   "claridad": 3,
+   "flujo": 3,
+   "precision": 4,
+   "cierre": 4,
+   "recompensa": 3
+  }
+ },
+ "gancho": {
+  "familia": "misterio",
+  "visual": "foto",
+  "pantalla": "Lo que hizo BI",
+  "linea": "lo que ningún banco hacía",
+  "id": "g3",
+  "elegido_por": "usuario",
+  "recomendado": "g3"
+ },
+ "promesa": {
+  "pregunta": "¿A qué país saltó primero este banco?",
+  "texto": "Nació para las fábricas, pero un día compraría bancos fuera del país.",
+  "forma": "contradiccion",
+  "en": 2,
+  "pago": 11,
+  "revela": 4
+ },
+ "bisagra": {
+  "texto": "Era pionero, pero no el más viejo: había otro con mucha más historia.",
+  "forma": "presagio",
+  "en": 7,
+  "pago": 8
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "Banco Industrial hizo lo que ningún banco de Guatemala hacía.",
+   "voz": "Banco Industrial hizo lo que ningún banco de Guatemala hacía.",
+   "dur": 4.678,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Rene Hernandez · CC BY-SA 2.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 2.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Nació para las fábricas, pero un día compraría bancos fuera del país. Abrió en junio de 1968, impulsado por los industriales guatemaltecos.",
+   "voz": "Nació para las fábricas, pero un día compraría bancos fuera del país. Abrió en junio de mil novecientos sesenta y ocho, impulsado por los industriales guatemaltecos.",
+   "dur": 10.661,
+   "hechos": [
+    "ori-h01",
+    "ori-h02"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Rene Hernandez · CC BY-SA 2.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 2.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "foto",
+   "pantalla": "Su primer presidente, cuenta el diario La Hora, fue Ramiro Castillo Love, hoy nombre de una plaza del banco.",
+   "voz": "Su primer presidente, cuenta el diario La Hora, fue Ramiro Castillo Love, hoy nombre de una plaza del banco.",
+   "dur": 7.681,
+   "hechos": [
+    "ori-h04"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: La Hora",
+     "origen": "medio",
+     "licencia": "© La Hora (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "cita",
+   "pantalla": "Años después, Diego Pulido, director corporativo del banco, lo explicó así: No era un negocio, sino una forma de colaborar para que la industria tuviera crédito.",
+   "voz": "Años después, Diego Pulido, director corporativo del banco, lo explicó así: No era un negocio, sino una forma de colaborar para que la industria tuviera crédito.",
+   "dur": 10.75,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "foto",
+   "pantalla": "Pulido había entrado en junio de 1973, y recuerda que era un banco de US$20 millones de activos y unos 200 empleados.",
+   "voz": "Pulido había entrado en junio de mil novecientos setenta y tres, y recuerda que era un banco de veinte millones de dólares de activos y unos doscientos empleados.",
+   "dur": 10.493,
+   "hechos": [
+    "ori-h05"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Rene Hernandez · CC BY-SA 2.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 2.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "foto",
+   "pantalla": "Cinco años después, en 1978, hizo lo que ningún banco hacía: la revista Estrategia y Negocios cuenta que los bancos cerraban a las tres de la tarde, y el BI, a las ocho de la noche.",
+   "voz": "Cinco años después, en mil novecientos setenta y ocho, hizo lo que ningún banco hacía: la revista Estrategia y Negocios cuenta que los bancos cerraban a las tres de la tarde, y el BI, a las ocho de la noche.",
+   "dur": 13.645,
+   "hechos": [
+    "exp-h03"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Rene Hernandez · CC BY-SA 2.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 2.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "foto",
+   "pantalla": "En 1999 fue el primer banco del país calificado por Fitch Ratings, la agencia que mide su solidez. Era pionero, pero no el más viejo: había otro con mucha más historia.",
+   "voz": "En mil novecientos noventa y nueve fue el primer banco del país calificado por Fitch Ratings, la agencia que mide su solidez. Era pionero, pero no el más viejo: había otro con mucha más historia.",
+   "dur": 14.441,
+   "hechos": [
+    "exp-h04"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "golpe",
+   "pantalla": "Se llamaba Banco de Occidente, y había surgido emitiendo sus propios billetes.",
+   "voz": "Se llamaba Banco de Occidente, y había surgido emitiendo sus propios billetes.",
+   "dur": 5.317,
+   "hechos": [
+    "exp-h05"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "foto",
+   "pantalla": "En 2006, el Banco Industrial lo compró y lo absorbió. José Molina Calderón, columnista de Prensa Libre, afirmó que Occidente cumplía 125 años y era el banco más antiguo del país.",
+   "voz": "En dos mil seis, el Banco Industrial lo compró y lo absorbió. José Molina Calderón, columnista de Prensa Libre, afirmó que Occidente cumplía ciento veinticinco años y era el banco más antiguo del país.",
+   "dur": 13.275,
+   "hechos": [
+    "exp-h07",
+    "exp-h11"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: La Hora",
+     "origen": "medio",
+     "licencia": "© La Hora (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "golpe",
+   "pantalla": "Tanta historia tuvo su precio: una tesis de la USAC estima que esa compra costó US$136 millones.",
+   "voz": "Tanta historia tuvo su precio: una tesis de la Usac estima que esa compra costó ciento treinta y seis millones de dólares.",
+   "dur": 8.44,
+   "hechos": [
+    "exp-h06"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "foto",
+   "pantalla": "Un año después, en 2007, el BI cruzó la frontera: Estrategia y Negocios cuenta que compró la mayoría de Banpaís, un banco de Honduras.",
+   "voz": "Un año después, en dos mil siete, el BI cruzó la frontera: Estrategia y Negocios cuenta que compró la mayoría de Banpaís, un banco de Honduras.",
+   "dur": 10.363,
+   "hechos": [
+    "reg-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "explica",
+   "pantalla": "Un ejecutivo del BI dijo que en 2011 abrió en El Salvador. En 2016, Corporación BI, el grupo financiero que nació del banco, abrió en Panamá su filial Bi-Bank.",
+   "voz": "Un ejecutivo del BI dijo que en dos mil once abrió en El Salvador. En dos mil dieciséis, Corporación BI, el grupo financiero que nació del banco, abrió en Panamá su filial Bi-Bank.",
+   "dur": 12.651,
+   "hechos": [
+    "reg-h02",
+    "reg-h03"
+   ],
+   "fotos": [],
+   "animacion": "foco-contagio",
+   "mecanismo": "onda"
+  },
+  {
+   "n": 13,
+   "tipo": "foto",
+   "pantalla": "Para 2024 superó por primera vez los US$20,000 millones en activos, y el ranking regional de 2026 estima que hoy es el banco más grande de Centroamérica. Si es el mayor de la región, también lo es de Guatemala.",
+   "voz": "Para dos mil veinticuatro superó por primera vez los veinte mil millones de dólares en activos, y el ranking regional de dos mil veintiséis estima que hoy es el banco más grande de Centroamérica. Si es el mayor de la región, también lo es de Guatemala.",
+   "dur": 15.073,
+   "hechos": [
+    "exp-h10",
+    "reg-h07"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "foto",
+   "pantalla": "Pero ninguna fuente dice cuándo llegó a ser el primero del país, ni qué pasó con las agencias de Occidente tras la compra. Cuánto concentra hoy, tampoco: el propio banco dice que en 2016 tenía el 29 % de los activos.",
+   "voz": "Pero ninguna fuente dice cuándo llegó a ser el primero del país, ni qué pasó con las agencias de Occidente tras la compra. Cuánto concentra hoy, tampoco: el propio banco dice que en dos mil dieciséis tenía el veintinueve por ciento de los activos.",
+   "dur": 15.684,
+   "hechos": [
+    "reg-h04"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 15,
+   "tipo": "cierre",
+   "pantalla": "Falta esa cifra, pero el banco de las fábricas sí cruzó fronteras. Hoy, los guatemaltecos guardan sus ahorros en el banco que abrieron los industriales.",
+   "voz": "Falta esa cifra, pero el banco de las fábricas sí cruzó fronteras. Hoy, los guatemaltecos guardan sus ahorros en el banco que abrieron los industriales.",
+   "dur": 11.96,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que dejó",
+  "resumen": [
+   "Un banco de industriales en 1968",
+   "Absorbió al Banco de Occidente",
+   "Hoy, el mayor de Centroamérica"
+  ],
+  "texto": "Falta esa cifra, pero el banco de las fábricas sí cruzó fronteras. Hoy, los guatemaltecos guardan sus ahorros en el banco que abrieron los industriales.",
+  "tipo": "remate",
+  "forma": "legado",
+  "final": "Hoy, los guatemaltecos guardan sus ahorros en el banco que abrieron los industriales.",
+  "consecuencia": {
+   "quien": "guatemaltecos",
+   "verbo": "guardan"
+  },
+  "id": "c1",
+  "elegido_por": "usuario",
+  "recomendado": "c1"
+ },
+ "caption": {
+  "tiktok": "Banco Industrial abrió en 1968 para darle crédito a la industria. En 1978, cuenta Estrategia & Negocios, atendía hasta las ocho de la noche cuando los demás bancos cerraban a las tres. Después absorbió al Banco de Occidente y cruzó fronteras. #Guatemala #BancoIndustrial #historia",
+  "instagram": "La historia de Banco Industrial: de un banco de industriales en 1968 al banco más grande de Centroamérica, según E&N. #Guatemala #BancoIndustrial #historia",
+  "facebook": "¿Cómo un banco de industriales llegó a ser el más grande de Centroamérica? De 1968 al Banco de Occidente y más allá de Guatemala. Fuentes en el primer comentario.",
+  "shorts": "Banco Industrial: de los industriales a Centroamérica #Shorts\nAbrió en 1968, absorbió al Banco de Occidente y cruzó fronteras. #Guatemala"
+ }
+}

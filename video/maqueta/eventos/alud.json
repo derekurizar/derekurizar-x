@@ -1,0 +1,79 @@
+{
+ "tipo": "alud",
+ "clase": "evento",
+ "cuando": "un alud de lodo sin erupción: lo alto de la ladera se desprende, baja por el cauce de una faldavolcan con piedras y árboles y sepulta el pueblo",
+ "parametros": {
+  "pieza": {
+   "tipo": "pieza",
+   "piezas": [
+    "faldavolcan"
+   ],
+   "requerido": true,
+   "descripcion": "la falda de volcán por cuyo cauce baja el lodo"
+  },
+  "desde": {
+   "tipo": "lugar",
+   "requerido": false,
+   "defecto": "ladera-alta",
+   "descripcion": "dónde se desprende (un lugar de la pieza: ladera-alta o barranco; se proyecta sobre su cauce)"
+  },
+  "hacia": {
+   "tipo": "lugar",
+   "requerido": false,
+   "defecto": "pueblo",
+   "descripcion": "hasta dónde llega el eje del lóbulo (pueblo, plaza o iglesia de la pieza); pasado ese punto el lodo se redondea"
+  },
+  "ancho_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    20,
+    400
+   ],
+   "defecto": 120,
+   "descripcion": "ancho del frente al llegar al llano (metros de la maqueta, no los de un alud real); en la ladera va de 0.35 a 0.65 de eso"
+  },
+  "cubre": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0.7,
+   "descripcion": "qué tanto del pueblo tapa el lóbulo: 0 = solo la franja de `ancho_m`; 1 = hasta 175 m (× tamano) a cada lado del eje, el pueblo entero"
+  },
+  "arboles": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    40
+   ],
+   "defecto": 12,
+   "descripcion": "árboles de la falda que el frente arranca: caen hacia abajo y se van flotando en el lodo"
+  }
+ },
+ "escalas": [
+  "esquema"
+ ],
+ "motores": [
+  "three"
+ ],
+ "adelanto": {
+  "dur": 0.3
+ },
+ "usa": [],
+ "animado": "el frente baja con la cabeza abultada y revuelta (más clara), las orillas atrasadas y ondas que corren; piedras que ruedan, árboles que caen y flotan, techos, vigas y adobes que salen del lodo; en lo alto queda la cicatriz y en la ladera el lodo escurre; en el llano se queda y tapa las casas y la luz de sus ventanas",
+ "ejemplo": {
+  "t": 0.6,
+  "dur": 6.5,
+  "tipo": "alud",
+  "pieza": "falda",
+  "desde": "ladera-alta",
+  "hacia": "pueblo",
+  "ancho_m": 120,
+  "cubre": 0.7,
+  "arboles": 12
+ }
+}

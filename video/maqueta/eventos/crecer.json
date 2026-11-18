@@ -1,0 +1,123 @@
+{
+ "tipo": "crecer",
+ "clase": "evento",
+ "cuando": "una pila (de basura, de lo que se acumula) sube capa por capa con la voz: objetos que caen y se asientan; se llama varias veces y crece, se detiene y sigue",
+ "parametros": {
+  "pieza": {
+   "tipo": "pieza",
+   "requerido": true,
+   "descripcion": "la pila que crece: una pieza `pila` (dibuja su cuerpo; aquí se le fija la fracción y cae lo que llega sobre su cima; su `alto_m` y su `inicio` mandan) o cualquier pieza con lugar junto a la que este evento dibuja su propia pila (con `ancho_m`, `fondo_m`, `alto_m`)"
+  },
+  "de": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "descripcion": "fracción del alto de la pila al empezar (sin ella, donde dejó el `crecer` anterior de la misma pieza; el primero, el `inicio` de la pila o 0)"
+  },
+  "a": {
+   "tipo": "numero",
+   "requerido": true,
+   "rango": [
+    0,
+    1
+   ],
+   "descripcion": "fracción del alto de la pila al terminar (0.17 de 30 m = 5.1 m: la medida la pone la cifra con respaldo)"
+  },
+  "caida": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "true: racimos de bolsas y envases caen sobre la cima, se asientan con polvo y la capa siguiente los tapa; false: solo sube"
+  },
+  "lugar": {
+   "tipo": "lugar",
+   "requerido": false,
+   "descripcion": "dónde se apila, si no es el lugar de la pieza (o si la pieza no tiene lugar)"
+  },
+  "ancho_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    4,
+    600
+   ],
+   "defecto": 60,
+   "descripcion": "largo de la huella a lo largo de `rumbo` (si no, el de la pieza)"
+  },
+  "fondo_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    4,
+    600
+   ],
+   "defecto": 40,
+   "descripcion": "fondo de la huella (si no, el de la pieza)"
+  },
+  "alto_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    1,
+    300
+   ],
+   "defecto": 30,
+   "descripcion": "el alto al que se refieren `de` y `a` (si no, el de la pieza)"
+  },
+  "rumbo": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    360
+   ],
+   "descripcion": "hacia dónde va el ancho (grados; 0 = este); si no, el de la pieza"
+  },
+  "cuerpo": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "false: no dibuja la pila (la dibuja la pieza con ctx.cuadro.nivel), solo lo que cae"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "otra mezcla de capas, bultos y caídas"
+  }
+ },
+ "escalas": [
+  "ciudad",
+  "esquema"
+ ],
+ "motores": [
+  "three"
+ ],
+ "adelanto": {
+  "s": 0.1
+ },
+ "animado": "la pila sube sin saltos (capa por capa, la de arriba se llena y la cima con su alfombra de bolsas sube con ella); racimos de bolsas y envases caen desde encima, giran, rebotan al asentarse con una nube de polvo y la capa siguiente los tapa; quieta antes y después de cada llamada; mientras crece, la cima y lo que cae se tiñen apenas del acento",
+ "distancia_m": [
+  60,
+  400
+ ],
+ "ejemplo": {
+  "t": 1.0,
+  "dur": 4.0,
+  "tipo": "crecer",
+  "pieza": "pila",
+  "de": 0,
+  "a": 0.17,
+  "caida": true
+ },
+ "usa": [
+  "pila"
+ ]
+}

@@ -1,0 +1,1192 @@
+{
+  "tipo": "video3d",
+  "version": 1,
+  "escenas": [
+    {
+      "mundo": "fila",
+      "secuencia": 1,
+      "texto": "Casi todos los volcanes de Guatemala están en una sola fila.",
+      "titular": {
+        "kicker": "VOLCANES DE GUATEMALA",
+        "texto": "¿Por qué están en fila?"
+      },
+      "camara": [
+        {
+          "mira": [
+            -90.6,
+            14.6
+          ],
+          "azimut": 0,
+          "elevacion": 80,
+          "dist_km": 900,
+          "dist_m": 2900
+        },
+        {
+          "al": "fin",
+          "mira": [
+            -90.9,
+            14.5
+          ],
+          "dist_km": 330,
+          "azimut": 0,
+          "elevacion": 55
+        }
+      ],
+      "eventos": [
+        {
+          "t": 0,
+          "tipo": "cumbres",
+          "pieza": "frente",
+          "orden": "oeste-este",
+          "dur": 3,
+          "sfx": "pulso"
+        }
+      ],
+      "n": 1,
+      "tipo": "gancho",
+      "acto": 1
+    },
+    {
+      "n": 2,
+      "tipo": "toma",
+      "acto": 1,
+      "secuencia": 1,
+      "mundo": "fila",
+      "texto": "Van del Tacaná, en el occidente, hasta el Chingo, en el oriente, paralelos a la costa del Pacífico.",
+      "camara": [
+        {
+          "dice": "en el occidente",
+          "mira": [
+            -91.4,
+            14.7
+          ],
+          "dist_km": 480,
+          "azimut": 0,
+          "elevacion": 60
+        },
+        {
+          "dice": "en el oriente",
+          "mira": [
+            -90.5,
+            14.5
+          ],
+          "dist_km": 500,
+          "azimut": 2,
+          "elevacion": 60
+        },
+        {
+          "al": "fin",
+          "mira": [
+            -90.9,
+            14.5
+          ],
+          "dist_km": 600,
+          "azimut": 3,
+          "elevacion": 62
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "en el occidente",
+          "tipo": "resaltar",
+          "lugar": "v-tacana",
+          "dur": 1.4
+        },
+        {
+          "dice": "Chingo",
+          "tipo": "resaltar",
+          "lugar": "v-chingo",
+          "dur": 1.6
+        },
+        {
+          "dice": "paralelos a la costa",
+          "tipo": "resaltar",
+          "pieza": "frente",
+          "dur": 2.4
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "en el occidente",
+          "lugar": "v-tacana",
+          "texto": "Tacaná",
+          "dura": 1.4
+        },
+        {
+          "dice": "Chingo",
+          "lugar": "v-chingo",
+          "texto": "Chingo",
+          "sub": "En el oriente",
+          "dura": 1.8
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "tipo": "toma",
+      "acto": 1,
+      "secuencia": 1,
+      "mundo": "fila",
+      "texto": "En esa fila están el Tajumulco, el más alto de Centroamérica, y el Fuego, el Pacaya y el Santiaguito, que no paran de hacer erupción.",
+      "camara": [
+        {
+          "dice": "el Tajumulco",
+          "mira": [
+            -91.3,
+            14.7
+          ],
+          "dist_km": 380,
+          "azimut": 0,
+          "elevacion": 55
+        },
+        {
+          "al": "fin",
+          "mira": [
+            -91.25,
+            14.65
+          ],
+          "dist_km": 370,
+          "azimut": 4,
+          "elevacion": 56
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "el Tajumulco",
+          "tipo": "resaltar",
+          "lugar": "v-tajumulco",
+          "dur": 2.6
+        },
+        {
+          "dice": "y el Fuego",
+          "tipo": "resaltar",
+          "lugar": "v-fuego",
+          "dur": 2.6
+        },
+        {
+          "dice": "el Pacaya",
+          "tipo": "resaltar",
+          "lugar": "v-pacaya",
+          "dur": 2.4
+        },
+        {
+          "dice": "el Santiaguito",
+          "tipo": "resaltar",
+          "lugar": "v-santa-maria",
+          "dur": 2.4
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "el Tajumulco",
+          "lugar": "v-tajumulco",
+          "texto": "Tajumulco",
+          "sub": "El más alto de Centroamérica",
+          "hasta_dice": "y el Fuego",
+          "alto": 110
+        },
+        {
+          "dice": "y el Fuego",
+          "lugar": "v-fuego",
+          "texto": "Fuego",
+          "sub": "En erupción",
+          "alto": 270,
+          "dura": 1.4
+        },
+        {
+          "dice": "el Pacaya",
+          "lugar": "v-pacaya",
+          "texto": "Pacaya",
+          "sub": "En erupción",
+          "alto": 110
+        },
+        {
+          "dice": "el Santiaguito",
+          "lugar": "v-santa-maria",
+          "texto": "Santiaguito",
+          "sub": "Domos de la Santa María",
+          "alto": 110
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "tipo": "toma",
+      "acto": 2,
+      "secuencia": 2,
+      "mundo": "fila",
+      "texto": "La razón está mar adentro: frente a Guatemala, en el fondo del océano, corre una fosa. Ahí, la placa de Cocos se hunde bajo la del Caribe, hacia el noreste.",
+      "titular": {
+        "kicker": "OCÉANO PACÍFICO",
+        "texto": "Una fosa frente a la costa",
+        "dice": "corre una fosa",
+        "dura": 3.2
+      },
+      "camara": [
+        {
+          "dice": "mar adentro",
+          "mira": [
+            -90.9,
+            13.3
+          ],
+          "dist_km": 640,
+          "azimut": 0,
+          "elevacion": 58
+        },
+        {
+          "dice": "Ahí, la placa",
+          "mira": [
+            -90.9,
+            13.3
+          ],
+          "dist_km": 620,
+          "azimut": 5,
+          "elevacion": 60
+        },
+        {
+          "al": "fin",
+          "mira": [
+            -90.9,
+            13.3
+          ],
+          "dist_km": 610,
+          "azimut": 7,
+          "elevacion": 61
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "corre una fosa",
+          "tipo": "resaltar",
+          "pieza": "fosa",
+          "dur": 3.0,
+          "sfx": "pulso"
+        },
+        {
+          "dice": "hacia el noreste",
+          "tipo": "resaltar",
+          "pieza": "fosa",
+          "dur": 2.0
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "corre una fosa",
+          "lugar": "fosa-499",
+          "texto": "Fosa Mesoamericana",
+          "sub": "Fondo del océano",
+          "hasta_dice": "Ahí, la placa",
+          "alto": 260
+        },
+        {
+          "dice": "la placa de Cocos",
+          "lugar": "placa-oceanica",
+          "texto": "Placa de Cocos"
+        },
+        {
+          "dice": "bajo la del Caribe",
+          "lugar": "placa-continental",
+          "texto": "Placa del Caribe",
+          "alto": 150
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "tipo": "toma",
+      "acto": 2,
+      "secuencia": 2,
+      "mundo": "fila",
+      "texto": "Y la fila de volcanes queda tierra adentro, paralela a esa fosa.",
+      "camara": [
+        {
+          "dice": "tierra adentro",
+          "mira": [
+            -90.9,
+            13.6
+          ],
+          "dist_km": 700,
+          "azimut": 2,
+          "elevacion": 76
+        },
+        {
+          "al": "fin",
+          "mira": [
+            -90.9,
+            13.6
+          ],
+          "dist_km": 690,
+          "azimut": 2,
+          "elevacion": 78
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "la fila de volcanes",
+          "tipo": "resaltar",
+          "pieza": "frente",
+          "dur": 2.6
+        },
+        {
+          "dice": "paralela a esa fosa",
+          "tipo": "resaltar",
+          "pieza": "fosa",
+          "dur": 1.4
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "tipo": "toma",
+      "acto": 2,
+      "secuencia": 3,
+      "mundo": "corte",
+      "transicion": "fundido",
+      "fundido_s": 0.6,
+      "texto": "Para ver por qué, hay que cortar la Tierra. La placa baja hacia el manto caliente, se calienta y suelta el agua que traía.",
+      "titular": {
+        "kicker": "ESQUEMA",
+        "texto": "La Tierra cortada bajo la fila",
+        "dura": 3.4
+      },
+      "camara": [
+        {
+          "mira": [
+            0,
+            0
+          ],
+          "mira_lev_m": 420,
+          "dist_m": 2900,
+          "azimut": 20,
+          "elevacion": 22
+        },
+        {
+          "dice": "La placa baja",
+          "mira": [
+            0,
+            -454
+          ],
+          "mira_lev_m": 260,
+          "dist_m": 2100,
+          "azimut": 4,
+          "elevacion": 12
+        },
+        {
+          "al": "fin",
+          "mira": [
+            40,
+            -454
+          ],
+          "mira_lev_m": 240,
+          "dist_m": 2000,
+          "azimut": 5,
+          "elevacion": 11
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "La placa baja",
+          "tipo": "hundir",
+          "pieza": "corte",
+          "agua": true,
+          "vel": 1,
+          "dur": 6.0
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "hacia el manto",
+          "lugar": "corte.placa",
+          "texto": "Placa oceánica",
+          "sub": "Entra por la fosa",
+          "hasta_dice": "suelta el agua",
+          "alto": 110
+        },
+        {
+          "dice": "el manto caliente",
+          "lugar": "corte.manto",
+          "texto": "Manto",
+          "alto": 150
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "tipo": "toma",
+      "acto": 2,
+      "secuencia": 3,
+      "mundo": "corte",
+      "texto": "Esa agua funde un poco el manto de encima, y ese magma sube.",
+      "camara": [
+        {
+          "dice": "funde un poco",
+          "mira": [
+            90,
+            -454
+          ],
+          "mira_lev_m": 200,
+          "dist_m": 1700,
+          "azimut": 4,
+          "elevacion": 10
+        },
+        {
+          "al": "fin",
+          "mira": [
+            110,
+            -454
+          ],
+          "mira_lev_m": 210,
+          "dist_m": 1650,
+          "azimut": 6,
+          "elevacion": 11
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "Esa agua",
+          "tipo": "magma",
+          "pieza": "corte",
+          "fila": false,
+          "dur": 4.5
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "Esa agua funde",
+          "lugar": "corte.manto",
+          "texto": "Manto",
+          "sub": "Se funde un poco",
+          "alto": 150
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "tipo": "toma",
+      "acto": 3,
+      "secuencia": 3,
+      "mundo": "corte",
+      "texto": "Los volcanes se alinean justo encima de donde la placa pasa por unos 100 kilómetros de profundidad. Como la fosa es una línea, esa profundidad también lo es: por eso salen en fila.",
+      "camara": [
+        {
+          "dice": "justo encima",
+          "mira": [
+            110,
+            -454
+          ],
+          "mira_lev_m": 260,
+          "dist_m": 1900,
+          "azimut": 2,
+          "elevacion": 12
+        },
+        {
+          "dice": "esa profundidad",
+          "mira": [
+            110,
+            -350
+          ],
+          "mira_lev_m": 220,
+          "dist_m": 2300,
+          "azimut": 10,
+          "elevacion": 14
+        },
+        {
+          "dice": "por eso salen",
+          "mira": [
+            110,
+            -150
+          ],
+          "mira_lev_m": 250,
+          "dist_m": 2600,
+          "azimut": 18,
+          "elevacion": 20
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "la placa pasa",
+          "tipo": "resaltar",
+          "pieza": "corte",
+          "elemento": "corte.placa-100",
+          "dur": 2.0
+        },
+        {
+          "dice": "Como la fosa",
+          "tipo": "resaltar",
+          "pieza": "corte",
+          "elemento": "corte.fosa",
+          "dur": 2.2
+        },
+        {
+          "dice": "por eso salen en fila",
+          "tipo": "resaltar",
+          "pieza": "corte",
+          "elemento": "corte.fila",
+          "dur": 1.8
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "100",
+          "valor": "100 km",
+          "rotulo": "de profundidad de la placa bajo los volcanes",
+          "cifra": "mec-c01",
+          "fuente": "USGS",
+          "dura": 3.6
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "justo encima",
+          "lugar": "corte.cono",
+          "texto": "Volcán",
+          "hasta_dice": "la placa pasa",
+          "alto": 60
+        },
+        {
+          "dice": "Como la fosa",
+          "lugar": "corte.fosa",
+          "texto": "Fosa",
+          "sub": "Una línea",
+          "hasta_dice": "por eso salen",
+          "alto": 110
+        },
+        {
+          "dice": "por eso salen en fila",
+          "lugar": "corte.fila",
+          "texto": "Fila de volcanes",
+          "alto": 280
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "tipo": "toma",
+      "acto": 3,
+      "secuencia": 4,
+      "mundo": "oriente",
+      "transicion": "fundido",
+      "fundido_s": 0.6,
+      "texto": "¿Y el casi? Unos pocos conos del oriente quedan detrás de la fila: Ipala, Suchitán, Ixtepeque, Flores y Cerro Santiago. Según un estudio geológico, brotaron donde el suelo se estira: el graben de Ipala.",
+      "titular": {
+        "kicker": "ORIENTE DE GUATEMALA",
+        "texto": "Detrás de la fila",
+        "dura": 3.0
+      },
+      "camara": [
+        {
+          "mira": [
+            -90.15,
+            14.35
+          ],
+          "dist_km": 280,
+          "azimut": 0,
+          "elevacion": 48
+        },
+        {
+          "dice": "Ipala",
+          "mira": [
+            -89.84,
+            14.41
+          ],
+          "dist_km": 215,
+          "azimut": 0,
+          "elevacion": 48
+        },
+        {
+          "dice": "Cerro Santiago",
+          "mira": [
+            -89.84,
+            14.41
+          ],
+          "dist_km": 215,
+          "azimut": 0,
+          "elevacion": 48
+        },
+        {
+          "dice": "Según un estudio",
+          "mira": [
+            -89.76,
+            14.36
+          ],
+          "dist_km": 180,
+          "azimut": 0,
+          "elevacion": 52
+        },
+        {
+          "al": "fin",
+          "mira": [
+            -89.76,
+            14.36
+          ],
+          "dist_km": 165,
+          "azimut": 4,
+          "elevacion": 52
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "cumbres",
+          "pieza": "frente-oriente",
+          "orden": "oeste-este",
+          "dur": 1.8
+        },
+        {
+          "dice": "Ipala",
+          "tipo": "cumbres",
+          "pieza": "trasarco",
+          "lugares": [
+            "v-ipala"
+          ],
+          "dur": 0.8,
+          "queda": false
+        },
+        {
+          "dice": "Suchitán",
+          "tipo": "cumbres",
+          "pieza": "trasarco",
+          "lugares": [
+            "v-suchitan"
+          ],
+          "dur": 1.0,
+          "queda": false
+        },
+        {
+          "dice": "Ixtepeque",
+          "tipo": "cumbres",
+          "pieza": "trasarco",
+          "lugares": [
+            "v-ixtepeque"
+          ],
+          "dur": 1.1,
+          "queda": false
+        },
+        {
+          "dice": "Flores",
+          "tipo": "cumbres",
+          "pieza": "trasarco",
+          "lugares": [
+            "v-flores"
+          ],
+          "dur": 0.7,
+          "queda": false
+        },
+        {
+          "dice": "Cerro Santiago",
+          "tipo": "cumbres",
+          "pieza": "trasarco",
+          "lugares": [
+            "v-cerro-santiago"
+          ],
+          "dur": 1.5,
+          "queda": true
+        },
+        {
+          "dice": "donde el suelo se estira",
+          "tipo": "resaltar",
+          "pieza": "trasarco",
+          "dur": 1.6
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "Ipala",
+          "lugar": "v-ipala",
+          "texto": "Ipala",
+          "dura": 1.6,
+          "alto": 60
+        },
+        {
+          "dice": "Suchitán",
+          "lugar": "v-suchitan",
+          "texto": "Suchitán",
+          "dura": 1.6,
+          "alto": 300
+        },
+        {
+          "dice": "Ixtepeque",
+          "lugar": "v-ixtepeque",
+          "texto": "Ixtepeque",
+          "dura": 1.6,
+          "alto": 40
+        },
+        {
+          "dice": "Flores",
+          "lugar": "v-flores",
+          "texto": "Flores",
+          "dura": 1.6,
+          "alto": 300
+        },
+        {
+          "dice": "Cerro Santiago",
+          "lugar": "v-cerro-santiago",
+          "texto": "Cerro Santiago",
+          "dura": 1.6,
+          "alto": 110
+        },
+        {
+          "dice": "brotaron",
+          "lugar": "graben-ipala",
+          "texto": "Graben de Ipala",
+          "sub": "Según Rapprich et al. (2005)",
+          "alto": 200
+        }
+      ]
+    },
+    {
+      "n": 10,
+      "tipo": "cierre",
+      "acto": 3,
+      "secuencia": 5,
+      "mundo": "fila",
+      "transicion": "fundido",
+      "fundido_s": 0.6,
+      "texto": "Esa fila es la huella, en la superficie, de una placa que se hunde bajo Guatemala.",
+      "final": "La fila es la huella de una placa que se hunde.",
+      "camara": [
+        {
+          "al": "fin",
+          "mira": [
+            -90.6,
+            14.6
+          ],
+          "dist_km": 900,
+          "azimut": 0,
+          "elevacion": 80
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "Esa fila",
+          "tipo": "cumbres",
+          "pieza": "frente",
+          "orden": "oeste-este",
+          "dur": 2.4
+        },
+        {
+          "dice": "una placa que se hunde",
+          "tipo": "resaltar",
+          "pieza": "fosa",
+          "dur": 2.4
+        }
+      ]
+    }
+  ],
+  "estilo": {
+    "id": "noche",
+    "razon": "La idea visual es una sola cosa encendida (los cráteres de la fila y el magma que sube) sobre un país y una Tierra a oscuras; noche lo da en los tres mundos y el brillo del magma en el corte solo se lee sobre fondo oscuro. color pierde el acento único; plano sirve al mecanismo pero apaga el magma y obliga a preguntar por las capas.",
+    "confianza": "alta",
+    "candidatos": [
+      "noche",
+      "plano",
+      "color"
+    ]
+  },
+  "idea_visual": "La fila de volcanes es lo único encendido: trece cráteres que se prenden uno tras otro de Tacaná a Chingo sobre el país a oscuras, paralelos a una fosa mar adentro; un corte de la Tierra muestra la placa que baja y el magma que sube justo debajo de esa fila.",
+  "protagonista": "frente",
+  "mundos": {
+    "fila": {
+      "escala": "pais",
+      "set": "guatemala",
+      "exageracion": 5,
+      "protagonista": "frente",
+      "lugares": {
+        "v-tacana": {
+          "lon": -92.1,
+          "lat": 15.13,
+          "nombre": "Tacaná"
+        },
+        "v-tajumulco": {
+          "lon": -91.903,
+          "lat": 15.043,
+          "nombre": "Tajumulco"
+        },
+        "v-santa-maria": {
+          "lon": -91.552,
+          "lat": 14.757,
+          "nombre": "Santa María"
+        },
+        "v-cerro-quemado": {
+          "lon": -91.519,
+          "lat": 14.797,
+          "nombre": "Cerro Quemado (Almolonga)"
+        },
+        "v-atitlan": {
+          "lon": -91.186,
+          "lat": 14.583,
+          "nombre": "Atitlán"
+        },
+        "v-toliman": {
+          "lon": -91.189,
+          "lat": 14.612,
+          "nombre": "Tolimán"
+        },
+        "v-acatenango": {
+          "lon": -90.876,
+          "lat": 14.501,
+          "nombre": "Acatenango"
+        },
+        "v-fuego": {
+          "lon": -90.8806,
+          "lat": 14.4748,
+          "nombre": "Fuego"
+        },
+        "v-agua": {
+          "lon": -90.743,
+          "lat": 14.465,
+          "nombre": "Agua"
+        },
+        "v-pacaya": {
+          "lon": -90.601,
+          "lat": 14.382,
+          "nombre": "Pacaya"
+        },
+        "v-tecuamburro": {
+          "lon": -90.407,
+          "lat": 14.156,
+          "nombre": "Tecuamburro"
+        },
+        "v-moyuta": {
+          "lon": -90.1,
+          "lat": 14.03,
+          "nombre": "Moyuta"
+        },
+        "v-chingo": {
+          "lon": -89.73,
+          "lat": 14.12,
+          "nombre": "Chingo"
+        },
+        "fosa-499": {
+          "lon": -90.9448,
+          "lat": 12.671,
+          "nombre": "Fosa Mesoamericana (sitio DSDP 499)"
+        },
+        "placa-oceanica": {
+          "lon": -91.3,
+          "lat": 12.5,
+          "nombre": "Placa de Cocos (posición ilustrativa)"
+        },
+        "placa-continental": {
+          "lon": -90.3,
+          "lat": 14.5,
+          "nombre": "Placa del Caribe (posición ilustrativa)"
+        }
+      },
+      "piezas": [
+        {
+          "id": "frontera",
+          "tipo": "frontera",
+          "vecinos": true
+        },
+        {
+          "id": "lagos",
+          "tipo": "lagos",
+          "nombres": [
+            "Atitlán"
+          ]
+        },
+        {
+          "id": "frente",
+          "tipo": "volcanes",
+          "lugares": [
+            "v-tacana",
+            "v-tajumulco",
+            "v-santa-maria",
+            "v-cerro-quemado",
+            "v-atitlan",
+            "v-toliman",
+            "v-acatenango",
+            "v-fuego",
+            "v-agua",
+            "v-pacaya",
+            "v-tecuamburro",
+            "v-moyuta",
+            "v-chingo"
+          ],
+          "radio_km": 6
+        },
+        {
+          "id": "fosa",
+          "tipo": "fosa",
+          "por": "fosa-499",
+          "paralela_a": [
+            "v-tacana",
+            "v-tajumulco",
+            "v-santa-maria",
+            "v-cerro-quemado",
+            "v-atitlan",
+            "v-toliman",
+            "v-acatenango",
+            "v-fuego",
+            "v-agua",
+            "v-pacaya",
+            "v-tecuamburro",
+            "v-moyuta",
+            "v-chingo"
+          ],
+          "largo_km": 500,
+          "flechas": true,
+          "desvio_grados": 0,
+          "esquematica": true
+        }
+      ]
+    },
+    "corte": {
+      "escala": "esquema",
+      "receta": "campo",
+      "horizonte": "llano",
+      "tamano_m": 3200,
+      "protagonista": "corte",
+      "piezas": [
+        {
+          "id": "corte",
+          "tipo": "subduccion",
+          "lugar": [
+            0,
+            0
+          ],
+          "rumbo": 0,
+          "tamano": 1,
+          "conos": 9,
+          "angulo_grados": 35,
+          "flechas": true,
+          "magma": false,
+          "semilla": 1,
+          "fondo": "liso",
+          "manto_brillo": 0.2
+        }
+      ],
+      "escena": {
+        "que_pasa": "Una placa oceánica se hunde bajo otra desde la fosa; al bajar hacia el manto caliente se calienta y suelta el agua que traía; esa agua funde un poco el manto de encima y ese magma sube; los volcanes salen sobre donde la placa pasa por unos 100 km, en una fila paralela a la fosa.",
+        "quien": "nadie",
+        "con_que": "nada humano: dos placas, el manto, el agua que suelta la placa, el magma y los conos",
+        "se_mueve": "chevrones que corren por la placa oceánica hacia la fosa y hacia abajo, gotas de agua que salen de la placa, el manto de encima que se enciende, el magma que sube a un cono y los cráteres de la fila que se encienden uno tras otro",
+        "sostiene": [
+          {
+            "que": "placa oceánica fría que se hunde desde la fosa, apagada, sin derretirse",
+            "hecho": "visual-corte-h01"
+          },
+          {
+            "que": "la fosa como valle submarino paralelo al margen",
+            "hecho": "visual-corte-h02"
+          },
+          {
+            "que": "gotas de agua de la placa, manto vecino que se enciende y magma que sube",
+            "hecho": "visual-corte-h03"
+          },
+          {
+            "que": "línea de volcanes sobre donde la placa pasa por unos 100 km (nivel sin número)",
+            "hecho": "visual-corte-h04"
+          },
+          {
+            "que": "conos altos y empinados en fila, sin altura medida",
+            "hecho": "visual-corte-h05"
+          },
+          {
+            "que": "la placa avanza hacia la fosa, perpendicular a ella (chevrones)",
+            "hecho": "mec-h14"
+          },
+          {
+            "que": "ángulo de la placa, espesores y número de conos",
+            "generico": true
+          }
+        ],
+        "ilustrativa": "Es un mecanismo: el corte es genérico (aviso «Esquema · no a escala»); ni el ángulo ni la escala son medidas de Guatemala."
+      },
+      "lugares": {
+        "corte.fosa": {
+          "x": -350.0,
+          "y": 0.0,
+          "nombre": "Fosa"
+        },
+        "corte.placa-oceanica": {
+          "x": -650.0,
+          "y": 0.0,
+          "nombre": "Placa oceánica"
+        },
+        "corte.placa-continental": {
+          "x": 402.03,
+          "y": 0.0,
+          "nombre": "Placa continental"
+        },
+        "corte.manto": {
+          "x": 52.03,
+          "y": -454.0,
+          "nombre": "Manto"
+        },
+        "corte.placa-100": {
+          "x": 122.03,
+          "y": -454.0,
+          "nombre": "La placa bajo la fila"
+        },
+        "corte.cono": {
+          "x": 122.03,
+          "y": -431.4,
+          "nombre": "Cono"
+        },
+        "corte.fila": {
+          "x": 122.03,
+          "y": 0.0,
+          "nombre": "Fila de volcanes"
+        },
+        "corte.placa": {
+          "x": -113.99,
+          "y": -454.0,
+          "nombre": "La placa que baja"
+        }
+      }
+    },
+    "oriente": {
+      "escala": "pais",
+      "set": "guatemala",
+      "exageracion": 6,
+      "protagonista": "trasarco",
+      "lugares": {
+        "v-pacaya": {
+          "lon": -90.601,
+          "lat": 14.382,
+          "nombre": "Pacaya"
+        },
+        "v-tecuamburro": {
+          "lon": -90.407,
+          "lat": 14.156,
+          "nombre": "Tecuamburro"
+        },
+        "v-moyuta": {
+          "lon": -90.1,
+          "lat": 14.03,
+          "nombre": "Moyuta"
+        },
+        "v-chingo": {
+          "lon": -89.73,
+          "lat": 14.12,
+          "nombre": "Chingo"
+        },
+        "v-ipala": {
+          "lon": -89.6398,
+          "lat": 14.5574,
+          "nombre": "Ipala"
+        },
+        "v-suchitan": {
+          "lon": -89.78,
+          "lat": 14.4,
+          "nombre": "Suchitán"
+        },
+        "v-ixtepeque": {
+          "lon": -89.68,
+          "lat": 14.42,
+          "nombre": "Ixtepeque"
+        },
+        "v-flores": {
+          "lon": -89.992,
+          "lat": 14.308,
+          "nombre": "Flores (Amayo)"
+        },
+        "v-cerro-santiago": {
+          "lon": -89.87,
+          "lat": 14.33,
+          "nombre": "Cerro Santiago"
+        },
+        "graben-ipala": {
+          "lon": -89.66,
+          "lat": 14.489,
+          "nombre": "Graben de Ipala (entre sus conos Ipala e Ixtepeque; posición ilustrativa, sin contorno)"
+        }
+      },
+      "piezas": [
+        {
+          "id": "frontera",
+          "tipo": "frontera",
+          "vecinos": true
+        },
+        {
+          "id": "frente-oriente",
+          "tipo": "volcanes",
+          "lugares": [
+            "v-pacaya",
+            "v-tecuamburro",
+            "v-moyuta",
+            "v-chingo"
+          ],
+          "radio_km": 5,
+          "tono": "atenuado"
+        },
+        {
+          "id": "trasarco",
+          "tipo": "volcanes",
+          "lugares": [
+            "v-ipala",
+            "v-suchitan",
+            "v-ixtepeque",
+            "v-flores",
+            "v-cerro-santiago"
+          ],
+          "radio_km": 5,
+          "tono": "acento",
+          "forma": "cono",
+          "reposo": 0.5,
+          "encendido": "solo"
+        }
+      ]
+    }
+  },
+  "pie": "Relieve: Mapzen · Volcanes: Smithsonian GVP · Fosa: DSDP 499 (traza esquemática) · Frontera y lagos: Natural Earth · © OpenStreetMap",
+  "aviso": "Fosa esquemática · corte no a escala",
+  "gancho": {
+    "id": "g1",
+    "familia": "caida",
+    "elegido_por": "usuario"
+  },
+  "narracion": "Casi todos los volcanes de Guatemala están en una sola fila. Van del Tacaná, en el occidente, hasta el Chingo, en el oriente, paralelos a la costa del Pacífico. En esa fila están el Tajumulco, el más alto de Centroamérica, y el Fuego, el Pacaya y el Santiaguito, que no paran de hacer erupción. La razón está mar adentro: frente a Guatemala, en el fondo del océano, corre una fosa. Ahí, la placa de Cocos se hunde bajo la del Caribe, hacia el noreste. Y la fila de volcanes queda tierra adentro, paralela a esa fosa. Para ver por qué, hay que cortar la Tierra. La placa baja hacia el manto caliente, se calienta y suelta el agua que traía. Esa agua funde un poco el manto de encima, y ese magma sube. Los volcanes se alinean justo encima de donde la placa pasa por unos 100 kilómetros de profundidad. Como la fosa es una línea, esa profundidad también lo es: por eso salen en fila. ¿Y el casi? Unos pocos conos del oriente quedan detrás de la fila: Ipala, Suchitán, Ixtepeque, Flores y Cerro Santiago. Según un estudio geológico, brotaron donde el suelo se estira: el graben de Ipala. Esa fila es la huella, en la superficie, de una placa que se hunde bajo Guatemala.",
+  "cifras_voz": [
+    "mec-c01"
+  ],
+  "promesa": {
+    "forma": "pregunta",
+    "texto": "¿Por qué están en fila?",
+    "en": 1,
+    "pago": 8
+  },
+  "no_afirmar": [
+    "No dibujar ni dar coordenadas de la fosa fuera del punto 12.671 N, 90.945 W como citadas: la traza es esquemática, paralela al frente.",
+    "No dar la distancia de la fosa o de la fila a la costa: ninguna fuente la da.",
+    "No dar el ángulo de la placa bajo Guatemala ni dibujarlo como medido: en el corte es genérico.",
+    "No decir que el magma se forma exactamente a 100 km: los volcanes se alinean sobre donde la placa pasa por unos 100 km (USGS, regla general).",
+    "La distancia fosa-frente se dice «unos 150 a 200 km», nunca una cifra exacta.",
+    "No dar azimut de Cocos: «hacia el noreste», más o menos perpendicular a la fosa.",
+    "No decir que Cocos «choca» contra Guatemala.",
+    "No dar velocidades de convergencia (7 o 7.5 cm/año), acoplamiento ni deshidratación.",
+    "No decir que TODOS los volcanes fuera de la fila son tras-arco: Moyuta y Tecuamburro están ~20 km al sur; Chingo en el borde.",
+    "No afirmar como hecho firme que los tras-arco nacen de la extensión: va atribuido («según un estudio geológico»); no dar su porqué (Chortis, segmentos de la fosa).",
+    "No llamar tras-arco a Almolonga/Cerro Quemado.",
+    "No dibujar Santiaguito como punto aparte.",
+    "No decir que el Tacaná está activo; no dar cuatro activos; en erupción continua: Fuego, Pacaya y Santiaguito (INSIVUMEH).",
+    "No dar alturas de Fuego, Santa María ni Tajumulco sin atribuir (mejor sin cifra: «el más alto de Centroamérica»).",
+    "No dar conteos de volcanes (43, 37, 234/324, 20 del Holoceno) ni proporciones de cuántos están en la fila.",
+    "No decir que Ipala es del Holoceno.",
+    "No dar distancias derivadas (cálculo propio) como de una fuente.",
+    "Lo que se mueve no inventa datos: el número de conos de la fila en el corte y el número de flechas son ilustrativos.",
+    "Corte: ángulo, espesores, escala y cuña de manto son un esquema genérico («Esquema · no a escala»), no medidas de Guatemala.",
+    "Corte: la placa no se derrite; el magma nace en el manto de encima.",
+    "Corte: sin cámara magmática ni conducto concreto bajo un volcán nombrado; sin alturas ni pendientes medidas de los conos.",
+    "Corte: sin personas, construcciones, vehículos ni hora del día.",
+    "Corte: la secuencia animada es didáctica: no da velocidad del ascenso ni duración del proceso; el número de conos y de flechas es ilustrativo.",
+    "Corte: los conos tras-arco del oriente no son parte de este corte."
+  ],
+  "caption": {
+    "tiktok": "Casi todos los volcanes de Guatemala están en una sola fila, del Tacaná al Chingo. La razón está bajo el mar: la placa de Cocos se hunde bajo la del Caribe, y donde pasa por unos 100 km de profundidad, el magma sube. #Guatemala #volcanes #geología #ciencia",
+    "instagram": "¿Por qué casi todos los volcanes de Guatemala están en fila?\n\nFrente a la costa del Pacífico corre la fosa Mesoamericana: ahí la placa de Cocos se hunde bajo la del Caribe. Al bajar suelta agua, esa agua funde un poco el manto de encima y el magma sube. Los volcanes salen sobre donde la placa pasa por unos 100 km de profundidad, a unos 150 a 200 km de la fosa: una fila paralela a ella. Los pocos conos del oriente (Ipala, Suchitán, Ixtepeque, Flores, Cerro Santiago) brotaron, según un estudio geológico, donde el suelo se estira: el graben de Ipala.\n\nFuentes: USGS, Smithsonian GVP, INSIVUMEH, Verma (2002), Rapprich et al. (2005).\n\n#Guatemala #volcanes #geología #ciencia",
+    "facebook": "Del Tacaná al Chingo, casi todos los volcanes de Guatemala forman una sola fila paralela a la costa. No es casualidad: la placa de Cocos se hunde bajo la del Caribe en una fosa mar adentro, y donde la placa pasa por unos 100 km de profundidad, suelta agua que funde el manto y el magma sube. Por eso la fila queda a unos 150 a 200 km de la fosa. Los pocos conos que quedan detrás, en el oriente, nacieron según un estudio geológico donde el suelo se estira: el graben de Ipala.",
+    "shorts": "¿Por qué los volcanes de Guatemala están en fila? #Guatemala #volcanes #Shorts"
+  },
+  "id": "video3d-volcanes-en-fila",
+  "slug": "volcanes-en-fila",
+  "tema": "¿Por qué casi todos los volcanes de Guatemala están en una sola fila? La placa de Cocos se hunde bajo la del Caribe y el magma sube a la misma distancia de la fosa: el arco volcánico",
+  "fecha": "2026-11-16",
+  "paleta": "obsidiana",
+  "musica": "obsidiana-2",
+  "desde": null,
+  "motor": "three",
+  "duracion_s": 83.6,
+  "creditos_voz": 1164
+}

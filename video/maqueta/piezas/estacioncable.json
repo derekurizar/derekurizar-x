@@ -1,0 +1,126 @@
+{
+ "tipo": "estacioncable",
+ "clase": "pieza",
+ "cuando": "estación genérica de teleférico urbano: en obra (fosa, zapatas, grúa torre, obreros, vallas) o lista (estación elevada, rueda y cabinas en un cable corto)",
+ "parametros": {
+  "lugar": {
+   "tipo": "lugar",
+   "requerido": true,
+   "descripcion": "el centro de la estación (un lugar del mundo, [lon, lat] o [x, y] en metros en un esquema). El predio va de u −42 a 42 y de v −30 a 30 m; publica los lugares estacion, acceso (u −34), en obra excavacion y grua, en lista rueda y linea"
+  },
+  "rumbo": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    360
+   ],
+   "defecto": 0,
+   "descripcion": "hacia dónde sale el cable (grados; 0 = este, 90 = norte). El acceso a pie queda del lado contrario. Para verla de tres cuartos: mira «<id>.estacion», dist_m 90–160, elevación 18–30°, azimut ≈ 90 − rumbo + 35"
+  },
+  "tamano": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0.6,
+    2
+   ],
+   "defecto": 1,
+   "descripcion": "escala de todo (1 = medidas reales: losa a 7 m, techo a 16 m, grúa torre de ≈ 38 m; la gente va ×1.3 para leerse de lejos)"
+  },
+  "estado": {
+   "tipo": "texto",
+   "requerido": false,
+   "valores": [
+    "obra",
+    "lista"
+   ],
+   "defecto": "obra",
+   "descripcion": "obra = predio vallado con la excavación de la cimentación, zapatas con varillas, dos columnas encofradas, la base del mástil, montículos de tierra, excavadora y volteo, caseta de obra; SIN cable ni cabinas · lista = estación elevada genérica con techo en arco, la rueda horizontal que gira, cabinas que entran despacio, dan la vuelta y salen por un cable que se pierde a 240 m (dos mástiles; trazo ilustrativo), plaza con acceso, árboles y faroles"
+  },
+  "gruas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    2
+   ],
+   "defecto": 1,
+   "descripcion": "grúas torre genéricas (solo en obra, sin marca): giran la pluma, el carro corre y el gancho sube un atado de varillas (ciclo de 26 s, desfasadas); de noche, quietas con su luz roja en la punta"
+  },
+  "obreros": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    8
+   ],
+   "defecto": 4,
+   "descripcion": "en obra, obreros sin rostro ni empresa (uno camina de la caseta a la fosa, los demás trabajan junto a las zapatas: atender, cargar, de pie); en lista, la misma cantidad de pasajeros en la plaza (caminan al acceso o esperan). Ilustrativo: no es un conteo"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "el azar fijo: altura de cada arranque de columna, tonos de la tierra y de las losas, color de las cabinas y la fase de cada ciclo"
+  }
+ },
+ "escalas": [
+  "ciudad",
+  "esquema"
+ ],
+ "motores": [
+  "three"
+ ],
+ "usa": [
+  "persona",
+  "volteo",
+  "arbol"
+ ],
+ "ejemplo": {
+  "id": "estacion",
+  "tipo": "estacioncable",
+  "lugar": "el-trebol",
+  "rumbo": 0,
+  "tamano": 1,
+  "estado": "obra",
+  "gruas": 1,
+  "obreros": 4,
+  "semilla": 1
+ },
+ "nivel": "escenario",
+ "contiene": [
+  "predio con vallas de lámina, postes y portón (obra) o plaza adoquinada con jardineras y faroles (lista)",
+  "excavación de la cimentación con tablestacas, zapatas, varillas de arranque y columnas encofradas con puntales",
+  "base del mástil con sus pernos de anclaje",
+  "grúa torre de celosía con pluma, contrapluma, carro y gancho con un atado de varillas",
+  "excavadora que gira entre la fosa y el montículo, volteo estacionado, montículos de tierra",
+  "caseta de obra, pilas de varillas y de tablas de encofrado, reflectores en postes",
+  "estación elevada sobre columnas con losa, barandal de vidrio, cuarto de máquinas y techo en arco con costillas",
+  "rueda horizontal que gira bajo el techo, riel de la estación y cabinas colgadas de su brazo",
+  "cable con dos mástiles tubulares y su cruceta",
+  "vestíbulo de vidrio en la planta baja, escalera y elevador",
+  "obreros u pasajeros sin rostro"
+ ],
+ "animado": "en obra la grúa gira y sube varillas, la excavadora gira entre la fosa y el montículo, un obrero camina y los demás trabajan; en lista la rueda gira, las cabinas entran despacio, dan la vuelta y salen por el cable, y la gente camina al acceso; de noche la obra queda quieta con reflectores y la estación encendida",
+ "gente": true,
+ "poses": [
+  "atender",
+  "cargar",
+  "de_pie",
+  "caminar"
+ ],
+ "distancia_m": [
+  50,
+  260
+ ],
+ "caja_m": [
+  90,
+  64,
+  40
+ ]
+}

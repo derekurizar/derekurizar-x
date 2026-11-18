@@ -1,0 +1,115 @@
+{
+ "tipo": "descenso",
+ "clase": "evento",
+ "cuando": "un flujo piroclástico baja en pulsos por una barranca desde el cráter, deja el depósito gris y, si se desborda, cubre unos lugares",
+ "parametros": {
+  "pieza": {
+   "tipo": "pieza",
+   "piezas": [
+    "barranca",
+    "afluente"
+   ],
+   "requerido": true,
+   "descripcion": "la barranca por donde baja (su cauce, del cráter hacia abajo; un afluente sirve igual); se aviva mientras bajan los pulsos"
+  },
+  "puntos": {
+   "tipo": "puntos",
+   "requerido": false,
+   "min": 2,
+   "descripcion": "el cauce [[lon, lat], …] del cráter hacia abajo; manda sobre el de la pieza (geodatos verificados como una cifra)"
+  },
+  "pulsos": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    1,
+    6
+   ],
+   "defecto": 3,
+   "descripcion": "cuántas lenguas salen del cráter una tras otra; cada una llega un poco más lejos y la última llega a `hasta` (ilustra, no cuenta pulsos medidos)"
+  },
+  "hasta": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 1,
+   "descripcion": "fracción del cauce que alcanza el último pulso (1 = todo el cauce)"
+  },
+  "desborde": {
+   "tipo": "lugares",
+   "requerido": false,
+   "descripcion": "lugares sobre los que el último pulso se sale del cauce y se abre en abanico (ids o [lon, lat]); sin ellos, el flujo se queda en el cauce"
+  },
+  "abanico_km": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0.2,
+    4
+   ],
+   "defecto": 1,
+   "descripcion": "hasta dónde llega el abanico desde el fin del cauce (debe cubrir los lugares de `desborde`)"
+  },
+  "queda": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "true: el depósito gris queda hasta el final; false: se desvanece al terminar"
+  },
+  "apaga": {
+   "tipo": "lugares",
+   "todos": true,
+   "requerido": false,
+   "descripcion": "luces (ids de una pieza luces) que se apagan cuando el depósito las cubre; «todos» = las que el depósito alcance"
+  }
+ },
+ "escalas": [
+  "pais"
+ ],
+ "motores": [
+  "three"
+ ],
+ "usa": [
+  "luces"
+ ],
+ "adelanto": {
+  "dur": 0.3
+ },
+ "nivel": "evento",
+ "contiene": [
+  "lenguas grises en pulsos que salen del cráter",
+  "borde anaranjado en el frente y las orillas",
+  "nube de ceniza baja que sube y se queda atrás",
+  "depósito gris oscuro con bloques rojizos",
+  "abanico de desborde sobre unos lugares",
+  "luces que se apagan al quedar cubiertas"
+ ],
+ "animado": "los pulsos bajan uno tras otro (salen rápido y frenan al final), el borde anaranjado se enfría al parar, la nube sube y se deshace; el depósito crece detrás del frente y queda; de noche solo brilla el borde y unas brasas",
+ "distancia_m": [
+  8000,
+  40000
+ ],
+ "caja_m": [
+  4000,
+  14000,
+  800
+ ],
+ "ejemplo": {
+  "t": 0.6,
+  "dur": 5.0,
+  "tipo": "descenso",
+  "pieza": "lajas",
+  "pulsos": 3,
+  "hasta": 1,
+  "desborde": [
+   [
+    -90.836,
+    14.392
+   ]
+  ],
+  "abanico_km": 1.6
+ }
+}

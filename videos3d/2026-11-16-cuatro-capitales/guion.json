@@ -1,0 +1,1155 @@
+{
+  "tipo": "video3d",
+  "version": 1,
+  "escenas": [
+    {
+      "mundo": "ladera",
+      "secuencia": 1,
+      "texto": "Un volcán de Guatemala sepultó a su capital sin hacer erupción.",
+      "titular": {
+        "kicker": "VOLCÁN DE AGUA, GUATEMALA",
+        "texto": "La capital, bajo el lodo"
+      },
+      "camara": [
+        {
+          "mira": [
+            0,
+            230
+          ],
+          "dist_m": 1150,
+          "azimut": 0,
+          "elevacion": 13
+        },
+        {
+          "al": "fin",
+          "mira": [
+            0,
+            0
+          ],
+          "dist_m": 520,
+          "azimut": 12,
+          "elevacion": 18
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "alud",
+          "pieza": "falda",
+          "desde": "ladera-alta",
+          "hacia": "pueblo",
+          "ancho_m": 120,
+          "cubre": 0.7,
+          "arboles": 12,
+          "dur": 5.0,
+          "sfx": "grave"
+        }
+      ],
+      "n": 1,
+      "tipo": "gancho",
+      "acto": 1
+    },
+    {
+      "mundo": "ladera",
+      "secuencia": 1,
+      "acto": 1,
+      "texto": "Tras días de lluvia, la noche del 10 al 11 de septiembre de 1541, lo alto de la ladera se desprendió.",
+      "titular": {
+        "kicker": "NOCHE DEL 10 AL 11 DE SEPTIEMBRE DE 1541",
+        "texto": "Tras días de lluvia"
+      },
+      "camara": [
+        {
+          "dice": "septiembre de 1541",
+          "mira": "falda.ladera-alta",
+          "dist_m": 1000,
+          "azimut": 5,
+          "elevacion": 14
+        },
+        {
+          "dice": "lo alto de la ladera",
+          "al": "fin",
+          "mira": "falda.ladera-alta",
+          "dist_m": 700,
+          "azimut": -5,
+          "elevacion": 18
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "lo alto de la ladera",
+          "tipo": "resaltar",
+          "lugar": "falda.ladera-alta",
+          "dur": 2.5
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "lo alto de la ladera",
+          "lugar": "falda.ladera-alta",
+          "texto": "Ladera alta",
+          "dura": 2.0
+        }
+      ],
+      "n": 2,
+      "tipo": "escena"
+    },
+    {
+      "mundo": "ladera",
+      "secuencia": 1,
+      "acto": 1,
+      "texto": "Un alud de lodo, piedras y árboles bajó sobre Santiago de Guatemala, asentada desde 1527 al pie del volcán de Agua.",
+      "titular": {
+        "kicker": "1527–1541 · VALLE DE ALMOLONGA",
+        "texto": "Santiago de Guatemala"
+      },
+      "camara": [
+        {
+          "dice": "Un alud de lodo",
+          "mira": "falda.barranco",
+          "dist_m": 520,
+          "azimut": 10,
+          "elevacion": 18
+        },
+        {
+          "dice": "Santiago de Guatemala",
+          "mira": "falda.plaza",
+          "dist_m": 400,
+          "azimut": 18,
+          "elevacion": 30
+        },
+        {
+          "dice": "al pie del volcán",
+          "al": "fin",
+          "mira": "falda.barranco",
+          "dist_m": 1400,
+          "azimut": -8,
+          "elevacion": 12
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "Santiago de Guatemala",
+          "tipo": "resaltar",
+          "lugar": "falda.pueblo",
+          "dur": 2.5
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "Santiago de Guatemala",
+          "lugar": "falda.pueblo",
+          "texto": "La ciudad",
+          "sub": "bajo el lodo",
+          "dura": 2.6
+        }
+      ],
+      "n": 3,
+      "tipo": "escena"
+    },
+    {
+      "mundo": "ladera",
+      "secuencia": 1,
+      "acto": 1,
+      "texto": "Murieron más de 600 personas, según el USGS. Y era la segunda vez que esa ciudad tenía que irse.",
+      "camara": [
+        {
+          "dice": "Y era la segunda vez",
+          "al": "fin",
+          "mira": "falda.pueblo",
+          "dist_m": 650,
+          "azimut": 18,
+          "elevacion": 26
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "600 personas",
+          "valor": "Más de 600",
+          "rotulo": "muertos",
+          "cifra": "traslados-c01",
+          "fuente": "USGS"
+        }
+      ],
+      "n": 4,
+      "tipo": "escena"
+    },
+    {
+      "mundo": "panchoy",
+      "secuencia": 2,
+      "acto": 2,
+      "transicion": "oscuro",
+      "fundido_s": 0.6,
+      "texto": "La rehicieron en el valle de Panchoy, hoy Antigua, con el mismo volcán de fondo, y ahí duró unos 230 años.",
+      "titular": {
+        "kicker": "1543 · VALLE DE PANCHOY",
+        "texto": "Hoy, Antigua Guatemala"
+      },
+      "camara": [
+        {
+          "mira": "ciudad.plaza",
+          "dist_m": 750,
+          "azimut": 180,
+          "elevacion": 16
+        },
+        {
+          "dice": "con el mismo volcán de fondo",
+          "mira": "ciudad.plaza",
+          "dist_m": 480,
+          "azimut": 180,
+          "elevacion": 11
+        },
+        {
+          "dice": "230",
+          "al": "fin",
+          "mira": "ciudad.plaza",
+          "dist_m": 300,
+          "azimut": 185,
+          "elevacion": 14
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "con el mismo volcán de fondo",
+          "tipo": "resaltar",
+          "lugar": "ciudad.volcan",
+          "dur": 2.5
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "230",
+          "valor": "230",
+          "rotulo": "años en Panchoy",
+          "cifra": "traslados-c05"
+        }
+      ],
+      "n": 5,
+      "tipo": "escena"
+    },
+    {
+      "mundo": "panchoy",
+      "secuencia": 2,
+      "acto": 2,
+      "texto": "Hasta que la tierra la sacudió desde abajo: los terremotos de Santa Marta, en julio de 1773, rajaron muros y tumbaron techos.",
+      "titular": {
+        "kicker": "29 DE JULIO DE 1773",
+        "texto": "Los terremotos de Santa Marta"
+      },
+      "camara": [
+        {
+          "dice": "los terremotos de Santa Marta",
+          "mira": [
+            -70,
+            0
+          ],
+          "dist_m": 300,
+          "azimut": 175,
+          "elevacion": 17
+        },
+        {
+          "dice": "rajaron muros",
+          "al": "fin",
+          "mira": [
+            -120,
+            0
+          ],
+          "dist_m": 240,
+          "azimut": 170,
+          "elevacion": 19
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "la sacudió desde abajo",
+          "tipo": "terremoto",
+          "pieza": "ciudad",
+          "intensidad": 0.8,
+          "danos": 0.6,
+          "polvo": true,
+          "previo": true,
+          "personas": 14,
+          "radio_m": 150,
+          "centro": [
+            -120,
+            0
+          ],
+          "refugio": [
+            -58,
+            170
+          ],
+          "radio_refugio_m": 18,
+          "dur": 7.5,
+          "sfx": "impacto"
+        }
+      ],
+      "n": 6,
+      "tipo": "escena"
+    },
+    {
+      "mundo": "cabildo",
+      "secuencia": 3,
+      "acto": 2,
+      "transicion": "fundido",
+      "fundido_s": 0.6,
+      "texto": "En 1775, la corona ordenó trasladarla al valle de la Ermita, buscando seguridad lejos de los volcanes.",
+      "titular": {
+        "kicker": "21 DE SEPTIEMBRE DE 1775",
+        "texto": "Al valle de la Ermita"
+      },
+      "camara": [
+        {
+          "mira": "cabildo.ranchos",
+          "dist_m": 170,
+          "azimut": 90,
+          "elevacion": 22
+        },
+        {
+          "dice": "lejos de los volcanes",
+          "al": "fin",
+          "mira": "cabildo.rancho",
+          "dist_m": 70,
+          "azimut": 75,
+          "elevacion": 14
+        }
+      ],
+      "marcas": [],
+      "n": 7,
+      "tipo": "escena",
+      "eventos": [
+        {
+          "dice": "trasladarla",
+          "tipo": "resaltar",
+          "lugar": "cabildo.ranchos",
+          "dur": 2.5
+        }
+      ]
+    },
+    {
+      "mundo": "cabildo",
+      "secuencia": 3,
+      "acto": 2,
+      "texto": "El 2 de enero de 1776, el cabildo se reunió ahí por primera vez, en un rancho de paja.",
+      "titular": {
+        "kicker": "2 DE ENERO DE 1776",
+        "texto": "El primer cabildo"
+      },
+      "camara": [
+        {
+          "dice": "el cabildo se reunió",
+          "mira": "cabildo.rancho",
+          "dist_m": 45,
+          "azimut": 100,
+          "elevacion": 12
+        },
+        {
+          "dice": "en un rancho de paja",
+          "al": "fin",
+          "mira": "cabildo.rancho",
+          "dist_m": 26,
+          "azimut": 95,
+          "elevacion": 10
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "se reunió ahí",
+          "tipo": "resaltar",
+          "lugar": "cabildo.rancho",
+          "dur": 2.5
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "se reunió ahí",
+          "lugar": "cabildo.rancho",
+          "texto": "Rancho de paja",
+          "sub": "casa del cabildo",
+          "dura": 3.2
+        }
+      ],
+      "n": 8,
+      "tipo": "escena"
+    },
+    {
+      "mundo": "valle",
+      "secuencia": 4,
+      "acto": 3,
+      "transicion": "fundido",
+      "fundido_s": 0.6,
+      "texto": "La primera mudanza la había empujado una guerra: en 1524, la ciudad nació junto a Iximché, la capital kaqchikel.",
+      "titular": {
+        "kicker": "1524 · TECPÁN, CHIMALTENANGO",
+        "texto": "La primera mudanza: una guerra"
+      },
+      "camara": [
+        {
+          "mira": [
+            -90.9,
+            14.61
+          ],
+          "dist_km": 85,
+          "azimut": -90,
+          "elevacion": 46
+        },
+        {
+          "dice": "en 1524",
+          "mira": "iximche",
+          "dist_km": 48,
+          "azimut": -90,
+          "elevacion": 40
+        },
+        {
+          "dice": "Iximché",
+          "al": "fin",
+          "mira": "iximche",
+          "dist_km": 28,
+          "azimut": -90,
+          "elevacion": 36
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "la ciudad nació",
+          "tipo": "encender",
+          "lugares": [
+            "iximche"
+          ],
+          "dur": 1.4
+        },
+        {
+          "dice": "Iximché",
+          "tipo": "resaltar",
+          "lugar": "iximche",
+          "dur": 2.4
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "Iximché",
+          "lugar": "iximche",
+          "texto": "Iximché",
+          "sub": "capital kaqchikel"
+        }
+      ],
+      "n": 9,
+      "tipo": "escena",
+      "anotaciones": [
+        {
+          "dice": "una guerra",
+          "tipo": "pulso",
+          "sobre": [
+            "iximche"
+          ],
+          "radio_m": 4000,
+          "anillos": 2,
+          "hasta_dice": "la ciudad nació"
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "1524",
+          "valor": "1524",
+          "rotulo": "la ciudad nace junto a Iximché",
+          "cifra": "anio-1524",
+          "dura": 2.6
+        }
+      ]
+    },
+    {
+      "mundo": "valle",
+      "secuencia": 4,
+      "acto": 3,
+      "texto": "Unos la cuentan como primera capital; otros, como un campamento. Ese mismo año, los kaqchikeles rompieron la alianza, dejaron Iximché y se alzaron.",
+      "camara": [
+        {
+          "mira": "iximche",
+          "dist_km": 26,
+          "azimut": -90,
+          "elevacion": 36
+        },
+        {
+          "dice": "otros, como un campamento",
+          "mira": "iximche",
+          "dist_km": 22,
+          "azimut": -75,
+          "elevacion": 32
+        },
+        {
+          "dice": "rompieron la alianza",
+          "al": "fin",
+          "mira": "iximche",
+          "dist_km": 40,
+          "azimut": -90,
+          "elevacion": 40
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "rompieron la alianza",
+          "tipo": "parpadear",
+          "lugares": [
+            "iximche"
+          ],
+          "dur": 2.0
+        },
+        {
+          "dice": "dejaron Iximché",
+          "tipo": "apagar",
+          "lugares": [
+            "iximche"
+          ],
+          "dur": 1.5
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "Unos la cuentan",
+          "lugar": "iximche",
+          "texto": "¿Capital o campamento?",
+          "sub": "AGN · Prensa Libre",
+          "hasta_dice": "Ese mismo año"
+        },
+        {
+          "dice": "rompieron la alianza",
+          "lugar": "iximche",
+          "texto": "La rebelión",
+          "sub": "kaqchikel, 1524"
+        }
+      ],
+      "n": 10,
+      "tipo": "escena"
+    },
+    {
+      "mundo": "valle",
+      "secuencia": 4,
+      "acto": 3,
+      "texto": "Una guerra, un volcán y la tierra la movieron por cuatro sitios. Antigua quedó a 10.3 km de la cumbre del Agua; la capital de hoy está a 31.6 km de ella.",
+      "camara": [
+        {
+          "dice": "Una guerra",
+          "mira": [
+            -90.75,
+            14.6
+          ],
+          "dist_km": 120,
+          "azimut": -90,
+          "elevacion": 52
+        },
+        {
+          "dice": "Antigua quedó",
+          "mira": [
+            -90.7,
+            14.53
+          ],
+          "dist_km": 80,
+          "azimut": -90,
+          "elevacion": 55
+        },
+        {
+          "dice": "31.6",
+          "al": "fin",
+          "mira": [
+            -90.64,
+            14.56
+          ],
+          "dist_km": 125,
+          "azimut": -90,
+          "elevacion": 58
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "Una guerra",
+          "tipo": "mudar",
+          "desde": "iximche",
+          "hacia": "ciudad-vieja",
+          "pieza": "sedes",
+          "altura_km": 10,
+          "dur": 1.4
+        },
+        {
+          "dice": "un volcán",
+          "tipo": "mudar",
+          "desde": "ciudad-vieja",
+          "hacia": "antigua-guatemala",
+          "pieza": "sedes",
+          "altura_km": 5,
+          "dur": 1.2
+        },
+        {
+          "dice": "la tierra",
+          "tipo": "mudar",
+          "desde": "antigua-guatemala",
+          "hacia": "guatemala",
+          "pieza": "sedes",
+          "altura_km": 10,
+          "dur": 1.4
+        },
+        {
+          "dice": "cumbre del Agua",
+          "tipo": "resaltar",
+          "pieza": "volcanes",
+          "elemento": [
+            -90.743,
+            14.465
+          ],
+          "dur": 2.0
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "la tierra",
+          "lugar": "guatemala",
+          "texto": "Valle de la Ermita",
+          "sub": "hoy Ciudad de Guatemala",
+          "dura": 3.2
+        },
+        {
+          "dice": "Antigua quedó",
+          "lugar": "antigua-guatemala",
+          "texto": "Antigua"
+        }
+      ],
+      "anotaciones": [
+        {
+          "dice": "Una guerra",
+          "tipo": "pulso",
+          "sobre": [
+            "ciudad-vieja"
+          ],
+          "radio_m": 1500,
+          "anillos": 2
+        },
+        {
+          "dice": "10.3",
+          "tipo": "medida",
+          "en": "cumbre-agua",
+          "radio_m": 10300,
+          "rotulo": "10.3 km"
+        },
+        {
+          "dice": "31.6",
+          "tipo": "medida",
+          "en": "cumbre-agua",
+          "radio_m": 31600,
+          "rotulo": "31.6 km"
+        }
+      ],
+      "cifras": [],
+      "n": 11,
+      "tipo": "escena"
+    },
+    {
+      "mundo": "valle",
+      "secuencia": 4,
+      "acto": 3,
+      "tipo": "cierre",
+      "texto": "Desde entonces no se ha vuelto a mover: la ciudad que el volcán enterró vive hoy lejos de él.",
+      "final": "La ciudad que el volcán enterró vive hoy lejos de él.",
+      "camara": [
+        {
+          "al": "fin",
+          "mira": [
+            -90.64,
+            14.56
+          ],
+          "dist_km": 125,
+          "azimut": -90,
+          "elevacion": 58
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "vive hoy lejos de él",
+          "tipo": "resaltar",
+          "lugar": "guatemala",
+          "dur": 2.0
+        }
+      ],
+      "n": 12
+    }
+  ],
+  "estilo": {
+    "id": "color",
+    "razon": "La idea visual son tres conos y una luz que se aleja: el mapa de día con tinta por altura y sol es el que deja leer los volcanes como montañas (en el cuadro de prueba, `noche` los hunde en azul y solo deja ver los halos). `noche` hace brillar mejor la luz que se muda y va con la paleta del tema (desastre): por eso la duda. `papel` (Blender) serviría a la efeméride, pero no dibuja las anotaciones `medida` ni `pulso` que pagan la distancia. Los tres mundos de cerca van en `dia`.",
+    "confianza": "baja",
+    "candidatos": [
+      "color",
+      "noche"
+    ],
+    "cuadros": [
+      "sesiones/video3d-cuatro-capitales/estilos/color/9x16_t000.500.png",
+      "sesiones/video3d-cuatro-capitales/estilos/noche/9x16_t000.500.png"
+    ],
+    "elegido_por_usuario": true
+  },
+  "idea_visual": "Un volcán que entierra a una capital sin hacer erupción, y una luz que se muda por el relieve hasta quedar lejos de los tres conos: la misma ciudad, empujada por una guerra, un volcán y la tierra.",
+  "protagonista": "sedes",
+  "mundos": {
+    "valle": {
+      "escala": "pais",
+      "set": "guatemala",
+      "exageracion": 3.0,
+      "estilo": "color",
+      "protagonista": "sedes",
+      "lugares": {
+        "iximche": {
+          "lon": -90.9943492,
+          "lat": 14.7338052,
+          "nombre": "Iximché"
+        },
+        "cumbre-agua": {
+          "lon": -90.743,
+          "lat": 14.465,
+          "nombre": "Volcán de Agua"
+        },
+        "cumbre-fuego": {
+          "lon": -90.8806,
+          "lat": 14.4748,
+          "nombre": "Volcán de Fuego"
+        },
+        "cumbre-acatenango": {
+          "lon": -90.87556,
+          "lat": 14.50056,
+          "nombre": "Volcán Acatenango"
+        }
+      },
+      "piezas": [
+        {
+          "id": "lagos",
+          "tipo": "lagos",
+          "nombres": [
+            "Lago de Atitlán"
+          ]
+        },
+        {
+          "id": "sedes",
+          "tipo": "luces",
+          "lugares": [
+            "iximche",
+            "ciudad-vieja",
+            "antigua-guatemala",
+            "guatemala"
+          ],
+          "encendidas": false
+        },
+        {
+          "id": "volcanes",
+          "tipo": "volcanes",
+          "lugares": [
+            "cumbre-agua",
+            "cumbre-fuego",
+            "cumbre-acatenango"
+          ],
+          "radio_km": 6,
+          "alto_m": {
+            "0": 3760,
+            "1": 3763,
+            "2": 3976
+          }
+        }
+      ]
+    },
+    "ladera": {
+      "escala": "esquema",
+      "receta": "campo",
+      "horizonte": "llano",
+      "semilla": 1541,
+      "tamano_m": 2400,
+      "estilo": "dia",
+      "hora": "noche",
+      "hora_razon": "El alud cayó de noche, unas dos horas después de oscurecer (visual-ladera-h06, «dos horas de noche»; sin hora en voz ni en pantalla): las ventanas del pueblo son lo que el lodo apaga.",
+      "protagonista": "falda",
+      "piezas": [
+        {
+          "id": "falda",
+          "tipo": "faldavolcan",
+          "lugar": [
+            0,
+            0
+          ],
+          "rumbo": 90,
+          "tamano": 1,
+          "casas": 24,
+          "lluvia": 0.3,
+          "ventanas": true,
+          "personas": 4,
+          "teja": 0.05,
+          "traza": 0.15,
+          "semilla": 1
+        }
+      ],
+      "escena": {
+        "que_pasa": "Tras días de lluvia, de noche, la parte alta de la ladera de un volcán se desprende y un flujo de lodo, piedras y árboles baja por la falda y sepulta el pueblo que está al pie; no hay erupción.",
+        "quien": "nadie en primer plano: es de noche; unos pocos vecinos en la plaza y el resto dentro de las casas (puntos de luz)",
+        "con_que": "lodo, piedras y árboles arrastrados; casas de adobe, caña y paja, una iglesia y una plaza genéricas",
+        "se_mueve": "cae una lluvia ligera con viento; el frente del alud baja de la ladera alta al pueblo, arranca árboles y cubre casas",
+        "sostiene": [
+          {
+            "que": "días de lluvia antes del alud",
+            "hecho": "visual-ladera-h04"
+          },
+          {
+            "que": "de noche, unas dos horas después de oscurecer",
+            "hecho": "visual-ladera-h06"
+          },
+          {
+            "que": "lodo, piedras y árboles arrastrados",
+            "hecho": "visual-ladera-h07"
+          },
+          {
+            "que": "alud de lodo, piedras y árboles tras fuertes lluvias, sin erupción",
+            "hecho": "traslados-h10"
+          },
+          {
+            "que": "el flujo se ve como concreto que fluye",
+            "hecho": "visual-ladera-h10"
+          },
+          {
+            "que": "se desprende en la parte alta de la ladera",
+            "hecho": "lugares-h13"
+          },
+          {
+            "que": "aldea poco delimitada, casas de adobe, caña y paja",
+            "hecho": "visual-ladera-h03"
+          },
+          {
+            "que": "la forma del cono, el trazo del lodo, la iglesia y la plaza",
+            "generico": true
+          },
+          {
+            "que": "las ventanas encendidas (puntos de luz)",
+            "generico": true
+          }
+        ],
+        "ilustrativa": "Es el mecanismo del alud en un volcán y un pueblo cualquiera: ni la ladera, ni el trazo del lodo, ni la forma de Almolonga se afirman."
+      },
+      "lugares": {
+        "falda.cumbre": {
+          "x": 0.0,
+          "y": 760.0,
+          "nombre": "Cumbre"
+        },
+        "falda.ladera-alta": {
+          "x": -8.68,
+          "y": 619.47,
+          "nombre": "Ladera alta"
+        },
+        "falda.barranco": {
+          "x": -36.93,
+          "y": 409.94,
+          "nombre": "Barranco"
+        },
+        "falda.pueblo": {
+          "x": -4.0,
+          "y": -58.0,
+          "nombre": "Pueblo"
+        },
+        "falda.plaza": {
+          "x": 0.0,
+          "y": 0.0,
+          "nombre": "Plaza"
+        },
+        "falda.iglesia": {
+          "x": 0.0,
+          "y": 42.0,
+          "nombre": "Iglesia"
+        }
+      }
+    },
+    "panchoy": {
+      "escala": "esquema",
+      "receta": "campo",
+      "horizonte": "llano",
+      "semilla": 1773,
+      "tamano_m": 3600,
+      "estilo": "dia",
+      "hora": "dia",
+      "protagonista": "ciudad",
+      "piezas": [
+        {
+          "id": "ciudad",
+          "tipo": "ciudadcolonial",
+          "lugar": [
+            0,
+            0
+          ],
+          "rumbo": 270,
+          "tamano": 1,
+          "manzanas": 12,
+          "personas": 14,
+          "volcan_fondo": true,
+          "semilla": 1
+        }
+      ],
+      "escena": {
+        "que_pasa": "La ciudad colonial en damero con su plaza mayor (fuente, mercado, portales de comercio) y el volcán al sur; el terremoto la sacude: muros que se hienden y caen, techos que se desploman, polvo, y la gente que sale a los espacios abiertos.",
+        "quien": "vecinos en la plaza y las calles: gente que camina y compra en el mercado",
+        "con_que": "catedral, palacio y cabildo con portales; casas de un piso con teja o azotea; fuente y puestos del mercado",
+        "se_mueve": "la gente camina; con el terremoto todo tiembla, caen muros y techos, sube el polvo y la gente corre a un espacio abierto",
+        "sostiene": [
+          {
+            "que": "plaza casi cuadrada con fuente y mercado",
+            "hecho": "visual-panchoy-h01"
+          },
+          {
+            "que": "catedral, palacio y cabildo con portales en la plaza",
+            "hecho": "visual-panchoy-h02"
+          },
+          {
+            "que": "casas de un piso, damero empedrado",
+            "hecho": "visual-panchoy-h03"
+          },
+          {
+            "que": "el volcán de Agua al sur de la plaza",
+            "hecho": "visual-panchoy-h08"
+          },
+          {
+            "que": "muros que se hienden y caen, techos rotos",
+            "hecho": "visual-panchoy-h12"
+          },
+          {
+            "que": "la nube de polvo",
+            "hecho": "visual-panchoy-h10"
+          },
+          {
+            "que": "la gente sale a calles y plazas",
+            "hecho": "visual-panchoy-h11"
+          },
+          {
+            "que": "la forma de la catedral, las casas, el volcán y qué pieza cae",
+            "generico": true
+          }
+        ]
+      },
+      "lugares": {
+        "ciudad.plaza": {
+          "x": 0.0,
+          "y": 0.0,
+          "nombre": "Plaza"
+        },
+        "ciudad.fuente": {
+          "x": 0.0,
+          "y": 0.0,
+          "nombre": "Fuente"
+        },
+        "ciudad.mercado": {
+          "x": -21.0,
+          "y": 0.0,
+          "nombre": "Mercado"
+        },
+        "ciudad.catedral": {
+          "x": 63.0,
+          "y": -15.0,
+          "nombre": "Catedral"
+        },
+        "ciudad.palacio": {
+          "x": 0.0,
+          "y": -50.0,
+          "nombre": "Palacio"
+        },
+        "ciudad.cabildo": {
+          "x": 0.0,
+          "y": 49.0,
+          "nombre": "Cabildo"
+        },
+        "ciudad.portal": {
+          "x": -47.0,
+          "y": 0.0,
+          "nombre": "Portal"
+        },
+        "ciudad.volcan": {
+          "x": 0.0,
+          "y": -1750.0,
+          "nombre": "Cono"
+        }
+      }
+    },
+    "cabildo": {
+      "escala": "esquema",
+      "receta": "campo",
+      "horizonte": "colinas",
+      "semilla": 1776,
+      "tamano_m": 1200,
+      "estilo": "dia",
+      "hora": "dia",
+      "protagonista": "cabildo",
+      "piezas": [
+        {
+          "id": "cabildo",
+          "tipo": "cabildoranchos",
+          "lugar": [
+            0,
+            0
+          ],
+          "rumbo": 180,
+          "tamano": 1,
+          "ranchos": 5,
+          "enlucidas": 1,
+          "cabildantes": 5,
+          "llegan": 2,
+          "vecinos": 6,
+          "mulas": 0,
+          "carretas": 0,
+          "iglesia": true,
+          "llegada_s": 11,
+          "semilla": 1
+        },
+        {
+          "id": "vecino-1",
+          "tipo": "actor",
+          "objeto": "persona",
+          "pose": "cargar",
+          "desde": [
+            70,
+            -45
+          ],
+          "hacia": [
+            14,
+            -22
+          ],
+          "claves": [
+            {
+              "t": 0,
+              "vel_kmh": 2.6
+            }
+          ]
+        },
+        {
+          "id": "vecino-2",
+          "tipo": "actor",
+          "objeto": "persona",
+          "pose": "caminar",
+          "desde": [
+            -45,
+            35
+          ],
+          "hacia": [
+            -2,
+            10
+          ],
+          "claves": [
+            {
+              "t": 0,
+              "vel_kmh": 3
+            }
+          ]
+        }
+      ],
+      "escena": {
+        "que_pasa": "En un llano, la ciudad naciente es un rancherío de paja con pocas casas enlucidas; los capitulares salen de sus ranchos y caminan a otro rancho de paja que desde esa mañana hace de casa del cabildo, y ahí celebran la primera sesión.",
+        "quien": "los capitulares (uno escribe) y vecinos del rancherío",
+        "con_que": "ranchos de paja con paredes de caña o bajareque, unas pocas casas enlucidas con teja, una ermita sencilla, una mesa",
+        "se_mueve": "dos capitulares llegan caminando sin prisa; los demás deliberan y uno escribe; los vecinos van y vienen",
+        "sostiene": [
+          {
+            "que": "la primera sesión en un rancho de paja",
+            "hecho": "visual-cabildo-h01"
+          },
+          {
+            "que": "capitulares que caminan sin prisa al rancho (según Laparte)",
+            "hecho": "visual-cabildo-h02"
+          },
+          {
+            "que": "rancherío pajizo con pocas casas enlucidas y una ermita sencilla",
+            "hecho": "visual-cabildo-h03"
+          },
+          {
+            "que": "de mañana, el 2 de enero de 1776",
+            "hecho": "visual-cabildo-h07"
+          },
+          {
+            "que": "la forma del rancho, la mesa, la ropa y la ermita",
+            "generico": true
+          }
+        ]
+      },
+      "lugares": {
+        "cabildo.rancho": {
+          "x": 4.6,
+          "y": 0.0,
+          "nombre": "Rancho"
+        },
+        "cabildo.mesa": {
+          "x": 0.0,
+          "y": 0.0,
+          "nombre": "Mesa"
+        },
+        "cabildo.llegada": {
+          "x": 17.77,
+          "y": 3.75,
+          "nombre": "Llegada"
+        },
+        "cabildo.ranchos": {
+          "x": 10.0,
+          "y": -21.0,
+          "nombre": "Ranchos"
+        },
+        "cabildo.llano": {
+          "x": 28.0,
+          "y": -8.0,
+          "nombre": "Llano"
+        },
+        "cabildo.iglesia": {
+          "x": -58.0,
+          "y": -20.0,
+          "nombre": "Iglesia"
+        }
+      }
+    }
+  },
+  "aviso": "Esquema",
+  "gancho": {
+    "id": "g2",
+    "familia": "ruptura",
+    "elegido_por": "usuario"
+  },
+  "narracion": "Un volcán de Guatemala sepultó a su capital sin hacer erupción. Tras días de lluvia, la noche del 10 al 11 de septiembre de 1541, lo alto de la ladera se desprendió. Un alud de lodo, piedras y árboles bajó sobre Santiago de Guatemala, asentada desde 1527 al pie del volcán de Agua. Murieron más de 600 personas, según el USGS. Y era la segunda vez que esa ciudad tenía que irse. La rehicieron en el valle de Panchoy, hoy Antigua, con el mismo volcán de fondo, y ahí duró unos 230 años. Hasta que la tierra la sacudió desde abajo: los terremotos de Santa Marta, en julio de 1773, rajaron muros y tumbaron techos. En 1775, la corona ordenó trasladarla al valle de la Ermita, buscando seguridad lejos de los volcanes. El 2 de enero de 1776, el cabildo se reunió ahí por primera vez, en un rancho de paja. La primera mudanza la había empujado una guerra: en 1524, la ciudad nació junto a Iximché, la capital kaqchikel. Unos la cuentan como primera capital; otros, como un campamento. Ese mismo año, los kaqchikeles rompieron la alianza, dejaron Iximché y se alzaron. Una guerra, un volcán y la tierra la movieron por cuatro sitios. Antigua quedó a 10.3 km de la cumbre del Agua; la capital de hoy está a 31.6 km de ella. Desde entonces no se ha vuelto a mover: la ciudad que el volcán enterró vive hoy lejos de él.",
+  "no_afirmar": [
+    "«Cuatro capitales» como hecho: es una cuenta en disputa (Iximché, primera capital para la AGN; campamento militar para Prensa Libre). Decir «cuatro sitios» o atribuirlo.",
+    "Que Iximché fue «la primera capital» sin atribuir.",
+    "Que la rebelión kaqchikel fue por el oro o los tributos que exigía Alvarado.",
+    "«700 muertos»: solo «más de 600, según el USGS».",
+    "Que el lago del cráter del Agua se desbordó: fue un alud de lodo, piedras y árboles tras días de lluvia, sin erupción.",
+    "La ladera exacta o el trazo del lodo de 1541; que bajó por el cráter abierto al NNE. En el mapa no se dibuja ningún trazo del alud; en el esquema la ladera es genérica.",
+    "Que el alud fue el 10 o el 11 de septiembre a secas: «la noche del 10 al 11», sin hora.",
+    "Que Almolonga estaba en el casco de Ciudad Vieja o en San Miguel Escobar: sitio en disputa; se dibuja como zona, nunca como punto, y no se le mide distancia exacta (los 7.0 km de lugares-c09 son al parque central de Ciudad Vieja: no se usan para la ciudad de 1527).",
+    "El lugar `almolonga` del set (es el pueblo de Quetzaltenango).",
+    "«Rodeada de volcanes» o «en todas direcciones»: los tres quedan al sur y suroeste de Antigua.",
+    "El día de la llegada a Panchoy (10 o 16 de marzo de 1543): solo «1543».",
+    "Una hora del terremoto de Santa Marta (15:15, 15:30, 15:40 según la fuente), ni su epicentro: no se dibuja onda ni origen.",
+    "Que la real cédula llegó en diciembre de 1775 o el 13 de enero de 1776: el Reglamento se firmó el 21 de septiembre de 1775.",
+    "Que la Ermita o Panchoy eran «llanas y con agua» como hecho (lo dijo Antonelli de Panchoy; de la Ermita nadie).",
+    "Que el argumento principal fue la distancia a los volcanes como hecho único (lugares-h08 no confirmado): decir «buscando seguridad lejos de los volcanes» (traslados-h25).",
+    "Que la ciudad se llamó «La Antigua» desde una fecha, o «capital hasta 1776» con 230 años (230 es hasta 1773).",
+    "Que el nombre de Santiago se descartó por las calamidades como hecho (lo dice Berdúo).",
+    "Que Beatriz de la Cueva fue «la primera gobernadora de América».",
+    "Altitudes de Antigua, Ciudad Vieja, Iximché y la capital; la altura de Fuego; la del Agua al metro (solo «unos 3,760 m según el Smithsonian»).",
+    "«45 km» Antigua–Nueva Guatemala; las distancias de la AGN (56 y 91 km) como «por carretera»: rotular «según AGN».",
+    "Rumbos de Ería («al noroeste», «al sureste el macizo»): usar los de las coordenadas (Ermita al ENE de Antigua; Fuego y Acatenango al SO).",
+    "Arcos de la mudanza como caminos: no tocan el suelo ni siguen valles; ninguna ruta terrestre entre sedes.",
+    "En los esquemas: nombres reales en marcas o lugares (lo dice el titular); que la forma del pueblo, la catedral o los ranchos son las reales.",
+    "Casas «de adobe y teja» o 30–60 casas en cuadrícula en Almolonga: aldea poco delimitada de adobe, caña y paja (visual-ladera).",
+    "Lluvia torrencial durante el alud: «mucho viento y no mucha agua».",
+    "Ancho, ruta, color o velocidad del lodo de 1541; las cifras del Casita 1998 aplicadas a 1541.",
+    "Torres de la catedral que caen; la gente corriendo al centro de la plaza mayor; lluvia durante el derrumbe.",
+    "«Ranchos de palma» y «frente a la iglesia» para el primer cabildo: un rancho de paja (visual-cabildo).",
+    "Cuántos capitulares asistieron o sus nombres; mesas, mulas y carretas como hecho."
+  ],
+  "caption": {
+    "tiktok": "Un volcán enterró la capital de Guatemala sin hacer erupción. Y no era la primera vez que la ciudad tenía que irse. #Guatemala #Historia #VolcanDeAgua #Antigua",
+    "instagram": "La misma ciudad, cuatro sitios. Santiago de Guatemala nació junto a Iximché, la sepultó un alud del volcán de Agua (más de 600 muertos, según el USGS), vivió unos 230 años en Panchoy y los terremotos de Santa Marta la llevaron al valle de la Ermita. Hoy la capital está a 31.6 km de la cumbre del Agua.\n\n#Guatemala #HistoriaDeGuatemala #Antigua #VolcanDeAgua #Iximche",
+    "facebook": "¿Por qué la capital de Guatemala cambió tantas veces de sitio? Depende de a quién le preguntes: unos cuentan Iximché como la primera capital y otros como un campamento. Lo que no se discute es que Santiago de Guatemala cambió de sitio tres veces, y a cada mudanza la empujó una fuerza distinta: una guerra, un volcán que la sepultó sin hacer erupción y los terremotos de Santa Marta. Antigua quedó a 10.3 km de la cumbre del volcán de Agua; la capital de hoy, a 31.6 km.",
+    "shorts": "Un volcán de Guatemala sepultó a su capital sin hacer erupción\nUna guerra, un alud de lodo y los terremotos de Santa Marta movieron a Santiago de Guatemala por cuatro sitios. Hoy la capital queda a 31.6 km de la cumbre del volcán de Agua. #Shorts #Guatemala #Historia"
+  },
+  "id": "video3d-cuatro-capitales",
+  "slug": "cuatro-capitales",
+  "tema": "¿Por qué Guatemala tuvo cuatro capitales?",
+  "fecha": "2026-11-16",
+  "paleta": "obsidiana",
+  "musica": "obsidiana-2",
+  "desde": null,
+  "motor": "three",
+  "duracion_s": 103.6,
+  "creditos_voz": 1531.85
+}

@@ -1,0 +1,89 @@
+{
+ "tipo": "bajarlago",
+ "clase": "evento",
+ "cuando": "el nivel de un lago baja: el agua se retira, queda lodo al aire y el tul en seco pasa de verde a pardo y se dobla (sin metros)",
+ "parametros": {
+  "pieza": {
+   "tipo": "pieza",
+   "piezas": [
+    "orillalago"
+   ],
+   "requerido": true,
+   "descripcion": "la orillalago cuyo nivel baja; ponle `tul: 0` (el tular que se seca lo dibuja este evento con su `tul`) y `aves: 0` y `cayucos: 0` (quedarían sobre el lodo)"
+  },
+  "baja": {
+   "tipo": "numero",
+   "requerido": true,
+   "rango": [
+    0,
+    1
+   ],
+   "descripcion": "cuánto se retira el agua al terminar (ilustrativa, no es una medida): 1 = la orilla 44 m mar adentro (× tamano, con su borde irregular) y todo el tular al aire; 0.5 ≈ la mitad del tular en seco"
+  },
+  "seca": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0.8,
+   "descripcion": "cuánto se seca lo que queda al aire: 0 = el tul sigue verde y erguido; 1 = pardo y doblado (cada junco a su modo) y el lodo claro y agrietado; tarda ≈ 3 s tras quedar al aire"
+  },
+  "de": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "descripcion": "el nivel antes del evento (se ve desde el cuadro 0); sin `de`, sigue donde dejó el bajarlago anterior de la misma pieza (0 el primero: lago lleno)"
+  },
+  "tul": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0.8,
+   "descripcion": "cuánto tular dibuja el evento (manchas de tul y de enea con su espiga, de 5 a 5 + 34·tul m mar adentro, a los dos lados del muelle, como el de la pieza); verde y meciéndose mientras está en el agua"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "el azar fijo: manchas del tular, cómo se dobla cada junco, el borde de la orilla, charcos, grietas y piedras"
+  }
+ },
+ "escalas": [
+  "esquema"
+ ],
+ "motores": [
+  "three"
+ ],
+ "adelanto": {
+  "s": 0.3
+ },
+ "ejemplo": {
+  "t": 0.6,
+  "dur": 5.0,
+  "tipo": "bajarlago",
+  "pieza": "orilla",
+  "baja": 1,
+  "seca": 1,
+  "tul": 0.8
+ },
+ "animado": "la orilla del agua se va mar adentro con su espuma, el lecho mojado se aclara y se agrieta, los charcos se encogen, las piedras asoman y el tul verde se mece en el agua hasta que, al aire, pasa a pardo y se dobla",
+ "contiene": [
+  "el lecho de lodo al aire: mojado y oscuro junto al agua, claro y agrietado al secarse",
+  "charcos en las hondonadas que se encogen",
+  "piedras del fondo que asoman",
+  "la orilla irregular del agua con su espuma",
+  "el tular de tul y enea (con su espiga) que se mece en el agua y en seco se vuelve pardo y se dobla"
+ ]
+}

@@ -33,6 +33,37 @@
       "pendiente": "no pasa A1/A2 (2026-11-07: adorno continuo o pasos visibles antes de la voz): rehazla y corre --check"
     },
     {
+      "id": "aro-renovacion",
+      "origen": "historia-quetzalteca",
+      "usos": [
+        "historia-quetzalteca"
+      ],
+      "descripcion": "aro que se cierra: cada paso dibuja su tramo del círculo hasta su estación; el último vuelve al primero y el ciclo reinicia",
+      "mecanismo": "ciclo",
+      "temas": [
+        "renovacion",
+        "licencia",
+        "concesion",
+        "permiso",
+        "tramite anual",
+        "ciclo",
+        "repetir"
+      ],
+      "pasos": [
+        3,
+        5
+      ],
+      "ejemplo": {
+        "titulo": "Una licencia que vence",
+        "pasos": [
+          "Propiedad del Estado",
+          "La concesión",
+          "Renovarla cada año",
+          "Volver a pedirla"
+        ]
+      }
+    },
+    {
       "id": "boca-a-boca",
       "origen": "historia-como-nacio-la-cerveza-gallo",
       "usos": [
@@ -723,6 +754,36 @@
       "pendiente": "no pasa A1/A2 (2026-11-07: adorno continuo o pasos visibles antes de la voz): rehazla y corre --check"
     },
     {
+      "id": "riel-productos",
+      "origen": "historia-cementos-progreso",
+      "usos": [
+        "historia-cementos-progreso"
+      ],
+      "descripcion": "riel de tiempo horizontal: se levanta el origen (un edificio) y a su lado caen, uno tras otro, los sacos de lo que produjo",
+      "mecanismo": "cronologia",
+      "temas": [
+        "historia",
+        "empresa",
+        "productos",
+        "origen",
+        "fábrica",
+        "línea de tiempo",
+        "marca"
+      ],
+      "pasos": [
+        2,
+        4
+      ],
+      "ejemplo": {
+        "titulo": "Del molino a la harina",
+        "pasos": [
+          "Molino San Juan",
+          "Maíz en grano",
+          "1950 · Harina de maíz"
+        ]
+      }
+    },
+    {
       "id": "tanque-balance",
       "origen": "semilla",
       "usos": [],
@@ -752,6 +813,35 @@
         ]
       },
       "pendiente": "no pasa A1/A2 (2026-11-07: adorno continuo o pasos visibles antes de la voz): rehazla y corre --check"
+    },
+    {
+      "id": "vagones-apagan",
+      "origen": "historia-litegua",
+      "usos": [
+        "historia-litegua"
+      ],
+      "descripcion": "final por fechas: cada evento entra en la línea de tiempo y apaga un tramo del tren, de la cola a la locomotora",
+      "mecanismo": "cronologia",
+      "temas": [
+        "historia",
+        "tren",
+        "ferrocarril",
+        "cierre",
+        "cronología",
+        "servicio que se apaga",
+        "transporte"
+      ],
+      "pasos": [
+        2,
+        5
+      ],
+      "ejemplo": {
+        "titulo": "El último tren",
+        "pasos": [
+          "Marzo 1996 · Cierra la línea",
+          "1996 · Sin pasajeros"
+        ]
+      }
     }
   ]
 }

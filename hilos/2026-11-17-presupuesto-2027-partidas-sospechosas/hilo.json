@@ -1,0 +1,340 @@
+{
+  "slug": "presupuesto-2027-partidas-sospechosas",
+  "fecha": "2026-11-17",
+  "tema": "Proyecto de Presupuesto 2027 de Guatemala (iniciativa 6841, Q192,045.1 millones): las partidas de alto impacto, raras u opacas — consejos de desarrollo (CODEDES) y obras del listado geográfico en año electoral, fideicomisos y transferencias a ONG/asociaciones, Obligaciones del Estado a cargo del Tesoro, deuda e intereses, y entidades con historial de baja ejecución o malos manejos que reciben más.",
+  "tesis": "El proyecto de Presupuesto 2027 casi duplica la deuda en bonos (de Q23,278 a Q42,750 millones) mientras sube el dinero para los consejos de desarrollo y Comunicaciones, que dejan sin ejecutar buena parte de lo que ya reciben y reparten con poco sustento técnico.",
+  "paleta": "obsidiana",
+  "hook_tipo": "curiosity_gap",
+  "modo": "hilo",
+  "pregunta": "En el proyecto de Presupuesto 2027, ¿qué partidas crecen en año electoral y cuánto va a canales con poca trazabilidad o baja ejecución?",
+  "n_tuits": 20,
+  "estado": "listo",
+  "tuits": [
+    {
+      "n": 1,
+      "beat": "gancho",
+      "texto": "Para 2027, el Gobierno planea colocar mucha más deuda en bonos que este año.\n\nY una parte del gasto va a donde menos se ejecuta: consejos de desarrollo con obras sin código SNIP y un Comunicaciones que gasta poco y pide más.\n\nLas partidas raras del presupuesto 2027 🧵",
+      "caracteres": 268,
+      "alt_text": "Tarjeta antes y después: los bonos del Tesoro previstos para financiar el presupuesto pasan de Q23,278 millones vigentes en 2026 a Q42,750 millones en el proyecto 2027, casi el doble. Fuente: Icefi vía Revista E&N.",
+      "imagen": "tuit_1.png",
+      "plantilla": "antes-despues",
+      "fuente": "Icefi · proyecto 2027, vía Revista E&N",
+      "cifra_ids": [
+        "opa-c01"
+      ]
+    },
+    {
+      "n": 2,
+      "beat": "contexto",
+      "texto": "Gobierno, Banguat y Congreso votaron a favor; empresarios, bancos privados y la Usac, en contra.",
+      "caracteres": 96,
+      "alt_text": "Barras horizontales: la Junta Monetaria dio opinión favorable al cupo de endeudamiento 2027 con 5 votos a favor (Minfin, Mineco, MAGA, presidente del Banguat y delegado del Congreso) y 3 en contra (sector empresarial, bancos privados y Usac), el 13 de noviembre de 2026. Fuente: Prensa Libre.",
+      "imagen": "tuit_2.png",
+      "plantilla": "barras-h",
+      "fuente": "Prensa Libre · Junta Monetaria, 13 nov 2026",
+      "cifra_ids": [
+        "deu-c13"
+      ]
+    },
+    {
+      "n": 3,
+      "beat": "contexto",
+      "texto": "Solo pagar el costo de lo que ya se debe, sin abonar a la deuda.",
+      "caracteres": 64,
+      "alt_text": "Barras horizontales del proyecto 2027 en millones de quetzales: Educación Q27,898; intereses y comisiones de la deuda Q18,717; Salud Pública Q18,615.5. Los intereses superan al presupuesto de Salud. Fuente: proyecto de presupuesto 2027 del Minfin vía Prensa Libre.",
+      "imagen": "tuit_3.png",
+      "plantilla": "barras-h",
+      "fuente": "Minfin, proyecto 2027, vía Prensa Libre",
+      "cifra_ids": [
+        "deu-c03"
+      ]
+    },
+    {
+      "n": 4,
+      "beat": "impacto",
+      "texto": "",
+      "caracteres": 0,
+      "alt_text": "Gráfico de 100 cuadros: los intereses de la deuda equivalen al 14.2 % de los ingresos tributarios proyectados para 2027, uno de cada siete quetzales de impuestos. Fuente: Prensa Libre sobre el proyecto 2027.",
+      "imagen": "tuit_4.png",
+      "plantilla": "waffle",
+      "fuente": "Prensa Libre · proyecto 2027",
+      "cifra_ids": [
+        "deu-c05"
+      ]
+    },
+    {
+      "n": 5,
+      "beat": "impacto",
+      "texto": "Es dinero que no compra medicinas, aulas ni carreteras: solo paga lo que el país ya pidió prestado.",
+      "caracteres": 99,
+      "alt_text": "Cifra: los intereses y comisiones de la deuda del proyecto 2027 equivalen a Q1,009.5 por habitante, con la población proyectada por el INE para 2027. Fuente: cálculo propio con el proyecto 2027 del Minfin y la proyección del INE.",
+      "imagen": "tuit_5.png",
+      "plantilla": "cifra",
+      "fuente": "Minfin · intereses 2027 entre población INE",
+      "cifra_ids": [
+        "deu-c04"
+      ]
+    },
+    {
+      "n": 6,
+      "beat": "contexto",
+      "texto": "Un nombre así no dice qué obra, dónde ni con qué estudio.",
+      "caracteres": 57,
+      "alt_text": "Barras horizontales de los gastos extraordinarios del techo preliminar 2027, en millones de quetzales: metas presidenciales específicas Q8,754.9; Puerto Quetzal Q4,800; Fondo para Proyectos Viales Prioritarios Q3,517.6; Fondo para la Primera Vivienda Q1,200; transporte metropolitano, puertos, aeropuertos y ferrovías Q600; resto no detallado Q249.9. Fuente: Minfin, techo preliminar 2027.",
+      "imagen": "tuit_6.png",
+      "plantilla": "barras-h",
+      "fuente": "Minfin · techo preliminar 2027 (jul 2026)",
+      "cifra_ids": [
+        "opa-c05"
+      ]
+    },
+    {
+      "n": 7,
+      "beat": "contexto",
+      "texto": "Es la bolsa que el Tesoro reparte a otros: consejos de desarrollo, municipalidades, TSE, Organismo Judicial.",
+      "caracteres": 108,
+      "alt_text": "Línea del presupuesto vigente de Obligaciones del Estado a cargo del Tesoro, 2016–2025, en millones de quetzales: 24,694.5 en 2016; 32,995.3 en 2020; 46,597.2 en 2024 y 61,762.1 en 2025. Fuente: Sicoin vía Guate en Datos.",
+      "imagen": "tuit_7.png",
+      "plantilla": "linea",
+      "fuente": "Guate en Datos · Sicoin, 2016–2025",
+      "cifra_ids": [
+        "opa-c07"
+      ]
+    },
+    {
+      "n": 8,
+      "beat": "contexto",
+      "texto": "Ahí entran los consejos departamentales de desarrollo (Codede): dinero para obras que deciden alcaldes, gobernadores y diputados. El monto de 2026 es una estimación de Icefi.",
+      "caracteres": 174,
+      "alt_text": "Barras verticales de la asignación total a los Codede, en millones de quetzales: 6,412.1 en 2024; 12,269.6 en 2025 y 15,461.4 en 2026. Es una estimación de Icefi sobre el presupuesto ampliado que suma aporte ordinario, extraordinario y saldos arrastrados; el tablero del Minfin da un vigente 2026 menor. Fuente: Icefi con base en Sicoin.",
+      "imagen": "tuit_8.png",
+      "plantilla": "barras-v",
+      "fuente": "Icefi · con base en Sicoin, 2024–2026",
+      "cifra_ids": [
+        "cod-c03"
+      ]
+    },
+    {
+      "n": 9,
+      "beat": "contexto",
+      "texto": "Más dinero no significó más obra terminada: el hueco entre lo asignado y lo ejecutado también creció.",
+      "caracteres": 101,
+      "alt_text": "Barras agrupadas de los Codede, en millones de quetzales: en 2024, asignado 6,412.1 y ejecutado 3,347.3; en 2025, asignado 12,269.6 y ejecutado 7,629.5. Fuente: Icefi con base en Sicoin.",
+      "imagen": "tuit_9.png",
+      "plantilla": "agrupadas",
+      "fuente": "Icefi · con base en Sicoin, 2024–2025",
+      "cifra_ids": [
+        "cod-c04"
+      ]
+    },
+    {
+      "n": 10,
+      "beat": "contexto",
+      "texto": "Y 2026 arrancó igual de lento.",
+      "caracteres": 30,
+      "alt_text": "Cifra: al 16 de abril de 2026 los Codede habían recibido Q654.56 millones de un presupuesto vigente de Q14,774.67 millones, el 4.43 %. Fuente: La Hora con datos del tablero de desembolsos del Minfin.",
+      "imagen": "tuit_10.png",
+      "plantilla": "cifra",
+      "fuente": "La Hora · tablero de desembolsos del Minfin",
+      "cifra_ids": [
+        "cod-c11"
+      ]
+    },
+    {
+      "n": 11,
+      "beat": "contexto",
+      "texto": "Ojo: son montos totales, no por habitante. Pero el reparto viene escrito, departamento por departamento, en el decreto del presupuesto.",
+      "caracteres": 135,
+      "alt_text": "Mapa de los 22 departamentos con el aporte extraordinario 2026 a los Codede, en millones de quetzales. Mayor: San Marcos 665.5, Huehuetenango 553.4 y Jutiapa 462. Menor: Sololá 70, Totonicapán 115.5 y Sacatepéquez 125.5. Total 6,312.1. Fuente: Icefi, anexo 5, con base en el Decreto 3-2026.",
+      "imagen": "tuit_11.png",
+      "plantilla": "mapa",
+      "fuente": "Icefi, anexo 5 · Decreto 3-2026",
+      "cifra_ids": [
+        "cod-c06"
+      ]
+    },
+    {
+      "n": 12,
+      "beat": "giro",
+      "texto": "Jalapa, la cabecera, frente a todos los municipios de Sololá juntos. El reparto por municipio también viene en el decreto que aprobó el Congreso.",
+      "caracteres": 145,
+      "alt_text": "Barras horizontales del aporte extraordinario 2026 a los Codede: el municipio de Jalapa recibe Q113.7 millones; el departamento de Sololá completo, con 19 municipios, Q70 millones. Fuente: Icefi, anexo 6, con base en el Decreto 3-2026.",
+      "imagen": "tuit_12.png",
+      "plantilla": "barras-h",
+      "fuente": "Icefi, anexo 6 · Decreto 3-2026",
+      "cifra_ids": [
+        "cod-c08"
+      ]
+    },
+    {
+      "n": 13,
+      "beat": "contexto",
+      "texto": "Hay saltos que la fuente no explica con ninguna fórmula: montos que se multiplicaron de un año a otro.",
+      "caracteres": 102,
+      "alt_text": "Barras horizontales del aporte extraordinario 2026 a municipios cuyo monto se multiplicó frente a 2025, en millones de quetzales: Sayaxché 63.5 (2.0 en 2025); Los Amates 60 (10.0); Granados 42 (3.0); Esquipulas 33.5 (1.0); San Jorge 32 (1.0). Fuente: Icefi, anexo 6.",
+      "imagen": "tuit_13.png",
+      "plantilla": "barras-h",
+      "fuente": "Icefi, anexo 6 · 2025–2026",
+      "cifra_ids": [
+        "cod-c09"
+      ]
+    },
+    {
+      "n": 14,
+      "beat": "contexto",
+      "texto": "Sin ese registro, la obra no pasó por el sistema de inversión pública: no consta que tenga estudio técnico ni costo evaluado.",
+      "caracteres": 125,
+      "alt_text": "Dona de las 64 obras que el Congreso metió en el presupuesto 2026 por readecuaciones del artículo 121: 45 con código SNIP y 19 sin código SNIP, que suman Q204.5 millones. El 19 es un conteo propio de las filas del anexo 6 de Icefi; Icefi solo dice que «algunas» no lo tienen. Las obras venían del Decreto 27-2025, suspendido, y el Decreto 3-2026 las restituyó.",
+      "imagen": "tuit_14.png",
+      "plantilla": "dona",
+      "fuente": "Icefi, anexo 6 (conteo propio de filas) · 2026",
+      "cifra_ids": [
+        "cod-c10"
+      ]
+    },
+    {
+      "n": 15,
+      "beat": "contexto",
+      "texto": "Para 2027, año de elecciones, Conadur ya aprobó el techo de los consejos.",
+      "caracteres": 73,
+      "alt_text": "Barras horizontales del techo de inversión 2027 de los Codede por región, en millones de quetzales: Suroccidente 1,281.3; Noroccidente 659.7; Metropolitana 612.2; Nororiente 609.4; Suroriente 564.3; Central 561.7; Norte 499.3; Petén 197.4. Total Q4,985.4 millones. Fuente: AGN, Conadur.",
+      "imagen": "tuit_15.png",
+      "plantilla": "barras-h",
+      "fuente": "AGN · Conadur, techo 2027",
+      "cifra_ids": [
+        "cod-c01"
+      ]
+    },
+    {
+      "n": 16,
+      "beat": "contexto",
+      "texto": "El otro gran canal de obra es Comunicaciones (CIV), el ministerio de carreteras.",
+      "caracteres": 80,
+      "alt_text": "Barras con meta de la ejecución del Ministerio de Comunicaciones en 2026 al 20 de septiembre, según Sicoin: total 38.2 %, funcionamiento 41.7 % e inversión 32.4 % de su presupuesto vigente. Fuente: AGN citando Sicoin.",
+      "imagen": "tuit_16.png",
+      "plantilla": "bullet",
+      "fuente": "AGN · Sicoin al 20 sep 2026",
+      "cifra_ids": [
+        "his-c06"
+      ]
+    },
+    {
+      "n": 17,
+      "beat": "contexto",
+      "texto": "Y no es nuevo: en 2024 y 2025 dejó sin ejecutar miles de millones de su vigente, según Sicoin.",
+      "caracteres": 94,
+      "alt_text": "Cifra: el techo 2027 del Ministerio de Comunicaciones es de Q10,668.6 millones, un aumento de 41.74 % frente a su presupuesto vigente de 2025. Fuente: AGN y Sicoin vía Guate en Datos.",
+      "imagen": "tuit_17.png",
+      "plantilla": "cifra",
+      "fuente": "AGN (techo 2027) y Sicoin vía Guate en Datos",
+      "cifra_ids": [
+        "his-c04",
+        "his-c03",
+        "his-c05"
+      ]
+    },
+    {
+      "n": 18,
+      "beat": "contexto",
+      "texto": "En el Congreso, que aprueba todo esto, también subió lo que se pagan los diputados cada julio.",
+      "caracteres": 94,
+      "alt_text": "Barras verticales del Bono 14 pagado a los diputados del Congreso, en millones de quetzales: 3.2 en 2024, 7.1 en 2025 y 10.9 en 2026. Fuente: La Hora.",
+      "imagen": "tuit_18.png",
+      "plantilla": "barras-v",
+      "fuente": "La Hora · Congreso, 2024–2026",
+      "cifra_ids": [
+        "his-c12"
+      ]
+    },
+    {
+      "n": 19,
+      "beat": "contexto",
+      "texto": "Desarrollo Social maneja programas de transferencias a hogares, y 2027 es año de elecciones.",
+      "caracteres": 92,
+      "alt_text": "Antes y después del Ministerio de Desarrollo Social: Q3,996 millones asignados en 2026 y Q5,500 millones en la proyección 2027 que su ministro presentó al Congreso. Fuente: Canal Antigua.",
+      "imagen": "tuit_19.png",
+      "plantilla": "antes-despues",
+      "fuente": "Canal Antigua · audiencia en el Congreso, nov 2026",
+      "cifra_ids": [
+        "his-c14"
+      ]
+    },
+    {
+      "n": 20,
+      "beat": "cierre",
+      "texto": "Nada de esto prueba un delito. Muestra dinero que crece con deuda, donde menos se ejecuta y con reparto poco técnico, antes de las elecciones de 2027.\n\nFuentes: Icefi, Revista E&N, Prensa Libre, Minfin, INE, Sicoin, Guate en Datos, La Hora, AGN, Canal Antigua.",
+      "caracteres": 260,
+      "alt_text": "Cierre del hilo sin gráfico: resume que el presupuesto 2027 aumenta la deuda en bonos y asigna más a entidades con baja ejecución, y lista las fuentes.",
+      "imagen": null,
+      "plantilla": null,
+      "fuente": null,
+      "cifra_ids": []
+    }
+  ],
+  "no_afirma": [
+    "No afirma que haya corrupción ni delito en ninguna partida: describe asignaciones, reparto y ejecución.",
+    "No afirma que los bonos nuevos financien específicamente a los consejos o a Comunicaciones.",
+    "No compara por habitante el reparto entre departamentos o municipios: son montos totales.",
+    "No afirma que el aumento de Mides o del Bono 14 tenga fines electorales.",
+    "El 4.43 % de los Codede es un corte de abril de 2026, no la ejecución del año."
+  ],
+  "incertidumbre": [
+    "Los tomos del proyecto 2027 (Minfin proypre27 e iniciativa 6841) no fueron accesibles (403/Incapsula): las cifras 2027 vienen de prensa, AGN, Icefi y ASIES que leen el proyecto.",
+    "Salvo la ancla (opa-c01), todas las cifras usadas tienen segunda fuente no independiente (reproduce la primaria): cod-c01, cod-c03, cod-c04, cod-c06, cod-c08, cod-c09, cod-c10, cod-c11, opa-c05, opa-c07, deu-c03, deu-c04, deu-c05, deu-c13, his-c03, his-c04, his-c06, his-c12, his-c14.",
+    "El vigente 2026 de bonos difiere entre fuentes (Q23,278 M de Icefi y Q23,291 M de ASIES); se usa el de Icefi y se omite el 83.5 % de ASIES.",
+    "La variación del CIV (41.74 %) se mide contra el vigente 2025 porque el vigente final de 2026 no está disponible; his-c03 y his-c04 son ajustadas.",
+    "Mides 2027 es la proyección del ministro ante la Comisión de Finanzas, no el tomo oficial; los gastos extraordinarios son del techo preliminar de julio de 2026.",
+    "El reparto por municipio y las obras sin SNIP son del presupuesto 2026 (Icefi); el listado geográfico 2027 no se obtuvo.",
+    "cod-c03: la asignación 2026 de los Codede es una estimación de Icefi sobre el presupuesto ampliado (mezcla aporte ordinario, extraordinario y saldos arrastrados); Icefi da 15,461.5 en el texto y 15,461.4 en el anexo 4, y el tablero del Minfin vía La Hora da 14,774.67 vigente. Se atribuye a Icefi y se usa el valor del anexo.",
+    "cod-c10: las 19 obras sin código SNIP son un conteo propio de filas del anexo 6 de Icefi (Q204.5 millones de 64 proyectos); Icefi solo dice «algunos». Eran obras del artículo 121 del Decreto 27-2025, suspendido por la CC, que el Decreto 3-2026 restituyó. No se atribuye el 19 a Icefi como cifra suya."
+  ],
+  "fuentes": [
+    "Icefi · proyecto 2027, vía Revista E&N",
+    "Prensa Libre · Junta Monetaria, 13 nov 2026",
+    "Minfin, proyecto 2027, vía Prensa Libre",
+    "Prensa Libre · proyecto 2027",
+    "Minfin · intereses 2027 entre población INE",
+    "Minfin · techo preliminar 2027 (jul 2026)",
+    "Guate en Datos · Sicoin, 2016–2025",
+    "Icefi · con base en Sicoin, 2024–2026",
+    "Icefi · con base en Sicoin, 2024–2025",
+    "La Hora · tablero de desembolsos del Minfin",
+    "Icefi, anexo 5 · Decreto 3-2026",
+    "Icefi, anexo 6 · Decreto 3-2026",
+    "Icefi, anexo 6 · 2025–2026",
+    "Icefi, anexo 6 (conteo propio de filas) · 2026",
+    "AGN · Conadur, techo 2027",
+    "AGN · Sicoin al 20 sep 2026",
+    "AGN (techo 2027) y Sicoin vía Guate en Datos",
+    "La Hora · Congreso, 2024–2026",
+    "Canal Antigua · audiencia en el Congreso, nov 2026"
+  ],
+  "fuentes_cifras": [
+    "AGN (Conadur, presentación del Minfin, 24 jun 2026)",
+    "AGN (techo 2027) y Guate en Datos/Sicoin (vigente 2025)",
+    "AGN, 16 oct 2026, citando Sicoin",
+    "Agencia Guatemalteca de Noticias (AGN), 29 sept 2026, sobre el proyecto de presupuesto 2027 (iniciativa 6841)",
+    "Canal Antigua, 3 nov 2026 (audiencias de la Comisión de Finanzas)",
+    "Cálculo propio: intereses del proyecto 2027 (Prensa Libre) / población proyectada INE 2027 (revisión 2019)",
+    "Guate en Datos con datos de Sicoin (Minfin)",
+    "ICEFI (análisis del proyecto 2027, 16-sep-2026) vía Revista E&N",
+    "Icefi con base en Sicoin",
+    "Icefi con base en Sicoin y decretos 36-2024, 27-2025 y 3-2026",
+    "Icefi, anexo 5, con base en el Decreto 3-2026 del Congreso",
+    "Icefi, anexo 6 (distribución por municipio), con base en el Decreto 3-2026",
+    "Icefi, anexo 6 del comunicado GT-09-2025, con base en el dictamen de la CFPM y el Decreto 27-2025",
+    "Icefi, anexo 6, con base en los decretos 36-2024 y 3-2026",
+    "La Hora con datos del tablero de desembolsos del Minfin y del SNIP",
+    "La Hora, 17 jul 2026",
+    "Minfin (techo preliminar, jul-2026) vía Revista E&N",
+    "Prensa Libre sobre el proyecto 2027; ingresos tributarios Q131,635.9 millones (Minfin vía AGN)",
+    "Prensa Libre, 13-nov-2026",
+    "Proyecto de Presupuesto 2027 según Prensa Libre (intereses, Salud) y AGN/Diario de Centro América (Educación, Salud)"
+  ],
+  "gate_mecanico": "ok",
+  "contacto": "contacto.png",
+  "redes": {
+    "4x5": "redes/4x5",
+    "9x16": "redes/9x16"
+  }
+}

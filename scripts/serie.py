@@ -918,10 +918,21 @@ def fotos_repetidas(g, n, trabajo):
     if not n or not trabajo:
         return []
     base, usos = os.path.dirname(os.path.abspath(trabajo)), {}
+
+    # excepción (decisión del usuario, 2026-11-17, caso Rosenberg): H12 pide la foto del protagonista en el gancho de
+    # CADA parte; si es la única que existe, SE19 la vetaría desde la parte 3. En el gancho no cuenta; en el cuerpo, sí
+    def protagonista(fid):
+        try:
+            return json.load(open(os.path.join(base, "fotos", fid + ".json"), encoding="utf-8")).get("muestra") == "protagonista"
+        except (OSError, ValueError):
+            return False
+
+    def fotos_escena(e):
+        xs = [e.get("foto"), (e.get("visual_datos") or {}).get("foto")] + list(e.get("dividida") or []) \
+            + [e.get("antes"), e.get("ahora")] + [p.get("foto") for p in e.get("piezas") or [] if isinstance(p, dict)]
+        return {x for x in xs if x and not (e.get("tipo") == "gancho" and protagonista(x))}
     # también la foto del gancho (visual_datos.foto): sin ella, la de las ruinas de la capital salió en 3 partes del terremoto
-    fotos_de = lambda gg: {x for e in gg.get("escenas") or [] for x in [e.get("foto"), (e.get("visual_datos") or {}).get("foto")]
-                           + list(e.get("dividida") or []) + [e.get("antes"), e.get("ahora")]   # las dos de una cortina y las piezas de un archivo
-                           + [p.get("foto") for p in e.get("piezas") or [] if isinstance(p, dict)] if x}
+    fotos_de = lambda gg: {x for e in gg.get("escenas") or [] for x in fotos_escena(e)}
     for d in sorted(glob.glob(os.path.join(base, "parte-*"))):
         try:
             k = int(d.rsplit("-", 1)[1])

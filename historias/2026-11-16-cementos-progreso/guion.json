@@ -1,0 +1,428 @@
+{
+ "id": "2026-11-16-cementos-progreso",
+ "tipo": "historia",
+ "slug": "cementos-progreso",
+ "tema": "cementos progreso",
+ "fecha": "2026-11-16",
+ "pregunta": "¿Cómo un horno de cal en una finca de la capital, abierto en 1899, llegó a ser el cemento con que se levanta casi toda Guatemala, y qué costó su planta más grande?",
+ "arco": "origen y ascenso de una empresa familiar hasta dominar un material del país, con el costo de su expansión",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "1974–2019",
+   "titulo": "El país de concreto",
+   "escena": 6
+  },
+  {
+   "numero": 3,
+   "anio": "2008–2021",
+   "titulo": "San Gabriel",
+   "escena": 10
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "Cementos Progreso empezó sin cemento. En Guatemala, lo primero que vendió fue cal. Un siglo después, su planta más grande chocaría con comunidades kaqchikeles. Todo empezó con Carlos F. Novella, ingeniero graduado en Lovaina, Bélgica. De vuelta en Guatemala, compró la finca La Pedrera, que ya tenía una pequeña operación de cal, y empeñó todo su capital en volverla fábrica de cemento. Por eso, en octubre de mil ochocientos noventa y nueve, fundó Carlos F. Novella y Compañía, la empresa que hoy es Progreso, un nombre que ninguna fuente explica. Su primer producto fue la cal Horcalsa, y en 1901 ya vendía cemento y cal. Pero en 1917 los terremotos destruyeron la capital. Entonces el cemento se volvió indispensable."
+  },
+  {
+   "acto": 2,
+   "texto": "Medio siglo después, en 1974, abrió una segunda planta, en Sanarate, El Progreso. A esa planta le quedaban dos años antes del terremoto de 1976. Décadas después, una nota publicitaria sobre Progreso en la revista Estrategia y Negocios dijo: El gran terremoto de 1976 hizo duplicar las ventas. Para 2019, la misma revista estimaba que 9 de cada 10 edificios de los últimos 50 años en Guatemala se hicieron con concreto de Progreso. Pero José Raúl González, director general de la empresa, admitía un límite de sus plantas: En el pasado, teníamos capacidad instalada para cubrir únicamente el mercado guatemalteco."
+  },
+  {
+   "acto": 3,
+   "texto": "Para crecer, la empresa proyectó en San Juan Sacatepéquez la planta San Gabriel, que, aseguró, sería la más grande y moderna de Centroamérica. Sus vecinos, comunidades kaqchikeles, se opusieron, y en 2008 el conflicto dejó un muerto. Aun así, a mediados de 2013 empezaron las obras. En 2014, un choque entre pobladores por la planta dejó 8 muertos en el caserío Los Pajoques, según Prensa Libre. Para 2017, 12 comunidades se oponían: temían por su agua. Si alguien les preguntó si querían la planta, ninguna fuente lo cuenta. Pese a todo, en diciembre de 2021, la empresa anunció que San Gabriel ya operaba: abrió en medio de un conflicto con comunidades kaqchikeles que sigue sin cerrarse. Cuatro años después, tomó las operaciones de Cemex, otra cementera, en República Dominicana. De un horno de cal salió el cemento de un país. Hoy, las familias de Guatemala levantan sus casas con ese cemento."
+  }
+ ],
+ "hilos": [
+  {
+   "id": "h1",
+   "escena": 4
+  },
+  {
+   "id": "h2",
+   "sin_respuesta": "Progreso, un nombre que ninguna fuente explica"
+  },
+  {
+   "id": "h3",
+   "escena": 7
+  },
+  {
+   "id": "h4",
+   "escena": 13
+  },
+  {
+   "id": "h5",
+   "escena": 14
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3
+  ],
+  [
+   4,
+   5
+  ],
+  [
+   7,
+   8,
+   9
+  ],
+  [
+   10,
+   11,
+   12
+  ],
+  [
+   13,
+   14,
+   15
+  ]
+ ],
+ "paleta": "obsidiana",
+ "musica": "cielo-2",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 3691.76,
+ "duracion_s": 165.4,
+ "critica": {
+  "veredicto": "corregir",
+  "vuelta": 2,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 3,
+   "claridad": 3,
+   "flujo": 3,
+   "precision": 4,
+   "cierre": 4,
+   "recompensa": 3
+  }
+ },
+ "gancho": {
+  "familia": "paradoja",
+  "visual": "foto",
+  "pantalla": "Progreso empezó con cal",
+  "linea": "lo primero que vendió fue cal",
+  "id": "g2",
+  "elegido_por": "usuario",
+  "recomendado": "g2"
+ },
+ "promesa": {
+  "texto": "Un siglo después, su planta más grande chocaría con comunidades kaqchikeles.",
+  "forma": "presagio",
+  "en": 2,
+  "pago": 14,
+  "revela": 4,
+  "pregunta": "¿Qué le costó a Progreso su planta más grande?"
+ },
+ "bisagra": {
+  "texto": "A esa planta le quedaban dos años antes del terremoto de 1976.",
+  "forma": "reloj",
+  "en": 6,
+  "pago": 7
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "Cementos Progreso empezó sin cemento. En Guatemala, lo primero que vendió fue cal.",
+   "voz": "Cementos Progreso empezó sin cemento. En Guatemala, lo primero que vendió fue cal.",
+   "dur": 6.324,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Un siglo después, su planta más grande chocaría con comunidades kaqchikeles. Todo empezó con Carlos F. Novella, ingeniero graduado en Lovaina, Bélgica.",
+   "voz": "Un siglo después, su planta más grande chocaría con comunidades kaqchikeles. Todo empezó con Carlos efe. Novella, ingeniero graduado en Lovaina, Bélgica.",
+   "dur": 11.23,
+   "hechos": [
+    "ori-h02",
+    "ori-h14"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: progreso.com",
+     "origen": "empresa",
+     "licencia": "© progreso.com (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "foto",
+   "pantalla": "De vuelta en Guatemala, compró la finca La Pedrera, que ya tenía una pequeña operación de cal, y empeñó todo su capital en volverla fábrica de cemento.",
+   "voz": "De vuelta en Guatemala, compró la finca La Pedrera, que ya tenía una pequeña operación de cal, y empeñó todo su capital en volverla fábrica de cemento.",
+   "dur": 10.179,
+   "hechos": [
+    "ori-h15",
+    "ori-h03"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "explica",
+   "pantalla": "Por eso, en octubre de mil ochocientos noventa y nueve, fundó Carlos F. Novella y Compañía, la empresa que hoy es Progreso, un nombre que ninguna fuente explica. Su primer producto fue la cal Horcalsa, y en 1901 ya vendía cemento y cal.",
+   "voz": "Por eso, en octubre de mil ochocientos noventa y nueve, fundó Carlos efe. Novella y Compañía, la empresa que hoy es Progreso, un nombre que ninguna fuente explica. Su primer producto fue la cal Horcalsa, y en mil novecientos uno ya vendía cemento y cal.",
+   "dur": 17.398,
+   "hechos": [
+    "ori-h01",
+    "ori-h04",
+    "ori-h05"
+   ],
+   "fotos": [],
+   "animacion": "riel-productos",
+   "mecanismo": "cronologia"
+  },
+  {
+   "n": 5,
+   "tipo": "golpe",
+   "pantalla": "Pero en 1917 los terremotos destruyeron la capital. Entonces el cemento se volvió indispensable.",
+   "voz": "Pero en mil novecientos diecisiete los terremotos destruyeron la capital. Entonces el cemento se volvió indispensable.",
+   "dur": 7.827,
+   "hechos": [
+    "ori-h06"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "foto",
+   "pantalla": "Medio siglo después, en 1974, abrió una segunda planta, en Sanarate, El Progreso. A esa planta le quedaban dos años antes del terremoto de 1976.",
+   "voz": "Medio siglo después, en mil novecientos setenta y cuatro, abrió una segunda planta, en Sanarate, El Progreso. A esa planta le quedaban dos años antes del terremoto de mil novecientos setenta y seis.",
+   "dur": 14.548,
+   "hechos": [
+    "ori-h13",
+    "cre-h10"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "cita",
+   "pantalla": "Décadas después, una nota publicitaria sobre Progreso en la revista Estrategia y Negocios dijo: El gran terremoto de 1976 hizo duplicar las ventas.",
+   "voz": "Décadas después, una nota publicitaria sobre Progreso en la revista Estrategia y Negocios dijo: El gran terremoto de mil novecientos setenta y seis hizo duplicar las ventas.",
+   "dur": 11.566,
+   "hechos": [
+    "cre-h11"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "foto",
+   "pantalla": "Para 2019, la misma revista estimaba que 9 de cada 10 edificios de los últimos 50 años en Guatemala se hicieron con concreto de Progreso.",
+   "voz": "Para dos mil diecinueve, la misma revista estimaba que nueve de cada diez edificios de los últimos cincuenta años en Guatemala se hicieron con concreto de Progreso.",
+   "dur": 10.173,
+   "hechos": [
+    "cre-h14"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Oscarin200 · CC BY-SA 3.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 3.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "cita",
+   "pantalla": "Pero José Raúl González, director general de la empresa, admitía un límite de sus plantas: En el pasado, teníamos capacidad instalada para cubrir únicamente el mercado guatemalteco.",
+   "voz": "Pero José Raúl González, director general de la empresa, admitía un límite de sus plantas: En el pasado, teníamos capacidad instalada para cubrir únicamente el mercado guatemalteco.",
+   "dur": 12.85,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "foto",
+   "pantalla": "Para crecer, la empresa proyectó en San Juan Sacatepéquez la planta San Gabriel, que, aseguró, sería la más grande y moderna de Centroamérica. Sus vecinos, comunidades kaqchikeles, se opusieron, y en 2008 el conflicto dejó un muerto.",
+   "voz": "Para crecer, la empresa proyectó en San Juan Sacatepéquez la planta San Gabriel, que, aseguró, sería la más grande y moderna de Centroamérica. Sus vecinos, comunidades kaqchikeles, se opusieron, y en dos mil ocho el conflicto dejó un muerto.",
+   "dur": 16.201,
+   "hechos": [
+    "sjs-h01",
+    "sjs-h11"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Juan Francisco · CC BY-SA 2.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 2.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "foto",
+   "pantalla": "Aun así, a mediados de 2013 empezaron las obras.",
+   "voz": "Aun así, a mediados de dos mil trece empezaron las obras.",
+   "dur": 4.404,
+   "hechos": [
+    "sjs-h02"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "golpe",
+   "pantalla": "En 2014, un choque entre pobladores por la planta dejó 8 muertos en el caserío Los Pajoques, según Prensa Libre.",
+   "voz": "En dos mil catorce, un choque entre pobladores por la planta dejó ocho muertos en el caserío Los Pajoques, según Prensa Libre.",
+   "dur": 8.332,
+   "hechos": [
+    "sjs-h03"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "foto",
+   "pantalla": "Para 2017, 12 comunidades se oponían: temían por su agua. Si alguien les preguntó si querían la planta, ninguna fuente lo cuenta.",
+   "voz": "Para dos mil diecisiete, doce comunidades se oponían: temían por su agua. Si alguien les preguntó si querían la planta, ninguna fuente lo cuenta.",
+   "dur": 10.217,
+   "hechos": [
+    "sjs-h09"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Juan Francisco · CC BY-SA 2.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 2.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "foto",
+   "pantalla": "Pese a todo, en diciembre de 2021, la empresa anunció que San Gabriel ya operaba: abrió en medio de un conflicto con comunidades kaqchikeles que sigue sin cerrarse.",
+   "voz": "Pese a todo, en diciembre de dos mil veintiuno, la empresa anunció que San Gabriel ya operaba: abrió en medio de un conflicto con comunidades kaqchikeles que sigue sin cerrarse.",
+   "dur": 11.743,
+   "hechos": [
+    "sjs-h07",
+    "ori-h12"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 15,
+   "tipo": "foto",
+   "pantalla": "Cuatro años después, tomó las operaciones de Cemex, otra cementera, en República Dominicana.",
+   "voz": "Cuatro años después, tomó las operaciones de Cemex, otra cementera, en República Dominicana.",
+   "dur": 6.552,
+   "hechos": [
+    "cre-h16"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 16,
+   "tipo": "cierre",
+   "pantalla": "De un horno de cal salió el cemento de un país. Hoy, las familias de Guatemala levantan sus casas con ese cemento.",
+   "voz": "De un horno de cal salió el cemento de un país. Hoy, las familias de Guatemala levantan sus casas con ese cemento.",
+   "dur": 9.772,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que dejó",
+  "resumen": [
+   "Nació con un horno de cal",
+   "Levantó el concreto del país",
+   "San Juan sigue sin cerrar"
+  ],
+  "texto": "De un horno de cal salió el cemento de un país. Hoy, las familias de Guatemala levantan sus casas con ese cemento.",
+  "tipo": "remate",
+  "forma": "legado",
+  "final": "Hoy, las familias de Guatemala levantan sus casas con ese cemento.",
+  "consecuencia": {
+   "quien": "familias",
+   "verbo": "levantan"
+  },
+  "id": "c1",
+  "elegido_por": "usuario",
+  "recomendado": "c1"
+ },
+ "caption": {
+  "tiktok": "Cementos Progreso nació en la finca La Pedrera vendiendo cal. Del horno de Carlos F. Novella a la planta San Gabriel en San Juan Sacatepéquez, y el conflicto que sigue abierto. #Guatemala #Historia #CementosProgreso",
+  "instagram": "De una finca con un horno de cal a la planta San Gabriel: la historia de Cementos Progreso, el cemento con que se levanta Guatemala, y lo que costó su planta más grande. #Guatemala #Historia #CementosProgreso",
+  "facebook": "Cementos Progreso empezó vendiendo cal en la finca La Pedrera. Más de un siglo después, su planta San Gabriel abrió en medio de un conflicto con comunidades kaqchikeles de San Juan Sacatepéquez. Fuentes en el primer comentario.",
+  "shorts": "Cementos Progreso empezó vendiendo cal #Shorts\nDe La Pedrera a la planta San Gabriel en San Juan Sacatepéquez. #Guatemala"
+ }
+}

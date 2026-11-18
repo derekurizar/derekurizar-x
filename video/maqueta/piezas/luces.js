@@ -6,8 +6,8 @@
     orden: 50,
     armar(ctx, LUCES) {
       const { THREE, lin, COL, CFG, ES, V3, scene } = ctx;
-      const LZ = ctx.luces = [];   // {x, y, peso, pieza, id, on, ac, v}
-      LUCES.forEach((p, ip) => p.puntos.forEach((q) => LZ.push({ x: q[0], y: q[1], peso: q[2], id: q[3], pieza: ip, on: p.encendidas !== false, ac: p.protagonista ? 1 : 0 })));
+      const LZ = ctx.luces = [];   // {x, y, peso, pieza (índice), pieza_id (m305), id, on, ac, v}
+      LUCES.forEach((p, ip) => p.puntos.forEach((q) => LZ.push({ x: q[0], y: q[1], peso: q[2], id: q[3], pieza: ip, pieza_id: p.id, on: p.encendidas !== false, ac: p.protagonista ? 1 : 0 })));
       if (!LZ.length) return null;
       const pos = new Float32Array(LZ.length * 3), peso = new Float32Array(LZ.length), acs = new Float32Array(LZ.length);
       LZ.forEach((l, i) => { const v = V3(l.x, l.y, 0.35); pos.set([v.x, v.y, v.z], 3 * i); peso[i] = l.peso; acs[i] = l.ac; });

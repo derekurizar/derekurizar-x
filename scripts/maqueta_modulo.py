@@ -65,6 +65,50 @@ LINT = [
 ]
 
 
+def reservados():
+    """m305: los uniformes que trae ctx.uComun() (el fondo, la resolución, el grano, la niebla, la hora, el segundo y la
+    sombra), leídos de motor.js: un módulo que los esparce (`...ctx.uComun()`) y declara uno con el mismo nombre lo pisa
+    sin aviso (un uRes propio rompe el ancho de las cintas)."""
+    src = M3.cargar_texto(os.path.join(M3.MOTOR, "motor.js"))
+    out = set()
+    for nombre in ("uComun", "U_SOMBRA"):
+        m = re.search(r"const %s = (?:\(\) => )?\(?\{(.*?)\}\)?;\s*$" % nombre, src, re.M)
+        if m:
+            out |= set(claves_de_primer_nivel(m.group(1))) - {"value"}
+    return out
+
+
+def claves_de_primer_nivel(cuerpo):
+    """Las claves `k:` del primer nivel de un objeto literal (sin las de los objetos anidados)."""
+    plano, prof = [], 0
+    for c in cuerpo:
+        prof += c in "{(["
+        prof -= c in "})]"
+        plano.append(c if prof == 0 else " ")
+    return re.findall(r"(?:^|,)\s*(?:\.\.\.[\w.()]+\s*,\s*)?([A-Za-z_]\w*)\s*:", "".join(plano))
+
+
+def pisa_reservados(src):
+    """[(uniforme, contexto)] de los objetos `{ ...ctx.uComun(), … }` que declaran un uniforme reservado."""
+    res, out = reservados(), []
+    for m in re.finditer(r"\.\.\.\s*(?:ctx\.)?uComun\(\)", src):
+        i, prof, fin = m.end(), 0, None
+        while i < len(src):
+            c = src[i]
+            if c in "{([":
+                prof += 1
+            elif c in "})]":
+                if prof == 0:
+                    fin = i
+                    break
+                prof -= 1
+            i += 1
+        for k in claves_de_primer_nivel(src[m.end():fin]):
+            if k in res:
+                out.append((k, src[m.start():m.start() + 60]))
+    return out
+
+
 def sin_comentarios(js):
     js = re.sub(r"/\*.*?\*/", "", js, flags=re.S)
     return re.sub(r"(^|[^:\\])//[^\n]*", r"\1", js)
@@ -119,6 +163,9 @@ def lint(clase, carpeta, tipo):
         m = rx.search(src)
         if m:
             f.append("%s/%s.js: %s («%s»)" % (carpeta, tipo, motivo, m.group(0)))
+    for k, donde in pisa_reservados(src):
+        f.append("%s/%s.js: el uniforme «%s» es de ctx.uComun() y lo pisa (cámbiale el nombre; reservados en "
+                 "referencias/diseno/maqueta3d.md «Uniformes reservados») («%s…»)" % (carpeta, tipo, k, donde))
     for u in (fi.get("usa") or []) if isinstance(fi, dict) else []:
         if u not in M3.vocabulario():
             f.append("%s/%s.json: `usa` «%s», que no está en el catálogo (regístralo antes)" % (carpeta, tipo, u))
@@ -424,7 +471,8 @@ def main():
         return 2
     if a.cmd == "check" or rc:
         return imprimir(rc, R)
-    p = subprocess.run([sys.executable, os.path.join(AQUI, "maqueta3d.py"), "catalogo", "--registrar"], capture_output=True, text=True)
+    # m305: lo que otra sesión dejó a medio hacer (un módulo sin ficha) no bloquea el registro de ESTE módulo
+    p = subprocess.run([sys.executable, os.path.join(AQUI, "maqueta3d.py"), "catalogo", "--registrar", "--ignorar-a-medias"], capture_output=True, text=True)
     print(p.stdout.strip())
     if p.returncode:
         R["check"] = "falla"

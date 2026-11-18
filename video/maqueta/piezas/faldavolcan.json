@@ -1,0 +1,111 @@
+{
+ "tipo": "faldavolcan",
+ "clase": "pieza",
+ "cuando": "falda de volcán genérico con su pueblo al pie (barrancos, bosque, milpas; plaza, iglesia, casas de adobe y paja): lo que baja del monte sin erupción",
+ "parametros": {
+  "lugar": {
+   "tipo": "lugar",
+   "requerido": true,
+   "descripcion": "la plaza del pueblo (un lugar del mundo o [x, y] en metros en un esquema). Va mejor en la receta campo con horizonte llano o colinas (el volcán lo pone la pieza) y sin `ambiente` en 250 m a la redonda"
+  },
+  "rumbo": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [0, 360],
+   "defecto": 0,
+   "descripcion": "hacia dónde queda el volcán desde la plaza (grados; 0 = este, 90 = norte); la cumbre queda a 760 m × tamano. El pueblo con el volcán detrás: mira «plaza» o «pueblo», azimut ≈ rumbo − 90, elevación 8–20°; el volcán entero: mira «barranco», dist_m 1400–2200"
+  },
+  "tamano": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [0.6, 2],
+   "defecto": 1,
+   "descripcion": "escala de todo (1 = casas de 5–9 m, plaza de 46 m, cono de 480 m de alto y 1.3 km de base: una maqueta, no a escala)"
+  },
+  "casas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [10, 80],
+   "defecto": 30,
+   "descripcion": "cuántas casas hay a lo largo de las calles y sueltas alrededor de la plaza (las que caben sin encimarse); con traza baja quedan dispersas, como una aldea sin borde claro"
+  },
+  "lluvia": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [0, 1],
+   "defecto": 0,
+   "descripcion": "lluvia en rayas con viento (0 = nada; 0.3 = lluvia ligera; 1 = aguacero); también oscurece el suelo mojado y las calles"
+  },
+  "ventanas": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "de noche, algunas ventanas y puertas encendidas con una luz que tiembla, y la puerta de la iglesia (puntos de luz genéricos, no un dato)"
+  },
+  "personas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [0, 12],
+   "defecto": 6,
+   "descripcion": "gente que camina por la plaza y las calles y alguna de pie frente a la iglesia (de noche, la mitad)"
+  },
+  "teja": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [0, 1],
+   "defecto": 0.1,
+   "descripcion": "la parte de los techos que son de teja; el resto, de paja (y la iglesia lleva teja si teja ≥ 0.5)"
+  },
+  "traza": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [0, 1],
+   "defecto": 0.2,
+   "descripcion": "qué tan regular es el trazo: 0 = caminos que serpentean y casas sueltas mal alineadas; 1 = calles rectas en damero y casas a cordel"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [0, 100000],
+   "defecto": 1,
+   "descripcion": "el azar fijo: el trazo de los barrancos, qué parcelas están sembradas, dónde caen las casas y los árboles, su tamaño y su techo"
+  }
+ },
+ "escalas": ["esquema"],
+ "motores": ["three"],
+ "usa": ["persona"],
+ "ejemplo": {
+  "id": "falda",
+  "tipo": "faldavolcan",
+  "lugar": [0, 0],
+  "rumbo": 90,
+  "tamano": 1,
+  "casas": 30,
+  "lluvia": 0.3,
+  "ventanas": true,
+  "personas": 6,
+  "teja": 0.1,
+  "traza": 0.2,
+  "semilla": 1
+ },
+ "nivel": "escenario",
+ "contiene": [
+  "el cono del volcán con su cráter poco hondo, costillas y nueve barrancos radiales (el cauce baja hacia el pueblo)",
+  "roca y escoria arriba, zacatal, bosque de pinos y de latifoliadas en la falda media",
+  "milpas en parcelas con sus surcos (verdes, secas o aradas) y árboles de lindero en la falda baja",
+  "el lecho de piedra del cauce en el llano, del pie del volcán a la plaza",
+  "la plaza de tierra con un árbol grande y su atrio",
+  "una iglesia genérica: nave de adobe con contrafuertes, fachada con espadaña de dos vanos, techo de paja (o teja)",
+  "casas de adobe o de bajareque con zócalo, puerta, ventana y techo de paja (algunas de teja), unas con corredor de horcones",
+  "solares con cerca de caña, troje redonda con techo de paja y árboles",
+  "calles de tierra que serpentean (o en damero con traza alta)",
+  "gente que camina por la plaza y la calle",
+  "humo de fogón por los techos de paja",
+  "de noche: ventanas, puertas y la puerta de la iglesia encendidas",
+  "lluvia en rayas con viento, si se pide"
+ ],
+ "animado": "la gente camina por la plaza y las calles (posición = función de t), el humo de los fogones sube y se lo lleva el viento, de noche la luz de las ventanas tiembla y, con lluvia, las rayas caen sesgadas",
+ "gente": true,
+ "distancia_m": [60, 2200],
+ "caja_m": [1600, 1300, 480]
+}

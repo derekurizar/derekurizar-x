@@ -1,0 +1,127 @@
+{
+ "tipo": "volcanes",
+ "clase": "pieza",
+ "cuando": "conos nítidos de volcanes nombrados (sin humo ni lava): fila protagonista, fila atenuada detrás, o conos lisos cuya cima se enciende al nombrarlos",
+ "parametros": {
+  "lugares": {
+   "tipo": "lugares",
+   "requerido": true,
+   "min": 1,
+   "descripcion": "las cumbres: [lon, lat] o id de mundo.lugares (verificadas como cualquier geodato); dos que se tocan forman un macizo"
+  },
+  "radio_km": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    2,
+    15
+   ],
+   "defecto": 6,
+   "descripcion": "el radio del pie de cada cono, en km"
+  },
+  "alto_m": {
+   "tipo": "mezcla",
+   "requerido": false,
+   "descripcion": "la altura de cada cumbre en metros sobre el mar, {id de la cumbre o su índice desde 0: metros}; sin ella, lo más alto del relieve junto a la cumbre (que el modelo de elevación deja bajo)"
+  },
+  "crater": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "un cráter en cada cumbre"
+  },
+  "tono": {
+   "tipo": "texto",
+   "requerido": false,
+   "valores": [
+    "acento",
+    "atenuado"
+   ],
+   "descripcion": "acento: todo el cono en el acento (por defecto si la pieza es protagonista); atenuado: cuerpo en el acento oscurecido y cima con su cráter en el mismo naranja a ~50 % (por defecto si no es protagonista), para una fila que queda detrás de la protagonista"
+  },
+  "forma": {
+   "tipo": "texto",
+   "requerido": false,
+   "valores": [
+    "abanico",
+    "cono"
+   ],
+   "defecto": "abanico",
+   "descripcion": "abanico: el cono con barrancas radiales (por defecto); cono: liso, sin barrancas ni rayos, con su cima y su cráter-punto naranja (una fila de fondo que no debe competir con la protagonista)"
+  },
+  "reposo": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0.5,
+   "descripcion": "la intensidad de la cima naranja antes de encenderse (0–1 del acento); en «acento», darla activa la cima naranja sobre un cuerpo oscurecido"
+  },
+  "encendido": {
+   "tipo": "texto",
+   "requerido": false,
+   "valores": [
+    "fijo",
+    "queda",
+    "solo"
+   ],
+   "defecto": "fijo",
+   "descripcion": "fijo: la cima queda en `reposo`; queda: la cima de una cumbre sube al acento pleno cuando un evento cumbres sobre esta pieza la nombra y se queda; solo: sube y vuelve a `reposo` cuando prende la siguiente (para que la luz de cumbres también baje, dale a cada cumbres `queda: false` y `dur` hasta el siguiente nombre)"
+  }
+ },
+ "escalas": [
+  "pais"
+ ],
+ "motores": [
+  "three"
+ ],
+ "ejemplo": {
+  "id": "volcanes",
+  "tipo": "volcanes",
+  "lugares": [
+   [
+    -90.743,
+    14.465
+   ],
+   [
+    -90.88,
+    14.473
+   ],
+   [
+    -90.876,
+    14.501
+   ]
+  ],
+  "radio_km": 5,
+  "alto_m": {
+   "0": 3760,
+   "1": 3763,
+   "2": 3976
+  }
+ },
+ "nivel": "fondo",
+ "contiene": [
+  "un cono cóncavo por cumbre, con el pie fundido en la ladera",
+  "un cráter en cada cumbre",
+  "fuera de acento, la cima y el cráter en el naranja del acento a media intensidad (nunca blanco), legible a 150–280 km",
+  "barrancas radiales en las faldas",
+  "macizos: los conos que se tocan comparten la silla (Fuego y Acatenango)",
+  "su relieve publicado (_alturas): marcas, luces y cámara pisan el cono",
+  "un lugar por cumbre: «volcan-<id>» o «volcan-<n>» (también «<pieza>.volcan-…»)",
+  "forma «cono»: el cono liso, sin barrancas ni abanico radial",
+  "la cima a su nivel: `reposo` y, con `encendido`, al acento pleno cuando un cumbres la nombra; un resaltar de la pieza las aviva todas"
+ ],
+ "animado": "con `encendido`, la cima de cada cumbre sube al acento cuando un evento cumbres la nombra (y con «solo» vuelve a su reposo al prender la siguiente); sin él, quieta",
+ "gente": false,
+ "distancia_m": [
+  30000,
+  280000
+ ],
+ "caja_m": [
+  12000,
+  12000,
+  4000
+ ]
+}

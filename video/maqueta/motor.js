@@ -217,7 +217,43 @@ function cintaSimple(pts, color, ancho, alfa, orden, extra = {}) {
   const c = { mat, base: ancho, alfa }; cintas.push(c); return c;
 }
 
+// m305: la cinta de un módulo con su propio shader (VERT_CINTA + su fragmentShader) entra a la misma lista: el núcleo le
+// ajusta el ancho a la distancia como a las suyas, sin que el módulo copie la fórmula
+function registrarCinta(mat, base, alfa = 1) { const c = { mat, base, alfa }; cintas.push(c); return c; }
+
 const LINEAS = {};    // id de pieza → cinta: «resaltar» la pieza sube su alfa (ctx.linea(id, cinta))
+
+// ---------- el suelo que se VE (m305) ----------
+// mundos/pais.js arma la malla del relieve con una celda de cada dos (en voxel, columnas de 6 × 6 celdas): un punto entre
+// dos vértices queda debajo o encima de lo que se ve si se posa con ctx.altura. superficieVista(base) da esa misma
+// superficie (exacta en los centros de celda) sobre `base`; ctx.sueloVisto(x, y) es la del suelo del mundo SIN el relieve de
+// pieza (lo que necesitan los conos y los lagos). Solo en un mundo con relieve (pais); en los demás, la altura misma.
+function superficieVista(base) {
+  const R = M.relieve;
+  if (!R || !R.proyeccion || !R.caja) return base;
+  const P = R.proyeccion, C = R.caja;
+  const X0 = (C.lon_min - P.lon0) * P.km_lon, X1 = (C.lon_max - P.lon0) * P.km_lon, Y1 = (C.lat_max - P.lat0) * P.km_lat, Y0 = (C.lat_min - P.lat0) * P.km_lat;
+  const CX = (X1 - X0) / R.ancho, CY = (Y1 - Y0) / R.alto;
+  const celda = (ci, cj) => base(X0 + (ci + 0.5) * CX, Y1 - (cj + 0.5) * CY);
+  if (ES.cubos) {   // voxel: el tope de la columna (la media del bloque en escalones de 300 m)
+    const B = 6, paso = 0.3 * EXAG, memo = new Map(), nbx = Math.floor(R.ancho / B), nby = Math.floor(R.alto / B);
+    return (x, y) => {
+      const bi = clamp(Math.floor((x - X0) / CX / B), 0, nbx - 1), bj = clamp(Math.floor((Y1 - y) / CY / B), 0, nby - 1), k = bj * nbx + bi;
+      if (!memo.has(k)) { let s = 0, n = 0;
+        for (let b = 0; b < B; b++) for (let a = 0; a < B; a++) { const h = celda(bi * B + a, bj * B + b); s += h; if (h > 0) n++; }
+        memo.set(k, n > B * B / 2 ? Math.max(1, Math.round(s / (B * B) / paso)) * paso : paso * 0.35); }
+      return memo.get(k);
+    };
+  }
+  const PASO = 2, nx = Math.floor((R.ancho - 1) / PASO) + 1, ny = Math.floor((R.alto - 1) / PASO) + 1;
+  return (x, y) => {   // el triángulo de la malla que pisa (x, y): a–b arriba, c–d abajo, diagonal b–c
+    const fi = clamp(((x - X0) / CX - 0.5) / PASO, 0, nx - 1.0001), fj = clamp(((Y1 - y) / CY - 0.5) / PASO, 0, ny - 1.0001);
+    const i = Math.floor(fi), j = Math.floor(fj), u = fi - i, v = fj - j;
+    const a = celda(i * PASO, j * PASO), b = celda((i + 1) * PASO, j * PASO), c = celda(i * PASO, (j + 1) * PASO), d = celda((i + 1) * PASO, (j + 1) * PASO);
+    return u + v <= 1 ? a + (b - a) * u + (c - a) * v : d + (c - d) * (1 - u) + (b - d) * (1 - v);
+  };
+}
+let SUELO_VISTO = null;
 
 // ---------- superficies de mundo (las usan los mundos ciudad y esquema y sus piezas: calles, edificios, agua, zona,
 // carretera): geometría en unidades de la escena posada sobre el suelo, con color por vértice. Nada de esto se crea en
@@ -602,14 +638,16 @@ const ctx = {
   enCamino: (nombre, s) => enCadena(ctx.camino(nombre), s),      // {x, y, dx, dy}: el punto a s de su inicio y hacia dónde va
   puntoEnS, distCadena,
   GLSL_COMUN, VERT_CINTA, uComun,                                // (el mundo pais añade NR, NC, NO, GLSL_RUPTURA, uRuptura, superficie)
-  geoCinta, pegar, cinta: cintaSimple,
+  geoCinta, pegar, cinta: cintaSimple, registrarCinta,           // registrarCinta(mat, base): una cinta con shader propio que el núcleo ensancha con la distancia
+  superficieVista,                                               // superficieVista(base) → (x, y): la superficie de la malla sobre `base` (pais)
+  sueloVisto: (x, y) => (SUELO_VISTO || (SUELO_VISTO = superficieVista(ctx.suelo || ctx.altura)))(x, y),   // el suelo que se ve, sin relieve de pieza
   tonos: TONOS, sombra, malla,                                   // superficies de mundo (ciudad, esquema): colores, luz y geometría
   // lo que se mueve: tray (evaluar una trayectoria T/S suavizada), moviles (id → (t, n) → {x, y, dx, dy, v, vis}: lo registran
   // actor y flujo; lo siguen la cámara y las anotaciones), ancla(A, t) y flota(tipo, n, {tamano, lev, luces, color, orden, cabeceo})
   tray, moviles: MOVILES, ancla: (A, t) => anclaEn(A, t), flota,
   linea: (id, cn) => { LINEAS[id] = cn; },                       // una cinta que «resaltar» sube por el id de su pieza
   fallas: [], idxFalla: () => -1,                                // los pone piezas/falla.js (la superficie y voxel los leen)
-  luces: [],                                                     // los pone piezas/luces.js: [{x, y, peso, id, pieza, on, ac, v}]
+  luces: [],                                                     // los pone piezas/luces.js: [{x, y, peso, id, pieza (índice), pieza_id, on, ac, v}]
   proyectar: null,                                               // (x, y, z) → [px, py] | null (la misma que recibe la capa 2D)
   cuadro: null,                                                  // {t, k, pxKm, dist, dist_km, brillo, elementos, ondas, rupturas}: se rehace en cada cuadro
 };

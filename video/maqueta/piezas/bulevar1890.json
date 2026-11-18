@@ -1,0 +1,173 @@
+{
+ "tipo": "bulevar1890",
+ "clase": "pieza",
+ "cuando": "el Bulevar 30 de Junio de los 1890 sobre el trazo real de la Reforma: calzadas, aceras, jardines, estatuas, fuentes, el palacio al sur y quintas",
+ "parametros": {
+  "desde": {
+   "tipo": "lugar",
+   "requerido": true,
+   "descripcion": "dónde empieza el tramo (un lugar del set o [lon, lat]): se toma su punto más cercano sobre la Avenida Reforma de OpenStreetMap"
+  },
+  "hacia": {
+   "tipo": "lugar",
+   "requerido": true,
+   "descripcion": "dónde termina (≥ 150 m de `desde`); el palacio va siempre en la punta SUR del tramo, 36 m más allá, mirando al paseo"
+  },
+  "estatuas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    30
+   ],
+   "defecto": 30,
+   "descripcion": "estatuas genéricas de mármol en pedestal, en los bordes del jardín central, alternando lados de desde a hacia (disposición y pose no se afirman); `resaltar` con elemento «<id>.estatuas» las enciende EN ORDEN"
+  },
+  "carruajes": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    8
+   ],
+   "defecto": 4,
+   "descripcion": "carruajes genéricos de un caballo que van y vienen por las dos calzadas centrales (ilustrativo: ni el tipo ni cuántos circulaban se afirman)"
+  },
+  "paseantes": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    20
+   ],
+   "defecto": 12,
+   "descripcion": "gente genérica que camina por las aceras y el sendero del jardín central (más cerca de la mitad del tramo)"
+  },
+  "grupos_paseantes": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    8
+   ],
+   "defecto": 0,
+   "descripcion": "grupos de 2 a 4 paseantes genéricos (ropa genérica de época: sombrero; algunas con falda larga), sin rostro, en las dos aceras laterales cerca de la mitad del tramo (frente al jardín central): unos pasean juntos ida y vuelta, otros conversan de pie en corro. Se suman a `paseantes`"
+  },
+  "escala_gente": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    1,
+    2
+   ],
+   "defecto": 1,
+   "descripcion": "el tamaño de toda la gente (paseantes y grupos): 1 = real; hasta 2 para que se lea en un teléfono con la cámara a 45–60 m (maqueta, no a escala)"
+  },
+  "quintas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    12
+   ],
+   "defecto": 6,
+   "descripcion": "quintas genéricas dispersas en el campo a los dos lados (casa de teja con corredor, tapia, huerto y galera; su forma no se afirma)"
+  },
+  "ancho_inicio_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    12,
+    80
+   ],
+   "descripcion": "ancho total del paseo en `desde` (m); sin él y sin `ancho_fin_m`, 40 m genéricos. El ensanche de 70 a 120 pies solo si está verificado"
+  },
+  "ancho_fin_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    12,
+    80
+   ],
+   "descripcion": "ancho total en `hacia` (m): entre los dos, el ancho cambia de corrido"
+  },
+  "palacio": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "el palacio genérico de estilo renacimiento italiano al extremo sur (volumen declarado genérico: planta, pisos y remate no se afirman), con la explanada y el monumento ecuestre genérico al frente; se rompe por partes con `terremoto` (pieza: el id, lugares: [«<id>.palacio»])"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "el azar fijo: dónde van las quintas y los árboles del campo, el color de las parcelas, la pose de cada estatua y la separación de carruajes y paseantes"
+  }
+ },
+ "escalas": [
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "usa": [
+  "arbol",
+  "persona"
+ ],
+ "nivel": "escenario",
+ "contiene": [
+  "dos calzadas centrales de tierra apisonada, abombadas, con bordillo de piedra, para los carruajes",
+  "dos aceras laterales para la gente a pie",
+  "jardines laterales con su seto bajo y su fila de árboles, y el jardín central con su sendero",
+  "estatuas blancas de mármol sobre pedestal con zócalo y cornisa (genéricas)",
+  "tres fuentes genéricas (pila redonda, pedestal, taza y remate; la del medio con una figura) con el agua que cae",
+  "dos estanques ovalados en los jardines laterales",
+  "el palacio genérico de estilo renacimiento italiano: planta baja almohadillada, piso noble con ventanas de frontón, cuerpo central con arcada, columnas y frontón, pabellones de esquina, cornisa, balaustrada y techo bajo de teja, sobre zócalo y escalinata",
+  "la explanada frente al palacio con el monumento ecuestre genérico sobre su pedestal",
+  "el campo a los dos lados: parcelas de cultivo y potrero, árboles sueltos",
+  "quintas dispersas: casa de teja con corredor de horcones, tapia con portón, patio, huerto y galera",
+  "carruajes de un caballo con su cochero, ruedas de rayos y faroles",
+  "paseantes que caminan",
+  "grupos de 2 a 4 paseantes en las aceras, con sombrero y algunas con falda larga (genéricos), que pasean juntos o conversan de pie"
+ ],
+ "animado": "los carruajes van y vienen por sus calzadas con el caballo al trote y las ruedas girando, entran y salen por las puntas; los paseantes caminan ida y vuelta por las aceras y el sendero, los grupos pasean juntos a paso lento o conversan de pie; el agua de las fuentes cae (todo función de t); de noche, ventanas del palacio y de las quintas y faroles de los carruajes encendidos",
+ "gente": true,
+ "poses": [
+  "caminar",
+  "de_pie"
+ ],
+ "distancia_m": [
+  60,
+  2600
+ ],
+ "caja_m": [
+  1900,
+  560,
+  24
+ ],
+ "publica": "caminos «<id>» y «<id>.eje», «<id>.carruajes-1» (en el sentido del eje), «<id>.carruajes-2» (en contra), «<id>.peatones-este» y «<id>.peatones-oeste»; lugares «<id>.inicio», «<id>.jardin», «<id>.estatuas», «<id>.fuente-1» … «<id>.fuente-3» (las fuentes del jardín central, de desde a hacia), «<id>.estanque-1» y «<id>.estanque-2» (los de los jardines laterales), «<id>.palacio» y «<id>.plaza» (la explanada: el refugio de un terremoto). resaltar con `elemento`: palacio, jardin (también una fuente o un estanque), estatuas (en orden), inicio o una estatua",
+ "ejemplo": {
+  "id": "bulevar",
+  "tipo": "bulevar1890",
+  "desde": [
+   -90.514801,
+   14.609813
+  ],
+  "hacia": [
+   -90.517809,
+   14.5948
+  ],
+  "estatuas": 30,
+  "carruajes": 4,
+  "paseantes": 12,
+  "quintas": 6,
+  "palacio": true,
+  "semilla": 1,
+  "grupos_paseantes": 6,
+  "escala_gente": 1.5
+ }
+}

@@ -1,0 +1,156 @@
+{
+ "tipo": "doselcuadricula",
+ "clase": "pieza",
+ "cuando": "parche de selva de cerca bajo la cuadrícula de 30 m de un satélite: cada cuadro se tiñe de bosque, pérdida o rebrote; tala, fuego, viento o rebrote",
+ "parametros": {
+  "lugar": {
+   "tipo": "lugar",
+   "requerido": true,
+   "descripcion": "el centro de la cuadrícula (un lugar del mundo o [x, y] en metros en un esquema)"
+  },
+  "rumbo": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    360
+   ],
+   "defecto": 0,
+   "descripcion": "giro de la cuadrícula (grados; 0 = las columnas avanzan al este y la fila 1 queda al norte)"
+  },
+  "celdas_lado": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    3,
+    9
+   ],
+   "defecto": 5,
+   "descripcion": "cuántos cuadros por lado (la cuadrícula es de celdas_lado × celdas_lado)"
+  },
+  "celda_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    10,
+    60
+   ],
+   "defecto": 30,
+   "descripcion": "el lado de un cuadro, en metros (30 = el píxel del mapa de cobertura); el bosque sigue una orla de casi un cuadro más allá de la cuadrícula"
+  },
+  "densidad": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0.9,
+   "descripcion": "qué tan cerrado está el dosel: 1 = copas que se tocan; menos deja ver claros de sotobosque oscuro"
+  },
+  "emergentes": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0.15,
+   "descripcion": "la parte de los árboles que sobresale del dosel con copas más anchas y claras (ilustrativo: sin altura ni especie)"
+  },
+  "cuadricula": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "dibujar la cuadrícula (líneas finas sobre las copas); false: solo la selva y, si los hay, los tintes"
+  },
+  "cuadricula_desde": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    600
+   ],
+   "defecto": 0,
+   "descripcion": "el segundo en que la cuadrícula empieza a dibujarse (se traza en ≈ 1.6 s, línea tras línea); «resaltar» la pieza la aviva"
+  },
+  "cuadros": {
+   "tipo": "lista",
+   "requerido": false,
+   "descripcion": "los cambios de cada cuadro, «fila-col:estado@segundo» (p. ej. «2-3:fuego@4.5»). Estados: bosque (solo el tinte verde), tala (los árboles se van uno a uno y queda la tierra limpia con tocones), fuego (llama y humo genéricos; queda la cicatriz oscura con troncos quemados), quemado (la cicatriz ya hecha), viento (los árboles caen volcados hacia un mismo lado), rebrote (plantas jóvenes que empiezan a crecer sobre un cuadro perdido; sin pérdida antes, el cuadro empieza ya talado). En @0, el cuadro arranca en ese estado. Tinte: bosque en el verde del estilo (bien), pérdida en el rojo (mal), rebrote en el ámbar (medio)"
+  },
+  "tinte": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0.3,
+   "descripcion": "qué tan fuerte se tiñe cada cuadro que cambia (0 = sin tinte: solo lo que pasa en la selva)"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "el azar fijo de dónde cae cada árbol, su tamaño y su tono"
+  }
+ },
+ "escalas": [
+  "esquema"
+ ],
+ "motores": [
+  "three"
+ ],
+ "ejemplo": {
+  "id": "dosel",
+  "tipo": "doselcuadricula",
+  "lugar": [
+   0,
+   0
+  ],
+  "rumbo": 0,
+  "celdas_lado": 5,
+  "celda_m": 30,
+  "densidad": 0.9,
+  "emergentes": 0.15,
+  "cuadricula": true,
+  "cuadricula_desde": 0.4,
+  "cuadros": [
+   "2-2:tala@2.5",
+   "2-4:fuego@3",
+   "4-2:viento@3.5",
+   "4-4:rebrote@4"
+  ],
+  "tinte": 0.3,
+  "semilla": 1
+ },
+ "nivel": "escenario",
+ "contiene": [
+  "dosel de copas de varios verdes",
+  "árboles emergentes",
+  "sotobosque oscuro en los claros",
+  "orla de selva alrededor",
+  "cuadrícula de cuadros sobre las copas",
+  "tinte por cuadro (bosque, pérdida, rebrote)",
+  "cuadro talado con tocones",
+  "cuadro con fuego, humo y cicatriz",
+  "árboles volcados por viento",
+  "rebrote de plantas jóvenes"
+ ],
+ "animado": "las copas se mecen con el viento; la cuadrícula se traza; en cada cuadro que cambia, los árboles se van, arden y humean, caen o rebrotan",
+ "gente": false,
+ "distancia_m": [
+  60,
+  400
+ ],
+ "caja_m": [
+  210,
+  210,
+  32
+ ]
+}

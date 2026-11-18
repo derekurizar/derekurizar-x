@@ -1,0 +1,94 @@
+{
+ "tipo": "afluente",
+ "clase": "pieza",
+ "cuando": "un río que el set no trae, de la fuente a la boca (el afluente de un lago): se dibuja río abajo al resaltarlo y queda en el acento",
+ "parametros": {
+  "puntos": {
+   "tipo": "puntos",
+   "requerido": true,
+   "min": 2,
+   "descripcion": "la traza verificada [[lon, lat], …] EN ORDEN de la fuente a la boca (el último punto, en la orilla del lago o del río que recibe); geodatos verificados como una cifra"
+  },
+  "nombre": {
+   "tipo": "texto",
+   "requerido": false,
+   "defecto": "Río",
+   "descripcion": "el nombre del río (no se dibuja: nombra sus lugares «<id>.fuente» y «<id>.boca»; el rótulo va en la capa 2D)"
+  },
+  "grosor": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0.5,
+    4
+   ],
+   "defecto": 1.5,
+   "descripcion": "cuánto engruesa la línea (1.5 ≈ 2 veces un río grande del país: se lee a 30–40 km)"
+  },
+  "corriente": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "rayas de corriente (galones) que bajan hacia la boca; ilustran el sentido, no una velocidad"
+  },
+  "suave": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "una curva que pasa por cada punto dado (no los mueve); false = tramos rectos entre puntos"
+  }
+ },
+ "escalas": [
+  "pais"
+ ],
+ "motores": [
+  "three"
+ ],
+ "ejemplo": {
+  "id": "afluente",
+  "tipo": "afluente",
+  "nombre": "Afluente de ejemplo",
+  "puntos": [
+   [
+    -90.545,
+    14.585
+   ],
+   [
+    -90.556,
+    14.563
+   ],
+   [
+    -90.571,
+    14.538
+   ],
+   [
+    -90.584,
+    14.508
+   ],
+   [
+    -90.594,
+    14.476
+   ]
+  ],
+  "grosor": 1.5,
+  "corriente": true
+ },
+ "nivel": "fondo",
+ "contiene": [
+  "cauce que se ensancha hacia la boca",
+  "orilla oscura",
+  "halo",
+  "rayas de corriente río abajo",
+  "punta que brilla mientras se dibuja"
+ ],
+ "animado": "las rayas de corriente bajan hacia la boca; con «resaltar» se dibuja de la fuente a la boca y queda en el acento",
+ "gente": false,
+ "distancia_m": [
+  15000,
+  60000
+ ],
+ "publica": [
+  "fuente",
+  "boca"
+ ]
+}

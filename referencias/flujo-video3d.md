@@ -34,7 +34,7 @@ entrega) y `scripts/maqueta3d.py` (gates M3D, cuadros sueltos, render).
 | # | Paso | Comando |
 |---|---|---|
 | 1 | Preparar (con `--desde` reutiliza las cifras verificadas de una pieza ya investigada) | `video3d.py preparar <slug> --tema "…" --musica-tema <tema>` |
-| 2 | Investigar y verificar lo que falte, incluidos los geodatos (qué se dibuja y de dónde sale) | agentes de /historia; `video3d.py datos --sumar` |
+| 2 | Investigar y verificar lo que falte, incluidos los geodatos (qué se dibuja y de dónde sale); `historia.py digesto` y `hechos --check` sirven en un TRABAJO 3D (sin fotos) | agentes de /historia; `video3d.py datos --sumar` (también los años de las fechas: `anio-AAAA`) |
 | 3 | Dirección visual por frase (idea visual, criterio, escala, estilo, mundo, el verbo del catálogo por oración); lo que falta, al constructor | Workflow `video3d`: `video3d-director` → `maqueta-constructor` |
 | 3b | **Referencia visual:** un verificador por mundo de cerca (cómo se ve el lugar, qué pasa ahí, con qué; lo que no se puede afirmar) → `verificacion_visual_<mundo>.json` | Workflow `video3d`: `historia-verificador` (≤ 3 a la vez) |
 | 4 | Ganchos: 5 candidatos con su cuadro renderizado; el crítico recomienda y **el usuario elige** (y el estilo, si la confianza es baja) | Workflow: `ganchos --check --cuadros` → para con `elegir_gancho` |
@@ -44,7 +44,7 @@ entrega) y `scripts/maqueta3d.py` (gates M3D, cuadros sueltos, render).
 | 7b | **Revisión de escenas:** una hoja por mundo y su medida; el crítico puntúa detalle, vida, realismo y claridad; ≤ 2 vuelve al director o al constructor. Las mejoras probadas se aplican solas | `maqueta3d.py escena --hoja` · Workflow |
 | — | **Retoque visual** (la voz ya existe): cambia solo lo que se ve; lo que el crítico ve se corrige en la misma corrida (una pasada del director; `correcciones` suma lo que se vio en las hojas) y, si algo cambió, el crítico vuelve a mirar solo esos mundos (`segunda_lectura`: los puntajes del retorno son los de después de corregir). Con 5 o más mundos de cerca en `mundos`, el director trabaja de 3 en 3 | Workflow con `desde: "retoque_visual"` + `notas` [+ `mundos`, `correcciones`] |
 | 8 | Voz (ElevenLabs, El Faraon 4) y escucha independiente (V11) | `voz` → MCP → `descargar --estado` (o `--nodos` si el estado llegó en el chat) → `escuchar` |
-| 9 | Tiempos reales | `tiempos` |
+| 9 | Tiempos reales (si un gate M3D falla, se ajusta lo que se ve con `aplicar`, nunca a mano) | `tiempos` · `aplicar` |
 | 10 | Render en 9:16 y 4:5 | `render` |
 | 11 | Montaje: voz, música del tema con ducking, efectos, −14 LUFS; `.srt` y portada | `montar` |
 | 12 | Entrega en `videos3d/<fecha>-<slug>/` y registro (M21) | `entregar` → `memoria.py --video3d <entrega>` |
@@ -247,8 +247,11 @@ se lee tres veces). Prueba cada arreglo en una copia del TRABAJO antes de propon
 - Un año dicho en palabras cuesta dos segundos de voz: va en el kicker.
 - El cuadro cero es la portada: el titular y el evento se ven desde `t = 0`.
 - La voz tiene que nombrar el hecho («el terremoto»), no solo sus piezas (la falla, el epicentro).
+- Los años que dice la voz necesitan su cifra (V2/C3D5): `datos --sumar` la saca de la fecha de cada hecho verificado
+  cuya cita trae el año (m301, cuatro capitales). Si aun así falta una, el Workflow se detiene con `faltan_datos` en vez
+  de gastar reparaciones que el director no puede hacer, y se reanuda con `args.datos`.
 - Con la voz real los tiempos se mueven: `tiempos` vuelve a correr los gates M3D y a veces hay que ajustar una clave de
-  cámara o la duración de un titular, sin tocar la voz.
+  cámara o la duración de un titular, sin tocar la voz: con `video3d.py aplicar` (m303).
 
 ## Costos (medidos el 2026-11-14 en un M4 Max)
 

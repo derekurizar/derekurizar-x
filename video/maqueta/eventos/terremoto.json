@@ -1,0 +1,125 @@
+{
+ "tipo": "terremoto",
+ "clase": "evento",
+ "cuando": "la sacudida en un escenario con edificios, sin epicentro ni onda: todo tiembla, caen techos, torres y muros por partes, sube el polvo y la gente huye",
+ "parametros": {
+  "pieza": {
+   "tipo": "pieza",
+   "requerido": true,
+   "descripcion": "la pieza con edificios que se sacude (edificios, faldavolcan o un escenario con construcciones): da el centro y la plaza; se rompe todo lo que está en pie dentro de `radio_m`, sea de la pieza que sea"
+  },
+  "intensidad": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0.8,
+   "descripcion": "cuánto tiembla el suelo (0 = nada; 1 = el máximo legible)"
+  },
+  "danos": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0.6,
+   "descripcion": "la parte de lo que está en pie que se rompe: ≈ 0.6·danos se cae, otro tanto pierde el techo y se inclina, el resto queda en pie (las partes altas caen más)"
+  },
+  "lugares": {
+   "tipo": "lugares",
+   "requerido": false,
+   "descripcion": "lo que cae sí o sí y antes: lo que está a ≤ 13 m de cada lugar (id del mundo, «<pieza>.<id>» o [x, y])"
+  },
+  "polvo": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "la nube de polvo que sube de lo que cae y del suelo, tapa el daño y queda como bruma"
+  },
+  "centro": {
+   "tipo": "lugar",
+   "requerido": false,
+   "descripcion": "el centro de la zona que se rompe (sin él: el refugio, la plaza de la pieza, la pieza)"
+  },
+  "radio_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    20,
+    1500
+   ],
+   "defecto": 180,
+   "descripcion": "hasta dónde, desde el centro, se rompe lo que está en pie"
+  },
+  "refugio": {
+   "tipo": "lugar",
+   "requerido": false,
+   "descripcion": "el espacio abierto al que corre la gente (sin él: «<pieza>.plaza», la plaza del mundo o el centro); genérico: no afirma a qué plaza corrió nadie"
+  },
+  "radio_refugio_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    6,
+    120
+   ],
+   "defecto": 20,
+   "descripcion": "radio del espacio abierto: la gente espera en su borde y corre hacia adentro (que quepa en la plaza)"
+  },
+  "personas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    40
+   ],
+   "defecto": 14,
+   "descripcion": "gente que corre al espacio abierto (la gente propia de la pieza sigue a lo suyo: bájala a 0 si estorba)"
+  },
+  "previo": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": false,
+   "descripcion": "un primer temblor corto y débil, una pausa y luego el fuerte, todo dentro de `dur`"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "otra semilla, otras partes que caen"
+  }
+ },
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "usa": [
+  "persona"
+ ],
+ "adelanto": {
+  "s": 0.4
+ },
+ "animado": "el suelo tiembla a 2–7 Hz y lo alto se mece; las partes caen con gravedad, se vuelcan y dejan montones de escombro; el polvo sube, se abre con el viento y queda como bruma; la gente corre al centro del espacio abierto y se queda mirando",
+ "publica": "ctx.cuadro.sismo[pieza] = {k, dx, dz, avance, danos, cx, cy, radio, caen}: una pieza puede leerlo en su `en` para romperse a su manera",
+ "ejemplo": {
+  "t": 1.5,
+  "dur": 7,
+  "tipo": "terremoto",
+  "pieza": "ciudad",
+  "intensidad": 0.8,
+  "danos": 0.6,
+  "polvo": true,
+  "personas": 14,
+  "radio_refugio_m": 20
+ }
+}

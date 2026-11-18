@@ -1,0 +1,131 @@
+{
+ "tipo": "cerrarcalle",
+ "clase": "evento",
+ "cuando": "el domingo de paseo: vallas en los cruces, los carros salen y la calzada se llena de gente que camina, trota y pedalea",
+ "parametros": {
+  "pieza": {
+   "tipo": "pieza",
+   "piezas": [
+    "avenidareforma"
+   ],
+   "requerido": true,
+   "descripcion": "la avenidareforma cuya vía principal se cierra (las dos calzadas del tramo)"
+  },
+  "flujo": {
+   "tipo": "pieza",
+   "piezas": [
+    "flujo"
+   ],
+   "requerido": false,
+   "descripcion": "el flujo de carros que corre por la vía (sus carriles, «<pieza>.norte-1…3» y «<pieza>.sur-1…3»): sale entre el 15 % y el 45 % del evento y no vuelve"
+  },
+  "lugar": {
+   "tipo": "lugar",
+   "requerido": false,
+   "descripcion": "el centro del tramo cerrado (se proyecta sobre el eje del arriate); sin él, el medio de la avenida"
+  },
+  "largo_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    80,
+    2400
+   ],
+   "defecto": 500,
+   "descripcion": "largo del tramo cerrado (ilustrativo: la fuente no dice qué tramos); cada extremo se ajusta al cruce más cercano a menos de 120 m, para que la calle que cruza siga abierta"
+  },
+  "personas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    60
+   ],
+   "defecto": 30,
+   "descripcion": "gente a pie en las dos calzadas (≈ 6 de cada 10 caminan, el resto trota), en los dos sentidos; ilustrativo, no un aforo"
+  },
+  "bicicletas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    20
+   ],
+   "defecto": 8,
+   "descripcion": "ciclistas en las dos calzadas, en los dos sentidos (ilustrativo)"
+  },
+  "vallas": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "vallas genéricas atravesadas en las dos calzadas en los extremos del tramo y a los dos lados de cada cruce de adentro; false = solo la gente"
+  },
+  "gente_tamano": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    1,
+    2
+   ],
+   "descripcion": "escala de la gente, las bicis y las vallas (1 = tamaño real); sin él, el `gente_tamano` de la pieza"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "el azar fijo: calzada, carril, sentido, velocidad y segundo de entrada de cada quien; el orden de las vallas"
+  }
+ },
+ "escalas": [
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "adelanto": {
+  "s": 0.4
+ },
+ "usa": [
+  "persona"
+ ],
+ "nivel": "evento",
+ "contiene": [
+  "vallas de tubo de 2 m con pies en V, zapatas, dos largueros y panel a franjas, en filas que atraviesan las dos calzadas",
+  "las filas en los extremos del tramo y a los dos lados de cada cruce (la calle que cruza queda abierta)",
+  "el flujo de carros que sale de la vía",
+  "gente que camina y trota en los dos sentidos por las dos calzadas",
+  "bicicletas de cuadro tubular con ruedas, rines, radios, manubrio, sillín y faro, y su ciclista sentado",
+  "bielas y pedales que giran con la velocidad",
+  "de noche: lámparas ámbar intermitentes sobre las vallas y el faro de cada bici"
+ ],
+ "animado": "las vallas suben del asfalto fila por fila y rebotan; los carros salen; la gente entra una a una y camina, trota o pedalea a lo largo del tramo en los dos sentidos (posición = función de t) con las bielas girando; de noche parpadean las lámparas de las vallas",
+ "gente": "personas a pie (caminar con su velocidad) y ciclistas (persona sentada sin banco sobre la bici), muñecos sin rostro",
+ "distancia_m": [
+  60,
+  450
+ ],
+ "caja_m": [
+  500,
+  40,
+  2
+ ],
+ "poses": [
+  "caminar",
+  "sentado"
+ ],
+ "ejemplo": {
+  "t": 0.6,
+  "dur": 6.0,
+  "tipo": "cerrarcalle",
+  "pieza": "reforma",
+  "flujo": "trafico",
+  "personas": 30,
+  "bicicletas": 8,
+  "vallas": true,
+  "semilla": 1
+ }
+}

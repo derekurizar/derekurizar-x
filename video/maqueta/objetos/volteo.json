@@ -1,0 +1,48 @@
+{
+ "tipo": "volteo",
+ "clase": "objeto",
+ "cuando": "camión de volteo genérico con la palangana llena de basura mezclada: la fila de camionadas; con la pose `volcar` sube la tolva y la vacía",
+ "parametros": {},
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "medidas": {
+  "largo_m": 8.6,
+  "ancho_m": 2.5,
+  "alto_m": 3.3
+ },
+ "ejemplo": {
+  "objeto": "volteo"
+ },
+ "nivel": "objeto",
+ "contiene": [
+  "cabina con cofre, parrilla, espejos, estribos y luces de techo",
+  "chasis con doble eje trasero, llantas dobles, tanque y escape vertical",
+  "palangana con costillas, visor sobre la cabina y compuerta trasera",
+  "basura mezclada que asoma: bolsas de varios tonos, botellas y restos orgánicos",
+  "pistón telescópico de cuatro etapas",
+  "montón de basura en el suelo al volcar"
+ ],
+ "animado": "rueda: la cabina se mece en la suspensión y el escape echa bocanadas que se tienden hacia atrás; volcar: el pistón se estira, la tolva sube a 48° en 4 s, la compuerta se abre, bolsas y botellas caen por detrás y el montón crece mientras la carga baja",
+ "gente": false,
+ "distancia_m": [
+  12,
+  150
+ ],
+ "caja_m": [
+  10.5,
+  3.0,
+  6.2
+ ],
+ "poses": [
+  "rodar",
+  "volcar",
+  "volcando",
+  "volcada"
+ ],
+ "notas": "Pose por defecto `rodar` (tolva abajo). `volcar`: una vez, la tolva sube desde t = 0.5 s (arriba a los 4.5 s, cae basura de 3.6 a 10 s) y queda arriba: para una toma o un gancho que empieza en la frase. `volcando`: ciclo de 14 s contado desde t = 0 (sube de 1 a 5 s, vacía, baja de 10 a 13 s; el montón crece ciclo a ciclo). `volcada`: ya arriba y vaciada. Volcar es para un actor quieto (el montón queda detrás de él). La cabina toma el color de la instancia (o el acento si es el protagonista); la palangana, tonos de metal gastado. La carga es basura mixta (no solo plástico) y no afirma volumen: un número de m³ va en la capa 2D con su respaldo. De noche: faros, pilotos, luces de techo y cabina encendidos."
+}

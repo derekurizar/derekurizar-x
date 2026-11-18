@@ -70,6 +70,11 @@ try:
     txt = "\n".join(fx)
     ok("suelto.js no tiene ficha" in txt, "registrar: un módulo sin ficha no falla: %s" % fx)
     ok("huerfana.json no tiene módulo" in txt, "registrar: una ficha sin módulo no falla")
+    medias = []
+    _, fm = M3.generar_catalogo(medias)
+    ok(any("suelto.js no tiene ficha" in x for x in medias) and not any("suelto.js" in x for x in fm),
+       "registrar con a_medias (m305): el módulo a medio hacer de otra sesión debe avisar, no fallar: %s / %s" % (medias, fm))
+    ok(any("onda.js: un color escrito" in x for x in fm), "registrar con a_medias: una ficha o un módulo con errores sigue fallando")
     ok(re.search(r"onda\.js: un color escrito", txt), "registrar: un color escrito a mano en un módulo no falla")
     ok(re.search(r"apagar\.js: el módulo no se registra", txt), "registrar: un módulo que no se registra no falla")
     fi = M3.cargar_json(os.path.join(falso, "piezas", "ruta.json"))

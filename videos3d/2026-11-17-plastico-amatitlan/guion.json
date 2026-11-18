@@ -1,0 +1,949 @@
+{
+  "tipo": "video3d",
+  "version": 1,
+  "escenas": [
+    {
+      "mundo": "palacio",
+      "secuencia": 1,
+      "texto": "Pon sobre el Palacio Nacional un año de basura del lago de Amatitlán, en Guatemala.",
+      "titular": {
+        "kicker": "LAGO DE AMATITLÁN · GUATEMALA",
+        "texto": "Un año de basura, sobre el Palacio Nacional"
+      },
+      "camara": [
+        {
+          "mira": [
+            -90.5130674,
+            14.642919
+          ],
+          "dist_m": 255,
+          "azimut": 130,
+          "elevacion": 22
+        },
+        {
+          "al": "fin",
+          "mira": [
+            -90.5130674,
+            14.642919
+          ],
+          "dist_m": 205,
+          "azimut": 118,
+          "elevacion": 17
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "crecer",
+          "pieza": "pila",
+          "de": 0,
+          "a": 0.3,
+          "caida": true,
+          "dur": 5.0,
+          "sfx": "whoosh"
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "Palacio Nacional",
+          "lugar": "palacio-nacional",
+          "texto": "Palacio Nacional de la Cultura",
+          "sub": "Ciudad de Guatemala"
+        }
+      ],
+      "n": 1,
+      "tipo": "gancho",
+      "acto": 1
+    },
+    {
+      "n": 2,
+      "tipo": "escena",
+      "acto": 1,
+      "secuencia": 1,
+      "mundo": "palacio",
+      "texto": "AMSA estima que al lago entran unos 45 mil metros cúbicos de basura al año, sobre todo plásticos y orgánicos.",
+      "camara": [
+        {
+          "dice": "45 mil metros cúbicos",
+          "mira": [
+            -90.5130674,
+            14.642919
+          ],
+          "dist_m": 160,
+          "azimut": 105,
+          "elevacion": 12
+        },
+        {
+          "dice": "sobre todo plásticos",
+          "al": "fin",
+          "mira": [
+            -90.5130674,
+            14.642919
+          ],
+          "dist_m": 140,
+          "azimut": 98,
+          "elevacion": 13
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "AMSA estima",
+          "tipo": "crecer",
+          "pieza": "pila",
+          "de": 0.3,
+          "a": 0.75,
+          "caida": true,
+          "hasta_dice": "sobre todo plásticos"
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "45 mil metros cúbicos",
+          "valor": "45,000 m³",
+          "rotulo": "de basura al año",
+          "cifra": "plastico-c01",
+          "fuente": "AMSA"
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "tipo": "escena",
+      "acto": 1,
+      "secuencia": 1,
+      "mundo": "palacio",
+      "texto": "Repartida sobre todo el terreno del Palacio, sube poco más de 5 metros: casi el 17 % de su volumen.",
+      "camara": [
+        {
+          "dice": "sube poco más",
+          "mira": [
+            -90.5130674,
+            14.642919
+          ],
+          "dist_m": 175,
+          "azimut": 118,
+          "elevacion": 9
+        },
+        {
+          "dice": "17 %",
+          "al": "fin",
+          "mira": [
+            -90.5130674,
+            14.642919
+          ],
+          "dist_m": 240,
+          "azimut": 125,
+          "elevacion": 8
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "Repartida",
+          "tipo": "crecer",
+          "pieza": "pila",
+          "de": 0.75,
+          "a": 1,
+          "caida": true,
+          "hasta_dice": "5 metros"
+        },
+        {
+          "dice": "17 %",
+          "tipo": "resaltar",
+          "pieza": "palacio",
+          "dur": 2.4
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "5 metros",
+          "valor": "5.06 metros",
+          "rotulo": "de alto: el 16.9 % del volumen del Palacio",
+          "cifra": "comparacion-c17",
+          "fuente": "cálculo con AMSA y AGN"
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "tipo": "escena",
+      "acto": 2,
+      "secuencia": 2,
+      "mundo": "volteos",
+      "transicion": "corte",
+      "texto": "Con la equivalencia que dio AMSA, son 4,500 camiones de volteo.",
+      "titular": {
+        "kicker": "LA MISMA BASURA",
+        "texto": "En camiones de volteo"
+      },
+      "camara": [
+        {
+          "mira": [
+            0,
+            0
+          ],
+          "dist_m": 38,
+          "azimut": 80,
+          "elevacion": 15
+        },
+        {
+          "dice": "4,500",
+          "al": "fin",
+          "mira": [
+            0,
+            0
+          ],
+          "dist_m": 32,
+          "azimut": 72,
+          "elevacion": 11
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "son 4,500",
+          "tipo": "frenar",
+          "flujo": "fila-volteos",
+          "en": "50%",
+          "longitud_m": 80,
+          "vel_kmh": 4,
+          "dur": 1.6
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "4,500",
+          "valor": "4,500",
+          "rotulo": "camiones de volteo",
+          "cifra": "comparacion-c22",
+          "fuente": "equivalencia de AMSA"
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "tipo": "escena",
+      "acto": 2,
+      "secuencia": 3,
+      "mundo": "cuenca",
+      "transicion": "fundido",
+      "fundido_s": 0.6,
+      "texto": "El lago está a unos 25 kilómetros de la capital. En su cuenca viven más de 2 millones de personas, en 14 municipios.",
+      "camara": [
+        {
+          "mira": [
+            -90.54,
+            14.55
+          ],
+          "dist_km": 90,
+          "azimut": -90,
+          "elevacion": 58
+        },
+        {
+          "dice": "de la capital",
+          "mira": [
+            -90.54,
+            14.55
+          ],
+          "dist_km": 84,
+          "azimut": -90,
+          "elevacion": 60
+        },
+        {
+          "dice": "En su cuenca",
+          "al": "fin",
+          "mira": [
+            -90.55,
+            14.53
+          ],
+          "dist_km": 78,
+          "azimut": -60,
+          "elevacion": 62
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "El lago",
+          "tipo": "resaltar",
+          "pieza": "lagos",
+          "dur": 2.0
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "la capital",
+          "lugar": "guatemala",
+          "texto": "Ciudad de Guatemala",
+          "hasta_dice": "En su cuenca"
+        },
+        {
+          "dice": "El lago",
+          "lugar": "lago-centro",
+          "texto": "Lago de Amatitlán",
+          "hasta_dice": "En su cuenca"
+        }
+      ],
+      "anotaciones": [
+        {
+          "dice": "En su cuenca",
+          "tipo": "pulso",
+          "sobre": [
+            "lago-centro"
+          ],
+          "radio_m": 5000,
+          "anillos": 2
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "25 kilómetros",
+          "valor": "25 km",
+          "rotulo": "de la capital al lago",
+          "cifra": "plastico-c17",
+          "fuente": "USAC",
+          "hasta_dice": "En su cuenca"
+        },
+        {
+          "dice": "2 millones",
+          "valor": "2 millones",
+          "rotulo": "de habitantes, en 14 municipios",
+          "cifra": "plastico-c20",
+          "fuente": "AMSA"
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "tipo": "escena",
+      "acto": 2,
+      "secuencia": 3,
+      "mundo": "cuenca",
+      "texto": "Su principal afluente contaminante es el río Villalobos, según AMSA.",
+      "camara": [
+        {
+          "dice": "contaminante",
+          "mira": [
+            -90.565,
+            14.505
+          ],
+          "dist_km": 24,
+          "azimut": 0,
+          "elevacion": 48
+        },
+        {
+          "dice": "según AMSA",
+          "al": "fin",
+          "mira": [
+            -90.566,
+            14.5
+          ],
+          "dist_km": 18,
+          "azimut": 0,
+          "elevacion": 45
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "principal afluente",
+          "tipo": "resaltar",
+          "pieza": "villalobos",
+          "dur": 2.6
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "río Villalobos",
+          "lugar": "villalobos-tramo",
+          "texto": "Río Villalobos",
+          "dura": 3.0
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "tipo": "escena",
+      "acto": 2,
+      "secuencia": 3,
+      "mundo": "cuenca",
+      "texto": "En marzo de este año, una sola lluvia metió por su desembocadura unos 2,400 metros cúbicos de basura.",
+      "titular": {
+        "kicker": "RÍO VILLALOBOS",
+        "texto": "Una sola lluvia"
+      },
+      "camara": [
+        {
+          "dice": "una sola lluvia",
+          "mira": [
+            -90.567,
+            14.49
+          ],
+          "dist_km": 17,
+          "azimut": 0,
+          "elevacion": 42
+        },
+        {
+          "dice": "desembocadura",
+          "al": "fin",
+          "mira": "desembocadura",
+          "dist_km": 15,
+          "azimut": 0,
+          "elevacion": 40
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "una sola lluvia",
+          "tipo": "arrastrar",
+          "pieza": "villalobos",
+          "intensidad": 0.75,
+          "abanico_km": 0.9,
+          "barda": true,
+          "queda": true,
+          "dur": 4.5,
+          "sfx": "whoosh",
+          "puntos": [
+            [
+              -90.561049,
+              14.5269362
+            ],
+            [
+              -90.5687216,
+              14.4836161
+            ]
+          ]
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "desembocadura",
+          "lugar": "desembocadura",
+          "texto": "Desembocadura",
+          "sub": "del río Villalobos"
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "2,400",
+          "valor": "2,400 m³",
+          "rotulo": "de basura en una sola lluvia",
+          "cifra": "plastico-c19",
+          "fuente": "AMSA"
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "tipo": "escena",
+      "acto": 3,
+      "secuencia": 4,
+      "mundo": "lago",
+      "transicion": "fundido",
+      "fundido_s": 0.6,
+      "texto": "En el agua, un estudio de la USAC halló microplásticos en el tracto digestivo de 68 de 70 peces del lago.",
+      "titular": {
+        "kicker": "ESTUDIO DE LA USAC",
+        "texto": "Lo que llevan dentro de los peces"
+      },
+      "camara": [
+        {
+          "mira": "corte.barda",
+          "dist_m": 45,
+          "azimut": 20,
+          "elevacion": 35
+        },
+        {
+          "dice": "tracto digestivo",
+          "mira": "corte.peces",
+          "dist_m": 50,
+          "azimut": 5,
+          "elevacion": 8
+        },
+        {
+          "dice": "68 de 70",
+          "al": "fin",
+          "mira": "corte.peces",
+          "dist_m": 38,
+          "azimut": 0,
+          "elevacion": 8
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "tracto digestivo",
+          "tipo": "resaltar",
+          "pieza": "corte",
+          "dur": 3.2
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "68 de 70",
+          "valor": "68 de 70",
+          "rotulo": "peces, con microplástico en el tracto",
+          "cifra": "plastico-c15",
+          "fuente": "USAC"
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "tipo": "cierre",
+      "acto": 3,
+      "secuencia": 5,
+      "mundo": "palacio",
+      "transicion": "fundido",
+      "fundido_s": 0.6,
+      "texto": "Y cada año empieza a caer otra pila igual.",
+      "final": "Cada año, otra pila igual.",
+      "camara": [
+        {
+          "mira": [
+            -90.5130674,
+            14.642919
+          ],
+          "dist_m": 175,
+          "azimut": 122,
+          "elevacion": 15
+        },
+        {
+          "al": "fin",
+          "mira": [
+            -90.5130674,
+            14.642919
+          ],
+          "dist_m": 205,
+          "azimut": 118,
+          "elevacion": 17
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "empieza a caer",
+          "tipo": "crecer",
+          "pieza": "pila",
+          "de": 0,
+          "a": 0.3,
+          "caida": true,
+          "dur": 2.6
+        }
+      ]
+    }
+  ],
+  "estilo": {
+    "id": "color",
+    "razon": "La idea es un lugar conocido de día y un mapa que se lee: `color` mantiene el Palacio y la ciudad claros y el lago azul sobre el relieve con tinta por altura. Probé `voxel` en el mismo cuadro: en la ciudad sale idéntico (los edificios ya son cajas) y en la cuenca rompe el lago (15 km²) en bloques de kilómetros que no se leen. `arquitecto` queda fuera: Blender no dibuja los mundos `ciudad` ni `esquema` que el video necesita. Los dos esquemas de cerca van en `dia`.",
+    "confianza": "alta",
+    "candidatos": [
+      "color",
+      "voxel"
+    ],
+    "cuadros": [
+      "sesiones/video3d-plastico-amatitlan/estilos/color/9x16_t000.500.png",
+      "sesiones/video3d-plastico-amatitlan/estilos/voxel/9x16_t000.500.png",
+      "sesiones/video3d-plastico-amatitlan/estilos/color/cuenca/9x16_t000.500.png",
+      "sesiones/video3d-plastico-amatitlan/estilos/voxel/cuenca/9x16_t000.500.png"
+    ]
+  },
+  "idea_visual": "Un año de basura del lago de Amatitlán hecho objeto: una pila que crece, capa por capa con la voz, dentro de la caja de cristal del Palacio Nacional hasta 5.06 m, y después el río que la trae y el pez que la lleva dentro.",
+  "protagonista": "pila",
+  "mundos": {
+    "palacio": {
+      "escala": "ciudad",
+      "set": "capital",
+      "exageracion": 1.5,
+      "estilo": "color",
+      "lugares": {
+        "palacio-nacional": {
+          "lon": -90.5130674,
+          "lat": 14.642919,
+          "nombre": "Palacio Nacional de la Cultura"
+        },
+        "acera": {
+          "lon": -90.512566,
+          "lat": 14.642919,
+          "nombre": "Acera de enfrente"
+        }
+      },
+      "piezas": [
+        {
+          "id": "parques",
+          "tipo": "zona",
+          "area": "parques",
+          "tono": "verde",
+          "opacidad": 0.5,
+          "borde": false
+        },
+        {
+          "id": "calles",
+          "tipo": "calles"
+        },
+        {
+          "id": "edificios",
+          "tipo": "edificios"
+        },
+        {
+          "id": "ambiente",
+          "tipo": "ambiente",
+          "ambiente": "plaza",
+          "densidad": 0.5,
+          "radio_m": 260,
+          "centro": "palacio-nacional",
+          "semilla": 3
+        },
+        {
+          "id": "palacio",
+          "tipo": "palacionacional",
+          "lugar": "palacio-nacional",
+          "rumbo": 0,
+          "tamano": 1,
+          "cristal": 1,
+          "cristal_desde": 0.6,
+          "cristal_dur": 1.2,
+          "personas": 8,
+          "entorno": true,
+          "semilla": 1,
+          "aristas": 1,
+          "gente_tamano": 1.3
+        },
+        {
+          "id": "pila",
+          "tipo": "pila",
+          "lugar": "palacio-nacional",
+          "largo_m": 127,
+          "ancho_m": 70,
+          "rumbo": 0,
+          "alto_m": 5.06,
+          "inicio": 0,
+          "material": "basura",
+          "acento": true,
+          "semilla": 1
+        }
+      ],
+      "protagonista": "pila",
+      "escena": {
+        "que_pasa": "Una comparación de escala: el volumen de basura que AMSA estima que entra al lago en un año (45 mil m³) repartido sobre la huella del Palacio Nacional de la Cultura (8,890 m²) sube 5.06 m, casi el 17 % de la caja del edificio (127 × 70 × 30 m). Es una medida hipotética: nadie la apila ahí.",
+        "quien": "transeúntes genéricos que caminan por la acera de enfrente y gente de pie en la plaza",
+        "con_que": "nada: la basura aparece como medida (bolsas, botellas, cartón y restos orgánicos mezclados)",
+        "se_mueve": "el Palacio que se vuelve cristal; la pila que crece capa por capa dentro de su caja mientras la voz cuenta, con bolsas y envases que caen y se asientan; la gente que camina por la acera",
+        "sostiene": [
+          {
+            "que": "la huella del Palacio, 8,890 m²",
+            "hecho": "comparacion-h02"
+          },
+          {
+            "que": "la caja del Palacio, 127 × 70 × 30 m",
+            "hecho": "comparacion-h01"
+          },
+          {
+            "que": "el Palacio de color verde (sin afirmar material ni tono exacto)",
+            "hecho": "visual-palacio-h01"
+          },
+          {
+            "que": "corredores y detalles decorativos de la fachada, sin número ni forma de patios",
+            "hecho": "visual-palacio-h02"
+          },
+          {
+            "que": "30 m de alto con tres pisos sobre el suelo más la terraza, sin torre ni reloj",
+            "hecho": "visual-palacio-h03"
+          },
+          {
+            "que": "el Palacio junto a la plaza principal (el lado cardinal es puesta en escena)",
+            "hecho": "visual-palacio-h04"
+          },
+          {
+            "que": "la altura de la pila, 5.06 m",
+            "hecho": "comparacion-c17"
+          },
+          {
+            "que": "casi el 17 % de la caja",
+            "hecho": "comparacion-c18"
+          },
+          {
+            "que": "la mezcla de la pila: principalmente plásticos y orgánicos",
+            "hecho": "plastico-h08"
+          },
+          {
+            "que": "el volumen de un año, 45 mil m³",
+            "hecho": "plastico-h01"
+          },
+          {
+            "que": "los transeúntes, las bancas, las farolas y los árboles de la plaza",
+            "generico": true
+          },
+          {
+            "que": "cómo cae la basura (nadie la apila ahí: es una medida)",
+            "generico": true
+          }
+        ]
+      }
+    },
+    "volteos": {
+      "escala": "esquema",
+      "receta": "carretera",
+      "semilla": 7,
+      "carriles": 4,
+      "tamano_m": 1600,
+      "horizonte": "colinas",
+      "estilo": "dia",
+      "piezas": [
+        {
+          "id": "autopista",
+          "tipo": "carretera",
+          "camino": "eje"
+        },
+        {
+          "id": "ambiente",
+          "tipo": "ambiente",
+          "ambiente": "campo",
+          "densidad": 0.8,
+          "radio_m": 700,
+          "semilla": 5
+        },
+        {
+          "id": "fila-volteos",
+          "tipo": "flujo",
+          "carriles": [
+            "carril-1",
+            "carril-2"
+          ],
+          "tipos": {
+            "volteo": 1
+          },
+          "densidad": 40,
+          "vel_kmh": 40,
+          "semilla": 4
+        }
+      ],
+      "protagonista": "fila-volteos",
+      "escena": {
+        "que_pasa": "Otra forma de medir el mismo año de basura: con la equivalencia que dio AMSA (3,000 m³ ≈ 300 camiones de volteo) son 4,500 camiones de volteo. Es una medida hipotética: esos camiones no circulan juntos.",
+        "quien": "nadie",
+        "con_que": "camiones de volteo genéricos con la palangana llena de basura mezclada",
+        "se_mueve": "la fila de volteos cargados que avanza por la carretera y se frena en una cola; la cabina se mece y el escape echa humo",
+        "sostiene": [
+          {
+            "que": "el camión de volteo como unidad de AMSA (3,000 m³ ≈ 300 camiones)",
+            "hecho": "visual-volteos-h01"
+          },
+          {
+            "que": "4,500 camiones de volteo",
+            "hecho": "comparacion-c22"
+          },
+          {
+            "que": "la carga mezclada (plásticos y orgánicos)",
+            "hecho": "plastico-h08"
+          },
+          {
+            "que": "el camión (cabina, palangana), sin logo, color ni marca",
+            "generico": true
+          },
+          {
+            "que": "la carretera, el campo, las colinas y el largo de la fila",
+            "generico": true
+          }
+        ],
+        "nota": "La cantidad de camiones que se ven ilustra: el número sale solo en la capa (comparacion-c22); el largo de la fila no se afirma. Los choferes no se ven."
+      },
+      "hora": "dia"
+    },
+    "cuenca": {
+      "escala": "pais",
+      "set": "guatemala",
+      "exageracion": 5.0,
+      "estilo": "color",
+      "lugares": {
+        "desembocadura": {
+          "lon": -90.5687216,
+          "lat": 14.4836161,
+          "nombre": "Desembocadura del Villalobos"
+        },
+        "villalobos-tramo": {
+          "lon": -90.561049,
+          "lat": 14.5269362,
+          "nombre": "Río Villalobos"
+        },
+        "lago-centro": {
+          "lon": -90.5678683,
+          "lat": 14.4559756,
+          "nombre": "Lago de Amatitlán"
+        }
+      },
+      "piezas": [
+        {
+          "id": "lagos",
+          "tipo": "lagos",
+          "nombres": [
+            "amatitlan"
+          ]
+        },
+        {
+          "id": "pueblos",
+          "tipo": "luces",
+          "lugares": [
+            "guatemala",
+            "villa-nueva",
+            "amatitlan",
+            "villa-canales",
+            "mixco"
+          ]
+        },
+        {
+          "id": "carreteras",
+          "tipo": "carreteras",
+          "clase": "troncal",
+          "grosor": 0.6
+        },
+        {
+          "id": "villalobos",
+          "tipo": "afluente",
+          "nombre": "Villalobos",
+          "puntos": [
+            [
+              -90.561049,
+              14.5269362
+            ],
+            [
+              -90.5687216,
+              14.4836161
+            ]
+          ],
+          "grosor": 3.0,
+          "corriente": true
+        }
+      ],
+      "protagonista": "villalobos"
+    },
+    "lago": {
+      "escala": "esquema",
+      "receta": "campo",
+      "semilla": 11,
+      "tamano_m": 600,
+      "horizonte": "montanas",
+      "estilo": "dia",
+      "piezas": [
+        {
+          "id": "corte",
+          "tipo": "lagocorte",
+          "lugar": [
+            0,
+            0
+          ],
+          "rumbo": 0,
+          "tamano": 1,
+          "peces": 70,
+          "marcados": 68,
+          "basura": 0.6,
+          "barda": true,
+          "personas": 0,
+          "semilla": 1
+        }
+      ],
+      "protagonista": "corte",
+      "escena": {
+        "que_pasa": "El lago visto en corte donde entra un río: la basura que baja queda atrapada contra la barda de retención de AMSA y no llega al espejo del lago; abajo, los peces. Un estudio de la USAC halló microplásticos, sobre todo línea o fibra, en el tracto digestivo de 68 de los 70 peces muestreados (97.14 %); no en la carne.",
+        "quien": "nadie",
+        "con_que": "la barda de retención artesanal de AMSA: envases plásticos reciclados atados con lazo",
+        "se_mueve": "la barda y la basura que suben y bajan con el oleaje; 70 peces que baten la cola; las fibras en el tracto de 68 que se encienden una tras otra",
+        "sostiene": [
+          {
+            "que": "la barda de envases plásticos reciclados atados con lazo",
+            "hecho": "visual-lago-h01"
+          },
+          {
+            "que": "la basura atrapada contra la barda en la desembocadura, sin llegar al espejo",
+            "hecho": "visual-lago-h02"
+          },
+          {
+            "que": "70 peces muestreados (dibujados genéricos)",
+            "hecho": "visual-lago-h06"
+          },
+          {
+            "que": "68 de 70 con microplástico en el tracto digestivo, no en la carne",
+            "hecho": "visual-lago-h08"
+          },
+          {
+            "que": "97.14 %",
+            "hecho": "plastico-c15"
+          },
+          {
+            "que": "la basura mezclada (bolsas, botellas, restos), sin animales",
+            "generico": true
+          },
+          {
+            "que": "la forma y el color de los peces, el fondo, la orilla y las montañas; los peces agrandados para contarlos",
+            "generico": true
+          },
+          {
+            "que": "dónde se ancla la barda, su altura y cómo flota",
+            "generico": true
+          }
+        ],
+        "nota": "El corte va sin gente (visual-lago: sin personas, lanchas ni máquinas confirmadas para hoy). Los peces no se ponen junto a la basura como causa: el estudio no dice dónde se pescaron ni de dónde viene el microplástico."
+      },
+      "ambiente": false,
+      "hora": "dia",
+      "lugares": {
+        "corte.peces": {
+          "x": 13.0,
+          "y": -14.0,
+          "nombre": "Los peces"
+        },
+        "corte.barda": {
+          "x": -11.2,
+          "y": 2.0,
+          "nombre": "La barda"
+        },
+        "corte.basura": {
+          "x": -17.0,
+          "y": 2.0,
+          "nombre": "La basura"
+        }
+      }
+    }
+  },
+  "gancho": {
+    "id": "g1",
+    "familia": "escala",
+    "elegido_por": "usuario"
+  },
+  "narracion": "Pon sobre el Palacio Nacional un año de basura del lago de Amatitlán, en Guatemala. AMSA estima que al lago entran unos 45 mil metros cúbicos de basura al año, sobre todo plásticos y orgánicos. Repartida sobre todo el terreno del Palacio, sube poco más de 5 metros: casi el 17 % de su volumen. Con la equivalencia que dio AMSA, son 4,500 camiones de volteo. El lago está a unos 25 kilómetros de la capital. En su cuenca viven más de 2 millones de personas, en 14 municipios. Su principal afluente contaminante es el río Villalobos, según AMSA. En marzo de este año, una sola lluvia metió por su desembocadura unos 2,400 metros cúbicos de basura. En el agua, un estudio de la USAC halló microplásticos en el tracto digestivo de 68 de 70 peces del lago. Y cada año empieza a caer otra pila igual.",
+  "aviso": "Esquema",
+  "no_afirmar": [
+    "Material de la fachada del Palacio ni tono exacto del verde; torre o reloj; número o forma de patios; hacia qué lado da la fachada o dónde está la Catedral.",
+    "Quién apila la basura sobre el Palacio, con qué máquinas o a qué hora: es una medida hipotética.",
+    "Ventas, palomas, tráfico o aglomeración en la plaza.",
+    "Que 10 m³ sea la capacidad real de un volteo; color, marca, ejes o logo de los camiones; que existan o circulen 4,500 camiones; el largo de la fila; un destino concreto.",
+    "Dónde se ancla la barda, su altura o cómo flota; personas, lanchas o máquinas en el lago de hoy; cadáveres de animales.",
+    "Que los peces naden junto a la barda o la basura; rasgos o colores de tilapia y guapote.",
+    "El año de la lluvia de 2,400 m³ en pantalla (no hay cifra de año): la voz dice «este año»."
+  ],
+  "caption": {
+    "tiktok": "AMSA estima que al lago de Amatitlán entran unos 45,000 m³ de basura al año. Sobre el Palacio Nacional, sube 5.06 m. #Guatemala #Amatitlan #Basura #Plastico",
+    "instagram": "Un año de basura del lago de Amatitlán, puesta sobre el Palacio Nacional.\n\nAMSA estima que entran unos 45,000 m³ de basura al año, sobre todo plásticos y orgánicos. Repartida sobre la huella del Palacio (8,890 m²), sube 5.06 m: casi el 17 % de su volumen. Con la equivalencia de AMSA, son 4,500 camiones de volteo. Su principal afluente contaminante es el río Villalobos, y un estudio de la USAC halló microplásticos en el tracto digestivo de 68 de 70 peces del lago.\n\n#Guatemala #LagoDeAmatitlan #Basura #Plastico #RioVillalobos",
+    "facebook": "¿Cuánto es un año de basura del lago de Amatitlán? AMSA estima que entran unos 45,000 m³ al año, sobre todo plásticos y orgánicos. Repartidos sobre la huella del Palacio Nacional de la Cultura (8,890 m²), suben 5.06 m, casi el 17 % de su volumen; con la equivalencia que dio AMSA, son 4,500 camiones de volteo. En la cuenca viven más de 2 millones de personas en 14 municipios, y su principal afluente contaminante es el río Villalobos: una sola lluvia de marzo metió unos 2,400 m³ por su desembocadura. Un estudio de la USAC halló microplásticos en el tracto digestivo de 68 de 70 peces muestreados.",
+    "shorts": "Un año de basura del lago de Amatitlán, sobre el Palacio Nacional\nAMSA estima unos 45,000 m³ de basura al año: sobre la huella del Palacio, 5.06 m de alto, o 4,500 camiones de volteo. #Shorts #Guatemala #Amatitlan"
+  },
+  "pie": "Relieve: Mapzen · Calles, edificios, zonas verdes, lugares, lagos y carreteras: © OpenStreetMap",
+  "ajustes": [
+    {
+      "fecha": "2026-11-17",
+      "escena": 8,
+      "elemento": "titular",
+      "antes": {
+        "texto": "Lo que llevan dentro los peces"
+      },
+      "cambios": {
+        "texto": "Lo que llevan dentro de los peces"
+      },
+      "quita": [],
+      "por": "titular sin la preposición «de» (visto en el storyboard)"
+    }
+  ],
+  "id": "video3d-plastico-amatitlan",
+  "slug": "plastico-amatitlan",
+  "tema": "El plástico que llega al lago de Amatitlán: la cifra hecha objeto",
+  "fecha": "2026-11-17",
+  "paleta": "jade",
+  "musica": "jade-1",
+  "desde": null,
+  "motor": "three",
+  "duracion_s": 62.3,
+  "creditos_voz": 890
+}

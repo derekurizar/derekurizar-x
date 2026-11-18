@@ -1,0 +1,1069 @@
+{
+  "tipo": "video3d",
+  "version": 1,
+  "escenas": [
+    {
+      "mundo": "bulevar",
+      "secuencia": 1,
+      "texto": "Por la Reforma de Guatemala no pasaban carros: pasaban carruajes.",
+      "titular": {
+        "kicker": "EL BULEVAR DE REYNA BARRIOS",
+        "texto": "Carruajes en la Reforma"
+      },
+      "camara": [
+        {
+          "mira": {
+            "actor": "coche"
+          },
+          "dist_m": 40,
+          "azimut": 150,
+          "elevacion": 18
+        },
+        {
+          "al": "fin",
+          "mira": {
+            "actor": "coche"
+          },
+          "dist_m": 60,
+          "azimut": 170,
+          "elevacion": 22
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "resaltar",
+          "pieza": "coche",
+          "dur": 2.4
+        }
+      ],
+      "n": 1,
+      "tipo": "gancho"
+    },
+    {
+      "n": 2,
+      "tipo": "escena",
+      "acto": 1,
+      "secuencia": 1,
+      "mundo": "bulevar",
+      "texto": "Al sur de la ciudad, el presidente José María Reyna Barrios trazó un bulevar inspirado en los Campos Elíseos de París.",
+      "titular": {
+        "kicker": "JOSÉ MARÍA REYNA BARRIOS",
+        "texto": "Un paseo a la manera de París"
+      },
+      "camara": [
+        {
+          "dice": "presidente",
+          "mira": "estatua-28",
+          "dist_m": 110,
+          "azimut": 165,
+          "elevacion": 13
+        },
+        {
+          "al": "fin",
+          "mira": "estatua-28",
+          "dist_m": 85,
+          "azimut": 140,
+          "elevacion": 12
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "Al sur de la ciudad",
+          "tipo": "resaltar",
+          "pieza": "coche",
+          "dur": 3.6
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "inspirado",
+          "lugar": "estatua-28",
+          "texto": "Bulevar 30 de Junio",
+          "sub": "Al sur de la ciudad",
+          "dura": 3.4,
+          "alto": 230
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "tipo": "escena",
+      "acto": 1,
+      "secuencia": 1,
+      "mundo": "bulevar",
+      "texto": "Dos calzadas al centro para los carruajes, dos a los lados para la gente a pie.",
+      "camara": [
+        {
+          "dice": "para los carruajes",
+          "mira": {
+            "actor": "coche"
+          },
+          "dist_m": 80,
+          "azimut": 170,
+          "elevacion": 16
+        },
+        {
+          "dice": "la gente a pie",
+          "mira": {
+            "actor": "paseante-3"
+          },
+          "dist_m": 45,
+          "azimut": 172,
+          "elevacion": 16
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "la gente a pie",
+          "tipo": "aparecer",
+          "pieza": "paseante-3",
+          "dur": 0.6
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "tipo": "escena",
+      "acto": 1,
+      "secuencia": 1,
+      "mundo": "bulevar",
+      "texto": "En sus jardines, 30 estatuas de mármol traídas de Italia.",
+      "camara": [
+        {
+          "mira": "estatua-28",
+          "dist_m": 60,
+          "azimut": 178,
+          "elevacion": 18
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "30 estatuas",
+          "tipo": "resaltar",
+          "pieza": "reforma",
+          "elemento": "estatua-28",
+          "dur": 1.8
+        },
+        {
+          "dice": "traídas de Italia",
+          "tipo": "resaltar",
+          "pieza": "reforma",
+          "elemento": "estatua-29",
+          "dur": 1.4
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "30 estatuas",
+          "valor": "30",
+          "rotulo": "estatuas de mármol traídas de Italia",
+          "cifra": "antes-c01"
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "tipo": "escena",
+      "acto": 2,
+      "secuencia": 1,
+      "mundo": "bulevar",
+      "texto": "Al final del paseo se alzaba el Palacio de la Reforma. Los terremotos de 1917 lo hicieron desaparecer.",
+      "titular": {
+        "kicker": "1917",
+        "texto": "Los terremotos"
+      },
+      "camara": [
+        {
+          "dice": "Palacio de la Reforma",
+          "mira": {
+            "actor": "coche"
+          },
+          "dist_m": 75,
+          "azimut": 188,
+          "elevacion": 18
+        },
+        {
+          "dice": "Los terremotos",
+          "al": "fin",
+          "mira": {
+            "actor": "coche"
+          },
+          "dist_m": 85,
+          "azimut": 198,
+          "elevacion": 20
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "se alzaba",
+          "tipo": "resaltar",
+          "pieza": "reforma",
+          "elemento": "reforma.palacio",
+          "dur": 2.4
+        },
+        {
+          "dice": "Los terremotos",
+          "tipo": "terremoto",
+          "pieza": "reforma",
+          "lugares": [
+            "reforma.palacio"
+          ],
+          "centro": "reforma.palacio",
+          "radio_m": 70,
+          "intensidad": 0.8,
+          "danos": 0.7,
+          "personas": 6,
+          "dur": 4.5,
+          "sfx": "grave"
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "Palacio de la Reforma",
+          "lugar": "reforma.palacio",
+          "texto": "Palacio de la Reforma",
+          "sub": "Forma ilustrativa",
+          "hasta_dice": "Los terremotos",
+          "alto": 0
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "tipo": "escena",
+      "acto": 2,
+      "secuencia": 2,
+      "mundo": "avenida",
+      "transicion": "oscuro",
+      "fundido_s": 0.8,
+      "texto": "En su lugar, desde 1935, está el Obelisco. Hoy es la avenida La Reforma: más de dos kilómetros entre las zonas 9 y 10.",
+      "titular": {
+        "kicker": "1935",
+        "texto": "Donde estuvo el palacio",
+        "hasta_dice": "Hoy es la avenida"
+      },
+      "camara": [
+        {
+          "mira": "reforma.obelisco",
+          "dist_m": 95,
+          "azimut": 18,
+          "elevacion": 28
+        },
+        {
+          "dice": "está el Obelisco",
+          "mira": "reforma.obelisco",
+          "dist_m": 90,
+          "azimut": 14,
+          "elevacion": 30
+        },
+        {
+          "dice": "Hoy es la avenida",
+          "mira": "reforma.obelisco",
+          "dist_m": 110,
+          "azimut": 14,
+          "elevacion": 44
+        },
+        {
+          "al": "fin",
+          "mira": "reforma-tramo-1",
+          "dist_m": 150,
+          "azimut": 14,
+          "elevacion": 56
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "está el Obelisco",
+          "tipo": "resaltar",
+          "pieza": "reforma",
+          "elemento": "reforma.obelisco",
+          "dur": 2.2
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "está el Obelisco",
+          "lugar": "reforma.obelisco",
+          "texto": "Obelisco",
+          "hasta_dice": "Hoy es la avenida",
+          "alto": 8
+        },
+        {
+          "dice": "zonas 9 y 10",
+          "lugar": "reforma-tramo-1",
+          "texto": "Avenida La Reforma",
+          "sub": "Hoy",
+          "dura": 1.8,
+          "alto": 0
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "tipo": "escena",
+      "acto": 2,
+      "secuencia": 2,
+      "mundo": "avenida",
+      "texto": "En 2003 se contaron en su arriate 461 árboles de 26 especies; 92 eran jacarandas.",
+      "camara": [
+        {
+          "dice": "461 árboles",
+          "mira": [
+            -90.516863,
+            14.598937
+          ],
+          "dist_m": 175,
+          "azimut": 16,
+          "elevacion": 46
+        },
+        {
+          "dice": "26 especies",
+          "mira": [
+            -90.516518,
+            14.600714
+          ],
+          "dist_m": 180,
+          "azimut": 16,
+          "elevacion": 36
+        },
+        {
+          "dice": "jacarandas",
+          "mira": "reforma.jacarandas",
+          "dist_m": 165,
+          "azimut": 18,
+          "elevacion": 30
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "92 eran jacarandas",
+          "tipo": "resaltar",
+          "pieza": "reforma",
+          "elemento": "reforma.jacarandas",
+          "dur": 2.4
+        }
+      ],
+      "marcas": null,
+      "cifras": [
+        {
+          "dice": "461 árboles",
+          "valor": "461",
+          "rotulo": "árboles en el arriate (2003)",
+          "cifra": "hoy-c03",
+          "dura": 2.6
+        },
+        {
+          "dice": "92 eran jacarandas",
+          "valor": "92",
+          "rotulo": "eran jacarandas",
+          "cifra": "hoy-c04"
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "tipo": "escena",
+      "acto": 3,
+      "secuencia": 2,
+      "mundo": "avenida",
+      "texto": "Entre semana la ordenan semáforos inteligentes. Pero cada domingo se cierra a los carros, y la toman quienes caminan, corren y pedalean.",
+      "camara": [
+        {
+          "dice": "inteligentes",
+          "mira": "reforma.semaforos",
+          "dist_m": 140,
+          "azimut": 20,
+          "elevacion": 26
+        },
+        {
+          "dice": "se cierra a los carros",
+          "mira": "reforma.arriate",
+          "dist_m": 110,
+          "azimut": 15,
+          "elevacion": 24
+        },
+        {
+          "dice": "caminan, corren y pedalean",
+          "mira": "reforma.arriate",
+          "dist_m": 95,
+          "azimut": 12,
+          "elevacion": 24
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "semáforos inteligentes",
+          "tipo": "resaltar",
+          "pieza": "reforma",
+          "elemento": "reforma.semaforos",
+          "dur": 2
+        },
+        {
+          "dice": "semáforos inteligentes",
+          "tipo": "frenar",
+          "flujo": "trafico",
+          "en": "50%",
+          "vel_kmh": 0,
+          "longitud_m": 120,
+          "dur": 1.2
+        },
+        {
+          "dice": "Pero cada domingo",
+          "tipo": "acelerar",
+          "flujo": "trafico",
+          "en": "50%",
+          "vel_kmh": 45,
+          "longitud_m": 120,
+          "dur": 0.8
+        },
+        {
+          "dice": "Pero cada domingo",
+          "tipo": "cerrarcalle",
+          "pieza": "reforma",
+          "flujo": "trafico",
+          "lugar": "reforma.arriate",
+          "personas": 30,
+          "bicicletas": 8,
+          "vallas": false,
+          "gente_tamano": 1.6,
+          "largo_m": 160,
+          "semilla": 1,
+          "dur": 6
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "cada domingo",
+          "lugar": "reforma.arriate",
+          "texto": "Domingo",
+          "sub": "Sin carros"
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "tipo": "cierre",
+      "acto": 3,
+      "secuencia": 2,
+      "mundo": "avenida",
+      "texto": "La calle de los carruajes vuelve a ser de quien camina.",
+      "final": "La calle de los carruajes vuelve a ser de quien camina.",
+      "camara": [
+        {
+          "al": "fin",
+          "mira": "reforma.arriate",
+          "dist_m": 60,
+          "azimut": 5,
+          "elevacion": 14
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "vuelve a ser de quien camina",
+          "tipo": "resaltar",
+          "pieza": "reforma",
+          "dur": 2.0
+        }
+      ]
+    }
+  ],
+  "estilo": {
+    "id": "dia",
+    "razon": "Un estilo por mundo, elegido por el usuario (2026-11-17): el bulevar de 1890 en «contorno» (papel crema y línea de tinta: se lee como grabado de época y marca el «antes» sin decirlo) y la avenida de hoy en «dia» (sol y sombra, el arriate lila y la gente del domingo); el oscuro entre los dos es el «antes y después».",
+    "confianza": "alta",
+    "candidatos": [
+      "dia"
+    ]
+  },
+  "idea_visual": "El mismo trazo de la Reforma en dos estados: el bulevar de carruajes, estatuas y palacio al sur de la ciudad de 1890, que se funde en la avenida de hoy entre torres, con su arriate de jacarandas y el Obelisco donde estuvo el palacio.",
+  "protagonista": "reforma",
+  "mundos": {
+    "bulevar": {
+      "escala": "ciudad",
+      "set": "capital",
+      "exageracion": 1.5,
+      "estilo": "contorno",
+      "lugares": {
+        "inicio": {
+          "lon": -90.5135586,
+          "lat": 14.6153387,
+          "nombre": "Inicio del bulevar",
+          "hecho": "antes-h11"
+        },
+        "palacio": {
+          "lon": -90.5166536,
+          "lat": 14.5950971,
+          "nombre": "Palacio de la Reforma",
+          "hecho": "antes-h08"
+        },
+        "jardin": {
+          "lon": -90.5151,
+          "lat": 14.6052,
+          "nombre": "Jardines del bulevar",
+          "hecho": "antes-h14"
+        },
+        "estatuas": {
+          "lon": -90.5153213,
+          "lat": 14.6065788,
+          "nombre": "Estatuas del bulevar",
+          "hecho": "antes-h14"
+        },
+        "reforma.inicio": {
+          "lon": -90.5139408,
+          "lat": 14.6150713,
+          "nombre": "Inicio del paseo",
+          "de_pieza": "reforma"
+        },
+        "reforma.jardin": {
+          "lon": -90.5157387,
+          "lat": 14.6049524,
+          "nombre": "Jardín central",
+          "de_pieza": "reforma"
+        },
+        "reforma.estatuas": {
+          "lon": -90.5157091,
+          "lat": 14.6051125,
+          "nombre": "Estatuas",
+          "de_pieza": "reforma"
+        },
+        "reforma.palacio": {
+          "lon": -90.5174038,
+          "lat": 14.594585,
+          "nombre": "Palacio",
+          "de_pieza": "reforma"
+        },
+        "reforma.plaza": {
+          "lon": -90.5174343,
+          "lat": 14.5949094,
+          "nombre": "Explanada",
+          "de_pieza": "reforma"
+        },
+        "tramo-sur": {
+          "lon": -90.5167378,
+          "lat": 14.598732,
+          "nombre": "Tramo sur",
+          "de_pieza": "reforma"
+        },
+        "estatua-27": {
+          "lon": -90.5173006,
+          "lat": 14.5969027,
+          "nombre": "Estatuas",
+          "de_pieza": "reforma"
+        },
+        "estatua-28": {
+          "lon": -90.5173705,
+          "lat": 14.5962362,
+          "nombre": "Estatuas",
+          "de_pieza": "reforma"
+        },
+        "estatua-29": {
+          "lon": -90.5174962,
+          "lat": 14.5955769,
+          "nombre": "Estatuas",
+          "de_pieza": "reforma"
+        }
+      },
+      "piezas": [
+        {
+          "id": "reforma",
+          "tipo": "bulevar1890",
+          "desde": "inicio",
+          "hacia": "palacio",
+          "estatuas": 30,
+          "carruajes": 6,
+          "paseantes": 20,
+          "quintas": 6,
+          "palacio": true,
+          "semilla": 1
+        },
+        {
+          "id": "coche",
+          "tipo": "actor",
+          "objeto": "carruaje",
+          "camino": "reforma.carruajes-1",
+          "claves": [
+            {
+              "t": 0,
+              "s": "93%",
+              "vel_kmh": 12
+            }
+          ]
+        },
+        {
+          "id": "ambiente",
+          "tipo": "ambiente",
+          "ambiente": "campo",
+          "densidad": 0.4,
+          "radio_m": 1400
+        },
+        {
+          "id": "paseante-1",
+          "tipo": "actor",
+          "objeto": "persona",
+          "camino": "reforma.peatones-este",
+          "claves": [
+            {
+              "t": 0,
+              "s": "94.6%",
+              "vel_kmh": 4
+            }
+          ]
+        },
+        {
+          "id": "paseante-2",
+          "tipo": "actor",
+          "objeto": "persona",
+          "camino": "reforma.peatones-este",
+          "claves": [
+            {
+              "t": 0,
+              "s": "95.2%",
+              "vel_kmh": 4
+            }
+          ],
+          "variante": 1
+        },
+        {
+          "id": "paseante-3",
+          "tipo": "actor",
+          "objeto": "persona",
+          "camino": "reforma.peatones-este",
+          "claves": [
+            {
+              "t": 0,
+              "s": "94.2%",
+              "vel_kmh": 4.5
+            }
+          ],
+          "variante": 2
+        },
+        {
+          "id": "coche-2",
+          "tipo": "actor",
+          "objeto": "carruaje",
+          "camino": "reforma.carruajes-2",
+          "claves": [
+            {
+              "t": 0,
+              "s": "96%",
+              "vel_kmh": 6
+            },
+            {
+              "t": 20,
+              "s": "98.6%",
+              "vel_kmh": 5
+            }
+          ],
+          "variante": 1
+        },
+        {
+          "id": "paseante-4",
+          "tipo": "actor",
+          "objeto": "persona",
+          "camino": "reforma.peatones-oeste",
+          "claves": [
+            {
+              "t": 0,
+              "s": "97.5%",
+              "vel_kmh": 3.5
+            }
+          ]
+        },
+        {
+          "id": "paseante-5",
+          "tipo": "actor",
+          "objeto": "persona",
+          "camino": "reforma.peatones-oeste",
+          "claves": [
+            {
+              "t": 0,
+              "s": "98%",
+              "vel_kmh": 3.5
+            }
+          ],
+          "variante": 2
+        },
+        {
+          "id": "paseante-6",
+          "tipo": "actor",
+          "objeto": "persona",
+          "camino": "reforma.peatones-este",
+          "claves": [
+            {
+              "t": 0,
+              "s": "98.5%",
+              "vel_kmh": 3
+            }
+          ],
+          "variante": 1
+        }
+      ],
+      "protagonista": "reforma",
+      "escena": {
+        "que_pasa": "Un paseo nuevo al sur de la ciudad: carruajes por las calzadas centrales, gente a pie por las laterales, jardines con estatuas de mármol y el Palacio de la Reforma cerrando el paseo; en 1917 los terremotos lo hacen desaparecer.",
+        "quien": "paseantes a pie y cocheros de carruajes",
+        "con_que": "carruajes de caballos, estatuas de mármol en sus pedestales, jardines, el palacio",
+        "se_mueve": "carruajes que avanzan por las calzadas centrales, paseantes que caminan por las laterales; las estatuas se encienden una tras otra; el palacio tiembla y desaparece entre polvo",
+        "sostiene": [
+          {
+            "que": "dos calzadas centrales para carruajes y dos laterales para peatones",
+            "hecho": "antes-h13"
+          },
+          {
+            "que": "30 estatuas de mármol traídas de Italia en los jardines",
+            "hecho": "antes-h14"
+          },
+          {
+            "que": "el Palacio de la Reforma al final del paseo, donde hoy está el Obelisco",
+            "hecho": "antes-h08"
+          },
+          {
+            "que": "el bulevar llegaba hasta el sitio del Obelisco",
+            "hecho": "antes-h12"
+          },
+          {
+            "que": "empezaba donde hoy está el Monumento al Ejército",
+            "hecho": "antes-h11"
+          },
+          {
+            "que": "trazado al sur de la ciudad, con jardín público",
+            "hecho": "cambio-h13"
+          },
+          {
+            "que": "residencias de esparcimiento de familias pudientes en las actuales zonas 9 y 10",
+            "hecho": "cambio-h08"
+          },
+          {
+            "que": "el palacio desapareció por los terremotos de 1917",
+            "hecho": "antes-h09"
+          },
+          {
+            "que": "campo y arboleda alrededor del paseo",
+            "generico": true
+          },
+          {
+            "que": "la forma de los carruajes y de las estatuas",
+            "generico": true
+          },
+          {
+            "que": "cuatro calzadas: dos centrales de carruajes y dos laterales de peatones",
+            "hecho": "visual-bulevar-h04"
+          },
+          {
+            "que": "30 estatuas de mármol genéricas en los jardines",
+            "hecho": "visual-bulevar-h03"
+          },
+          {
+            "que": "el palacio como volumen genérico al final del paseo",
+            "hecho": "visual-bulevar-h06"
+          },
+          {
+            "que": "jardines con fuentes genéricas dentro del paseo",
+            "hecho": "visual-bulevar-h01"
+          },
+          {
+            "que": "el palacio que desaparece con el temblor de 1917",
+            "hecho": "visual-bulevar-h08"
+          },
+          {
+            "que": "el ancho del paseo (40 m) y la forma del palacio",
+            "generico": true
+          }
+        ]
+      }
+    },
+    "avenida": {
+      "escala": "ciudad",
+      "set": "capital",
+      "exageracion": 1.5,
+      "estilo": "dia",
+      "hora": "dia",
+      "lugares": {
+        "obelisco": {
+          "lon": -90.5166536,
+          "lat": 14.5950971,
+          "nombre": "Obelisco",
+          "hecho": "hoy-h16"
+        },
+        "reforma": {
+          "lon": -90.5153213,
+          "lat": 14.6065788,
+          "nombre": "Avenida La Reforma",
+          "hecho": "hoy-h01"
+        },
+        "reforma.obelisco": {
+          "lon": -90.517707,
+          "lat": 14.5943481,
+          "nombre": "Obelisco",
+          "de_pieza": "reforma"
+        },
+        "reforma.arriate": {
+          "lon": -90.5157016,
+          "lat": 14.6051541,
+          "nombre": "Arriate central",
+          "de_pieza": "reforma"
+        },
+        "reforma.norte": {
+          "lon": -90.5138849,
+          "lat": 14.6151848,
+          "nombre": "Extremo norte",
+          "de_pieza": "reforma"
+        },
+        "reforma.sur": {
+          "lon": -90.5176014,
+          "lat": 14.5951258,
+          "nombre": "Extremo sur",
+          "de_pieza": "reforma"
+        },
+        "reforma.jacarandas": {
+          "lon": -90.5160689,
+          "lat": 14.6030249,
+          "nombre": "Jacarandas",
+          "de_pieza": "reforma"
+        },
+        "reforma.semaforos": {
+          "lon": -90.515748,
+          "lat": 14.6049065,
+          "nombre": "Semáforos",
+          "de_pieza": "reforma"
+        },
+        "reforma-tramo": {
+          "lon": -90.51684,
+          "lat": 14.59908,
+          "nombre": "Avenida La Reforma, tramo sur",
+          "hecho": "hoy-h01"
+        },
+        "reforma-tramo-1": {
+          "lon": -90.51722,
+          "lat": 14.5971,
+          "nombre": "Avenida La Reforma, inicio sur",
+          "hecho": "hoy-h01"
+        },
+        "reforma-medio": {
+          "lon": -90.51645,
+          "lat": 14.60105,
+          "nombre": "Avenida La Reforma, tramo medio",
+          "hecho": "hoy-h01"
+        }
+      },
+      "piezas": [
+        {
+          "id": "parques",
+          "tipo": "zona",
+          "area": "parques",
+          "tono": "verde",
+          "opacidad": 0.5,
+          "borde": false
+        },
+        {
+          "id": "calles",
+          "tipo": "calles"
+        },
+        {
+          "id": "edificios",
+          "tipo": "edificios"
+        },
+        {
+          "id": "reforma",
+          "tipo": "avenidareforma",
+          "arboles": "denso",
+          "jacarandas": 0.2,
+          "jacaranda_flor": true,
+          "semaforos": true,
+          "obelisco": true,
+          "auxiliares": true,
+          "personas": 16,
+          "gente_tamano": 1.4,
+          "semilla": 1
+        },
+        {
+          "id": "trafico",
+          "tipo": "flujo",
+          "carriles": [
+            "reforma.norte-1",
+            "reforma.norte-2",
+            "reforma.norte-3",
+            "reforma.sur-1",
+            "reforma.sur-2",
+            "reforma.sur-3"
+          ],
+          "tipos": {
+            "carro": 0.85,
+            "bus": 0.1,
+            "moto": 0.05
+          },
+          "densidad": 14,
+          "vel_kmh": 45
+        },
+        {
+          "id": "ambiente",
+          "tipo": "ambiente",
+          "ambiente": "ciudad",
+          "densidad": 0.5,
+          "radio_m": 1200
+        }
+      ],
+      "protagonista": "reforma",
+      "escena": {
+        "que_pasa": "La avenida de hoy como límite entre las zonas 9 y 10: tráfico entre semana con semáforos inteligentes, un arriate central arbolado con jacarandas, el Obelisco al sur; el domingo se cierra a los carros y la toma la gente.",
+        "quien": "conductores entre semana; el domingo gente que camina, corre, patina y pedalea",
+        "con_que": "carros, buses y motos; semáforos; árboles del arriate; bicicletas",
+        "se_mueve": "el tráfico que frena y arranca con los semáforos; las jacarandas que se encienden en lila; el domingo los carros salen y entra la gente",
+        "sostiene": [
+          {
+            "que": "la avenida como límite entre las zonas 9 y 10",
+            "hecho": "hoy-h01"
+          },
+          {
+            "que": "el Obelisco en el extremo sur",
+            "hecho": "hoy-h16"
+          },
+          {
+            "que": "el Obelisco inaugurado en 1935 en el extremo sur",
+            "hecho": "cambio-h07"
+          },
+          {
+            "que": "va del Monumento al Ferrocarril, al norte, al Obelisco, al sur",
+            "hecho": "cambio-h14"
+          },
+          {
+            "que": "arriate central con 461 árboles de 26 especies, 92 jacarandas (2003)",
+            "hecho": "hoy-h06"
+          },
+          {
+            "que": "carriles auxiliares a los lados de la vía principal",
+            "hecho": "hoy-h10"
+          },
+          {
+            "que": "semáforos inteligentes en la avenida",
+            "hecho": "hoy-h19"
+          },
+          {
+            "que": "los domingos cerrada a los carros: caminar, correr, patinar o pedalear",
+            "hecho": "hoy-h18"
+          },
+          {
+            "que": "el número de carriles, la densidad del tráfico y las torres de los lados",
+            "generico": true
+          },
+          {
+            "que": "camellón central con caminos y jardín",
+            "hecho": "visual-avenida-h01"
+          },
+          {
+            "que": "árboles de varias especies, algunas jacarandas en lila (marzo y abril)",
+            "hecho": "visual-avenida-h11"
+          },
+          {
+            "que": "arteria de mucho tráfico, cantidad ilustrativa",
+            "hecho": "visual-avenida-h05"
+          },
+          {
+            "que": "plaza del Obelisco, forma genérica",
+            "hecho": "visual-avenida-h06"
+          },
+          {
+            "que": "cierre dominical a los carros, sin vallas ni tramos precisos",
+            "hecho": "visual-avenida-h07"
+          },
+          {
+            "que": "carriles auxiliares a los lados",
+            "hecho": "visual-avenida-h08"
+          },
+          {
+            "que": "semáforos inteligentes sin ubicación exacta",
+            "hecho": "visual-avenida-h09"
+          }
+        ]
+      }
+    }
+  },
+  "gancho": {
+    "id": "g5",
+    "familia": "recorrido",
+    "elegido_por": "usuario"
+  },
+  "narracion": "Por la Reforma de Guatemala no pasaban carros: pasaban carruajes. Al sur de la ciudad, el presidente José María Reyna Barrios trazó un bulevar inspirado en los Campos Elíseos de París. Dos calzadas al centro para los carruajes, dos a los lados para la gente a pie. En sus jardines, 30 estatuas de mármol traídas de Italia. Al final del paseo se alzaba el Palacio de la Reforma. Los terremotos de 1917 lo hicieron desaparecer. En su lugar, desde 1935, está el Obelisco. Hoy es la avenida La Reforma: más de dos kilómetros entre las zonas 9 y 10. En 2003 se contaron en su arriate 461 árboles de 26 especies; 92 eran jacarandas. Entre semana la ordenan semáforos inteligentes. Pero cada domingo se cierra a los carros, y la toman quienes caminan, corren y pedalean. La calle de los carruajes vuelve a ser de quien camina.",
+  "no_afirmar": [
+    "El año firme de apertura del bulevar (1892/1894/1895/1896 en disputa)",
+    "El año del cambio de nombre a La Reforma",
+    "El largo exacto (la voz solo puede decir «más de dos kilómetros»)",
+    "Que el bulevar llegara a La Aurora o a la Estación Central",
+    "La altura de la Torre del Reformador y que esté sobre la avenida",
+    "Ningún edificio alto concreto sobre la avenida",
+    "La población de 1880, 1921 y 1973",
+    "El aforo de vehículos y el número de carriles (lo dibujado es ilustrativo)",
+    "El mes de floración de las jacarandas en la Reforma",
+    "El año de creación de las zonas 9 y 10",
+    "Que los terremotos de 1917-18 causaran el traslado de la élite",
+    "Forma, planta, pisos o cúpula del Palacio de la Reforma: volumen genérico rotulado «Forma ilustrativa»",
+    "Disposición, pose, tamaño o autor de cada estatua; especie y densidad de los árboles del paseo; tipo de carruaje y cuántos circulaban",
+    "Dónde estuvo la Exposición Centroamericana (no se nombra ni se dibuja)",
+    "Derrumbe total o ruina del palacio en 1917-18: la voz dice solo que desapareció",
+    "Tren Decauville; el ensanche de 70 a 120 pies (una sola fuente: el paseo va con su ancho genérico)",
+    "Altura y peso del Obelisco, su forma exacta y que su plaza sea una rotonda",
+    "Que las 92 jacarandas de 2003 sigan hoy o dónde están: la proporción en el arriate es ilustrativa",
+    "Tramos, vallas y horas del cierre dominical (sin vallas); dónde van los semáforos inteligentes y desde cuándo",
+    "Que los árboles de hoy sean los de 1896; el año 1950 de la llama eterna"
+  ],
+  "aviso": "Maqueta · formas ilustrativas",
+  "caption": {
+    "tiktok": "Por la Reforma de Guatemala no pasaban carros: pasaban carruajes. Reyna Barrios la trazó como un bulevar a la manera de París, con 30 estatuas de mármol traídas de Italia y un palacio en su extremo sur, que los terremotos de 1917 hicieron desaparecer. Hoy, donde estuvo, está el Obelisco (1935). En 2003 su arriate tenía 461 árboles; 92 eran jacarandas. Y cada domingo se cierra a los carros. ¿La caminas los domingos?\n#Guatemala #AvenidaReforma #HistoriaDeGuatemala #CiudadDeGuatemala",
+    "instagram": "La Reforma antes y después.\n\nAntes: el Bulevar 30 de Junio de Reyna Barrios, al sur de la ciudad, con dos calzadas para carruajes, dos para peatones y 30 estatuas de mármol traídas de Italia. En su extremo sur, el Palacio de la Reforma, que los terremotos de 1917 hicieron desaparecer.\n\nHoy: el Obelisco (1935), el límite entre las zonas 9 y 10 y un arriate que en 2003 tenía 461 árboles de 26 especies, 92 de ellos jacarandas. Los domingos, sin carros.\n\nFuentes: Ministerio de Cultura y Deportes, Prensa Libre, tesis de la UVG (2003), La Hora.\n#Guatemala #AvenidaReforma #HistoriaDeGuatemala #Jacarandas",
+    "facebook": "Por la avenida La Reforma no siempre pasaron carros. A mediados de la década de 1890 era el Bulevar 30 de Junio de José María Reyna Barrios: dos calzadas al centro para carruajes, dos a los lados para la gente a pie, 30 estatuas de mármol traídas de Italia y, en su extremo sur, el Palacio de la Reforma, que desapareció con los terremotos de 1917. En su lugar está desde 1935 el Obelisco. Hoy la avenida separa las zonas 9 y 10; en 2003 su arriate tenía 461 árboles y 92 eran jacarandas. Y cada domingo vuelve a ser de quien camina.\n\nFuentes: Ministerio de Cultura y Deportes, Prensa Libre, tesis de la UVG (2003), La Hora.",
+    "shorts": "La Reforma de Guatemala antes de los carros: carruajes, 30 estatuas y un palacio\nEl Bulevar 30 de Junio de Reyna Barrios y la avenida de hoy, entre las zonas 9 y 10, sobre el mismo trazo.\n#Shorts #Guatemala #AvenidaReforma"
+  },
+  "ajustes": [
+    {
+      "fecha": "2026-11-17",
+      "que": "mundos.bulevar.estilo dia → contorno (sin `hora`: contorno no tiene horas)",
+      "por": "el usuario eligió contorno → día; la reanudación pasó estilo «dia» y el director lo aplicó a los dos mundos"
+    },
+    {
+      "fecha": "2026-11-17",
+      "escena": 7,
+      "elemento": "camara:0",
+      "antes": {
+        "mira": "reforma-tramo",
+        "elevacion": 40
+      },
+      "cambios": {
+        "mira": [
+          -90.516863,
+          14.598937
+        ],
+        "elevacion": 46
+      },
+      "quita": [],
+      "por": "M3D3 paneo 0.88/0.89 con la voz real: las claves de «461 árboles» y «26 especies» reparten el recorrido del arriate y bajan más suave (probado en copia)"
+    },
+    {
+      "fecha": "2026-11-17",
+      "escena": 7,
+      "elemento": "camara:1",
+      "antes": {
+        "mira": "reforma-medio",
+        "elevacion": 32
+      },
+      "cambios": {
+        "mira": [
+          -90.516518,
+          14.600714
+        ],
+        "elevacion": 36
+      },
+      "quita": [],
+      "por": "M3D3 paneo 0.88/0.89 con la voz real: las claves de «461 árboles» y «26 especies» reparten el recorrido del arriate y bajan más suave (probado en copia)"
+    }
+  ],
+  "id": "video3d-avenida-reforma",
+  "slug": "avenida-reforma",
+  "tema": "La Avenida La Reforma de la Ciudad de Guatemala, antes y después: el bulevar de 1890 en las afueras y la avenida de hoy",
+  "fecha": "2026-11-17",
+  "paleta": "jacaranda",
+  "musica": "atitlan-1",
+  "desde": null,
+  "motor": "three",
+  "duracion_s": 64.5,
+  "creditos_voz": 927.9
+}

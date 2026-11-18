@@ -1,0 +1,203 @@
+{
+ "tipo": "transformar",
+ "clase": "evento",
+ "cuando": "una pieza pasa de una época a otra como obra: lo viejo se hunde, la tierra se mueve, suben pilas, se tienden tableros y llegan los carros",
+ "parametros": {
+  "pieza": {
+   "tipo": "pieza",
+   "requerido": true,
+   "descripcion": "la pieza que cambia de época (un `trebol` u otra con `epocas: true` en su módulo: ella dibuja sus épocas y aquí va solo la obra) o cualquier pieza con lugar junto a la que este evento dibuja lo viejo y lo nuevo"
+  },
+  "de": {
+   "tipo": "texto",
+   "requerido": true,
+   "descripcion": "la época de la que sale (p. ej. «1950»); no se rotula en el 3D: va en la capa"
+  },
+  "a": {
+   "tipo": "texto",
+   "requerido": true,
+   "descripcion": "la época a la que llega (p. ej. «1959»); no se rotula en el 3D: va en la capa"
+  },
+  "orden": {
+   "tipo": "texto",
+   "requerido": false,
+   "valores": [
+    "centro-afuera",
+    "azar"
+   ],
+   "defecto": "centro-afuera",
+   "descripcion": "en qué orden se hunde lo viejo, suben las pilas y se tienden los tramos: del centro hacia afuera o en un azar fijo por `semilla`"
+  },
+  "hundir_desde_s": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    120
+   ],
+   "defecto": 0,
+   "descripcion": "segundos desde el inicio del evento en que lo viejo sigue en pie (callecitas, casas, la fábrica, su gente): la obra entera (hundirse, la tierra, las pilas, los tableros y los carros) cabe en lo que queda de `dur`; mientras tanto los volteos llegan desde afuera (lo que se mueve en el cuadro cero). Sin él (0): la obra empieza al empezar el evento"
+  },
+  "ultimo": {
+   "tipo": "lista",
+   "requerido": false,
+   "descripcion": "lo que se hunde AL FINAL de lo viejo, aun con orden «azar»: una lista de «fabrica» (la nave y su chimenea, las del evento y la de la pieza trebol), «casas», «gente», «cerca», «arboles»; p. ej. [\"fabrica\"]"
+  },
+  "lugar": {
+   "tipo": "lugar",
+   "requerido": false,
+   "descripcion": "el centro de la obra, si no es el lugar de la pieza (o si la pieza no tiene lugar), p. ej. «el-trebol»"
+  },
+  "rumbo": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    360
+   ],
+   "descripcion": "giro del nudo y de las calles viejas (grados; 0 = este); sin él, el de la pieza o 0"
+  },
+  "radio_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    60,
+    400
+   ],
+   "defecto": 150,
+   "descripcion": "radio de la obra en metros (lo viejo, el terreno de tierra y el nudo caben en él); ilustrativo"
+  },
+  "alto_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    4,
+    14
+   ],
+   "defecto": 6.5,
+   "descripcion": "altura de los tableros sobre las calzadas de abajo; ilustrativa, no se rotula"
+  },
+  "cuerpo": {
+   "tipo": "bool",
+   "requerido": false,
+   "descripcion": "true: el evento dibuja lo viejo (callecitas, casas genéricas, la fábrica de tejidos genérica, potrero) y lo nuevo (tres puentes); false: solo la obra. Sin él: false si la pieza declara `epocas`, true si no"
+  },
+  "autos": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    12
+   ],
+   "defecto": 4,
+   "descripcion": "carros por puente al final (más dos por calzada de abajo); ilustrativo, sin modelo ni cifra"
+  },
+  "obreros": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    16
+   ],
+   "defecto": 10,
+   "descripcion": "obreros genéricos junto a las pilas mientras dura la obra (sin empresa ni número)"
+  },
+  "volteos": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    4
+   ],
+   "defecto": 2,
+   "descripcion": "volteos genéricos que dan vueltas por el terreno mientras se mueve la tierra"
+  },
+  "gente_tamano": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    1,
+    3
+   ],
+   "defecto": 1.6,
+   "descripcion": "escala de la gente para que se lea de lejos (≈ 2.4 con la cámara a 200–250 m)"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "variación de casas, árboles, montículos, el orden «azar» y los carros"
+  },
+  "volteos_tamano": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    1,
+    3
+   ],
+   "defecto": 1,
+   "descripcion": "escala de los volteos para que se lean de lejos (≈ 1.8 con la cámara a 200–250 m)"
+  }
+ },
+ "escalas": [
+  "ciudad",
+  "esquema"
+ ],
+ "motores": [
+  "three"
+ ],
+ "adelanto": {
+  "s": 0.1
+ },
+ "nivel": "evento",
+ "contiene": [
+  "callecitas de tierra clara (sin afirmar el material) y un potrero con su cerca de postes y dos hilos",
+  "casas genéricas de una y dos plantas con zócalo, puerta, ventanas con marco y techo de lámina a un agua o losa con pretil",
+  "fábrica de tejidos genérica: nave con ventanales corridos, pilastras, portón y techo de dientes de sierra con vidrio; chimenea de ladrillo por anillos que humea",
+  "árboles de patio y de la orilla del potrero",
+  "terreno de obra que se abre y ondula, con zanjas (fondo oscuro, paredes y bordos de tierra sacada) donde van las pilas y montones de tierra de dos o tres lomos; montículos que se empujan, volteos genéricos y obreros genéricos",
+  "pilas de dos columnas con zapata y viga cabezal",
+  "tres puentes con tableros de asfalto, rayas, pretiles de concreto, goterón, vigas, estribo y rampas macizas, postes de luz con brazo",
+  "calzadas a nivel que llegan al cruce por debajo de los puentes y la plancha del cruce; jardines donde quedó tierra",
+  "carros genéricos que suben por las rampas y cruzan los puentes; de noche, faros, ventanas y postes encendidos"
+ ],
+ "animado": "cada parte de lo viejo se hunde en su turno con polvo (con `hundir_desde_s`, no antes de ese segundo, y lo de `ultimo` al final); mientras tanto los volteos llegan desde afuera; la tierra se abre con sus zanjas y montones; los montículos crecen, se arrastran y se aplanan; volteos y obreros trabajan; las pilas suben y los tableros se tienden tramo a tramo desde el centro de cada puente con un rebote corto; se asfaltan las calzadas, zanjas y montones se aplanan, la tierra se vuelve jardín y entran los carros, que siguen andando (todo función de t)",
+ "gente": "paseantes en las callecitas antes de la obra y obreros genéricos durante (muñecos sin rostro)",
+ "distancia_m": [
+  200,
+  700
+ ],
+ "caja_m": [
+  300,
+  300,
+  30
+ ],
+ "usa": [
+  "persona",
+  "volteo",
+  "carro"
+ ],
+ "ejemplo": {
+  "t": 0.0,
+  "dur": 18,
+  "tipo": "transformar",
+  "pieza": "trebol",
+  "de": "1950",
+  "a": "1959",
+  "orden": "azar",
+  "hundir_desde_s": 10.6,
+  "ultimo": [
+   "fabrica"
+  ],
+  "autos": 4,
+  "obreros": 10,
+  "volteos": 3,
+  "volteos_tamano": 1.8,
+  "gente_tamano": 2.4,
+  "semilla": 2
+ }
+}

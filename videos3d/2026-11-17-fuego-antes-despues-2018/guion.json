@@ -1,0 +1,1054 @@
+{
+  "tipo": "video3d",
+  "version": 1,
+  "escenas": [
+    {
+      "mundo": "lajas2018",
+      "secuencia": 1,
+      "texto": "Así bajó el volcán de Fuego por esta barranca de Guatemala.",
+      "titular": {
+        "kicker": "VOLCÁN DE FUEGO · 2018",
+        "texto": "Por dónde bajó: Las Lajas"
+      },
+      "camara": [
+        {
+          "mira": "vista-alta",
+          "dist_km": 27,
+          "azimut": -30,
+          "elevacion": 62
+        },
+        {
+          "al": "fin",
+          "mira": "vista-alta",
+          "dist_km": 25,
+          "azimut": -28,
+          "elevacion": 62
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "descenso",
+          "pieza": "lajas",
+          "pulsos": 3,
+          "hasta": 0.85,
+          "queda": true,
+          "dur": 4.5,
+          "sfx": "grave"
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "volcán de Fuego",
+          "lugar": "cumbre-fuego",
+          "texto": "Volcán de Fuego",
+          "alto": 40
+        }
+      ],
+      "n": 1,
+      "tipo": "gancho",
+      "acto": 1
+    },
+    {
+      "n": 2,
+      "tipo": "toma",
+      "acto": 1,
+      "secuencia": 1,
+      "mundo": "lajas2018",
+      "texto": "Se llama Las Lajas. A unos 10 kilómetros de la cumbre, a su pie, estaban San Miguel Los Lotes y El Rodeo.",
+      "camara": [
+        {
+          "dice": "Las Lajas",
+          "mira": "vista-alta",
+          "dist_km": 23,
+          "azimut": -26,
+          "elevacion": 62
+        },
+        {
+          "dice": "a su pie",
+          "mira": "aldeas-pie",
+          "dist_km": 17,
+          "azimut": -20,
+          "elevacion": 62
+        },
+        {
+          "al": "fin",
+          "mira": "aldeas-pie",
+          "dist_km": 16,
+          "azimut": -18,
+          "elevacion": 62
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "Las Lajas",
+          "tipo": "resaltar",
+          "pieza": "lajas",
+          "dur": 2.2
+        },
+        {
+          "dice": "San Miguel Los Lotes",
+          "tipo": "resaltar",
+          "lugar": "los-lotes",
+          "dur": 1.6
+        },
+        {
+          "dice": "El Rodeo",
+          "tipo": "resaltar",
+          "lugar": "el-rodeo",
+          "dur": 1.6
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "Las Lajas",
+          "lugar": "puente-lajas",
+          "texto": "Barranca Las Lajas",
+          "sub": "Flanco sureste",
+          "alto": 40,
+          "hasta_dice": "de la cumbre"
+        },
+        {
+          "dice": "San Miguel Los Lotes",
+          "lugar": "los-lotes",
+          "texto": "San Miguel Los Lotes"
+        },
+        {
+          "dice": "El Rodeo",
+          "lugar": "el-rodeo",
+          "texto": "El Rodeo"
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "10 kilómetros",
+          "valor": "10 km",
+          "rotulo": "de la cumbre a Los Lotes y El Rodeo",
+          "cifra": "lugar-c04",
+          "fuente": "Smithsonian GVP"
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "tipo": "toma",
+      "acto": 2,
+      "secuencia": 2,
+      "mundo": "lotes",
+      "transicion": "fundido",
+      "fundido_s": 0.6,
+      "texto": "Los Lotes era una aldea de cortadores de café, con casas de lámina, block y ladrillo.",
+      "titular": {
+        "kicker": "ANTES DE 2018",
+        "texto": "Una aldea al pie de la barranca"
+      },
+      "camara": [
+        {
+          "mira": [
+            -175,
+            -80
+          ],
+          "dist_m": 600,
+          "azimut": -95,
+          "elevacion": 20
+        },
+        {
+          "dice": "cortadores de café",
+          "mira": [
+            -310,
+            -140
+          ],
+          "dist_m": 215,
+          "azimut": -90,
+          "elevacion": 14,
+          "mira_lev_m": 1
+        },
+        {
+          "dice": "casas de lámina",
+          "mira": [
+            -320,
+            -140
+          ],
+          "dist_m": 75,
+          "azimut": -80,
+          "elevacion": 9,
+          "mira_lev_m": 1
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "una aldea",
+          "tipo": "resaltar",
+          "pieza": "aldea",
+          "dur": 2.0
+        },
+        {
+          "dice": "cortadores de café",
+          "tipo": "resaltar",
+          "pieza": "cafetal",
+          "dur": 1.0
+        }
+      ],
+      "marcas": [
+        {
+          "lugar": "aldea.aldea",
+          "texto": "La aldea",
+          "sub": "Esquema",
+          "alto": 20,
+          "dura": 1.5
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "tipo": "toma",
+      "acto": 2,
+      "secuencia": 2,
+      "mundo": "lotes",
+      "texto": "El 3 de junio de 2018, el flujo piroclástico bajó en pulsos, se desbordó junto al puente y entró a la aldea.",
+      "titular": {
+        "kicker": "3 DE JUNIO DE 2018",
+        "texto": "Baja por la barranca"
+      },
+      "camara": [
+        {
+          "mira": "aldea.puente",
+          "dist_m": 700,
+          "azimut": -100,
+          "elevacion": 18,
+          "dice": "bajó en pulsos"
+        },
+        {
+          "dice": "se desbordó",
+          "mira": "aldea.puente",
+          "dist_m": 600,
+          "azimut": -105,
+          "elevacion": 20
+        },
+        {
+          "al": "fin",
+          "mira": "aldea.aldea",
+          "dist_m": 450,
+          "azimut": -85,
+          "elevacion": 24
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "el flujo piroclástico",
+          "tipo": "piroclastico",
+          "pieza": "aldea",
+          "pulsos": 3,
+          "desborde": 0.8,
+          "cubre": 0.6,
+          "bloques": 15,
+          "humo": true,
+          "vacia": true,
+          "gente": 8,
+          "queda": true,
+          "semilla": 1,
+          "dur": 7.5,
+          "sfx": "grave"
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "junto al puente",
+          "lugar": "aldea.puente",
+          "texto": "El puente",
+          "hasta_dice": "entró a la aldea"
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "tipo": "toma",
+      "acto": 2,
+      "secuencia": 2,
+      "mundo": "lotes",
+      "texto": "Enterró gran parte de Los Lotes hasta los techos. Murieron más de doscientas personas, y hubo 229 desaparecidos.",
+      "camara": [
+        {
+          "dice": "hasta los techos",
+          "mira": "aldea.lado-barranca",
+          "dist_m": 220,
+          "azimut": -60,
+          "elevacion": 16
+        },
+        {
+          "dice": "Murieron",
+          "mira": "aldea.lado-barranca",
+          "dist_m": 320,
+          "azimut": -50,
+          "elevacion": 26
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "hasta los techos",
+          "lugar": "aldea.lado-barranca",
+          "texto": "Enterrada hasta el techo",
+          "alto": 40,
+          "hasta_dice": "Murieron"
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "229",
+          "valor": "229",
+          "rotulo": "desaparecidos (cifra oficial)",
+          "cifra": "cambio-c07"
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "tipo": "toma",
+      "acto": 2,
+      "secuencia": 2,
+      "mundo": "lotes",
+      "texto": "Conred declaró la zona inhabitable; los sobrevivientes fueron trasladados a La Dignidad. Con la lluvia, la ceniza se endureció como concreto.",
+      "titular": {
+        "kicker": "DESPUÉS · ZONA INHABITABLE",
+        "texto": "Sobrevivientes: a La Dignidad"
+      },
+      "camara": [
+        {
+          "mira": "aldea.lado-barranca",
+          "dist_m": 300,
+          "azimut": -40,
+          "elevacion": 22
+        },
+        {
+          "dice": "La Dignidad",
+          "mira": "aldea.escuela",
+          "dist_m": 360,
+          "azimut": -32,
+          "elevacion": 22
+        },
+        {
+          "dice": "Con la lluvia",
+          "mira": [
+            40,
+            -10
+          ],
+          "dist_m": 440,
+          "azimut": -28,
+          "elevacion": 25
+        },
+        {
+          "al": "fin",
+          "mira": [
+            40,
+            -10
+          ],
+          "dist_m": 400,
+          "azimut": -22,
+          "elevacion": 22
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "Con la lluvia",
+          "tipo": "endurecer",
+          "pieza": "aldea",
+          "lluvia": 0.8,
+          "costra": 0.85,
+          "grietas": 0.6,
+          "semilla": 1,
+          "dur": 3.2
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "tipo": "toma",
+      "acto": 3,
+      "secuencia": 3,
+      "mundo": "lajas2026",
+      "transicion": "oscuro",
+      "fundido_s": 0.6,
+      "texto": "Pero el Fuego sigue bajando por Las Lajas. En agosto de 2026, con alerta roja, se cerró la RN-14 en el kilómetro 83 y cerca de 1,700 personas fueron evacuadas.",
+      "titular": {
+        "kicker": "AGOSTO DE 2026",
+        "texto": "Alerta roja"
+      },
+      "camara": [
+        {
+          "mira": "vista-alta",
+          "dist_km": 25,
+          "azimut": -28,
+          "elevacion": 62
+        },
+        {
+          "dice": "En agosto",
+          "mira": "vista",
+          "dist_km": 22,
+          "azimut": -36,
+          "elevacion": 50
+        },
+        {
+          "dice": "la RN-14",
+          "mira": "norte-aloten",
+          "dist_km": 20,
+          "azimut": -12,
+          "elevacion": 62
+        },
+        {
+          "dice": "el kilómetro",
+          "mira": "norte-aloten",
+          "dist_km": 19,
+          "azimut": -12,
+          "elevacion": 62
+        },
+        {
+          "dice": "personas fueron evacuadas",
+          "mira": "entre",
+          "dist_km": 19,
+          "azimut": -14,
+          "elevacion": 60
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "descenso",
+          "pieza": "lajas",
+          "pulsos": 2,
+          "hasta": 0.55,
+          "queda": true,
+          "dur": 4.0,
+          "sfx": "grave"
+        },
+        {
+          "dice": "la RN-14",
+          "tipo": "resaltar",
+          "lugar": "alotenango",
+          "dur": 2.6
+        },
+        {
+          "dice": "personas fueron evacuadas",
+          "tipo": "resaltar",
+          "lugar": "aldea-el-porvenir",
+          "dur": 2.0
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "la RN-14",
+          "lugar": "alotenango",
+          "texto": "RN-14 cerrada",
+          "sub": "Entrada de Alotenango",
+          "alto": 30,
+          "hasta_dice": "y cerca"
+        },
+        {
+          "dice": "personas fueron evacuadas",
+          "lugar": "aldea-el-porvenir",
+          "texto": "El Porvenir",
+          "sub": "Aldea evacuada"
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "1,700 personas",
+          "valor": "1,700",
+          "rotulo": "evacuados, cerca de",
+          "cifra": "cambio-c20",
+          "fuente": "Conred"
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "tipo": "cierre",
+      "acto": 3,
+      "secuencia": 3,
+      "mundo": "lajas2026",
+      "texto": "Los Lotes quedó inhabitable y Las Lajas sigue activa. ¿Por qué crees que tanta gente sigue viviendo al pie del Fuego?",
+      "final": "¿Por qué crees que tanta gente sigue viviendo al pie del Fuego?",
+      "camara": [
+        {
+          "dice": "Los Lotes",
+          "mira": "los-lotes",
+          "dist_km": 16,
+          "azimut": -15,
+          "elevacion": 40
+        },
+        {
+          "al": "fin",
+          "mira": "vista-alta",
+          "dist_km": 25,
+          "azimut": -28,
+          "elevacion": 62
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "Las Lajas",
+          "tipo": "resaltar",
+          "pieza": "lajas",
+          "dur": 3.0
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "Los Lotes",
+          "lugar": "los-lotes",
+          "texto": "San Miguel Los Lotes",
+          "sub": "Zona inhabitable",
+          "hasta_dice": "Las Lajas"
+        }
+      ]
+    }
+  ],
+  "estilo": {
+    "id": "noche",
+    "razon": "El video es una sola cosa encendida —la barranca y lo que baja por ella— sobre un lugar que se apaga; el tramo de hoy pasa de noche (la RN-14 se cerró la noche del 3 de agosto de 2026). El tramo de 2018 va en `color` (de día: el mapa amable del antes, con su tinta por altura) y la aldea de cerca en `dia`; el salto a `noche` con transición `oscuro` cuenta el paso del tiempo.",
+    "confianza": "alta",
+    "candidatos": [
+      "noche",
+      "color",
+      "dia"
+    ]
+  },
+  "idea_visual": "Una sola barranca encendida: Las Lajas baja del cráter del Fuego hasta una aldea que en 2018 quedó enterrada y apagada, y en 2026 la misma barranca vuelve a encenderse con la aldea ya vacía al pie.",
+  "protagonista": "lajas",
+  "mundos": {
+    "lajas2018": {
+      "escala": "pais",
+      "set": "guatemala",
+      "exageracion": 3.0,
+      "estilo": "color",
+      "protagonista": "lajas",
+      "lugares": {
+        "cumbre-fuego": {
+          "lon": -90.8806,
+          "lat": 14.4748,
+          "nombre": "Volcán de Fuego"
+        },
+        "cumbre-acatenango": {
+          "lon": -90.876,
+          "lat": 14.501,
+          "nombre": "Volcán Acatenango"
+        },
+        "cumbre-agua": {
+          "lon": -90.741761,
+          "lat": 14.4663275,
+          "nombre": "Volcán de Agua"
+        },
+        "lajas-cauce": {
+          "lon": -90.846289,
+          "lat": 14.4494516,
+          "nombre": "Barranca Las Lajas"
+        },
+        "puente-lajas": {
+          "lon": -90.825713,
+          "lat": 14.418597,
+          "nombre": "Puente Las Lajas (RN-14)"
+        },
+        "los-lotes": {
+          "lon": -90.828253,
+          "lat": 14.4083069,
+          "nombre": "San Miguel Los Lotes"
+        },
+        "el-rodeo": {
+          "lon": -90.8315451,
+          "lat": 14.3922753,
+          "nombre": "El Rodeo"
+        },
+        "vista": {
+          "lon": -90.856,
+          "lat": 14.442,
+          "nombre": "Las Lajas"
+        },
+        "vista-alta": {
+          "lon": -90.868,
+          "lat": 14.458,
+          "nombre": "Las Lajas"
+        },
+        "norte-aloten": {
+          "lon": -90.818,
+          "lat": 14.512,
+          "nombre": "Alotenango"
+        },
+        "entre": {
+          "lon": -90.805,
+          "lat": 14.415,
+          "nombre": "El Porvenir"
+        },
+        "aldeas-pie": {
+          "lon": -90.83,
+          "lat": 14.4,
+          "nombre": "Los Lotes y El Rodeo"
+        }
+      },
+      "piezas": [
+        {
+          "id": "volcanes",
+          "tipo": "volcanes",
+          "lugares": [
+            "cumbre-fuego",
+            "cumbre-acatenango",
+            "cumbre-agua"
+          ],
+          "radio_km": 5,
+          "crater": true
+        },
+        {
+          "id": "lajas",
+          "tipo": "barranca",
+          "nombre": "Barranca Las Lajas",
+          "puntos": [
+            [
+              -90.8806,
+              14.4748
+            ],
+            [
+              -90.846289,
+              14.4494516
+            ],
+            [
+              -90.825713,
+              14.418597
+            ],
+            [
+              -90.828253,
+              14.4083069
+            ]
+          ],
+          "esquematica": true,
+          "ancho_km": 0.3,
+          "profundidad_m": 40
+        },
+        {
+          "id": "rn14",
+          "tipo": "carreteras",
+          "nombres": [
+            "RN-14"
+          ],
+          "grosor": 1.2
+        },
+        {
+          "id": "pueblos",
+          "tipo": "luces",
+          "lugares": [
+            "los-lotes",
+            "el-rodeo",
+            "alotenango",
+            "escuintla"
+          ]
+        }
+      ]
+    },
+    "lotes": {
+      "escala": "esquema",
+      "receta": "campo",
+      "horizonte": "llano",
+      "semilla": 2018,
+      "tamano_m": 3400,
+      "estilo": "dia",
+      "protagonista": "aldea",
+      "piezas": [
+        {
+          "id": "aldea",
+          "tipo": "aldeabarranca",
+          "lugar": [
+            0,
+            0
+          ],
+          "rumbo": 0,
+          "tamano": 1,
+          "casas": 40,
+          "personas": 0,
+          "vehiculos": 0,
+          "ancho_barranca_m": 80,
+          "semilla": 1
+        },
+        {
+          "id": "vecina-1",
+          "tipo": "actor",
+          "objeto": "persona",
+          "pose": "caminar",
+          "puntos": [
+            [
+              10,
+              -35
+            ],
+            [
+              25,
+              -320
+            ]
+          ],
+          "claves": [
+            {
+              "t": 0,
+              "s": "0%",
+              "vel_kmh": 4
+            }
+          ]
+        },
+        {
+          "id": "vecino-2",
+          "tipo": "actor",
+          "objeto": "persona",
+          "pose": "caminar",
+          "puntos": [
+            [
+              18,
+              -30
+            ],
+            [
+              35,
+              -320
+            ]
+          ],
+          "claves": [
+            {
+              "t": 0,
+              "s": "0%",
+              "vel_kmh": 4
+            }
+          ]
+        },
+        {
+          "id": "cafetal",
+          "tipo": "cafetal",
+          "puntos": [
+            [
+              -460,
+              -200
+            ],
+            [
+              -200,
+              -200
+            ],
+            [
+              -200,
+              -90
+            ],
+            [
+              -460,
+              -90
+            ]
+          ]
+        },
+        {
+          "id": "cortador-1",
+          "tipo": "actor",
+          "objeto": "cosechador",
+          "lugar": [
+            -400,
+            -150
+          ]
+        },
+        {
+          "id": "cortador-2",
+          "tipo": "actor",
+          "objeto": "cosechador",
+          "lugar": [
+            -320,
+            -130
+          ]
+        },
+        {
+          "id": "cortador-3",
+          "tipo": "actor",
+          "objeto": "cosechador",
+          "lugar": [
+            -250,
+            -170
+          ]
+        }
+      ],
+      "escena": {
+        "que_pasa": "Una aldea de cortadores de café al pie de una barranca honda. El 3 de junio de 2018, de tarde, el flujo piroclástico baja en pulsos por la barranca, se desborda junto al puente, cruza la carretera y entra a la aldea por el lado de la barranca: entierra casas hasta el techo con ceniza gris y bloques; las del otro lado quedan en pie. Después, el depósito humea y se endurece; la zona queda declarada inhabitable.",
+        "quien": "vecinos de la aldea que caminan por sus calles antes del flujo y la dejan antes de que llegue; después, nadie en la calle",
+        "con_que": "casas mezcladas (lámina sobre postes, block, ladrillo), calles de tierra, la carretera que cruza la barranca por un puente, el cafetal; el flujo: nube gris con base densa, ceniza y bloques de piedra",
+        "se_mueve": "los vecinos que caminan y se van; los pulsos grises que bajan por la barranca, el último que se desborda junto al puente y avanza sobre las casas; bloques que ruedan; el humo del depósito; la cámara que baja entre los techos enterrados",
+        "sostiene": [
+          {
+            "que": "aldea de cortadores de café de las fincas cercanas",
+            "hecho": "visual-lotes-h01"
+          },
+          {
+            "que": "casas mezcladas: champas de lámina sobre postes, block y ladrillo; escuela y cisterna",
+            "hecho": "visual-lotes-h02"
+          },
+          {
+            "que": "la barranca honda a un lado (norte) de la aldea, en un valle estrecho",
+            "hecho": "visual-lotes-h04"
+          },
+          {
+            "que": "pulsos que se desbordan junto al puente hacia la carretera y entran por el lado de la barranca",
+            "hecho": "visual-lotes-h06"
+          },
+          {
+            "que": "de tarde (sin reloj en pantalla)",
+            "hecho": "visual-lotes-h10"
+          },
+          {
+            "que": "depósito gris oscuro de bloques, lapilli y ceniza, con bloques rojizos",
+            "hecho": "visual-lotes-h07"
+          },
+          {
+            "que": "casas enterradas hasta el techo",
+            "hecho": "visual-lotes-h08"
+          },
+          {
+            "que": "casas del otro lado en pie",
+            "hecho": "visual-lotes-h15"
+          },
+          {
+            "que": "salón comunal en pie y dañado",
+            "hecho": "visual-lotes-h03"
+          },
+          {
+            "que": "café alrededor",
+            "hecho": "visual-lotes-h09"
+          },
+          {
+            "que": "la ceniza endurecida como concreto",
+            "hecho": "visual-lotes-h12"
+          },
+          {
+            "que": "zona declarada inhabitable",
+            "hecho": "cambio-h10"
+          },
+          {
+            "que": "trazo de la aldea, cuántas casas y el orden de sus calles",
+            "generico": true
+          },
+          {
+            "que": "cuántos vecinos caminan y por dónde",
+            "generico": true
+          },
+          {
+            "que": "el puente, dibujado entero (su colapso no está confirmado)",
+            "generico": true
+          },
+          {
+            "que": "la forma del cono al fondo y la distancia puente–aldea",
+            "generico": true
+          }
+        ],
+        "ilustrativa": "La aldea es un esquema: ni el trazo de Los Lotes ni cuántas casas tenía se afirman; la ubicación real se ve en los tramos de mapa."
+      },
+      "hora": "dia",
+      "lugares": {
+        "aldea.puente": {
+          "x": 170.35,
+          "y": 105.0,
+          "nombre": "Puente"
+        },
+        "aldea.aldea": {
+          "x": -20.0,
+          "y": -20.0,
+          "nombre": "Aldea"
+        },
+        "aldea.lado-barranca": {
+          "x": -60.0,
+          "y": 59.59,
+          "nombre": "Lado de la barranca"
+        },
+        "aldea.escuela": {
+          "x": 26.0,
+          "y": -44.0,
+          "nombre": "Escuela"
+        },
+        "aldea.salon": {
+          "x": -90.0,
+          "y": 22.0,
+          "nombre": "Salón comunal"
+        },
+        "aldea.cisterna": {
+          "x": -62.0,
+          "y": 30.0,
+          "nombre": "Cisterna"
+        },
+        "aldea.carretera": {
+          "x": 158.0,
+          "y": -260.0,
+          "nombre": "Carretera"
+        }
+      }
+    },
+    "lajas2026": {
+      "escala": "pais",
+      "set": "guatemala",
+      "exageracion": 3.0,
+      "estilo": "noche",
+      "hora_razon": "La RN-14 se cerró la noche del 3 de agosto de 2026 en el km 83 por el descenso de material en Las Lajas (cambio-h26) y la alerta se activó esa noche (cambio-h25); entra con transición «oscuro»: salto de 2018 a 2026.",
+      "protagonista": "lajas",
+      "lugares": {
+        "cumbre-fuego": {
+          "lon": -90.8806,
+          "lat": 14.4748,
+          "nombre": "Volcán de Fuego"
+        },
+        "cumbre-acatenango": {
+          "lon": -90.876,
+          "lat": 14.501,
+          "nombre": "Volcán Acatenango"
+        },
+        "cumbre-agua": {
+          "lon": -90.741761,
+          "lat": 14.4663275,
+          "nombre": "Volcán de Agua"
+        },
+        "lajas-cauce": {
+          "lon": -90.846289,
+          "lat": 14.4494516,
+          "nombre": "Barranca Las Lajas"
+        },
+        "puente-lajas": {
+          "lon": -90.825713,
+          "lat": 14.418597,
+          "nombre": "Puente Las Lajas (RN-14)"
+        },
+        "los-lotes": {
+          "lon": -90.828253,
+          "lat": 14.4083069,
+          "nombre": "San Miguel Los Lotes"
+        },
+        "el-rodeo": {
+          "lon": -90.8315451,
+          "lat": 14.3922753,
+          "nombre": "El Rodeo"
+        },
+        "aldea-el-porvenir": {
+          "lon": -90.8203697,
+          "lat": 14.429963,
+          "nombre": "El Porvenir (Alotenango)"
+        },
+        "vista": {
+          "lon": -90.856,
+          "lat": 14.442,
+          "nombre": "Las Lajas"
+        },
+        "vista-alta": {
+          "lon": -90.868,
+          "lat": 14.458,
+          "nombre": "Las Lajas"
+        },
+        "norte-aloten": {
+          "lon": -90.818,
+          "lat": 14.512,
+          "nombre": "Alotenango"
+        },
+        "entre": {
+          "lon": -90.805,
+          "lat": 14.415,
+          "nombre": "El Porvenir"
+        },
+        "aldeas-pie": {
+          "lon": -90.83,
+          "lat": 14.4,
+          "nombre": "Los Lotes y El Rodeo"
+        }
+      },
+      "piezas": [
+        {
+          "id": "volcanes",
+          "tipo": "volcanes",
+          "lugares": [
+            "cumbre-fuego",
+            "cumbre-acatenango",
+            "cumbre-agua"
+          ],
+          "radio_km": 5,
+          "crater": true
+        },
+        {
+          "id": "lajas",
+          "tipo": "barranca",
+          "nombre": "Barranca Las Lajas",
+          "puntos": [
+            [
+              -90.8806,
+              14.4748
+            ],
+            [
+              -90.846289,
+              14.4494516
+            ],
+            [
+              -90.825713,
+              14.418597
+            ],
+            [
+              -90.828253,
+              14.4083069
+            ]
+          ],
+          "esquematica": true,
+          "ancho_km": 0.3,
+          "profundidad_m": 40
+        },
+        {
+          "id": "rn14",
+          "tipo": "carreteras",
+          "nombres": [
+            "RN-14"
+          ],
+          "grosor": 1.2
+        },
+        {
+          "id": "pueblos",
+          "tipo": "luces",
+          "lugares": [
+            "alotenango",
+            "aldea-el-porvenir",
+            "el-rodeo",
+            "escuintla"
+          ]
+        }
+      ]
+    }
+  },
+  "pie": "Relieve: Mapzen Terrain Tiles · Lugares y carreteras: © OpenStreetMap · Volcanes: Smithsonian GVP · Barranca: traza esquemática",
+  "gancho": {
+    "id": "g2",
+    "familia": "recorrido",
+    "elegido_por": "usuario"
+  },
+  "narracion": "Así bajó el volcán de Fuego por esta barranca de Guatemala. Se llama Las Lajas. A unos 10 kilómetros de la cumbre, a su pie, estaban San Miguel Los Lotes y El Rodeo. Los Lotes era una aldea de cortadores de café, con casas de lámina, block y ladrillo. El 3 de junio de 2018, el flujo piroclástico bajó en pulsos, se desbordó junto al puente y entró a la aldea. Enterró gran parte de Los Lotes hasta los techos. Murieron más de doscientas personas, y hubo 229 desaparecidos. Conred declaró la zona inhabitable; los sobrevivientes fueron trasladados a La Dignidad. Con la lluvia, la ceniza se endureció como concreto. Pero el Fuego sigue bajando por Las Lajas. En agosto de 2026, con alerta roja, se cerró la RN-14 en el kilómetro 83 y cerca de 1,700 personas fueron evacuadas. Los Lotes quedó inhabitable y Las Lajas sigue activa. ¿Por qué crees que tanta gente sigue viviendo al pie del Fuego?",
+  "no_afirmar": [
+    "Que el puente Las Lajas colapsó o quedó destruido: lo dice un solo vecino a AP y el estudio no (visual-lotes-h05 no_confirmado); el puente se dibuja entero.",
+    "El trazo real de Los Lotes, cuántas casas tenía, el orden de sus calles, su iglesia, la milpa o la piña: la aldea de cerca es un esquema; solo el café tiene fuente.",
+    "Un espesor del depósito en metros: se dibuja «hasta el techo», sin metros.",
+    "Velocidad, temperatura o color exacto del flujo y el número de casas destruidas.",
+    "Gente o vehículos alcanzados por el flujo, y la fiesta, las gallinas o los globos de Plaza Pública.",
+    "Que «nadie vive» en Los Lotes: en 2019 una sobreviviente seguía allí; «inhabitable» no es «desierta» (Los Lotes no se apaga ni se enciende en 2026: no se dibuja su luz).",
+    "La hora del flujo en pantalla: las del estudio son reconstruidas; la escena es de día, sin reloj.",
+    "El trazo exacto de la RN-14 junto a la aldea y la distancia puente–aldea: esquemático.",
+    "El número exacto de muertos (en disputa: 201/202 oficiales frente a al menos 430 del estudio de 2023): la voz dice «más de doscientas» y no sale cifra en pantalla.",
+    "La altura del volcán (en disputa): no se dice.",
+    "Hasta dónde bajó el material por Las Lajas en agosto de 2026: el descenso de 2026 se queda en el tramo alto (ilustrativo) y no toca las aldeas.",
+    "La Dignidad no se dibuja: no hay coordenada verificada.",
+    "La traza de Las Lajas: esquemática entre cumbre, cauce, puente y Los Lotes."
+  ],
+  "caption": {
+    "tiktok": "El 3 de junio de 2018, el flujo piroclástico del volcán de Fuego bajó por la barranca Las Lajas y enterró gran parte de San Miguel Los Lotes, a unos 10 km de la cumbre. Hubo más de 200 muertos y 229 desaparecidos; Conred declaró la zona inhabitable. En agosto de 2026, con alerta roja, se cerró la RN-14 en el km 83 y cerca de 1,700 personas fueron evacuadas.\n\nFuentes: Conred, Smithsonian GVP, Prensa Libre.\n\n#Guatemala #VolcanDeFuego #Escuintla #LosLotes",
+    "instagram": "Una barranca, dos momentos.\n\nEl 3 de junio de 2018, el flujo piroclástico del volcán de Fuego bajó en pulsos por la barranca Las Lajas, se desbordó junto al puente de la RN-14 y enterró gran parte de San Miguel Los Lotes hasta los techos. Hubo más de 200 muertos y 229 desaparecidos. Conred declaró la zona inhabitable y los sobrevivientes fueron trasladados a La Dignidad, en Escuintla.\n\nEn agosto de 2026, el Fuego volvió a bajar por Las Lajas: alerta roja, la RN-14 cerrada en el km 83 y cerca de 1,700 personas evacuadas.\n\nFuentes: Conred, Smithsonian GVP, Prensa Libre.\n\n#Guatemala #VolcanDeFuego #Escuintla #LosLotes",
+    "facebook": "San Miguel Los Lotes era una aldea de cortadores de café al pie de la barranca Las Lajas, a unos 10 km de la cumbre del volcán de Fuego.\n\nEl 3 de junio de 2018, el flujo piroclástico se desbordó junto al puente y enterró gran parte de la aldea. Hubo más de 200 muertos y 229 desaparecidos; Conred declaró la zona inhabitable y los sobrevivientes fueron trasladados a La Dignidad.\n\nEn agosto de 2026, con alerta roja, se cerró la RN-14 en el km 83 y cerca de 1,700 personas fueron evacuadas. La aldea quedó inhabitable; la barranca sigue siendo el camino del Fuego.\n\nFuentes: Conred, Smithsonian GVP y Prensa Libre.",
+    "shorts": "Volcán de Fuego: la barranca que enterró Los Lotes en 2018\n\nEl flujo piroclástico bajó por Las Lajas y enterró gran parte de San Miguel Los Lotes: más de 200 muertos y 229 desaparecidos. En agosto de 2026 volvió a bajar: alerta roja y cerca de 1,700 evacuados.\n\nFuentes: Conred, Smithsonian GVP.\n\n#Shorts #Guatemala #VolcanDeFuego"
+  },
+  "cierre": {
+    "id": "c5",
+    "tipo": "pregunta",
+    "forma": "porque",
+    "elegido_por": "usuario",
+    "recomendado": "c2",
+    "texto": "Los Lotes quedó inhabitable y Las Lajas sigue activa. ¿Por qué crees que tanta gente sigue viviendo al pie del Fuego?",
+    "final": "¿Por qué crees que tanta gente sigue viviendo al pie del Fuego?"
+  },
+  "id": "video3d-fuego-antes-despues-2018",
+  "slug": "fuego-antes-despues-2018",
+  "tema": "El volcán de Fuego antes y después de 2018: cómo el flujo piroclástico del 3 de junio cambió el lugar (barranca Las Lajas, San Miguel Los Lotes, El Rodeo, la RN-14) y qué hay ahí hoy",
+  "fecha": "2026-11-17",
+  "paleta": "obsidiana",
+  "musica": "obsidiana-1",
+  "desde": null,
+  "motor": "three",
+  "duracion_s": 67.2,
+  "creditos_voz": 969
+}

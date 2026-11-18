@@ -6,12 +6,12 @@ Un solo video para las cuatro apps: **video.mp4** (9:16). Para el feed de Facebo
 
 ## TikTok
 ```
-¿Una monja inventó el fiambre? La leyenda de Capuchinas, lo que dicen las crónicas y por qué Guatemala lo come cada 1 de noviembre. #fiambre #Guatemala #DiaDeTodosLosSantos
+¿Una monja inventó el fiambre? La leyenda de Capuchinas, lo que dicen las crónicas y por qué Guatemala lo come cada 1 de noviembre. #fiambre #Guatemala #DiaDeTodosLosSantos #historia
 ```
 
 ## Instagram Reels (y feed con video_4x5.mp4)
 ```
-El fiambre: de la leyenda de la monja de Capuchinas a patrimonio de la Nación en 2019. Lo que sí dicen los documentos sobre el plato del 1 de noviembre. #fiambre #Guatemala
+El fiambre: de la leyenda de la monja de Capuchinas a patrimonio de la Nación en 2019. Lo que sí dicen los documentos sobre el plato del 1 de noviembre. #fiambre #Guatemala #historia
 ```
 
 ## Facebook Reels (y feed con video_4x5.mp4)
@@ -23,7 +23,7 @@ El fiambre: de la leyenda de la monja de Capuchinas a patrimonio de la Nación e
 Título (primera línea, ≤ 100 caracteres) y descripción.
 ```
 El fiambre: ¿lo inventó una monja? #Shorts
-La leyenda, las crónicas y el patrimonio de Guatemala.
+La leyenda, las crónicas y el patrimonio de Guatemala. #Guatemala
 ```
 
 Sígueme: TikTok @derekurizargt · Instagram @derekurizargt · Facebook Derek Urizar · YouTube @derekurizar · X @DerekUrizar

@@ -1,0 +1,141 @@
+{
+ "tipo": "subduccion",
+ "clase": "pieza",
+ "cuando": "bloque-diagrama genérico de la Tierra cortada: la placa oceánica baja bajo la continental, el manto se enciende y sube a una fila de volcanes",
+ "parametros": {
+  "lugar": {
+   "tipo": "lugar",
+   "requerido": true,
+   "descripcion": "el centro del bloque (un lugar del mundo o [x, y] en metros en un esquema). El bloque se apoya en el suelo: va mejor en la receta campo con horizonte llano y sin `ambiente` en 1.2 km × tamano a la redonda (la receta costa estorba: su mar no es el del bloque). Publica los lugares fosa, placa-oceanica, placa-continental, cono y fila (sobre la tapa) y manto y placa-100 (delante de la cara del corte, al pie: míralos con mira_lev_m ≈ 300 × tamano) y placa (a media pendiente, sobre la banda oscura de la placa que baja entre la fosa y el manto, delante del corte: ahí va la marca de la placa que entra)"
+  },
+  "rumbo": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    360
+   ],
+   "defecto": 0,
+   "descripcion": "hacia dónde entra la placa, del mar a la tierra (grados; 0 = este, 90 = norte): la fosa y la fila quedan perpendiculares. La cara del corte se ve de frente con azimut = rumbo; elevación 12–30°"
+  },
+  "tamano": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0.5,
+    3
+   ],
+   "defecto": 1,
+   "descripcion": "escala de todo (1 = bloque de 1.9 km de largo, 0.9 km de ancho y 0.6 km de hondo, conos de 70–110 m: una maqueta, no a escala). Para verlo entero en 9:16: dist_m ≈ 3600 × tamano con mira_lev_m ≈ 420 × tamano"
+  },
+  "conos": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    3,
+    15
+   ],
+   "defecto": 9,
+   "descripcion": "cuántos conos hay en la fila (ilustrativo, no un dato); el primero queda partido por la cara del corte y deja ver su conducto"
+  },
+  "angulo_grados": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    15,
+    60
+   ],
+   "defecto": 35,
+   "descripcion": "con qué inclinación baja la placa pasada la fosa (ilustrativo, no verificado): más empinada, la fila queda más cerca de la fosa"
+  },
+  "flechas": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "flechas sobre el mar que avanzan hacia la tierra, perpendiculares a la fosa (el sentido en que entra la placa; su número no es un dato)"
+  },
+  "magma": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "la secuencia que se mueve: gotas de agua que salen de la placa, el manto de encima que se enciende y el magma que sube a la bolsa y pulsa por el conducto (didáctica: ni velocidad ni duración)"
+  },
+  "fondo": {
+   "tipo": "texto",
+   "requerido": false,
+   "valores": [
+    "campo",
+    "liso"
+   ],
+   "defecto": "campo",
+   "descripcion": "lo que rodea al bloque: campo (el suelo de la receta del mundo, con sus parcelas) o liso (un suelo oscuro y parejo que se funde con la bruma: el bloque solo, como en un libro; va mejor con horizonte llano)"
+  },
+  "manto_brillo": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0.4,
+   "descripcion": "cuán vivo es el rojo del manto: 0.4 (por defecto) lo deja apagado para que el magma encendido sea lo más brillante del corte; 1 = el rojo pleno"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "el azar fijo: el tamaño y el corrimiento de cada cono, sus costillas, las lomas y las manchas de la tierra"
+  }
+ },
+ "escalas": [
+  "esquema"
+ ],
+ "motores": [
+  "three"
+ ],
+ "ejemplo": {
+  "id": "corte",
+  "tipo": "subduccion",
+  "lugar": [
+   0,
+   0
+  ],
+  "rumbo": 0,
+  "tamano": 1,
+  "conos": 9,
+  "angulo_grados": 35,
+  "flechas": true,
+  "magma": true,
+  "semilla": 1,
+  "fondo": "liso",
+  "manto_brillo": 0.4
+ },
+ "nivel": "escenario",
+ "contiene": [
+  "la tapa del mar, translúcida, con el fondo oceánico y la fosa como un valle paralelo al canto",
+  "la costa con su playa y la tierra con lomas suaves",
+  "la fila de conos empinados (estratovolcanes genéricos) con cráter y costillas, paralela a la fosa",
+  "en la cara del corte: el agua, la placa oceánica fría con su costra de basalto que entra por la fosa y baja",
+  "la placa continental en capas y la cuña de manto entre ella y la placa; el manto debajo",
+  "el cono partido por el corte, con sus capas de ceniza y lava, y su conducto con la bolsa al pie de la continental",
+  "los cantos del bloque con las mismas capas",
+  "flechas sobre el mar hacia la tierra (el sentido en que entra la placa)",
+  "gotas de agua que salen de la placa, el manto vecino que se enciende y el magma que sube",
+  "el suelo alrededor, del mundo o liso y oscuro (fondo)"
+ ],
+ "animado": "la placa avanza (bandas que corren hacia la fosa y bajan con ella), las flechas cruzan el mar hacia la tierra, las gotas de agua suben desde la placa, el manto de encima late encendido y el magma sube en gotas a la bolsa y pulsa por el conducto (todo función de t); de noche lo que tiene luz propia brilla más",
+ "gente": false,
+ "distancia_m": [
+  500,
+  4500
+ ],
+ "caja_m": [
+  1900,
+  900,
+  750
+ ]
+}

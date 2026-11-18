@@ -1,0 +1,139 @@
+{
+ "tipo": "coberturaceldas",
+ "clase": "pieza",
+ "cuando": "la cobertura de un área año por año (pérdida de bosque por celdas): cada celda brilla por su cobertura y se apaga el año que la pierde",
+ "parametros": {
+  "datos": {
+   "tipo": "texto",
+   "requerido": true,
+   "descripcion": "JSON {celda_grados, celdas: [{lon, lat (centro), area_ha, bosque2000_ha, perdida_ha: {AAAA: ha}}]}: ruta desde la raíz del proyecto (sesiones/<slug>/geodatos/…) o absoluta; cifras verificadas como cualquier cifra. «_ejemplo» = malla ilustrativa del catálogo (nunca en un video)"
+  },
+  "contorno": {
+   "tipo": "texto",
+   "requerido": true,
+   "descripcion": "GeoJSON del área (Polygon o MultiPolygon; Feature o FeatureCollection): ruta desde la raíz del proyecto o absoluta; geodatos verificados. «_ejemplo» = contorno ilustrativo"
+  },
+  "anio_base": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    1980,
+    2100
+   ],
+   "defecto": 2000,
+   "descripcion": "el año de la cobertura de partida (bosque2000_ha): las pérdidas de ese año o antes no se cuentan"
+  },
+  "anio": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    1980,
+    2100
+   ],
+   "defecto": 2000,
+   "descripcion": "el año que se ve al empezar (lo perdido hasta ese año ya va apagado)"
+  },
+  "anio_fin": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    1980,
+    2100
+   ],
+   "descripcion": "el año al que llega entre corre_desde y corre_hasta (en escalones de un año); sin él, el año queda fijo en `anio`"
+  },
+  "corre_desde": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    600
+   ],
+   "descripcion": "segundo en que el año empieza a correr (con anio_fin); hazlo coincidir con la frase y con el año en la capa 2D"
+  },
+  "corre_hasta": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    600
+   ],
+   "descripcion": "segundo en que llega a anio_fin"
+  },
+  "tono": {
+   "tipo": "texto",
+   "requerido": false,
+   "valores": [
+    "acento",
+    "verde"
+   ],
+   "defecto": "acento",
+   "descripcion": "el color de la cobertura: el acento de la paleta o el verde del estilo (`bien`); la protagonista va siempre en el acento"
+  },
+  "apagado": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0.15,
+   "descripcion": "cuánto del tono conserva la parte perdida (0 = el suelo oscuro; 0.15 = un tono oscuro tenue)"
+  },
+  "destello": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "un destello breve en la celda el año en que pierde cobertura"
+  },
+  "contorno_grosor": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0.5,
+    4
+   ],
+   "defecto": 1.5,
+   "descripcion": "el grosor de la línea del contorno («resaltar» lo engruesa)"
+  }
+ },
+ "escalas": [
+  "pais"
+ ],
+ "motores": [
+  "three"
+ ],
+ "ejemplo": {
+  "id": "cobertura",
+  "tipo": "coberturaceldas",
+  "datos": "_ejemplo",
+  "contorno": "_ejemplo",
+  "anio_base": 2000,
+  "anio": 2000,
+  "anio_fin": 2023,
+  "corre_desde": 1.0,
+  "corre_hasta": 4.5,
+  "tono": "acento",
+  "apagado": 0.15,
+  "destello": true,
+  "contorno_grosor": 1.5
+ },
+ "nivel": "fondo",
+ "contiene": [
+  "contorno del área en línea fina",
+  "una celda plana por celda del archivo, pegada al relieve",
+  "brillo de cada celda según su cobertura del año base",
+  "lo perdido apagado en un tono oscuro tenue",
+  "destello breve el año de la pérdida",
+  "marco fino de cada celda y suelo visible entre celdas"
+ ],
+ "animado": "el año corre de `anio` a `anio_fin` entre corre_desde y corre_hasta: cada celda apaga lo que perdió ese año con un destello; «resaltar» aviva las celdas y engruesa el contorno",
+ "gente": false,
+ "distancia_m": [
+  40000,
+  400000
+ ],
+ "publica": [
+  "centro"
+ ]
+}

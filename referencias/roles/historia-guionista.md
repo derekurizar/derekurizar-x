@@ -244,6 +244,9 @@ consecuencia}` con las reglas F1–F8 de `referencias/cierres.md`.
   los adjetivos («desgarrador», «lamentablemente»).
 - `caption {tiktok, instagram, facebook (con «Fuentes en el primer comentario»), shorts (primera línea ≤ 100 con
   #Shorts)}`.
+- **Hashtags (H35, usuario 2026-11-17)**: `tiktok` e `instagram` cierran con 3–5: **#Guatemala**, el sujeto de la
+  historia (#Tortrix, #CementosProgreso, #VolcanDeFuego) y #historia. `shorts`: #Shorts en el título y #Guatemala en la
+  descripción. `facebook`: 0–2. El título «Si lo vas a teclear» no lleva hashtags, los captions sí.
 
 ## Cierres para el usuario (fase Cierres del workflow)
 

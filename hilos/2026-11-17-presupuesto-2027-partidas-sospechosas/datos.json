@@ -1,0 +1,2274 @@
+{
+  "slug": "presupuesto-2027-partidas-sospechosas",
+  "fecha": "2026-11-17",
+  "tesis": "El proyecto de Presupuesto 2027 casi duplica la deuda en bonos (de Q23,278 a Q42,750 millones) mientras sube el dinero para los consejos de desarrollo y Comunicaciones, que dejan sin ejecutar buena parte de lo que ya reciben y reparten con poco sustento técnico.",
+  "ancla_id": "opa-c01",
+  "paleta": "obsidiana",
+  "hook_tipo": "curiosity_gap",
+  "cifras": [
+    {
+      "id": "cod-c01",
+      "concepto": "Techo de inversión 2027 para los Consejos Departamentales de Desarrollo (CODEDE) aprobado por Conadur, por región (IVA-Paz + Fonpetrol)",
+      "unidad": "quetzales",
+      "anio": 2027,
+      "tipo": "desglose",
+      "fuente": "AGN (Conadur, presentación del Minfin, 24 jun 2026)",
+      "url": "https://agn.gt/conadur-aprueba-4-9-mil-millones-de-quetzales-para-consejos-departamentales-de-desarrollo/",
+      "periodo": "2027 (techo, no proyecto de ley)",
+      "n_puntos": 8,
+      "valor": 4985417969,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "La Hora, nota de la misma reunión del Conadur (Alvarado: «cuatro mil 985 millones 417 mil 969 quetzales»)",
+      "calculo": "612248353+499290285+609362365+564301918+561726532+1281320668+659747641+197420207",
+      "evidencia": {
+        "url": "https://agn.gt/conadur-aprueba-4-9-mil-millones-de-quetzales-para-consejos-departamentales-de-desarrollo/",
+        "cita": "El total asignado asciende a 4 mil 985 millones 417 mil 969 quetzales el cual es distribuido en ocho regiones para el ejercicio fiscal 2027.",
+        "archivo_local": "sesiones/_descargas/presupuesto2027_cod/agn_conadur.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Suroccidente",
+          "valor": 1281320668
+        },
+        {
+          "nombre": "Noroccidente",
+          "valor": 659747641
+        },
+        {
+          "nombre": "Metropolitana",
+          "valor": 612248353
+        },
+        {
+          "nombre": "Nororiente",
+          "valor": 609362365
+        },
+        {
+          "nombre": "Suroriente",
+          "valor": 564301918
+        },
+        {
+          "nombre": "Central",
+          "valor": 561726532
+        },
+        {
+          "nombre": "Norte",
+          "valor": 499290285
+        },
+        {
+          "nombre": "Petén",
+          "valor": 197420207
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_15.png"
+      ]
+    },
+    {
+      "id": "cod-c02",
+      "concepto": "Aporte extraordinario a los Consejos de Desarrollo incluido en el proyecto de Presupuesto 2027 (además del IVA-Paz)",
+      "unidad": "millones de quetzales",
+      "anio": 2027,
+      "tipo": "puntual",
+      "fuente": "ASIES, «El presupuesto público para 2027 y las prioridades para el desarrollo», citado por La Hora (27 sep 2026)",
+      "url": "https://lahora.gt/lh-economia/esmith/2026/09/27/presupuesto-2027-q192-mil-millones-de-gasto-y-un-deficit-cercano-a-niveles-de-la-pandemia-dice-asies-now/",
+      "periodo": "proyecto 2027 (iniciativa 6841)",
+      "n_puntos": 1,
+      "valor": 1200,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "ASIES vía La Hora; búsqueda sin segunda fuente (Minfin 403, sin tomo de Obligaciones del Estado 2027)",
+      "evidencia": {
+        "url": "https://lahora.gt/lh-economia/esmith/2026/09/27/presupuesto-2027-q192-mil-millones-de-gasto-y-un-deficit-cercano-a-niveles-de-la-pandemia-dice-asies-now/",
+        "cita": "El proyecto ya contiene las obligaciones del IVA-PAZ adicionales los Q1 mil 200 millones extraordinarios para los Consejos de Desarrollo.",
+        "archivo_local": "sesiones/_descargas/presupuesto2027_cod/lahora_asies.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cod-c03",
+      "concepto": "Asignación total (ampliada) a los CODEDE por año: aporte ordinario + extraordinario + saldos arrastrados",
+      "unidad": "millones de quetzales",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "Icefi con base en Sicoin y decretos 36-2024, 27-2025 y 3-2026",
+      "url": "https://mail.icefi.org/sites/default/files/01-2026_comunicado_icefi_ampliacion_presupuestaria_03febrero2026.pdf",
+      "periodo": "2024–2026",
+      "n_puntos": 3,
+      "valor": 15461.4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Icefi, anexo 4 y comunicado GT-09-2025 (2025: 12,269.6; redondeo 12,269.7 en anexo 4)",
+      "calculo": "15461.4",
+      "evidencia": {
+        "url": "https://mail.icefi.org/sites/default/files/01-2026_comunicado_icefi_ampliacion_presupuestaria_03febrero2026.pdf",
+        "cita": "con una asignación ampliada de Q6,412.1 millones en 2024, [...] Q12,269.6 millones en 2025, [...] ahora con una asignación de Q15,461.4 millones para 2026",
+        "archivo_local": "sesiones/_descargas/presupuesto2027_cod/icefi_01_2026.txt"
+      },
+      "serie": [
+        {
+          "p": "2024",
+          "v": 6412.1
+        },
+        {
+          "p": "2025",
+          "v": 12269.6
+        },
+        {
+          "p": "2026",
+          "v": 15461.4
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_8.png"
+      ]
+    },
+    {
+      "id": "cod-c04",
+      "concepto": "Lo que de verdad ejecutaron los CODEDE: asignación frente a lo ejecutado",
+      "unidad": "millones de quetzales",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Icefi con base en Sicoin",
+      "url": "https://mail.icefi.org/sites/default/files/01-2026_comunicado_icefi_ampliacion_presupuestaria_03febrero2026.pdf",
+      "periodo": "2024–2025",
+      "n_puntos": 4,
+      "valor": 7629.5,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "La Hora con tablero Minfin: 62.19 % en 2025 y 52.25 % en 2024",
+      "calculo": "7629.5",
+      "evidencia": {
+        "url": "https://mail.icefi.org/sites/default/files/01-2026_comunicado_icefi_ampliacion_presupuestaria_03febrero2026.pdf",
+        "cita": "Q6,412.1 millones en 2024, de los cuales se ejecutaron solamente Q3,347.3 millones, una asignación ampliada de Q12,269.6 millones en 2025, de los cuales se ejecutaron solamente Q7,629.5 millones",
+        "archivo_local": "sesiones/_descargas/presupuesto2027_cod/icefi_01_2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "2024 asignado",
+          "valor": 6412.1
+        },
+        {
+          "nombre": "2024 ejecutado",
+          "valor": 3347.3
+        },
+        {
+          "nombre": "2025 asignado",
+          "valor": 12269.6
+        },
+        {
+          "nombre": "2025 ejecutado",
+          "valor": 7629.5
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_9.png"
+      ]
+    },
+    {
+      "id": "cod-c05",
+      "concepto": "Ejecución 2025 de los CODEDE por tipo de aporte (% ejecutado del presupuesto)",
+      "unidad": "porcentaje",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Icefi con base en Sicoin (anexo 4)",
+      "url": "https://mail.icefi.org/sites/default/files/01-2026_comunicado_icefi_ampliacion_presupuestaria_03febrero2026.pdf",
+      "periodo": "cierre 2025",
+      "n_puntos": 5,
+      "valor": 45.3,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Cálculo propio sobre el anexo 4 de Icefi (2,271.8 / 5,012.0)",
+      "calculo": "2271.8/5012.0*100",
+      "evidencia": {
+        "url": "https://mail.icefi.org/sites/default/files/01-2026_comunicado_icefi_ampliacion_presupuestaria_03febrero2026.pdf",
+        "cita": "Extraordinario 5,012.0 2,271.8 45.3% [...] Ordinario 4,672.5 3,110.6 66.6% [...] Total 12,269.7 7,629.5 62.2%",
+        "archivo_local": "sesiones/_descargas/presupuesto2027_cod/icefi_01_2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Saldo extraordinario 2024",
+          "valor": 89.9
+        },
+        {
+          "nombre": "Saldo ordinario 2024",
+          "valor": 82.6
+        },
+        {
+          "nombre": "Ordinario 2025",
+          "valor": 66.6
+        },
+        {
+          "nombre": "Extraordinario 2025",
+          "valor": 45.3
+        },
+        {
+          "nombre": "Total",
+          "valor": 62.2
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cod-c06",
+      "concepto": "Aporte extraordinario a los CODEDE 2026 por departamento (art. 23, Decreto 3-2026), los 22",
+      "unidad": "millones de quetzales",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Icefi, anexo 5, con base en el Decreto 3-2026 del Congreso",
+      "url": "https://mail.icefi.org/sites/default/files/01-2026_comunicado_icefi_ampliacion_presupuestaria_03febrero2026.pdf",
+      "periodo": "2026 (presupuesto ampliado)",
+      "n_puntos": 22,
+      "valor": 6312.1,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Cotejo con la primaria (archivo local, anexo 5; los 22 departamentos suman 6,312.1)",
+      "calculo": "665.5+553.4+462+408.7+403.5+395+360.8+347.4+337.1+312.5+267+257+198.3+198+187+178.4+161.5+157+151+125.5+115.5+70",
+      "evidencia": {
+        "url": "https://mail.icefi.org/sites/default/files/01-2026_comunicado_icefi_ampliacion_presupuestaria_03febrero2026.pdf",
+        "cita": "San Marcos 382.0 664.0 665.5 10.5% [...] Sololá 84.7 65.5 70.0 1.1% Total 5,012.0 6,312.1 6,312.1 100.0%",
+        "archivo_local": "sesiones/_descargas/presupuesto2027_cod/icefi_01_2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "San Marcos",
+          "valor": 665.5
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 553.4
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 462.0
+        },
+        {
+          "nombre": "Petén",
+          "valor": 408.7
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 403.5
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 395.0
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 360.8
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 347.4
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 337.1
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 312.5
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 267.0
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 257.0
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 198.3
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 198.0
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 187.0
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 178.4
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 161.5
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 157.0
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 151.0
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 125.5
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 115.5
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 70.0
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_11.png"
+      ]
+    },
+    {
+      "id": "cod-c07",
+      "concepto": "Aporte extraordinario a los CODEDE 2025 por departamento (art. 126, Decreto 36-2024), los 22",
+      "unidad": "millones de quetzales",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Icefi, anexo 5, con base en el Decreto 36-2024",
+      "url": "https://mail.icefi.org/sites/default/files/01-2026_comunicado_icefi_ampliacion_presupuestaria_03febrero2026.pdf",
+      "periodo": "2025",
+      "n_puntos": 22,
+      "valor": 5012,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Cotejo con la primaria (archivo local, anexo 5; suma de 22 departamentos 2025)",
+      "calculo": "382+464.8+344+267.5+373+438+375+292+314.5+227+206.5+165+121.5+106+87+161+185+115+100+115.5+87+84.7",
+      "evidencia": {
+        "url": "https://mail.icefi.org/sites/default/files/01-2026_comunicado_icefi_ampliacion_presupuestaria_03febrero2026.pdf",
+        "cita": "Chiquimula 87.0 206.0 187.0 3.0% [...] Izabal 106.0 170.5 198.0 3.1% [...] Quiché 438.0 389.0 395.0 6.3%",
+        "archivo_local": "sesiones/_descargas/presupuesto2027_cod/icefi_01_2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "San Marcos",
+          "valor": 382.0
+        },
+        {
+          "nombre": "Huehuetenango",
+          "valor": 464.8
+        },
+        {
+          "nombre": "Jutiapa",
+          "valor": 344.0
+        },
+        {
+          "nombre": "Petén",
+          "valor": 267.5
+        },
+        {
+          "nombre": "Alta Verapaz",
+          "valor": 373.0
+        },
+        {
+          "nombre": "Quiché",
+          "valor": 438.0
+        },
+        {
+          "nombre": "Guatemala",
+          "valor": 375.0
+        },
+        {
+          "nombre": "Escuintla",
+          "valor": 292.0
+        },
+        {
+          "nombre": "Quetzaltenango",
+          "valor": 314.5
+        },
+        {
+          "nombre": "Suchitepéquez",
+          "valor": 227.0
+        },
+        {
+          "nombre": "Santa Rosa",
+          "valor": 206.5
+        },
+        {
+          "nombre": "Jalapa",
+          "valor": 165.0
+        },
+        {
+          "nombre": "Zacapa",
+          "valor": 121.5
+        },
+        {
+          "nombre": "Izabal",
+          "valor": 106.0
+        },
+        {
+          "nombre": "Chiquimula",
+          "valor": 87.0
+        },
+        {
+          "nombre": "Retalhuleu",
+          "valor": 161.0
+        },
+        {
+          "nombre": "Chimaltenango",
+          "valor": 185.0
+        },
+        {
+          "nombre": "El Progreso",
+          "valor": 115.0
+        },
+        {
+          "nombre": "Baja Verapaz",
+          "valor": 100.0
+        },
+        {
+          "nombre": "Sacatepéquez",
+          "valor": 115.5
+        },
+        {
+          "nombre": "Totonicapán",
+          "valor": 87.0
+        },
+        {
+          "nombre": "Sololá",
+          "valor": 84.7
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "cod-c08",
+      "concepto": "Un solo municipio, Jalapa (cabecera), recibe más aporte extraordinario 2026 que todo el departamento de Sololá",
+      "unidad": "millones de quetzales",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Icefi, anexo 6 (distribución por municipio), con base en el Decreto 3-2026",
+      "url": "https://mail.icefi.org/sites/default/files/01-2026_comunicado_icefi_ampliacion_presupuestaria_03febrero2026.pdf",
+      "periodo": "2026",
+      "n_puntos": 2,
+      "valor": 113.7,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Cotejo con la primaria (archivo local)",
+      "calculo": "113.7",
+      "evidencia": {
+        "url": "https://mail.icefi.org/sites/default/files/01-2026_comunicado_icefi_ampliacion_presupuestaria_03febrero2026.pdf",
+        "cita": "Jalapa          Jalapa                                       55.0                  116.7               113.7",
+        "archivo_local": "sesiones/_descargas/presupuesto2027_cod/icefi_01_2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Municipio de Jalapa",
+          "valor": 113.7
+        },
+        {
+          "nombre": "Departamento de Sololá (19 municipios)",
+          "valor": 70.0
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_12.png"
+      ]
+    },
+    {
+      "id": "cod-c09",
+      "concepto": "Municipios cuyo aporte extraordinario se multiplicó de 2025 a 2026",
+      "unidad": "millones de quetzales",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Icefi, anexo 6, con base en los decretos 36-2024 y 3-2026",
+      "url": "https://mail.icefi.org/sites/default/files/01-2026_comunicado_icefi_ampliacion_presupuestaria_03febrero2026.pdf",
+      "periodo": "2025→2026",
+      "n_puntos": 5,
+      "valor": 63.5,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Cotejo con la primaria (archivo local)",
+      "calculo": "63.5",
+      "evidencia": {
+        "url": "https://mail.icefi.org/sites/default/files/01-2026_comunicado_icefi_ampliacion_presupuestaria_03febrero2026.pdf",
+        "cita": "Sayaxché 2.0 73.5 63.5 [...] Granados 3.0 42.0 42.0 [...] Esquipulas 1.0 39.5 33.5 [...] San Jorge 1.0 32.0 32.0",
+        "archivo_local": "sesiones/_descargas/presupuesto2027_cod/icefi_01_2026.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Sayaxché, Petén (2025: 2.0)",
+          "valor": 63.5
+        },
+        {
+          "nombre": "Granados, Baja Verapaz (2025: 3.0)",
+          "valor": 42.0
+        },
+        {
+          "nombre": "Esquipulas, Chiquimula (2025: 1.0)",
+          "valor": 33.5
+        },
+        {
+          "nombre": "San Jorge, Zacapa (2025: 1.0)",
+          "valor": 32.0
+        },
+        {
+          "nombre": "Los Amates, Izabal (2025: 10.0)",
+          "valor": 60.0
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_13.png"
+      ]
+    },
+    {
+      "id": "cod-c10",
+      "concepto": "Obras metidas por el Congreso en el presupuesto 2026 (readecuaciones del art. 121) sin código SNIP",
+      "unidad": "proyectos",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Icefi, anexo 6 del comunicado GT-09-2025, con base en el dictamen de la CFPM y el Decreto 27-2025",
+      "url": "https://mail.icefi.org/sites/default/files/gt09-2025_comunicado_icefi_presupuesto_aprobado_para_2026_26_noviembre_2025.pdf",
+      "periodo": "2026",
+      "n_puntos": 2,
+      "valor": 19,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Conteo propio sobre el anexo 6 de Icefi GT-09-2025 (filas con «-» en SNIP: Caminos 9, FSS 8, Fodes 2; suman Q204.5 millones)",
+      "calculo": "9+8+2",
+      "evidencia": {
+        "url": "https://mail.icefi.org/sites/default/files/gt09-2025_comunicado_icefi_presupuesto_aprobado_para_2026_26_noviembre_2025.pdf",
+        "cita": "se alerta que, incluso, algunos de estos proyectos carecen de código en el Sistema Nacional de Inversión Pública [...] Total 104.5 677.0 781.5 100.0%",
+        "archivo_local": "sesiones/_descargas/presupuesto2027_cod/icefi_gt09.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Proyectos con código SNIP",
+          "valor": 45
+        },
+        {
+          "nombre": "Proyectos sin código SNIP",
+          "valor": 19
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_14.png"
+      ]
+    },
+    {
+      "id": "cod-c11",
+      "concepto": "Ejecución de los CODEDE en 2026 al 16 de abril: transferido vs. obra efectiva",
+      "unidad": "porcentaje",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "La Hora con datos del tablero de desembolsos del Minfin y del SNIP",
+      "url": "https://lahora.gt/nacionales/kgutierrez/2026/04/20/codedes-solo-q60-millones-se-han-transformado-en-ejecucion-efectiva-de-un-presupuesto-de-q14-mil-millones/",
+      "periodo": "enero–16 abril 2026",
+      "n_puntos": 3,
+      "valor": 4.43,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "La Hora (tablero de desembolsos Minfin al 16 abril 2026); recalculo 654.56/14,774.67",
+      "calculo": "654.56/14774.67*100",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/kgutierrez/2026/04/20/codedes-solo-q60-millones-se-han-transformado-en-ejecucion-efectiva-de-un-presupuesto-de-q14-mil-millones/",
+        "cita": "han ejecutado Q654.56 millones de un presupuesto vigente de Q14,774.67 millones. [...] apenas el 10% de esos fondos se ha traducido en ejecución efectiva, es decir, alrededor de Q59.5 millones.",
+        "archivo_local": "sesiones/_descargas/presupuesto2027_cod/lahora_q60.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Presupuesto vigente",
+          "valor": 14774.67
+        },
+        {
+          "nombre": "Desembolsado",
+          "valor": 654.56
+        },
+        {
+          "nombre": "Ejecución efectiva (SNIP)",
+          "valor": 59.5
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_10.png"
+      ]
+    },
+    {
+      "id": "cod-c12",
+      "concepto": "Dinero autorizado a los CODEDE de 2024 a abril de 2026 y cuánto vino de ampliaciones y extraordinarios del Congreso",
+      "unidad": "millones de quetzales",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "La Hora con datos del Minfin",
+      "url": "https://lahora.gt/nacionales/kgutierrez/2026/04/20/codedes-solo-q60-millones-se-han-transformado-en-ejecucion-efectiva-de-un-presupuesto-de-q14-mil-millones/",
+      "periodo": "2024–abril 2026",
+      "n_puntos": 1,
+      "valor": 33381.41,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "La Hora con datos del Minfin; sin segunda fuente (tabla Minfin no disponible)",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/kgutierrez/2026/04/20/codedes-solo-q60-millones-se-han-transformado-en-ejecucion-efectiva-de-un-presupuesto-de-q14-mil-millones/",
+        "cita": "la ejecución promedio baja y se sitúa en 39.62%, pese a que en ese lapso se ha autorizado el uso de Q33 mil 381.41 millones. Más de la mitad de estos recursos (52%) provienen de ampliaciones",
+        "archivo_local": "sesiones/_descargas/presupuesto2027_cod/lahora_q60.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "deu-c01",
+      "concepto": "Servicios de la Deuda Pública: presupuesto vigente anual (intereses, comisiones y amortización)",
+      "unidad": "millones de quetzales",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Sicoin vía Guate en Datos (gastopublico-ejecucion.csv)",
+      "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+      "periodo": "2008-2025",
+      "n_puntos": 18,
+      "valor": 18637.75,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Sicoin/Guate en Datos (CSV local); IIES-USAC cita 18,499 devengado 2025 (coincide con el devengado de la nota)",
+      "calculo": "18637.75",
+      "evidencia": {
+        "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+        "cita": "\"Servicios de la Deuda Pública\",\"Total\",2025,18637.75,18499.61,99.26 · \"Servicios de la Deuda Pública\",\"Total\",2016,10419.69,10339.85,99.23",
+        "archivo_local": "sesiones/_descargas/gastopublico-ejecucion.csv"
+      },
+      "serie": [
+        {
+          "p": "2008",
+          "v": 6424.8
+        },
+        {
+          "p": "2009",
+          "v": 6577.0
+        },
+        {
+          "p": "2010",
+          "v": 7212.0
+        },
+        {
+          "p": "2011",
+          "v": 7825.3
+        },
+        {
+          "p": "2012",
+          "v": 8461.26
+        },
+        {
+          "p": "2013",
+          "v": 8934.1
+        },
+        {
+          "p": "2014",
+          "v": 8934.1
+        },
+        {
+          "p": "2015",
+          "v": 10260.6
+        },
+        {
+          "p": "2016",
+          "v": 10419.69
+        },
+        {
+          "p": "2017",
+          "v": 12185.66
+        },
+        {
+          "p": "2018",
+          "v": 11069.48
+        },
+        {
+          "p": "2019",
+          "v": 13097.06
+        },
+        {
+          "p": "2020",
+          "v": 14611.0
+        },
+        {
+          "p": "2021",
+          "v": 14611.0
+        },
+        {
+          "p": "2022",
+          "v": 15312.0
+        },
+        {
+          "p": "2023",
+          "v": 16141.73
+        },
+        {
+          "p": "2024",
+          "v": 17603.7
+        },
+        {
+          "p": "2025",
+          "v": 18637.75
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "deu-c02",
+      "concepto": "Intereses y comisiones de la deuda pública en el proyecto de presupuesto 2027",
+      "unidad": "millones de quetzales",
+      "anio": 2027,
+      "tipo": "puntual",
+      "fuente": "Proyecto de Presupuesto 2027 (Minfin, iniciativa 6841) según Prensa Libre",
+      "url": "https://www.prensalibre.com/economia/presupuesto-2027-analistas-alertan-por-deficit-fiscal-de-4-4-y-mayor-deuda-publica/",
+      "periodo": "2027 (proyecto)",
+      "n_puntos": 1,
+      "valor": 18717.0,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Libre leyendo la iniciativa 6841; la primaria Minfin (proypre27) devuelve 403. ASIES (La Hora) dice intereses +5.4 % pero sin monto. Segunda fuente independiente con el monto no encontrada.",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/economia/presupuesto-2027-analistas-alertan-por-deficit-fiscal-de-4-4-y-mayor-deuda-publica/",
+        "cita": "Los intereses y comisiones de la deuda ascienden a Q18 mil 717.0 millones, por encima de los Q18 mil 615.5 millones asignados a Salud Pública.",
+        "archivo_local": "sesiones/_descargas/deuda2027/pl-analistas-deficit.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "deu-c03",
+      "concepto": "Intereses de la deuda frente a los presupuestos de Salud y Educación, proyecto 2027",
+      "unidad": "millones de quetzales",
+      "anio": 2027,
+      "tipo": "desglose",
+      "fuente": "Proyecto de Presupuesto 2027 según Prensa Libre (intereses, Salud) y AGN/Diario de Centro América (Educación, Salud)",
+      "url": "https://www.prensalibre.com/economia/presupuesto-2027-analistas-alertan-por-deficit-fiscal-de-4-4-y-mayor-deuda-publica/",
+      "periodo": "2027 (proyecto)",
+      "n_puntos": 3,
+      "valor": 18717.0,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN confirma Educación Q27,898 M y Salud Q18,615.5 M; intereses solo en Prensa Libre",
+      "calculo": "18615.5+101.5",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/economia/presupuesto-2027-analistas-alertan-por-deficit-fiscal-de-4-4-y-mayor-deuda-publica/",
+        "cita": "Los intereses y comisiones de la deuda ascienden a Q18 mil 717.0 millones, por encima de los Q18 mil 615.5 millones asignados a Salud Pública.",
+        "archivo_local": "sesiones/_descargas/deuda2027/pl-analistas-deficit.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Educación (Mineduc)",
+          "valor": 27898
+        },
+        {
+          "nombre": "Intereses y comisiones de la deuda",
+          "valor": 18717.0
+        },
+        {
+          "nombre": "Salud Pública (MSPAS)",
+          "valor": 18615.5
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_3.png"
+      ]
+    },
+    {
+      "id": "deu-c04",
+      "concepto": "Intereses y comisiones de la deuda 2027 por habitante",
+      "unidad": "quetzales por habitante",
+      "anio": 2027,
+      "tipo": "puntual",
+      "fuente": "Cálculo propio: intereses del proyecto 2027 (Prensa Libre) / población proyectada INE 2027 (revisión 2019)",
+      "url": "https://prensalibre.com/wp-content/uploads/2024/09/01-Metodologia-Nacional.pdf",
+      "periodo": "2027",
+      "n_puntos": 1,
+      "denominador": 18540770,
+      "valor": 1009.5,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo propio con población INE 2027 (18,540,770); numerador de deu-c02",
+      "calculo": "18717.0*1000000/18540770",
+      "evidencia": {
+        "url": "https://prensalibre.com/wp-content/uploads/2024/09/01-Metodologia-Nacional.pdf",
+        "cita": "2027        18,540,770         9,118,808        9,421,962",
+        "archivo_local": "sesiones/_descargas/01-Metodologia-Nacional.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_5.png"
+      ]
+    },
+    {
+      "id": "deu-c05",
+      "concepto": "Intereses de la deuda 2027 como porcentaje de los ingresos tributarios proyectados (de cada Q100 de impuestos)",
+      "unidad": "% de ingresos tributarios",
+      "anio": 2027,
+      "tipo": "puntual",
+      "fuente": "Prensa Libre sobre el proyecto 2027; ingresos tributarios Q131,635.9 millones (Minfin vía AGN)",
+      "url": "https://www.prensalibre.com/economia/presupuesto-2027-analistas-alertan-por-deficit-fiscal-de-4-4-y-mayor-deuda-publica/",
+      "periodo": "2027 (proyecto)",
+      "n_puntos": 1,
+      "valor": 14.2,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN confirma ingresos tributarios 2027 Q131,635.9 M (denominador); el 14.2 % es de Prensa Libre y coincide con el recálculo",
+      "calculo": "18717.0/131635.9*100",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/economia/presupuesto-2027-analistas-alertan-por-deficit-fiscal-de-4-4-y-mayor-deuda-publica/",
+        "cita": "Equivalen al 14.2% de los ingresos tributarios proyectados, un indicador que las calificadoras vigilan de cerca.",
+        "archivo_local": "sesiones/_descargas/deuda2027/pl-analistas-deficit.txt"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_4.png"
+      ]
+    },
+    {
+      "id": "deu-c06",
+      "concepto": "Fuentes financieras (deuda y caja) del proyecto 2027",
+      "unidad": "millones de quetzales",
+      "anio": 2027,
+      "tipo": "desglose",
+      "fuente": "Proyecto de Presupuesto 2027 según Prensa Libre",
+      "url": "https://www.prensalibre.com/economia/presupuesto-2027-analistas-alertan-por-deficit-fiscal-de-4-4-y-mayor-deuda-publica/",
+      "periodo": "2027 (proyecto)",
+      "n_puntos": 3,
+      "valor": 54184.2,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Las partes suman el total; EyN (EFE) reporta endeudamiento de US$5,913 M, coherente con bonos + préstamos externos (Q45,619.1 M)",
+      "calculo": "42750.0+2869.1+8565.1",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/economia/presupuesto-2027-analistas-alertan-por-deficit-fiscal-de-4-4-y-mayor-deuda-publica/",
+        "cita": "Las fuentes financieras suman Q54 mil 184.2 millones: Q42 mil 750.0 millones en bonos del Tesoro, Q2 mil 869.1 millones en préstamos externos y Q8 mil 565.1 millones de disminución de d",
+        "archivo_local": "sesiones/_descargas/deuda2027/pl-analistas-deficit.txt"
+      },
+      "partes": [
+        {
+          "nombre": "Bonos del Tesoro",
+          "valor": 42750.0
+        },
+        {
+          "nombre": "Disminución de disponibilidades de caja",
+          "valor": 8565.1
+        },
+        {
+          "nombre": "Préstamos externos",
+          "valor": 2869.1
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "deu-c07",
+      "concepto": "Aumento de la colocación de Bonos del Tesoro, 2026 a 2027",
+      "unidad": "% de variación",
+      "anio": 2027,
+      "tipo": "puntual",
+      "fuente": "ASIES, análisis del proyecto 2027, vía La Hora",
+      "url": "https://lahora.gt/?p=1024779",
+      "periodo": "2026-2027",
+      "n_puntos": 1,
+      "valor": 83.5,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "ICEFI vía Revista EyN (según buscador): 23,278 -> 42,750 = 83.6 %; ASIES/La Hora usa base 23,291 = 83.5 %",
+      "calculo": "(42750/23291-1)*100",
+      "evidencia": {
+        "url": "https://lahora.gt/?p=1024779",
+        "cita": "La colocación de bonos pasaría de Q23 mil 291 millones en 2026 a Q42 mil 750 millones en 2027, un aumento de 83.5%.",
+        "archivo_local": "sesiones/_descargas/deuda2027/lahora-asies.txt"
+      },
+      "partes": [
+        {
+          "nombre": "2026",
+          "valor": 23291
+        },
+        {
+          "nombre": "2027 (proyecto)",
+          "valor": 42750
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "deu-c09",
+      "concepto": "Saldo de la deuda pública del Gobierno Central, % del PIB",
+      "unidad": "% del PIB",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "Banco de Guatemala, Resultados macroeconómicos 2025 y perspectivas 2026 (datos MINFIN y Banguat)",
+      "url": "https://www.fundesa.org.gt/content/files/publicaciones/BANGUAT_2026_Resultados_macroeconmicos_2025_y_Perspectivas.pdf",
+      "periodo": "2012-2026",
+      "n_puntos": 15,
+      "valor": 27.5,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "La Hora reporta 27.6 % para 2026 (Minfin); Banguat proyecta 27.5 %",
+      "evidencia": {
+        "url": "https://www.fundesa.org.gt/content/files/publicaciones/BANGUAT_2026_Resultados_macroeconmicos_2025_y_Perspectivas.pdf",
+        "cita": "La deuda pública permanece en niveles bajos · Deuda Pública (% del PIB) · Valor crítico: 40% · 31.5 · 30.6 · 29.0 · 27.5 · 26.9 · 27.2 · 26.5 · 26.3",
+        "archivo_local": "sesiones/_descargas/BANGUAT_2026_Resultados_macroeconmicos_2025_y_Perspectivas.txt"
+      },
+      "serie": [
+        {
+          "p": "2012",
+          "v": 24.8
+        },
+        {
+          "p": "2013",
+          "v": 25.2
+        },
+        {
+          "p": "2014",
+          "v": 24.8
+        },
+        {
+          "p": "2015",
+          "v": 24.9
+        },
+        {
+          "p": "2016",
+          "v": 25.0
+        },
+        {
+          "p": "2017",
+          "v": 25.2
+        },
+        {
+          "p": "2018",
+          "v": 26.5
+        },
+        {
+          "p": "2019",
+          "v": 26.5
+        },
+        {
+          "p": "2020",
+          "v": 31.5
+        },
+        {
+          "p": "2021",
+          "v": 30.6
+        },
+        {
+          "p": "2022",
+          "v": 29.0
+        },
+        {
+          "p": "2023",
+          "v": 27.2
+        },
+        {
+          "p": "2024",
+          "v": 26.3
+        },
+        {
+          "p": "2025",
+          "v": 26.9
+        },
+        {
+          "p": "2026",
+          "v": 27.5
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "deu-c10",
+      "concepto": "Saldo de la deuda pública proyectado al cierre de 2027, % del PIB",
+      "unidad": "% del PIB",
+      "anio": 2027,
+      "tipo": "puntual",
+      "fuente": "Proyecto de Presupuesto 2027 (Minfin) según La Hora; también CIEN vía Prensa Libre",
+      "url": "https://lahora.gt/?p=1018085",
+      "periodo": "2026-2027",
+      "n_puntos": 1,
+      "valor": 29.4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "La Hora (cita local); otra consulta web repite 29.4 % vs 27.9 % en proyecciones previas",
+      "evidencia": {
+        "url": "https://lahora.gt/?p=1018085",
+        "cita": "La iniciativa plantea que la deuda pase de 27.6% del Producto Interno Bruto (PIB) en 2026 a 29.4% el año siguiente.",
+        "archivo_local": "sesiones/_descargas/deuda2027/lahora-deuda-280mil.txt"
+      },
+      "partes": [
+        {
+          "nombre": "2026",
+          "valor": 27.6
+        },
+        {
+          "nombre": "2027 (proyecto)",
+          "valor": 29.4
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "deu-c11",
+      "concepto": "Saldo nominal de la deuda pública proyectado para 2027",
+      "unidad": "millones de quetzales",
+      "anio": 2027,
+      "tipo": "puntual",
+      "fuente": "Minfin (proyecto 2027 y Reportes de Operaciones de Crédito Público) según La Hora",
+      "url": "https://lahora.gt/?p=1018085",
+      "periodo": "2012-2027",
+      "n_puntos": 1,
+      "valor": 320443.3,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "La Hora (cita local); búsqueda web confirma Q320,443.3 M con Q280,708.3 M para 2026",
+      "calculo": "280708.3+39735.0",
+      "evidencia": {
+        "url": "https://lahora.gt/?p=1018085",
+        "cita": "el saldo pasó de Q96 mil 960.3 millones en 2012 a Q280 mil 708.3 millones proyectados para 2026. [...] Para 2027, el proyecto de presupuesto plantea que el saldo llegue a Q320 mil 443.3 millones.",
+        "archivo_local": "sesiones/_descargas/deuda2027/lahora-deuda-280mil.txt"
+      },
+      "partes": [
+        {
+          "nombre": "2012",
+          "valor": 96960.3
+        },
+        {
+          "nombre": "2026 (proyección de cierre)",
+          "valor": 280708.3
+        },
+        {
+          "nombre": "2027 (proyecto)",
+          "valor": 320443.3
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "deu-c13",
+      "concepto": "Votación de la Junta Monetaria sobre el cupo de endeudamiento 2027 (opinión favorable)",
+      "unidad": "votos a favor",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "Prensa Libre, 13-nov-2026",
+      "url": "https://www.prensalibre.com/economia/junta-monetaria-emite-opinion-favorable-sobre-deuda-para-2027-por-que-preocupa-el-aumento-del-endeudamiento-y-el-gasto-publico/",
+      "periodo": "sesión del 11-nov-2026",
+      "n_puntos": 2,
+      "valor": 5,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Prensa Libre, 13-nov-2026 (archivo local); sin segunda fuente: la búsqueda no halló otra nota de la sesión del 11-nov-2026",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/economia/junta-monetaria-emite-opinion-favorable-sobre-deuda-para-2027-por-que-preocupa-el-aumento-del-endeudamiento-y-el-gasto-publico/",
+        "cita": "concluyó con cinco votos a favor y tres en contra, con lo cual se emitió opinión favorable sobre el cupo de endeudamiento.",
+        "archivo_local": "sesiones/_descargas/deuda2027/pl-junta-monetaria.txt"
+      },
+      "partes": [
+        {
+          "nombre": "A favor (Minfin, Mineco, MAGA, presidente del Banguat, delegado del Congreso)",
+          "valor": 5
+        },
+        {
+          "nombre": "En contra (sector empresarial, bancos privados, Usac)",
+          "valor": 3
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_2.png"
+      ]
+    },
+    {
+      "id": "deu-c14",
+      "concepto": "Asignación 2027 para retribuir al Banco de Guatemala las deficiencias de la política monetaria (Ley Orgánica del Banguat)",
+      "unidad": "millones de quetzales",
+      "anio": 2027,
+      "tipo": "puntual",
+      "fuente": "Ministro de Finanzas Jonathan Menkos en la presentación del proyecto, vía Emisoras Unidas",
+      "url": "https://emisorasunidas.com/nacional/2026/09/02/gobierno-arevalo-proyecto-presupuesto-general-2027/",
+      "periodo": "2027 (proyecto)",
+      "n_puntos": 1,
+      "valor": 2600,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Emisoras Unidas cita al ministro; búsqueda web halló otra nota que repite Q2,600.0 M para deficiencias netas del Banguat",
+      "evidencia": {
+        "url": "https://emisorasunidas.com/nacional/2026/09/02/gobierno-arevalo-proyecto-presupuesto-general-2027/",
+        "cita": "Q2 mil 600 millones para cumplir con la Ley Orgánica del Banco de Guatemala que obliga al Estado a retribuir las deficiencias de la política monetaria",
+        "archivo_local": "sesiones/_descargas/deuda2027/eu-12-propositos.txt"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "his-c01",
+      "concepto": "Ejecución presupuestaria del Ministerio de Comunicaciones (CIV), devengado/vigente, 2016–2025",
+      "unidad": "% del presupuesto vigente",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Guate en Datos con datos de Sicoin (Minfin)",
+      "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+      "periodo": "2016–2025",
+      "n_puntos": 10,
+      "valor": 68.19,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+        "cita": "\"Comunicaciones, Infraestructura y Vivienda\",\"Total\",2025,7526.74,5132.32,68.19 | \"Comunicaciones, Infraestructura y Vivienda\",\"Total\",2024,6042.73,4270.26,70.67",
+        "archivo_local": "sesiones/presupuesto-2027-partidas-sospechosas/fuentes_his/gastopublico-ejecucion.csv"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 56.86
+        },
+        {
+          "p": "2017",
+          "v": 71.1
+        },
+        {
+          "p": "2018",
+          "v": 96.59
+        },
+        {
+          "p": "2019",
+          "v": 91.57
+        },
+        {
+          "p": "2020",
+          "v": 69.56
+        },
+        {
+          "p": "2021",
+          "v": 90.53
+        },
+        {
+          "p": "2022",
+          "v": 89.53
+        },
+        {
+          "p": "2023",
+          "v": 92.8
+        },
+        {
+          "p": "2024",
+          "v": 70.67
+        },
+        {
+          "p": "2025",
+          "v": 68.19
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "his-c02",
+      "concepto": "Ejecución de la inversión del CIV (devengado/vigente), 2016–2025",
+      "unidad": "% del vigente de inversión",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Guate en Datos con datos de Sicoin (Minfin)",
+      "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+      "periodo": "2016–2025",
+      "n_puntos": 10,
+      "valor": 57.43,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+        "cita": "\"Comunicaciones, Infraestructura y Vivienda\",\"Inversión\",2025,4225.6,2426.82,57.43 | \"Comunicaciones, Infraestructura y Vivienda\",\"Inversión\",2024,2969.21,1917.06,64.56",
+        "archivo_local": "sesiones/presupuesto-2027-partidas-sospechosas/fuentes_his/gastopublico-ejecucion.csv"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 45.81
+        },
+        {
+          "p": "2017",
+          "v": 73.22
+        },
+        {
+          "p": "2018",
+          "v": 96.38
+        },
+        {
+          "p": "2019",
+          "v": 96.59
+        },
+        {
+          "p": "2020",
+          "v": 70.49
+        },
+        {
+          "p": "2021",
+          "v": 86.84
+        },
+        {
+          "p": "2022",
+          "v": 80.53
+        },
+        {
+          "p": "2023",
+          "v": 88.74
+        },
+        {
+          "p": "2024",
+          "v": 64.56
+        },
+        {
+          "p": "2025",
+          "v": 57.43
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "his-c03",
+      "concepto": "Techo del Ministerio de Comunicaciones (CIV) en el proyecto de presupuesto 2027",
+      "unidad": "millones de Q",
+      "anio": 2027,
+      "tipo": "puntual",
+      "fuente": "Agencia Guatemalteca de Noticias (AGN), 29 sept 2026, sobre el proyecto de presupuesto 2027 (iniciativa 6841)",
+      "url": "https://agn.gt/presupuesto-2027-mas-de-10-millones-dirigidos-a-infraestructura-vial-y-educativa/",
+      "periodo": "2027 (proyecto)",
+      "n_puntos": 1,
+      "valor": 10668.6,
+      "valor_original": 10669.6,
+      "veredicto": "ajustada",
+      "independencia": "baja",
+      "fuente_2": "La Hora (7 sep 2026): «Comunicaciones tendría Q10 mil 668.6 millones»; República: «GTQ10 668.6M para el CIV» (vigente 2026 7,631.8 y +3,036.8)",
+      "calculo": "10668.6",
+      "evidencia": {
+        "url": "https://agn.gt/presupuesto-2027-mas-de-10-millones-dirigidos-a-infraestructura-vial-y-educativa/",
+        "cita": "El proyecto de presupuesto para 2027 plantea un techo presupuestario de 10 mil 669.6 millones de quetzales para el Ministerio de Comunicaciones, Infraestructura y Vivienda ( CIV ).",
+        "archivo_local": "sesiones/presupuesto-2027-partidas-sospechosas/fuentes_his/agn_civ_2027.html"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_17.png"
+      ]
+    },
+    {
+      "id": "his-c04",
+      "concepto": "Aumento del techo 2027 del CIV frente a su presupuesto vigente 2025",
+      "unidad": "%",
+      "anio": 2027,
+      "tipo": "puntual",
+      "fuente": "AGN (techo 2027) y Guate en Datos/Sicoin (vigente 2025)",
+      "url": "https://agn.gt/presupuesto-2027-mas-de-10-millones-dirigidos-a-infraestructura-vial-y-educativa/",
+      "periodo": "2025 vigente → 2027 proyecto",
+      "n_puntos": 1,
+      "valor": 41.74,
+      "valor_original": 41.76,
+      "veredicto": "ajustada",
+      "independencia": "baja",
+      "fuente_2": "Recálculo con techo 10,668.6 (La Hora, República) y vigente 2025 Sicoin 7526.74",
+      "calculo": "(10668.6/7526.74-1)*100",
+      "evidencia": {
+        "url": "https://agn.gt/presupuesto-2027-mas-de-10-millones-dirigidos-a-infraestructura-vial-y-educativa/",
+        "cita": "plantea un techo presupuestario de 10 mil 669.6 millones de quetzales para el Ministerio de Comunicaciones | Sicoin 2025 vigente CIV: 7526.74",
+        "archivo_local": "sesiones/presupuesto-2027-partidas-sospechosas/fuentes_his/agn_civ_2027.html"
+      },
+      "usada": true,
+      "aparece_en": [
+        "tuit_17.png"
+      ]
+    },
+    {
+      "id": "his-c05",
+      "concepto": "Presupuesto que el CIV tenía vigente y no ejecutó en 2024 y 2025 (vigente − devengado)",
+      "unidad": "millones de Q",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Guate en Datos con datos de Sicoin (Minfin)",
+      "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+      "periodo": "2024–2025",
+      "n_puntos": 2,
+      "valor": 4166.89,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "calculo": "(6042.73-4270.26)+(7526.74-5132.32)",
+      "evidencia": {
+        "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+        "cita": "\"Comunicaciones, Infraestructura y Vivienda\",\"Total\",2024,6042.73,4270.26,70.67 | \"Comunicaciones, Infraestructura y Vivienda\",\"Total\",2025,7526.74,5132.32,68.19",
+        "archivo_local": "sesiones/presupuesto-2027-partidas-sospechosas/fuentes_his/gastopublico-ejecucion.csv"
+      },
+      "partes": [
+        {
+          "nombre": "2024",
+          "valor": 1772.47
+        },
+        {
+          "nombre": "2025",
+          "valor": 2394.42
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_17.png"
+      ]
+    },
+    {
+      "id": "his-c06",
+      "concepto": "Ejecución del CIV en 2026 según Sicoin al 20 de septiembre (total, funcionamiento, inversión)",
+      "unidad": "% del vigente",
+      "anio": 2026,
+      "tipo": "desglose",
+      "fuente": "AGN, 16 oct 2026, citando Sicoin",
+      "url": "https://agn.gt/civ-proyecta-superar-el-80-de-ejecucion-presupuestaria-en-2026/",
+      "periodo": "al 20 sept 2026",
+      "n_puntos": 3,
+      "valor": 38.2,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://agn.gt/civ-proyecta-superar-el-80-de-ejecucion-presupuestaria-en-2026/",
+        "cita": "datos del Sistema de Contabilidad Integrada (Sicoin), que situaban la ejecución del CIV en 38.2 % al 20 de septiembre, con 41.7 % en funcionamiento y 32.4 % en inversión.",
+        "archivo_local": "sesiones/presupuesto-2027-partidas-sospechosas/fuentes_his/agn_civ_ejec2026.html"
+      },
+      "partes": [
+        {
+          "nombre": "Total",
+          "valor": 38.2
+        },
+        {
+          "nombre": "Funcionamiento",
+          "valor": 41.7
+        },
+        {
+          "nombre": "Inversión",
+          "valor": 32.4
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_16.png"
+      ]
+    },
+    {
+      "id": "his-c07",
+      "concepto": "Ejecución del CIV al cierre del primer trimestre 2026 (último lugar del Ejecutivo) y su vigente 2026",
+      "unidad": "% del vigente",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "Prensa Libre, 31 mar 2026 (datos Sicoin)",
+      "url": "https://www.prensalibre.com/?p=24982975",
+      "periodo": "primer trimestre 2026",
+      "n_puntos": 1,
+      "valor": 6.36,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/?p=24982975",
+        "cita": "del presupuesto vigente de Q. 8 mil 344 millones 667 mil 692 ha ejecutado únicamente 6.36%%, equivalente a Q. 530 millones 521 mil 310.05",
+        "archivo_local": "sesiones/presupuesto-2027-partidas-sospechosas/fuentes_his/prensalibre_ejecucion_t1_2026.html"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "his-c08",
+      "concepto": "Ejecución de la inversión del Ministerio de Gobernación (devengado/vigente), 2016–2025",
+      "unidad": "% del vigente de inversión",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Guate en Datos con datos de Sicoin (Minfin)",
+      "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+      "periodo": "2016–2025",
+      "n_puntos": 10,
+      "valor": 49.17,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+        "cita": "\"Gobernación\",\"Inversión\",2024,583.38,119.82,20.54 | \"Gobernación\",\"Inversión\",2025,299.77,147.39,49.17",
+        "archivo_local": "sesiones/presupuesto-2027-partidas-sospechosas/fuentes_his/gastopublico-ejecucion.csv"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 22.52
+        },
+        {
+          "p": "2017",
+          "v": 24.38
+        },
+        {
+          "p": "2018",
+          "v": 82.09
+        },
+        {
+          "p": "2019",
+          "v": 50.09
+        },
+        {
+          "p": "2020",
+          "v": 13.77
+        },
+        {
+          "p": "2021",
+          "v": 16.77
+        },
+        {
+          "p": "2022",
+          "v": 70.26
+        },
+        {
+          "p": "2023",
+          "v": 79.8
+        },
+        {
+          "p": "2024",
+          "v": 20.54
+        },
+        {
+          "p": "2025",
+          "v": 49.17
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "his-c09",
+      "concepto": "Presupuesto del Ministerio de Gobernación: 2023 vigente, 2026 vigente y propuesta 2027 defendida ante el Congreso",
+      "unidad": "millones de Q",
+      "anio": 2027,
+      "tipo": "desglose",
+      "fuente": "Infobae (23 sept 2026, Comisión de Finanzas) y Canal Antigua (3 nov 2026)",
+      "url": "https://canalantigua.tv/2026/11/03/presupuesto-2027-congreso-revisa-solicitudes-de-ampliacion-de-ministerios-por-q192-mil-millones/",
+      "periodo": "2023, 2026, 2027",
+      "n_puntos": 3,
+      "valor": 10490,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "La Hora (7 sep 2026): «Gobernación, por su parte, tendría Q10 mil 490 millones»; Infobae y Canal Antigua",
+      "calculo": "10490",
+      "evidencia": {
+        "url": "https://www.infobae.com/guatemala/2026/09/23/congreso-fija-calendario-de-audiencias-para-revisar-el-presupuesto-2027-de-guatemala-y-exigira-comprobar-el-uso-de-los-recursos/",
+        "cita": "El Ministerio de Gobernación pasó de 7,008,6 millones de quetzales a 9.753,4 millones, lo que supone una suba de 39,2%.",
+        "archivo_local": "sesiones/presupuesto-2027-partidas-sospechosas/fuentes_his/infobae_mingob.html"
+      },
+      "partes": [
+        {
+          "nombre": "2023 vigente",
+          "valor": 7008.6
+        },
+        {
+          "nombre": "2026 vigente",
+          "valor": 9753.4
+        },
+        {
+          "nombre": "2027 propuesta",
+          "valor": 10490
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "his-c10",
+      "concepto": "Ejecución de la inversión por ministerio en 2025 (devengado/vigente de inversión)",
+      "unidad": "% del vigente de inversión",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Guate en Datos con datos de Sicoin (Minfin)",
+      "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+      "periodo": "2025",
+      "n_puntos": 8,
+      "valor": 57.43,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+        "cita": "\"Salud Pública y Asistencia Social\",\"Inversión\",2025,1222.43,474.36,38.8 | \"Gobernación\",\"Inversión\",2025,299.77,147.39,49.17",
+        "archivo_local": "sesiones/presupuesto-2027-partidas-sospechosas/fuentes_his/gastopublico-ejecucion.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Cultura y Deportes",
+          "valor": 33.3
+        },
+        {
+          "nombre": "Salud Pública",
+          "valor": 38.8
+        },
+        {
+          "nombre": "Gobernación",
+          "valor": 49.17
+        },
+        {
+          "nombre": "Comunicaciones (CIV)",
+          "valor": 57.43
+        },
+        {
+          "nombre": "Educación",
+          "valor": 70.38
+        },
+        {
+          "nombre": "Agricultura",
+          "valor": 78.42
+        },
+        {
+          "nombre": "Obligaciones del Estado a cargo del Tesoro",
+          "valor": 82.42
+        },
+        {
+          "nombre": "Defensa Nacional",
+          "valor": 100
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "his-c11",
+      "concepto": "Ejecución presupuestaria total de la Administración Central (devengado/vigente), 2016–2025",
+      "unidad": "% del vigente",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Guate en Datos con datos de Sicoin (Minfin)",
+      "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+      "periodo": "2016–2025",
+      "n_puntos": 10,
+      "valor": 90.76,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local)",
+      "evidencia": {
+        "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+        "cita": "\"Total\",\"Total\",2025,154836.61,140525.47,90.76 | \"Total\",\"Total\",2023,118624.31,115032.03,96.97",
+        "archivo_local": "sesiones/presupuesto-2027-partidas-sospechosas/fuentes_his/gastopublico-ejecucion.csv"
+      },
+      "serie": [
+        {
+          "p": "2016",
+          "v": 92.08
+        },
+        {
+          "p": "2017",
+          "v": 91.75
+        },
+        {
+          "p": "2018",
+          "v": 96.03
+        },
+        {
+          "p": "2019",
+          "v": 93.79
+        },
+        {
+          "p": "2020",
+          "v": 89.67
+        },
+        {
+          "p": "2021",
+          "v": 86.5
+        },
+        {
+          "p": "2022",
+          "v": 96.15
+        },
+        {
+          "p": "2023",
+          "v": 96.97
+        },
+        {
+          "p": "2024",
+          "v": 92.08
+        },
+        {
+          "p": "2025",
+          "v": 90.76
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "his-c12",
+      "concepto": "Bono 14 pagado a los diputados del Congreso, 2024–2026",
+      "unidad": "millones de Q",
+      "anio": 2026,
+      "tipo": "serie",
+      "fuente": "La Hora, 17 jul 2026",
+      "url": "https://lahora.gt/nacionales/jmaldonado/2026/07/17/pago-de-bono-14-a-diputados-aumento-338-en-comparacion-con-2024-y-supera-los-q10-millones-now/",
+      "periodo": "2024–2026",
+      "n_puntos": 3,
+      "valor": 10.872916,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Cotejo con la cita local de La Hora (Q10,872,916)",
+      "calculo": "10872916/1000000",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/jmaldonado/2026/07/17/pago-de-bono-14-a-diputados-aumento-338-en-comparacion-con-2024-y-supera-los-q10-millones-now/",
+        "cita": "el Congreso devengó Q3 millones 212 mil 820 ... en Bono 14 se pagaron Q7 millones 146 mil 932 ... El Organismo Legislativo este año desembolsó Q10 millones 872 mil 916",
+        "archivo_local": "sesiones/presupuesto-2027-partidas-sospechosas/fuentes_his/lahora_bono14.html"
+      },
+      "serie": [
+        {
+          "p": "2024",
+          "v": 3.21282
+        },
+        {
+          "p": "2025",
+          "v": 7.146932
+        },
+        {
+          "p": "2026",
+          "v": 10.872916
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_18.png"
+      ]
+    },
+    {
+      "id": "his-c13",
+      "concepto": "Aumento del Bono 14 de diputados 2026 frente a 2024",
+      "unidad": "%",
+      "anio": 2026,
+      "tipo": "puntual",
+      "fuente": "La Hora, 17 jul 2026 (cálculo propio con sus cifras)",
+      "url": "https://lahora.gt/nacionales/jmaldonado/2026/07/17/pago-de-bono-14-a-diputados-aumento-338-en-comparacion-con-2024-y-supera-los-q10-millones-now/",
+      "periodo": "2024 → 2026",
+      "n_puntos": 1,
+      "valor": 238.42,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Cotejo con la cita local de La Hora (Q3,212,820 en 2024; Q10,872,916 en 2026)",
+      "calculo": "(10872916/3212820-1)*100",
+      "evidencia": {
+        "url": "https://lahora.gt/nacionales/jmaldonado/2026/07/17/pago-de-bono-14-a-diputados-aumento-338-en-comparacion-con-2024-y-supera-los-q10-millones-now/",
+        "cita": "el Congreso devengó Q3 millones 212 mil 820 ... El Organismo Legislativo este año desembolsó Q10 millones 872 mil 916",
+        "archivo_local": "sesiones/presupuesto-2027-partidas-sospechosas/fuentes_his/lahora_bono14.html"
+      },
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "his-c14",
+      "concepto": "Ministerio de Desarrollo Social (Mides): proyección 2027 presentada al Congreso frente a lo asignado en 2026",
+      "unidad": "millones de Q",
+      "anio": 2027,
+      "tipo": "desglose",
+      "fuente": "Canal Antigua, 3 nov 2026 (audiencias de la Comisión de Finanzas)",
+      "url": "https://canalantigua.tv/2026/11/03/presupuesto-2027-congreso-revisa-solicitudes-de-ampliacion-de-ministerios-por-q192-mil-millones/",
+      "periodo": "2026 → 2027",
+      "n_puntos": 2,
+      "valor": 5500,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "Cotejo con la cita local de Canal Antigua: proyección de Q5,500 millones frente a Q3,996 millones asignados en 2026",
+      "evidencia": {
+        "url": "https://canalantigua.tv/2026/11/03/presupuesto-2027-congreso-revisa-solicitudes-de-ampliacion-de-ministerios-por-q192-mil-millones/",
+        "cita": "Abelardo Pinto presentó una proyección de Q5,500 millones, un incremento de Q1,503 millones respecto de los Q3,996 millones asignados en 2026.",
+        "archivo_local": "sesiones/presupuesto-2027-partidas-sospechosas/fuentes_his/canalantigua_ampliaciones.html"
+      },
+      "partes": [
+        {
+          "nombre": "2026 asignado",
+          "valor": 3996
+        },
+        {
+          "nombre": "2027 proyección",
+          "valor": 5500
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_19.png"
+      ]
+    },
+    {
+      "id": "opa-c01",
+      "concepto": "Bonos del Tesoro previstos para financiar el presupuesto: vigente 2026 frente a proyecto 2027",
+      "unidad": "millones de quetzales",
+      "anio": 2027,
+      "tipo": "desglose",
+      "fuente": "ICEFI (análisis del proyecto 2027, 16-sep-2026) vía Revista E&N",
+      "url": "https://www.revistaeyn.com/centroamericaymundo/guatemala-por-que-arevalo-se-vio-obligado-a-dar-un-giro-en-el-ministerio-de-finanzas-HH32246405",
+      "periodo": "2026 vigente – 2027 proyecto",
+      "n_puntos": 2,
+      "valor": 42750,
+      "veredicto": "verificada",
+      "independencia": "alta",
+      "fuente_2": "ASIES vía La Hora (bonos 2027)",
+      "evidencia": {
+        "url": "https://www.revistaeyn.com/centroamericaymundo/guatemala-por-que-arevalo-se-vio-obligado-a-dar-un-giro-en-el-ministerio-de-finanzas-HH32246405",
+        "cita": "La contratación prevista mediante bonos del Tesoro subiría de Q23.278 millones en el presupuesto vigente de 2026 a Q42.750 millones en 2027, un incremento de 83,6%.",
+        "archivo_local": "sesiones/_descargas/opa_eyn_giro_minfin.html"
+      },
+      "partes": [
+        {
+          "nombre": "2026 vigente",
+          "valor": 23278
+        },
+        {
+          "nombre": "2027 proyecto",
+          "valor": 42750
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_1.png"
+      ]
+    },
+    {
+      "id": "opa-c05",
+      "concepto": "Gastos extraordinarios del techo preliminar 2027 por destino",
+      "unidad": "millones de quetzales",
+      "anio": 2027,
+      "tipo": "desglose",
+      "fuente": "Minfin (techo preliminar, jul-2026) vía Revista E&N",
+      "url": "https://www.revistaeyn.com/centroamericaymundo/guatemala-proyecto-de-presupuesto-2027-contempla-proyectos-por-us-2480m-DD31327613",
+      "periodo": "2027 techo preliminar (julio 2026)",
+      "n_puntos": 6,
+      "valor": 19122.4,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "AGN (agencia oficial) sobre el techo preliminar de Minfin, 6-jul-2026",
+      "evidencia": {
+        "url": "https://www.revistaeyn.com/centroamericaymundo/guatemala-proyecto-de-presupuesto-2027-contempla-proyectos-por-us-2480m-DD31327613",
+        "cita": "el cual contempla gastos extraordinarios por 19,122.4 millones de quetzales (unos US$2,483.4 millones) destinados a proyectos de alto impacto económico y social.",
+        "archivo_local": "sesiones/_descargas/opa_eyn_us2480m.html"
+      },
+      "partes": [
+        {
+          "nombre": "Metas presidenciales específicas",
+          "valor": 8754.9
+        },
+        {
+          "nombre": "Ampliación y modernización de Puerto Quetzal",
+          "valor": 4800
+        },
+        {
+          "nombre": "Fondo para Proyectos Viales Prioritarios (nuevo)",
+          "valor": 3517.6
+        },
+        {
+          "nombre": "Fondo para la Primera Vivienda",
+          "valor": 1200
+        },
+        {
+          "nombre": "Sistema Metropolitano de Transporte, puertos, aeropuertos y ferrovías",
+          "valor": 600
+        },
+        {
+          "nombre": "Resto no detallado",
+          "valor": 249.9
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_6.png"
+      ]
+    },
+    {
+      "id": "opa-c07",
+      "concepto": "Presupuesto vigente de «Obligaciones del Estado a cargo del Tesoro» (transferencias a Codede, municipalidades, TSE, OJ, USAC, etc.)",
+      "unidad": "millones de quetzales",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Guate en Datos con datos de Sicoin (Minfin)",
+      "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+      "periodo": "2016–2025",
+      "n_puntos": 10,
+      "valor": 61762.07,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local): CSV Guate en Datos con datos de Sicoin",
+      "evidencia": {
+        "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+        "cita": "\"Obligaciones del Estado a Cargo del Tesoro\",\"Total\",2025,61762.07,54007.95,87.45",
+        "archivo_local": "sesiones/_descargas/gastopublico-ejecucion.csv"
+      },
+      "serie": [
+        {
+          "p": 2016,
+          "v": 24694.52
+        },
+        {
+          "p": 2017,
+          "v": 26569.33
+        },
+        {
+          "p": 2018,
+          "v": 27091.69
+        },
+        {
+          "p": 2019,
+          "v": 28639.57
+        },
+        {
+          "p": 2020,
+          "v": 32995.26
+        },
+        {
+          "p": 2021,
+          "v": 39184.3
+        },
+        {
+          "p": 2022,
+          "v": 34858.76
+        },
+        {
+          "p": 2023,
+          "v": 40638.11
+        },
+        {
+          "p": 2024,
+          "v": 46597.2
+        },
+        {
+          "p": 2025,
+          "v": 61762.07
+        }
+      ],
+      "usada": true,
+      "aparece_en": [
+        "tuit_7.png"
+      ]
+    },
+    {
+      "id": "opa-c08",
+      "concepto": "Peso de Obligaciones del Tesoro en el presupuesto vigente total de la Administración Central",
+      "unidad": "% del presupuesto vigente total",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Guate en Datos con datos de Sicoin (cálculo propio)",
+      "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+      "periodo": "2016–2025",
+      "n_puntos": 10,
+      "valor": 39.89,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "recálculo desde el CSV (Total y Tesoro, vigente)",
+      "calculo": "61762.07/154836.61*100",
+      "evidencia": {
+        "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+        "cita": "\"Total\",\"Total\",2025,154836.61,140525.47,90.76 · \"Obligaciones del Estado a Cargo del Tesoro\",\"Total\",2025,61762.07,54007.95,87.45",
+        "archivo_local": "sesiones/_descargas/gastopublico-ejecucion.csv"
+      },
+      "serie": [
+        {
+          "p": 2016,
+          "v": 34.61
+        },
+        {
+          "p": 2017,
+          "v": 34.23
+        },
+        {
+          "p": 2018,
+          "v": 34.56
+        },
+        {
+          "p": 2019,
+          "v": 32.42
+        },
+        {
+          "p": 2020,
+          "v": 30.62
+        },
+        {
+          "p": 2021,
+          "v": 36.44
+        },
+        {
+          "p": 2022,
+          "v": 30.86
+        },
+        {
+          "p": 2023,
+          "v": 34.26
+        },
+        {
+          "p": 2024,
+          "v": 35.51
+        },
+        {
+          "p": 2025,
+          "v": 39.89
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "opa-c09",
+      "concepto": "Dinero de Obligaciones del Tesoro que quedó sin ejecutar (vigente menos devengado)",
+      "unidad": "millones de quetzales",
+      "anio": 2025,
+      "tipo": "serie",
+      "fuente": "Guate en Datos con datos de Sicoin (cálculo propio)",
+      "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+      "periodo": "2016–2025",
+      "n_puntos": 10,
+      "valor": 7754.12,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "recálculo desde el CSV (vigente menos devengado)",
+      "calculo": "61762.07-54007.95",
+      "evidencia": {
+        "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+        "cita": "\"Obligaciones del Estado a Cargo del Tesoro\",\"Total\",2025,61762.07,54007.95,87.45",
+        "archivo_local": "sesiones/_descargas/gastopublico-ejecucion.csv"
+      },
+      "serie": [
+        {
+          "p": 2016,
+          "v": 1206.22
+        },
+        {
+          "p": 2017,
+          "v": 1224.94
+        },
+        {
+          "p": 2018,
+          "v": 1126.35
+        },
+        {
+          "p": 2019,
+          "v": 1841.87
+        },
+        {
+          "p": 2020,
+          "v": 2757.67
+        },
+        {
+          "p": 2021,
+          "v": 10316.43
+        },
+        {
+          "p": 2022,
+          "v": 1437.64
+        },
+        {
+          "p": 2023,
+          "v": 1890.22
+        },
+        {
+          "p": 2024,
+          "v": 3935.35
+        },
+        {
+          "p": 2025,
+          "v": 7754.12
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "opa-c10",
+      "concepto": "Ejecución 2025 de Obligaciones del Tesoro por tipo de gasto",
+      "unidad": "% devengado/vigente",
+      "anio": 2025,
+      "tipo": "desglose",
+      "fuente": "Guate en Datos con datos de Sicoin",
+      "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+      "periodo": "2025",
+      "n_puntos": 2,
+      "valor": 87.45,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "cotejo con la primaria (archivo local): CSV Guate en Datos con datos de Sicoin",
+      "evidencia": {
+        "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+        "cita": "\"Obligaciones del Estado a Cargo del Tesoro\",\"Inversión\",2025,28459.81,23456.58,82.42",
+        "archivo_local": "sesiones/_descargas/gastopublico-ejecucion.csv"
+      },
+      "partes": [
+        {
+          "nombre": "Funcionamiento",
+          "valor": 91.74
+        },
+        {
+          "nombre": "Inversión (transferencias de capital)",
+          "valor": 82.42
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    },
+    {
+      "id": "opa-c11",
+      "concepto": "Asignaciones penitenciarias anunciadas para 2027 (anteproyectos de Gobernación y Defensa)",
+      "unidad": "millones de quetzales",
+      "anio": 2027,
+      "tipo": "desglose",
+      "fuente": "Viceministro de Finanzas en foro de Fundesa, vía Prensa Libre (4-ago-2026)",
+      "url": "https://www.prensalibre.com/?p=25798104",
+      "periodo": "2027 anteproyecto",
+      "n_puntos": 5,
+      "valor": 116,
+      "veredicto": "verificada",
+      "independencia": "baja",
+      "fuente_2": "La Hora sobre la misma presentación de Fundesa",
+      "evidencia": {
+        "url": "https://www.prensalibre.com/?p=25798104",
+        "cita": "Q116 millones para el funcionamiento de la cárcel de Masagua, esta última aún en fase de licitación.",
+        "archivo_local": "sesiones/_descargas/opa_pl_25798104.html"
+      },
+      "partes": [
+        {
+          "nombre": "Funcionamiento de la cárcel de Masagua (aún en licitación)",
+          "valor": 116
+        },
+        {
+          "nombre": "Funcionamiento de la cárcel de Izabal",
+          "valor": 90
+        },
+        {
+          "nombre": "Remozamiento de infraestructura penitenciaria",
+          "valor": 266.5
+        },
+        {
+          "nombre": "Defensa: equipamiento y tecnología cárcel de Morales, Izabal",
+          "valor": 280
+        },
+        {
+          "nombre": "Defensa: armamento y equipo táctico para esa cárcel",
+          "valor": 24.3
+        }
+      ],
+      "usada": false,
+      "aparece_en": []
+    }
+  ],
+  "fuentes": [
+    {
+      "nombre": "Icefi — Comunicado 01-2026 sobre la ampliación presupuestaria 2026 (anexos 4–7)",
+      "url": "https://mail.icefi.org/sites/default/files/01-2026_comunicado_icefi_ampliacion_presupuestaria_03febrero2026.pdf",
+      "nivel": "secundaria (tablas de Sicoin y decretos del Congreso)"
+    },
+    {
+      "nombre": "Icefi — Comunicado GT-09-2025 sobre el presupuesto aprobado 2026 (anexos 4–7)",
+      "url": "https://mail.icefi.org/sites/default/files/gt09-2025_comunicado_icefi_presupuesto_aprobado_para_2026_26_noviembre_2025.pdf",
+      "nivel": "secundaria (tablas de Sicoin y Decreto 27-2025)"
+    },
+    {
+      "nombre": "Icefi — Análisis y recomendaciones para el proyecto de presupuesto 2026",
+      "url": "https://www.icefi.org/sites/default/files/guatemala_analisis_del_presupuesto_aprobado_para_2026_-_12_nov_2025_0.pdf",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "AGN — Conadur aprueba Q4.9 mil millones para CODEDE 2027",
+      "url": "https://agn.gt/conadur-aprueba-4-9-mil-millones-de-quetzales-para-consejos-departamentales-de-desarrollo/",
+      "nivel": "primaria (agencia oficial)"
+    },
+    {
+      "nombre": "La Hora — Codedes: Q4,985 millones, criterios de distribución",
+      "url": "https://lahora.gt/nacionales/ypena/2026/06/25/codedes-obtienen-primera-asignacion-de-q4-mil-985-millones-para-obras-en-ano-electoral-now/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "La Hora — ASIES sobre el proyecto 2027",
+      "url": "https://lahora.gt/lh-economia/esmith/2026/09/27/presupuesto-2027-q192-mil-millones-de-gasto-y-un-deficit-cercano-a-niveles-de-la-pandemia-dice-asies-now/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "La Hora — Codedes: solo Q60 millones en ejecución efectiva",
+      "url": "https://lahora.gt/nacionales/kgutierrez/2026/04/20/codedes-solo-q60-millones-se-han-transformado-en-ejecucion-efectiva-de-un-presupuesto-de-q14-mil-millones/",
+      "nivel": "prensa (tablero Minfin)"
+    },
+    {
+      "nombre": "La Hora — Gobierno rompe inercia de la baja ejecución (CIEN, Icefi, Fundesa)",
+      "url": "https://lahora.gt/lh-economia/esmith/2026/07/01/gobierno-rompe-inercia-de-la-baja-ejecucion-en-2027-el-desafio-es-concretar-obras-que-generen-desarrollo-now/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "La Hora — techos 2027 y Q19,122 millones en proyectos",
+      "url": "https://lahora.gt/nacionales/jmaldonado/2026/06/21/gobierno-elevaria-en-q19-mil-millones-el-presupuesto-de-2024-en-ano-electoral-pese-a-rezagos-en-ejecucion-now/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "IIES-USAC — CODEDES en Guatemala (abril 2026)",
+      "url": "https://iies.usac.edu.gt/wp-content/uploads/2026/04/CODEDES-MB.pdf",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "Prensa Libre — Presupuesto 2027: analistas alertan por déficit fiscal de 4.4% y mayor deuda pública (3-sep-2026)",
+      "url": "https://www.prensalibre.com/economia/presupuesto-2027-analistas-alertan-por-deficit-fiscal-de-4-4-y-mayor-deuda-publica/",
+      "nivel": "secundaria (reproduce el proyecto)"
+    },
+    {
+      "nombre": "Prensa Libre — Junta Monetaria emite opinión favorable sobre deuda para 2027 (13-nov-2026)",
+      "url": "https://www.prensalibre.com/economia/junta-monetaria-emite-opinion-favorable-sobre-deuda-para-2027-por-que-preocupa-el-aumento-del-endeudamiento-y-el-gasto-publico/",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "La Hora — El presupuesto 2027 y la deuda pública que ronda los Q280 mil millones (20-sep-2026)",
+      "url": "https://lahora.gt/?p=1018085",
+      "nivel": "secundaria (cita Minfin)"
+    },
+    {
+      "nombre": "La Hora — Presupuesto 2027: déficit cercano a niveles de la pandemia, dice ASIES (27-sep-2026)",
+      "url": "https://lahora.gt/?p=1024779",
+      "nivel": "secundaria (análisis ASIES)"
+    },
+    {
+      "nombre": "AGN — Gobierno presenta presupuesto histórico en inversión social (7-sep-2026)",
+      "url": "https://agn.gt/gobierno-presenta-presupuesto-historico-en-inversion-social-con-un-46-destinado-a-este-rubro/",
+      "nivel": "oficial (agencia de gobierno)"
+    },
+    {
+      "nombre": "Emisoras Unidas — Presupuesto 2027: 12 principales propósitos (2-sep-2026)",
+      "url": "https://emisorasunidas.com/nacional/2026/09/02/gobierno-arevalo-proyecto-presupuesto-general-2027/",
+      "nivel": "secundaria (declaraciones del ministro)"
+    },
+    {
+      "nombre": "Guate en Datos — gastopublico-ejecucion.csv (Sicoin)",
+      "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+      "nivel": "primaria (recompilación de Sicoin)"
+    },
+    {
+      "nombre": "Banco de Guatemala — Resultados macroeconómicos 2025 y perspectivas 2026",
+      "url": "https://www.fundesa.org.gt/content/files/publicaciones/BANGUAT_2026_Resultados_macroeconmicos_2025_y_Perspectivas.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "INE — Estimaciones y proyecciones de población, revisión 2019 (metodología nacional)",
+      "url": "https://prensalibre.com/wp-content/uploads/2024/09/01-Metodologia-Nacional.pdf",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "Minfin — Proyecto de Presupuesto 2027 (proypre27)",
+      "url": "https://www.minfin.gob.gt/wp-content/uploads/archivos/proypre27/Inicio%201.htm",
+      "nivel": "primaria (inaccesible: Cloudflare 403)"
+    },
+    {
+      "nombre": "Guate en Datos — gastopublico-ejecucion.csv (Sicoin/Minfin)",
+      "url": "https://guateendatos.org.gt/wp-content/uploads/gastopublico-ejecucion.csv",
+      "nivel": "primaria"
+    },
+    {
+      "nombre": "AGN — Presupuesto 2027: techo del CIV (29 sept 2026)",
+      "url": "https://agn.gt/presupuesto-2027-mas-de-10-millones-dirigidos-a-infraestructura-vial-y-educativa/",
+      "nivel": "secundaria_oficial"
+    },
+    {
+      "nombre": "AGN — CIV proyecta superar el 80 % de ejecución en 2026 (16 oct 2026)",
+      "url": "https://agn.gt/civ-proyecta-superar-el-80-de-ejecucion-presupuestaria-en-2026/",
+      "nivel": "secundaria_oficial"
+    },
+    {
+      "nombre": "Prensa Libre — Ejecución del Ejecutivo primer trimestre 2026",
+      "url": "https://www.prensalibre.com/?p=24982975",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Infobae — Comisión de Finanzas, audiencias presupuesto 2027 (23 sept 2026)",
+      "url": "https://www.infobae.com/guatemala/2026/09/23/congreso-fija-calendario-de-audiencias-para-revisar-el-presupuesto-2027-de-guatemala-y-exigira-comprobar-el-uso-de-los-recursos/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Canal Antigua — Solicitudes de ampliación de ministerios (3 nov 2026)",
+      "url": "https://canalantigua.tv/2026/11/03/presupuesto-2027-congreso-revisa-solicitudes-de-ampliacion-de-ministerios-por-q192-mil-millones/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "La Hora — Bono 14 de diputados (17 jul 2026)",
+      "url": "https://lahora.gt/nacionales/jmaldonado/2026/07/17/pago-de-bono-14-a-diputados-aumento-338-en-comparacion-con-2024-y-supera-los-q10-millones-now/",
+      "nivel": "prensa"
+    },
+    {
+      "nombre": "Revista E&N — ¿Por qué Arévalo se vio obligado a dar un giro en el Ministerio de Finanzas? (cita análisis ICEFI del proyecto 2027), 5-oct-2026",
+      "url": "https://www.revistaeyn.com/centroamericaymundo/guatemala-por-que-arevalo-se-vio-obligado-a-dar-un-giro-en-el-ministerio-de-finanzas-HH32246405",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "Revista E&N — Proyecto de Presupuesto 2027 contempla proyectos por US$2,480M (techo preliminar Minfin), 7-jul-2026",
+      "url": "https://www.revistaeyn.com/centroamericaymundo/guatemala-proyecto-de-presupuesto-2027-contempla-proyectos-por-us-2480m-DD31327613",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "Prensa Libre — Presupuesto para seguridad y justicia aumentaría a Q20 mil millones en el 2027, 4-ago-2026",
+      "url": "https://www.prensalibre.com/?p=25798104",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "Latin Times — La brecha de Q400 millones… (TSE 2027), 24-oct-2026",
+      "url": "https://www.latintimes.com/espanol/la-brecha-de-q400-millones-que-podria-afectar-cada-votante-guatemalteco-en-2027-545461",
+      "nivel": "secundaria"
+    },
+    {
+      "nombre": "Telesur — organizaciones campesinas denuncian recortes (Winaq cuestiona opacidad de fideicomisos como Fonagro), 15-oct-2026; sin cifra utilizable",
+      "url": "https://www.telesurtv.net/organizaciones-campesinas-guatemala-recortes-sociales/",
+      "nivel": "contexto"
+    },
+    {
+      "nombre": "Minfin — Proyecto de Presupuesto 2027 (proypre27) · HTTP 403 a curl, fetch_tabla y WebFetch; sin copia en Wayback",
+      "url": "https://www.minfin.gob.gt/wp-content/uploads/archivos/proypre27/Inicio%201.htm",
+      "nivel": "primaria (inaccesible)"
+    }
+  ],
+  "no_afirma": [
+    "No afirma que haya corrupción ni delito en ninguna partida: describe asignaciones, reparto y ejecución.",
+    "No afirma que los bonos nuevos financien específicamente a los consejos o a Comunicaciones.",
+    "No compara por habitante el reparto entre departamentos o municipios: son montos totales.",
+    "No afirma que el aumento de Mides o del Bono 14 tenga fines electorales.",
+    "El 4.43 % de los Codede es un corte de abril de 2026, no la ejecución del año."
+  ],
+  "incertidumbre": [
+    "Los tomos del proyecto 2027 (Minfin proypre27 e iniciativa 6841) no fueron accesibles (403/Incapsula): las cifras 2027 vienen de prensa, AGN, Icefi y ASIES que leen el proyecto.",
+    "Salvo la ancla (opa-c01), todas las cifras usadas tienen segunda fuente no independiente (reproduce la primaria): cod-c01, cod-c03, cod-c04, cod-c06, cod-c08, cod-c09, cod-c10, cod-c11, opa-c05, opa-c07, deu-c03, deu-c04, deu-c05, deu-c13, his-c03, his-c04, his-c06, his-c12, his-c14.",
+    "El vigente 2026 de bonos difiere entre fuentes (Q23,278 M de Icefi y Q23,291 M de ASIES); se usa el de Icefi y se omite el 83.5 % de ASIES.",
+    "La variación del CIV (41.74 %) se mide contra el vigente 2025 porque el vigente final de 2026 no está disponible; his-c03 y his-c04 son ajustadas.",
+    "Mides 2027 es la proyección del ministro ante la Comisión de Finanzas, no el tomo oficial; los gastos extraordinarios son del techo preliminar de julio de 2026.",
+    "El reparto por municipio y las obras sin SNIP son del presupuesto 2026 (Icefi); el listado geográfico 2027 no se obtuvo.",
+    "cod-c03: la asignación 2026 de los Codede es una estimación de Icefi sobre el presupuesto ampliado (mezcla aporte ordinario, extraordinario y saldos arrastrados); Icefi da 15,461.5 en el texto y 15,461.4 en el anexo 4, y el tablero del Minfin vía La Hora da 14,774.67 vigente. Se atribuye a Icefi y se usa el valor del anexo.",
+    "cod-c10: las 19 obras sin código SNIP son un conteo propio de filas del anexo 6 de Icefi (Q204.5 millones de 64 proyectos); Icefi solo dice «algunos». Eran obras del artículo 121 del Decreto 27-2025, suspendido por la CC, que el Decreto 3-2026 restituyó. No se atribuye el 19 a Icefi como cifra suya."
+  ],
+  "descartadas": [
+    {
+      "id": "codede-127",
+      "por": "El +127.9 % de los Codede (La Hora/CIEN) es el aumento de 2025, no del proyecto 2027."
+    },
+    {
+      "id": "fideicomisos-ong-2027",
+      "por": "Fideicomisos y transferencias a ONG 2027: sin cifra en fuente accesible."
+    },
+    {
+      "id": "tse-2027",
+      "por": "Aporte al TSE 2027: fuente débil con cifras que no cuadran."
+    },
+    {
+      "id": "cod-c13",
+      "por": "sin veredicto; no se usa"
+    },
+    {
+      "id": "cod-c14",
+      "por": "sin veredicto; no se usa"
+    },
+    {
+      "id": "cod-c15",
+      "por": "sin veredicto; no se usa"
+    },
+    {
+      "id": "cod-c16",
+      "por": "sin veredicto; no se usa"
+    }
+  ]
+}

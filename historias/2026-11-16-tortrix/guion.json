@@ -1,0 +1,376 @@
+{
+ "id": "2026-11-16-tortrix",
+ "tipo": "historia",
+ "slug": "tortrix",
+ "tema": "Tortrix",
+ "fecha": "2026-11-16",
+ "pregunta": "¿Cómo un snack de maíz hecho en Guatemala terminó en manos de PepsiCo sin dejar de sentirse chapín?",
+ "arco": "origen y adquisición: de la fábrica familiar a la multinacional que la volvió su bandera local",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "1998–2004",
+   "titulo": "Llega PepsiCo",
+   "escena": 6
+  },
+  {
+   "numero": 3,
+   "anio": "2015",
+   "titulo": "Más chapín que nunca",
+   "escena": 9
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "Tortrix nació para los escolares de Guatemala. Casi nadie sabe quién la hizo. ¿Cómo acaba una botana de colegio en la camisola del equipo de fútbol del país? La historia empieza en 1961, con tres socios. René Menéndez, un empresario guatemalteco, se asoció con los hermanos Nashin y Enrique Misshan, y formaron René Menéndez y Compañía. Un año después, en 1962, llegó la franquicia: la revista Estrategia y Negocios, E&N, cuenta que Isidro Filler's les autorizó a los socios usar su marca para hacer los primeros TorTrix. Los gerentes de Tortrix dicen que nació para los escolares. Pero E&N también dice que René Menéndez inventó Tortrix; qué traía la franquicia, no lo cuenta."
+  },
+  {
+   "acto": 2,
+   "texto": "Pasaron más de tres décadas. E&N cuenta que la marca no tenía estrategia de marca ni apoyo publicitario, y aun así lideraba. Esa marca sin anuncios estaba a punto de cambiar de dueño. Entonces llegó PepsiCo, la multinacional estadounidense de bebidas y botanas. Pero las fuentes no coinciden en cuándo. E&N cuenta que PepsiCo Alimentos adquirió la marca en 2004. Una nota de Emisoras Unidas de 2025 dice que PepsiCo la respalda desde 1998. Así, la botana de tres socios guatemaltecos quedó en manos de una empresa de Estados Unidos."
+  },
+  {
+   "acto": 3,
+   "texto": "PepsiCo no le borró lo chapín: según E&N, sus campañas destacaron la identidad guatemalteca, con lemas como «A la tortrix» y «Héroe Chapín». En enero de 2015, los Effie Awards Guatemala la reconocieron como la marca más premiada de los últimos diez años. Dos años después, la redacción de E&N lo resumió así: En Guatemala es lo mismo decir A la tortrix que decir A lo Chapín. En 2025, la marca saltó a la cancha: el 24 de marzo, Tortrix y la Selección Nacional, el equipo de fútbol del país, anunciaron una alianza por 1 año. Cinco meses después, PepsiCo celebró los 50 años de su planta en la Ciudad de Guatemala con una línea nueva de TorTrix y 50 millones de dólares de inversión. La empresa dice que esa línea empaca sola las bolsitas en tiras, para colgarlas como en la tienda. Pero nunca se publicó cuánto pagó PepsiCo, de dónde sale el nombre ni si cambió la receta. De tres socios en 1961 a la camisola de la Selección. Hoy, los guatemaltecos todavía descuelgan su Tortrix de la tira de la tienda."
+  }
+ ],
+ "hilos": [
+  {
+   "id": "h1",
+   "sin_respuesta": "de dónde sale el nombre"
+  },
+  {
+   "id": "h2",
+   "escena": 4
+  },
+  {
+   "id": "h3",
+   "sin_respuesta": "Nunca se publicó cuánto pagó PepsiCo"
+  },
+  {
+   "id": "h4",
+   "sin_respuesta": "ni si cambió la receta"
+  },
+  {
+   "id": "h5",
+   "escena": 9
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3,
+   4,
+   5
+  ],
+  [
+   6,
+   7
+  ],
+  [
+   9,
+   10,
+   11,
+   12,
+   13
+  ]
+ ],
+ "paleta": "cacao",
+ "musica": "cacao-1",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2383,
+ "duracion_s": 162.5,
+ "critica": {
+  "veredicto": "corregir",
+  "vuelta": 2,
+  "puntajes": {
+   "gancho": 3,
+   "tension": 4,
+   "claridad": 3,
+   "flujo": 3,
+   "precision": 3,
+   "cierre": 4,
+   "recompensa": 4
+  }
+ },
+ "gancho": {
+  "familia": "misterio",
+  "visual": "foto",
+  "pantalla": "¿Quién hizo Tortrix?",
+  "linea": "Nació para los escolares",
+  "id": "g1",
+  "elegido_por": "usuario",
+  "recomendado": "g1"
+ },
+ "promesa": {
+  "pregunta": "¿Cómo llegó Tortrix a la camisola de la Selección?",
+  "texto": "¿Cómo acaba una botana de colegio en la camisola del equipo de fútbol del país?",
+  "forma": "pregunta",
+  "en": 2,
+  "pago": 11,
+  "revela": 4
+ },
+ "bisagra": {
+  "texto": "Pero las fuentes no coinciden en cuándo.",
+  "forma": "contradiccion",
+  "en": 7,
+  "pago": 8
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "Tortrix nació para los escolares de Guatemala. Casi nadie sabe quién la hizo.",
+   "voz": "Tortrix nació para los escolares de Guatemala. Casi nadie sabe quién la hizo.",
+   "dur": 6.154,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "¿Cómo acaba una botana de colegio en la camisola del equipo de fútbol del país? La historia empieza en 1961, con tres socios.",
+   "voz": "¿Cómo acaba una botana de colegio en la camisola del equipo de fútbol del país? La historia empieza en mil novecientos sesenta y uno, con tres socios.",
+   "dur": 9.709,
+   "hechos": [
+    "mar-h05"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "explica",
+   "pantalla": "René Menéndez, un empresario guatemalteco, se asoció con los hermanos Nashin y Enrique Misshan, y formaron René Menéndez y Compañía.",
+   "voz": "René Menéndez, un empresario guatemalteco, se asoció con los hermanos Nashin y Enrique Misshan, y formaron René Menéndez y Compañía.",
+   "dur": 10.187,
+   "hechos": [
+    "mar-h05"
+   ],
+   "fotos": [],
+   "animacion": "cronologia",
+   "mecanismo": "cronologia"
+  },
+  {
+   "n": 4,
+   "tipo": "foto",
+   "pantalla": "Un año después, en 1962, llegó la franquicia: la revista Estrategia y Negocios, E&N, cuenta que Isidro Filler's les autorizó a los socios usar su marca para hacer los primeros TorTrix. Los gerentes de Tortrix dicen que nació para los escolares.",
+   "voz": "Un año después, en mil novecientos sesenta y dos, llegó la franquicia: la revista Estrategia y Negocios, E&N, cuenta que Isidro Filler's les autorizó a los socios usar su marca para hacer los primeros TorTrix. Los gerentes de Tortrix dicen que nació para los escolares.",
+   "dur": 17.545,
+   "hechos": [
+    "ori-h02"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "golpe",
+   "pantalla": "Pero E&N también dice que René Menéndez inventó Tortrix; qué traía la franquicia, no lo cuenta.",
+   "voz": "Pero E&N también dice que René Menéndez inventó Tortrix; qué traía la franquicia, no lo cuenta.",
+   "dur": 8.722,
+   "hechos": [
+    "ori-h04"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "foto",
+   "pantalla": "Pasaron más de tres décadas. E&N cuenta que la marca no tenía estrategia de marca ni apoyo publicitario, y aun así lideraba. Esa marca sin anuncios estaba a punto de cambiar de dueño.",
+   "voz": "Pasaron más de tres décadas. E&N cuenta que la marca no tenía estrategia de marca ni apoyo publicitario, y aun así lideraba. Esa marca sin anuncios estaba a punto de cambiar de dueño.",
+   "dur": 12.697,
+   "hechos": [
+    "ori-h06"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "golpe",
+   "pantalla": "Entonces llegó PepsiCo, la multinacional estadounidense de bebidas y botanas. Pero las fuentes no coinciden en cuándo.",
+   "voz": "Entonces llegó PepsiCo, la multinacional estadounidense de bebidas y botanas. Pero las fuentes no coinciden en cuándo.",
+   "dur": 8.785,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "foto",
+   "pantalla": "E&N cuenta que PepsiCo Alimentos adquirió la marca en 2004. Una nota de Emisoras Unidas de 2025 dice que PepsiCo la respalda desde 1998. Así, la botana de tres socios guatemaltecos quedó en manos de una empresa de Estados Unidos.",
+   "voz": "E&N cuenta que PepsiCo Alimentos adquirió la marca en dos mil cuatro. Una nota de Emisoras Unidas de dos mil veinticinco dice que PepsiCo la respalda desde mil novecientos noventa y ocho. Así, la botana de tres socios guatemaltecos quedó en manos de una empresa de Estados Unidos.",
+   "dur": 18.297,
+   "hechos": [
+    "mar-h01",
+    "pep-h04"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "foto",
+   "pantalla": "PepsiCo no le borró lo chapín: según E&N, sus campañas destacaron la identidad guatemalteca, con lemas como «A la tortrix» y «Héroe Chapín». En enero de 2015, los Effie Awards Guatemala la reconocieron como la marca más premiada de los últimos diez años.",
+   "voz": "PepsiCo no le borró lo chapín: según E&N, sus campañas destacaron la identidad guatemalteca, con lemas como «A la tortrix» y «Héroe Chapín». En enero de dos mil quince, los Effie Awards Guatemala la reconocieron como la marca más premiada de los últimos diez años.",
+   "dur": 17.58,
+   "hechos": [
+    "mar-h03",
+    "mar-h04"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "cita",
+   "pantalla": "Dos años después, la redacción de E&N lo resumió así: En Guatemala es lo mismo decir A la tortrix que decir A lo Chapín.",
+   "voz": "Dos años después, la redacción de E&N lo resumió así: En Guatemala es lo mismo decir A la tortrix que decir A lo Chapín.",
+   "dur": 9.644,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "foto",
+   "pantalla": "En 2025, la marca saltó a la cancha: el 24 de marzo, Tortrix y la Selección Nacional, el equipo de fútbol del país, anunciaron una alianza por 1 año.",
+   "voz": "En dos mil veinticinco, la marca saltó a la cancha: el veinticuatro de marzo, Tortrix y la Selección Nacional, el equipo de fútbol del país, anunciaron una alianza por un año.",
+   "dur": 11.001,
+   "hechos": [
+    "mar-h07"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "foto",
+   "pantalla": "Cinco meses después, PepsiCo celebró los 50 años de su planta en la Ciudad de Guatemala con una línea nueva de TorTrix y 50 millones de dólares de inversión. La empresa dice que esa línea empaca sola las bolsitas en tiras, para colgarlas como en la tienda.",
+   "voz": "Cinco meses después, PepsiCo celebró los cincuenta años de su planta en la Ciudad de Guatemala con una línea nueva de TorTrix y cincuenta millones de dólares de inversión. La empresa dice que esa línea empaca sola las bolsitas en tiras, para colgarlas como en la tienda.",
+   "dur": 16.053,
+   "hechos": [
+    "mar-h08",
+    "mar-h09"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "golpe",
+   "pantalla": "Pero nunca se publicó cuánto pagó PepsiCo, de dónde sale el nombre ni si cambió la receta.",
+   "voz": "Pero nunca se publicó cuánto pagó PepsiCo, de dónde sale el nombre ni si cambió la receta.",
+   "dur": 7.09,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "cierre",
+   "pantalla": "De tres socios en 1961 a la camisola de la Selección. Hoy, los guatemaltecos todavía descuelgan su Tortrix de la tira de la tienda.",
+   "voz": "De tres socios en mil novecientos sesenta y uno a la camisola de la Selección. Hoy, los guatemaltecos todavía descuelgan su Tortrix de la tira de la tienda.",
+   "dur": 12.385,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que dejó",
+  "resumen": [
+   "Tres socios en 1961",
+   "Pasó a manos de PepsiCo",
+   "Hoy viste a la Selección"
+  ],
+  "texto": "De tres socios en 1961 a la camisola de la Selección. Hoy, los guatemaltecos todavía descuelgan su Tortrix de la tira de la tienda.",
+  "tipo": "remate",
+  "forma": "legado",
+  "final": "Hoy, los guatemaltecos todavía descuelgan su Tortrix de la tira de la tienda.",
+  "consecuencia": {
+   "quien": "guatemaltecos",
+   "verbo": "descuelgan"
+  },
+  "id": "c1",
+  "elegido_por": "usuario",
+  "recomendado": "c1"
+ },
+ "caption": {
+  "tiktok": "¿Quién hizo Tortrix? Tres socios en 1961, una franquicia en 1962, PepsiCo y la camisola de la Selección. #Guatemala #Tortrix #historia",
+  "instagram": "La historia de Tortrix: de René Menéndez y Compañía a PepsiCo, y de la tienda de barrio a la Selección. #Guatemala #Tortrix #historia",
+  "facebook": "¿Quién hizo Tortrix? La historia de la botana chapina, de 1961 a la alianza con la Selección en 2025. Fuentes en el primer comentario.",
+  "shorts": "¿Quién hizo Tortrix? #Shorts\nDe René Menéndez y Compañía a PepsiCo y la Selección. #Guatemala"
+ }
+}

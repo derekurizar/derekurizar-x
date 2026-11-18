@@ -1,0 +1,62 @@
+{
+ "tipo": "verter",
+ "clase": "evento",
+ "cuando": "agua residual en pulsos por los tubos de una drenajeorilla: la de la planta sale menos turbia; la cruda abre en el lago una mancha que se queda",
+ "parametros": {
+  "pieza": {
+   "tipo": "pieza",
+   "piezas": [
+    "drenajeorilla"
+   ],
+   "requerido": true,
+   "descripcion": "la drenajeorilla por cuyos tubos corre el agua (sus casas conectadas, su colector, sus desagües y su planta). Cámara: mira = «<pieza>.calle», azimut = 270 − rumbo, elevación 20–35°, dist_m 200–280 para ver el pueblo y la mancha; mira = «<pieza>.desague», dist_m 60–90 para la boca"
+  },
+  "mancha": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0.6,
+   "descripcion": "hasta dónde se abre la mancha turbia frente a cada desagüe crudo al terminar (ilustrativo, no una extensión: 0 ≈ 12 m de radio, 1 ≈ 60 m × tamano). Crece desde que llega el primer pulso a la boca hasta el final del evento y se queda (sin rótulo; la cifra va en la capa 2D con su respaldo)"
+  },
+  "vel": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0.2,
+    3
+   ],
+   "defecto": 1,
+   "descripcion": "rapidez de los pulsos (1 = ≈ 26 m/s de maqueta: de la casa al lago en 4–7 s; uno por casa cada ≈ 1.5 s). Didáctica: no es la velocidad del agua"
+  }
+ },
+ "escalas": [
+  "esquema"
+ ],
+ "motores": [
+  "three"
+ ],
+ "usa": [
+  "drenajeorilla"
+ ],
+ "adelanto": {
+  "s": 0.3
+ },
+ "animado": "bolos de agua turbia avanzan sobre cada acometida y el colector, bajan por los desagües, caen a la playa y entran al lago; los que van a la planta entran al canal de rejas y, un momento después, la salida suelta pulsos menos turbios; la mancha frente a cada desagüe crudo crece con un borde vivo y queda quieta pero viva (su textura se mueve) cuando el evento termina; los pulsos dejan de salir de las casas y el agua que ya iba termina su recorrido",
+ "contiene": [
+  "pulsos de agua turbia sobre las acometidas, el colector y las bajadas (medio tubo con halo que se lee de lejos)",
+  "pulsos menos turbios en la salida de la planta, sin mancha",
+  "la mancha turbia que se abre en el lago frente a cada desagüe crudo, con su borde que avanza y su núcleo oscuro junto a la boca",
+  "la mancha que se queda después del evento"
+ ],
+ "ejemplo": {
+  "t": 0.6,
+  "dur": 6.0,
+  "tipo": "verter",
+  "pieza": "drenaje",
+  "mancha": 0.6,
+  "vel": 1
+ }
+}

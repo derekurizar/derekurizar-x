@@ -1,0 +1,21 @@
+# Cronología verificada · litegua
+
+La línea de tiempo de lo que cuenta el video (2026-11-17).
+
+- **1904** · Estrada Cabrera concesionó por 99 años la línea del Atlántico, que llegaba hasta El Rancho, a una compañía estadounidense para terminar los kilómetros que faltaban hasta la capital. · en disputa — Prensa Libre: en 1904, a la United Fruit Company, para terminar los 94 km que faltaban. Véliz Catalán (academia): contrato firmado el 31 de agosto de 1900 con la Central American Improvement Co. por 99 años; la vía se inauguró el 19 de enero de 1908. Atribuir o decir «a inicios del siglo XX» a «una compañía estadounidense». · Prensa Libre (Hemeroteca), Néstor Véliz Catalán, Cuadernos Inter.c.a.mbio (UCR)
+- **1912** · Nace la International Railways of Central America (Irca), la compañía que operó el tren al Atlántico, filial de la United Fruit Company. · una fuente (Prensa Libre) · Prensa Libre
+- **1950** · Se funda Líneas Terrestres Guatemaltecas (Litegua) con dos buses y dos agencias, en Puerto Barrios y la capital, para servir solo a Izabal. · una fuente (Litegua) · Litegua (sitio de la empresa)
+- **1950** · Se funda Líneas Terrestres Guatemaltecas, S.A. (Litegua), con servicio únicamente a Izabal. · una fuente (Litegua) · Litegua (historia de la empresa), Revista Gerencia
+- **1950** · Al empezar, Litegua tenía dos buses y dos agencias: una en Puerto Barrios y la oficina central en la 20 calle de la zona 1 de la capital. · una fuente (Litegua) · Litegua (historia de la empresa)
+- **1950** · La empresa que se funda en 1950 como Líneas Terrestres Guatemaltecas, S.A. es la que la propia empresa llama Litegua. · una fuente (Litegua) · Litegua (historia de la empresa)
+- **1950** · El historiador Miguel Álvarez, cronista de la ciudad, atribuye la decadencia del tren en buena parte a la carretera al Atlántico, que rompió el monopolio del transporte. · una fuente (Prensa Libre) · Prensa Libre (Hemeroteca)
+- **1951** · La construcción de la carretera al Atlántico comenzó en 1951, bajo el gobierno de Jacobo Árbenz. · confirmado · Prensa Libre, Néstor Véliz Catalán, Cuadernos Inter.c.a.mbio (UCR)
+- **1959** · En 1959 se inauguró la carretera al Atlántico, de la capital a Puerto Barrios y Matías de Gálvez, con el presidente Miguel Ydígoras Fuentes. · confirmado · Prensa Libre, Néstor Véliz Catalán, Cuadernos Inter.c.a.mbio (UCR)
+- **1959-11-29** · Antonio Meneses: «el mérito indiscutible de haber empezado a traslucir como realidad el sueño hermoso y benéfico de la gran ruta del Atlántico» · una fuente (Prensa Libre) · Prensa Libre
+- **1968** · En 1968 el ferrocarril pasó del Irca al Estado de Guatemala y nació Ferrocarriles de Guatemala (Fegua), empresa estatal descentralizada. · confirmado · Prensa Libre (Hemeroteca), USAC, IIES, Boletín Economía al día No. 8
+- **1995** · A mediados de los años 90 Litegua adquirió el derecho de línea a Santo Tomás, Río Dulce-Cadenas y Morales, con una flotilla de 30 buses. · una fuente (Litegua) · Litegua (sitio de la empresa)
+- **1996** · El tren dejó de llevar pasajeros: Prensa Libre ubica el cese del transporte de pasajeros en 1996. · en disputa — Prensa Libre (2025): cese del transporte de pasajeros en 1996. Railway Gazette (1997, medio especializado que no está en la lista): Fegua suspendió la carga a inicios de 1996 y había dejado los trenes de pasajeros en 1994. Atribuir: «según Prensa Libre, en 1996» o «a mediados de los noventa». · Prensa Libre
+- **1996-03** · El presidente Álvaro Arzú decidió cerrar las operaciones de Fegua en marzo de 1996. · una fuente (USAC, IIES, Boletín Economía al día No. 8) · USAC, IIES, Boletín Economía al día No. 8
+- **2002** · En 2002 Litegua ya tenía más de 50 buses, con salidas cada 30 minutos de la capital a cada destino. · una fuente (Litegua) · Litegua (sitio de la empresa)
+- **2020-08-13** · El 13 de agosto de 2020 Litegua fue la primera empresa extraurbana en reanudar servicio, tras cinco meses de pandemia, con buses al 50 % de ocupación. · confirmado · Soy502, Publinews
+- **2026** · Litegua, sección «¿Quiénes somos?»: «Se funda Líneas Terrestres Guatemaltecas S.A. prestando servicios únicamente a Izabal.» · una fuente (Litegua) · Litegua (sitio de la empresa)

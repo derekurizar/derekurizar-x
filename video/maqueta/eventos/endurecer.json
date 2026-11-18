@@ -1,0 +1,93 @@
+{
+ "tipo": "endurecer",
+ "clase": "evento",
+ "cuando": "tras un piroclastico, llueve sobre el depósito: la ceniza gris suelta se moja, se oscurece y se agrieta en placas de costra dura",
+ "parametros": {
+  "pieza": {
+   "tipo": "pieza",
+   "piezas": [
+    "aldeabarranca",
+    "faldavolcan"
+   ],
+   "requerido": true,
+   "descripcion": "la pieza del piroclastico cuyo depósito se endurece (el último piroclastico sobre ella que va antes en `eventos`; va después de que termina: t ≥ su t + dur + 4 s, con su queda: true)"
+  },
+  "lluvia": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0.8,
+   "descripcion": "cuánto llueve: rayas con viento y gotas que salpican sobre el depósito; sube al empezar y escampa antes del final (0 = sin lluvia ni charcos)"
+  },
+  "costra": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0.85,
+   "descripcion": "cuánto se oscurece el gris suelto hacia la costra dura y mate, por placas de tono distinto"
+  },
+  "grietas": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0.6,
+   "descripcion": "la red de grietas que parte la costra en placas (más = placas más chicas, más grietas y más anchas; 0 = sin grietas); se abren una tras otra en la segunda mitad"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "el azar fijo de la costra: las placas, por dónde corren las grietas, los charcos y la lluvia (el depósito es el del piroclastico)"
+  }
+ },
+ "escalas": [
+  "esquema"
+ ],
+ "motores": [
+  "three"
+ ],
+ "usa": [],
+ "nivel": "evento",
+ "contiene": [
+  "lluvia en rayas con viento sobre todo el lugar",
+  "gotas que salpican en anillos sobre el depósito",
+  "el depósito del piroclastico (cauce y lóbulo en la aldea) que se moja y se oscurece",
+  "placas de costra de tonos distintos",
+  "grietas oscuras que se abren una tras otra entre las placas",
+  "charcos en lo bajo que se secan al escampar"
+ ],
+ "animado": "la lluvia cae con viento y salpica (función de t), el gris se moja y se oscurece por placas, las grietas crecen de una punta a la otra una tras otra y, al escampar, los charcos se secan; la costra queda el resto del tramo",
+ "gente": false,
+ "distancia_m": [
+  150,
+  1600
+ ],
+ "caja_m": [
+  1500,
+  700,
+  60
+ ],
+ "ejemplo": {
+  "t": 8.4,
+  "dur": 7.0,
+  "tipo": "endurecer",
+  "pieza": "aldea",
+  "lluvia": 0.8,
+  "costra": 0.85,
+  "grietas": 0.6,
+  "semilla": 1
+ }
+}

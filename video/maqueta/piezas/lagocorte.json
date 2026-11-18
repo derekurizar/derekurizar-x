@@ -1,0 +1,134 @@
+{
+ "tipo": "lagocorte",
+ "clase": "pieza",
+ "cuando": "un lago en corte: basura contra una barda de envases en la boca de un río y, abajo, un cardumen de peces que se cuentan con microplástico en el tracto",
+ "parametros": {
+  "lugar": {
+   "tipo": "lugar",
+   "requerido": true,
+   "descripcion": "el centro del bloque (un lugar del mundo o [x, y] en metros en un esquema). Va mejor en la receta campo con horizonte llano y sin `ambiente` en 60 m × tamano a la redonda. Publica los lugares peces (delante de la cara del corte, a media agua de los peces: su altura ya va publicada: míralos sin mira_lev_m), barda, basura, rio, lago y orilla (sobre la tapa)"
+  },
+  "rumbo": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    360
+   ],
+   "defecto": 0,
+   "descripcion": "hacia dónde va el bloque de la orilla (con el río y la barda) al lago abierto (grados; 0 = este, 90 = norte). La cara del corte, con los peces, se ve de frente con azimut = rumbo; elevación 8–25°"
+  },
+  "tamano": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0.5,
+    3
+   ],
+   "defecto": 1,
+   "descripcion": "escala de todo (1 = bloque de 56 m de largo, 22 m de ancho y 30 m de hondo bajo el espejo; peces de hasta 2.2 m: una maqueta, no a escala, para que se cuenten). Para ver el bloque entero en 9:16: dist_m ≈ 150 × tamano con mira_lev_m ≈ 16 × tamano; todos los peces de frente: mira «<id>.peces», dist_m ≈ 70 × tamano, elevación ≈ 10°; las fibras encendidas se leen hasta dist_m ≈ 40 × tamano; la barda y la basura: mira «<id>.barda», dist_m ≈ 35 × tamano, elevación 30–45°"
+  },
+  "peces": {
+   "tipo": "entero",
+   "requerido": true,
+   "rango": [
+    1,
+    100
+   ],
+   "descripcion": "cuántos peces se dibujan (exacto: van en un cardumen suelto, sin filas, pegado a la cara del corte y lejos de la barda; ninguno toca a otro, así se cuentan). Genéricos: sin rasgos ni colores de una especie. Es una cifra: lleva su respaldo"
+  },
+  "marcados": {
+   "tipo": "entero",
+   "requerido": true,
+   "rango": [
+    0,
+    100
+   ],
+   "descripcion": "cuántos de ellos llevan fibras de microplástico dentro del tracto digestivo (no en la carne); exacto, ≤ peces. Cuáles, lo decide la semilla. Antes de un `resaltar` de la pieza no se ven (un pez marcado es igual a uno limpio); el resaltar las enciende en el acento una tras otra (de izquierda a derecha) en lo que dura y se quedan encendidas. Los limpios siguen grises"
+  },
+  "basura": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0.6,
+   "descripcion": "cuánta basura mezclada (bolsas, botellas, latas, duroport, cartón, ramas y hojas; sin animales) se junta contra la barda del lado del río; nunca llega al espejo del lago. 0 = sin basura. Ilustrativo: no es un volumen"
+  },
+  "barda": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "la barda de retención: una hilera doble de envases plásticos atados con lazo que cruza la desembocadura de estaca a estaca (genérica: sin largo, altura ni anclaje afirmados)"
+  },
+  "personas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    4
+   ],
+   "defecto": 0,
+   "descripcion": "gente de pie en la orilla junto a la barda, mirando el río (0 = el corte sin nadie)"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "el azar fijo: qué peces van marcados, su tamaño, su vaivén y hacia dónde miran; la basura, los árboles, el carrizo y las plantas del fondo"
+  }
+ },
+ "escalas": [
+  "esquema"
+ ],
+ "motores": [
+  "three"
+ ],
+ "usa": [
+  "persona"
+ ],
+ "ejemplo": {
+  "id": "lago",
+  "tipo": "lagocorte",
+  "lugar": [
+   0,
+   0
+  ],
+  "rumbo": 0,
+  "tamano": 1,
+  "peces": 70,
+  "marcados": 68,
+  "basura": 0.6,
+  "barda": true,
+  "personas": 0,
+  "semilla": 1
+ },
+ "nivel": "escenario",
+ "contiene": [
+  "la orilla de tierra con pasto, árboles, piedras y carrizo",
+  "un río que entra por la tierra y desemboca en el lago",
+  "la barda: envases plásticos tendidos en hilera doble, atados con lazo, de estaca a estaca",
+  "basura mezclada que flota contra la barda: bolsas, botellas, latas, duroport, cartón, ramas y hojas",
+  "el espejo del agua, translúcido, con oleaje",
+  "la cara del corte: la tierra en capas, el talud y el fondo con su sedimento, plantas y piedras",
+  "el agua del corte, translúcida, con rayos de luz y partículas que flotan",
+  "peces genéricos en un cardumen suelto, sin filas, que se cuentan, con una ventana de corte en el vientre que deja ver el tracto gris",
+  "fibras de microplástico dentro del tracto de los peces marcados, que solo aparecen y se encienden en el acento con resaltar, una tras otra; los limpios siguen grises"
+ ],
+ "animado": "el cardumen se mece junto y cada pez bate la cola y cabecea; la barda y la basura suben y bajan con el oleaje; el carrizo, las plantas del fondo y las copas se mecen; el espejo ondula y las partículas flotan; con resaltar, las fibras se encienden una tras otra (todo función de t)",
+ "gente": false,
+ "distancia_m": [
+  30,
+  170
+ ],
+ "caja_m": [
+  56,
+  22,
+  32
+ ]
+}

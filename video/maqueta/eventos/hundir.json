@@ -1,0 +1,52 @@
+{
+ "tipo": "hundir",
+ "clase": "evento",
+ "cuando": "la placa oceánica de una subduccion avanza y baja (chevrones por la placa) y bajo la fila suelta agua que sube a la cuña de manto",
+ "parametros": {
+  "pieza": {
+   "tipo": "pieza",
+   "piezas": [
+    "subduccion"
+   ],
+   "requerido": true,
+   "descripcion": "la pieza subduccion cuya placa baja (se ve en su cara del corte: cámara con azimut = rumbo, mirando a «<pieza>.placa-100» con mira_lev_m ≈ 300 × tamano)"
+  },
+  "agua": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "true: desde el primer tercio de la duración, la placa suelta gotas de agua bajo la fila que suben a la cuña de manto (y su techo se entibia); false: solo la placa que avanza y baja"
+  },
+  "vel": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0.2,
+    3
+   ],
+   "defecto": 1,
+   "descripcion": "rapidez de la animación (chevrones y gotas; 1 = un chevrón cada ≈ 4 s por un mismo punto). Didáctica: no es la velocidad de la placa"
+  }
+ },
+ "escalas": [
+  "esquema"
+ ],
+ "motores": [
+  "three"
+ ],
+ "usa": [
+  "subduccion"
+ ],
+ "adelanto": {
+  "s": 0.25
+ },
+ "animado": "chevrones en el acento corren por la placa de la fosa hacia el manto y se doblan con ella; gotas de agua salen del techo de la placa bajo la fila y suben a la cuña, y ese techo se entibia (todo función de t − e.t); de noche las gotas y el techo tibio se leen más",
+ "ejemplo": {
+  "t": 0.6,
+  "dur": 6.0,
+  "tipo": "hundir",
+  "pieza": "corte",
+  "agua": true,
+  "vel": 1
+ }
+}

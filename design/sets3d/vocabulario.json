@@ -21,18 +21,23 @@
       "camion",
       "camionsacos",
       "carro",
+      "carruaje",
       "casa",
+      "cayuco",
       "cliente",
       "contenedor",
       "cosechador",
       "grua",
+      "lobina",
       "moto",
       "persona",
       "pin",
+      "poc",
       "taza",
       "telefono",
       "torre",
-      "tostadora"
+      "tostadora",
+      "volteo"
      ],
      "valores_de": "objetos"
     },
@@ -138,18 +143,23 @@
     "camion",
     "camionsacos",
     "carro",
+    "carruaje",
     "casa",
+    "cayuco",
     "cliente",
     "contenedor",
     "cosechador",
     "grua",
+    "lobina",
     "moto",
     "persona",
     "pin",
+    "poc",
     "taza",
     "telefono",
     "torre",
-    "tostadora"
+    "tostadora",
+    "volteo"
    ],
    "ejemplo": {
     "id": "mi-carro",
@@ -171,6 +181,102 @@
    "gente": false,
    "modulo": "piezas/actor.js",
    "reglas": "scripts/maqueta_tipos/actor.py"
+  },
+  {
+   "tipo": "afluente",
+   "clase": "pieza",
+   "cuando": "un río que el set no trae, de la fuente a la boca (el afluente de un lago): se dibuja río abajo al resaltarlo y queda en el acento",
+   "parametros": {
+    "puntos": {
+     "tipo": "puntos",
+     "requerido": true,
+     "min": 2,
+     "descripcion": "la traza verificada [[lon, lat], …] EN ORDEN de la fuente a la boca (el último punto, en la orilla del lago o del río que recibe); geodatos verificados como una cifra"
+    },
+    "nombre": {
+     "tipo": "texto",
+     "requerido": false,
+     "defecto": "Río",
+     "descripcion": "el nombre del río (no se dibuja: nombra sus lugares «<id>.fuente» y «<id>.boca»; el rótulo va en la capa 2D)"
+    },
+    "grosor": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.5,
+      4
+     ],
+     "defecto": 1.5,
+     "descripcion": "cuánto engruesa la línea (1.5 ≈ 2 veces un río grande del país: se lee a 30–40 km)"
+    },
+    "corriente": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "rayas de corriente (galones) que bajan hacia la boca; ilustran el sentido, no una velocidad"
+    },
+    "suave": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "una curva que pasa por cada punto dado (no los mueve); false = tramos rectos entre puntos"
+    }
+   },
+   "escalas": [
+    "pais"
+   ],
+   "motores": [
+    "three"
+   ],
+   "ejemplo": {
+    "id": "afluente",
+    "tipo": "afluente",
+    "nombre": "Afluente de ejemplo",
+    "puntos": [
+     [
+      -90.545,
+      14.585
+     ],
+     [
+      -90.556,
+      14.563
+     ],
+     [
+      -90.571,
+      14.538
+     ],
+     [
+      -90.584,
+      14.508
+     ],
+     [
+      -90.594,
+      14.476
+     ]
+    ],
+    "grosor": 1.5,
+    "corriente": true
+   },
+   "nivel": "fondo",
+   "contiene": [
+    "cauce que se ensancha hacia la boca",
+    "orilla oscura",
+    "halo",
+    "rayas de corriente río abajo",
+    "punta que brilla mientras se dibuja"
+   ],
+   "animado": "las rayas de corriente bajan hacia la boca; con «resaltar» se dibuja de la fuente a la boca y queda en el acento",
+   "gente": false,
+   "distancia_m": [
+    15000,
+    60000
+   ],
+   "publica": [
+    "fuente",
+    "boca"
+   ],
+   "modulo": "piezas/afluente.js",
+   "reglas": "scripts/maqueta_tipos/afluente.py"
   },
   {
    "tipo": "agua",
@@ -204,6 +310,152 @@
    "gente": false,
    "modulo": "piezas/agua.js",
    "reglas": "scripts/maqueta_tipos/agua.py"
+  },
+  {
+   "tipo": "aldeabarranca",
+   "clase": "pieza",
+   "cuando": "aldea rural al pie de un volcán con una barranca ancha de arena gris al lado y una carretera que la cruza por un puente: por donde baja lo del volcán",
+   "parametros": {
+    "lugar": {
+     "tipo": "lugar",
+     "requerido": true,
+     "descripcion": "el centro de la aldea (un lugar del mundo o [x, y] en metros en un esquema). Va mejor en la receta campo con horizonte llano (el volcán lo pone la pieza), mundo de ≥ 3200 m y sin otra pieza en 1 km a la redonda"
+    },
+    "rumbo": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      360
+     ],
+     "defecto": 0,
+     "descripcion": "hacia dónde queda el volcán desde la aldea (grados; 0 = este, 90 = norte); la cumbre queda a ≈ 830 m × tamano y la barranca corre a la IZQUIERDA de quien mira al volcán (con rumbo 0, al norte), del cono hacia abajo. La carretera cruza de derecha a izquierda entre la aldea y el volcán. La aldea con el volcán detrás: mira «aldea», azimut ≈ rumbo − 90, dist_m 250–450, elevación 10–22°; todo el lugar: mira «puente», dist_m 1200–1700, elevación 12–18°"
+    },
+    "tamano": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.6,
+      2
+     ],
+     "defecto": 1,
+     "descripcion": "escala de todo (1 = casas de 3–8 m, carretera de 7.2 m, cono de 480 m de alto y 1.3 km de base sobre una meseta de 22 m: una maqueta, no a escala)"
+    },
+    "casas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      10,
+      80
+     ],
+     "defecto": 40,
+     "descripcion": "cuántas casas con su lote hay a lo largo de las calles y sueltas alrededor (las que caben sin encimarse ni pisar la barranca, la carretera o el cafetal): mezcladas, champas de lámina sobre postes, block y ladrillo. Ilustrativo: no cuenta casas reales"
+    },
+    "personas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      12
+     ],
+     "defecto": 8,
+     "descripcion": "vecinos: de cada cuatro, dos caminan por las calles y dos platican de pie en pareja (en la calle o junto a la cisterna); de noche, la mitad"
+    },
+    "vehiculos": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      4
+     ],
+     "defecto": 1,
+     "descripcion": "vehículos en la carretera, en este orden: carro, camión, bus, carro; los pares van hacia la barranca y los impares vienen de ella, por el puente, en un tramo de ≈ 600 m junto a la aldea (de noche con faros)"
+    },
+    "ancho_barranca_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      20,
+      200
+     ],
+     "defecto": 80,
+     "descripcion": "el ancho de la barranca en el llano (m de orilla a orilla; más angosta arriba, en el cono). Su fondo plano de arena gris queda unos 20 m bajo la meseta; la aldea se corre para dejarle sitio"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "el azar fijo: la curva de la barranca y de la carretera, dónde caen las casas, de qué son y su techo (alguno oxidado), los árboles, las piedras y el color de los vehículos"
+    }
+   },
+   "escalas": [
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "usa": [
+    "persona",
+    "carro",
+    "camion",
+    "bus"
+   ],
+   "ejemplo": {
+    "id": "aldea",
+    "tipo": "aldeabarranca",
+    "lugar": [
+     0,
+     0
+    ],
+    "rumbo": 0,
+    "tamano": 1,
+    "casas": 40,
+    "personas": 8,
+    "vehiculos": 2,
+    "ancho_barranca_m": 80,
+    "semilla": 1
+   },
+   "nivel": "escenario",
+   "contiene": [
+    "el cono del volcán al fondo con su cráter, costillas, ceniza y roca arriba, zacatal y bosque de pinos y latifoliadas en la falda",
+    "la barranca ancha: fondo plano de arena gris con regueros, piedras y bloques, paredes de roca con vetas y árboles en la orilla",
+    "la carretera asfaltada de dos carriles con raya central discontinua, orillas pintadas a ras y hombros de grava",
+    "el puente de concreto: losa, bordillos, barandas con postes, pilas dobles con cabezal sobre el fondo y estribos",
+    "postes de luz junto a la carretera, a la altura de la aldea",
+    "calles de tierra: una que sale de la carretera, otra paralela y tres que bajan hacia la barranca",
+    "lotes con patio de tierra y cerca de postes y alambre o muro bajo de block (el frente abierto a la calle)",
+    "casas sencillas y mezcladas: champas de lámina acanalada sobre postes, casas de block con juntas y de ladrillo, techos de lámina (alguno oxidado), puerta, ventana con reja",
+    "patios con árbol, leña apilada y tendedero con ropa",
+    "la escuela de ladrillo con tres aulas, corredor de columnas y su cancha de concreto con líneas y dos tableros",
+    "el salón comunal de block con techo a dos aguas",
+    "la cisterna de concreto con su tapa, escalera y tubo",
+    "cafetales en hileras en la loma del sur, con árboles de sombra",
+    "vecinos que caminan y otros que platican de pie en pareja",
+    "vehículos que van y vienen por la carretera y cruzan el puente",
+    "humo de fogón que sale de algunas casas",
+    "de noche: ventanas, el salón, los postes de luz y los faros encendidos"
+   ],
+   "animado": "los vecinos caminan por las calles y los que platican se quedan de pie (posición = función de t), los vehículos van y vienen por la carretera y cruzan el puente, el humo de los fogones sube y se lo lleva el viento y, de noche, las ventanas tiemblan",
+   "gente": true,
+   "poses": [
+    "caminar",
+    "de_pie"
+   ],
+   "distancia_m": [
+    40,
+    1800
+   ],
+   "caja_m": [
+    2500,
+    1720,
+    500
+   ],
+   "modulo": "piezas/aldeabarranca.js",
+   "reglas": "scripts/maqueta_tipos/aldeabarranca.py"
   },
   {
    "tipo": "ambiente",
@@ -299,6 +551,253 @@
    ],
    "modulo": "piezas/ambiente.js",
    "reglas": "scripts/maqueta_tipos/ambiente.py"
+  },
+  {
+   "tipo": "avenidareforma",
+   "clase": "pieza",
+   "cuando": "la Avenida La Reforma entera sobre su trazo real: dos sentidos, auxiliares, arriate con jacarandas, semáforos y el Obelisco; se resalta como una sola calle",
+   "parametros": {
+    "arboles": {
+     "tipo": "texto",
+     "requerido": false,
+     "valores": [
+      "ralo",
+      "denso"
+     ],
+     "defecto": "denso",
+     "descripcion": "cuántos árboles en el arriate y los separadores (ilustrativo: la fuente dice 26 especies sin una dominante, no cuántos): denso ≈ uno cada 9 m por fila, ralo ≈ uno cada 16 m"
+    },
+    "jacarandas": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.2,
+     "descripcion": "fracción ilustrativa de jacarandas entre los árboles del arriate (no se afirma cuántas hay ni dónde); los cipreses (≈ 14 %, los más altos) y los manzanotes (≈ 10 %) van aparte"
+    },
+    "jacaranda_flor": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "las jacarandas en flor lila (solo marzo y abril); false = copa verde. Con «resaltar» y `elemento` «<id>.jacarandas» se encienden en lila de todos modos"
+    },
+    "semaforos": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "semáforos en los cruces (dos en las puntas del arriate y dos en las orillas; ubicación genérica: la fuente no dice dónde van): la avenida en verde 7 s, ámbar 2 y rojo 5, la calle al revés"
+    },
+    "obelisco": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "la plaza del Obelisco en el extremo sur (en el centro del anillo «Plaza Obelisco» del set): obelisco de forma genérica con placas de escudo arriba, la llama en un pebetero de cobre y cuatro pérgolas"
+    },
+    "auxiliares": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "los carriles auxiliares a los lados (los del set: «Carril Auxiliar Avenida Reforma»), con su separador verde y su acera"
+    },
+    "personas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      40
+     ],
+     "defecto": 16,
+     "descripcion": "gente genérica en el camino del arriate: caminan y corren en los dos sentidos (posición = función de t) y una de cada cinco sentada en una banca"
+    },
+    "gente_tamano": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      1,
+      2
+     ],
+     "defecto": 1,
+     "descripcion": "escala de la gente (1 = 1.75 m reales); con la cámara a más de 250 m súbela a 1.5–2 para que se vea en el teléfono"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "el azar fijo: dónde va cada árbol y de qué especie, las bancas, los monumentos, los recorridos y las camisas de la gente, la fase de los semáforos"
+    }
+   },
+   "escalas": [
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "capas": [
+    "calles"
+   ],
+   "usa": [
+    "persona"
+   ],
+   "ejemplo": {
+    "id": "reforma",
+    "tipo": "avenidareforma",
+    "arboles": "denso",
+    "jacarandas": 0.2,
+    "jacaranda_flor": true,
+    "semaforos": true,
+    "obelisco": true,
+    "auxiliares": true,
+    "personas": 16,
+    "gente_tamano": 1.4,
+    "semilla": 1
+   },
+   "nivel": "escenario",
+   "contiene": [
+    "la vía principal en los dos sentidos sobre su trazo de OpenStreetMap, con sus orillas y rayas de carril (3 por sentido, ilustrativos)",
+    "los carriles auxiliares a los lados con su separador verde arbolado y su acera",
+    "el arriate central con pasto, bordillos y un camino al medio",
+    "árboles de varias especies sin una dominante: frondosos, cipreses altos, manzanotes y jacarandas (lila en flor)",
+    "bancas y farolas a lo largo del camino del arriate",
+    "monumentos genéricos en glorietas del camino (columna, figura sin rostro, busto) y un depósito de agua redondo",
+    "los cruces con el arriate abierto, pasos de cebra y semáforos que cambian",
+    "la plaza del Obelisco: losas en anillo, jardinera, plataforma con gradas, obelisco genérico con placas de escudo, pebetero de cobre con su llama y cuatro pérgolas con bancas",
+    "gente que camina y corre por el arriate y alguna sentada en las bancas"
+   ],
+   "animado": "la gente camina y corre por el camino del arriate (posición = función de t); los semáforos cambian de verde a ámbar a rojo (la avenida y la calle en fases opuestas); la llama del pebetero tiembla; «resaltar» enciende la avenida entera en el acento (o, con `elemento`, las jacarandas en lila, el Obelisco, los semáforos o el arriate); de noche, farolas con su charco de luz, la llama que alumbra y los semáforos encendidos",
+   "gente": true,
+   "distancia_m": [
+    120,
+    2600
+   ],
+   "caja_m": [
+    2300,
+    90,
+    22
+   ],
+   "poses": [
+    "caminar",
+    "sentado"
+   ],
+   "modulo": "piezas/avenidareforma.js",
+   "reglas": "scripts/maqueta_tipos/avenidareforma.py"
+  },
+  {
+   "tipo": "barranca",
+   "clase": "pieza",
+   "cuando": "el cauce de una barranca que baja de una cumbre: se dibuja cuesta abajo al resaltarla y publica el cauce como camino para un flujo",
+   "parametros": {
+    "puntos": {
+     "tipo": "puntos",
+     "requerido": true,
+     "min": 2,
+     "descripcion": "la traza [[lon, lat], …] EN ORDEN de la cumbre hacia abajo (el último punto, al pie); geodatos verificados como una cifra"
+    },
+    "nombre": {
+     "tipo": "texto",
+     "requerido": false,
+     "defecto": "Barranca",
+     "descripcion": "el nombre de la barranca (no se dibuja: nombra sus lugares «<id>.cumbre», «<id>.medio» y «<id>.pie»; el rótulo va en la capa 2D)"
+    },
+    "ancho_km": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.05,
+      2
+     ],
+     "defecto": 0.3,
+     "descripcion": "el ancho del cauce de labio a labio, al pie (junto a la cumbre nace a la mitad); ilustrativo si la fuente no lo da"
+    },
+    "profundidad_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      200
+     ],
+     "defecto": 40,
+     "descripcion": "cuánto sube el labio sobre el lecho (exagerado como el relieve); ilustrativo, no es una cifra en pantalla"
+    },
+    "esquematica": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "suaviza entre los puntos (una curva que pasa por cada uno) y declara la traza esquemática; false = tramos rectos entre los puntos dados"
+    }
+   },
+   "escalas": [
+    "pais"
+   ],
+   "motores": [
+    "three"
+   ],
+   "ejemplo": {
+    "id": "laslajas",
+    "tipo": "barranca",
+    "nombre": "Las Lajas",
+    "puntos": [
+     [
+      -90.88,
+      14.473
+     ],
+     [
+      -90.868,
+      14.46
+     ],
+     [
+      -90.857,
+      14.446
+     ],
+     [
+      -90.847,
+      14.43
+     ],
+     [
+      -90.838,
+      14.414
+     ],
+     [
+      -90.829,
+      14.4
+     ]
+    ],
+    "ancho_km": 0.3,
+    "profundidad_m": 40,
+    "esquematica": true
+   },
+   "nivel": "fondo",
+   "contiene": [
+    "lecho claro de arena y piedra volcánica",
+    "piedras sueltas en el lecho",
+    "dos paredes sombreadas con la luz del estilo",
+    "labio y hombros que se funden con la ladera",
+    "halo del acento y punta que brilla mientras se dibuja",
+    "vetas de arena que bajan despacio"
+   ],
+   "animado": "vetas de arena que bajan despacio por el lecho (ilustrativo); con «resaltar» se dibuja de la cumbre hacia abajo y queda en el acento",
+   "gente": false,
+   "distancia_m": [
+    8000,
+    50000
+   ],
+   "caja_m": [
+    12000,
+    600,
+    200
+   ],
+   "publica": [
+    "cumbre",
+    "medio",
+    "pie"
+   ],
+   "modulo": "piezas/barranca.js",
+   "reglas": "scripts/maqueta_tipos/barranca.py"
   },
   {
    "tipo": "beneficio",
@@ -500,6 +999,371 @@
    ],
    "modulo": "piezas/beneficioseco.js",
    "reglas": "scripts/maqueta_tipos/beneficioseco.py"
+  },
+  {
+   "tipo": "bulevar1890",
+   "clase": "pieza",
+   "cuando": "el Bulevar 30 de Junio de los 1890 sobre el trazo real de la Reforma: calzadas, aceras, jardines, estatuas, fuentes, el palacio al sur y quintas",
+   "parametros": {
+    "desde": {
+     "tipo": "lugar",
+     "requerido": true,
+     "descripcion": "dónde empieza el tramo (un lugar del set o [lon, lat]): se toma su punto más cercano sobre la Avenida Reforma de OpenStreetMap"
+    },
+    "hacia": {
+     "tipo": "lugar",
+     "requerido": true,
+     "descripcion": "dónde termina (≥ 150 m de `desde`); el palacio va siempre en la punta SUR del tramo, 36 m más allá, mirando al paseo"
+    },
+    "estatuas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      30
+     ],
+     "defecto": 30,
+     "descripcion": "estatuas genéricas de mármol en pedestal, en los bordes del jardín central, alternando lados de desde a hacia (disposición y pose no se afirman); `resaltar` con elemento «<id>.estatuas» las enciende EN ORDEN"
+    },
+    "carruajes": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      8
+     ],
+     "defecto": 4,
+     "descripcion": "carruajes genéricos de un caballo que van y vienen por las dos calzadas centrales (ilustrativo: ni el tipo ni cuántos circulaban se afirman)"
+    },
+    "paseantes": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      20
+     ],
+     "defecto": 12,
+     "descripcion": "gente genérica que camina por las aceras y el sendero del jardín central (más cerca de la mitad del tramo)"
+    },
+    "grupos_paseantes": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      8
+     ],
+     "defecto": 0,
+     "descripcion": "grupos de 2 a 4 paseantes genéricos (ropa genérica de época: sombrero; algunas con falda larga), sin rostro, en las dos aceras laterales cerca de la mitad del tramo (frente al jardín central): unos pasean juntos ida y vuelta, otros conversan de pie en corro. Se suman a `paseantes`"
+    },
+    "escala_gente": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      1,
+      2
+     ],
+     "defecto": 1,
+     "descripcion": "el tamaño de toda la gente (paseantes y grupos): 1 = real; hasta 2 para que se lea en un teléfono con la cámara a 45–60 m (maqueta, no a escala)"
+    },
+    "quintas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      12
+     ],
+     "defecto": 6,
+     "descripcion": "quintas genéricas dispersas en el campo a los dos lados (casa de teja con corredor, tapia, huerto y galera; su forma no se afirma)"
+    },
+    "ancho_inicio_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      12,
+      80
+     ],
+     "descripcion": "ancho total del paseo en `desde` (m); sin él y sin `ancho_fin_m`, 40 m genéricos. El ensanche de 70 a 120 pies solo si está verificado"
+    },
+    "ancho_fin_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      12,
+      80
+     ],
+     "descripcion": "ancho total en `hacia` (m): entre los dos, el ancho cambia de corrido"
+    },
+    "palacio": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "el palacio genérico de estilo renacimiento italiano al extremo sur (volumen declarado genérico: planta, pisos y remate no se afirman), con la explanada y el monumento ecuestre genérico al frente; se rompe por partes con `terremoto` (pieza: el id, lugares: [«<id>.palacio»])"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "el azar fijo: dónde van las quintas y los árboles del campo, el color de las parcelas, la pose de cada estatua y la separación de carruajes y paseantes"
+    }
+   },
+   "escalas": [
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "usa": [
+    "arbol",
+    "persona"
+   ],
+   "nivel": "escenario",
+   "contiene": [
+    "dos calzadas centrales de tierra apisonada, abombadas, con bordillo de piedra, para los carruajes",
+    "dos aceras laterales para la gente a pie",
+    "jardines laterales con su seto bajo y su fila de árboles, y el jardín central con su sendero",
+    "estatuas blancas de mármol sobre pedestal con zócalo y cornisa (genéricas)",
+    "tres fuentes genéricas (pila redonda, pedestal, taza y remate; la del medio con una figura) con el agua que cae",
+    "dos estanques ovalados en los jardines laterales",
+    "el palacio genérico de estilo renacimiento italiano: planta baja almohadillada, piso noble con ventanas de frontón, cuerpo central con arcada, columnas y frontón, pabellones de esquina, cornisa, balaustrada y techo bajo de teja, sobre zócalo y escalinata",
+    "la explanada frente al palacio con el monumento ecuestre genérico sobre su pedestal",
+    "el campo a los dos lados: parcelas de cultivo y potrero, árboles sueltos",
+    "quintas dispersas: casa de teja con corredor de horcones, tapia con portón, patio, huerto y galera",
+    "carruajes de un caballo con su cochero, ruedas de rayos y faroles",
+    "paseantes que caminan",
+    "grupos de 2 a 4 paseantes en las aceras, con sombrero y algunas con falda larga (genéricos), que pasean juntos o conversan de pie"
+   ],
+   "animado": "los carruajes van y vienen por sus calzadas con el caballo al trote y las ruedas girando, entran y salen por las puntas; los paseantes caminan ida y vuelta por las aceras y el sendero, los grupos pasean juntos a paso lento o conversan de pie; el agua de las fuentes cae (todo función de t); de noche, ventanas del palacio y de las quintas y faroles de los carruajes encendidos",
+   "gente": true,
+   "poses": [
+    "caminar",
+    "de_pie"
+   ],
+   "distancia_m": [
+    60,
+    2600
+   ],
+   "caja_m": [
+    1900,
+    560,
+    24
+   ],
+   "publica": "caminos «<id>» y «<id>.eje», «<id>.carruajes-1» (en el sentido del eje), «<id>.carruajes-2» (en contra), «<id>.peatones-este» y «<id>.peatones-oeste»; lugares «<id>.inicio», «<id>.jardin», «<id>.estatuas», «<id>.fuente-1» … «<id>.fuente-3» (las fuentes del jardín central, de desde a hacia), «<id>.estanque-1» y «<id>.estanque-2» (los de los jardines laterales), «<id>.palacio» y «<id>.plaza» (la explanada: el refugio de un terremoto). resaltar con `elemento`: palacio, jardin (también una fuente o un estanque), estatuas (en orden), inicio o una estatua",
+   "ejemplo": {
+    "id": "bulevar",
+    "tipo": "bulevar1890",
+    "desde": [
+     -90.514801,
+     14.609813
+    ],
+    "hacia": [
+     -90.517809,
+     14.5948
+    ],
+    "estatuas": 30,
+    "carruajes": 4,
+    "paseantes": 12,
+    "quintas": 6,
+    "palacio": true,
+    "semilla": 1,
+    "grupos_paseantes": 6,
+    "escala_gente": 1.5
+   },
+   "modulo": "piezas/bulevar1890.js",
+   "reglas": "scripts/maqueta_tipos/bulevar1890.py"
+  },
+  {
+   "tipo": "cabildoranchos",
+   "clase": "pieza",
+   "cuando": "un llano modesto donde UN rancho de paja abierto hace de cabildo (mesa, escribano), entre ranchos y gente que llega: un gobierno en sitio provisional",
+   "parametros": {
+    "lugar": {
+     "tipo": "lugar",
+     "requerido": true,
+     "descripcion": "la mesa bajo el rancho del cabildo (un lugar del mundo o [x, y] en metros en un esquema). Va mejor en la receta campo con horizonte llano o colinas y sin `ambiente` en 90 m a la redonda"
+    },
+    "rumbo": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      360
+     ],
+     "defecto": 0,
+     "descripcion": "hacia dónde queda la ermita desde el rancho (grados; 0 = este, 90 = norte); el frente abierto del rancho y el camino de llegada quedan del lado contrario. El rancho de frente con la ermita al fondo: mira «rancho», azimut ≈ rumbo − 90, elevación 8–20°, dist_m 25–60; la mesa de cerca: mira «mesa», dist_m 8–14 y elevación 4–9° (más alto, el techo la tapa); todo el llano: dist_m 150–260"
+    },
+    "tamano": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.6,
+      2
+     ],
+     "defecto": 1,
+     "descripcion": "escala de todo (1 = rancho de 9.2 × 6.2 m con alero a 2.45 m, ranchos de 5–7 m, llano de 180 m: una maqueta, no a escala)"
+    },
+    "ranchos": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      1,
+      8
+     ],
+     "defecto": 5,
+     "descripcion": "cuántos ranchos de alojamiento hay alrededor (paredes de caña, tabla o bajareque, techo de paja), cada uno con su fogón; el del cabildo es siempre uno solo y aparte"
+    },
+    "enlucidas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      3
+     ],
+     "defecto": 1,
+     "descripcion": "cuántos de esos ranchos son casas enlucidas con techo de teja (unas pocas)"
+    },
+    "cabildantes": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      2,
+      8
+     ],
+     "defecto": 5,
+     "descripcion": "cuántos capitulares están sentados a la mesa (figuras genéricas, sin ropa ni rostro de nadie; el número no es un dato: no atribuir cuántos asistieron); el escribano va aparte, de pie en la cabecera"
+    },
+    "llegan": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      3
+     ],
+     "defecto": 2,
+     "descripcion": "capitulares que caminan sin prisa desde su rancho y llegan al frente del rancho del cabildo (el primero en `llegada_s`, los demás cada 2.2 s)"
+    },
+    "vecinos": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      12
+     ],
+     "defecto": 6,
+     "descripcion": "vecinos que van y vienen por las veredas (la mitad con un bulto a la espalda) y alguno de pie junto a un fogón; de noche, la mitad. Ambientación genérica"
+    },
+    "mulas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      4
+     ],
+     "defecto": 1,
+     "descripcion": "mulas con carga (aparejo, dos bultos y un fardo) y su arriero que entran por el camino y se detienen en `llegada_s`. Ambientación genérica: ninguna fuente las describe (no atribuir)"
+    },
+    "carretas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      3
+     ],
+     "defecto": 1,
+     "descripcion": "carretas de bueyes (ruedas macizas que giran, sacos y un petate) con su boyero, detrás de las mulas; se detienen en `llegada_s`. Ambientación genérica: ninguna fuente las describe (no atribuir)"
+    },
+    "iglesia": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "una ermita sencilla y pequeña sobre una loma al fondo, hacia `rumbo` (a 60 m, no frente al rancho): nave enlucida, espadaña, techo de teja; genérica, no un templo identificado"
+    },
+    "llegada_s": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      60
+     ],
+     "defecto": 8,
+     "descripcion": "el segundo en que se detiene lo que llega por el camino y llega el primer capitular (antes van entrando, a paso de bestia y sin prisa; que caiga en la frase que lo nombra)"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "el azar fijo: qué rancho es de caña, tabla o bajareque, sus medidas y su giro, dónde caen las matas y los árboles, y el andar de cada quien"
+    }
+   },
+   "escalas": [
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "usa": [
+    "persona"
+   ],
+   "ejemplo": {
+    "id": "cabildo",
+    "tipo": "cabildoranchos",
+    "lugar": [
+     0,
+     0
+    ],
+    "rumbo": 180,
+    "tamano": 1,
+    "ranchos": 5,
+    "enlucidas": 1,
+    "cabildantes": 5,
+    "llegan": 2,
+    "vecinos": 6,
+    "mulas": 1,
+    "carretas": 1,
+    "iglesia": true,
+    "llegada_s": 8,
+    "semilla": 1
+   },
+   "nivel": "escenario",
+   "contiene": [
+    "UN rancho del cabildo abierto: seis horcones con horqueta, soleras y tirantes, techo de paja a dos aguas en tres hiladas con fleco, alfardas a la vista y cumbrera",
+    "bajo el rancho: piso apisonado, mesa de tablas con papeles, tintero, pluma y vela; dos bancas; un cofre",
+    "cabildantes sentados a la mesa y el escribano de pie en la cabecera, con las manos sobre el papel",
+    "ranchos de alojamiento de caña, tabla o bajareque con techo de paja (y unas pocas casas enlucidas con teja), puerta con su marco, alguno con corredor de horcones",
+    "fogón de tres piedras con comal, ceniza y leña frente a cada rancho, cántaros y leña apilada",
+    "llano de tierra apisonada que se vuelve zacate, matas y árboles sueltos",
+    "camino de llegada con sus rodadas y veredas a cada rancho",
+    "bultos, sacos y un petate al costado del rancho del cabildo",
+    "mulas con aparejo y carga y carreta de bueyes con ruedas macizas, sacos y petate, con su arriero y su boyero",
+    "ermita sencilla sobre una loma al fondo: nave enlucida con contrafuertes, espadaña con su campana y una cruz chica, techo de teja",
+    "de noche: la vela, los fogones, algunas puertas y la puerta de la ermita encendidas"
+   ],
+   "animado": "el escribano mueve las manos sobre el papel; capitulares que caminan sin prisa y llegan al rancho; vecinos que van y vienen (la mitad con bulto); mulas y carreta que entran por el camino y frenan hasta detenerse en llegada_s, con las patas al paso y las ruedas girando según lo recorrido; humo de los fogones; de noche, la luz de la vela y de los fogones tiembla",
+   "gente": true,
+   "distancia_m": [
+    8,
+    260
+   ],
+   "caja_m": [
+    180,
+    180,
+    14
+   ],
+   "poses": [
+    "sentado",
+    "clasificar",
+    "caminar",
+    "de_pie"
+   ],
+   "modulo": "piezas/cabildoranchos.js",
+   "reglas": "scripts/maqueta_tipos/cabildoranchos.py"
   },
   {
    "tipo": "cafetal",
@@ -1079,6 +1943,557 @@
    "reglas": "scripts/maqueta_tipos/carreteras.py"
   },
   {
+   "tipo": "ciudadcolonial",
+   "clase": "pieza",
+   "cuando": "ciudad colonial genérica en damero con su plaza mayor (catedral, palacio, cabildo, fuente, mercado) y un volcán al fondo: la capital que se vive o se pierde",
+   "parametros": {
+    "lugar": {
+     "tipo": "lugar",
+     "requerido": true,
+     "descripcion": "el centro de la plaza mayor, donde está la fuente (un lugar del mundo o [x, y] en metros en un esquema). Va mejor en la receta campo con horizonte llano o colinas (el volcán lo pone la pieza) y sin `ambiente` en 300 m a la redonda"
+    },
+    "rumbo": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      360
+     ],
+     "defecto": 0,
+     "descripcion": "hacia dónde queda el volcán de fondo desde la plaza (grados; 0 = este, 90 = norte, 270 = sur); el damero va a escuadra con ese rumbo. Lados de la plaza (orden relativo, no brújula): el palacio hacia el volcán, el cabildo enfrente de él, la catedral a la izquierda mirando al volcán y las casas con balcones a la derecha. La plaza con el volcán detrás: mira «<id>.plaza», azimut = rumbo − 90, elevación 10–20°, dist_m 140–320; la ciudad entera con el volcán: dist_m 700–1300"
+    },
+    "tamano": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.6,
+      2
+     ],
+     "defecto": 1,
+     "descripcion": "escala de todo (1 = manzanas de 64 m, calles de 9 m, casas de 4–5.4 m de alto, catedral de 60 m de fondo; el volcán a 1.75 km y 560 m de alto: una maqueta, no a escala)"
+    },
+    "manzanas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      4,
+      25
+     ],
+     "defecto": 12,
+     "descripcion": "cuántas manzanas hay alrededor de la plaza, de adentro hacia afuera (las cuatro primeras son las de los edificios de la plaza); desde 7, una iglesia de barrio, y otra cada 7 más (hasta 3)"
+    },
+    "personas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      30
+     ],
+     "defecto": 14,
+     "descripcion": "gente: vendedores en los puestos (≈ 30 %), un cargador que baja sacos de la carreta, quien jala un carretón alrededor de la plaza (desde 6), dos que platican junto a la fuente (desde 10) y los demás caminando por la plaza, los portales y las calles (de noche, la mitad). Figuras genéricas, sin vestimenta de un pueblo"
+    },
+    "volcan_fondo": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "un volcán genérico de forma piramidal al fondo, por `rumbo` (sin humo ni lava; no es la forma real de ninguno)"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "el azar fijo: qué manzanas salen primero, el largo, alto, color y techo de cada casa, sus ventanas y patios, las iglesias de barrio y su espadaña o torre, la mercancía de los puestos"
+    }
+   },
+   "escalas": [
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "usa": [
+    "persona"
+   ],
+   "ejemplo": {
+    "id": "ciudad",
+    "tipo": "ciudadcolonial",
+    "lugar": [
+     0,
+     0
+    ],
+    "rumbo": 270,
+    "tamano": 1,
+    "manzanas": 12,
+    "personas": 14,
+    "volcan_fondo": true,
+    "semilla": 1
+   },
+   "nivel": "escenario",
+   "contiene": [
+    "la plaza mayor empedrada, casi cuadrada, con su bordillo de piedra",
+    "la fuente al centro: pila ochavada con grada, pedestal, taza y remate, con el agua que cae de la taza a la pila",
+    "puestos de mercado: mesas con montones de fruta y verdura, canastos y toldos de lona sobre horcones; de noche, un farol",
+    "la catedral de tres naves: fachada con pilastras, cornisas, puerta en arco y nichos, dos torres bajas con campanario y cupulino, bóveda en la nave mayor, cupulitas en las laterales, cúpula con tambor y linterna en el crucero, contrafuertes",
+    "la galería del arzobispado junto a la catedral, con dos pisos de arquería",
+    "el palacio y el cabildo: dos pisos de arquería de piedra (pilares con basa y capitel, arcos con su rosca, antepecho arriba) con tiendas al fondo del portal",
+    "enfrente de la catedral, casas con balcones de madera sobre un portal de comercio, cada una de su color",
+    "mercancía en los portales: sacos, canastos con fruta",
+    "manzanas de casas de un piso de muros gruesos: zócalo, cornisa, portón de madera con marco de piedra, ventanas con reja al ras o voladiza, techo de teja a dos aguas o azotea con pretil y gárgolas",
+    "patios con árbol o pila y a veces una segunda crujía con chimenea; huertos con árboles al centro de la manzana",
+    "iglesias de barrio de muros gruesos con contrafuertes, atrio con tapia y cruz, bóveda y cúpula o techo de teja, espadaña o torre baja",
+    "calles empedradas en damero con su canal de piedra al centro",
+    "una carreta de dos ruedas con sacos y un carretón de mano",
+    "un volcán genérico piramidal al fondo, con barrancas y bosque",
+    "gente que camina, vende, carga y platica"
+   ],
+   "animado": "la gente camina por la plaza, los portales y las calles (posición = función de t); los vendedores atienden; el cargador baja sacos de la carreta; un carretón de mano da la vuelta a la plaza con las ruedas girando; el agua de la fuente cae de la taza a la pila; el humo de las cocinas sube; de noche tiembla la luz de puertas de tienda, ventanas, faroles de los puestos y la puerta de los templos",
+   "gente": true,
+   "distancia_m": [
+    40,
+    1500
+   ],
+   "caja_m": [
+    2960,
+    1900,
+    560
+   ],
+   "poses": [
+    "atender",
+    "descargar",
+    "caminar",
+    "de_pie"
+   ],
+   "modulo": "piezas/ciudadcolonial.js",
+   "reglas": "scripts/maqueta_tipos/ciudadcolonial.py"
+  },
+  {
+   "tipo": "coberturaceldas",
+   "clase": "pieza",
+   "cuando": "la cobertura de un área año por año (pérdida de bosque por celdas): cada celda brilla por su cobertura y se apaga el año que la pierde",
+   "parametros": {
+    "datos": {
+     "tipo": "texto",
+     "requerido": true,
+     "descripcion": "JSON {celda_grados, celdas: [{lon, lat (centro), area_ha, bosque2000_ha, perdida_ha: {AAAA: ha}}]}: ruta desde la raíz del proyecto (sesiones/<slug>/geodatos/…) o absoluta; cifras verificadas como cualquier cifra. «_ejemplo» = malla ilustrativa del catálogo (nunca en un video)"
+    },
+    "contorno": {
+     "tipo": "texto",
+     "requerido": true,
+     "descripcion": "GeoJSON del área (Polygon o MultiPolygon; Feature o FeatureCollection): ruta desde la raíz del proyecto o absoluta; geodatos verificados. «_ejemplo» = contorno ilustrativo"
+    },
+    "anio_base": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      1980,
+      2100
+     ],
+     "defecto": 2000,
+     "descripcion": "el año de la cobertura de partida (bosque2000_ha): las pérdidas de ese año o antes no se cuentan"
+    },
+    "anio": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      1980,
+      2100
+     ],
+     "defecto": 2000,
+     "descripcion": "el año que se ve al empezar (lo perdido hasta ese año ya va apagado)"
+    },
+    "anio_fin": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      1980,
+      2100
+     ],
+     "descripcion": "el año al que llega entre corre_desde y corre_hasta (en escalones de un año); sin él, el año queda fijo en `anio`"
+    },
+    "corre_desde": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      600
+     ],
+     "descripcion": "segundo en que el año empieza a correr (con anio_fin); hazlo coincidir con la frase y con el año en la capa 2D"
+    },
+    "corre_hasta": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      600
+     ],
+     "descripcion": "segundo en que llega a anio_fin"
+    },
+    "tono": {
+     "tipo": "texto",
+     "requerido": false,
+     "valores": [
+      "acento",
+      "verde"
+     ],
+     "defecto": "acento",
+     "descripcion": "el color de la cobertura: el acento de la paleta o el verde del estilo (`bien`); la protagonista va siempre en el acento"
+    },
+    "apagado": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.15,
+     "descripcion": "cuánto del tono conserva la parte perdida (0 = el suelo oscuro; 0.15 = un tono oscuro tenue)"
+    },
+    "destello": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "un destello breve en la celda el año en que pierde cobertura"
+    },
+    "contorno_grosor": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.5,
+      4
+     ],
+     "defecto": 1.5,
+     "descripcion": "el grosor de la línea del contorno («resaltar» lo engruesa)"
+    }
+   },
+   "escalas": [
+    "pais"
+   ],
+   "motores": [
+    "three"
+   ],
+   "ejemplo": {
+    "id": "cobertura",
+    "tipo": "coberturaceldas",
+    "datos": "_ejemplo",
+    "contorno": "_ejemplo",
+    "anio_base": 2000,
+    "anio": 2000,
+    "anio_fin": 2023,
+    "corre_desde": 1.0,
+    "corre_hasta": 4.5,
+    "tono": "acento",
+    "apagado": 0.15,
+    "destello": true,
+    "contorno_grosor": 1.5
+   },
+   "nivel": "fondo",
+   "contiene": [
+    "contorno del área en línea fina",
+    "una celda plana por celda del archivo, pegada al relieve",
+    "brillo de cada celda según su cobertura del año base",
+    "lo perdido apagado en un tono oscuro tenue",
+    "destello breve el año de la pérdida",
+    "marco fino de cada celda y suelo visible entre celdas"
+   ],
+   "animado": "el año corre de `anio` a `anio_fin` entre corre_desde y corre_hasta: cada celda apaga lo que perdió ese año con un destello; «resaltar» aviva las celdas y engruesa el contorno",
+   "gente": false,
+   "distancia_m": [
+    40000,
+    400000
+   ],
+   "publica": [
+    "centro"
+   ],
+   "modulo": "piezas/coberturaceldas.js",
+   "reglas": "scripts/maqueta_tipos/coberturaceldas.py"
+  },
+  {
+   "tipo": "doselcuadricula",
+   "clase": "pieza",
+   "cuando": "parche de selva de cerca bajo la cuadrícula de 30 m de un satélite: cada cuadro se tiñe de bosque, pérdida o rebrote; tala, fuego, viento o rebrote",
+   "parametros": {
+    "lugar": {
+     "tipo": "lugar",
+     "requerido": true,
+     "descripcion": "el centro de la cuadrícula (un lugar del mundo o [x, y] en metros en un esquema)"
+    },
+    "rumbo": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      360
+     ],
+     "defecto": 0,
+     "descripcion": "giro de la cuadrícula (grados; 0 = las columnas avanzan al este y la fila 1 queda al norte)"
+    },
+    "celdas_lado": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      3,
+      9
+     ],
+     "defecto": 5,
+     "descripcion": "cuántos cuadros por lado (la cuadrícula es de celdas_lado × celdas_lado)"
+    },
+    "celda_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      10,
+      60
+     ],
+     "defecto": 30,
+     "descripcion": "el lado de un cuadro, en metros (30 = el píxel del mapa de cobertura); el bosque sigue una orla de casi un cuadro más allá de la cuadrícula"
+    },
+    "densidad": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.9,
+     "descripcion": "qué tan cerrado está el dosel: 1 = copas que se tocan; menos deja ver claros de sotobosque oscuro"
+    },
+    "emergentes": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.15,
+     "descripcion": "la parte de los árboles que sobresale del dosel con copas más anchas y claras (ilustrativo: sin altura ni especie)"
+    },
+    "cuadricula": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "dibujar la cuadrícula (líneas finas sobre las copas); false: solo la selva y, si los hay, los tintes"
+    },
+    "cuadricula_desde": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      600
+     ],
+     "defecto": 0,
+     "descripcion": "el segundo en que la cuadrícula empieza a dibujarse (se traza en ≈ 1.6 s, línea tras línea); «resaltar» la pieza la aviva"
+    },
+    "cuadros": {
+     "tipo": "lista",
+     "requerido": false,
+     "descripcion": "los cambios de cada cuadro, «fila-col:estado@segundo» (p. ej. «2-3:fuego@4.5»). Estados: bosque (solo el tinte verde), tala (los árboles se van uno a uno y queda la tierra limpia con tocones), fuego (llama y humo genéricos; queda la cicatriz oscura con troncos quemados), quemado (la cicatriz ya hecha), viento (los árboles caen volcados hacia un mismo lado), rebrote (plantas jóvenes que empiezan a crecer sobre un cuadro perdido; sin pérdida antes, el cuadro empieza ya talado). En @0, el cuadro arranca en ese estado. Tinte: bosque en el verde del estilo (bien), pérdida en el rojo (mal), rebrote en el ámbar (medio)"
+    },
+    "tinte": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.3,
+     "descripcion": "qué tan fuerte se tiñe cada cuadro que cambia (0 = sin tinte: solo lo que pasa en la selva)"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "el azar fijo de dónde cae cada árbol, su tamaño y su tono"
+    }
+   },
+   "escalas": [
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "ejemplo": {
+    "id": "dosel",
+    "tipo": "doselcuadricula",
+    "lugar": [
+     0,
+     0
+    ],
+    "rumbo": 0,
+    "celdas_lado": 5,
+    "celda_m": 30,
+    "densidad": 0.9,
+    "emergentes": 0.15,
+    "cuadricula": true,
+    "cuadricula_desde": 0.4,
+    "cuadros": [
+     "2-2:tala@2.5",
+     "2-4:fuego@3",
+     "4-2:viento@3.5",
+     "4-4:rebrote@4"
+    ],
+    "tinte": 0.3,
+    "semilla": 1
+   },
+   "nivel": "escenario",
+   "contiene": [
+    "dosel de copas de varios verdes",
+    "árboles emergentes",
+    "sotobosque oscuro en los claros",
+    "orla de selva alrededor",
+    "cuadrícula de cuadros sobre las copas",
+    "tinte por cuadro (bosque, pérdida, rebrote)",
+    "cuadro talado con tocones",
+    "cuadro con fuego, humo y cicatriz",
+    "árboles volcados por viento",
+    "rebrote de plantas jóvenes"
+   ],
+   "animado": "las copas se mecen con el viento; la cuadrícula se traza; en cada cuadro que cambia, los árboles se van, arden y humean, caen o rebrotan",
+   "gente": false,
+   "distancia_m": [
+    60,
+    400
+   ],
+   "caja_m": [
+    210,
+    210,
+    32
+   ],
+   "modulo": "piezas/doselcuadricula.js",
+   "reglas": "scripts/maqueta_tipos/doselcuadricula.py"
+  },
+  {
+   "tipo": "drenajeorilla",
+   "clase": "pieza",
+   "cuando": "drenaje de un pueblo de orilla: tubos de las casas al lago, una parte por una planta de tratamiento y el resto crudo a la orilla con mancha turbia",
+   "parametros": {
+    "lugar": {
+     "tipo": "lugar",
+     "requerido": true,
+     "descripcion": "la línea del agua frente al pueblo (un lugar del mundo, o [x, y] en metros en un esquema): el lago queda hacia `rumbo` (≈ 170 m de agua) y la tierra a la espalda (playa 12 m, casas del frente a 40 m, calle con el colector a 60 m, casas de atrás a 82 m, árboles hasta 150 m). El pueblo ocupa v −100…45 (a la derecha, mirando al lago) y la planta cercada v 50…114 (a la izquierda). Publica los lugares pueblo, planta, desague (el primer desagüe crudo), desague-2/-3, salida-planta, mancha, orilla, lago y calle, y el camino «<id>.calle»"
+    },
+    "rumbo": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      360
+     ],
+     "defecto": 0,
+     "descripcion": "hacia dónde queda el lago visto desde la orilla (grados; 0 = este, 90 = norte). Para ver el pueblo desde el agua: mira = <id>.calle, azimut = 270 − rumbo, elevación 20–35°, dist_m 200–280; una boca de cerca: mira = <id>.desague, dist_m 50–80, elevación 12–25°"
+    },
+    "tamano": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.6,
+      2
+     ],
+     "defecto": 1,
+     "descripcion": "escala de todo (1 = medidas reales: casas de 7–9 m de frente, tubos de 0.6–1.2 m de diámetro agrandados para leerse, sedimentadores de 11 m; la gente va ×1.25)"
+    },
+    "a_planta": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.3,
+     "descripcion": "qué parte del pueblo (desde el lado de la planta) va por el colector a la planta; el resto baja crudo por 1–3 desagües. Es ilustrativo: mueve el corte entre las casas, no dibuja una cifra (la cifra va en la capa 2D con su respaldo)"
+    },
+    "sin_drenaje": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.35,
+     "descripcion": "qué parte de las 20 casas no tiene conexión: sin tubo, con una fosa en el patio (lo que se infiltra no se ve). Ilustrativo"
+    },
+    "personas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      4
+     ],
+     "defecto": 2,
+     "descripcion": "1 = quien opera la planta, de pie entre el tanque y los sedimentadores; 2 = y quien camina por la calle; 3 = y quien mira el agua en la orilla junto al primer desagüe; 4 = y otra persona por la calle. Muñecos sin rostro"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "el azar fijo: tamaño, color, pisos y techo de cada casa, cuáles no tienen conexión, árboles, forma de la mancha, fase de los pulsos y de los puentes"
+    }
+   },
+   "escalas": [
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "usa": [
+    "persona"
+   ],
+   "ejemplo": {
+    "id": "drenaje",
+    "tipo": "drenajeorilla",
+    "lugar": [
+     0,
+     0
+    ],
+    "rumbo": 90,
+    "tamano": 1,
+    "a_planta": 0.3,
+    "sin_drenaje": 0.35,
+    "personas": 3,
+    "semilla": 1
+   },
+   "nivel": "escenario",
+   "contiene": [
+    "lago con su playa en rampa",
+    "dos filas de casas genéricas (un piso con teja o dos con losa y tinaco) con patios, muros, puertas y ventanas con reja",
+    "calle con cunetas, faroles y tapas de pozo",
+    "acometidas con caja de registro y fosas con respiradero en las casas sin conexión",
+    "colector crudo y colector a la planta",
+    "1–3 desagües que bajan a la playa con su cabezal, chorro y mancha turbia en el agua",
+    "planta de tratamiento cercada: canal de rejas, tanque con pasarela y burbujas, dos sedimentadores con puente giratorio, lechos de secado, edificio bajo y lámparas",
+    "salida del efluente a la orilla, sin mancha",
+    "árboles y gente"
+   ],
+   "animado": "el agua corre por los tubos en pulsos (turbia a los desagües y a la planta, menos turbia a la salida), los chorros caen de las bocas, la mancha respira y suelta anillos, burbujas en el tanque, los puentes de los sedimentadores giran, destellos del lago, gente que camina por la calle",
+   "gente": true,
+   "poses": [
+    "de_pie",
+    "caminar"
+   ],
+   "distancia_m": [
+    50,
+    280
+   ],
+   "caja_m": [
+    320,
+    300,
+    8
+   ],
+   "modulo": "piezas/drenajeorilla.js",
+   "reglas": "scripts/maqueta_tipos/drenajeorilla.py"
+  },
+  {
    "tipo": "edificios",
    "clase": "pieza",
    "cuando": "los edificios extruidos con su altura (una ciudad de bloques); uno se puede destacar o resaltar",
@@ -1123,6 +2538,287 @@
    ],
    "modulo": "piezas/edificios.js",
    "reglas": "scripts/maqueta_tipos/edificios.py"
+  },
+  {
+   "tipo": "estacioncable",
+   "clase": "pieza",
+   "cuando": "estación genérica de teleférico urbano: en obra (fosa, zapatas, grúa torre, obreros, vallas) o lista (estación elevada, rueda y cabinas en un cable corto)",
+   "parametros": {
+    "lugar": {
+     "tipo": "lugar",
+     "requerido": true,
+     "descripcion": "el centro de la estación (un lugar del mundo, [lon, lat] o [x, y] en metros en un esquema). El predio va de u −42 a 42 y de v −30 a 30 m; publica los lugares estacion, acceso (u −34), en obra excavacion y grua, en lista rueda y linea"
+    },
+    "rumbo": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      360
+     ],
+     "defecto": 0,
+     "descripcion": "hacia dónde sale el cable (grados; 0 = este, 90 = norte). El acceso a pie queda del lado contrario. Para verla de tres cuartos: mira «<id>.estacion», dist_m 90–160, elevación 18–30°, azimut ≈ 90 − rumbo + 35"
+    },
+    "tamano": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.6,
+      2
+     ],
+     "defecto": 1,
+     "descripcion": "escala de todo (1 = medidas reales: losa a 7 m, techo a 16 m, grúa torre de ≈ 38 m; la gente va ×1.3 para leerse de lejos)"
+    },
+    "estado": {
+     "tipo": "texto",
+     "requerido": false,
+     "valores": [
+      "obra",
+      "lista"
+     ],
+     "defecto": "obra",
+     "descripcion": "obra = predio vallado con la excavación de la cimentación, zapatas con varillas, dos columnas encofradas, la base del mástil, montículos de tierra, excavadora y volteo, caseta de obra; SIN cable ni cabinas · lista = estación elevada genérica con techo en arco, la rueda horizontal que gira, cabinas que entran despacio, dan la vuelta y salen por un cable que se pierde a 240 m (dos mástiles; trazo ilustrativo), plaza con acceso, árboles y faroles"
+    },
+    "gruas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      2
+     ],
+     "defecto": 1,
+     "descripcion": "grúas torre genéricas (solo en obra, sin marca): giran la pluma, el carro corre y el gancho sube un atado de varillas (ciclo de 26 s, desfasadas); de noche, quietas con su luz roja en la punta"
+    },
+    "obreros": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      8
+     ],
+     "defecto": 4,
+     "descripcion": "en obra, obreros sin rostro ni empresa (uno camina de la caseta a la fosa, los demás trabajan junto a las zapatas: atender, cargar, de pie); en lista, la misma cantidad de pasajeros en la plaza (caminan al acceso o esperan). Ilustrativo: no es un conteo"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "el azar fijo: altura de cada arranque de columna, tonos de la tierra y de las losas, color de las cabinas y la fase de cada ciclo"
+    }
+   },
+   "escalas": [
+    "ciudad",
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "usa": [
+    "persona",
+    "volteo",
+    "arbol"
+   ],
+   "ejemplo": {
+    "id": "estacion",
+    "tipo": "estacioncable",
+    "lugar": "el-trebol",
+    "rumbo": 0,
+    "tamano": 1,
+    "estado": "obra",
+    "gruas": 1,
+    "obreros": 4,
+    "semilla": 1
+   },
+   "nivel": "escenario",
+   "contiene": [
+    "predio con vallas de lámina, postes y portón (obra) o plaza adoquinada con jardineras y faroles (lista)",
+    "excavación de la cimentación con tablestacas, zapatas, varillas de arranque y columnas encofradas con puntales",
+    "base del mástil con sus pernos de anclaje",
+    "grúa torre de celosía con pluma, contrapluma, carro y gancho con un atado de varillas",
+    "excavadora que gira entre la fosa y el montículo, volteo estacionado, montículos de tierra",
+    "caseta de obra, pilas de varillas y de tablas de encofrado, reflectores en postes",
+    "estación elevada sobre columnas con losa, barandal de vidrio, cuarto de máquinas y techo en arco con costillas",
+    "rueda horizontal que gira bajo el techo, riel de la estación y cabinas colgadas de su brazo",
+    "cable con dos mástiles tubulares y su cruceta",
+    "vestíbulo de vidrio en la planta baja, escalera y elevador",
+    "obreros u pasajeros sin rostro"
+   ],
+   "animado": "en obra la grúa gira y sube varillas, la excavadora gira entre la fosa y el montículo, un obrero camina y los demás trabajan; en lista la rueda gira, las cabinas entran despacio, dan la vuelta y salen por el cable, y la gente camina al acceso; de noche la obra queda quieta con reflectores y la estación encendida",
+   "gente": true,
+   "poses": [
+    "atender",
+    "cargar",
+    "de_pie",
+    "caminar"
+   ],
+   "distancia_m": [
+    50,
+    260
+   ],
+   "caja_m": [
+    90,
+    64,
+    40
+   ],
+   "modulo": "piezas/estacioncable.js",
+   "reglas": "scripts/maqueta_tipos/estacioncable.py"
+  },
+  {
+   "tipo": "faldavolcan",
+   "clase": "pieza",
+   "cuando": "falda de volcán genérico con su pueblo al pie (barrancos, bosque, milpas; plaza, iglesia, casas de adobe y paja): lo que baja del monte sin erupción",
+   "parametros": {
+    "lugar": {
+     "tipo": "lugar",
+     "requerido": true,
+     "descripcion": "la plaza del pueblo (un lugar del mundo o [x, y] en metros en un esquema). Va mejor en la receta campo con horizonte llano o colinas (el volcán lo pone la pieza) y sin `ambiente` en 250 m a la redonda"
+    },
+    "rumbo": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      360
+     ],
+     "defecto": 0,
+     "descripcion": "hacia dónde queda el volcán desde la plaza (grados; 0 = este, 90 = norte); la cumbre queda a 760 m × tamano. El pueblo con el volcán detrás: mira «plaza» o «pueblo», azimut ≈ rumbo − 90, elevación 8–20°; el volcán entero: mira «barranco», dist_m 1400–2200"
+    },
+    "tamano": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.6,
+      2
+     ],
+     "defecto": 1,
+     "descripcion": "escala de todo (1 = casas de 5–9 m, plaza de 46 m, cono de 480 m de alto y 1.3 km de base: una maqueta, no a escala)"
+    },
+    "casas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      10,
+      80
+     ],
+     "defecto": 30,
+     "descripcion": "cuántas casas hay a lo largo de las calles y sueltas alrededor de la plaza (las que caben sin encimarse); con traza baja quedan dispersas, como una aldea sin borde claro"
+    },
+    "lluvia": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0,
+     "descripcion": "lluvia en rayas con viento (0 = nada; 0.3 = lluvia ligera; 1 = aguacero); también oscurece el suelo mojado y las calles"
+    },
+    "ventanas": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "de noche, algunas ventanas y puertas encendidas con una luz que tiembla, y la puerta de la iglesia (puntos de luz genéricos, no un dato)"
+    },
+    "personas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      12
+     ],
+     "defecto": 6,
+     "descripcion": "gente que camina por la plaza y las calles y alguna de pie frente a la iglesia (de noche, la mitad)"
+    },
+    "teja": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.1,
+     "descripcion": "la parte de los techos que son de teja; el resto, de paja (y la iglesia lleva teja si teja ≥ 0.5)"
+    },
+    "traza": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.2,
+     "descripcion": "qué tan regular es el trazo: 0 = caminos que serpentean y casas sueltas mal alineadas; 1 = calles rectas en damero y casas a cordel"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "el azar fijo: el trazo de los barrancos, qué parcelas están sembradas, dónde caen las casas y los árboles, su tamaño y su techo"
+    }
+   },
+   "escalas": [
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "usa": [
+    "persona"
+   ],
+   "ejemplo": {
+    "id": "falda",
+    "tipo": "faldavolcan",
+    "lugar": [
+     0,
+     0
+    ],
+    "rumbo": 90,
+    "tamano": 1,
+    "casas": 30,
+    "lluvia": 0.3,
+    "ventanas": true,
+    "personas": 6,
+    "teja": 0.1,
+    "traza": 0.2,
+    "semilla": 1
+   },
+   "nivel": "escenario",
+   "contiene": [
+    "el cono del volcán con su cráter poco hondo, costillas y nueve barrancos radiales (el cauce baja hacia el pueblo)",
+    "roca y escoria arriba, zacatal, bosque de pinos y de latifoliadas en la falda media",
+    "milpas en parcelas con sus surcos (verdes, secas o aradas) y árboles de lindero en la falda baja",
+    "el lecho de piedra del cauce en el llano, del pie del volcán a la plaza",
+    "la plaza de tierra con un árbol grande y su atrio",
+    "una iglesia genérica: nave de adobe con contrafuertes, fachada con espadaña de dos vanos, techo de paja (o teja)",
+    "casas de adobe o de bajareque con zócalo, puerta, ventana y techo de paja (algunas de teja), unas con corredor de horcones",
+    "solares con cerca de caña, troje redonda con techo de paja y árboles",
+    "calles de tierra que serpentean (o en damero con traza alta)",
+    "gente que camina por la plaza y la calle",
+    "humo de fogón por los techos de paja",
+    "de noche: ventanas, puertas y la puerta de la iglesia encendidas",
+    "lluvia en rayas con viento, si se pide"
+   ],
+   "animado": "la gente camina por la plaza y las calles (posición = función de t), el humo de los fogones sube y se lo lleva el viento, de noche la luz de las ventanas tiembla y, con lluvia, las rayas caen sesgadas",
+   "gente": true,
+   "distancia_m": [
+    60,
+    2200
+   ],
+   "caja_m": [
+    1600,
+    1300,
+    480
+   ],
+   "modulo": "piezas/faldavolcan.js",
+   "reglas": "scripts/maqueta_tipos/faldavolcan.py"
   },
   {
    "tipo": "falla",
@@ -1197,18 +2893,23 @@
       "camion",
       "camionsacos",
       "carro",
+      "carruaje",
       "casa",
+      "cayuco",
       "cliente",
       "contenedor",
       "cosechador",
       "grua",
+      "lobina",
       "moto",
       "persona",
       "pin",
+      "poc",
       "taza",
       "telefono",
       "torre",
-      "tostadora"
+      "tostadora",
+      "volteo"
      ]
     },
     "densidad": {
@@ -1294,18 +2995,23 @@
     "camion",
     "camionsacos",
     "carro",
+    "carruaje",
     "casa",
+    "cayuco",
     "cliente",
     "contenedor",
     "cosechador",
     "grua",
+    "lobina",
     "moto",
     "persona",
     "pin",
+    "poc",
     "taza",
     "telefono",
     "torre",
-    "tostadora"
+    "tostadora",
+    "volteo"
    ],
    "ejemplo": {
     "id": "trafico",
@@ -1324,6 +3030,89 @@
    "gente": false,
    "modulo": "piezas/flujo.js",
    "reglas": "scripts/maqueta_tipos/flujo.py"
+  },
+  {
+   "tipo": "fosa",
+   "clase": "pieza",
+   "cuando": "la fosa oceánica mar adentro, rayada y paralela a una fila de lugares; con flechas, la placa que avanza y se mete bajo la costa",
+   "parametros": {
+    "por": {
+     "tipo": "lugar",
+     "requerido": true,
+     "descripcion": "un punto citado por el que pasa la fosa (id o [lon, lat], mar adentro)"
+    },
+    "paralela_a": {
+     "tipo": "lugares",
+     "requerido": true,
+     "min": 2,
+     "descripcion": "los lugares en tierra a los que corre paralela (su eje principal); también dicen de qué lado está la tierra",
+     "capa": "lugares"
+    },
+    "largo_km": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      100,
+      1500
+     ],
+     "defecto": 500,
+     "descripcion": "cuánto se dibuja, centrado en `por` (se recorta a la caja del set)"
+    },
+    "flechas": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": false,
+     "descripcion": "flechas de convergencia: galones que avanzan hacia la fosa y se hunden bajo la costa (el número de flechas y su paso son ilustrativos)"
+    },
+    "desvio_grados": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      -30,
+      30
+     ],
+     "defecto": 0,
+     "descripcion": "giro de las flechas respecto de la perpendicular a la fosa (positivo = antihorario)"
+    },
+    "esquematica": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "línea rayada (esquema) o continua"
+    }
+   },
+   "escalas": [
+    "pais"
+   ],
+   "motores": [
+    "three"
+   ],
+   "ejemplo": {
+    "id": "fosa",
+    "tipo": "fosa",
+    "por": [
+     -90.9448,
+     12.671
+    ],
+    "paralela_a": [
+     "quetzaltenango",
+     "antigua-guatemala",
+     "jutiapa"
+    ],
+    "largo_km": 500,
+    "flechas": true
+   },
+   "nivel": "fondo",
+   "contiene": [],
+   "animado": "con flechas: los galones avanzan hacia la fosa y se hunden bajo la costa",
+   "gente": false,
+   "publica": [
+    "fosa",
+    "placa-oceanica",
+    "placa-continental"
+   ],
+   "modulo": "piezas/fosa.js",
+   "reglas": "scripts/maqueta_tipos/fosa.py"
   },
   {
    "tipo": "frontera",
@@ -1354,6 +3143,321 @@
    "gente": false,
    "modulo": "piezas/frontera.js",
    "reglas": "scripts/maqueta_tipos/frontera.py"
+  },
+  {
+   "tipo": "garitasur",
+   "clase": "pieza",
+   "cuando": "la entrada de una ciudad del siglo XIX por su garita: puerta de madera, tranca, mulas y carretas en fila que pasan, cantón trazado en el potrero",
+   "parametros": {
+    "lugar": {
+     "tipo": "lugar",
+     "requerido": true,
+     "descripcion": "dónde está la puerta (un lugar del mundo o [lon, lat]; en un esquema, [x, y] en metros): el camino real llega de 300 m afuera y sigue 140 m hacia la ciudad; la huella es ≈ 440 × 300 m"
+    },
+    "rumbo": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      360
+     ],
+     "defecto": 0,
+     "descripcion": "hacia dónde entra el camino a la ciudad (grados; 0 = este, 90 = norte). El cantón queda adentro a la IZQUIERDA del camino y el potrero abierto a la derecha. Para ver la fila de frente desde afuera: mira el lugar «<id>.tranca», dist_m 90–220, elevación 14–25°, azimut = 90 − rumbo; desde arriba, elevación 60–80°"
+    },
+    "tamano": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.6,
+      2
+     ],
+     "defecto": 1,
+     "descripcion": "escala de todo (1 = medidas reales: puerta de ≈ 9 m de vano, carretas de ≈ 3.2 m; la gente va ×1.25 para leerse de lejos)"
+    },
+    "carretas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      6
+     ],
+     "defecto": 3,
+     "descripcion": "carretas de dos ruedas con carga (bultos y sacos, sin marca) tiradas por una pareja de animales de tiro genéricos; esperan en la fila y pasan una por vez"
+    },
+    "mulas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      8
+     ],
+     "defecto": 4,
+     "descripcion": "mulas de carga con su aparejo y dos bultos, en recuas de dos (una detrás de otra), alternadas con las carretas en la fila"
+    },
+    "arrieros": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      8
+     ],
+     "defecto": 4,
+     "descripcion": "personas sin rostro que caminan junto a las carretas y las recuas (de noche, sentadas junto a una fogata a la orilla del camino). Sin vestimenta de un pueblo"
+    },
+    "guardas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      3
+     ],
+     "defecto": 2,
+     "descripcion": "1 = quien atiende la tranca; 2 = y quien espera junto a la ramada; 3 = y quien camina adentro de la puerta. Sin uniforme ni armas: guardas genéricos, no soldados"
+    },
+    "canton": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0,
+     "descripcion": "ILUSTRATIVO: 0 = las manzanas solo trazadas sobre el potrero (faja rastrillada de 3 m, línea de cal de 1.1 m, estacas con punta encalada y cordel: se leen a 120–160 m); hasta 1 = la fracción de los solares con casas genéricas de un piso con techo de teja (no es la forma verificada de ningún cantón)"
+    },
+    "vecinos": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      9
+     ],
+     "defecto": 0,
+     "descripcion": "ILUSTRATIVO: gente genérica del cantón trabajando dentro de las manzanas trazadas, de día (de noche no hay nadie): uno de cada tres rastrilla la faja del trazo de ida y vuelta, otro toma sacos de cal de una tarima y el otro ata el cordel a una estaca. Úsalo con canton bajo y «resaltar» sobre la pieza"
+    },
+    "tranca_s": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      5,
+      20
+     ],
+     "defecto": 8,
+     "descripcion": "cada cuántos segundos pasa uno por la tranca: sube, pasa la carreta o la recua del frente, baja y la fila avanza (de día; de noche la puerta está cerrada y nadie pasa)"
+    },
+    "tren": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": false,
+     "descripcion": "un ramal de vía férrea genérico con su estación de madera, adentro a la derecha. Ojo con la época: no lo combines con la garita en funciones sin matizarlo en la voz"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "el azar fijo: el tono de cada animal y de cada carga, las matas del potrero, los árboles y qué solares tienen casa"
+    }
+   },
+   "escalas": [
+    "ciudad",
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "usa": [
+    "persona"
+   ],
+   "ejemplo": {
+    "id": "garita",
+    "tipo": "garitasur",
+    "lugar": "el-trebol",
+    "rumbo": 80,
+    "tamano": 1,
+    "carretas": 3,
+    "mulas": 4,
+    "arrieros": 4,
+    "guardas": 2,
+    "canton": 0,
+    "tranca_s": 8,
+    "vecinos": 3
+   },
+   "nivel": "escenario",
+   "contiene": [
+    "camino real de tierra con roderas y dos ramales que convergen afuera (tres caminos, sin rótulos)",
+    "puerta de madera de dos hojas entre dos postes, sin muro ni cerca (abierta de día, cerrada de noche)",
+    "tranca con su contrapeso que sube y baja",
+    "ramada genérica con banca, mesa y farol",
+    "carretas de dos ruedas con carga, tiradas por animales de tiro genéricos",
+    "recuas de mulas con aparejo y bultos",
+    "arrieros y guardas sin rostro",
+    "potrero con matas de pasto, árboles y una siembra en surcos",
+    "manzanas trazadas: faja rastrillada, línea de cal, estacas encaladas, cordel y montones de cal (y, con canton > 0, casas genéricas de teja)",
+    "fogata de los arrieros de noche",
+    "con tren: vía, andén y estación de madera",
+    "con vecinos: gente que rastrilla, acarrea cal y ata el cordel dentro del cantón"
+   ],
+   "animado": "la tranca sube, pasa la carreta o la recua del frente (patas que caminan, ruedas que giran), baja y la fila avanza; los arrieros caminan a su lado, un guarda camina adentro, el ganado del potrero pasta; de noche la puerta cerrada, la fogata y el farol titilan; con vecinos, en el cantón uno rastrilla de ida y vuelta, otro toma y deja sacos de cal, otro ata el cordel",
+   "gente": true,
+   "poses": [
+    "atender",
+    "caminar",
+    "clasificar",
+    "de_pie",
+    "descargar",
+    "rastrillar",
+    "sentado"
+   ],
+   "distancia_m": [
+    40,
+    400
+   ],
+   "caja_m": [
+    440,
+    300,
+    6
+   ],
+   "modulo": "piezas/garitasur.js",
+   "reglas": "scripts/maqueta_tipos/garitasur.py"
+  },
+  {
+   "tipo": "lagocorte",
+   "clase": "pieza",
+   "cuando": "un lago en corte: basura contra una barda de envases en la boca de un río y, abajo, un cardumen de peces que se cuentan con microplástico en el tracto",
+   "parametros": {
+    "lugar": {
+     "tipo": "lugar",
+     "requerido": true,
+     "descripcion": "el centro del bloque (un lugar del mundo o [x, y] en metros en un esquema). Va mejor en la receta campo con horizonte llano y sin `ambiente` en 60 m × tamano a la redonda. Publica los lugares peces (delante de la cara del corte, a media agua de los peces: su altura ya va publicada: míralos sin mira_lev_m), barda, basura, rio, lago y orilla (sobre la tapa)"
+    },
+    "rumbo": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      360
+     ],
+     "defecto": 0,
+     "descripcion": "hacia dónde va el bloque de la orilla (con el río y la barda) al lago abierto (grados; 0 = este, 90 = norte). La cara del corte, con los peces, se ve de frente con azimut = rumbo; elevación 8–25°"
+    },
+    "tamano": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.5,
+      3
+     ],
+     "defecto": 1,
+     "descripcion": "escala de todo (1 = bloque de 56 m de largo, 22 m de ancho y 30 m de hondo bajo el espejo; peces de hasta 2.2 m: una maqueta, no a escala, para que se cuenten). Para ver el bloque entero en 9:16: dist_m ≈ 150 × tamano con mira_lev_m ≈ 16 × tamano; todos los peces de frente: mira «<id>.peces», dist_m ≈ 70 × tamano, elevación ≈ 10°; las fibras encendidas se leen hasta dist_m ≈ 40 × tamano; la barda y la basura: mira «<id>.barda», dist_m ≈ 35 × tamano, elevación 30–45°"
+    },
+    "peces": {
+     "tipo": "entero",
+     "requerido": true,
+     "rango": [
+      1,
+      100
+     ],
+     "descripcion": "cuántos peces se dibujan (exacto: van en un cardumen suelto, sin filas, pegado a la cara del corte y lejos de la barda; ninguno toca a otro, así se cuentan). Genéricos: sin rasgos ni colores de una especie. Es una cifra: lleva su respaldo"
+    },
+    "marcados": {
+     "tipo": "entero",
+     "requerido": true,
+     "rango": [
+      0,
+      100
+     ],
+     "descripcion": "cuántos de ellos llevan fibras de microplástico dentro del tracto digestivo (no en la carne); exacto, ≤ peces. Cuáles, lo decide la semilla. Antes de un `resaltar` de la pieza no se ven (un pez marcado es igual a uno limpio); el resaltar las enciende en el acento una tras otra (de izquierda a derecha) en lo que dura y se quedan encendidas. Los limpios siguen grises"
+    },
+    "basura": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.6,
+     "descripcion": "cuánta basura mezclada (bolsas, botellas, latas, duroport, cartón, ramas y hojas; sin animales) se junta contra la barda del lado del río; nunca llega al espejo del lago. 0 = sin basura. Ilustrativo: no es un volumen"
+    },
+    "barda": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "la barda de retención: una hilera doble de envases plásticos atados con lazo que cruza la desembocadura de estaca a estaca (genérica: sin largo, altura ni anclaje afirmados)"
+    },
+    "personas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      4
+     ],
+     "defecto": 0,
+     "descripcion": "gente de pie en la orilla junto a la barda, mirando el río (0 = el corte sin nadie)"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "el azar fijo: qué peces van marcados, su tamaño, su vaivén y hacia dónde miran; la basura, los árboles, el carrizo y las plantas del fondo"
+    }
+   },
+   "escalas": [
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "usa": [
+    "persona"
+   ],
+   "ejemplo": {
+    "id": "lago",
+    "tipo": "lagocorte",
+    "lugar": [
+     0,
+     0
+    ],
+    "rumbo": 0,
+    "tamano": 1,
+    "peces": 70,
+    "marcados": 68,
+    "basura": 0.6,
+    "barda": true,
+    "personas": 0,
+    "semilla": 1
+   },
+   "nivel": "escenario",
+   "contiene": [
+    "la orilla de tierra con pasto, árboles, piedras y carrizo",
+    "un río que entra por la tierra y desemboca en el lago",
+    "la barda: envases plásticos tendidos en hilera doble, atados con lazo, de estaca a estaca",
+    "basura mezclada que flota contra la barda: bolsas, botellas, latas, duroport, cartón, ramas y hojas",
+    "el espejo del agua, translúcido, con oleaje",
+    "la cara del corte: la tierra en capas, el talud y el fondo con su sedimento, plantas y piedras",
+    "el agua del corte, translúcida, con rayos de luz y partículas que flotan",
+    "peces genéricos en un cardumen suelto, sin filas, que se cuentan, con una ventana de corte en el vientre que deja ver el tracto gris",
+    "fibras de microplástico dentro del tracto de los peces marcados, que solo aparecen y se encienden en el acento con resaltar, una tras otra; los limpios siguen grises"
+   ],
+   "animado": "el cardumen se mece junto y cada pez bate la cola y cabecea; la barda y la basura suben y bajan con el oleaje; el carrizo, las plantas del fondo y las copas se mecen; el espejo ondula y las partículas flotan; con resaltar, las fibras se encienden una tras otra (todo función de t)",
+   "gente": false,
+   "distancia_m": [
+    30,
+    170
+   ],
+   "caja_m": [
+    56,
+    22,
+    32
+   ],
+   "modulo": "piezas/lagocorte.js",
+   "reglas": "scripts/maqueta_tipos/lagocorte.py"
   },
   {
    "tipo": "lagos",
@@ -1572,6 +3676,673 @@
    "reglas": "scripts/maqueta_tipos/muelle.py"
   },
   {
+   "tipo": "orillalago",
+   "clase": "pieza",
+   "cuando": "orilla de lago de montaña de cerca: tular, muelle, hoteles y casas (en fila o dispersas), camino, pueblito, cargadores y vendedoras; antes u hoy",
+   "parametros": {
+    "lugar": {
+     "tipo": "lugar",
+     "requerido": true,
+     "descripcion": "la línea del agua con el lago lleno, al pie del muelle (un lugar del mundo, o [x, y] en metros en un esquema): el lago queda hacia `rumbo` y la tierra a la espalda (playa 10 m, lotes hasta 80 m, camino a 95 m, huertos y pueblito hasta ≈ 240 m; volcanes a 1.5 km)"
+    },
+    "rumbo": {
+     "tipo": "numero",
+     "requerido": false,
+     "descripcion": "hacia dónde queda el lago visto desde la orilla (grados; 0 = este, 90 = norte). Para ver la orilla desde el agua: mira = <id>.orilla, azimut = 270 − rumbo, elevación 6–20°; a ras del agua, elevación 2–5° y dist_m 40–120",
+     "rango": [
+      0,
+      360
+     ],
+     "defecto": 0
+    },
+    "tamano": {
+     "tipo": "numero",
+     "requerido": false,
+     "descripcion": "escala de todo (1 = medidas reales: casas de 3 m por piso, muelle de 54 m, lancha de 7.5 m, cayuco de 5.2 m; la gente va ×1.25)",
+     "rango": [
+      0.6,
+      2
+     ],
+     "defecto": 1
+    },
+    "tul": {
+     "tipo": "numero",
+     "requerido": false,
+     "descripcion": "cuánto tular: 0 = sin tul; 1 = manchas densas de tul y enea (con su espiga) de 5 a 39 m mar adentro, a los dos lados del muelle; también cuántos manojos de tul cortado se secan en la playa",
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.7
+    },
+    "seco": {
+     "tipo": "numero",
+     "requerido": false,
+     "descripcion": "cuánto se retiró el agua (ilustrativo, sin medida): 0 = lleno; 1 = el agua 24 m más allá, con un lecho de lodo al aire y el tul en seco (amarillento)",
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0
+    },
+    "construcciones": {
+     "tipo": "numero",
+     "requerido": false,
+     "descripcion": "qué parte de las 10 ranuras de lotes está ocupada (en orden: los dos hoteles junto al muelle primero, luego casas de campo hacia los lados); lo demás, pasto con árboles. La densidad es ilustrativa",
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.6
+    },
+    "epoca": {
+     "tipo": "texto",
+     "requerido": false,
+     "descripcion": "antes = hoteles bajos de 1–2 pisos, setos, camino sin faroles; hoy = más hoteles (3 pisos), casas de 1–2 pisos, muros, faroles en el camino y más carros",
+     "valores": [
+      "antes",
+      "hoy"
+     ],
+     "defecto": "antes"
+    },
+    "camino": {
+     "tipo": "texto",
+     "requerido": false,
+     "descripcion": "el camino de atrás: tierra (con huellas) o asfalto (con su raya y sus orillas de tierra); el acceso al muelle es siempre de tierra",
+     "valores": [
+      "tierra",
+      "asfalto"
+     ],
+     "defecto": "tierra"
+    },
+    "personas": {
+     "tipo": "entero",
+     "requerido": false,
+     "descripcion": "gente en tierra (en este orden): 1 vendedora en el muelle, 2 alguien que camina por el camino, 3 un cargador con su carga a la espalda sujeta por la frente, 4 alguien en la playa, 5 un huésped en el corredor del hotel, 6 quien corta tul de pie en el agua baja, 7 otro cargador, 8 otra vendedora junto al muelle, 9–10 más gente a pie y en la playa. Muñecos sin rostro ni traje de un pueblo. Con `cargadores` o `vendedoras` esos dos los cuentan aparte (los de `personas` de ese tipo se quitan)",
+     "rango": [
+      0,
+      10
+     ],
+     "defecto": 5
+    },
+    "cargadores": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      6
+     ],
+     "descripcion": "cargadores con su carga a la espalda sujeta por la frente (mecapal) que caminan en grupo por el camino de tierra, espaciados 16–21 m, la mitad en cada sentido, cerca del acceso al muelle al empezar (sin sacos ni canastos concretos). Sin él, los de `personas`"
+    },
+    "vendedoras": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      6
+     ],
+     "descripcion": "vendedoras en la playa: de pie junto a un petate con montones de cebolla, ajo, fruta y verdura (genéricos) o caminando por la playa, todas con un bulto de tela al frente; solo mujeres, sin traje de un pueblo. Sin él, las de `personas`"
+    },
+    "dispersion": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0,
+     "descripcion": "0 = las casas de campo en sus ranuras y las casas del camino en fila; 1 = dispersas y desiguales: corridas hacia atrás y a los lados, de tamaños, giros y techos distintos, sin lindero continuo, algún lote vacío, menos casas junto al camino y el adoquín solo en el centro. Los hoteles quedan en su ranura"
+    },
+    "gente_escala": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      1,
+      2.2
+     ],
+     "defecto": 1.25,
+     "descripcion": "cuánto se agranda la gente (y su carga) para leerse de lejos: 1.25 = como siempre; 1.6–1.8 se lee a 55–60 m en 9:16 (maqueta, no a escala)"
+    },
+    "cayucos": {
+     "tipo": "entero",
+     "requerido": false,
+     "descripcion": "cayucos (tronco excavado) que cruzan despacio cerca de la orilla, cada uno con su remero de pie y su remo; transporte, no pesca",
+     "rango": [
+      0,
+      4
+     ],
+     "defecto": 1
+    },
+    "lanchas": {
+     "tipo": "entero",
+     "requerido": false,
+     "descripcion": "lanchas genéricas de madera con toldo y motor: la mitad (redondeada abajo) amarradas al muelle; las demás cruzan el lago a 70–160 m con su estela",
+     "rango": [
+      0,
+      4
+     ],
+     "defecto": 2
+    },
+    "aves": {
+     "tipo": "entero",
+     "requerido": false,
+     "descripcion": "zambullidores oscuros junto al tul (pico claro): nadan 10 s, se sumergen ≈ 20 s y salen un poco más allá, con su anillo en el agua. Ilustrativo: no cuenta una población",
+     "rango": [
+      0,
+      6
+     ],
+     "defecto": 0
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "descripcion": "el azar fijo: manchas del tul, árboles, tonos de muros y techos, ranchos del pueblito, fase de cada lancha, cayuco, ave y peatón",
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1
+    }
+   },
+   "escalas": [
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "usa": [
+    "persona",
+    "carro",
+    "bus",
+    "camion"
+   ],
+   "ejemplo": {
+    "id": "orilla",
+    "tipo": "orillalago",
+    "lugar": [
+     0,
+     0
+    ],
+    "rumbo": 90,
+    "tamano": 1,
+    "tul": 0.7,
+    "seco": 0,
+    "construcciones": 0.6,
+    "epoca": "antes",
+    "camino": "tierra",
+    "personas": 7,
+    "cargadores": 4,
+    "vendedoras": 4,
+    "dispersion": 0.8,
+    "gente_escala": 1.7,
+    "cayucos": 2,
+    "lanchas": 3,
+    "aves": 2,
+    "semilla": 1
+   },
+   "nivel": "escenario",
+   "contiene": [
+    "el lago: agua quieta con su tono por hondura y destellos que titilan",
+    "la playa angosta con piedras y, con seco, el lecho de lodo al aire",
+    "el tular: manchas de tul y de enea con su espiga en el agua baja, y manojos de tul cortado secándose en la playa",
+    "el muelle público de madera sobre pilotes con largueros, tablones, bitas, farol y escalera a la playa",
+    "lanchas de madera con toldo y motor (amarradas y cruzando con su estela)",
+    "cayucos de tronco con su remero de pie y el remo que entra al agua",
+    "hoteles bajos genéricos con ala de atrás y corredor de columnas hacia el lago, mesas y bancas",
+    "casas de campo con corredor, jardín de césped, arriates con flores, setos (o muros hoy) y árboles",
+    "el camino de tierra con huellas (o de asfalto) y el acceso al muelle",
+    "huertos con sus surcos y cercas de palos",
+    "casas de adobe encalado con teja y ventanas con reja junto al camino, con su adoquín",
+    "ranchos de caña y adobe con techo de paja entre cafetales, con humo de fogón",
+    "tres volcanes genéricos al fondo, tierra adentro",
+    "gente: vendedoras con su bulto y su petate de cebolla, ajo y fruta en la playa, cargadores con mecapal en grupo por el camino, quien corta tul, paseantes y un huésped",
+    "un camión-bus, un carro y un camión genéricos por el camino",
+    "aves zambullidoras junto al tul",
+    "de noche: ventanas, farol del muelle, faroles del camino (hoy) y luces de las lanchas",
+    "con dispersion: casas de campo y casas del camino sueltas y desiguales en vez de fila (lotificación)"
+   ],
+   "animado": "las lanchas cruzan con su estela y las amarradas se mecen, los cayucos avanzan con su remo, la gente camina por el camino (los cargadores en grupo con su carga) y las vendedoras por la playa, los vehículos pasan, el agua destella, el humo sube de los ranchos y las aves se zambullen y salen",
+   "gente": true,
+   "poses": [
+    "de_pie",
+    "caminar"
+   ],
+   "distancia_m": [
+    30,
+    600
+   ],
+   "caja_m": [
+    1000,
+    1400,
+    60
+   ],
+   "modulo": "piezas/orillalago.js",
+   "reglas": "scripts/maqueta_tipos/orillalago.py"
+  },
+  {
+   "tipo": "palacionacional",
+   "clase": "pieza",
+   "cuando": "el Palacio Nacional simplificado (volumen verde de 127 × 70 × 30 m junto a su plaza) que se vuelve cristal: «ponlo sobre el Palacio»",
+   "parametros": {
+    "lugar": {
+     "tipo": "lugar",
+     "requerido": true,
+     "descripcion": "el centro de la planta del palacio (un lugar del mundo, o [x, y] en metros en un esquema): la caja va 35 m hacia el frente y hacia atrás y 63.5 m a cada lado; con entorno, la plaza llega a 87 m hacia el frente"
+    },
+    "rumbo": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      360
+     ],
+     "defecto": 0,
+     "descripcion": "hacia dónde mira la fachada que da a la plaza, en grados (0 = este, 90 = norte); el lado real no está verificado: es una decisión de puesta en escena. Para verla de frente desde la plaza: azimut ≈ rumbo + 90 (de tres cuartos, rumbo + 50…60 o + 120…130), elevación 10–25°, dist_m 160–320 mirando al centro; desde arriba, elevación 50–70°"
+    },
+    "tamano": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.8,
+      1.2
+     ],
+     "defecto": 1,
+     "descripcion": "escala de todo (1 = medidas del brief: 127 × 70 × 30 m; la gente 1.75 m)"
+    },
+    "cristal": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0,
+     "descripcion": "cuánto se vuelve cristal: 0 macizo, 1 solo la caja (las caras del palacio casi invisibles; quedan un volumen liso translúcido de 127 × 70 × 30 m con el techo un poco más denso, sus aristas en tinta con un halo de contraste —la de arriba, a 30 m, la más gruesa— y las líneas de los pisos a 10, 18.5 y 27.4 m)"
+    },
+    "cristal_desde": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      600
+     ],
+     "defecto": 0,
+     "descripcion": "segundo en que empieza a volverse cristal (0 = ya está en `cristal` desde el inicio): ponlo en la frase que dice qué lo llena"
+    },
+    "cristal_dur": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.2,
+      6
+     ],
+     "defecto": 1.2,
+     "descripcion": "cuántos segundos tarda en pasar de macizo a `cristal`"
+    },
+    "aristas": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 1,
+     "descripcion": "cuánto pesa la caja en cristal: el grueso y la fuerza de las aristas (la de arriba siempre la más gruesa) y la densidad del volumen translúcido; 0 = aristas finas y sin volumen, 1 = la caja bien marcada para medir lo que se pone adentro contra los 30 m"
+    },
+    "personas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      12
+     ],
+     "defecto": 6,
+     "descripcion": "gente genérica: tres de cada cuatro caminan por la acera de enfrente (a 1.05–1.45 m/s, en los dos sentidos) y el resto está de pie en la plaza; sin entorno, por la acera del frente; camisas oscuras sobre losetas claras y claras sobre oscuras, para que se distingan a tamaño de teléfono"
+    },
+    "gente_tamano": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      1,
+      2
+     ],
+     "defecto": 1,
+     "descripcion": "escala de la gente (1 = 1.75 m reales); con la cámara lejos (≥ 300 m) súbela a 1.3–1.6 para que se distinga en el teléfono (exagera la gente: la maqueta no queda a escala en ella)"
+    },
+    "entorno": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "dibuja al frente la calle de adoquín, la acera de enfrente y una franja de plaza de 30 m con bancas, farolas y árboles, y calles de asfalto a los lados y atrás; false = solo el palacio con su acera (en una ciudad cuyas calles ya dibuja otra pieza)"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "el azar fijo: qué ventanas se encienden de noche, las camisas y los recorridos de la gente, el tono de las losas y de los árboles"
+    }
+   },
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "usa": [
+    "persona"
+   ],
+   "ejemplo": {
+    "id": "palacio",
+    "tipo": "palacionacional",
+    "lugar": [
+     0,
+     0
+    ],
+    "rumbo": 0,
+    "tamano": 1,
+    "cristal": 1,
+    "cristal_desde": 1.8,
+    "cristal_dur": 1.2,
+    "aristas": 1,
+    "personas": 8,
+    "gente_tamano": 1.3
+   },
+   "nivel": "escenario",
+   "contiene": [
+    "el volumen del palacio de 127 × 70 × 30 m en color verde (el tono es del estilo): cuerpo central y cuatro pabellones de esquina apenas salientes, sin torre ni reloj",
+    "zócalo, pilastras con basa y capitel, cordones entre los tres pisos, friso de rombos y dentículos bajo la cornisa volada",
+    "ventanas en arco con clave en la planta baja, con balcón de barandal y frontón recto en el primer piso y con marco y repisa en el segundo",
+    "el portal del frente: tres arcos altos con columnas pareadas, entablamento y gradas",
+    "la terraza con su balaustrada y los áticos de los pabellones y del cuerpo central",
+    "el modo cristal: caras translúcidas y la caja de 127 × 70 × 30 m que queda para medir: volumen liso translúcido con techo más denso, aristas en tinta con halo de contraste (la de arriba la más gruesa) y las líneas de los pisos (y el piso del palacio a la vista)",
+    "la acera de losetas con su bordillo alrededor",
+    "al frente, una calle de adoquín, la acera de enfrente y una franja de plaza con bancas, farolas, basureros y árboles en su alcorque",
+    "calles de asfalto con su línea a los lados y atrás",
+    "gente que camina por la acera de enfrente y alguna de pie en la plaza"
+   ],
+   "animado": "la gente camina por la acera de enfrente en los dos sentidos (posición = función de t); el palacio se vuelve cristal entre `cristal_desde` y `cristal_desde + cristal_dur` (la caja de 30 m aparece mientras las caras se van); «resaltar» lo tiñe y enciende sus aristas en el acento; de noche, ventanas encendidas y farolas con su charco de luz",
+   "gente": true,
+   "distancia_m": [
+    120,
+    450
+   ],
+   "caja_m": [
+    127,
+    70,
+    30
+   ],
+   "poses": [
+    "caminar",
+    "de_pie"
+   ],
+   "modulo": "piezas/palacionacional.js",
+   "reglas": "scripts/maqueta_tipos/palacionacional.py"
+  },
+  {
+   "tipo": "pasodesnivel",
+   "clase": "pieza",
+   "cuando": "un paso a desnivel sobre un cruce real de OSM: la vía sube en puente o baja en trinchera y los carros pasan sin detenerse",
+   "parametros": {
+    "lugar": {
+     "tipo": "lugar",
+     "requerido": true,
+     "descripcion": "junto al cruce (hasta 450 m): sin `rumbo`, la pieza toma la vía de la traza cuyo nombre dice «desnivel» más cercana y la usa de eje; si no la hay, una recta por el punto de la red vial más cercano"
+    },
+    "rumbo": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      360
+     ],
+     "descripcion": "hacia dónde corre el eje en recta (grados; 0 = este, 90 = norte); con él no se busca la vía «desnivel» de la traza. Sin él ni vía en la traza, perpendicular a la calle más cercana. Para verlo de lado: azimut = 90 − rumbo ± 90"
+    },
+    "forma": {
+     "tipo": "texto",
+     "requerido": false,
+     "valores": [
+      "bajo",
+      "sobre"
+     ],
+     "defecto": "bajo",
+     "descripcion": "sobre: puente elevado (tablero sobre pilas con viga cabezal, vigas, pretiles y rampas que bajan a nivel) · bajo: trinchera con muros y la calle que cruza pasa encima en una losa. La altura y el número de pilas son ilustrativos"
+    },
+    "largo_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      100,
+      800
+     ],
+     "descripcion": "largo del eje de punta a punta, SOLO si está verificado (recorta o alarga la traza desde su medio); sin él, el de la traza (o 360 m en recta). Ningún largo se rotula en el 3D"
+    },
+    "carros": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      20
+     ],
+     "defecto": 10,
+     "descripcion": "carros genéricos (ilustrativos: ni cuántos ni qué modelo): la mitad sube y baja por el paso sin detenerse, la otra corre por las calles que cruza"
+    },
+    "personas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      12
+     ],
+     "defecto": 4,
+     "descripcion": "gente que camina por las aceras de la calle que cruza (sin cifra: ilustrativa)"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "el azar fijo: dónde va cada carro, cada persona y el tono de cada tramo"
+    }
+   },
+   "escalas": [
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "capas": [
+    "calles"
+   ],
+   "usa": [
+    "carro",
+    "persona"
+   ],
+   "ejemplo": {
+    "id": "desnivel",
+    "tipo": "pasodesnivel",
+    "lugar": [
+     -90.541909,
+     14.617636
+    ],
+    "forma": "sobre",
+    "carros": 10,
+    "personas": 4,
+    "semilla": 1
+   },
+   "nivel": "escenario",
+   "contiene": [
+    "el eje del paso sobre su traza de OpenStreetMap, con su calzada de asfalto, rayas de orilla y raya central discontinua",
+    "sobre: tablero de concreto sobre pilas con viga cabezal, vigas bajo la losa y juntas entre tramos (altura y número ilustrativos)",
+    "rampas de entrada y salida que bajan a nivel, con pretiles y baranda metálica",
+    "bajo: trinchera con muros de concreto, pretiles arriba y la losa por donde la calle que cruza pasa encima",
+    "las calles que cruza a nivel (las de la traza: con su ancho, rayas y aceras) y jardineras con arbustos bajo el puente",
+    "postes de luz sobre el paso y postes de señal sin texto en las rampas",
+    "carros que suben y bajan sin detenerse y gente que camina por las aceras"
+   ],
+   "animado": "los carros suben por la rampa, cruzan y bajan sin detenerse mientras otros corren por la calle que cruza (posición = función de t); la gente camina por las aceras; «resaltar» la pieza (o cualquiera de sus lugares) enciende el paso entero en el acento; de noche, postes de luz con su charco y faros en la calle a nivel",
+   "gente": true,
+   "distancia_m": [
+    90,
+    900
+   ],
+   "caja_m": [
+    360,
+    60,
+    12
+   ],
+   "poses": [
+    "caminar"
+   ],
+   "modulo": "piezas/pasodesnivel.js",
+   "reglas": "scripts/maqueta_tipos/pasodesnivel.py"
+  },
+  {
+   "tipo": "pila",
+   "clase": "pieza",
+   "cuando": "«¿cuánto es eso?»: un volumen de basura (o tierra, o agua) apilado en capas sobre un lugar conocido, con su planta y su alto; sube con crecer",
+   "parametros": {
+    "lugar": {
+     "tipo": "lugar",
+     "requerido": false,
+     "descripcion": "el centro de la pila (un lugar del mundo, [lon, lat] en una ciudad o [x, y] en metros en un esquema), con `largo_m` y `ancho_m`; o usa `puntos`"
+    },
+    "largo_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      1,
+      2000
+     ],
+     "descripcion": "el largo de la planta en metros, a lo largo de `rumbo` (con `lugar`)"
+    },
+    "ancho_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      1,
+      2000
+     ],
+     "descripcion": "el ancho de la planta en metros, de través (con `lugar`)"
+    },
+    "puntos": {
+     "tipo": "puntos",
+     "requerido": false,
+     "min": 3,
+     "descripcion": "o la planta como polígono: [lon, lat] en una ciudad, [x, y] en metros en un esquema (en vez de lugar, largo y ancho)"
+    },
+    "rumbo": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      360
+     ],
+     "defecto": 0,
+     "descripcion": "hacia dónde corre el largo (grados; 0 = este, 90 = norte). Para verla de frente por su largo: azimut ≈ 90 − rumbo"
+    },
+    "alto_m": {
+     "tipo": "numero",
+     "requerido": true,
+     "rango": [
+      0.1,
+      500
+     ],
+     "descripcion": "el alto final en metros (con f = 1): el que sale de la cuenta (volumen ÷ área), con su respaldo"
+    },
+    "inicio": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0,
+     "descripcion": "la fracción del alto con que arranca (0 = el lugar vacío; 1 = ya llena). El evento `crecer` la mueve; sin él, la pila se queda en `inicio`"
+    },
+    "material": {
+     "tipo": "texto",
+     "requerido": false,
+     "valores": [
+      "basura",
+      "tierra",
+      "agua"
+     ],
+     "defecto": "basura",
+     "descripcion": "basura: mezclada (plásticos y orgánicos: arriba, bultos de alto desigual con su pliegue oscuro y encima bolsas negras y blancas sobre todo, alguna gris o de color, botellas tendidas, cajas y láminas de cartón y restos orgánicos, cada una con su volumen; sin marcas, texto ni animales); tierra: terrones y piedras; agua: lisa, sin cosas"
+    },
+    "acento": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": false,
+     "descripcion": "true cuando la pila es la protagonista: un filo en el acento rodea su borde de arriba y sube con ella"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "el azar fijo: el dentado de las capas, las manchas de arriba y dónde cae cada cosa"
+    }
+   },
+   "escalas": [
+    "ciudad",
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "ejemplo": {
+    "id": "pila",
+    "tipo": "pila",
+    "lugar": [
+     -90.5130674,
+     14.642919
+    ],
+    "largo_m": 127,
+    "ancho_m": 70,
+    "rumbo": 0,
+    "alto_m": 5.06,
+    "inicio": 1,
+    "material": "basura",
+    "acento": true
+   },
+   "nivel": "objeto",
+   "contiene": [
+    "lados en capas de ≈ 1 m (panza, junta hundida y tonos que se alternan)",
+    "arriba (basura): bultos de ≈ 2.4 m de alto desigual, con el pliegue oscuro entre uno y otro (nada de baldosas planas)",
+    "bolsas negras y blancas (y alguna gris o de color) como volúmenes sueltos, con su nudo",
+    "botellas plásticas tendidas",
+    "cajas de cartón aplastadas y láminas, restos orgánicos",
+    "faldón de cosas rodadas al pie",
+    "sombra de contacto",
+    "filo en el acento (opcional)"
+   ],
+   "animado": "sube con f (lo fija el evento crecer: los lados se descubren y la superficie de arriba sube con su talud); bolsas sueltas arriba se mecen e inflan con el viento y las botellas destellan, más de noche",
+   "gente": false,
+   "distancia_m": [
+    40,
+    600
+   ],
+   "caja_m": [
+    127,
+    70,
+    5.06
+   ],
+   "modulo": "piezas/pila.js",
+   "reglas": "scripts/maqueta_tipos/pila.py"
+  },
+  {
    "tipo": "rios",
    "clase": "pieza",
    "cuando": "los ríos principales del país sobre el relieve: por dónde corre el agua, qué cuenca une dos lugares, qué río es una frontera",
@@ -1658,6 +4429,149 @@
    "gente": false,
    "modulo": "piezas/ruta.js",
    "reglas": "scripts/maqueta_tipos/ruta.py"
+  },
+  {
+   "tipo": "subduccion",
+   "clase": "pieza",
+   "cuando": "bloque-diagrama genérico de la Tierra cortada: la placa oceánica baja bajo la continental, el manto se enciende y sube a una fila de volcanes",
+   "parametros": {
+    "lugar": {
+     "tipo": "lugar",
+     "requerido": true,
+     "descripcion": "el centro del bloque (un lugar del mundo o [x, y] en metros en un esquema). El bloque se apoya en el suelo: va mejor en la receta campo con horizonte llano y sin `ambiente` en 1.2 km × tamano a la redonda (la receta costa estorba: su mar no es el del bloque). Publica los lugares fosa, placa-oceanica, placa-continental, cono y fila (sobre la tapa) y manto y placa-100 (delante de la cara del corte, al pie: míralos con mira_lev_m ≈ 300 × tamano) y placa (a media pendiente, sobre la banda oscura de la placa que baja entre la fosa y el manto, delante del corte: ahí va la marca de la placa que entra)"
+    },
+    "rumbo": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      360
+     ],
+     "defecto": 0,
+     "descripcion": "hacia dónde entra la placa, del mar a la tierra (grados; 0 = este, 90 = norte): la fosa y la fila quedan perpendiculares. La cara del corte se ve de frente con azimut = rumbo; elevación 12–30°"
+    },
+    "tamano": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.5,
+      3
+     ],
+     "defecto": 1,
+     "descripcion": "escala de todo (1 = bloque de 1.9 km de largo, 0.9 km de ancho y 0.6 km de hondo, conos de 70–110 m: una maqueta, no a escala). Para verlo entero en 9:16: dist_m ≈ 3600 × tamano con mira_lev_m ≈ 420 × tamano"
+    },
+    "conos": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      3,
+      15
+     ],
+     "defecto": 9,
+     "descripcion": "cuántos conos hay en la fila (ilustrativo, no un dato); el primero queda partido por la cara del corte y deja ver su conducto"
+    },
+    "angulo_grados": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      15,
+      60
+     ],
+     "defecto": 35,
+     "descripcion": "con qué inclinación baja la placa pasada la fosa (ilustrativo, no verificado): más empinada, la fila queda más cerca de la fosa"
+    },
+    "flechas": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "flechas sobre el mar que avanzan hacia la tierra, perpendiculares a la fosa (el sentido en que entra la placa; su número no es un dato)"
+    },
+    "magma": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "la secuencia que se mueve: gotas de agua que salen de la placa, el manto de encima que se enciende y el magma que sube a la bolsa y pulsa por el conducto (didáctica: ni velocidad ni duración)"
+    },
+    "fondo": {
+     "tipo": "texto",
+     "requerido": false,
+     "valores": [
+      "campo",
+      "liso"
+     ],
+     "defecto": "campo",
+     "descripcion": "lo que rodea al bloque: campo (el suelo de la receta del mundo, con sus parcelas) o liso (un suelo oscuro y parejo que se funde con la bruma: el bloque solo, como en un libro; va mejor con horizonte llano)"
+    },
+    "manto_brillo": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.4,
+     "descripcion": "cuán vivo es el rojo del manto: 0.4 (por defecto) lo deja apagado para que el magma encendido sea lo más brillante del corte; 1 = el rojo pleno"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "el azar fijo: el tamaño y el corrimiento de cada cono, sus costillas, las lomas y las manchas de la tierra"
+    }
+   },
+   "escalas": [
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "ejemplo": {
+    "id": "corte",
+    "tipo": "subduccion",
+    "lugar": [
+     0,
+     0
+    ],
+    "rumbo": 0,
+    "tamano": 1,
+    "conos": 9,
+    "angulo_grados": 35,
+    "flechas": true,
+    "magma": true,
+    "semilla": 1,
+    "fondo": "liso",
+    "manto_brillo": 0.4
+   },
+   "nivel": "escenario",
+   "contiene": [
+    "la tapa del mar, translúcida, con el fondo oceánico y la fosa como un valle paralelo al canto",
+    "la costa con su playa y la tierra con lomas suaves",
+    "la fila de conos empinados (estratovolcanes genéricos) con cráter y costillas, paralela a la fosa",
+    "en la cara del corte: el agua, la placa oceánica fría con su costra de basalto que entra por la fosa y baja",
+    "la placa continental en capas y la cuña de manto entre ella y la placa; el manto debajo",
+    "el cono partido por el corte, con sus capas de ceniza y lava, y su conducto con la bolsa al pie de la continental",
+    "los cantos del bloque con las mismas capas",
+    "flechas sobre el mar hacia la tierra (el sentido en que entra la placa)",
+    "gotas de agua que salen de la placa, el manto vecino que se enciende y el magma que sube",
+    "el suelo alrededor, del mundo o liso y oscuro (fondo)"
+   ],
+   "animado": "la placa avanza (bandas que corren hacia la fosa y bajan con ella), las flechas cruzan el mar hacia la tierra, las gotas de agua suben desde la placa, el manto de encima late encendido y el magma sube en gotas a la bolsa y pulsa por el conducto (todo función de t); de noche lo que tiene luz propia brilla más",
+   "gente": false,
+   "distancia_m": [
+    500,
+    4500
+   ],
+   "caja_m": [
+    1900,
+    900,
+    750
+   ],
+   "modulo": "piezas/subduccion.js",
+   "reglas": "scripts/maqueta_tipos/subduccion.py"
   },
   {
    "tipo": "tostaduria",
@@ -1847,6 +4761,251 @@
    "reglas": "scripts/maqueta_tipos/trazo.py"
   },
   {
+   "tipo": "trebol",
+   "clase": "pieza",
+   "cuando": "El Trébol sobre su traza real: tableros sobre pilas, rampas y lazos, en cuatro épocas (callecitas, obra, 1959, hoy)",
+   "parametros": {
+    "lugar": {
+     "tipo": "lugar",
+     "requerido": true,
+     "descripcion": "cerca de dónde está el nudo (hasta 900 m): la pieza busca el punto donde convergen las calzadas en la traza de OSM y centra ahí el nudo (radio 240 m)"
+    },
+    "epoca": {
+     "tipo": "texto",
+     "requerido": false,
+     "valores": [
+      "callecitas",
+      "obra",
+      "1959",
+      "hoy"
+     ],
+     "defecto": "hoy",
+     "descripcion": "callecitas: sin nudo, callecitas genéricas por las calzadas que convergen, casas bajas y una nave industrial genérica · obra: tierra removida, pilas a medio hacer con varillas, tableros por tramos, cimbras genéricas y obreros · 1959: tableros nuevos sin los lazos (construidos después) y pocos carros · hoy: asfalto con rayas, barandas y postes de luz, sin rótulos de destino"
+    },
+    "fabrica": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "la nave industrial genérica (dientes de sierra, chimenea que humea; forma, tamaño y lugar ilustrativos) en las épocas callecitas y obra"
+    },
+    "obreros": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      12
+     ],
+     "defecto": 6,
+     "descripcion": "en obra, obreros genéricos junto a las pilas (cargan, rastrillan, caminan, esperan); en callecitas, la gente que camina por las callecitas. Sin cifra: ilustrativos"
+    },
+    "carros": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      12
+     ],
+     "defecto": 4,
+     "descripcion": "en 1959 y hoy, carros genéricos que corren por las vías y suben a los tableros (ilustrativos: ni cuántos ni qué modelo)"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "el azar fijo: casas, montículos, qué tramo de cada puente ya tiene tablero en obra, carros y gente"
+    }
+   },
+   "escalas": [
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "capas": [
+    "calles"
+   ],
+   "usa": [
+    "carro",
+    "persona",
+    "casa"
+   ],
+   "ejemplo": {
+    "id": "trebol",
+    "tipo": "trebol",
+    "lugar": [
+     -90.5384,
+     14.6158
+    ],
+    "epoca": "hoy",
+    "fabrica": true,
+    "obreros": 6,
+    "carros": 6,
+    "semilla": 1
+   },
+   "nivel": "escenario",
+   "contiene": [
+    "las vías del nudo sobre su traza de OpenStreetMap (autopistas, rampas y lazos a 240 m del centro), con su ancho",
+    "tableros de concreto sobre pilas redondas con viga cabezal donde una vía pasa sobre otra (altura y número ilustrativos)",
+    "rampas macizas que bajan del tablero al suelo y los lazos del trébol (en 1959 sin los lazos)",
+    "hoy: asfalto con rayas de orilla y de carril, pretiles con baranda y postes de luz; 1959: concreto nuevo y pretil bajo",
+    "obra: tierra removida, rampas de tierra, pilas a medio hacer con varillas, cimbras de madera bajo los tramos sin tablero, montículos y tablones, focos de obra",
+    "callecitas: calles angostas por donde convergen las calzadas, casas bajas y una nave industrial genérica con dientes de sierra, ventanas, chimenea y patio",
+    "carros, obreros y gente que camina"
+   ],
+   "animado": "los carros corren por las vías y suben a los tableros (posición = función de t); los obreros cargan, rastrillan o van y vienen; la gente camina por las callecitas; la chimenea de la nave humea; «resaltar» enciende el nudo entero, con `elemento` «<id>.puentes» los tableros (sin decir cuál es cuál) y con «<id>.fabrica» la nave; de noche, postes de luz con su charco, ventanas de la nave y focos de obra",
+   "gente": true,
+   "distancia_m": [
+    150,
+    1400
+   ],
+   "caja_m": [
+    480,
+    480,
+    25
+   ],
+   "poses": [
+    "caminar",
+    "de_pie",
+    "descargar",
+    "rastrillar"
+   ],
+   "modulo": "piezas/trebol.js",
+   "reglas": "scripts/maqueta_tipos/trebol.py"
+  },
+  {
+   "tipo": "volcanes",
+   "clase": "pieza",
+   "cuando": "conos nítidos de volcanes nombrados (sin humo ni lava): fila protagonista, fila atenuada detrás, o conos lisos cuya cima se enciende al nombrarlos",
+   "parametros": {
+    "lugares": {
+     "tipo": "lugares",
+     "requerido": true,
+     "min": 1,
+     "descripcion": "las cumbres: [lon, lat] o id de mundo.lugares (verificadas como cualquier geodato); dos que se tocan forman un macizo"
+    },
+    "radio_km": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      2,
+      15
+     ],
+     "defecto": 6,
+     "descripcion": "el radio del pie de cada cono, en km"
+    },
+    "alto_m": {
+     "tipo": "mezcla",
+     "requerido": false,
+     "descripcion": "la altura de cada cumbre en metros sobre el mar, {id de la cumbre o su índice desde 0: metros}; sin ella, lo más alto del relieve junto a la cumbre (que el modelo de elevación deja bajo)"
+    },
+    "crater": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "un cráter en cada cumbre"
+    },
+    "tono": {
+     "tipo": "texto",
+     "requerido": false,
+     "valores": [
+      "acento",
+      "atenuado"
+     ],
+     "descripcion": "acento: todo el cono en el acento (por defecto si la pieza es protagonista); atenuado: cuerpo en el acento oscurecido y cima con su cráter en el mismo naranja a ~50 % (por defecto si no es protagonista), para una fila que queda detrás de la protagonista"
+    },
+    "forma": {
+     "tipo": "texto",
+     "requerido": false,
+     "valores": [
+      "abanico",
+      "cono"
+     ],
+     "defecto": "abanico",
+     "descripcion": "abanico: el cono con barrancas radiales (por defecto); cono: liso, sin barrancas ni rayos, con su cima y su cráter-punto naranja (una fila de fondo que no debe competir con la protagonista)"
+    },
+    "reposo": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.5,
+     "descripcion": "la intensidad de la cima naranja antes de encenderse (0–1 del acento); en «acento», darla activa la cima naranja sobre un cuerpo oscurecido"
+    },
+    "encendido": {
+     "tipo": "texto",
+     "requerido": false,
+     "valores": [
+      "fijo",
+      "queda",
+      "solo"
+     ],
+     "defecto": "fijo",
+     "descripcion": "fijo: la cima queda en `reposo`; queda: la cima de una cumbre sube al acento pleno cuando un evento cumbres sobre esta pieza la nombra y se queda; solo: sube y vuelve a `reposo` cuando prende la siguiente (para que la luz de cumbres también baje, dale a cada cumbres `queda: false` y `dur` hasta el siguiente nombre)"
+    }
+   },
+   "escalas": [
+    "pais"
+   ],
+   "motores": [
+    "three"
+   ],
+   "ejemplo": {
+    "id": "volcanes",
+    "tipo": "volcanes",
+    "lugares": [
+     [
+      -90.743,
+      14.465
+     ],
+     [
+      -90.88,
+      14.473
+     ],
+     [
+      -90.876,
+      14.501
+     ]
+    ],
+    "radio_km": 5,
+    "alto_m": {
+     "0": 3760,
+     "1": 3763,
+     "2": 3976
+    }
+   },
+   "nivel": "fondo",
+   "contiene": [
+    "un cono cóncavo por cumbre, con el pie fundido en la ladera",
+    "un cráter en cada cumbre",
+    "fuera de acento, la cima y el cráter en el naranja del acento a media intensidad (nunca blanco), legible a 150–280 km",
+    "barrancas radiales en las faldas",
+    "macizos: los conos que se tocan comparten la silla (Fuego y Acatenango)",
+    "su relieve publicado (_alturas): marcas, luces y cámara pisan el cono",
+    "un lugar por cumbre: «volcan-<id>» o «volcan-<n>» (también «<pieza>.volcan-…»)",
+    "forma «cono»: el cono liso, sin barrancas ni abanico radial",
+    "la cima a su nivel: `reposo` y, con `encendido`, al acento pleno cuando un cumbres la nombra; un resaltar de la pieza las aviva todas"
+   ],
+   "animado": "con `encendido`, la cima de cada cumbre sube al acento cuando un evento cumbres la nombra (y con «solo» vuelve a su reposo al prender la siguiente); sin él, quieta",
+   "gente": false,
+   "distancia_m": [
+    30000,
+    280000
+   ],
+   "caja_m": [
+    12000,
+    12000,
+    4000
+   ],
+   "modulo": "piezas/volcanes.js",
+   "reglas": "scripts/maqueta_tipos/volcanes.py"
+  },
+  {
    "tipo": "zona",
    "clase": "pieza",
    "cuando": "un área teñida sobre el suelo: un barrio, un parque, la plaza, el área de lo que pasó",
@@ -1976,6 +5135,87 @@
    "reglas": "scripts/maqueta_tipos/acelerar.py"
   },
   {
+   "tipo": "alud",
+   "clase": "evento",
+   "cuando": "un alud de lodo sin erupción: lo alto de la ladera se desprende, baja por el cauce de una faldavolcan con piedras y árboles y sepulta el pueblo",
+   "parametros": {
+    "pieza": {
+     "tipo": "pieza",
+     "piezas": [
+      "faldavolcan"
+     ],
+     "requerido": true,
+     "descripcion": "la falda de volcán por cuyo cauce baja el lodo"
+    },
+    "desde": {
+     "tipo": "lugar",
+     "requerido": false,
+     "defecto": "ladera-alta",
+     "descripcion": "dónde se desprende (un lugar de la pieza: ladera-alta o barranco; se proyecta sobre su cauce)"
+    },
+    "hacia": {
+     "tipo": "lugar",
+     "requerido": false,
+     "defecto": "pueblo",
+     "descripcion": "hasta dónde llega el eje del lóbulo (pueblo, plaza o iglesia de la pieza); pasado ese punto el lodo se redondea"
+    },
+    "ancho_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      20,
+      400
+     ],
+     "defecto": 120,
+     "descripcion": "ancho del frente al llegar al llano (metros de la maqueta, no los de un alud real); en la ladera va de 0.35 a 0.65 de eso"
+    },
+    "cubre": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.7,
+     "descripcion": "qué tanto del pueblo tapa el lóbulo: 0 = solo la franja de `ancho_m`; 1 = hasta 175 m (× tamano) a cada lado del eje, el pueblo entero"
+    },
+    "arboles": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      40
+     ],
+     "defecto": 12,
+     "descripcion": "árboles de la falda que el frente arranca: caen hacia abajo y se van flotando en el lodo"
+    }
+   },
+   "escalas": [
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "adelanto": {
+    "dur": 0.3
+   },
+   "usa": [],
+   "animado": "el frente baja con la cabeza abultada y revuelta (más clara), las orillas atrasadas y ondas que corren; piedras que ruedan, árboles que caen y flotan, techos, vigas y adobes que salen del lodo; en lo alto queda la cicatriz y en la ladera el lodo escurre; en el llano se queda y tapa las casas y la luz de sus ventanas",
+   "ejemplo": {
+    "t": 0.6,
+    "dur": 6.5,
+    "tipo": "alud",
+    "pieza": "falda",
+    "desde": "ladera-alta",
+    "hacia": "pueblo",
+    "ancho_m": 120,
+    "cubre": 0.7,
+    "arboles": 12
+   },
+   "modulo": "eventos/alud.js",
+   "reglas": "scripts/maqueta_tipos/alud.py"
+  },
+  {
    "tipo": "apagar",
    "clase": "evento",
    "cuando": "las luces de unos lugares se apagan de a poco (el apagón, lo que se pierde)",
@@ -2036,6 +5276,619 @@
    "reglas": "scripts/maqueta_tipos/aparecer.py"
   },
   {
+   "tipo": "arrastrar",
+   "clase": "evento",
+   "cuando": "una crecida arrastra basura por el cauce de un río y la abre en abanico en su boca, sobre un lago, donde queda flotando",
+   "parametros": {
+    "pieza": {
+     "tipo": "pieza",
+     "piezas": [
+      "afluente",
+      "rios"
+     ],
+     "requerido": false,
+     "descripcion": "el río por donde baja la crecida: una pieza afluente (su cauce, de la fuente a la boca) o rios (con ella, `puntos` es obligatorio); se aviva mientras baja"
+    },
+    "puntos": {
+     "tipo": "puntos",
+     "requerido": false,
+     "min": 2,
+     "descripcion": "el cauce [[lon, lat], …] de la fuente a la boca (el último punto es la boca, en la orilla o dentro del lago); manda sobre el de la pieza"
+    },
+    "intensidad": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.7,
+     "descripcion": "cuánta basura y cuánta corriente: de unas 260 partículas (0) a unas 900 (1); también abre el abanico y aviva las estelas (ilustra, no mide)"
+    },
+    "abanico_km": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.2,
+      5
+     ],
+     "defecto": 1.2,
+     "descripcion": "hasta dónde llega la mancha desde la boca; si hay una pieza lagos junto a la boca, la mancha queda dentro del agua"
+    },
+    "barda": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": false,
+     "descripcion": "true: una hilera de boyas en arco a abanico_km de la boca y la basura queda atrapada contra ella (una barda de retención genérica)"
+    },
+    "queda": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "true: la mancha queda flotando hasta el final; false: se desvanece al terminar"
+    }
+   },
+   "escalas": [
+    "pais"
+   ],
+   "motores": [
+    "three"
+   ],
+   "usa": [
+    "lagos"
+   ],
+   "adelanto": {
+    "dur": 0.3
+   },
+   "animado": "el agua turbia baja por el cauce, la corriente se acelera (estelas que corren cada vez más rápido), la basura de las orillas se suelta, baja y se abre en abanico en la boca; luego flota y se mece apenas",
+   "nivel": "evento",
+   "contiene": [
+    "agua turbia que baja con la crecida",
+    "estelas de la corriente",
+    "basura mezclada (piezas chicas de tonos y formas variadas)",
+    "abanico en la boca, dentro del lago",
+    "barda de boyas opcional"
+   ],
+   "distancia_m": 30000,
+   "caja_m": [
+    6000,
+    15000,
+    300
+   ],
+   "ejemplo": {
+    "t": 0.6,
+    "dur": 4.0,
+    "tipo": "arrastrar",
+    "pieza": "rios",
+    "puntos": [
+     [
+      -90.553,
+      14.548
+     ],
+     [
+      -90.566,
+      14.528
+     ],
+     [
+      -90.572,
+      14.512
+     ],
+     [
+      -90.58,
+      14.497
+     ],
+     [
+      -90.586,
+      14.481
+     ]
+    ],
+    "intensidad": 0.7,
+    "abanico_km": 1.2
+   },
+   "modulo": "eventos/arrastrar.js",
+   "reglas": "scripts/maqueta_tipos/arrastrar.py"
+  },
+  {
+   "tipo": "bajarlago",
+   "clase": "evento",
+   "cuando": "el nivel de un lago baja: el agua se retira, queda lodo al aire y el tul en seco pasa de verde a pardo y se dobla (sin metros)",
+   "parametros": {
+    "pieza": {
+     "tipo": "pieza",
+     "piezas": [
+      "orillalago"
+     ],
+     "requerido": true,
+     "descripcion": "la orillalago cuyo nivel baja; ponle `tul: 0` (el tular que se seca lo dibuja este evento con su `tul`) y `aves: 0` y `cayucos: 0` (quedarían sobre el lodo)"
+    },
+    "baja": {
+     "tipo": "numero",
+     "requerido": true,
+     "rango": [
+      0,
+      1
+     ],
+     "descripcion": "cuánto se retira el agua al terminar (ilustrativa, no es una medida): 1 = la orilla 44 m mar adentro (× tamano, con su borde irregular) y todo el tular al aire; 0.5 ≈ la mitad del tular en seco"
+    },
+    "seca": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.8,
+     "descripcion": "cuánto se seca lo que queda al aire: 0 = el tul sigue verde y erguido; 1 = pardo y doblado (cada junco a su modo) y el lodo claro y agrietado; tarda ≈ 3 s tras quedar al aire"
+    },
+    "de": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "descripcion": "el nivel antes del evento (se ve desde el cuadro 0); sin `de`, sigue donde dejó el bajarlago anterior de la misma pieza (0 el primero: lago lleno)"
+    },
+    "tul": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.8,
+     "descripcion": "cuánto tular dibuja el evento (manchas de tul y de enea con su espiga, de 5 a 5 + 34·tul m mar adentro, a los dos lados del muelle, como el de la pieza); verde y meciéndose mientras está en el agua"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "el azar fijo: manchas del tular, cómo se dobla cada junco, el borde de la orilla, charcos, grietas y piedras"
+    }
+   },
+   "escalas": [
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "adelanto": {
+    "s": 0.3
+   },
+   "ejemplo": {
+    "t": 0.6,
+    "dur": 5.0,
+    "tipo": "bajarlago",
+    "pieza": "orilla",
+    "baja": 1,
+    "seca": 1,
+    "tul": 0.8
+   },
+   "animado": "la orilla del agua se va mar adentro con su espuma, el lecho mojado se aclara y se agrieta, los charcos se encogen, las piedras asoman y el tul verde se mece en el agua hasta que, al aire, pasa a pardo y se dobla",
+   "contiene": [
+    "el lecho de lodo al aire: mojado y oscuro junto al agua, claro y agrietado al secarse",
+    "charcos en las hondonadas que se encogen",
+    "piedras del fondo que asoman",
+    "la orilla irregular del agua con su espuma",
+    "el tular de tul y enea (con su espiga) que se mece en el agua y en seco se vuelve pardo y se dobla"
+   ],
+   "modulo": "eventos/bajarlago.js",
+   "reglas": "scripts/maqueta_tipos/bajarlago.py"
+  },
+  {
+   "tipo": "cerrarcalle",
+   "clase": "evento",
+   "cuando": "el domingo de paseo: vallas en los cruces, los carros salen y la calzada se llena de gente que camina, trota y pedalea",
+   "parametros": {
+    "pieza": {
+     "tipo": "pieza",
+     "piezas": [
+      "avenidareforma"
+     ],
+     "requerido": true,
+     "descripcion": "la avenidareforma cuya vía principal se cierra (las dos calzadas del tramo)"
+    },
+    "flujo": {
+     "tipo": "pieza",
+     "piezas": [
+      "flujo"
+     ],
+     "requerido": false,
+     "descripcion": "el flujo de carros que corre por la vía (sus carriles, «<pieza>.norte-1…3» y «<pieza>.sur-1…3»): sale entre el 15 % y el 45 % del evento y no vuelve"
+    },
+    "lugar": {
+     "tipo": "lugar",
+     "requerido": false,
+     "descripcion": "el centro del tramo cerrado (se proyecta sobre el eje del arriate); sin él, el medio de la avenida"
+    },
+    "largo_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      80,
+      2400
+     ],
+     "defecto": 500,
+     "descripcion": "largo del tramo cerrado (ilustrativo: la fuente no dice qué tramos); cada extremo se ajusta al cruce más cercano a menos de 120 m, para que la calle que cruza siga abierta"
+    },
+    "personas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      60
+     ],
+     "defecto": 30,
+     "descripcion": "gente a pie en las dos calzadas (≈ 6 de cada 10 caminan, el resto trota), en los dos sentidos; ilustrativo, no un aforo"
+    },
+    "bicicletas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      20
+     ],
+     "defecto": 8,
+     "descripcion": "ciclistas en las dos calzadas, en los dos sentidos (ilustrativo)"
+    },
+    "vallas": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "vallas genéricas atravesadas en las dos calzadas en los extremos del tramo y a los dos lados de cada cruce de adentro; false = solo la gente"
+    },
+    "gente_tamano": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      1,
+      2
+     ],
+     "descripcion": "escala de la gente, las bicis y las vallas (1 = tamaño real); sin él, el `gente_tamano` de la pieza"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "el azar fijo: calzada, carril, sentido, velocidad y segundo de entrada de cada quien; el orden de las vallas"
+    }
+   },
+   "escalas": [
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "adelanto": {
+    "s": 0.4
+   },
+   "usa": [
+    "persona"
+   ],
+   "nivel": "evento",
+   "contiene": [
+    "vallas de tubo de 2 m con pies en V, zapatas, dos largueros y panel a franjas, en filas que atraviesan las dos calzadas",
+    "las filas en los extremos del tramo y a los dos lados de cada cruce (la calle que cruza queda abierta)",
+    "el flujo de carros que sale de la vía",
+    "gente que camina y trota en los dos sentidos por las dos calzadas",
+    "bicicletas de cuadro tubular con ruedas, rines, radios, manubrio, sillín y faro, y su ciclista sentado",
+    "bielas y pedales que giran con la velocidad",
+    "de noche: lámparas ámbar intermitentes sobre las vallas y el faro de cada bici"
+   ],
+   "animado": "las vallas suben del asfalto fila por fila y rebotan; los carros salen; la gente entra una a una y camina, trota o pedalea a lo largo del tramo en los dos sentidos (posición = función de t) con las bielas girando; de noche parpadean las lámparas de las vallas",
+   "gente": "personas a pie (caminar con su velocidad) y ciclistas (persona sentada sin banco sobre la bici), muñecos sin rostro",
+   "distancia_m": [
+    60,
+    450
+   ],
+   "caja_m": [
+    500,
+    40,
+    2
+   ],
+   "poses": [
+    "caminar",
+    "sentado"
+   ],
+   "ejemplo": {
+    "t": 0.6,
+    "dur": 6.0,
+    "tipo": "cerrarcalle",
+    "pieza": "reforma",
+    "flujo": "trafico",
+    "personas": 30,
+    "bicicletas": 8,
+    "vallas": true,
+    "semilla": 1
+   },
+   "modulo": "eventos/cerrarcalle.js",
+   "reglas": "scripts/maqueta_tipos/cerrarcalle.py"
+  },
+  {
+   "tipo": "correranios",
+   "clase": "evento",
+   "cuando": "el tiempo corre sobre una pieza coberturaceldas: sube el año y se apagan las celdas que lo perdieron, con contador de año; encadenable",
+   "parametros": {
+    "pieza": {
+     "tipo": "pieza",
+     "piezas": [
+      "coberturaceldas"
+     ],
+     "requerido": true,
+     "descripcion": "la pieza coberturaceldas cuyo año corre (ella apaga sus celdas con su destello)"
+    },
+    "de": {
+     "tipo": "entero",
+     "requerido": true,
+     "rango": [
+      1980,
+      2100
+     ],
+     "descripcion": "el año al empezar: llega en `t` (sus celdas se apagan ahí); el siguiente evento de la misma pieza empieza en un año mayor"
+    },
+    "a": {
+     "tipo": "entero",
+     "requerido": true,
+     "rango": [
+      1980,
+      2100
+     ],
+     "descripcion": "el año al terminar (en `t + dur`), en escalones iguales de un año; ≥ `de`"
+    },
+    "contador": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "muestra el año grande en la capa 2D (una tarjeta a la derecha)"
+    },
+    "pos": {
+     "tipo": "texto",
+     "requerido": false,
+     "valores": [
+      "arriba",
+      "abajo"
+     ],
+     "defecto": "arriba",
+     "descripcion": "dónde va el contador: arriba (bajo el titular) o abajo (sobre la banda)"
+    },
+    "rotulo": {
+     "tipo": "texto",
+     "requerido": false,
+     "descripcion": "una línea pequeña sobre el año («Perdió cobertura en»); sin números"
+    },
+    "queda": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "true: el contador se queda en el último año al terminar; false: se apaga"
+    },
+    "cifra_por_anio": {
+     "tipo": "texto",
+     "requerido": false,
+     "descripcion": "prefijo del id de la cifra verificada de cada año mostrado («anio-» → anio-2001…): el respaldo de los años en pantalla (C3D5)"
+    }
+   },
+   "escalas": [
+    "pais"
+   ],
+   "motores": [
+    "three"
+   ],
+   "usa": [
+    "coberturaceldas"
+   ],
+   "adelanto": {
+    "dur": 0.08
+   },
+   "animado": "el año sube de uno en uno; con cada año, las celdas que lo perdieron se apagan con un destello y el contador late; encadenado, sigue donde quedó",
+   "ejemplo": {
+    "t": 0.6,
+    "dur": 3.0,
+    "tipo": "correranios",
+    "pieza": "cobertura",
+    "de": 2001,
+    "a": 2012,
+    "rotulo": "Año",
+    "cifra_por_anio": "anio-"
+   },
+   "modulo": "eventos/correranios.js",
+   "reglas": "scripts/maqueta_tipos/correranios.py"
+  },
+  {
+   "tipo": "crecer",
+   "clase": "evento",
+   "cuando": "una pila (de basura, de lo que se acumula) sube capa por capa con la voz: objetos que caen y se asientan; se llama varias veces y crece, se detiene y sigue",
+   "parametros": {
+    "pieza": {
+     "tipo": "pieza",
+     "requerido": true,
+     "descripcion": "la pila que crece: una pieza `pila` (dibuja su cuerpo; aquí se le fija la fracción y cae lo que llega sobre su cima; su `alto_m` y su `inicio` mandan) o cualquier pieza con lugar junto a la que este evento dibuja su propia pila (con `ancho_m`, `fondo_m`, `alto_m`)"
+    },
+    "de": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "descripcion": "fracción del alto de la pila al empezar (sin ella, donde dejó el `crecer` anterior de la misma pieza; el primero, el `inicio` de la pila o 0)"
+    },
+    "a": {
+     "tipo": "numero",
+     "requerido": true,
+     "rango": [
+      0,
+      1
+     ],
+     "descripcion": "fracción del alto de la pila al terminar (0.17 de 30 m = 5.1 m: la medida la pone la cifra con respaldo)"
+    },
+    "caida": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "true: racimos de bolsas y envases caen sobre la cima, se asientan con polvo y la capa siguiente los tapa; false: solo sube"
+    },
+    "lugar": {
+     "tipo": "lugar",
+     "requerido": false,
+     "descripcion": "dónde se apila, si no es el lugar de la pieza (o si la pieza no tiene lugar)"
+    },
+    "ancho_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      4,
+      600
+     ],
+     "defecto": 60,
+     "descripcion": "largo de la huella a lo largo de `rumbo` (si no, el de la pieza)"
+    },
+    "fondo_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      4,
+      600
+     ],
+     "defecto": 40,
+     "descripcion": "fondo de la huella (si no, el de la pieza)"
+    },
+    "alto_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      1,
+      300
+     ],
+     "defecto": 30,
+     "descripcion": "el alto al que se refieren `de` y `a` (si no, el de la pieza)"
+    },
+    "rumbo": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      360
+     ],
+     "descripcion": "hacia dónde va el ancho (grados; 0 = este); si no, el de la pieza"
+    },
+    "cuerpo": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "false: no dibuja la pila (la dibuja la pieza con ctx.cuadro.nivel), solo lo que cae"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "otra mezcla de capas, bultos y caídas"
+    }
+   },
+   "escalas": [
+    "ciudad",
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "adelanto": {
+    "s": 0.1
+   },
+   "animado": "la pila sube sin saltos (capa por capa, la de arriba se llena y la cima con su alfombra de bolsas sube con ella); racimos de bolsas y envases caen desde encima, giran, rebotan al asentarse con una nube de polvo y la capa siguiente los tapa; quieta antes y después de cada llamada; mientras crece, la cima y lo que cae se tiñen apenas del acento",
+   "distancia_m": [
+    60,
+    400
+   ],
+   "ejemplo": {
+    "t": 1.0,
+    "dur": 4.0,
+    "tipo": "crecer",
+    "pieza": "pila",
+    "de": 0,
+    "a": 0.17,
+    "caida": true
+   },
+   "usa": [
+    "pila"
+   ],
+   "modulo": "eventos/crecer.js",
+   "reglas": "scripts/maqueta_tipos/crecer.py"
+  },
+  {
+   "tipo": "cumbres",
+   "clase": "evento",
+   "cuando": "los cráteres de una pieza volcanes se encienden uno tras otro y quedan encendidos: una fila de volcanes, cuáles son, en qué orden; sin humo ni lava",
+   "parametros": {
+    "pieza": {
+     "tipo": "pieza",
+     "piezas": [
+      "volcanes"
+     ],
+     "requerido": true,
+     "descripcion": "la pieza volcanes cuyas bocas se encienden (en el acento si es la protagonista; en crema si no)"
+    },
+    "lugares": {
+     "tipo": "lugares",
+     "todos": true,
+     "requerido": false,
+     "defecto": "todos",
+     "descripcion": "un subconjunto de sus cumbres: el id con que la pieza nombró la cumbre, su lugar «volcan-<id>»/«volcan-<n>» o [lon, lat] (a menos de un radio de la cumbre); «todos» por defecto"
+    },
+    "orden": {
+     "tipo": "texto",
+     "requerido": false,
+     "valores": [
+      "lista",
+      "oeste-este",
+      "este-oeste"
+     ],
+     "defecto": "lista",
+     "descripcion": "en qué orden se encienden: el de la lista (o el de la pieza) o de oeste a este / de este a oeste"
+    },
+    "queda": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "true: las bocas quedan encendidas hasta el final; false: se apagan al terminar"
+    }
+   },
+   "escalas": [
+    "pais"
+   ],
+   "motores": [
+    "three"
+   ],
+   "usa": [
+    "volcanes"
+   ],
+   "adelanto": {
+    "dur": 0.2
+   },
+   "animado": "cada boca se enciende con un destello y un anillo que se abre una vez; luego queda con su núcleo, su halo y un aro fino que respiran",
+   "ejemplo": {
+    "t": 0.6,
+    "dur": 3.0,
+    "tipo": "cumbres",
+    "pieza": "volcanes",
+    "orden": "oeste-este"
+   },
+   "modulo": "eventos/cumbres.js",
+   "reglas": "scripts/maqueta_tipos/cumbres.py"
+  },
+  {
    "tipo": "desaparecer",
    "clase": "evento",
    "cuando": "un actor o el tráfico sale de escena (se encoge hasta cero) y deja ver lo demás",
@@ -2065,6 +5918,123 @@
    },
    "modulo": "eventos/desaparecer.js",
    "reglas": "scripts/maqueta_tipos/desaparecer.py"
+  },
+  {
+   "tipo": "descenso",
+   "clase": "evento",
+   "cuando": "un flujo piroclástico baja en pulsos por una barranca desde el cráter, deja el depósito gris y, si se desborda, cubre unos lugares",
+   "parametros": {
+    "pieza": {
+     "tipo": "pieza",
+     "piezas": [
+      "barranca",
+      "afluente"
+     ],
+     "requerido": true,
+     "descripcion": "la barranca por donde baja (su cauce, del cráter hacia abajo; un afluente sirve igual); se aviva mientras bajan los pulsos"
+    },
+    "puntos": {
+     "tipo": "puntos",
+     "requerido": false,
+     "min": 2,
+     "descripcion": "el cauce [[lon, lat], …] del cráter hacia abajo; manda sobre el de la pieza (geodatos verificados como una cifra)"
+    },
+    "pulsos": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      1,
+      6
+     ],
+     "defecto": 3,
+     "descripcion": "cuántas lenguas salen del cráter una tras otra; cada una llega un poco más lejos y la última llega a `hasta` (ilustra, no cuenta pulsos medidos)"
+    },
+    "hasta": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 1,
+     "descripcion": "fracción del cauce que alcanza el último pulso (1 = todo el cauce)"
+    },
+    "desborde": {
+     "tipo": "lugares",
+     "requerido": false,
+     "descripcion": "lugares sobre los que el último pulso se sale del cauce y se abre en abanico (ids o [lon, lat]); sin ellos, el flujo se queda en el cauce"
+    },
+    "abanico_km": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.2,
+      4
+     ],
+     "defecto": 1,
+     "descripcion": "hasta dónde llega el abanico desde el fin del cauce (debe cubrir los lugares de `desborde`)"
+    },
+    "queda": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "true: el depósito gris queda hasta el final; false: se desvanece al terminar"
+    },
+    "apaga": {
+     "tipo": "lugares",
+     "todos": true,
+     "requerido": false,
+     "descripcion": "luces (ids de una pieza luces) que se apagan cuando el depósito las cubre; «todos» = las que el depósito alcance"
+    }
+   },
+   "escalas": [
+    "pais"
+   ],
+   "motores": [
+    "three"
+   ],
+   "usa": [
+    "luces"
+   ],
+   "adelanto": {
+    "dur": 0.3
+   },
+   "nivel": "evento",
+   "contiene": [
+    "lenguas grises en pulsos que salen del cráter",
+    "borde anaranjado en el frente y las orillas",
+    "nube de ceniza baja que sube y se queda atrás",
+    "depósito gris oscuro con bloques rojizos",
+    "abanico de desborde sobre unos lugares",
+    "luces que se apagan al quedar cubiertas"
+   ],
+   "animado": "los pulsos bajan uno tras otro (salen rápido y frenan al final), el borde anaranjado se enfría al parar, la nube sube y se deshace; el depósito crece detrás del frente y queda; de noche solo brilla el borde y unas brasas",
+   "distancia_m": [
+    8000,
+    40000
+   ],
+   "caja_m": [
+    4000,
+    14000,
+    800
+   ],
+   "ejemplo": {
+    "t": 0.6,
+    "dur": 5.0,
+    "tipo": "descenso",
+    "pieza": "lajas",
+    "pulsos": 3,
+    "hasta": 1,
+    "desborde": [
+     [
+      -90.836,
+      14.392
+     ]
+    ],
+    "abanico_km": 1.6
+   },
+   "modulo": "eventos/descenso.js",
+   "reglas": "scripts/maqueta_tipos/descenso.py"
   },
   {
    "tipo": "deslizar",
@@ -2182,6 +6152,168 @@
    "reglas": "scripts/maqueta_tipos/encender.py"
   },
   {
+   "tipo": "endurecer",
+   "clase": "evento",
+   "cuando": "tras un piroclastico, llueve sobre el depósito: la ceniza gris suelta se moja, se oscurece y se agrieta en placas de costra dura",
+   "parametros": {
+    "pieza": {
+     "tipo": "pieza",
+     "piezas": [
+      "aldeabarranca",
+      "faldavolcan"
+     ],
+     "requerido": true,
+     "descripcion": "la pieza del piroclastico cuyo depósito se endurece (el último piroclastico sobre ella que va antes en `eventos`; va después de que termina: t ≥ su t + dur + 4 s, con su queda: true)"
+    },
+    "lluvia": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.8,
+     "descripcion": "cuánto llueve: rayas con viento y gotas que salpican sobre el depósito; sube al empezar y escampa antes del final (0 = sin lluvia ni charcos)"
+    },
+    "costra": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.85,
+     "descripcion": "cuánto se oscurece el gris suelto hacia la costra dura y mate, por placas de tono distinto"
+    },
+    "grietas": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.6,
+     "descripcion": "la red de grietas que parte la costra en placas (más = placas más chicas, más grietas y más anchas; 0 = sin grietas); se abren una tras otra en la segunda mitad"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "el azar fijo de la costra: las placas, por dónde corren las grietas, los charcos y la lluvia (el depósito es el del piroclastico)"
+    }
+   },
+   "escalas": [
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "usa": [],
+   "nivel": "evento",
+   "contiene": [
+    "lluvia en rayas con viento sobre todo el lugar",
+    "gotas que salpican en anillos sobre el depósito",
+    "el depósito del piroclastico (cauce y lóbulo en la aldea) que se moja y se oscurece",
+    "placas de costra de tonos distintos",
+    "grietas oscuras que se abren una tras otra entre las placas",
+    "charcos en lo bajo que se secan al escampar"
+   ],
+   "animado": "la lluvia cae con viento y salpica (función de t), el gris se moja y se oscurece por placas, las grietas crecen de una punta a la otra una tras otra y, al escampar, los charcos se secan; la costra queda el resto del tramo",
+   "gente": false,
+   "distancia_m": [
+    150,
+    1600
+   ],
+   "caja_m": [
+    1500,
+    700,
+    60
+   ],
+   "ejemplo": {
+    "t": 8.4,
+    "dur": 7.0,
+    "tipo": "endurecer",
+    "pieza": "aldea",
+    "lluvia": 0.8,
+    "costra": 0.85,
+    "grietas": 0.6,
+    "semilla": 1
+   },
+   "modulo": "eventos/endurecer.js",
+   "reglas": "scripts/maqueta_tipos/endurecer.py"
+  },
+  {
+   "tipo": "florecer",
+   "clase": "evento",
+   "cuando": "un lago se pone verde (cianobacteria, algas): manchas verde vivo nacen en focos y se extienden en vetas sobre el agua; sin porcentaje",
+   "parametros": {
+    "pieza": {
+     "tipo": "pieza",
+     "piezas": [
+      "lagos"
+     ],
+     "requerido": true,
+     "descripcion": "la pieza lagos que dibuja el lago (tiene que incluirlo en sus `nombres`, o dibujarlos todos)"
+    },
+    "lago": {
+     "tipo": "texto",
+     "requerido": true,
+     "descripcion": "qué lago florece, por id o por nombre («atitlan», «Lago de Amatitlán»; ids en design/sets3d/<set>/lagos.json)"
+    },
+    "cobertura": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.6,
+     "descripcion": "la fracción del lago que queda verde al terminar (ilustrativa, no es una medida ni se rotula): 0.3 = unas vetas; 1 = todo el lago"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "el azar fijo: dónde están los focos, hacia dónde se estiran las vetas y su dibujo"
+    }
+   },
+   "escalas": [
+    "pais"
+   ],
+   "motores": [
+    "three"
+   ],
+   "adelanto": {
+    "s": 0.35
+   },
+   "animado": "las manchas nacen en 3–5 focos, se extienden en vetas estiradas por el viento hasta la cobertura pedida y, al quedar, sus hebras finas derivan despacio sobre el agua",
+   "contiene": [
+    "los focos donde nace el verde",
+    "las vetas largas estiradas en un sentido",
+    "el núcleo denso verde vivo y el borde ralo mezclado con el agua",
+    "hebras finas más claras que derivan despacio",
+    "el lago que se aviva apenas mientras florece"
+   ],
+   "ejemplo": {
+    "t": 0.6,
+    "dur": 4.0,
+    "tipo": "florecer",
+    "pieza": "lagos",
+    "lago": "atitlan",
+    "cobertura": 0.6
+   },
+   "modulo": "eventos/florecer.js",
+   "reglas": "scripts/maqueta_tipos/florecer.py"
+  },
+  {
    "tipo": "frenar",
    "clase": "evento",
    "cuando": "el tráfico frena en un punto y se forma la cola hacia atrás (un choque, un semáforo, un bloqueo, una hora pico)",
@@ -2244,6 +6376,109 @@
    "reglas": "scripts/maqueta_tipos/frenar.py"
   },
   {
+   "tipo": "hundir",
+   "clase": "evento",
+   "cuando": "la placa oceánica de una subduccion avanza y baja (chevrones por la placa) y bajo la fila suelta agua que sube a la cuña de manto",
+   "parametros": {
+    "pieza": {
+     "tipo": "pieza",
+     "piezas": [
+      "subduccion"
+     ],
+     "requerido": true,
+     "descripcion": "la pieza subduccion cuya placa baja (se ve en su cara del corte: cámara con azimut = rumbo, mirando a «<pieza>.placa-100» con mira_lev_m ≈ 300 × tamano)"
+    },
+    "agua": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "true: desde el primer tercio de la duración, la placa suelta gotas de agua bajo la fila que suben a la cuña de manto (y su techo se entibia); false: solo la placa que avanza y baja"
+    },
+    "vel": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.2,
+      3
+     ],
+     "defecto": 1,
+     "descripcion": "rapidez de la animación (chevrones y gotas; 1 = un chevrón cada ≈ 4 s por un mismo punto). Didáctica: no es la velocidad de la placa"
+    }
+   },
+   "escalas": [
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "usa": [
+    "subduccion"
+   ],
+   "adelanto": {
+    "s": 0.25
+   },
+   "animado": "chevrones en el acento corren por la placa de la fosa hacia el manto y se doblan con ella; gotas de agua salen del techo de la placa bajo la fila y suben a la cuña, y ese techo se entibia (todo función de t − e.t); de noche las gotas y el techo tibio se leen más",
+   "ejemplo": {
+    "t": 0.6,
+    "dur": 6.0,
+    "tipo": "hundir",
+    "pieza": "corte",
+    "agua": true,
+    "vel": 1
+   },
+   "modulo": "eventos/hundir.js",
+   "reglas": "scripts/maqueta_tipos/hundir.py"
+  },
+  {
+   "tipo": "magma",
+   "clase": "evento",
+   "cuando": "el magma que nace en una subduccion: el manto de encima se enciende, sube por el conducto al cráter y la fila de cráteres se enciende",
+   "parametros": {
+    "pieza": {
+     "tipo": "pieza",
+     "piezas": [
+      "subduccion"
+     ],
+     "requerido": true,
+     "descripcion": "el bloque de subducción sobre cuya cara del corte pasa todo (mejor con su `magma: false`, para que la secuencia sea solo la del evento). Míralo de frente: azimut ≈ rumbo, mira «<pieza>.placa-100» con mira_lev_m ≈ 300 × tamano y dist_m ≈ 1400 × tamano; para la fila, mira «<pieza>.fila» desde más arriba"
+    },
+    "fila": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": false,
+     "descripcion": "tras el cráter del frente, los cráteres de toda la fila se encienden uno tras otro, paralelos a la fosa, y quedan encendidos (con fila, el ascenso usa la primera mitad de `dur`)"
+    },
+    "orden": {
+     "tipo": "texto",
+     "valores": [
+      "frente-fondo",
+      "fondo-frente"
+     ],
+     "requerido": false,
+     "defecto": "frente-fondo",
+     "descripcion": "en qué orden se enciende la fila: del cono partido por el corte hacia el fondo, o del fondo hacia el corte"
+    }
+   },
+   "escalas": [
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "usa": [],
+   "animado": "gotas de agua que salen de la placa, la cuña de manto de encima que se enciende y late (la placa no), una gota de magma con su cola que sube a la bolsa y por el conducto y deja un hilo tibio, el cráter del frente que se enciende en el acento con su halo y, con fila, los cráteres que se encienden uno tras otro; después del evento todo lo encendido sigue encendido; de noche brilla más (todo función de t; didáctico: ni velocidad ni duración del ascenso)",
+   "ejemplo": {
+    "t": 0.6,
+    "dur": 6.0,
+    "tipo": "magma",
+    "pieza": "corte",
+    "fila": true,
+    "orden": "frente-fondo"
+   },
+   "modulo": "eventos/magma.js",
+   "reglas": "scripts/maqueta_tipos/magma.py"
+  },
+  {
    "tipo": "mover",
    "clase": "evento",
    "cuando": "un actor va a otro lugar en el tiempo que dura (la ambulancia que llega, la persona que cruza)",
@@ -2278,6 +6513,68 @@
    },
    "modulo": "eventos/mover.js",
    "reglas": "scripts/maqueta_tipos/mover.py"
+  },
+  {
+   "tipo": "mudar",
+   "clase": "evento",
+   "cuando": "algo que se muda de un lugar a otro (una capital, una sede): un arco de luz salta sobre el relieve y enciende el destino; no es un camino",
+   "parametros": {
+    "desde": {
+     "tipo": "lugar",
+     "requerido": true,
+     "descripcion": "de dónde sale (un lugar: id del set o de mundo.lugares, o [lon, lat]); ahí queda una brasa tenue"
+    },
+    "hacia": {
+     "tipo": "lugar",
+     "requerido": true,
+     "descripcion": "dónde cae y se enciende el núcleo (un lugar: id del set o de mundo.lugares, o [lon, lat])"
+    },
+    "pieza": {
+     "tipo": "pieza",
+     "piezas": [
+      "luces"
+     ],
+     "requerido": false,
+     "descripcion": "una pieza luces: además aviva la luz de `hacia` y deja tenue la de `desde` (si son ids de sus luces)"
+    },
+    "altura_km": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      1,
+      60
+     ],
+     "defecto": 12,
+     "descripcion": "alto del arco sobre la recta entre los dos lugares (sube solo si un cerro lo tocaría)"
+    },
+    "queda": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "true: el núcleo de `hacia` y la brasa de `desde` se quedan hasta el final (o hasta el siguiente salto); false: se apagan al terminar"
+    }
+   },
+   "escalas": [
+    "pais"
+   ],
+   "motores": [
+    "three"
+   ],
+   "adelanto": {
+    "dur": 0.3
+   },
+   "animado": "el arco crece de `desde` a `hacia` con una cabeza brillante, se recoge al caer; el núcleo destella y abre anillos; la brasa respira",
+   "ejemplo": {
+    "t": 0.6,
+    "dur": 2.6,
+    "tipo": "mudar",
+    "desde": "antigua-guatemala",
+    "hacia": "guatemala",
+    "pieza": "pueblos",
+    "altura_km": 12
+   },
+   "modulo": "eventos/mudar.js",
+   "reglas": "scripts/maqueta_tipos/mudar.py"
   },
   {
    "tipo": "onda",
@@ -2413,6 +6710,328 @@
    },
    "modulo": "eventos/pintar.js",
    "reglas": "scripts/maqueta_tipos/pintar.py"
+  },
+  {
+   "tipo": "piroclastico",
+   "clase": "evento",
+   "cuando": "flujo piroclástico de cerca: pulsos de nube gris bajan por la barranca, el último se desborda junto al puente y entierra la aldea hasta el techo",
+   "parametros": {
+    "pieza": {
+     "tipo": "pieza",
+     "piezas": [
+      "aldeabarranca",
+      "faldavolcan"
+     ],
+     "requerido": true,
+     "descripcion": "la aldea por cuya barranca baja (en una faldavolcan, por su cauce; se desborda al pie del cono). Ponle personas: 0 y vehiculos: 0: la gente que sale la pone este evento"
+    },
+    "pulsos": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      1,
+      6
+     ],
+     "defecto": 3,
+     "descripcion": "cuántas lenguas con su nube bajan una tras otra; cada una llega más lejos y solo la última se desborda (ilustra, no cuenta pulsos medidos)"
+    },
+    "desborde": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.8,
+     "descripcion": "cuánto sube el último pulso sobre la orilla junto al puente (aguas arriba: el puente queda entero a la vista) y el espesor del depósito en la aldea (2.4–3 m: hasta el techo, sin cifra). Menos de 0.15: no se desborda, se queda en el cauce"
+    },
+    "cubre": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.6,
+     "descripcion": "qué fracción de la aldea (calles y lotes) queda enterrada, contada desde el lado de la barranca y el puente; lo demás queda en pie"
+    },
+    "bloques": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      40
+     ],
+     "defecto": 15,
+     "descripcion": "bloques de piedra (algunos rojizos y unos grandes) que ruedan en el frente y quedan medio enterrados; dos de cada tres en la aldea, el resto en el cauce"
+    },
+    "humo": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "el depósito echa humo después de que llega (hasta el final del tramo)"
+    },
+    "vacia": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "true: la gente sale antes de que llegue y no vuelve (pueblo fantasma); false: al final dos personas miran desde fuera del depósito"
+    },
+    "gente": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      12
+     ],
+     "defecto": 8,
+     "descripcion": "vecinos que pone el evento en las calles (en una aldeabarranca, la principal y las tres que la cruzan): caminan y, con margen antes del desborde, caminan de prisa lejos de la barranca y dejan la calle; nadie queda alcanzado"
+    },
+    "queda": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "true: el depósito (y lo enterrado) queda el resto del tramo; false: se va al terminar"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "el azar fijo: la nube, los bloques, los escombros y dónde camina la gente"
+    }
+   },
+   "escalas": [
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "adelanto": {
+    "dur": 0.3
+   },
+   "usa": [
+    "persona"
+   ],
+   "nivel": "evento",
+   "contiene": [
+    "pulsos que bajan por la barranca y rellenan su fondo",
+    "nube gris turbulenta con la base densa sobre cada frente",
+    "desborde junto al puente (el puente queda entero) que cruza la carretera",
+    "lóbulo de ceniza gris que entierra las casas hasta el techo desde el lado de la barranca",
+    "bloques de piedra rodando, algunos rojizos y unos grandes",
+    "láminas y vigas que asoman del depósito",
+    "humo que sale del depósito",
+    "vecinos que dejan la calle antes de que llegue"
+   ],
+   "animado": "los pulsos bajan uno tras otro (salen rápido y frenan) con su nube que se enrosca, sube y se deshace; el último sube sobre la orilla y el lóbulo avanza por la aldea con la cabeza abultada y más clara, bloques que ruedan y la nube del frente; después el depósito se oscurece y humea; la gente camina por las calles y se va antes del desborde",
+   "gente": "los vecinos los pone el evento (`gente`); la pieza va con personas: 0",
+   "distancia_m": [
+    250,
+    1600
+   ],
+   "caja_m": [
+    1500,
+    700,
+    60
+   ],
+   "ejemplo": {
+    "t": 0.6,
+    "dur": 8.0,
+    "tipo": "piroclastico",
+    "pieza": "aldea",
+    "pulsos": 3,
+    "desborde": 0.8,
+    "cubre": 0.6,
+    "bloques": 15,
+    "humo": true,
+    "vacia": true,
+    "gente": 8,
+    "queda": true,
+    "semilla": 1
+   },
+   "modulo": "eventos/piroclastico.js",
+   "reglas": "scripts/maqueta_tipos/piroclastico.py"
+  },
+  {
+   "tipo": "poblar",
+   "clase": "evento",
+   "cuando": "la orilla de un lago que se llena de casas de verano y hoteles: brotan lote a lote con su sombra (ilustrativo, no cuenta edificios)",
+   "parametros": {
+    "pieza": {
+     "tipo": "pieza",
+     "piezas": [
+      "orillalago"
+     ],
+     "requerido": true,
+     "descripcion": "la orillalago cuya franja de lotes (entre la playa y el camino) se llena; pon su `construcciones` en 0 para que los lotes de poblar no se encimen con los suyos"
+    },
+    "de": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "descripcion": "fracción de los lotes ya ocupados antes del evento (se ven desde el cuadro 0); sin `de`, sigue donde dejó el poblar anterior de la misma pieza (0 el primero)"
+    },
+    "a": {
+     "tipo": "numero",
+     "requerido": true,
+     "rango": [
+      0,
+      1
+     ],
+     "descripcion": "fracción de los lotes ocupados al terminar (ilustrativa: la densidad no es un dato)"
+    },
+    "orden": {
+     "tipo": "texto",
+     "requerido": false,
+     "valores": [
+      "izquierda-derecha",
+      "centro-afuera",
+      "azar"
+     ],
+     "defecto": "izquierda-derecha",
+     "descripcion": "en qué orden brotan los lotes: de izquierda a derecha mirando desde el agua, del centro hacia los lados o en un azar fijo por `semilla`"
+    },
+    "lotes": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      4,
+      40
+     ],
+     "defecto": 16,
+     "descripcion": "cuántos lotes caben en la franja (los del paso al muelle se saltan); ilustrativo"
+    },
+    "largo_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      60,
+      1200
+     ],
+     "defecto": 300,
+     "descripcion": "largo de la franja a lo largo de la orilla (metros × tamano de la pieza); lotes de menos de 15 m no llevan hotel"
+    },
+    "playa_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      4,
+      60
+     ],
+     "defecto": 16,
+     "descripcion": "distancia de la línea del agua al frente de los lotes (metros × tamano)"
+    },
+    "fondo_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      20,
+      90
+     ],
+     "defecto": 34,
+     "descripcion": "fondo de cada lote hacia tierra (metros × tamano); nunca pisa el camino de la pieza"
+    },
+    "hoteles": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.35,
+     "descripcion": "parte de los lotes que son hotel (dos plantas, balcón, terraza con sombrillas); el resto, casas de una planta con corredor y tapia"
+    },
+    "epoca": {
+     "tipo": "texto",
+     "requerido": false,
+     "valores": [
+      "antes",
+      "hoy"
+     ],
+     "descripcion": "antes: techos de teja; hoy: losas con pretil, vidrio y alguna teja. Sin ella, la `epoca` de la pieza (hoy si no tiene)"
+    },
+    "lugar": {
+     "tipo": "lugar",
+     "requerido": false,
+     "descripcion": "otro punto de la línea del agua para el centro de la franja (sin él, el lugar de la pieza)"
+    },
+    "rumbo": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      360
+     ],
+     "descripcion": "hacia dónde queda la tierra desde el agua (sin él, el contrario del rumbo de la orillalago)"
+    },
+    "personas": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "al terminar de brotar, alguien sale a caminar frente al lote (de noche, la mitad)"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "variación de cada lote (hotel o casa, tamaño, techo, árboles) y el orden «azar»"
+    }
+   },
+   "escalas": [
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "adelanto": {
+    "s": 0.15
+   },
+   "nivel": "evento",
+   "contiene": [
+    "solar de césped con andén hacia el agua",
+    "tapia baja con remate, pilares y portón hacia el camino",
+    "casa de una planta con zócalo, puerta, ventanas con marco, corredor de horcones y alero, chimenea",
+    "hotel de dos plantas con cornisa, balcón corrido con baranda y pilares, ventanas por planta",
+    "terraza del hotel con sombrillas y mesas",
+    "techos de teja a dos o cuatro aguas (antes) o losas con pretil y vidrio (hoy)",
+    "árboles del jardín",
+    "sombra de contacto, polvo al brotar y lámparas del corredor de noche",
+    "gente que camina frente a los lotes poblados"
+   ],
+   "animado": "cada lote brota en su turno: el solar se abre desde el centro con polvo, el edificio sube desde el suelo, rebota apenas y se asienta con su sombra; luego alguien sale a caminar frente al lote; de noche se encienden ventanas y lámparas",
+   "gente": "una persona caminando frente a la mayoría de los lotes poblados (muñeco sin rostro)",
+   "distancia_m": 220,
+   "caja_m": [
+    300,
+    60,
+    14
+   ],
+   "usa": [
+    "persona"
+   ],
+   "ejemplo": {
+    "t": 0.6,
+    "dur": 6.0,
+    "tipo": "poblar",
+    "pieza": "orilla",
+    "de": 0.1,
+    "a": 0.8,
+    "orden": "izquierda-derecha",
+    "semilla": 1
+   },
+   "modulo": "eventos/poblar.js",
+   "reglas": "scripts/maqueta_tipos/poblar.py"
   },
   {
    "tipo": "resaltar",
@@ -2556,6 +7175,338 @@
    "reglas": "scripts/maqueta_tipos/ruptura.py"
   },
   {
+   "tipo": "terremoto",
+   "clase": "evento",
+   "cuando": "la sacudida en un escenario con edificios, sin epicentro ni onda: todo tiembla, caen techos, torres y muros por partes, sube el polvo y la gente huye",
+   "parametros": {
+    "pieza": {
+     "tipo": "pieza",
+     "requerido": true,
+     "descripcion": "la pieza con edificios que se sacude (edificios, faldavolcan o un escenario con construcciones): da el centro y la plaza; se rompe todo lo que está en pie dentro de `radio_m`, sea de la pieza que sea"
+    },
+    "intensidad": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.8,
+     "descripcion": "cuánto tiembla el suelo (0 = nada; 1 = el máximo legible)"
+    },
+    "danos": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.6,
+     "descripcion": "la parte de lo que está en pie que se rompe: ≈ 0.6·danos se cae, otro tanto pierde el techo y se inclina, el resto queda en pie (las partes altas caen más)"
+    },
+    "lugares": {
+     "tipo": "lugares",
+     "requerido": false,
+     "descripcion": "lo que cae sí o sí y antes: lo que está a ≤ 13 m de cada lugar (id del mundo, «<pieza>.<id>» o [x, y])"
+    },
+    "polvo": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": true,
+     "descripcion": "la nube de polvo que sube de lo que cae y del suelo, tapa el daño y queda como bruma"
+    },
+    "centro": {
+     "tipo": "lugar",
+     "requerido": false,
+     "descripcion": "el centro de la zona que se rompe (sin él: el refugio, la plaza de la pieza, la pieza)"
+    },
+    "radio_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      20,
+      1500
+     ],
+     "defecto": 180,
+     "descripcion": "hasta dónde, desde el centro, se rompe lo que está en pie"
+    },
+    "refugio": {
+     "tipo": "lugar",
+     "requerido": false,
+     "descripcion": "el espacio abierto al que corre la gente (sin él: «<pieza>.plaza», la plaza del mundo o el centro); genérico: no afirma a qué plaza corrió nadie"
+    },
+    "radio_refugio_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      6,
+      120
+     ],
+     "defecto": 20,
+     "descripcion": "radio del espacio abierto: la gente espera en su borde y corre hacia adentro (que quepa en la plaza)"
+    },
+    "personas": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      40
+     ],
+     "defecto": 14,
+     "descripcion": "gente que corre al espacio abierto (la gente propia de la pieza sigue a lo suyo: bájala a 0 si estorba)"
+    },
+    "previo": {
+     "tipo": "bool",
+     "requerido": false,
+     "defecto": false,
+     "descripcion": "un primer temblor corto y débil, una pausa y luego el fuerte, todo dentro de `dur`"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "otra semilla, otras partes que caen"
+    }
+   },
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "usa": [
+    "persona"
+   ],
+   "adelanto": {
+    "s": 0.4
+   },
+   "animado": "el suelo tiembla a 2–7 Hz y lo alto se mece; las partes caen con gravedad, se vuelcan y dejan montones de escombro; el polvo sube, se abre con el viento y queda como bruma; la gente corre al centro del espacio abierto y se queda mirando",
+   "publica": "ctx.cuadro.sismo[pieza] = {k, dx, dz, avance, danos, cx, cy, radio, caen}: una pieza puede leerlo en su `en` para romperse a su manera",
+   "ejemplo": {
+    "t": 1.5,
+    "dur": 7,
+    "tipo": "terremoto",
+    "pieza": "ciudad",
+    "intensidad": 0.8,
+    "danos": 0.6,
+    "polvo": true,
+    "personas": 14,
+    "radio_refugio_m": 20
+   },
+   "modulo": "eventos/terremoto.js",
+   "reglas": "scripts/maqueta_tipos/terremoto.py"
+  },
+  {
+   "tipo": "transformar",
+   "clase": "evento",
+   "cuando": "una pieza pasa de una época a otra como obra: lo viejo se hunde, la tierra se mueve, suben pilas, se tienden tableros y llegan los carros",
+   "parametros": {
+    "pieza": {
+     "tipo": "pieza",
+     "requerido": true,
+     "descripcion": "la pieza que cambia de época (un `trebol` u otra con `epocas: true` en su módulo: ella dibuja sus épocas y aquí va solo la obra) o cualquier pieza con lugar junto a la que este evento dibuja lo viejo y lo nuevo"
+    },
+    "de": {
+     "tipo": "texto",
+     "requerido": true,
+     "descripcion": "la época de la que sale (p. ej. «1950»); no se rotula en el 3D: va en la capa"
+    },
+    "a": {
+     "tipo": "texto",
+     "requerido": true,
+     "descripcion": "la época a la que llega (p. ej. «1959»); no se rotula en el 3D: va en la capa"
+    },
+    "orden": {
+     "tipo": "texto",
+     "requerido": false,
+     "valores": [
+      "centro-afuera",
+      "azar"
+     ],
+     "defecto": "centro-afuera",
+     "descripcion": "en qué orden se hunde lo viejo, suben las pilas y se tienden los tramos: del centro hacia afuera o en un azar fijo por `semilla`"
+    },
+    "hundir_desde_s": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      120
+     ],
+     "defecto": 0,
+     "descripcion": "segundos desde el inicio del evento en que lo viejo sigue en pie (callecitas, casas, la fábrica, su gente): la obra entera (hundirse, la tierra, las pilas, los tableros y los carros) cabe en lo que queda de `dur`; mientras tanto los volteos llegan desde afuera (lo que se mueve en el cuadro cero). Sin él (0): la obra empieza al empezar el evento"
+    },
+    "ultimo": {
+     "tipo": "lista",
+     "requerido": false,
+     "descripcion": "lo que se hunde AL FINAL de lo viejo, aun con orden «azar»: una lista de «fabrica» (la nave y su chimenea, las del evento y la de la pieza trebol), «casas», «gente», «cerca», «arboles»; p. ej. [\"fabrica\"]"
+    },
+    "lugar": {
+     "tipo": "lugar",
+     "requerido": false,
+     "descripcion": "el centro de la obra, si no es el lugar de la pieza (o si la pieza no tiene lugar), p. ej. «el-trebol»"
+    },
+    "rumbo": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      360
+     ],
+     "descripcion": "giro del nudo y de las calles viejas (grados; 0 = este); sin él, el de la pieza o 0"
+    },
+    "radio_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      60,
+      400
+     ],
+     "defecto": 150,
+     "descripcion": "radio de la obra en metros (lo viejo, el terreno de tierra y el nudo caben en él); ilustrativo"
+    },
+    "alto_m": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      4,
+      14
+     ],
+     "defecto": 6.5,
+     "descripcion": "altura de los tableros sobre las calzadas de abajo; ilustrativa, no se rotula"
+    },
+    "cuerpo": {
+     "tipo": "bool",
+     "requerido": false,
+     "descripcion": "true: el evento dibuja lo viejo (callecitas, casas genéricas, la fábrica de tejidos genérica, potrero) y lo nuevo (tres puentes); false: solo la obra. Sin él: false si la pieza declara `epocas`, true si no"
+    },
+    "autos": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      12
+     ],
+     "defecto": 4,
+     "descripcion": "carros por puente al final (más dos por calzada de abajo); ilustrativo, sin modelo ni cifra"
+    },
+    "obreros": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      16
+     ],
+     "defecto": 10,
+     "descripcion": "obreros genéricos junto a las pilas mientras dura la obra (sin empresa ni número)"
+    },
+    "volteos": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      4
+     ],
+     "defecto": 2,
+     "descripcion": "volteos genéricos que dan vueltas por el terreno mientras se mueve la tierra"
+    },
+    "gente_tamano": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      1,
+      3
+     ],
+     "defecto": 1.6,
+     "descripcion": "escala de la gente para que se lea de lejos (≈ 2.4 con la cámara a 200–250 m)"
+    },
+    "semilla": {
+     "tipo": "entero",
+     "requerido": false,
+     "rango": [
+      0,
+      100000
+     ],
+     "defecto": 1,
+     "descripcion": "variación de casas, árboles, montículos, el orden «azar» y los carros"
+    },
+    "volteos_tamano": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      1,
+      3
+     ],
+     "defecto": 1,
+     "descripcion": "escala de los volteos para que se lean de lejos (≈ 1.8 con la cámara a 200–250 m)"
+    }
+   },
+   "escalas": [
+    "ciudad",
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "adelanto": {
+    "s": 0.1
+   },
+   "nivel": "evento",
+   "contiene": [
+    "callecitas de tierra clara (sin afirmar el material) y un potrero con su cerca de postes y dos hilos",
+    "casas genéricas de una y dos plantas con zócalo, puerta, ventanas con marco y techo de lámina a un agua o losa con pretil",
+    "fábrica de tejidos genérica: nave con ventanales corridos, pilastras, portón y techo de dientes de sierra con vidrio; chimenea de ladrillo por anillos que humea",
+    "árboles de patio y de la orilla del potrero",
+    "terreno de obra que se abre y ondula, con zanjas (fondo oscuro, paredes y bordos de tierra sacada) donde van las pilas y montones de tierra de dos o tres lomos; montículos que se empujan, volteos genéricos y obreros genéricos",
+    "pilas de dos columnas con zapata y viga cabezal",
+    "tres puentes con tableros de asfalto, rayas, pretiles de concreto, goterón, vigas, estribo y rampas macizas, postes de luz con brazo",
+    "calzadas a nivel que llegan al cruce por debajo de los puentes y la plancha del cruce; jardines donde quedó tierra",
+    "carros genéricos que suben por las rampas y cruzan los puentes; de noche, faros, ventanas y postes encendidos"
+   ],
+   "animado": "cada parte de lo viejo se hunde en su turno con polvo (con `hundir_desde_s`, no antes de ese segundo, y lo de `ultimo` al final); mientras tanto los volteos llegan desde afuera; la tierra se abre con sus zanjas y montones; los montículos crecen, se arrastran y se aplanan; volteos y obreros trabajan; las pilas suben y los tableros se tienden tramo a tramo desde el centro de cada puente con un rebote corto; se asfaltan las calzadas, zanjas y montones se aplanan, la tierra se vuelve jardín y entran los carros, que siguen andando (todo función de t)",
+   "gente": "paseantes en las callecitas antes de la obra y obreros genéricos durante (muñecos sin rostro)",
+   "distancia_m": [
+    200,
+    700
+   ],
+   "caja_m": [
+    300,
+    300,
+    30
+   ],
+   "usa": [
+    "persona",
+    "volteo",
+    "carro"
+   ],
+   "ejemplo": {
+    "t": 0.0,
+    "dur": 18,
+    "tipo": "transformar",
+    "pieza": "trebol",
+    "de": "1950",
+    "a": "1959",
+    "orden": "azar",
+    "hundir_desde_s": 10.6,
+    "ultimo": [
+     "fabrica"
+    ],
+    "autos": 4,
+    "obreros": 10,
+    "volteos": 3,
+    "volteos_tamano": 1.8,
+    "gente_tamano": 2.4,
+    "semilla": 2
+   },
+   "modulo": "eventos/transformar.js",
+   "reglas": "scripts/maqueta_tipos/transformar.py"
+  },
+  {
    "tipo": "trazar",
    "clase": "evento",
    "cuando": "la línea de un trazo se dibuja mientras la voz la recorre (la ruta que aparece, el camino que se marca)",
@@ -2597,6 +7548,70 @@
    },
    "modulo": "eventos/trazar.js",
    "reglas": "scripts/maqueta_tipos/trazar.py"
+  },
+  {
+   "tipo": "verter",
+   "clase": "evento",
+   "cuando": "agua residual en pulsos por los tubos de una drenajeorilla: la de la planta sale menos turbia; la cruda abre en el lago una mancha que se queda",
+   "parametros": {
+    "pieza": {
+     "tipo": "pieza",
+     "piezas": [
+      "drenajeorilla"
+     ],
+     "requerido": true,
+     "descripcion": "la drenajeorilla por cuyos tubos corre el agua (sus casas conectadas, su colector, sus desagües y su planta). Cámara: mira = «<pieza>.calle», azimut = 270 − rumbo, elevación 20–35°, dist_m 200–280 para ver el pueblo y la mancha; mira = «<pieza>.desague», dist_m 60–90 para la boca"
+    },
+    "mancha": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0,
+      1
+     ],
+     "defecto": 0.6,
+     "descripcion": "hasta dónde se abre la mancha turbia frente a cada desagüe crudo al terminar (ilustrativo, no una extensión: 0 ≈ 12 m de radio, 1 ≈ 60 m × tamano). Crece desde que llega el primer pulso a la boca hasta el final del evento y se queda (sin rótulo; la cifra va en la capa 2D con su respaldo)"
+    },
+    "vel": {
+     "tipo": "numero",
+     "requerido": false,
+     "rango": [
+      0.2,
+      3
+     ],
+     "defecto": 1,
+     "descripcion": "rapidez de los pulsos (1 = ≈ 26 m/s de maqueta: de la casa al lago en 4–7 s; uno por casa cada ≈ 1.5 s). Didáctica: no es la velocidad del agua"
+    }
+   },
+   "escalas": [
+    "esquema"
+   ],
+   "motores": [
+    "three"
+   ],
+   "usa": [
+    "drenajeorilla"
+   ],
+   "adelanto": {
+    "s": 0.3
+   },
+   "animado": "bolos de agua turbia avanzan sobre cada acometida y el colector, bajan por los desagües, caen a la playa y entran al lago; los que van a la planta entran al canal de rejas y, un momento después, la salida suelta pulsos menos turbios; la mancha frente a cada desagüe crudo crece con un borde vivo y queda quieta pero viva (su textura se mueve) cuando el evento termina; los pulsos dejan de salir de las casas y el agua que ya iba termina su recorrido",
+   "contiene": [
+    "pulsos de agua turbia sobre las acometidas, el colector y las bajadas (medio tubo con halo que se lee de lejos)",
+    "pulsos menos turbios en la salida de la planta, sin mancha",
+    "la mancha turbia que se abre en el lago frente a cada desagüe crudo, con su borde que avanza y su núcleo oscuro junto a la boca",
+    "la mancha que se queda después del evento"
+   ],
+   "ejemplo": {
+    "t": 0.6,
+    "dur": 6.0,
+    "tipo": "verter",
+    "pieza": "drenaje",
+    "mancha": 0.6,
+    "vel": 1
+   },
+   "modulo": "eventos/verter.js",
+   "reglas": "scripts/maqueta_tipos/verter.py"
   },
   {
    "tipo": "arbol",
@@ -2880,6 +7895,55 @@
    "reglas": null
   },
   {
+   "tipo": "carruaje",
+   "clase": "objeto",
+   "cuando": "carruaje de caballos de fines del siglo XIX (calesa, cochero sin rostro, ruedas que giran): el paseo y la calzada de carruajes antes del carro",
+   "parametros": {},
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "medidas": {
+    "largo_m": 7.2,
+    "ancho_m": 2.0,
+    "alto_m": 2.8
+   },
+   "ejemplo": {
+    "objeto": "carruaje"
+   },
+   "nivel": "objeto",
+   "contiene": [
+    "caja lacada con molduras, puertas y asientos tapizados",
+    "capota plegable alzada con sus arcos",
+    "cuatro ruedas de rayos con llanta de hierro y ballestas",
+    "uno o dos caballos con collera, riendas y tirantes",
+    "cochero sin rostro con levita, sombrero de copa y fusta",
+    "faroles a los lados del pescante (de noche, encendidos)"
+   ],
+   "animado": "los caballos trotan (diagonales a la vez, la zancada según la velocidad) o van al paso en cuatro tiempos, cabecean y el cuerpo sube y baja; las ruedas giran según la marcha (recorrido / radio); la caja se mece sobre las ballestas y el cochero rebota; quieto, los caballos respiran y bajan la cabeza",
+   "gente": true,
+   "distancia_m": [
+    8,
+    90
+   ],
+   "caja_m": [
+    7.2,
+    2.0,
+    2.8
+   ],
+   "poses": [
+    "trote",
+    "paso",
+    "quieto"
+   ],
+   "notas": "Genérico (no afirma el tipo de carruaje ni cuántos circulaban). La `variante` elige la laca de la caja; el pelaje de los caballos sale de la semilla, y ≈ 30 % de las semillas llevan un solo caballo al centro. Sin pose: trota a ≥ 2.2 m/s o si nadie da la velocidad, va al paso por debajo y queda quieto a ≤ 0.3 m/s. En flujo, `vel_kmh` 8–15 da un trote creíble.",
+   "modulo": "objetos/carruaje.js",
+   "reglas": null
+  },
+  {
    "tipo": "casa",
    "clase": "objeto",
    "cuando": "una casa: el hogar de alguien, una aldea dibujada a mano, la casa que se inunda o se cae",
@@ -2908,6 +7972,55 @@
     200
    ],
    "modulo": "objetos/casa.js",
+   "reglas": null
+  },
+  {
+   "tipo": "cayuco",
+   "clase": "objeto",
+   "cuando": "cayuco de tronco con un remero sin rostro que rema y se mece: el cruce de un lago en canoa; con la pose `tul`, cargado de manojos de tul",
+   "parametros": {},
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "medidas": {
+    "largo_m": 5.2,
+    "ancho_m": 0.8,
+    "alto_m": 1.25
+   },
+   "ejemplo": {
+    "objeto": "cayuco"
+   },
+   "nivel": "objeto",
+   "contiene": [
+    "casco excavado en un tronco (hueco, borda y tajamar)",
+    "remero sentado a popa con sombrero",
+    "pala de remo con su hoja",
+    "manojos de tul atados (pose tul)",
+    "estela y remolino de la pala"
+   ],
+   "animado": "rema: la pala entra a proa, jala bajo el agua y vuelve por el aire (ciclo de 1.5–1.9 s, escalado por la velocidad); el torso se inclina y gira con la palada; el casco se mece en balance, cabeceo y arfada; la estela crece con la marcha",
+   "gente": true,
+   "distancia_m": [
+    6,
+    70
+   ],
+   "caja_m": [
+    5.6,
+    1.3,
+    1.25
+   ],
+   "poses": [
+    "remar",
+    "tul",
+    "quieto",
+    "tul_quieto"
+   ],
+   "notas": "Va sobre el agua (actor con `puntos` o `desde`/`hacia` sobre el lago o el mar; el origen es la línea de flotación). Sin pose: rema si avanza (> 0.3 m/s) o si nadie da la velocidad, quieto si no. La `variante` elige la madera del casco (no la carga): la carga de tul sale con la pose `tul` o `tul_quieto`. Sin redes ni aparejo de pesca: es transporte. Sin luces de noche.",
+   "modulo": "objetos/cayuco.js",
    "reglas": null
   },
   {
@@ -3049,6 +8162,54 @@
    "reglas": null
   },
   {
+   "tipo": "lobina",
+   "clase": "objeto",
+   "cuando": "lobina negra genérica (pez oscuro de ≈ 0.56 m) que nada a flor de agua entre el tul y da tirones con salpicadura: el pez sembrado en el lago",
+   "parametros": {},
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "medidas": {
+    "largo_m": 0.68,
+    "ancho_m": 0.12,
+    "alto_m": 0.26
+   },
+   "ejemplo": {
+    "objeto": "lobina"
+   },
+   "nivel": "objeto",
+   "contiene": [
+    "cuerpo alargado y robusto por secciones (lomo arqueado, pedúnculo angosto, hocico romo)",
+    "lomo oscuro, flanco oliva, banda oscura irregular a lo largo y vientre claro",
+    "boca grande con la mandíbula de abajo saliente, opérculo y ojo con su anillo",
+    "aletas de membrana: dorsal espinosa con escotadura y blanda, anal, pélvicas, pectorales y caudal con radios",
+    "estela en V y anillos en el agua",
+    "salpicadura (corona y gotas) en cada tirón"
+   ],
+   "animado": "nada ondulando (cuerpo, cola y caudal en fase, ≈ 1.6 Hz) y abanica las pectorales; cada 3–4.5 s da un tirón de ≈ 0.7 s: la cola azota rápido, avanza ≈ 0.2 m, sube y asoma el flanco, cabecea y salpica; la estela crece con la marcha. Pose `quieto`: cernido, sin tirones",
+   "gente": false,
+   "distancia_m": [
+    2,
+    25
+   ],
+   "caja_m": [
+    0.68,
+    0.12,
+    0.26
+   ],
+   "poses": [
+    "nadar",
+    "quieto"
+   ],
+   "notas": "Va en el agua: actor con `puntos` o `desde`/`hacia` sobre el lago; el origen es la línea del agua (sobre `orillalago` usa `lev_m` 0.08, la altura del agua de esa pieza). El agua de la maqueta es opaca: se ve el lomo, la dorsal y la estela, y en el tirón el flanco con su banda. A tamaño real (0.56 m) se lee hasta ≈ 25 m; para leerlo desde más lejos, `tamano` 2–3 (ilustrativo). Lo verificado es «pez alargado, oscuro, grande» (siete libras no eran raras): color y banda son genéricos. Sin luces de noche. Sin texto.",
+   "modulo": "objetos/lobina.js",
+   "reglas": null
+  },
+  {
    "tipo": "moto",
    "clase": "objeto",
    "cuando": "una moto: el repartidor que se mete entre los carros, el mototaxi, la moto que huye",
@@ -3153,6 +8314,55 @@
     400
    ],
    "modulo": "objetos/pin.js",
+   "reglas": null
+  },
+  {
+   "tipo": "poc",
+   "clase": "objeto",
+   "cuando": "el poc de Atitlán: zambullidor oscuro de pico pálido que nada junto al tul y se zambulle de cabeza; con `tamano` 3–4 se lee junto al tul",
+   "parametros": {},
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "medidas": {
+    "largo_m": 0.52,
+    "ancho_m": 0.22,
+    "alto_m": 0.3
+   },
+   "ejemplo": {
+    "objeto": "poc"
+   },
+   "nivel": "objeto",
+   "contiene": [
+    "cuerpo redondo que flota bajo, lomo más oscuro y pecho más claro",
+    "alas pequeñas plegadas y cola corta esponjada",
+    "cuello corto, cabeza redonda con coronilla y ojos",
+    "pico grueso y pálido con su marca negra",
+    "anillos de onda al zambullirse y al salir",
+    "estela en V al nadar"
+   ],
+   "animado": "nada cabeceando con cada patada y mira a los lados; cada 5–8 s se encoge, brinca y se hunde de cabeza (anillos que se abren), sigue bajo el agua ≈ 3 s (pose `bucear`: ≈ 20 s, el ritmo de la referencia) y sale con una sacudida; `flotar`: descansa con el cuello recogido; la estela crece con la velocidad",
+   "gente": false,
+   "distancia_m": [
+    2,
+    40
+   ],
+   "caja_m": [
+    0.55,
+    0.3,
+    0.24
+   ],
+   "poses": [
+    "nadar",
+    "bucear",
+    "flotar"
+   ],
+   "notas": "Va sobre el agua (actor con `puntos`, `desde`/`hacia` o `lugar` sobre un lago; el origen es la línea de flotación). Real: un macho medía 525 mm (`tamano` 1); junto al tul de `orillalago`, `tamano` 3–4. El tiempo bajo el agua de `nadar` (≈ 3 s) está abreviado para que la zambullida se lea en un plano; `bucear` usa el de la referencia (≈ 20 s). No vuela (el vuelo solo está «reportado»: no hay pose). Cuántos pocs se dibujan es ilustrativo: no cuenta una población. Sin luces de noche.",
+   "modulo": "objetos/poc.js",
    "reglas": null
   },
   {
@@ -3284,6 +8494,56 @@
     20
    ],
    "modulo": "objetos/tostadora.js",
+   "reglas": null
+  },
+  {
+   "tipo": "volteo",
+   "clase": "objeto",
+   "cuando": "camión de volteo genérico con la palangana llena de basura mezclada: la fila de camionadas; con la pose `volcar` sube la tolva y la vacía",
+   "parametros": {},
+   "escalas": [
+    "esquema",
+    "ciudad"
+   ],
+   "motores": [
+    "three"
+   ],
+   "medidas": {
+    "largo_m": 8.6,
+    "ancho_m": 2.5,
+    "alto_m": 3.3
+   },
+   "ejemplo": {
+    "objeto": "volteo"
+   },
+   "nivel": "objeto",
+   "contiene": [
+    "cabina con cofre, parrilla, espejos, estribos y luces de techo",
+    "chasis con doble eje trasero, llantas dobles, tanque y escape vertical",
+    "palangana con costillas, visor sobre la cabina y compuerta trasera",
+    "basura mezclada que asoma: bolsas de varios tonos, botellas y restos orgánicos",
+    "pistón telescópico de cuatro etapas",
+    "montón de basura en el suelo al volcar"
+   ],
+   "animado": "rueda: la cabina se mece en la suspensión y el escape echa bocanadas que se tienden hacia atrás; volcar: el pistón se estira, la tolva sube a 48° en 4 s, la compuerta se abre, bolsas y botellas caen por detrás y el montón crece mientras la carga baja",
+   "gente": false,
+   "distancia_m": [
+    12,
+    150
+   ],
+   "caja_m": [
+    10.5,
+    3.0,
+    6.2
+   ],
+   "poses": [
+    "rodar",
+    "volcar",
+    "volcando",
+    "volcada"
+   ],
+   "notas": "Pose por defecto `rodar` (tolva abajo). `volcar`: una vez, la tolva sube desde t = 0.5 s (arriba a los 4.5 s, cae basura de 3.6 a 10 s) y queda arriba: para una toma o un gancho que empieza en la frase. `volcando`: ciclo de 14 s contado desde t = 0 (sube de 1 a 5 s, vacía, baja de 10 a 13 s; el montón crece ciclo a ciclo). `volcada`: ya arriba y vaciada. Volcar es para un actor quieto (el montón queda detrás de él). La cabina toma el color de la instancia (o el acento si es el protagonista); la palangana, tonos de metal gastado. La carga es basura mixta (no solo plástico) y no afirma volumen: un número de m³ va en la capa 2D con su respaldo. De noche: faros, pilotos, luces de techo y cabina encendidos.",
+   "modulo": "objetos/volteo.js",
    "reglas": null
   },
   {

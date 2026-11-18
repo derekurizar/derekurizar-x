@@ -1,0 +1,88 @@
+{
+ "tipo": "correranios",
+ "clase": "evento",
+ "cuando": "el tiempo corre sobre una pieza coberturaceldas: sube el año y se apagan las celdas que lo perdieron, con contador de año; encadenable",
+ "parametros": {
+  "pieza": {
+   "tipo": "pieza",
+   "piezas": [
+    "coberturaceldas"
+   ],
+   "requerido": true,
+   "descripcion": "la pieza coberturaceldas cuyo año corre (ella apaga sus celdas con su destello)"
+  },
+  "de": {
+   "tipo": "entero",
+   "requerido": true,
+   "rango": [
+    1980,
+    2100
+   ],
+   "descripcion": "el año al empezar: llega en `t` (sus celdas se apagan ahí); el siguiente evento de la misma pieza empieza en un año mayor"
+  },
+  "a": {
+   "tipo": "entero",
+   "requerido": true,
+   "rango": [
+    1980,
+    2100
+   ],
+   "descripcion": "el año al terminar (en `t + dur`), en escalones iguales de un año; ≥ `de`"
+  },
+  "contador": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "muestra el año grande en la capa 2D (una tarjeta a la derecha)"
+  },
+  "pos": {
+   "tipo": "texto",
+   "requerido": false,
+   "valores": [
+    "arriba",
+    "abajo"
+   ],
+   "defecto": "arriba",
+   "descripcion": "dónde va el contador: arriba (bajo el titular) o abajo (sobre la banda)"
+  },
+  "rotulo": {
+   "tipo": "texto",
+   "requerido": false,
+   "descripcion": "una línea pequeña sobre el año («Perdió cobertura en»); sin números"
+  },
+  "queda": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "true: el contador se queda en el último año al terminar; false: se apaga"
+  },
+  "cifra_por_anio": {
+   "tipo": "texto",
+   "requerido": false,
+   "descripcion": "prefijo del id de la cifra verificada de cada año mostrado («anio-» → anio-2001…): el respaldo de los años en pantalla (C3D5)"
+  }
+ },
+ "escalas": [
+  "pais"
+ ],
+ "motores": [
+  "three"
+ ],
+ "usa": [
+  "coberturaceldas"
+ ],
+ "adelanto": {
+  "dur": 0.08
+ },
+ "animado": "el año sube de uno en uno; con cada año, las celdas que lo perdieron se apagan con un destello y el contador late; encadenado, sigue donde quedó",
+ "ejemplo": {
+  "t": 0.6,
+  "dur": 3.0,
+  "tipo": "correranios",
+  "pieza": "cobertura",
+  "de": 2001,
+  "a": 2012,
+  "rotulo": "Año",
+  "cifra_por_anio": "anio-"
+ }
+}

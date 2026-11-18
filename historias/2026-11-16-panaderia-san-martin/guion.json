@@ -1,0 +1,428 @@
+{
+ "id": "2026-11-16-panaderia-san-martin",
+ "tipo": "historia",
+ "slug": "panaderia-san-martin",
+ "tema": "Panadería San Martín",
+ "fecha": "2026-11-16",
+ "pregunta": "¿Cómo una panadería pequeña de la capital terminó horneando pan guatemalteco en Texas?",
+ "arco": "origen y expansión de una marca: de la panadería de barrio a la tienda en otro país",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "1989–2018",
+   "titulo": "La masa madre",
+   "escena": 4
+  },
+  {
+   "numero": 3,
+   "anio": "2018–2026",
+   "titulo": "Pan en Texas",
+   "escena": 10
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "En El Salvador hay quien cree que San Martín nació allá. Nació en Guatemala. Su pan iba a cruzar dos fronteras, pero todo empezó en 1974, con una panadería pequeña en la Ciudad de Guatemala. Quince años después, en 1989, la revista Estrategia y Negocios cuenta que un joven empresario guatemalteco la compró y la dio a conocer como San Martín. Pero la revista no dice su nombre."
+  },
+  {
+   "acto": 2,
+   "texto": "¿Y de dónde salió su pan? La empresa cuenta que lo hornea con una masa madre que un maestro panadero trajo de Italia. Del mostrador pasó a la mesa: en 2000, San Martín abrió su primer restaurante casual. Dieciséis años después, en julio de 2016, iba por su tienda número 40, y la abrió en la Casa Pavón, un edificio centenario de la Sexta Avenida. Esa casa había pasado a ser el Banco Central en 1926, pero el terremoto de 1976 le tumbó un muro, y a principios de este siglo quedó abandonada. Álvaro Arzú, entonces alcalde de la capital, lo celebró así: Es la restauración más importante de los últimos años en una de las propiedades más significativas de la Calle Real. La primera de sus dos fronteras fue El Salvador; cuándo la cruzó, nadie lo publicó. En 2018, Prensa Libre ya contaba 8 sucursales en El Salvador."
+  },
+  {
+   "acto": 3,
+   "texto": "La segunda frontera la cruzó en diciembre de 2018: abrió su primera tienda en Estados Unidos, en Uptown Dallas. Luis Ibarra, que administraba la marca en El Salvador, contó por qué Dallas: El dueño empezó a venir a Dallas hace 12 años y le gustó mucho Texas. La empresa dijo que esa tienda era para centroamericanos que conocían la marca y para oficinistas. La segunda abrió en agosto de 2024, y dos años después, la tercera, en Plano, también en Texas. Con ella, según la empresa, suma más de 70 tiendas en Guatemala, 12 en El Salvador y 3 en Texas. Viviana Luna de Arévalo, vicepresidenta de Marketing, lo dijo así: Hoy contamos con 12 tiendas en El Salvador y nos llena de orgullo escuchar que algunos salvadoreños creen que San Martín nació en su país. Pero quién abrió aquella panadería en 1974, quién la compró en 1989 y cuándo llegó a El Salvador, ninguna fuente lo dice. Empezó como una panadería pequeña de la capital. Hoy, en Plano, Texas, unos 100 empleados sirven un pan nacido en Guatemala."
+  }
+ ],
+ "hilos": [
+  {
+   "id": "h1",
+   "sin_respuesta": "quién abrió aquella panadería en 1974, ninguna fuente lo dice"
+  },
+  {
+   "id": "h2",
+   "sin_respuesta": "quién la compró en 1989, ninguna fuente lo dice"
+  },
+  {
+   "id": "h3",
+   "escena": 4
+  },
+  {
+   "id": "h4",
+   "sin_respuesta": "cuándo llegó a El Salvador, ninguna fuente lo dice"
+  },
+  {
+   "id": "h5",
+   "escena": 11
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3
+  ],
+  [
+   4,
+   5,
+   6
+  ],
+  [
+   7,
+   8
+  ],
+  [
+   10,
+   11,
+   12
+  ],
+  [
+   13,
+   14,
+   15
+  ]
+ ],
+ "paleta": "maiz",
+ "musica": "cacao-2",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2432,
+ "duracion_s": 164.0,
+ "critica": {
+  "veredicto": "corregir",
+  "vuelta": 2,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 3,
+   "claridad": 3,
+   "flujo": 3,
+   "precision": 4,
+   "cierre": 4,
+   "recompensa": 3
+  }
+ },
+ "gancho": {
+  "familia": "paradoja",
+  "visual": "foto",
+  "pantalla": "¿San Martín salvadoreño?",
+  "linea": "En El Salvador creen que nació allá",
+  "id": "g1",
+  "elegido_por": "usuario",
+  "recomendado": "g1"
+ },
+ "promesa": {
+  "pregunta": "¿Hasta dónde llegó el pan de San Martín?",
+  "texto": "Su pan iba a cruzar dos fronteras",
+  "forma": "presagio",
+  "en": 2,
+  "pago": 13,
+  "revela": 4
+ },
+ "bisagra": {
+  "texto": "La primera de sus dos fronteras fue El Salvador; cuándo la cruzó, nadie lo publicó.",
+  "forma": "secreto",
+  "en": 8,
+  "pago": 9
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "En El Salvador hay quien cree que San Martín nació allá. Nació en Guatemala.",
+   "voz": "En El Salvador hay quien cree que San Martín nació allá. Nació en Guatemala.",
+   "dur": 6.446,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Su pan iba a cruzar dos fronteras, pero todo empezó en 1974, con una panadería pequeña en la Ciudad de Guatemala.",
+   "voz": "Su pan iba a cruzar dos fronteras, pero todo empezó en mil novecientos setenta y cuatro, con una panadería pequeña en la Ciudad de Guatemala.",
+   "dur": 9.416,
+   "hechos": [
+    "exp-h01",
+    "ori-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "foto",
+   "pantalla": "Quince años después, en 1989, la revista Estrategia y Negocios cuenta que un joven empresario guatemalteco la compró y la dio a conocer como San Martín. Pero la revista no dice su nombre.",
+   "voz": "Quince años después, en mil novecientos ochenta y nueve, la revista Estrategia y Negocios cuenta que un joven empresario guatemalteco la compró y la dio a conocer como San Martín. Pero la revista no dice su nombre.",
+   "dur": 14.106,
+   "hechos": [
+    "ori-h02"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "foto",
+   "pantalla": "¿Y de dónde salió su pan? La empresa cuenta que lo hornea con una masa madre que un maestro panadero trajo de Italia.",
+   "voz": "¿Y de dónde salió su pan? La empresa cuenta que lo hornea con una masa madre que un maestro panadero trajo de Italia.",
+   "dur": 7.621,
+   "hechos": [
+    "ori-h06",
+    "exp-h11"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "golpe",
+   "pantalla": "Del mostrador pasó a la mesa: en 2000, San Martín abrió su primer restaurante casual.",
+   "voz": "Del mostrador pasó a la mesa: en dos mil, San Martín abrió su primer restaurante casual.",
+   "dur": 6.424,
+   "hechos": [
+    "ori-h03"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "foto",
+   "pantalla": "Dieciséis años después, en julio de 2016, iba por su tienda número 40, y la abrió en la Casa Pavón, un edificio centenario de la Sexta Avenida.",
+   "voz": "Dieciséis años después, en julio de dos mil dieciséis, iba por su tienda número cuarenta, y la abrió en la Casa Pavón, un edificio centenario de la Sexta Avenida.",
+   "dur": 11.263,
+   "hechos": [
+    "exp-h02",
+    "ori-h05"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Edgouno · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "foto",
+   "pantalla": "Esa casa había pasado a ser el Banco Central en 1926, pero el terremoto de 1976 le tumbó un muro, y a principios de este siglo quedó abandonada.",
+   "voz": "Esa casa había pasado a ser el Banco Central en mil novecientos veintiséis, pero el terremoto de mil novecientos setenta y seis le tumbó un muro, y a principios de este siglo quedó abandonada.",
+   "dur": 12.255,
+   "hechos": [
+    "exp-h04",
+    "exp-h05"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "cita",
+   "pantalla": "Álvaro Arzú, entonces alcalde de la capital, lo celebró así: Es la restauración más importante de los últimos años en una de las propiedades más significativas de la Calle Real. La primera de sus dos fronteras fue El Salvador; cuándo la cruzó, nadie lo publicó.",
+   "voz": "Álvaro Arzú, entonces alcalde de la capital, lo celebró así: Es la restauración más importante de los últimos años en una de las propiedades más significativas de la Calle Real. La primera de sus dos fronteras fue El Salvador; cuándo la cruzó, nadie lo publicó.",
+   "dur": 18.398,
+   "hechos": [
+    "exp-h02"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "golpe",
+   "pantalla": "En 2018, Prensa Libre ya contaba 8 sucursales en El Salvador.",
+   "voz": "En dos mil dieciocho, Prensa Libre ya contaba ocho sucursales en El Salvador.",
+   "dur": 5.677,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "foto",
+   "pantalla": "La segunda frontera la cruzó en diciembre de 2018: abrió su primera tienda en Estados Unidos, en Uptown Dallas.",
+   "voz": "La segunda frontera la cruzó en diciembre de dos mil dieciocho: abrió su primera tienda en Estados Unidos, en Uptown Dallas.",
+   "dur": 8.28,
+   "hechos": [
+    "exp-h06",
+    "ext-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "cita",
+   "pantalla": "Luis Ibarra, que administraba la marca en El Salvador, contó por qué Dallas: El dueño empezó a venir a Dallas hace 12 años y le gustó mucho Texas. La empresa dijo que esa tienda era para centroamericanos que conocían la marca y para oficinistas.",
+   "voz": "Luis Ibarra, que administraba la marca en El Salvador, contó por qué Dallas: El dueño empezó a venir a Dallas hace doce años y le gustó mucho Texas. La empresa dijo que esa tienda era para centroamericanos que conocían la marca y para oficinistas.",
+   "dur": 15.85,
+   "hechos": [
+    "ext-h02",
+    "ext-h05"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "archivo",
+   "pantalla": "La segunda abrió en agosto de 2024, y dos años después, la tercera, en Plano, también en Texas.",
+   "voz": "La segunda abrió en agosto de dos mil veinticuatro, y dos años después, la tercera, en Plano, también en Texas.",
+   "dur": 8.523,
+   "hechos": [
+    "ext-h07",
+    "exp-h10"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    },
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "tarjeta",
+   "pantalla": "Con ella, según la empresa, suma más de 70 tiendas en Guatemala, 12 en El Salvador y 3 en Texas.",
+   "voz": "Con ella, según la empresa, suma más de setenta tiendas en Guatemala, doce en El Salvador y tres en Texas.",
+   "dur": 7.651,
+   "hechos": [
+    "ext-h10"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "cita",
+   "pantalla": "Viviana Luna de Arévalo, vicepresidenta de Marketing, lo dijo así: Hoy contamos con 12 tiendas en El Salvador y nos llena de orgullo escuchar que algunos salvadoreños creen que San Martín nació en su país.",
+   "voz": "Viviana Luna de Arévalo, vicepresidenta de Marketing, lo dijo así: Hoy contamos con doce tiendas en El Salvador y nos llena de orgullo escuchar que algunos salvadoreños creen que San Martín nació en su país.",
+   "dur": 13.627,
+   "hechos": [
+    "exp-h09"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 15,
+   "tipo": "foto",
+   "pantalla": "Pero quién abrió aquella panadería en 1974, quién la compró en 1989 y cuándo llegó a El Salvador, ninguna fuente lo dice.",
+   "voz": "Pero quién abrió aquella panadería en mil novecientos setenta y cuatro, quién la compró en mil novecientos ochenta y nueve y cuándo llegó a El Salvador, ninguna fuente lo dice.",
+   "dur": 11.565,
+   "hechos": [
+    "ori-h01",
+    "ori-h02"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 16,
+   "tipo": "cierre",
+   "pantalla": "Empezó como una panadería pequeña de la capital. Hoy, en Plano, Texas, unos 100 empleados sirven un pan nacido en Guatemala.",
+   "voz": "Empezó como una panadería pequeña de la capital. Hoy, en Plano, Texas, unos cien empleados sirven un pan nacido en Guatemala.",
+   "dur": 10.829,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que dejó",
+  "resumen": [
+   "Nació en 1974, pequeña",
+   "Masa madre traída de Italia",
+   "Hoy hornea también en Texas"
+  ],
+  "texto": "Empezó como una panadería pequeña de la capital. Hoy, en Plano, Texas, unos 100 empleados sirven un pan nacido en Guatemala.",
+  "tipo": "remate",
+  "forma": "legado",
+  "final": "Hoy, en Plano, Texas, unos 100 empleados sirven un pan nacido en Guatemala.",
+  "consecuencia": {
+   "quien": "empleados",
+   "verbo": "sirven"
+  },
+  "id": "c1",
+  "elegido_por": "usuario",
+  "recomendado": "c1"
+ },
+ "caption": {
+  "tiktok": "San Martín nació en 1974 como una panadería pequeña de la Ciudad de Guatemala. Hoy hornea en El Salvador y en Texas. Lo que nadie ha dicho: quién la fundó. #Guatemala #historia #SanMartin",
+  "instagram": "De una panadería pequeña de la capital a tres tiendas en Texas: la historia de San Martín, su masa madre y la Casa Pavón. #Guatemala #SanMartin #historia",
+  "facebook": "San Martín nació en 1974 en la Ciudad de Guatemala. Pasó por la Casa Pavón, cruzó a El Salvador y hoy tiene tres tiendas en Texas. Fuentes en el primer comentario.",
+  "shorts": "San Martín: de panadería pequeña a Texas #Shorts\nLa historia de una panadería de la Ciudad de Guatemala. #Guatemala"
+ }
+}

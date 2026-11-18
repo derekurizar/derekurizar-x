@@ -1,0 +1,948 @@
+{
+  "tipo": "video3d",
+  "version": 1,
+  "escenas": [
+    {
+      "mundo": "peten",
+      "secuencia": 1,
+      "texto": "Mira cómo se apaga, año por año, el área protegida más grande de Guatemala.",
+      "titular": {
+        "kicker": "SEGÚN EL SATÉLITE",
+        "texto": "El bosque de la reserva, año por año"
+      },
+      "camara": [
+        {
+          "mira": "rbm-centro",
+          "dist_km": 350,
+          "azimut": 0,
+          "elevacion": 60
+        },
+        {
+          "al": "fin",
+          "mira": "rbm-centro",
+          "dist_km": 320,
+          "azimut": -10,
+          "elevacion": 48
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "correranios",
+          "pieza": "bosque",
+          "de": 2001,
+          "a": 2024,
+          "dur": 4.4,
+          "pos": "arriba",
+          "rotulo": "Año",
+          "queda": true,
+          "cifra_por_anio": "anio-"
+        }
+      ],
+      "marcas": [],
+      "n": 1,
+      "tipo": "gancho",
+      "acto": 1
+    },
+    {
+      "n": 2,
+      "tipo": "escena",
+      "acto": 1,
+      "secuencia": 1,
+      "mundo": "anios",
+      "transicion": "fundido",
+      "fundido_s": 0.6,
+      "texto": "Es la Reserva de la Biosfera Maya: la quinta parte del país. Cada cuadro encendido es bosque que el satélite vio en el año 2000.",
+      "camara": [
+        {
+          "mira": "rbm-centro",
+          "dist_km": 300,
+          "azimut": 0,
+          "elevacion": 58
+        },
+        {
+          "dice": "la quinta parte del país",
+          "mira": [
+            -90.25,
+            16.5
+          ],
+          "dist_km": 560,
+          "azimut": 0,
+          "elevacion": 62
+        },
+        {
+          "dice": "Cada cuadro encendido",
+          "al": "fin",
+          "mira": "rbm-centro",
+          "dist_km": 230,
+          "azimut": -12,
+          "elevacion": 50
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "Reserva de la Biosfera Maya",
+          "tipo": "resaltar",
+          "pieza": "bosque",
+          "dur": 2.2
+        },
+        {
+          "dice": "Cada cuadro encendido",
+          "tipo": "resaltar",
+          "pieza": "bosque",
+          "dur": 2.0
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "Reserva de la Biosfera Maya",
+          "lugar": "rbm-centro",
+          "texto": "Reserva de la Biosfera Maya",
+          "sub": "Petén",
+          "hasta_dice": "Cada cuadro encendido"
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "la quinta parte del país",
+          "valor": "2,090,667 ha",
+          "rotulo": "la quinta parte de Guatemala",
+          "cifra": "reserva-c01",
+          "fuente": "CONAP"
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "tipo": "escena",
+      "acto": 2,
+      "secuencia": 2,
+      "mundo": "anios",
+      "texto": "Ahora corre el tiempo: el año en que un cuadro pierde su bosque, se apaga. En 2003 y en 2005 se apaga mucho más, y 2007 es el año que más pierde.",
+      "camara": [
+        {
+          "mira": "rbm-centro",
+          "dist_km": 225,
+          "azimut": -14,
+          "elevacion": 50
+        },
+        {
+          "al": "fin",
+          "mira": [
+            -90.4,
+            17.25
+          ],
+          "dist_km": 200,
+          "azimut": -24,
+          "elevacion": 46
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "Ahora corre el tiempo",
+          "tipo": "correranios",
+          "pieza": "bosque",
+          "de": 2001,
+          "a": 2002,
+          "dur": 2.4,
+          "pos": "arriba",
+          "rotulo": "Perdió cobertura en",
+          "queda": true,
+          "cifra_por_anio": "anio-"
+        },
+        {
+          "dice": "En 2003",
+          "tipo": "correranios",
+          "pieza": "bosque",
+          "de": 2003,
+          "a": 2005,
+          "dur": 2.0,
+          "pos": "arriba",
+          "rotulo": "Perdió cobertura en",
+          "queda": true,
+          "cifra_por_anio": "anio-"
+        },
+        {
+          "dice": "y 2007",
+          "tipo": "correranios",
+          "pieza": "bosque",
+          "de": 2006,
+          "a": 2007,
+          "dur": 0.7,
+          "pos": "arriba",
+          "rotulo": "Perdió cobertura en",
+          "queda": true,
+          "cifra_por_anio": "anio-"
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "tipo": "escena",
+      "acto": 2,
+      "secuencia": 2,
+      "mundo": "anios",
+      "texto": "Después baja, pero 2016, 2020 y 2024 vuelven a subir: coinciden con temporadas de grandes incendios.",
+      "camara": [
+        {
+          "dice": "pero 2016",
+          "mira": [
+            -90.35,
+            17.25
+          ],
+          "dist_km": 225,
+          "azimut": -6,
+          "elevacion": 50
+        },
+        {
+          "al": "fin",
+          "mira": "rbm-centro",
+          "dist_km": 240,
+          "azimut": 8,
+          "elevacion": 52
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "Después baja",
+          "tipo": "correranios",
+          "pieza": "bosque",
+          "de": 2008,
+          "a": 2015,
+          "dur": 0.8,
+          "pos": "arriba",
+          "rotulo": "Perdió cobertura en",
+          "queda": true,
+          "cifra_por_anio": "anio-"
+        },
+        {
+          "dice": "pero 2016",
+          "tipo": "correranios",
+          "pieza": "bosque",
+          "de": 2016,
+          "a": 2019,
+          "dur": 0.7,
+          "pos": "arriba",
+          "rotulo": "Perdió cobertura en",
+          "queda": true,
+          "cifra_por_anio": "anio-"
+        },
+        {
+          "dice": "2020",
+          "tipo": "correranios",
+          "pieza": "bosque",
+          "de": 2020,
+          "a": 2023,
+          "dur": 0.7,
+          "pos": "arriba",
+          "rotulo": "Perdió cobertura en",
+          "queda": true,
+          "cifra_por_anio": "anio-"
+        },
+        {
+          "dice": "y 2024",
+          "tipo": "correranios",
+          "pieza": "bosque",
+          "de": 2024,
+          "a": 2024,
+          "dur": 0.4,
+          "pos": "arriba",
+          "rotulo": "Perdió cobertura en",
+          "queda": true,
+          "cifra_por_anio": "anio-"
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "tipo": "escena",
+      "acto": 2,
+      "secuencia": 2,
+      "mundo": "anios",
+      "texto": "En total, más de medio millón de hectáreas perdieron su cobertura según el satélite: más de la cuarta parte del bosque que había.",
+      "camara": [
+        {
+          "dice": "perdieron su cobertura",
+          "mira": "rbm-centro",
+          "dist_km": 260,
+          "azimut": 4,
+          "elevacion": 56
+        },
+        {
+          "al": "fin",
+          "mira": "rbm-centro",
+          "dist_km": 330,
+          "azimut": 0,
+          "elevacion": 60
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "más de medio millón",
+          "tipo": "resaltar",
+          "pieza": "bosque",
+          "dur": 2.4
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "más de medio millón",
+          "valor": "508,697 ha",
+          "rotulo": "perdieron cobertura · aprox., según el satélite",
+          "cifra": "sat-c01",
+          "fuente": "Hansen/UMD",
+          "dura": 4.0
+        },
+        {
+          "dice": "más de la cuarta parte",
+          "valor": "26.8 %",
+          "rotulo": "del bosque que había en 2000",
+          "cifra": "sat-c03",
+          "fuente": "Hansen/UMD"
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "tipo": "escena",
+      "acto": 2,
+      "secuencia": 3,
+      "mundo": "anios",
+      "texto": "¿Y dónde? El oeste se apaga más rápido: Laguna del Tigre y Sierra del Lacandón, parques con las reglas más estrictas, están entre las pérdidas más rápidas de América Latina, según la NASA.",
+      "camara": [
+        {
+          "dice": "El oeste se apaga",
+          "mira": [
+            -90.8,
+            17.5
+          ],
+          "dist_km": 200,
+          "azimut": -24,
+          "elevacion": 50
+        },
+        {
+          "dice": "Sierra del Lacandón",
+          "mira": [
+            -90.85,
+            17.5
+          ],
+          "dist_km": 260,
+          "azimut": -18,
+          "elevacion": 54
+        },
+        {
+          "dice": "según la NASA",
+          "mira": [
+            -90.8,
+            17.5
+          ],
+          "dist_km": 275,
+          "azimut": -14,
+          "elevacion": 56
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "Laguna del Tigre",
+          "tipo": "resaltar",
+          "lugar": "laguna-del-tigre",
+          "dur": 2.0
+        },
+        {
+          "dice": "Sierra del Lacandón",
+          "tipo": "resaltar",
+          "lugar": "sierra-del-lacandon",
+          "dur": 2.0
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "Laguna del Tigre",
+          "lugar": "laguna-del-tigre",
+          "texto": "Laguna del Tigre",
+          "sub": "Parque nacional"
+        },
+        {
+          "dice": "Sierra del Lacandón",
+          "lugar": "sierra-del-lacandon",
+          "texto": "Sierra del Lacandón",
+          "sub": "Parque nacional · según la NASA"
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "tipo": "escena",
+      "acto": 2,
+      "secuencia": 3,
+      "mundo": "anios",
+      "texto": "Al este, donde comunidades manejan el bosque en concesiones, como Uaxactún y Carmelita, el bosque resiste mucho mejor.",
+      "camara": [
+        {
+          "dice": "como Uaxactún",
+          "mira": [
+            -89.85,
+            17.5
+          ],
+          "dist_km": 200,
+          "azimut": 18,
+          "elevacion": 50
+        },
+        {
+          "al": "fin",
+          "mira": [
+            -89.85,
+            17.5
+          ],
+          "dist_km": 175,
+          "azimut": 26,
+          "elevacion": 47
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "como Uaxactún",
+          "tipo": "resaltar",
+          "lugar": "uaxactun",
+          "dur": 1.6
+        },
+        {
+          "dice": "y Carmelita",
+          "tipo": "resaltar",
+          "lugar": "carmelita",
+          "dur": 1.6
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "como Uaxactún",
+          "lugar": "uaxactun",
+          "texto": "Uaxactún",
+          "sub": "Concesión comunitaria"
+        },
+        {
+          "dice": "y Carmelita",
+          "lugar": "carmelita",
+          "texto": "Carmelita",
+          "sub": "Concesión comunitaria"
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "tipo": "escena",
+      "acto": 3,
+      "secuencia": 4,
+      "mundo": "pixel",
+      "transicion": "fundido",
+      "fundido_s": 0.6,
+      "texto": "Pero un cuadro apagado no siempre es un árbol cortado. El satélite mira el bosque en cuadros de 30 metros y marca el que pierde su dosel por tala, por fuego o por tormenta.",
+      "titular": {
+        "kicker": "DE CERCA",
+        "texto": "Un cuadro del satélite"
+      },
+      "camara": [
+        {
+          "mira": [
+            0,
+            0
+          ],
+          "dist_m": 330,
+          "azimut": 0,
+          "elevacion": 78
+        },
+        {
+          "dice": "cuadros de 30 metros",
+          "mira": [
+            0,
+            0
+          ],
+          "dist_m": 240,
+          "azimut": 10,
+          "elevacion": 66
+        },
+        {
+          "dice": "por tala",
+          "al": "fin",
+          "mira": [
+            0,
+            5
+          ],
+          "dist_m": 175,
+          "azimut": 22,
+          "elevacion": 46
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "cuadros de 30 metros",
+          "tipo": "resaltar",
+          "pieza": "dosel",
+          "dur": 2.0
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "cuadros de 30 metros",
+          "valor": "30",
+          "rotulo": "metros por lado, cada cuadro",
+          "cifra": "geodatos-c01"
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "tipo": "escena",
+      "acto": 3,
+      "secuencia": 4,
+      "mundo": "pixel",
+      "texto": "Y después de una pérdida, el bosque vuelve a empezar su ciclo.",
+      "camara": [
+        {
+          "mira": [
+            0,
+            5
+          ],
+          "dist_m": 150,
+          "azimut": 30,
+          "elevacion": 40
+        },
+        {
+          "al": "fin",
+          "mira": [
+            0,
+            0
+          ],
+          "dist_m": 300,
+          "azimut": 10,
+          "elevacion": 74
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "vuelve a empezar",
+          "tipo": "resaltar",
+          "pieza": "dosel",
+          "elemento": "c-2-4",
+          "dur": 2.0
+        }
+      ]
+    },
+    {
+      "n": 10,
+      "tipo": "cierre",
+      "acto": 3,
+      "secuencia": 5,
+      "mundo": "peten",
+      "transicion": "fundido",
+      "fundido_s": 0.6,
+      "texto": "Lo que sigue encendido es el bosque que todavía queda, y el oeste es por donde más rápido se apaga.",
+      "final": "Lo encendido es lo que todavía queda.",
+      "camara": [
+        {
+          "mira": "rbm-centro",
+          "dist_km": 330,
+          "azimut": -10,
+          "elevacion": 50
+        },
+        {
+          "dice": "y el oeste",
+          "mira": [
+            -90.6,
+            17.3
+          ],
+          "dist_km": 300,
+          "azimut": -16,
+          "elevacion": 52
+        },
+        {
+          "dice": "más rápido se apaga",
+          "al": "fin",
+          "mira": "rbm-centro",
+          "dist_km": 350,
+          "azimut": 0,
+          "elevacion": 60
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "correranios",
+          "pieza": "bosque",
+          "de": 2024,
+          "a": 2024,
+          "dur": 0.4,
+          "queda": true,
+          "cifra_por_anio": "anio-",
+          "contador": false
+        },
+        {
+          "dice": "Lo que sigue encendido",
+          "tipo": "resaltar",
+          "pieza": "bosque",
+          "dur": 2.4
+        },
+        {
+          "dice": "y el oeste",
+          "tipo": "resaltar",
+          "lugar": "laguna-del-tigre",
+          "dur": 2.0
+        }
+      ]
+    }
+  ],
+  "estilo": {
+    "id": "noche",
+    "razon": "La idea visual es «el bosque que se apaga»: en noche el país queda oscuro y lo único encendido es el protagonista (las celdas de bosque en el acento), y apagarlas año por año se lee sin sonido. Color daría un mapa de día donde el verde del bosque compite con el verde del relieve; plano y voxel quitan la seriedad del tema.",
+    "confianza": "alta",
+    "candidatos": [
+      "noche",
+      "color"
+    ]
+  },
+  "idea_visual": "La Reserva de la Biosfera Maya es un tapiz de cuadros verdes encendidos sobre el norte de Guatemala a oscuras y, mientras el año corre en pantalla, sus cuadros se apagan, más rápido en el oeste que en el este.",
+  "protagonista": "bosque",
+  "mundos": {
+    "peten": {
+      "escala": "pais",
+      "set": "guatemala",
+      "exageracion": 4,
+      "lugares": {
+        "laguna-del-tigre": {
+          "lon": -90.683,
+          "lat": 17.471,
+          "nombre": "Laguna del Tigre"
+        },
+        "sierra-del-lacandon": {
+          "lon": -90.97,
+          "lat": 17.031,
+          "nombre": "Sierra del Lacandón"
+        },
+        "uaxactun": {
+          "lon": -89.635,
+          "lat": 17.392,
+          "nombre": "Uaxactún"
+        },
+        "carmelita": {
+          "lon": -90.055,
+          "lat": 17.461,
+          "nombre": "Carmelita"
+        },
+        "rbm-centro": {
+          "lon": -90.31,
+          "lat": 17.246,
+          "nombre": "Reserva de la Biosfera Maya"
+        }
+      },
+      "piezas": [
+        {
+          "id": "frontera",
+          "tipo": "frontera",
+          "vecinos": true
+        },
+        {
+          "id": "lagos",
+          "tipo": "lagos",
+          "nombres": [
+            "peten-itza"
+          ]
+        },
+        {
+          "id": "bosque",
+          "tipo": "coberturaceldas",
+          "datos": "sesiones/video3d-biosfera-maya-satelite/geodatos/perdida_hansen.json",
+          "contorno": "sesiones/video3d-biosfera-maya-satelite/_nominatim_rbm.geojson",
+          "anio_base": 2000,
+          "anio": 2000,
+          "tono": "acento",
+          "apagado": 0.05,
+          "destello": true,
+          "contorno_grosor": 1.5
+        }
+      ],
+      "protagonista": "bosque",
+      "estilo": "noche"
+    },
+    "anios": {
+      "escala": "pais",
+      "set": "guatemala",
+      "exageracion": 4,
+      "lugares": {
+        "laguna-del-tigre": {
+          "lon": -90.683,
+          "lat": 17.471,
+          "nombre": "Laguna del Tigre"
+        },
+        "sierra-del-lacandon": {
+          "lon": -90.97,
+          "lat": 17.031,
+          "nombre": "Sierra del Lacandón"
+        },
+        "uaxactun": {
+          "lon": -89.635,
+          "lat": 17.392,
+          "nombre": "Uaxactún"
+        },
+        "carmelita": {
+          "lon": -90.055,
+          "lat": 17.461,
+          "nombre": "Carmelita"
+        },
+        "rbm-centro": {
+          "lon": -90.31,
+          "lat": 17.246,
+          "nombre": "Reserva de la Biosfera Maya"
+        }
+      },
+      "piezas": [
+        {
+          "id": "frontera",
+          "tipo": "frontera",
+          "vecinos": true
+        },
+        {
+          "id": "lagos",
+          "tipo": "lagos",
+          "nombres": [
+            "peten-itza"
+          ]
+        },
+        {
+          "id": "bosque",
+          "tipo": "coberturaceldas",
+          "datos": "sesiones/video3d-biosfera-maya-satelite/geodatos/perdida_hansen.json",
+          "contorno": "sesiones/video3d-biosfera-maya-satelite/_nominatim_rbm.geojson",
+          "anio_base": 2000,
+          "anio": 2000,
+          "tono": "acento",
+          "apagado": 0.05,
+          "destello": true,
+          "contorno_grosor": 1.5
+        }
+      ],
+      "protagonista": "bosque",
+      "estilo": "noche"
+    },
+    "pixel": {
+      "escala": "esquema",
+      "receta": "campo",
+      "horizonte": "llano",
+      "tamano_m": 600,
+      "estilo": "dia",
+      "estilo_razon": "Es el cuadro de 30 m visto de cerca, como una foto de satélite de día: copas, troncos, humo y rebrote se leen con sol y sombra; de noche no se distinguiría el fuego de la tala ni el rebrote.",
+      "hora": "dia",
+      "piezas": [
+        {
+          "id": "ambiente",
+          "tipo": "ambiente",
+          "ambiente": "campo",
+          "densidad": 0.8,
+          "radio_m": 300,
+          "semilla": 5
+        },
+        {
+          "id": "dosel",
+          "tipo": "doselcuadricula",
+          "lugar": [
+            0,
+            0
+          ],
+          "rumbo": 0,
+          "celdas_lado": 5,
+          "celda_m": 30,
+          "densidad": 0.9,
+          "emergentes": 0.15,
+          "cuadricula": true,
+          "cuadricula_desde": 0.4,
+          "cuadros": [
+            "2-2:tala@7.6",
+            "2-4:fuego@8.2",
+            "4-3:viento@8.9",
+            "2-4:rebrote@11.6"
+          ],
+          "tinte": 0.3,
+          "semilla": 1
+        }
+      ],
+      "protagonista": "dosel",
+      "escena": {
+        "que_pasa": "El mapa del satélite divide el bosque en cuadros de 30 m; un cuadro que pasa de bosque a no bosque queda marcado como pérdida de cobertura (por tala, fuego o tormenta, sin decir cuál pesa más) y después el bosque reinicia su ciclo.",
+        "quien": "nadie",
+        "con_que": "el dosel visto desde arriba, la cuadrícula de 30 m, un cuadro talado con tocones, uno con llama y humo genéricos que deja su cicatriz, uno con árboles volcados por viento y plantas jóvenes que empiezan a brotar",
+        "se_mueve": "la cuadrícula se dibuja sobre las copas; en tres cuadros el dosel cae (llamas y humo, árboles talados, árboles volcados) y el cuadro cambia de color; luego brotan plantas jóvenes en uno de ellos",
+        "sostiene": [
+          {
+            "que": "la cuadrícula de cuadros de 30 m sobre las copas",
+            "hecho": "visual-pixel-h01"
+          },
+          {
+            "que": "el dosel como copas de vegetación, sin altura ni escala vertical",
+            "hecho": "visual-pixel-h02"
+          },
+          {
+            "que": "el cuadro que pasa de bosque a no bosque cambia de tinte",
+            "hecho": "visual-pixel-h03"
+          },
+          {
+            "que": "tres cuadros pierden el dosel (tala, fuego, viento) sin proporciones ni causa por lugar",
+            "hecho": "visual-pixel-h04"
+          },
+          {
+            "que": "árboles volcados por viento, genéricos, como tipo de perturbación del método",
+            "hecho": "visual-pixel-h04"
+          },
+          {
+            "que": "el cuadro con fuego, sin año ni lugar",
+            "hecho": "visual-pixel-h05"
+          },
+          {
+            "que": "la cicatriz oscura que deja el fuego",
+            "hecho": "visual-pixel-h06"
+          },
+          {
+            "que": "el cuadro talado y limpio, sin actor ni máquina",
+            "hecho": "visual-pixel-h07"
+          },
+          {
+            "que": "el rebrote que empieza en un cuadro perdido",
+            "hecho": "visual-pixel-h08"
+          },
+          {
+            "que": "la forma de los árboles y el color del dosel",
+            "generico": true
+          }
+        ],
+        "ilustrativa": "Mecanismo de la medición: un bosque cualquiera, sin nombrar un lugar real ni asignar causas a ningún sitio."
+      }
+    }
+  },
+  "pie": "Relieve: Mapzen · Bosque: Hansen/UMD/Google/USGS/NASA (CC BY 4.0) · Límite y lagos: © OpenStreetMap",
+  "gancho": {
+    "id": "g2",
+    "familia": "contraste",
+    "elegido_por": "usuario"
+  },
+  "narracion": "Mira cómo se apaga, año por año, el área protegida más grande de Guatemala. Es la Reserva de la Biosfera Maya: la quinta parte del país. Cada cuadro encendido es bosque que el satélite vio en el año 2000. Ahora corre el tiempo: el año en que un cuadro pierde su bosque, se apaga. En 2003 y en 2005 se apaga mucho más, y 2007 es el año que más pierde. Después baja, pero 2016, 2020 y 2024 vuelven a subir: coinciden con temporadas de grandes incendios. En total, más de medio millón de hectáreas perdieron su cobertura según el satélite: más de la cuarta parte del bosque que había. ¿Y dónde? El oeste se apaga más rápido: Laguna del Tigre y Sierra del Lacandón, parques con las reglas más estrictas, están entre las pérdidas más rápidas de América Latina, según la NASA. Al este, donde comunidades manejan el bosque en concesiones, como Uaxactún y Carmelita, el bosque resiste mucho mejor. Pero un cuadro apagado no siempre es un árbol cortado. El satélite mira el bosque en cuadros de 30 metros y marca el que pierde su dosel por tala, por fuego o por tormenta. Y después de una pérdida, el bosque vuelve a empezar su ciclo. Lo que sigue encendido es el bosque que todavía queda, y el oeste es por donde más rápido se apaga.",
+  "aviso": "Esquema",
+  "no_afirmar": [
+    "Que pérdida de cobertura es deforestación: incluye fuego, tala, aclareo y tormentas, y el bosque puede volver (decir «perdió cobertura» o «se perdió el bosque según el satélite»).",
+    "Que un pico lo causó algo: 2003, 2005, 2016, 2020 y 2024 coinciden con grandes temporadas de incendios (coincidencia, no causa); 2007 no tiene explicación en las fuentes y no se le pone una.",
+    "Que 2020 «mejoró» o que la ganancia neta de 2019-2020 (CONAP/WCS) compensa la pérdida.",
+    "Hectáreas exactas como área definitiva: los autores advierten no contar píxeles; la voz dice «unas 500 mil hectáreas» y en pantalla va con «según el satélite · aprox.».",
+    "Que la reserva «creció» de 1 a 2 millones de hectáreas.",
+    "El número de concesiones (en disputa entre FAO y USAC/CONAP).",
+    "Causas (ganadería, narcoganadería, pistas clandestinas, petróleo) sin atribución; si se dicen, atribuidas y sin cifra de una sola fuente en la voz.",
+    "El porcentaje propio oeste/este calculado con las celdas: solo ayuda a dirigir; lo que se afirma del oeste y el este es lo de la NASA y la FAO.",
+    "Los límites de los parques nacionales (solo puntos de referencia) ni un límite exacto de la reserva (el contorno de OSM es aproximado).",
+    "En el esquema: qué causa domina en la reserva; los tres cuadros ilustran el tipo de pérdida que mide el satélite, no su proporción.",
+    "En el esquema: altura del dosel (solo el umbral de 5 m del mapa), especies, fauna, tipo o duración del fuego, cuánto tarda el rebrote o qué especies vuelven; que tormentas causaran pérdida en la reserva; que un cuadro talado sea legal o ilegal o quién lo taló.",
+    "Que el satélite ve el evento en vivo o su causa: el mapa registra el año de pérdida."
+  ],
+  "caption": {
+    "tiktok": "La Reserva de la Biosfera Maya, año por año desde el satélite: de 2001 a 2024 perdió cobertura cerca del 26.8 % del bosque que tenía en 2000. #Guatemala #Peten #BiosferaMaya #Bosque",
+    "instagram": "La Reserva de la Biosfera Maya, creada en 1990, cubre 2,090,667 ha: la quinta parte de Guatemala.\n\nSegún el mapa de satélite de Hansen/UMD (cuadros de 30 m), de 2001 a 2024 unas 508,697 ha de la reserva perdieron cobertura: 26.8 % del bosque que había en 2000. El año con más pérdida fue 2007; 2016, 2020 y 2024 coinciden con temporadas de grandes incendios.\n\nSegún la NASA, Laguna del Tigre y Sierra del Lacandón, al oeste, están entre las pérdidas más rápidas de América Latina; las zonas de usos múltiples del este, con concesiones comunitarias como Uaxactún y Carmelita, resisten mucho mejor.\n\nPérdida de cobertura no es lo mismo que deforestación: incluye tala, fuego y tormentas, y el bosque puede volver.\n\n#Guatemala #Peten #BiosferaMaya #Bosque #LagunaDelTigre",
+    "facebook": "¿Cuánto bosque de la Reserva de la Biosfera Maya se apagó desde el satélite? Según el mapa de Hansen/UMD, de 2001 a 2024 unas 508,697 ha perdieron cobertura: 26.8 % del bosque que la reserva tenía en 2000 (es una estimación: los autores advierten que el conteo de cuadros de 30 m es aproximado). El año con más pérdida fue 2007, y 2016, 2020 y 2024 coinciden con temporadas de grandes incendios. Según la NASA, los parques nacionales Laguna del Tigre y Sierra del Lacandón, en el oeste, tienen algunas de las pérdidas más rápidas de América Latina pese a sus reglas más estrictas, y las zonas del este con concesiones comunitarias, como Uaxactún y Carmelita, resisten mucho mejor. Ojo: pérdida de cobertura no es igual a deforestación; incluye incendios y tormentas, y el bosque puede volver.",
+    "shorts": "La Biosfera Maya desde el satélite: el bosque que se apaga de 2001 a 2024\nSegún Hansen/UMD, unas 508,697 ha de la reserva perdieron cobertura de 2001 a 2024: 26.8 % del bosque de 2000. El oeste se apaga más rápido. #Shorts #Guatemala #Peten"
+  },
+  "ajustes": [
+    {
+      "fecha": "2026-11-17",
+      "escena": 2,
+      "elemento": "transicion",
+      "cambios": {
+        "transicion": "fundido"
+      },
+      "por": "3C10 crítico: pantalla negra en 6.5 s con «oscuro»"
+    },
+    {
+      "fecha": "2026-11-17",
+      "escena": 4,
+      "elemento": "eventos",
+      "cambios": {
+        "correranios": "4 tramos 2008-2015, 2016-2019, 2020-2023, 2024"
+      },
+      "por": "3C2 crítico: el contador iba adelante de la voz; aviso C3D7 E4-E5"
+    },
+    {
+      "fecha": "2026-11-17",
+      "escena": 6,
+      "elemento": "camara:0",
+      "cambios": {
+        "mira": [
+          -90.7,
+          17.85
+        ]
+      },
+      "por": "3C2 crítico: marca Laguna del Tigre bajo el contador del año"
+    },
+    {
+      "fecha": "2026-11-17",
+      "escena": 6,
+      "elemento": "camara:0",
+      "antes": {
+        "mira": [
+          -90.7,
+          17.85
+        ]
+      },
+      "cambios": {
+        "mira": [
+          -90.8,
+          17.5
+        ]
+      },
+      "quita": [],
+      "por": "La marca Laguna del Tigre queda bajo el contador de año (anot-reloj, que M3D4 no mide): la cámara la baja al centro"
+    },
+    {
+      "fecha": "2026-11-17",
+      "escena": 6,
+      "elemento": "camara:1",
+      "antes": {
+        "mira": [
+          -90.85,
+          17.3
+        ],
+        "dist_km": 230
+      },
+      "cambios": {
+        "mira": [
+          -90.85,
+          17.5
+        ],
+        "dist_km": 260
+      },
+      "quita": [],
+      "por": "La marca Laguna del Tigre queda bajo el contador de año (anot-reloj, que M3D4 no mide): la clave de «Sierra del Lacandón» encuadra los dos parques más abajo"
+    },
+    {
+      "fecha": "2026-11-17",
+      "escena": 6,
+      "elemento": "camara:2",
+      "antes": {
+        "mira": [
+          -90.8,
+          17.32
+        ],
+        "dist_km": 250
+      },
+      "cambios": {
+        "mira": [
+          -90.8,
+          17.5
+        ],
+        "dist_km": 275
+      },
+      "quita": [],
+      "por": "Igual que camara:1: con «según la NASA» la marca Laguna del Tigre volvía a quedar bajo el contador de año"
+    }
+  ],
+  "id": "video3d-biosfera-maya-satelite",
+  "slug": "biosfera-maya-satelite",
+  "tema": "La Biósfera Maya desde el satélite, año por año: cuánto bosque de la reserva se perdió de 2001 a hoy y dónde",
+  "fecha": "2026-11-17",
+  "paleta": "jade",
+  "musica": "jade-1",
+  "desde": "sesiones/video3d-frontera-recta",
+  "motor": "three",
+  "duracion_s": 88.6,
+  "creditos_voz": 1294
+}

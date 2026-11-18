@@ -1,0 +1,1601 @@
+{
+  "version": 1,
+  "video": true,
+  "estilo": "color",
+  "paleta": "jade",
+  "fps": 30,
+  "duracion_s": 62.3333,
+  "protagonista": "pila",
+  "capa": {
+    "titulares": [
+      {
+        "t": 0.0,
+        "kicker": "LAGO DE AMATITLÁN · GUATEMALA",
+        "texto": "Un año de basura, sobre el Palacio Nacional",
+        "hasta": 5.3667
+      },
+      {
+        "t": 21.3333,
+        "kicker": "LA MISMA BASURA",
+        "texto": "En camiones de volteo",
+        "hasta": 26.8667
+      },
+      {
+        "t": 40.1,
+        "kicker": "RÍO VILLALOBOS",
+        "texto": "Una sola lluvia",
+        "hasta": 47.9333
+      },
+      {
+        "t": 47.9333,
+        "kicker": "ESTUDIO DE LA USAC",
+        "texto": "Lo que llevan dentro de los peces",
+        "hasta": 56.3333
+      }
+    ],
+    "cifras": [
+      {
+        "valor": "45,000 m³",
+        "rotulo": "de basura al año",
+        "fuente": "AMSA",
+        "t": 7.7333,
+        "hasta": 13.5667
+      },
+      {
+        "valor": "5.06 metros",
+        "rotulo": "de alto: el 16.9 % del volumen del Palacio",
+        "fuente": "cálculo con AMSA y AGN",
+        "t": 16.8333,
+        "hasta": 21.3333
+      },
+      {
+        "valor": "4,500",
+        "rotulo": "camiones de volteo",
+        "fuente": "equivalencia de AMSA",
+        "t": 23.3667,
+        "hasta": 26.8667
+      },
+      {
+        "valor": "25 km",
+        "rotulo": "de la capital al lago",
+        "fuente": "USAC",
+        "t": 27.8,
+        "hasta": 31.7
+      },
+      {
+        "valor": "2 millones",
+        "rotulo": "de habitantes, en 14 municipios",
+        "fuente": "AMSA",
+        "t": 31.8667,
+        "hasta": 35.4333
+      },
+      {
+        "valor": "2,400 m³",
+        "rotulo": "de basura en una sola lluvia",
+        "fuente": "AMSA",
+        "t": 44.1,
+        "hasta": 47.9333
+      },
+      {
+        "valor": "68 de 70",
+        "rotulo": "peces, con microplástico en el tracto",
+        "fuente": "USAC",
+        "t": 52.6667,
+        "hasta": 56.3333
+      }
+    ],
+    "palabras": [
+      {
+        "text": "Pon",
+        "start": 0.0,
+        "end": 0.222
+      },
+      {
+        "text": "sobre",
+        "start": 0.285,
+        "end": 0.538
+      },
+      {
+        "text": "el",
+        "start": 0.559,
+        "end": 0.612
+      },
+      {
+        "text": "Palacio",
+        "start": 0.675,
+        "end": 1.129
+      },
+      {
+        "text": "Nacional",
+        "start": 1.161,
+        "end": 1.678
+      },
+      {
+        "text": "un",
+        "start": 1.784,
+        "end": 1.91
+      },
+      {
+        "text": "año",
+        "start": 1.942,
+        "end": 2.153
+      },
+      {
+        "text": "de",
+        "start": 2.195,
+        "end": 2.259
+      },
+      {
+        "text": "basura",
+        "start": 2.301,
+        "end": 2.734
+      },
+      {
+        "text": "del",
+        "start": 2.786,
+        "end": 2.913
+      },
+      {
+        "text": "lago",
+        "start": 2.987,
+        "end": 3.283
+      },
+      {
+        "text": "de",
+        "start": 3.335,
+        "end": 3.398
+      },
+      {
+        "text": "Amatitlán,",
+        "start": 3.441,
+        "end": 4.137
+      },
+      {
+        "text": "en",
+        "start": 4.169,
+        "end": 4.306
+      },
+      {
+        "text": "Guatemala.",
+        "start": 4.359,
+        "end": 5.098
+      },
+      {
+        "text": "AMSA",
+        "start": 5.641,
+        "end": 6.021
+      },
+      {
+        "text": "estima",
+        "start": 6.085,
+        "end": 6.454
+      },
+      {
+        "text": "que",
+        "start": 6.507,
+        "end": 6.602
+      },
+      {
+        "text": "al",
+        "start": 6.655,
+        "end": 6.729
+      },
+      {
+        "text": "lago",
+        "start": 6.781,
+        "end": 7.088
+      },
+      {
+        "text": "entran",
+        "start": 7.161,
+        "end": 7.52
+      },
+      {
+        "text": "unos",
+        "start": 7.626,
+        "end": 7.879
+      },
+      {
+        "text": "45",
+        "start": 7.985,
+        "end": 8.702
+      },
+      {
+        "text": "mil",
+        "start": 8.745,
+        "end": 8.871
+      },
+      {
+        "text": "metros",
+        "start": 8.935,
+        "end": 9.251
+      },
+      {
+        "text": "cúbicos",
+        "start": 9.325,
+        "end": 9.769
+      },
+      {
+        "text": "de",
+        "start": 9.81,
+        "end": 9.863
+      },
+      {
+        "text": "basura",
+        "start": 9.895,
+        "end": 10.339
+      },
+      {
+        "text": "al",
+        "start": 10.401,
+        "end": 10.476
+      },
+      {
+        "text": "año,",
+        "start": 10.508,
+        "end": 10.961
+      },
+      {
+        "text": "sobre",
+        "start": 11.151,
+        "end": 11.394
+      },
+      {
+        "text": "todo",
+        "start": 11.436,
+        "end": 11.699
+      },
+      {
+        "text": "plásticos",
+        "start": 11.784,
+        "end": 12.397
+      },
+      {
+        "text": "y",
+        "start": 12.502,
+        "end": 12.523
+      },
+      {
+        "text": "orgánicos.",
+        "start": 12.576,
+        "end": 13.336
+      },
+      {
+        "text": "Repartida",
+        "start": 13.767,
+        "end": 14.284
+      },
+      {
+        "text": "sobre",
+        "start": 14.348,
+        "end": 14.579
+      },
+      {
+        "text": "todo",
+        "start": 14.622,
+        "end": 14.801
+      },
+      {
+        "text": "el",
+        "start": 14.833,
+        "end": 14.886
+      },
+      {
+        "text": "terreno",
+        "start": 14.949,
+        "end": 15.308
+      },
+      {
+        "text": "del",
+        "start": 15.35,
+        "end": 15.445
+      },
+      {
+        "text": "Palacio,",
+        "start": 15.498,
+        "end": 16.036
+      },
+      {
+        "text": "sube",
+        "start": 16.068,
+        "end": 16.289
+      },
+      {
+        "text": "poco",
+        "start": 16.363,
+        "end": 16.669
+      },
+      {
+        "text": "más",
+        "start": 16.733,
+        "end": 16.954
+      },
+      {
+        "text": "de",
+        "start": 16.997,
+        "end": 17.06
+      },
+      {
+        "text": "5",
+        "start": 17.091,
+        "end": 17.387
+      },
+      {
+        "text": "metros:",
+        "start": 17.439,
+        "end": 17.915
+      },
+      {
+        "text": "casi",
+        "start": 18.21,
+        "end": 18.538
+      },
+      {
+        "text": "el",
+        "start": 18.59,
+        "end": 18.643
+      },
+      {
+        "text": "17 %",
+        "start": 18.707,
+        "end": 19.889
+      },
+      {
+        "text": "de",
+        "start": 19.941,
+        "end": 19.994
+      },
+      {
+        "text": "su",
+        "start": 20.037,
+        "end": 20.12
+      },
+      {
+        "text": "volumen.",
+        "start": 20.173,
+        "end": 20.88
+      },
+      {
+        "text": "Con",
+        "start": 21.333,
+        "end": 21.502
+      },
+      {
+        "text": "la",
+        "start": 21.523,
+        "end": 21.565
+      },
+      {
+        "text": "equivalencia",
+        "start": 21.587,
+        "end": 22.157
+      },
+      {
+        "text": "que",
+        "start": 22.21,
+        "end": 22.283
+      },
+      {
+        "text": "dio",
+        "start": 22.325,
+        "end": 22.547
+      },
+      {
+        "text": "AMSA,",
+        "start": 22.652,
+        "end": 23.16
+      },
+      {
+        "text": "son",
+        "start": 23.296,
+        "end": 23.518
+      },
+      {
+        "text": "4,500",
+        "start": 23.602,
+        "end": 24.88
+      },
+      {
+        "text": "camiones",
+        "start": 24.943,
+        "end": 25.471
+      },
+      {
+        "text": "de",
+        "start": 25.513,
+        "end": 25.566
+      },
+      {
+        "text": "volteo.",
+        "start": 25.608,
+        "end": 26.4
+      },
+      {
+        "text": "El",
+        "start": 26.867,
+        "end": 27.015
+      },
+      {
+        "text": "lago",
+        "start": 27.046,
+        "end": 27.32
+      },
+      {
+        "text": "está",
+        "start": 27.394,
+        "end": 27.659
+      },
+      {
+        "text": "a",
+        "start": 27.7,
+        "end": 27.721
+      },
+      {
+        "text": "unos",
+        "start": 27.785,
+        "end": 27.986
+      },
+      {
+        "text": "25",
+        "start": 28.049,
+        "end": 28.714
+      },
+      {
+        "text": "kilómetros",
+        "start": 28.767,
+        "end": 29.316
+      },
+      {
+        "text": "de",
+        "start": 29.347,
+        "end": 29.389
+      },
+      {
+        "text": "la",
+        "start": 29.431,
+        "end": 29.495
+      },
+      {
+        "text": "capital.",
+        "start": 29.537,
+        "end": 30.191
+      },
+      {
+        "text": "En",
+        "start": 30.592,
+        "end": 30.709
+      },
+      {
+        "text": "su",
+        "start": 30.761,
+        "end": 30.857
+      },
+      {
+        "text": "cuenca",
+        "start": 30.909,
+        "end": 31.31
+      },
+      {
+        "text": "viven",
+        "start": 31.363,
+        "end": 31.638
+      },
+      {
+        "text": "más",
+        "start": 31.711,
+        "end": 31.912
+      },
+      {
+        "text": "de",
+        "start": 31.943,
+        "end": 31.996
+      },
+      {
+        "text": "2",
+        "start": 32.102,
+        "end": 32.313
+      },
+      {
+        "text": "millones",
+        "start": 32.398,
+        "end": 32.809
+      },
+      {
+        "text": "de",
+        "start": 32.84,
+        "end": 32.893
+      },
+      {
+        "text": "personas,",
+        "start": 32.936,
+        "end": 33.611
+      },
+      {
+        "text": "en",
+        "start": 33.749,
+        "end": 33.864
+      },
+      {
+        "text": "14",
+        "start": 33.939,
+        "end": 34.36
+      },
+      {
+        "text": "municipios.",
+        "start": 34.403,
+        "end": 35.205
+      },
+      {
+        "text": "Su",
+        "start": 35.666,
+        "end": 35.803
+      },
+      {
+        "text": "principal",
+        "start": 35.835,
+        "end": 36.247
+      },
+      {
+        "text": "afluente",
+        "start": 36.289,
+        "end": 36.753
+      },
+      {
+        "text": "contaminante",
+        "start": 36.795,
+        "end": 37.481
+      },
+      {
+        "text": "es",
+        "start": 37.534,
+        "end": 37.608
+      },
+      {
+        "text": "el",
+        "start": 37.671,
+        "end": 37.735
+      },
+      {
+        "text": "río",
+        "start": 37.809,
+        "end": 38.041
+      },
+      {
+        "text": "Villalobos,",
+        "start": 38.072,
+        "end": 38.759
+      },
+      {
+        "text": "según",
+        "start": 38.801,
+        "end": 39.212
+      },
+      {
+        "text": "AMSA.",
+        "start": 39.297,
+        "end": 39.888
+      },
+      {
+        "text": "En",
+        "start": 40.301,
+        "end": 40.427
+      },
+      {
+        "text": "marzo",
+        "start": 40.47,
+        "end": 40.734
+      },
+      {
+        "text": "de",
+        "start": 40.786,
+        "end": 40.85
+      },
+      {
+        "text": "este",
+        "start": 40.914,
+        "end": 41.135
+      },
+      {
+        "text": "año,",
+        "start": 41.177,
+        "end": 41.546
+      },
+      {
+        "text": "una",
+        "start": 41.62,
+        "end": 41.779
+      },
+      {
+        "text": "sola",
+        "start": 41.832,
+        "end": 42.043
+      },
+      {
+        "text": "lluvia",
+        "start": 42.075,
+        "end": 42.381
+      },
+      {
+        "text": "metió",
+        "start": 42.423,
+        "end": 42.803
+      },
+      {
+        "text": "por",
+        "start": 42.855,
+        "end": 42.982
+      },
+      {
+        "text": "su",
+        "start": 43.035,
+        "end": 43.119
+      },
+      {
+        "text": "desembocadura",
+        "start": 43.172,
+        "end": 43.953
+      },
+      {
+        "text": "unos",
+        "start": 44.059,
+        "end": 44.291
+      },
+      {
+        "text": "2,400",
+        "start": 44.344,
+        "end": 45.578
+      },
+      {
+        "text": "metros",
+        "start": 45.685,
+        "end": 46.043
+      },
+      {
+        "text": "cúbicos",
+        "start": 46.127,
+        "end": 46.56
+      },
+      {
+        "text": "de",
+        "start": 46.603,
+        "end": 46.655
+      },
+      {
+        "text": "basura.",
+        "start": 46.697,
+        "end": 47.489
+      },
+      {
+        "text": "En",
+        "start": 47.933,
+        "end": 48.071
+      },
+      {
+        "text": "el",
+        "start": 48.112,
+        "end": 48.176
+      },
+      {
+        "text": "agua,",
+        "start": 48.24,
+        "end": 48.524
+      },
+      {
+        "text": "un",
+        "start": 48.577,
+        "end": 48.693
+      },
+      {
+        "text": "estudio",
+        "start": 48.746,
+        "end": 49.242
+      },
+      {
+        "text": "de",
+        "start": 49.295,
+        "end": 49.348
+      },
+      {
+        "text": "la",
+        "start": 49.401,
+        "end": 49.506
+      },
+      {
+        "text": "USAC",
+        "start": 49.611,
+        "end": 50.033
+      },
+      {
+        "text": "halló",
+        "start": 50.192,
+        "end": 50.456
+      },
+      {
+        "text": "microplásticos",
+        "start": 50.509,
+        "end": 51.29
+      },
+      {
+        "text": "en",
+        "start": 51.342,
+        "end": 51.384
+      },
+      {
+        "text": "el",
+        "start": 51.438,
+        "end": 51.491
+      },
+      {
+        "text": "tracto",
+        "start": 51.532,
+        "end": 51.828
+      },
+      {
+        "text": "digestivo",
+        "start": 51.871,
+        "end": 52.451
+      },
+      {
+        "text": "de",
+        "start": 52.514,
+        "end": 52.714
+      },
+      {
+        "text": "68",
+        "start": 52.904,
+        "end": 53.971
+      },
+      {
+        "text": "de",
+        "start": 54.012,
+        "end": 54.087
+      },
+      {
+        "text": "70",
+        "start": 54.129,
+        "end": 54.657
+      },
+      {
+        "text": "peces",
+        "start": 54.72,
+        "end": 55.037
+      },
+      {
+        "text": "del",
+        "start": 55.09,
+        "end": 55.195
+      },
+      {
+        "text": "lago.",
+        "start": 55.248,
+        "end": 55.871
+      },
+      {
+        "text": "Y",
+        "start": 56.333,
+        "end": 56.418
+      },
+      {
+        "text": "cada",
+        "start": 56.523,
+        "end": 56.798
+      },
+      {
+        "text": "año",
+        "start": 56.83,
+        "end": 57.157
+      },
+      {
+        "text": "empieza",
+        "start": 57.22,
+        "end": 57.748
+      },
+      {
+        "text": "a",
+        "start": 57.78,
+        "end": 57.801
+      },
+      {
+        "text": "caer",
+        "start": 57.853,
+        "end": 58.181
+      },
+      {
+        "text": "otra",
+        "start": 58.265,
+        "end": 58.571
+      },
+      {
+        "text": "pila",
+        "start": 58.623,
+        "end": 58.888
+      },
+      {
+        "text": "igual.",
+        "start": 58.93,
+        "end": 59.541
+      }
+    ],
+    "progreso": {
+      "actos": [
+        0.0,
+        21.3333,
+        47.9333
+      ]
+    },
+    "seguir": {
+      "t": 31.1667,
+      "dur": 3.0
+    },
+    "pie": "Relieve: Mapzen · Calles, edificios, zonas verdes, lugares, lagos y carreteras: © OpenStreetMap",
+    "handle": "@DerekUrizar",
+    "aviso": "Esquema",
+    "cierre": {
+      "t": 57.4667,
+      "frase": "Cada año, otra pila igual.",
+      "redes": [
+        {
+          "nombre": "TikTok",
+          "handle": "@derekurizargt"
+        },
+        {
+          "nombre": "Instagram",
+          "handle": "@derekurizargt"
+        },
+        {
+          "nombre": "Facebook",
+          "handle": "Derek Urizar"
+        },
+        {
+          "nombre": "YouTube",
+          "handle": "@derekurizar"
+        },
+        {
+          "nombre": "X",
+          "handle": "@DerekUrizar"
+        }
+      ]
+    }
+  },
+  "mundos": {
+    "palacio": {
+      "escala": "ciudad",
+      "set": "capital",
+      "exageracion": 1.5,
+      "estilo": "color",
+      "lugares": {
+        "palacio-nacional": {
+          "lon": -90.5130674,
+          "lat": 14.642919,
+          "nombre": "Palacio Nacional de la Cultura"
+        },
+        "acera": {
+          "lon": -90.512566,
+          "lat": 14.642919,
+          "nombre": "Acera de enfrente"
+        }
+      },
+      "piezas": [
+        {
+          "id": "parques",
+          "tipo": "zona",
+          "area": "parques",
+          "tono": "verde",
+          "opacidad": 0.5,
+          "borde": false
+        },
+        {
+          "id": "calles",
+          "tipo": "calles"
+        },
+        {
+          "id": "edificios",
+          "tipo": "edificios"
+        },
+        {
+          "id": "ambiente",
+          "tipo": "ambiente",
+          "ambiente": "plaza",
+          "densidad": 0.5,
+          "radio_m": 260,
+          "centro": "palacio-nacional",
+          "semilla": 3
+        },
+        {
+          "id": "palacio",
+          "tipo": "palacionacional",
+          "lugar": "palacio-nacional",
+          "rumbo": 0,
+          "tamano": 1,
+          "cristal": 1,
+          "cristal_desde": 0.6,
+          "cristal_dur": 1.2,
+          "personas": 8,
+          "entorno": true,
+          "semilla": 1,
+          "aristas": 1,
+          "gente_tamano": 1.3
+        },
+        {
+          "id": "pila",
+          "tipo": "pila",
+          "lugar": "palacio-nacional",
+          "largo_m": 127,
+          "ancho_m": 70,
+          "rumbo": 0,
+          "alto_m": 5.06,
+          "inicio": 0,
+          "material": "basura",
+          "acento": true,
+          "semilla": 1
+        }
+      ],
+      "protagonista": "pila",
+      "escena": {
+        "que_pasa": "Una comparación de escala: el volumen de basura que AMSA estima que entra al lago en un año (45 mil m³) repartido sobre la huella del Palacio Nacional de la Cultura (8,890 m²) sube 5.06 m, casi el 17 % de la caja del edificio (127 × 70 × 30 m). Es una medida hipotética: nadie la apila ahí.",
+        "quien": "transeúntes genéricos que caminan por la acera de enfrente y gente de pie en la plaza",
+        "con_que": "nada: la basura aparece como medida (bolsas, botellas, cartón y restos orgánicos mezclados)",
+        "se_mueve": "el Palacio que se vuelve cristal; la pila que crece capa por capa dentro de su caja mientras la voz cuenta, con bolsas y envases que caen y se asientan; la gente que camina por la acera",
+        "sostiene": [
+          {
+            "que": "la huella del Palacio, 8,890 m²",
+            "hecho": "comparacion-h02"
+          },
+          {
+            "que": "la caja del Palacio, 127 × 70 × 30 m",
+            "hecho": "comparacion-h01"
+          },
+          {
+            "que": "el Palacio de color verde (sin afirmar material ni tono exacto)",
+            "hecho": "visual-palacio-h01"
+          },
+          {
+            "que": "corredores y detalles decorativos de la fachada, sin número ni forma de patios",
+            "hecho": "visual-palacio-h02"
+          },
+          {
+            "que": "30 m de alto con tres pisos sobre el suelo más la terraza, sin torre ni reloj",
+            "hecho": "visual-palacio-h03"
+          },
+          {
+            "que": "el Palacio junto a la plaza principal (el lado cardinal es puesta en escena)",
+            "hecho": "visual-palacio-h04"
+          },
+          {
+            "que": "la altura de la pila, 5.06 m",
+            "hecho": "comparacion-c17"
+          },
+          {
+            "que": "casi el 17 % de la caja",
+            "hecho": "comparacion-c18"
+          },
+          {
+            "que": "la mezcla de la pila: principalmente plásticos y orgánicos",
+            "hecho": "plastico-h08"
+          },
+          {
+            "que": "el volumen de un año, 45 mil m³",
+            "hecho": "plastico-h01"
+          },
+          {
+            "que": "los transeúntes, las bancas, las farolas y los árboles de la plaza",
+            "generico": true
+          },
+          {
+            "que": "cómo cae la basura (nadie la apila ahí: es una medida)",
+            "generico": true
+          }
+        ]
+      }
+    },
+    "volteos": {
+      "escala": "esquema",
+      "receta": "carretera",
+      "semilla": 7,
+      "carriles": 4,
+      "tamano_m": 1600,
+      "horizonte": "colinas",
+      "estilo": "dia",
+      "piezas": [
+        {
+          "id": "autopista",
+          "tipo": "carretera",
+          "camino": "eje"
+        },
+        {
+          "id": "ambiente",
+          "tipo": "ambiente",
+          "ambiente": "campo",
+          "densidad": 0.8,
+          "radio_m": 700,
+          "semilla": 5
+        },
+        {
+          "id": "fila-volteos",
+          "tipo": "flujo",
+          "carriles": [
+            "carril-1",
+            "carril-2"
+          ],
+          "tipos": {
+            "volteo": 1
+          },
+          "densidad": 40,
+          "vel_kmh": 40,
+          "semilla": 4
+        }
+      ],
+      "protagonista": "fila-volteos",
+      "escena": {
+        "que_pasa": "Otra forma de medir el mismo año de basura: con la equivalencia que dio AMSA (3,000 m³ ≈ 300 camiones de volteo) son 4,500 camiones de volteo. Es una medida hipotética: esos camiones no circulan juntos.",
+        "quien": "nadie",
+        "con_que": "camiones de volteo genéricos con la palangana llena de basura mezclada",
+        "se_mueve": "la fila de volteos cargados que avanza por la carretera y se frena en una cola; la cabina se mece y el escape echa humo",
+        "sostiene": [
+          {
+            "que": "el camión de volteo como unidad de AMSA (3,000 m³ ≈ 300 camiones)",
+            "hecho": "visual-volteos-h01"
+          },
+          {
+            "que": "4,500 camiones de volteo",
+            "hecho": "comparacion-c22"
+          },
+          {
+            "que": "la carga mezclada (plásticos y orgánicos)",
+            "hecho": "plastico-h08"
+          },
+          {
+            "que": "el camión (cabina, palangana), sin logo, color ni marca",
+            "generico": true
+          },
+          {
+            "que": "la carretera, el campo, las colinas y el largo de la fila",
+            "generico": true
+          }
+        ],
+        "nota": "La cantidad de camiones que se ven ilustra: el número sale solo en la capa (comparacion-c22); el largo de la fila no se afirma. Los choferes no se ven."
+      },
+      "hora": "dia"
+    },
+    "cuenca": {
+      "escala": "pais",
+      "set": "guatemala",
+      "exageracion": 5.0,
+      "estilo": "color",
+      "lugares": {
+        "desembocadura": {
+          "lon": -90.5687216,
+          "lat": 14.4836161,
+          "nombre": "Desembocadura del Villalobos"
+        },
+        "villalobos-tramo": {
+          "lon": -90.561049,
+          "lat": 14.5269362,
+          "nombre": "Río Villalobos"
+        },
+        "lago-centro": {
+          "lon": -90.5678683,
+          "lat": 14.4559756,
+          "nombre": "Lago de Amatitlán"
+        }
+      },
+      "piezas": [
+        {
+          "id": "lagos",
+          "tipo": "lagos",
+          "nombres": [
+            "amatitlan"
+          ]
+        },
+        {
+          "id": "pueblos",
+          "tipo": "luces",
+          "lugares": [
+            "guatemala",
+            "villa-nueva",
+            "amatitlan",
+            "villa-canales",
+            "mixco"
+          ]
+        },
+        {
+          "id": "carreteras",
+          "tipo": "carreteras",
+          "clase": "troncal",
+          "grosor": 0.6
+        },
+        {
+          "id": "villalobos",
+          "tipo": "afluente",
+          "nombre": "Villalobos",
+          "puntos": [
+            [
+              -90.561049,
+              14.5269362
+            ],
+            [
+              -90.5687216,
+              14.4836161
+            ]
+          ],
+          "grosor": 3.0,
+          "corriente": true
+        }
+      ],
+      "protagonista": "villalobos"
+    },
+    "lago": {
+      "escala": "esquema",
+      "receta": "campo",
+      "semilla": 11,
+      "tamano_m": 600,
+      "horizonte": "montanas",
+      "estilo": "dia",
+      "piezas": [
+        {
+          "id": "corte",
+          "tipo": "lagocorte",
+          "lugar": [
+            0,
+            0
+          ],
+          "rumbo": 0,
+          "tamano": 1,
+          "peces": 70,
+          "marcados": 68,
+          "basura": 0.6,
+          "barda": true,
+          "personas": 0,
+          "semilla": 1
+        }
+      ],
+      "protagonista": "corte",
+      "escena": {
+        "que_pasa": "El lago visto en corte donde entra un río: la basura que baja queda atrapada contra la barda de retención de AMSA y no llega al espejo del lago; abajo, los peces. Un estudio de la USAC halló microplásticos, sobre todo línea o fibra, en el tracto digestivo de 68 de los 70 peces muestreados (97.14 %); no en la carne.",
+        "quien": "nadie",
+        "con_que": "la barda de retención artesanal de AMSA: envases plásticos reciclados atados con lazo",
+        "se_mueve": "la barda y la basura que suben y bajan con el oleaje; 70 peces que baten la cola; las fibras en el tracto de 68 que se encienden una tras otra",
+        "sostiene": [
+          {
+            "que": "la barda de envases plásticos reciclados atados con lazo",
+            "hecho": "visual-lago-h01"
+          },
+          {
+            "que": "la basura atrapada contra la barda en la desembocadura, sin llegar al espejo",
+            "hecho": "visual-lago-h02"
+          },
+          {
+            "que": "70 peces muestreados (dibujados genéricos)",
+            "hecho": "visual-lago-h06"
+          },
+          {
+            "que": "68 de 70 con microplástico en el tracto digestivo, no en la carne",
+            "hecho": "visual-lago-h08"
+          },
+          {
+            "que": "97.14 %",
+            "hecho": "plastico-c15"
+          },
+          {
+            "que": "la basura mezclada (bolsas, botellas, restos), sin animales",
+            "generico": true
+          },
+          {
+            "que": "la forma y el color de los peces, el fondo, la orilla y las montañas; los peces agrandados para contarlos",
+            "generico": true
+          },
+          {
+            "que": "dónde se ancla la barda, su altura y cómo flota",
+            "generico": true
+          }
+        ],
+        "nota": "El corte va sin gente (visual-lago: sin personas, lanchas ni máquinas confirmadas para hoy). Los peces no se ponen junto a la basura como causa: el estudio no dice dónde se pescaron ni de dónde viene el microplástico."
+      },
+      "ambiente": false,
+      "hora": "dia",
+      "lugares": {
+        "corte.peces": {
+          "x": 13.0,
+          "y": -14.0,
+          "nombre": "Los peces"
+        },
+        "corte.barda": {
+          "x": -11.2,
+          "y": 2.0,
+          "nombre": "La barda"
+        },
+        "corte.basura": {
+          "x": -17.0,
+          "y": 2.0,
+          "nombre": "La basura"
+        }
+      }
+    }
+  },
+  "tramos": [
+    {
+      "id": "palacio-1",
+      "mundo": "palacio",
+      "desde": 0.0,
+      "hasta": 21.3333,
+      "camara": [
+        {
+          "mira": [
+            -90.5130674,
+            14.642919
+          ],
+          "dist_m": 255,
+          "azimut": 130,
+          "elevacion": 22,
+          "t": 0.0
+        },
+        {
+          "mira": [
+            -90.5130674,
+            14.642919
+          ],
+          "dist_m": 205,
+          "azimut": 118,
+          "elevacion": 17,
+          "t": 5.1
+        },
+        {
+          "mira": [
+            -90.5130674,
+            14.642919
+          ],
+          "dist_m": 160,
+          "azimut": 105,
+          "elevacion": 12,
+          "t": 8.0
+        },
+        {
+          "mira": [
+            -90.5130674,
+            14.642919
+          ],
+          "dist_m": 140,
+          "azimut": 98,
+          "elevacion": 13,
+          "t": 12.4
+        },
+        {
+          "mira": [
+            -90.5130674,
+            14.642919
+          ],
+          "dist_m": 175,
+          "azimut": 118,
+          "elevacion": 9,
+          "t": 16.0667
+        },
+        {
+          "mira": [
+            -90.5130674,
+            14.642919
+          ],
+          "dist_m": 240,
+          "azimut": 125,
+          "elevacion": 8,
+          "t": 19.9
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "crecer",
+          "pieza": "pila",
+          "de": 0,
+          "a": 0.3,
+          "caida": true,
+          "dur": 5.0,
+          "sfx": "whoosh",
+          "t": 0.0
+        },
+        {
+          "tipo": "crecer",
+          "pieza": "pila",
+          "de": 0.3,
+          "a": 0.75,
+          "caida": true,
+          "t": 5.6333,
+          "dur": 6.755
+        },
+        {
+          "tipo": "crecer",
+          "pieza": "pila",
+          "de": 0.75,
+          "a": 1,
+          "caida": true,
+          "t": 13.7667,
+          "dur": 4.148
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "palacio",
+          "dur": 2.4,
+          "t": 18.7
+        }
+      ],
+      "marcas": [
+        {
+          "lugar": "palacio-nacional",
+          "texto": "Palacio Nacional de la Cultura",
+          "sub": "Ciudad de Guatemala",
+          "t": 0.4333,
+          "hasta": 5.3667
+        }
+      ]
+    },
+    {
+      "id": "volteos-2",
+      "mundo": "volteos",
+      "desde": 21.3333,
+      "hasta": 26.8667,
+      "camara": [
+        {
+          "mira": [
+            0,
+            0
+          ],
+          "dist_m": 38,
+          "azimut": 80,
+          "elevacion": 15,
+          "t": 21.3333
+        },
+        {
+          "mira": [
+            0,
+            0
+          ],
+          "dist_m": 32,
+          "azimut": 72,
+          "elevacion": 11,
+          "t": 24.8667
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "frenar",
+          "flujo": "fila-volteos",
+          "en": "50%",
+          "longitud_m": 80,
+          "vel_kmh": 4,
+          "dur": 1.6,
+          "t": 23.3
+        }
+      ],
+      "transicion": "corte"
+    },
+    {
+      "id": "cuenca-3",
+      "mundo": "cuenca",
+      "desde": 26.8667,
+      "hasta": 47.9333,
+      "camara": [
+        {
+          "mira": [
+            -90.54,
+            14.55
+          ],
+          "dist_km": 90,
+          "azimut": -90,
+          "elevacion": 58,
+          "t": 26.8667
+        },
+        {
+          "mira": [
+            -90.54,
+            14.55
+          ],
+          "dist_km": 84,
+          "azimut": -90,
+          "elevacion": 60,
+          "t": 29.3333
+        },
+        {
+          "mira": [
+            -90.55,
+            14.53
+          ],
+          "dist_km": 78,
+          "azimut": -60,
+          "elevacion": 62,
+          "t": 31.3
+        },
+        {
+          "mira": [
+            -90.565,
+            14.505
+          ],
+          "dist_km": 24,
+          "azimut": 0,
+          "elevacion": 48,
+          "t": 36.8
+        },
+        {
+          "mira": [
+            -90.566,
+            14.5
+          ],
+          "dist_km": 18,
+          "azimut": 0,
+          "elevacion": 45,
+          "t": 39.9
+        },
+        {
+          "mira": [
+            -90.567,
+            14.49
+          ],
+          "dist_km": 17,
+          "azimut": 0,
+          "elevacion": 42,
+          "t": 41.6333
+        },
+        {
+          "mira": "desembocadura",
+          "dist_km": 15,
+          "azimut": 0,
+          "elevacion": 40,
+          "t": 43.9667
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "resaltar",
+          "pieza": "lagos",
+          "dur": 2.0,
+          "t": 26.8667
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "villalobos",
+          "dur": 2.6,
+          "t": 35.8333
+        },
+        {
+          "tipo": "arrastrar",
+          "pieza": "villalobos",
+          "intensidad": 0.75,
+          "abanico_km": 0.9,
+          "barda": true,
+          "queda": true,
+          "dur": 4.5,
+          "sfx": "whoosh",
+          "puntos": [
+            [
+              -90.561049,
+              14.5269362
+            ],
+            [
+              -90.5687216,
+              14.4836161
+            ]
+          ],
+          "t": 41.6333
+        }
+      ],
+      "marcas": [
+        {
+          "lugar": "guatemala",
+          "texto": "Ciudad de Guatemala",
+          "t": 29.1667,
+          "hasta": 31.7
+        },
+        {
+          "lugar": "lago-centro",
+          "texto": "Lago de Amatitlán",
+          "t": 26.8667,
+          "hasta": 31.7
+        },
+        {
+          "lugar": "villalobos-tramo",
+          "texto": "Río Villalobos",
+          "t": 37.5667,
+          "hasta": 40.5667
+        },
+        {
+          "lugar": "desembocadura",
+          "texto": "Desembocadura",
+          "sub": "del río Villalobos",
+          "t": 42.9333,
+          "hasta": 47.9333
+        }
+      ],
+      "anotaciones": [
+        {
+          "tipo": "pulso",
+          "sobre": [
+            "lago-centro"
+          ],
+          "radio_m": 5000,
+          "anillos": 2,
+          "t": 30.3333,
+          "hasta": 35.4333
+        }
+      ],
+      "transicion": "fundido",
+      "fundido_s": 0.6
+    },
+    {
+      "id": "lago-4",
+      "mundo": "lago",
+      "desde": 47.9333,
+      "hasta": 56.3333,
+      "camara": [
+        {
+          "mira": "corte.barda",
+          "dist_m": 45,
+          "azimut": 20,
+          "elevacion": 35,
+          "t": 47.9333
+        },
+        {
+          "mira": "corte.peces",
+          "dist_m": 50,
+          "azimut": 5,
+          "elevacion": 8,
+          "t": 51.5333
+        },
+        {
+          "mira": "corte.peces",
+          "dist_m": 38,
+          "azimut": 0,
+          "elevacion": 8,
+          "t": 54.6667
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "resaltar",
+          "pieza": "corte",
+          "dur": 3.2,
+          "t": 51.5333
+        }
+      ],
+      "transicion": "fundido",
+      "fundido_s": 0.6
+    },
+    {
+      "id": "palacio-5",
+      "mundo": "palacio",
+      "desde": 56.3333,
+      "hasta": 62.3333,
+      "camara": [
+        {
+          "mira": [
+            -90.5130674,
+            14.642919
+          ],
+          "dist_m": 175,
+          "azimut": 122,
+          "elevacion": 15,
+          "t": 56.3333
+        },
+        {
+          "mira": [
+            -90.5130674,
+            14.642919
+          ],
+          "dist_m": 205,
+          "azimut": 118,
+          "elevacion": 17,
+          "t": 59.5333
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "crecer",
+          "pieza": "pila",
+          "de": 0,
+          "a": 0.3,
+          "caida": true,
+          "dur": 2.6,
+          "t": 57.2333
+        }
+      ],
+      "transicion": "fundido",
+      "fundido_s": 0.6
+    }
+  ]
+}

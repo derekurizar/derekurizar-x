@@ -1,0 +1,1287 @@
+{
+  "tipo": "video3d",
+  "version": 1,
+  "escenas": [
+    {
+      "mundo": "lago",
+      "secuencia": 1,
+      "texto": "La NASA fotografió el lago de Atitlán, en Guatemala, verde de cianobacterias.",
+      "titular": {
+        "kicker": "22 NOV 2009 · NASA",
+        "texto": "Atitlán se puso verde"
+      },
+      "camara": [
+        {
+          "mira": "centro-lago",
+          "dist_km": 24,
+          "azimut": 180,
+          "elevacion": 30
+        },
+        {
+          "al": "fin",
+          "mira": "centro-lago",
+          "dist_km": 21,
+          "azimut": 174,
+          "elevacion": 28
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "florecer",
+          "pieza": "lagos",
+          "lago": "atitlan",
+          "cobertura": 0.35,
+          "dur": 4.5,
+          "semilla": 1
+        }
+      ],
+      "n": 1,
+      "tipo": "gancho",
+      "acto": 1
+    },
+    {
+      "n": 2,
+      "acto": 1,
+      "secuencia": 2,
+      "mundo": "costa-de-oro",
+      "transicion": "oscuro",
+      "fundido_s": 0.8,
+      "texto": "Antes, en 1934, el escritor Aldous Huxley lo comparó con el lago de Como.",
+      "titular": {
+        "kicker": "PANAJACHEL · 1934 · ALDOUS HUXLEY",
+        "texto": "«Como el lago de Como»"
+      },
+      "camara": [
+        {
+          "mira": [
+            -10,
+            -10
+          ],
+          "dist_m": 360,
+          "azimut": 255,
+          "elevacion": 14
+        },
+        {
+          "dice": "Aldous Huxley",
+          "mira": [
+            -10,
+            -10
+          ],
+          "dist_m": 320,
+          "azimut": 245,
+          "elevacion": 13
+        },
+        {
+          "al": "fin",
+          "mira": [
+            -15,
+            -15
+          ],
+          "dist_m": 280,
+          "azimut": 232,
+          "elevacion": 15
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "lago de Como",
+          "tipo": "resaltar",
+          "pieza": "orilla",
+          "dur": 2
+        }
+      ],
+      "tipo": "escena"
+    },
+    {
+      "n": 3,
+      "acto": 1,
+      "secuencia": 2,
+      "mundo": "costa-de-oro",
+      "texto": "En Panajachel, cuenta el antropólogo Sol Tax, ya había hoteles y casas de campo de ricos y extranjeros en la orilla.",
+      "titular": {
+        "kicker": "AÑOS 30 · SEGÚN SOL TAX",
+        "texto": "La «costa de oro»"
+      },
+      "camara": [
+        {
+          "dice": "ya había hoteles",
+          "mira": [
+            -45,
+            -20
+          ],
+          "dist_m": 260,
+          "azimut": 182,
+          "elevacion": 30
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "hoteles",
+          "lugar": [
+            -46,
+            -20
+          ],
+          "texto": "Hoteles y casas de campo",
+          "sub": "En la orilla"
+        }
+      ],
+      "tipo": "escena"
+    },
+    {
+      "n": 4,
+      "acto": 1,
+      "secuencia": 2,
+      "mundo": "costa-de-oro",
+      "texto": "La carretera era de tierra, y la gente vivía de vender cebolla, ajo, fruta y café.",
+      "camara": [
+        {
+          "dice": "la gente vivía",
+          "mira": [
+            -85,
+            -20
+          ],
+          "dist_m": 70,
+          "azimut": 200,
+          "elevacion": 20
+        },
+        {
+          "al": "fin",
+          "mira": [
+            -88,
+            -28
+          ],
+          "dist_m": 55,
+          "azimut": 208,
+          "elevacion": 18
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "era de tierra",
+          "lugar": [
+            -95,
+            -10
+          ],
+          "texto": "Camino de tierra",
+          "hasta_dice": "cebolla"
+        },
+        {
+          "dice": "cebolla",
+          "lugar": [
+            -95,
+            -40
+          ],
+          "texto": "Cebolla, ajo, fruta y café",
+          "dura": 2.6
+        }
+      ],
+      "tipo": "escena"
+    },
+    {
+      "n": 5,
+      "acto": 2,
+      "secuencia": 3,
+      "mundo": "tular",
+      "transicion": "oscuro",
+      "fundido_s": 0.8,
+      "texto": "Entre el tul de la orilla vivía el pato poc, que no existía en ningún otro lugar: hacia 1960 quedaban unos {200:m}.",
+      "titular": {
+        "kicker": "LAGO DE ATITLÁN",
+        "texto": "El tular de la orilla"
+      },
+      "camara": [
+        {
+          "mira": [
+            40,
+            85
+          ],
+          "dist_m": 90,
+          "azimut": 250,
+          "elevacion": 16
+        },
+        {
+          "dice": "vivía el pato poc",
+          "mira": [
+            52,
+            98
+          ],
+          "dist_m": 38,
+          "azimut": 262,
+          "elevacion": 9
+        },
+        {
+          "dice": "hacia 1960",
+          "mira": [
+            52,
+            100
+          ],
+          "dist_m": 60,
+          "azimut": 245,
+          "elevacion": 14
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "pato poc",
+          "lugar": [
+            52,
+            98
+          ],
+          "texto": "Poc",
+          "sub": "Solo vivía en Atitlán",
+          "hasta_dice": "hacia 1960"
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "{200:m}",
+          "valor": "200",
+          "rotulo": "pocs hacia 1960",
+          "cifra": "poc-c01",
+          "dura": 2.2
+        }
+      ],
+      "tipo": "escena"
+    },
+    {
+      "n": 6,
+      "acto": 2,
+      "secuencia": 3,
+      "mundo": "tular",
+      "texto": "A finales de los cincuenta sembraron lobina negra para pesca deportiva; según Cornell, idea de hoteleros y una aerolínea.",
+      "titular": {
+        "kicker": "SEGÚN CORNELL (1996)",
+        "texto": "Llega la lobina"
+      },
+      "camara": [
+        {
+          "dice": "lobina negra",
+          "mira": [
+            50,
+            101
+          ],
+          "dist_m": 22,
+          "azimut": 285,
+          "elevacion": 24
+        },
+        {
+          "dice": "según Cornell",
+          "mira": [
+            50,
+            100
+          ],
+          "dist_m": 45,
+          "azimut": 255,
+          "elevacion": 18
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "lobina negra",
+          "tipo": "aparecer",
+          "pieza": "lobina-1",
+          "dur": 0.6
+        },
+        {
+          "dice": "lobina negra",
+          "tipo": "aparecer",
+          "pieza": "lobina-2",
+          "dur": 0.6
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "lobina negra",
+          "lugar": [
+            50,
+            101
+          ],
+          "texto": "Lobina negra",
+          "sub": "Pez sembrado"
+        }
+      ],
+      "tipo": "escena"
+    },
+    {
+      "n": 7,
+      "acto": 2,
+      "secuencia": 3,
+      "mundo": "tular",
+      "texto": "En 1965, la bióloga Anne LaBastille anotó lo que acorralaba al poc: el corte del tul, las casas nuevas, las lanchas y el nivel del agua.",
+      "titular": {
+        "kicker": "1965 · ANNE LABASTILLE",
+        "texto": "Lo que acorralaba al poc"
+      },
+      "camara": [
+        {
+          "mira": [
+            30,
+            90
+          ],
+          "dist_m": 170,
+          "azimut": 240,
+          "elevacion": 22
+        },
+        {
+          "dice": "acorralaba al poc",
+          "mira": [
+            30,
+            92
+          ],
+          "dist_m": 155,
+          "azimut": 236,
+          "elevacion": 22
+        },
+        {
+          "dice": "el nivel del agua",
+          "mira": [
+            30,
+            92
+          ],
+          "dist_m": 150,
+          "azimut": 232,
+          "elevacion": 21
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "el corte del tul",
+          "lugar": [
+            24,
+            92
+          ],
+          "texto": "Corte de tul",
+          "hasta_dice": "las lanchas"
+        },
+        {
+          "dice": "el nivel del agua",
+          "lugar": [
+            40,
+            100
+          ],
+          "texto": "Nivel del agua",
+          "alto": 190
+        }
+      ],
+      "tipo": "escena"
+    },
+    {
+      "n": 8,
+      "acto": 2,
+      "secuencia": 3,
+      "mundo": "tular",
+      "texto": "Tras el terremoto de 1976 el lago bajó, y se perdió el 83 % de los juncos.",
+      "titular": {
+        "kicker": "1976 · SEGÚN CORNELL",
+        "texto": "El lago bajó"
+      },
+      "camara": [
+        {
+          "dice": "el lago bajó",
+          "mira": [
+            30,
+            90
+          ],
+          "dist_m": 140,
+          "azimut": 230,
+          "elevacion": 20
+        },
+        {
+          "al": "fin",
+          "mira": [
+            45,
+            100
+          ],
+          "dist_m": 120,
+          "azimut": 245,
+          "elevacion": 17
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "el lago bajó",
+          "tipo": "bajarlago",
+          "pieza": "orilla-tul",
+          "baja": 0.5,
+          "seca": 1,
+          "tul": 0.8,
+          "dur": 5,
+          "semilla": 1
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "83 %",
+          "valor": "83 %",
+          "rotulo": "de los juncos, perdidos",
+          "cifra": "poc-c08",
+          "fuente": "Cornell (1996)"
+        }
+      ],
+      "tipo": "escena"
+    },
+    {
+      "n": 9,
+      "acto": 2,
+      "secuencia": 3,
+      "mundo": "tular",
+      "texto": "En 1983 quedaban unos 50, y a finales de los ochenta ya no se halló ninguno.",
+      "camara": [
+        {
+          "dice": "quedaban unos 50",
+          "mira": [
+            52,
+            95
+          ],
+          "dist_m": 50,
+          "azimut": 258,
+          "elevacion": 14
+        },
+        {
+          "al": "fin",
+          "mira": [
+            50,
+            98
+          ],
+          "dist_m": 90,
+          "azimut": 250,
+          "elevacion": 18
+        }
+      ],
+      "eventos": [
+        {
+          "dice": "unos 50",
+          "tipo": "desaparecer",
+          "pieza": "poc-3",
+          "dur": 0.8
+        },
+        {
+          "dice": "ya no se halló ninguno",
+          "tipo": "desaparecer",
+          "pieza": "poc-1",
+          "dur": 0.8
+        },
+        {
+          "dice": "ya no se halló ninguno",
+          "tipo": "desaparecer",
+          "pieza": "poc-2",
+          "dur": 0.8
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "50",
+          "valor": "50",
+          "rotulo": "pocs en 1983",
+          "cifra": "poc-c05",
+          "fuente": "LaBastille, según Hunter (1988)"
+        }
+      ],
+      "tipo": "escena"
+    },
+    {
+      "n": 10,
+      "acto": 3,
+      "secuencia": 4,
+      "mundo": "orilla-hoy",
+      "transicion": "oscuro",
+      "fundido_s": 0.8,
+      "texto": "La orilla siguió llenándose de casas de verano y de hoteles. En 2025, AMSCLAE halló tul en 8,167 de 42,193 metros de orilla.",
+      "titular": {
+        "kicker": "LAGO DE ATITLÁN · HASTA HOY",
+        "texto": "La orilla se llena"
+      },
+      "camara": [
+        {
+          "mira": [
+            0,
+            -35
+          ],
+          "dist_m": 320,
+          "azimut": 180,
+          "elevacion": 22
+        },
+        {
+          "dice": "de hoteles",
+          "mira": [
+            -10,
+            -35
+          ],
+          "dist_m": 290,
+          "azimut": 188,
+          "elevacion": 20
+        },
+        {
+          "dice": "halló tul",
+          "mira": [
+            -200,
+            12
+          ],
+          "dist_m": 60,
+          "azimut": 170,
+          "elevacion": 12
+        },
+        {
+          "dice": "metros de orilla",
+          "mira": [
+            -185,
+            8
+          ],
+          "dist_m": 150,
+          "azimut": 178,
+          "elevacion": 18
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "poblar",
+          "pieza": "orilla-hoy",
+          "de": 0.05,
+          "a": 0.85,
+          "orden": "izquierda-derecha",
+          "epoca": "hoy",
+          "dur": 3.6,
+          "semilla": 1
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "halló tul",
+          "lugar": [
+            -200,
+            12
+          ],
+          "texto": "Tul",
+          "sub": "A trozos en la orilla"
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "8,167",
+          "valor": "8,167",
+          "rotulo": "metros con tul, de 42,193 de orilla en seis municipios",
+          "cifra": "poc-c09",
+          "fuente": "AMSCLAE (2025)"
+        }
+      ],
+      "tipo": "escena"
+    },
+    {
+      "n": 11,
+      "acto": 3,
+      "secuencia": 4,
+      "mundo": "drenaje-hoy",
+      "transicion": "fundido",
+      "fundido_s": 0.6,
+      "texto": "En 2018, solo el 28 % del agua residual de los poblados de la orilla entraba a una planta, y el 46 % de su gente no tenía drenaje. Y el lago no tiene salida por ningún río.",
+      "titular": {
+        "kicker": "AMSCLAE · 2018",
+        "texto": "El agua de los poblados"
+      },
+      "camara": [
+        {
+          "mira": [
+            30,
+            0
+          ],
+          "dist_m": 220,
+          "azimut": 180,
+          "elevacion": 26
+        },
+        {
+          "dice": "de los poblados",
+          "mira": [
+            30,
+            0
+          ],
+          "dist_m": 220,
+          "azimut": 180,
+          "elevacion": 26
+        },
+        {
+          "dice": "entraba a una planta",
+          "mira": [
+            -84,
+            -33
+          ],
+          "dist_m": 150,
+          "azimut": 182,
+          "elevacion": 24
+        },
+        {
+          "dice": "y el 46 %",
+          "mira": [
+            -84,
+            -33
+          ],
+          "dist_m": 150,
+          "azimut": 182,
+          "elevacion": 24
+        },
+        {
+          "dice": "no tenía drenaje",
+          "mira": [
+            0,
+            -15
+          ],
+          "dist_m": 200,
+          "azimut": 180,
+          "elevacion": 26
+        },
+        {
+          "dice": "el lago no tiene salida",
+          "mira": [
+            10,
+            20
+          ],
+          "dist_m": 380,
+          "azimut": 180,
+          "elevacion": 30
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "verter",
+          "pieza": "drenaje",
+          "mancha": 0.6,
+          "vel": 1.2,
+          "dur": 6
+        }
+      ],
+      "marcas": [
+        {
+          "dice": "del agua residual",
+          "lugar": [
+            27.5,
+            5
+          ],
+          "texto": "Descarga sin tratar",
+          "dura": 2.0
+        },
+        {
+          "dice": "entraba a una planta",
+          "lugar": [
+            -84,
+            -33
+          ],
+          "texto": "Planta de tratamiento",
+          "dura": 2.4
+        },
+        {
+          "dice": "el lago no tiene salida",
+          "lugar": [
+            10,
+            60
+          ],
+          "texto": "Sin río de salida"
+        }
+      ],
+      "cifras": [
+        {
+          "dice": "28 %",
+          "valor": "28 %",
+          "rotulo": "del agua residual entra a una planta",
+          "cifra": "hoy-c05",
+          "fuente": "AMSCLAE",
+          "dura": 3.5
+        },
+        {
+          "dice": "46 %",
+          "valor": "46 %",
+          "rotulo": "de la gente, sin drenaje",
+          "cifra": "hoy-c10",
+          "fuente": "AMSCLAE"
+        }
+      ],
+      "tipo": "escena"
+    },
+    {
+      "n": 12,
+      "tipo": "cierre",
+      "acto": 3,
+      "secuencia": 5,
+      "mundo": "lago",
+      "transicion": "fundido",
+      "fundido_s": 0.8,
+      "texto": "El tul sigue a trozos en la orilla. El pato que vivía en él, no.",
+      "final": "El tul sigue a trozos. El poc, no.",
+      "camara": [
+        {
+          "mira": "centro-lago",
+          "dist_km": 28,
+          "azimut": 168,
+          "elevacion": 34
+        },
+        {
+          "dice": "El pato que vivía en él",
+          "mira": [
+            -91.19,
+            14.665
+          ],
+          "dist_km": 25,
+          "azimut": 172,
+          "elevacion": 31
+        },
+        {
+          "al": "fin",
+          "mira": "centro-lago",
+          "dist_km": 24,
+          "azimut": 180,
+          "elevacion": 30
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "resaltar",
+          "pieza": "lagos",
+          "dur": 2.5
+        }
+      ]
+    }
+  ],
+  "estilo": {
+    "id": "color",
+    "razon": "El lago de Atitlán se reconoce de día por su azul entre volcanes verdes: el mapa de día, con relieve teñido por altura y sol, es la postal que el antes y el ahora comparan. Noche apagaría el agua y el verde de la floración; los estilos de Blender no dibujan lagos ni volcanes (motor three). Los mundos de cerca van en «dia».",
+    "confianza": "alta",
+    "candidatos": [
+      "color",
+      "dia"
+    ]
+  },
+  "idea_visual": "El lago de Atitlán entre sus volcanes, y de cerca su orilla: el tul verde donde nadaba el poc se seca y se vacía mientras la playa se llena de casas con los años corriendo en pantalla.",
+  "protagonista": "lagos",
+  "mundos": {
+    "lago": {
+      "escala": "pais",
+      "set": "guatemala",
+      "exageracion": 3,
+      "estilo": "color",
+      "protagonista": "lagos",
+      "lugares": {
+        "panajachel": {
+          "lon": -91.1559757,
+          "lat": 14.7421699,
+          "nombre": "Panajachel"
+        },
+        "santiago": {
+          "lon": -91.2295526,
+          "lat": 14.6388934,
+          "nombre": "Santiago Atitlán"
+        },
+        "san-pedro": {
+          "lon": -91.2615284,
+          "lat": 14.6541186,
+          "nombre": "San Pedro La Laguna"
+        },
+        "san-marcos": {
+          "lon": -91.2593697,
+          "lat": 14.735498,
+          "nombre": "San Marcos La Laguna"
+        },
+        "centro-lago": {
+          "lon": -91.186161,
+          "lat": 14.6801463,
+          "nombre": "Lago de Atitlán"
+        },
+        "v-atitlan": {
+          "lon": -91.186,
+          "lat": 14.583,
+          "nombre": "Volcán Atitlán"
+        },
+        "v-toliman": {
+          "lon": -91.189,
+          "lat": 14.612,
+          "nombre": "Volcán Tolimán"
+        }
+      },
+      "piezas": [
+        {
+          "id": "lagos",
+          "tipo": "lagos",
+          "nombres": [
+            "atitlan"
+          ]
+        },
+        {
+          "id": "volcanes",
+          "tipo": "volcanes",
+          "lugares": [
+            "v-atitlan",
+            "v-toliman"
+          ],
+          "radio_km": 4,
+          "crater": true,
+          "forma": "cono",
+          "encendido": "queda"
+        },
+        {
+          "id": "pueblos",
+          "tipo": "luces",
+          "lugares": [
+            "panajachel",
+            "santiago",
+            "san-pedro",
+            "san-marcos"
+          ]
+        }
+      ]
+    },
+    "costa-de-oro": {
+      "escala": "esquema",
+      "receta": "campo",
+      "horizonte": "montanas",
+      "semilla": 11,
+      "tamano_m": 1600,
+      "estilo": "dia",
+      "hora": "dia",
+      "protagonista": "orilla",
+      "piezas": [
+        {
+          "id": "orilla",
+          "tipo": "orillalago",
+          "lugar": [
+            0,
+            0
+          ],
+          "rumbo": 0,
+          "tamano": 1,
+          "tul": 0.6,
+          "seco": 0,
+          "construcciones": 0.6,
+          "epoca": "antes",
+          "camino": "tierra",
+          "personas": 6,
+          "cayucos": 2,
+          "lanchas": 2,
+          "aves": 0,
+          "semilla": 1,
+          "cargadores": 4,
+          "vendedoras": 4,
+          "dispersion": 0.8,
+          "gente_escala": 1.7
+        }
+      ],
+      "escena": {
+        "que_pasa": "Años 30, según Sol Tax: en la orilla del delta de Panajachel hay hoteles y casas de campo bajas; detrás pasa el camino de tierra con gente a pie que carga y vende, un camión-bus y carros; cayucos y lanchas de gasolina cruzan el lago desde el muelle",
+        "quien": "vendedoras en el muelle y la playa, cargadores con mecapal que caminan por el camino, un remero en su cayuco",
+        "con_que": "mecapal, cayucos de tronco, lanchas de gasolina, un camión-bus y un carro genéricos",
+        "se_mueve": "los cayucos y las lanchas que cruzan, los cargadores que caminan, el carro y el camión-bus por el camino de tierra",
+        "sostiene": [
+          {
+            "que": "hoteles y casas de campo bajos y genéricos en la orilla",
+            "hecho": "visual-costa-de-oro-h01"
+          },
+          {
+            "que": "camino ancho de tierra, adoquín solo en el centro del pueblo",
+            "hecho": "visual-costa-de-oro-h02"
+          },
+          {
+            "que": "gente a pie con carga, camiones, camión-bus y carros por el camino",
+            "hecho": "visual-costa-de-oro-h03"
+          },
+          {
+            "que": "cargadores con mecapal, sin sacos concretos",
+            "hecho": "visual-costa-de-oro-h05"
+          },
+          {
+            "que": "casas indígenas de caña y adobe con paja entre cafetales",
+            "hecho": "visual-costa-de-oro-h06"
+          },
+          {
+            "que": "casas ladinas de adobe encalado con teja y reja",
+            "hecho": "visual-costa-de-oro-h07"
+          },
+          {
+            "que": "mujeres que venden en el muelle y los caminos",
+            "hecho": "visual-costa-de-oro-h08"
+          },
+          {
+            "que": "lanchas de gasolina y cayucos que cruzan el lago",
+            "hecho": "visual-costa-de-oro-h09"
+          },
+          {
+            "que": "cayuco de tronco como transporte, no para pescar",
+            "hecho": "visual-costa-de-oro-h10"
+          },
+          {
+            "que": "forma, techos y número de hoteles y casas; modelo del carro y del camión-bus",
+            "generico": true
+          }
+        ]
+      }
+    },
+    "tular": {
+      "escala": "esquema",
+      "receta": "campo",
+      "horizonte": "montanas",
+      "semilla": 23,
+      "tamano_m": 1600,
+      "estilo": "dia",
+      "hora": "amanecer",
+      "hora_razon": "el poc come cerca de la orilla en la mañana y descansa al abrigo del tul (visual-tular-h02): la primera luz es cuando se le ve",
+      "protagonista": "orilla-tul",
+      "piezas": [
+        {
+          "id": "orilla-tul",
+          "tipo": "orillalago",
+          "lugar": [
+            0,
+            0
+          ],
+          "rumbo": 0,
+          "tamano": 1,
+          "tul": 0,
+          "seco": 0,
+          "construcciones": 0.2,
+          "epoca": "antes",
+          "camino": "tierra",
+          "personas": 6,
+          "cayucos": 0,
+          "lanchas": 1,
+          "aves": 0,
+          "semilla": 3
+        },
+        {
+          "id": "poc-1",
+          "tipo": "actor",
+          "objeto": "poc",
+          "puntos": [
+            [
+              50,
+              92
+            ],
+            [
+              54,
+              104
+            ]
+          ],
+          "claves": [
+            {
+              "t": 0,
+              "s": 0,
+              "vel_kmh": 0.9
+            }
+          ],
+          "tamano": 4,
+          "pose": "nadar"
+        },
+        {
+          "id": "poc-2",
+          "tipo": "actor",
+          "objeto": "poc",
+          "puntos": [
+            [
+              56,
+              118
+            ],
+            [
+              52,
+              108
+            ]
+          ],
+          "claves": [
+            {
+              "t": 0,
+              "s": 0,
+              "vel_kmh": 0.8
+            }
+          ],
+          "tamano": 4,
+          "pose": "nadar"
+        },
+        {
+          "id": "poc-3",
+          "tipo": "actor",
+          "objeto": "poc",
+          "puntos": [
+            [
+              49,
+              82
+            ],
+            [
+              52,
+              86
+            ]
+          ],
+          "claves": [
+            {
+              "t": 0,
+              "s": 0,
+              "vel_kmh": 0.3
+            }
+          ],
+          "tamano": 4,
+          "pose": "nadar"
+        },
+        {
+          "id": "cayuco-tul",
+          "tipo": "actor",
+          "objeto": "cayuco",
+          "puntos": [
+            [
+              60,
+              150
+            ],
+            [
+              70,
+              60
+            ]
+          ],
+          "claves": [
+            {
+              "t": 0,
+              "s": 0,
+              "vel_kmh": 3
+            }
+          ],
+          "pose": "tul",
+          "variante": 1
+        },
+        {
+          "id": "lobina-1",
+          "tipo": "actor",
+          "objeto": "lobina",
+          "puntos": [
+            [
+              46,
+              96
+            ],
+            [
+              52,
+              106
+            ]
+          ],
+          "claves": [
+            {
+              "t": 0,
+              "s": 0,
+              "vel_kmh": 1.6
+            }
+          ],
+          "lev_m": 0.08,
+          "tamano": 2,
+          "variante": 0
+        },
+        {
+          "id": "lobina-2",
+          "tipo": "actor",
+          "objeto": "lobina",
+          "lugar": [
+            50,
+            100
+          ],
+          "rumbo": 200,
+          "lev_m": 0.08,
+          "tamano": 2,
+          "variante": 2,
+          "pose": "quieto"
+        }
+      ],
+      "escena": {
+        "que_pasa": "El tular de la orilla donde el poc come y descansa; la gente corta tul para petates y lo lleva en cayuco; entra la lobina; LaBastille anota lo que acorrala al poc; tras 1976 el lago baja y el tul queda en seco; los pocs dejan de verse",
+        "quien": "quien corta tul de pie en el agua baja, un remero con su cayuco cargado de tul, vendedoras y cargadores en la orilla",
+        "con_que": "manojos de tul, cayuco de tronco, una lancha de motor genérica",
+        "se_mueve": "los pocs que nadan y se zambullen, el cayuco con tul, las lobinas a flor de agua, la lancha que cruza, el agua que se retira y el tul que se seca y se dobla",
+        "sostiene": [
+          {
+            "que": "el poc: zambullidor oscuro y robusto de pico pálido",
+            "hecho": "visual-tular-h01"
+          },
+          {
+            "que": "el poc que come cerca de la orilla y descansa al abrigo del tul",
+            "hecho": "visual-tular-h02"
+          },
+          {
+            "que": "pocs entre manchas de tul y enea, con una lancha cerca",
+            "hecho": "visual-tular-h04"
+          },
+          {
+            "que": "tul y enea (petates, sopladores, amarres)",
+            "hecho": "visual-tular-h05"
+          },
+          {
+            "que": "quien corta tul junto a donde vive el poc",
+            "hecho": "visual-tular-h06"
+          },
+          {
+            "que": "la lobina: pez alargado, oscuro y grande",
+            "hecho": "visual-tular-h07"
+          },
+          {
+            "que": "el tul que queda en seco al bajar el agua, sin medida",
+            "hecho": "visual-tular-h08"
+          },
+          {
+            "que": "color, altura y forma del tul; la lancha; cuántos pocs se dibujan",
+            "generico": true
+          }
+        ]
+      }
+    },
+    "orilla-hoy": {
+      "escala": "esquema",
+      "receta": "campo",
+      "horizonte": "montanas",
+      "semilla": 37,
+      "tamano_m": 1600,
+      "estilo": "dia",
+      "hora": "dia",
+      "protagonista": "orilla-hoy",
+      "piezas": [
+        {
+          "id": "orilla-hoy",
+          "tipo": "orillalago",
+          "lugar": [
+            0,
+            0
+          ],
+          "rumbo": 90,
+          "tamano": 1,
+          "tul": 0.3,
+          "seco": 0,
+          "construcciones": 0,
+          "epoca": "hoy",
+          "camino": "asfalto",
+          "personas": 6,
+          "cayucos": 1,
+          "lanchas": 3,
+          "aves": 0,
+          "semilla": 1
+        }
+      ],
+      "escena": {
+        "que_pasa": "La orilla se va llenando de casas de verano y hoteles; las lanchas salen del muelle y la gente camina por la playa y el camino",
+        "quien": "vendedoras, paseantes y un huésped en la orilla, lancheros",
+        "con_que": "lanchas de motor genéricas, un cayuco, carros por el camino asfaltado",
+        "se_mueve": "las construcciones que brotan lote a lote, las lanchas que cruzan con su estela, la gente que camina",
+        "sostiene": [
+          {
+            "que": "casas de verano y hoteles que se multiplican en la orilla, genéricos",
+            "hecho": "visual-orilla-hoy-h07"
+          },
+          {
+            "que": "lanchas con motor que salen del muelle",
+            "hecho": "visual-orilla-hoy-h08"
+          },
+          {
+            "que": "cuántas construcciones brotan, su estilo y su material; el tipo de lancha",
+            "generico": true
+          }
+        ]
+      }
+    },
+    "drenaje-hoy": {
+      "escala": "esquema",
+      "receta": "campo",
+      "horizonte": "montanas",
+      "semilla": 41,
+      "tamano_m": 1600,
+      "estilo": "dia",
+      "hora": "dia",
+      "protagonista": "drenaje",
+      "piezas": [
+        {
+          "id": "drenaje",
+          "tipo": "drenajeorilla",
+          "lugar": [
+            0,
+            0
+          ],
+          "rumbo": 90,
+          "tamano": 1,
+          "a_planta": 0.3,
+          "sin_drenaje": 0.45,
+          "personas": 4,
+          "semilla": 1
+        }
+      ],
+      "escena": {
+        "que_pasa": "El agua residual de un pueblo de la orilla: una parte entra a una planta de tratamiento; otra baja cruda a la orilla por los desagües; las casas sin drenaje la dejan en fosas; el lago no tiene río de salida",
+        "quien": "vecinos que caminan por la calle del pueblo",
+        "con_que": "tubos de las casas, desagües en la playa, fosas, una planta de tratamiento genérica",
+        "se_mueve": "el agua residual en pulsos por los tubos, los chorros de los desagües, la mancha turbia que se abre en el agua, la gente en la calle",
+        "sostiene": [
+          {
+            "que": "28 % a planta, el resto crudo a la orilla o infiltrado; la mancha solo frente a las descargas crudas",
+            "hecho": "visual-orilla-hoy-h01"
+          },
+          {
+            "que": "varias descargas que bajan a la orilla, el punto más bajo",
+            "hecho": "visual-orilla-hoy-h02"
+          },
+          {
+            "que": "planta de tratamiento genérica con tanques",
+            "hecho": "visual-orilla-hoy-h03"
+          },
+          {
+            "que": "la salida de la planta no se pinta como agua limpia",
+            "hecho": "visual-orilla-hoy-h05"
+          },
+          {
+            "que": "un lago sin río de salida",
+            "hecho": "visual-orilla-hoy-h09"
+          },
+          {
+            "que": "la forma de las casas, los tubos y la planta; la proporción dibujada",
+            "generico": true
+          }
+        ]
+      }
+    }
+  },
+  "aviso": "Esquema",
+  "gancho": {
+    "id": "g1",
+    "familia": "revelacion",
+    "elegido_por": "usuario"
+  },
+  "narracion": "La NASA fotografió el lago de Atitlán, en Guatemala, verde de cianobacterias. Antes, en 1934, el escritor Aldous Huxley lo comparó con el lago de Como. En Panajachel, cuenta el antropólogo Sol Tax, ya había hoteles y casas de campo de ricos y extranjeros en la orilla. La carretera era de tierra, y la gente vivía de vender cebolla, ajo, fruta y café. Entre el tul de la orilla vivía el pato poc, que no existía en ningún otro lugar: hacia 1960 quedaban unos {200:m}. A finales de los cincuenta sembraron lobina negra para pesca deportiva; según Cornell, idea de hoteleros y una aerolínea. En 1965, la bióloga Anne LaBastille anotó lo que acorralaba al poc: el corte del tul, las casas nuevas, las lanchas y el nivel del agua. Tras el terremoto de 1976 el lago bajó, y se perdió el 83 % de los juncos. En 1983 quedaban unos 50, y a finales de los ochenta ya no se halló ninguno. La orilla siguió llenándose de casas de verano y de hoteles. En 2025, AMSCLAE halló tul en 8,167 de 42,193 metros de orilla. En 2018, solo el 28 % del agua residual de los poblados de la orilla entraba a una planta, y el 46 % de su gente no tenía drenaje. Y el lago no tiene salida por ningún río. El tul sigue a trozos en la orilla. El pato que vivía en él, no.",
+  "no_afirmar": [
+    "el año de apertura de ningún hotel",
+    "cuándo se asfaltó la carretera",
+    "cuántos hoteles hay hoy (no hay cifra oficial): las construcciones que brotan son ilustrativas y no se cuentan",
+    "población de hoy de Panajachel o de la cuenca",
+    "Pan American (la fuente no nombra la aerolínea)",
+    "que los chalets o los hoteles cortaron el tul: los factores de LaBastille van como marcas separadas, sin flechas ni causa entre ellos",
+    "el peso de cada causa en la extinción del poc",
+    "un año exacto de la extinción («a finales de los ochenta») ni de la lobina (1957 vs 1960: «a finales de los cincuenta»)",
+    "el porcentaje de la floración de 2009 (en disputa): las manchas no se rotulan",
+    "que 2009 fue la primera floración",
+    "la ubicación del refugio del poc",
+    "que las plantas de tratamiento se duplicaron (12 en 2018 y 23 en 2025 miden alcances distintos)",
+    "los metros que bajó el lago tras 1976 (en disputa): el descenso se dibuja sin medida",
+    "dónde queda hoy el tul sobre el mapa (AMSCLAE da metros, no ubicación): no se dibuja en el mundo lago",
+    "que el agua residual causó la floración de 2009 como hecho propio: la NASA cita a la prensa local; si se dice, se atribuye",
+    "el parecido de ninguna persona real (Huxley, Tax, LaBastille): muñecos sin rostro o nada",
+    "un pescador de Panajachel en cayuco: el cayuco es transporte (o carga tul), sin aparejo de pesca",
+    "sacos o canastos concretos de los cargadores: solo mecapal y carga",
+    "cuántos pocs se dibujan frente al número del rótulo: los pocs son ilustrativos",
+    "que las lanchas contaminen, o que las casas y los hoteles descarguen directo al lago",
+    "un porcentaje o una extensión para la mancha turbia: se dibuja sin rótulo",
+    "que la planta del esquema sea la de Panajachel o depure bien (9 de 12 no cumplen o solo a veces)",
+    "«costa de oro» como nombre de época: es expresión de Tax y va atribuida en el kicker",
+    "un pescador de Panajachel en cayuco: el cayuco es transporte (o carga tul), sin aparejo de pesca",
+    "sacos o canastos concretos de los cargadores: solo mecapal y carga",
+    "cuántos pocs se dibujan frente al número del rótulo: los pocs son ilustrativos",
+    "que las lanchas contaminen, o que las casas y los hoteles descarguen directo al lago",
+    "un porcentaje o una extensión para la mancha turbia: se dibuja sin rótulo",
+    "que la planta del esquema sea la de Panajachel o depure bien (9 de 12 no cumplen o solo a veces)",
+    "«costa de oro» como nombre de época: es expresión de Tax y va atribuida en el kicker"
+  ],
+  "caption": {
+    "tiktok": "Atitlán antes de los hoteles: hoteles y casas de campo ya en la orilla en los años 30, un pato que solo vivía ahí y un lago que se puso verde en 2009.\n\nEn 2018, solo el 28 % del agua residual de 20 poblados entraba a una planta. En 2025 había tul en 8,167 de 42,193 m de orilla medidos.\n\nFuentes: Sol Tax, LaBastille, Hunter (1988), Cornell (1996), AMSCLAE, NASA.\n\n#Guatemala #Atitlan #LagoDeAtitlan #Panajachel #Historia",
+    "instagram": "Atitlán antes de los hoteles.\n\nEn los años 30, cuenta Sol Tax, Panajachel ya tenía hoteles y casas de campo en la orilla y un camino de tierra. Entre el tul vivía el poc, un pato que no existía en ningún otro lugar: unos 200 hacia 1960, unos 50 en 1983 y ninguno hallado a finales de los ochenta.\n\nHoy: en 2018, solo el 28 % del agua residual de 20 poblados entraba a una planta, y el 46 % de su gente no tenía drenaje. El lago no tiene río de salida. En 2025, AMSCLAE halló tul en 8,167 de 42,193 m de orilla.\n\nFuentes: Sol Tax, Anne LaBastille, Hunter (1988), Cornell (1996), AMSCLAE, NASA.\n\n#Guatemala #LagoDeAtitlan #Atitlan #Panajachel #Historia #Naturaleza",
+    "facebook": "El lago de Atitlán antes de los hoteles de hoy.\n\nEn 1934, Aldous Huxley lo comparó con el lago de Como. En los años 30, según el antropólogo Sol Tax, Panajachel ya tenía hoteles y casas de campo en la orilla. Entre el tul vivía el pato poc, que solo existía aquí: unos 200 hacia 1960, unos 50 en 1983 y ninguno hallado a finales de los ochenta. Según Cornell (1996), tras el terremoto de 1976 el lago bajó y se perdió el 83 % de los juncos.\n\nEn 2018, según AMSCLAE, solo el 28 % del agua residual de 20 poblados entraba a una planta. En 2025 halló tul en 8,167 de 42,193 m de orilla.\n\n¿Lo conociste antes?",
+    "shorts": "Atitlán antes de los hoteles: el pato que solo vivía ahí\n\nPanajachel en los años 30, el poc entre el tul y la orilla de hoy, en una maqueta 3D. En 2018, solo el 28 % del agua residual de 20 poblados entraba a una planta.\n\nFuentes: Sol Tax, LaBastille, Cornell (1996), AMSCLAE, NASA.\n\n#Shorts #Guatemala #Atitlan"
+  },
+  "id": "video3d-atitlan-antes-de-los-hoteles",
+  "slug": "atitlan-antes-de-los-hoteles",
+  "tema": "El lago de Atitlán antes de los hoteles: cómo cambiaron sus orillas con el turismo, los chalets y los hoteles",
+  "fecha": "2026-11-17",
+  "paleta": "jade",
+  "musica": "jade-1",
+  "desde": null,
+  "motor": "three",
+  "duracion_s": 105.7,
+  "creditos_voz": 1521
+}

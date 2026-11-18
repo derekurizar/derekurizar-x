@@ -116,6 +116,2263 @@
       "entrega": "videos3d/2026-11-15-cafe-huehuetenango-taza",
       "minutos_pieza": 218.7,
       "registrado": "2026-11-16"
+    },
+    {
+      "pieza": "2026-11-16-tortrix",
+      "flujo": "historia",
+      "run": "wf_8ace988e-739",
+      "workflow": "historia",
+      "fecha": "2026-11-16",
+      "inicio": "2026-11-17T01:57:01.082000+00:00",
+      "fin": "2026-11-17T02:21:59.305000+00:00",
+      "minutos": 25.0,
+      "agentes": 22,
+      "completados": 22,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 404,
+        "output": 200815,
+        "cache_read": 8986064,
+        "cache_create": 1137273,
+        "total": 10324556
+      },
+      "herramientas": 254,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-editor": {
+          "agentes": 2,
+          "tokens": 350303,
+          "salida": 7573,
+          "minutos": 1.4
+        },
+        "historia-investigador": {
+          "agentes": 3,
+          "tokens": 2761135,
+          "salida": 34743,
+          "minutos": 6.0
+        },
+        "historia-verificador": {
+          "agentes": 3,
+          "tokens": 2507988,
+          "salida": 24646,
+          "minutos": 3.9
+        },
+        "video-gancho": {
+          "agentes": 1,
+          "tokens": 347884,
+          "salida": 5801,
+          "minutos": 0.9
+        },
+        "video-critico": {
+          "agentes": 4,
+          "tokens": 1741581,
+          "salida": 63546,
+          "minutos": 9.2
+        },
+        "historia-guionista": {
+          "agentes": 5,
+          "tokens": 2329808,
+          "salida": 46841,
+          "minutos": 7.2
+        },
+        "historia-oyente": {
+          "agentes": 4,
+          "tokens": 285857,
+          "salida": 17665,
+          "minutos": 1.9
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 12,
+          "tokens": 4769576,
+          "salida": 123761
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 10,
+          "tokens": 5554980,
+          "salida": 77054
+        }
+      },
+      "entrega": "historias/2026-11-16-tortrix",
+      "minutos_pieza": 46.3,
+      "registrado": "2026-11-16"
+    },
+    {
+      "pieza": "video3d-cuatro-capitales",
+      "flujo": "video3d",
+      "run": "wf_49016e95-da0",
+      "workflow": "video3d",
+      "fecha": "2026-11-16",
+      "inicio": "2026-11-17T02:11:19.118000+00:00",
+      "fin": "2026-11-17T04:11:19+00:00",
+      "minutos": 120.0,
+      "agentes": 22,
+      "completados": 22,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 1096,
+        "output": 817943,
+        "cache_read": 50270544,
+        "cache_create": 3016920,
+        "total": 54106503
+      },
+      "herramientas": 598,
+      "pico_alto": 7,
+      "por_rol": {
+        "video3d-director": {
+          "agentes": 9,
+          "tokens": 23638008,
+          "salida": 244004,
+          "minutos": 55.9
+        },
+        "historia-verificador": {
+          "agentes": 3,
+          "tokens": 3845439,
+          "salida": 54809,
+          "minutos": 8.1
+        },
+        "maqueta-constructor": {
+          "agentes": 7,
+          "tokens": 24208205,
+          "salida": 467447,
+          "minutos": 87.1
+        },
+        "video-critico": {
+          "agentes": 3,
+          "tokens": 2414851,
+          "salida": 51683,
+          "minutos": 8.5
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 19,
+          "tokens": 50261064,
+          "salida": 763134
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 3,
+          "tokens": 3845439,
+          "salida": 54809
+        }
+      },
+      "entrega": "videos3d/2026-11-16-cuatro-capitales",
+      "minutos_pieza": 168.4,
+      "registrado": "2026-11-16"
+    },
+    {
+      "pieza": "2026-11-16-saul-e-mendez",
+      "flujo": "historia",
+      "run": "wf_83da8d6e-0d6",
+      "workflow": "historia",
+      "fecha": "2026-11-16",
+      "inicio": "2026-11-17T02:12:10.144000+00:00",
+      "fin": "2026-11-17T02:36:23.578000+00:00",
+      "minutos": 24.2,
+      "agentes": 20,
+      "completados": 20,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 352,
+        "output": 177492,
+        "cache_read": 8133167,
+        "cache_create": 1043919,
+        "total": 9354930
+      },
+      "herramientas": 210,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-editor": {
+          "agentes": 2,
+          "tokens": 224443,
+          "salida": 6773,
+          "minutos": 1.3
+        },
+        "historia-investigador": {
+          "agentes": 2,
+          "tokens": 1468932,
+          "salida": 24268,
+          "minutos": 3.7
+        },
+        "historia-verificador": {
+          "agentes": 2,
+          "tokens": 2222630,
+          "salida": 25144,
+          "minutos": 3.5
+        },
+        "video-gancho": {
+          "agentes": 1,
+          "tokens": 352331,
+          "salida": 8979,
+          "minutos": 1.4
+        },
+        "video-critico": {
+          "agentes": 3,
+          "tokens": 1562726,
+          "salida": 45303,
+          "minutos": 6.5
+        },
+        "historia-guionista": {
+          "agentes": 6,
+          "tokens": 3160741,
+          "salida": 44570,
+          "minutos": 7.1
+        },
+        "historia-oyente": {
+          "agentes": 4,
+          "tokens": 363127,
+          "salida": 22455,
+          "minutos": 2.4
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 12,
+          "tokens": 5300241,
+          "salida": 105625
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 8,
+          "tokens": 4054689,
+          "salida": 71867
+        }
+      },
+      "entrega": "historias/2026-11-16-saul-e-mendez",
+      "minutos_pieza": 49.4,
+      "registrado": "2026-11-16"
+    },
+    {
+      "pieza": "2026-11-16-tortrix",
+      "flujo": "historia",
+      "run": "wf_b9529227-873",
+      "workflow": "plano",
+      "fecha": "2026-11-16",
+      "inicio": "2026-11-17T02:25:21.044000+00:00",
+      "fin": "2026-11-17T02:32:21.205000+00:00",
+      "minutos": 7.0,
+      "agentes": 3,
+      "completados": 3,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 70,
+        "output": 44109,
+        "cache_read": 2177482,
+        "cache_create": 192479,
+        "total": 2414140
+      },
+      "herramientas": 38,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-realizador": {
+          "agentes": 2,
+          "tokens": 2326781,
+          "salida": 41004,
+          "minutos": 6.7
+        },
+        "historia-oyente": {
+          "agentes": 1,
+          "tokens": 87359,
+          "salida": 3105,
+          "minutos": 0.4
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 2,
+          "tokens": 2326781,
+          "salida": 41004
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 1,
+          "tokens": 87359,
+          "salida": 3105
+        }
+      },
+      "entrega": "historias/2026-11-16-tortrix",
+      "minutos_pieza": 46.3,
+      "registrado": "2026-11-16"
+    },
+    {
+      "pieza": "2026-11-16-saul-e-mendez",
+      "flujo": "historia",
+      "run": "wf_25b31e1a-8ff",
+      "workflow": "plano",
+      "fecha": "2026-11-16",
+      "inicio": "2026-11-17T02:39:09.135000+00:00",
+      "fin": "2026-11-17T02:46:28.101000+00:00",
+      "minutos": 7.3,
+      "agentes": 3,
+      "completados": 3,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 128,
+        "output": 39286,
+        "cache_read": 3586323,
+        "cache_create": 216567,
+        "total": 3842304
+      },
+      "herramientas": 69,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-realizador": {
+          "agentes": 3,
+          "tokens": 3842304,
+          "salida": 39286,
+          "minutos": 7.3
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 3,
+          "tokens": 3842304,
+          "salida": 39286
+        }
+      },
+      "entrega": "historias/2026-11-16-saul-e-mendez",
+      "minutos_pieza": 49.4,
+      "registrado": "2026-11-16"
+    },
+    {
+      "pieza": "2026-11-16-saul-e-mendez",
+      "flujo": "historia",
+      "run": "wf_20c49622-f74",
+      "workflow": "plano",
+      "fecha": "2026-11-16",
+      "inicio": "2026-11-17T02:47:15.745000+00:00",
+      "fin": "2026-11-17T02:50:40.119000+00:00",
+      "minutos": 3.4,
+      "agentes": 3,
+      "completados": 3,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 76,
+        "output": 19453,
+        "cache_read": 1523445,
+        "cache_create": 130927,
+        "total": 1673901
+      },
+      "herramientas": 39,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-realizador": {
+          "agentes": 3,
+          "tokens": 1673901,
+          "salida": 19453,
+          "minutos": 3.4
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 3,
+          "tokens": 1673901,
+          "salida": 19453
+        }
+      },
+      "entrega": "historias/2026-11-16-saul-e-mendez",
+      "minutos_pieza": 49.4,
+      "registrado": "2026-11-16"
+    },
+    {
+      "pieza": "2026-11-16-los-cebollines",
+      "flujo": "historia",
+      "run": "wf_5b6c78f0-bda",
+      "workflow": "historia",
+      "fecha": "2026-11-16",
+      "inicio": "2026-11-17T05:25:32.234000+00:00",
+      "fin": "2026-11-17T05:49:18.005000+00:00",
+      "minutos": 23.8,
+      "agentes": 21,
+      "completados": 21,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 366,
+        "output": 193657,
+        "cache_read": 8221684,
+        "cache_create": 1036213,
+        "total": 9451920
+      },
+      "herramientas": 227,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-editor": {
+          "agentes": 2,
+          "tokens": 397088,
+          "salida": 6675,
+          "minutos": 1.4
+        },
+        "historia-investigador": {
+          "agentes": 3,
+          "tokens": 1707682,
+          "salida": 31568,
+          "minutos": 7.3
+        },
+        "historia-verificador": {
+          "agentes": 3,
+          "tokens": 3196889,
+          "salida": 37073,
+          "minutos": 5.7
+        },
+        "video-gancho": {
+          "agentes": 1,
+          "tokens": 239382,
+          "salida": 6563,
+          "minutos": 1.0
+        },
+        "video-critico": {
+          "agentes": 3,
+          "tokens": 1709416,
+          "salida": 51703,
+          "minutos": 7.4
+        },
+        "historia-guionista": {
+          "agentes": 5,
+          "tokens": 1845971,
+          "salida": 41657,
+          "minutos": 6.6
+        },
+        "historia-oyente": {
+          "agentes": 4,
+          "tokens": 355492,
+          "salida": 18418,
+          "minutos": 2.1
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 11,
+          "tokens": 4191857,
+          "salida": 106598
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 10,
+          "tokens": 5260063,
+          "salida": 87059
+        }
+      },
+      "entrega": "historias/2026-11-16-los-cebollines",
+      "minutos_pieza": 575.5,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "2026-11-16-panaderia-san-martin",
+      "flujo": "historia",
+      "run": "wf_d7d2ec9c-024",
+      "workflow": "historia",
+      "fecha": "2026-11-16",
+      "inicio": "2026-11-17T05:25:52.511000+00:00",
+      "fin": "2026-11-17T05:54:18.067000+00:00",
+      "minutos": 28.4,
+      "agentes": 24,
+      "completados": 24,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 484,
+        "output": 242750,
+        "cache_read": 10518661,
+        "cache_create": 1246578,
+        "total": 12008473
+      },
+      "herramientas": 279,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-editor": {
+          "agentes": 2,
+          "tokens": 349381,
+          "salida": 7019,
+          "minutos": 1.4
+        },
+        "historia-investigador": {
+          "agentes": 3,
+          "tokens": 2121685,
+          "salida": 32431,
+          "minutos": 5.0
+        },
+        "historia-verificador": {
+          "agentes": 3,
+          "tokens": 3223321,
+          "salida": 45217,
+          "minutos": 5.8
+        },
+        "video-gancho": {
+          "agentes": 1,
+          "tokens": 189193,
+          "salida": 5692,
+          "minutos": 0.9
+        },
+        "video-critico": {
+          "agentes": 6,
+          "tokens": 3398462,
+          "salida": 85399,
+          "minutos": 12.5
+        },
+        "historia-guionista": {
+          "agentes": 5,
+          "tokens": 2365199,
+          "salida": 48011,
+          "minutos": 7.6
+        },
+        "historia-oyente": {
+          "agentes": 4,
+          "tokens": 361232,
+          "salida": 18981,
+          "minutos": 2.1
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 14,
+          "tokens": 6302235,
+          "salida": 146121
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 10,
+          "tokens": 5706238,
+          "salida": 96629
+        }
+      },
+      "entrega": "historias/2026-11-16-panaderia-san-martin",
+      "minutos_pieza": 67.7,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "2026-11-16-quetzalteca",
+      "flujo": "historia",
+      "run": "wf_ae5d5826-d04",
+      "workflow": "historia",
+      "fecha": "2026-11-16",
+      "inicio": "2026-11-17T05:26:15.370000+00:00",
+      "fin": "2026-11-17T05:58:11.707000+00:00",
+      "minutos": 31.9,
+      "agentes": 23,
+      "completados": 23,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 436,
+        "output": 230977,
+        "cache_read": 9639017,
+        "cache_create": 1146956,
+        "total": 11017386
+      },
+      "herramientas": 263,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-editor": {
+          "agentes": 2,
+          "tokens": 353630,
+          "salida": 7712,
+          "minutos": 1.5
+        },
+        "historia-investigador": {
+          "agentes": 3,
+          "tokens": 2828315,
+          "salida": 39218,
+          "minutos": 9.3
+        },
+        "historia-verificador": {
+          "agentes": 3,
+          "tokens": 2933649,
+          "salida": 34659,
+          "minutos": 5.3
+        },
+        "video-gancho": {
+          "agentes": 1,
+          "tokens": 225729,
+          "salida": 6363,
+          "minutos": 1.0
+        },
+        "video-critico": {
+          "agentes": 4,
+          "tokens": 1825949,
+          "salida": 60226,
+          "minutos": 8.8
+        },
+        "historia-guionista": {
+          "agentes": 5,
+          "tokens": 2081782,
+          "salida": 51522,
+          "minutos": 8.0
+        },
+        "historia-oyente": {
+          "agentes": 4,
+          "tokens": 360181,
+          "salida": 21735,
+          "minutos": 2.4
+        },
+        "video-animador": {
+          "agentes": 1,
+          "tokens": 408151,
+          "salida": 9542,
+          "minutos": 3.4
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 13,
+          "tokens": 4895241,
+          "salida": 135365
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 10,
+          "tokens": 6122145,
+          "salida": 95612
+        }
+      },
+      "entrega": "historias/2026-11-16-quetzalteca",
+      "minutos_pieza": 57.8,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "2026-11-16-cementos-progreso",
+      "flujo": "historia",
+      "run": "wf_d3c59686-ceb",
+      "workflow": "historia",
+      "fecha": "2026-11-16",
+      "inicio": "2026-11-17T05:48:27.322000+00:00",
+      "fin": "2026-11-17T06:22:33.311000+00:00",
+      "minutos": 34.1,
+      "agentes": 22,
+      "completados": 22,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 520,
+        "output": 265378,
+        "cache_read": 14007176,
+        "cache_create": 1310137,
+        "total": 15583211
+      },
+      "herramientas": 308,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-editor": {
+          "agentes": 2,
+          "tokens": 462049,
+          "salida": 9948,
+          "minutos": 1.8
+        },
+        "historia-investigador": {
+          "agentes": 3,
+          "tokens": 2935729,
+          "salida": 45864,
+          "minutos": 8.3
+        },
+        "historia-verificador": {
+          "agentes": 3,
+          "tokens": 4687004,
+          "salida": 48418,
+          "minutos": 7.4
+        },
+        "video-gancho": {
+          "agentes": 1,
+          "tokens": 256355,
+          "salida": 9670,
+          "minutos": 1.5
+        },
+        "video-critico": {
+          "agentes": 3,
+          "tokens": 2545232,
+          "salida": 61140,
+          "minutos": 9.3
+        },
+        "historia-guionista": {
+          "agentes": 5,
+          "tokens": 3909201,
+          "salida": 57728,
+          "minutos": 9.0
+        },
+        "historia-oyente": {
+          "agentes": 4,
+          "tokens": 367734,
+          "salida": 23534,
+          "minutos": 2.5
+        },
+        "video-animador": {
+          "agentes": 1,
+          "tokens": 419907,
+          "salida": 9076,
+          "minutos": 2.9
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 12,
+          "tokens": 7592744,
+          "salida": 147562
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 10,
+          "tokens": 7990467,
+          "salida": 117816
+        }
+      },
+      "entrega": "historias/2026-11-16-cementos-progreso",
+      "minutos_pieza": 548.7,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "2026-11-16-los-cebollines",
+      "flujo": "historia",
+      "run": "wf_a7595236-8dd",
+      "workflow": "plano",
+      "fecha": "2026-11-16",
+      "inicio": "2026-11-17T05:52:45.190000+00:00",
+      "fin": "2026-11-17T05:58:49.223000+00:00",
+      "minutos": 6.1,
+      "agentes": 3,
+      "completados": 3,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 74,
+        "output": 35705,
+        "cache_read": 1843249,
+        "cache_create": 182303,
+        "total": 2061331
+      },
+      "herramientas": 39,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-realizador": {
+          "agentes": 3,
+          "tokens": 2061331,
+          "salida": 35705,
+          "minutos": 6.1
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 3,
+          "tokens": 2061331,
+          "salida": 35705
+        }
+      },
+      "entrega": "historias/2026-11-16-los-cebollines",
+      "minutos_pieza": 575.5,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "2026-11-16-panaderia-san-martin",
+      "flujo": "historia",
+      "run": "wf_5727deb9-9ea",
+      "workflow": "plano",
+      "fecha": "2026-11-16",
+      "inicio": "2026-11-17T05:56:52.010000+00:00",
+      "fin": "2026-11-17T06:05:18.994000+00:00",
+      "minutos": 8.4,
+      "agentes": 5,
+      "completados": 5,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 134,
+        "output": 49797,
+        "cache_read": 3140105,
+        "cache_create": 289084,
+        "total": 3479120
+      },
+      "herramientas": 72,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-realizador": {
+          "agentes": 4,
+          "tokens": 3386322,
+          "salida": 45115,
+          "minutos": 7.9
+        },
+        "historia-oyente": {
+          "agentes": 1,
+          "tokens": 92798,
+          "salida": 4682,
+          "minutos": 0.6
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 4,
+          "tokens": 3386322,
+          "salida": 45115
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 1,
+          "tokens": 92798,
+          "salida": 4682
+        }
+      },
+      "entrega": "historias/2026-11-16-panaderia-san-martin",
+      "minutos_pieza": 67.7,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "2026-11-16-los-cebollines",
+      "flujo": "historia",
+      "run": "wf_529de651-c0c",
+      "workflow": "plano",
+      "fecha": "2026-11-16",
+      "inicio": "2026-11-17T05:58:55.478000+00:00",
+      "fin": "2026-11-17T06:02:57.464000+00:00",
+      "minutos": 4.0,
+      "agentes": 3,
+      "completados": 3,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 76,
+        "output": 21443,
+        "cache_read": 1416695,
+        "cache_create": 118306,
+        "total": 1556520
+      },
+      "herramientas": 39,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-realizador": {
+          "agentes": 3,
+          "tokens": 1556520,
+          "salida": 21443,
+          "minutos": 4.1
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 3,
+          "tokens": 1556520,
+          "salida": 21443
+        }
+      },
+      "entrega": "historias/2026-11-16-los-cebollines",
+      "minutos_pieza": 575.5,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "video3d-plastico-amatitlan",
+      "flujo": "video3d",
+      "run": "wf_fe6b4a7b-324",
+      "workflow": "video3d",
+      "fecha": "2026-11-16",
+      "inicio": "2026-11-17T05:59:55.538000+00:00",
+      "fin": "2026-11-17T15:08:32.762000+00:00",
+      "minutos": 548.6,
+      "agentes": 24,
+      "completados": 24,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 1152,
+        "output": 711101,
+        "cache_read": 47985050,
+        "cache_create": 2637189,
+        "total": 51334492
+      },
+      "herramientas": 613,
+      "pico_alto": 5,
+      "por_rol": {
+        "video3d-director": {
+          "agentes": 8,
+          "tokens": 21669069,
+          "salida": 191828,
+          "minutos": 54.2
+        },
+        "historia-verificador": {
+          "agentes": 3,
+          "tokens": 2554067,
+          "salida": 33128,
+          "minutos": 9.3
+        },
+        "maqueta-constructor": {
+          "agentes": 10,
+          "tokens": 25579823,
+          "salida": 447909,
+          "minutos": 83.0
+        },
+        "video-critico": {
+          "agentes": 3,
+          "tokens": 1531533,
+          "salida": 38236,
+          "minutos": 6.3
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 21,
+          "tokens": 48780425,
+          "salida": 677973
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 3,
+          "tokens": 2554067,
+          "salida": 33128
+        }
+      },
+      "entrega": "videos3d/2026-11-17-plastico-amatitlan",
+      "minutos_pieza": 569.5,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "2026-11-16-quetzalteca",
+      "flujo": "historia",
+      "run": "wf_9490bc54-2dc",
+      "workflow": "plano",
+      "fecha": "2026-11-17",
+      "inicio": "2026-11-17T06:02:04.164000+00:00",
+      "fin": "2026-11-17T06:06:40.130000+00:00",
+      "minutos": 4.6,
+      "agentes": 3,
+      "completados": 3,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 50,
+        "output": 29798,
+        "cache_read": 1274503,
+        "cache_create": 171399,
+        "total": 1475750
+      },
+      "herramientas": 29,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-realizador": {
+          "agentes": 2,
+          "tokens": 1383501,
+          "salida": 24696,
+          "minutos": 4.0
+        },
+        "historia-oyente": {
+          "agentes": 1,
+          "tokens": 92249,
+          "salida": 5102,
+          "minutos": 0.6
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 2,
+          "tokens": 1383501,
+          "salida": 24696
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 1,
+          "tokens": 92249,
+          "salida": 5102
+        }
+      },
+      "entrega": "historias/2026-11-16-quetzalteca",
+      "minutos_pieza": 57.8,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "video3d-atitlan-antes-de-los-hoteles",
+      "flujo": "video3d",
+      "run": "wf_0913bb94-d3f",
+      "workflow": "video3d",
+      "fecha": "2026-11-17",
+      "inicio": "2026-11-17T06:13:11.141000+00:00",
+      "fin": "2026-11-17T15:08:48.502000+00:00",
+      "minutos": 535.6,
+      "agentes": 22,
+      "completados": 22,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 1086,
+        "output": 613467,
+        "cache_read": 44524349,
+        "cache_create": 2549006,
+        "total": 47687908
+      },
+      "herramientas": 564,
+      "pico_alto": 4,
+      "por_rol": {
+        "video3d-director": {
+          "agentes": 6,
+          "tokens": 19487651,
+          "salida": 187491,
+          "minutos": 50.3
+        },
+        "historia-verificador": {
+          "agentes": 3,
+          "tokens": 2959921,
+          "salida": 38500,
+          "minutos": 5.9
+        },
+        "maqueta-constructor": {
+          "agentes": 10,
+          "tokens": 24301641,
+          "salida": 363701,
+          "minutos": 87.7
+        },
+        "video-critico": {
+          "agentes": 3,
+          "tokens": 938695,
+          "salida": 23775,
+          "minutos": 3.6
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 19,
+          "tokens": 44727987,
+          "salida": 574967
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 3,
+          "tokens": 2959921,
+          "salida": 38500
+        }
+      },
+      "entrega": "videos3d/2026-11-17-atitlan-antes-de-los-hoteles",
+      "minutos_pieza": 616.6,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "2026-11-16-panaderia-san-martin",
+      "flujo": "historia",
+      "run": "wf_0f8f9e84-234",
+      "workflow": "plano",
+      "fecha": "2026-11-17",
+      "inicio": "2026-11-17T06:20:32.033000+00:00",
+      "fin": "2026-11-17T06:22:28.727000+00:00",
+      "minutos": 1.9,
+      "agentes": 2,
+      "completados": 2,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 32,
+        "output": 12277,
+        "cache_read": 667873,
+        "cache_create": 105295,
+        "total": 785477
+      },
+      "herramientas": 19,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-realizador": {
+          "agentes": 1,
+          "tokens": 692894,
+          "salida": 7940,
+          "minutos": 1.4
+        },
+        "historia-oyente": {
+          "agentes": 1,
+          "tokens": 92583,
+          "salida": 4337,
+          "minutos": 0.5
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 1,
+          "tokens": 692894,
+          "salida": 7940
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 1,
+          "tokens": 92583,
+          "salida": 4337
+        }
+      },
+      "entrega": "historias/2026-11-16-panaderia-san-martin",
+      "minutos_pieza": 67.7,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "2026-11-16-cementos-progreso",
+      "flujo": "historia",
+      "run": "wf_66380dd2-830",
+      "workflow": "plano",
+      "fecha": "2026-11-17",
+      "inicio": "2026-11-17T06:25:24.549000+00:00",
+      "fin": "2026-11-17T06:31:04.676000+00:00",
+      "minutos": 5.7,
+      "agentes": 3,
+      "completados": 3,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 82,
+        "output": 33951,
+        "cache_read": 1898213,
+        "cache_create": 180932,
+        "total": 2113178
+      },
+      "herramientas": 41,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-realizador": {
+          "agentes": 3,
+          "tokens": 2113178,
+          "salida": 33951,
+          "minutos": 5.7
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 3,
+          "tokens": 2113178,
+          "salida": 33951
+        }
+      },
+      "entrega": "historias/2026-11-16-cementos-progreso",
+      "minutos_pieza": 548.7,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "2026-11-16-los-cebollines",
+      "flujo": "historia",
+      "run": "wf_570799b2-04b",
+      "workflow": "historia",
+      "fecha": "2026-11-17",
+      "inicio": "2026-11-17T14:19:55.526000+00:00",
+      "fin": "2026-11-17T14:22:55.810000+00:00",
+      "minutos": 3.0,
+      "agentes": 4,
+      "completados": 4,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 58,
+        "output": 17282,
+        "cache_read": 909599,
+        "cache_create": 175688,
+        "total": 1102627
+      },
+      "herramientas": 30,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-guionista": {
+          "agentes": 2,
+          "tokens": 465670,
+          "salida": 6571,
+          "minutos": 1.1
+        },
+        "historia-oyente": {
+          "agentes": 1,
+          "tokens": 86396,
+          "salida": 3017,
+          "minutos": 0.6
+        },
+        "video-critico": {
+          "agentes": 1,
+          "tokens": 550561,
+          "salida": 7694,
+          "minutos": 1.3
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 3,
+          "tokens": 1016231,
+          "salida": 14265
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 1,
+          "tokens": 86396,
+          "salida": 3017
+        }
+      },
+      "entrega": "historias/2026-11-16-los-cebollines",
+      "minutos_pieza": 575.5,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "2026-11-16-cementos-progreso",
+      "flujo": "historia",
+      "run": "wf_e7b78b7e-0f6",
+      "workflow": "historia",
+      "fecha": "2026-11-17",
+      "inicio": "2026-11-17T14:20:54.540000+00:00",
+      "fin": "2026-11-17T14:29:45.468000+00:00",
+      "minutos": 8.8,
+      "agentes": 10,
+      "completados": 10,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 134,
+        "output": 60343,
+        "cache_read": 2312486,
+        "cache_create": 338349,
+        "total": 2711312
+      },
+      "herramientas": 73,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-guionista": {
+          "agentes": 4,
+          "tokens": 1390267,
+          "salida": 17217,
+          "minutos": 3.1
+        },
+        "historia-oyente": {
+          "agentes": 4,
+          "tokens": 334120,
+          "salida": 23025,
+          "minutos": 2.7
+        },
+        "video-critico": {
+          "agentes": 2,
+          "tokens": 986925,
+          "salida": 20101,
+          "minutos": 3.1
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 6,
+          "tokens": 2377192,
+          "salida": 37318
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 4,
+          "tokens": 334120,
+          "salida": 23025
+        }
+      },
+      "entrega": "historias/2026-11-16-cementos-progreso",
+      "minutos_pieza": 548.7,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "2026-11-16-los-cebollines",
+      "flujo": "historia",
+      "run": "wf_25be7ba4-133",
+      "workflow": "plano",
+      "fecha": "2026-11-17",
+      "inicio": "2026-11-17T14:23:05.934000+00:00",
+      "fin": "2026-11-17T14:27:29.313000+00:00",
+      "minutos": 4.4,
+      "agentes": 3,
+      "completados": 3,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 60,
+        "output": 25701,
+        "cache_read": 1408457,
+        "cache_create": 184847,
+        "total": 1619065
+      },
+      "herramientas": 33,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-realizador": {
+          "agentes": 2,
+          "tokens": 1528797,
+          "salida": 22090,
+          "minutos": 3.9
+        },
+        "historia-oyente": {
+          "agentes": 1,
+          "tokens": 90268,
+          "salida": 3611,
+          "minutos": 0.4
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 2,
+          "tokens": 1528797,
+          "salida": 22090
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 1,
+          "tokens": 90268,
+          "salida": 3611
+        }
+      },
+      "entrega": "historias/2026-11-16-los-cebollines",
+      "minutos_pieza": 575.5,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "2026-11-16-los-cebollines",
+      "flujo": "historia",
+      "run": "wf_5a0284c0-aa9",
+      "workflow": "historia",
+      "fecha": "2026-11-17",
+      "inicio": "2026-11-17T14:37:35.150000+00:00",
+      "fin": "2026-11-17T14:39:55.957000+00:00",
+      "minutos": 2.3,
+      "agentes": 4,
+      "completados": 4,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 42,
+        "output": 15555,
+        "cache_read": 635654,
+        "cache_create": 148243,
+        "total": 799494
+      },
+      "herramientas": 22,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-guionista": {
+          "agentes": 2,
+          "tokens": 266399,
+          "salida": 4229,
+          "minutos": 0.8
+        },
+        "historia-oyente": {
+          "agentes": 1,
+          "tokens": 88258,
+          "salida": 4110,
+          "minutos": 0.5
+        },
+        "video-critico": {
+          "agentes": 1,
+          "tokens": 444837,
+          "salida": 7216,
+          "minutos": 1.1
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 3,
+          "tokens": 711236,
+          "salida": 11445
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 1,
+          "tokens": 88258,
+          "salida": 4110
+        }
+      },
+      "entrega": "historias/2026-11-16-los-cebollines",
+      "minutos_pieza": 575.5,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "2026-11-16-cementos-progreso",
+      "flujo": "historia",
+      "run": "wf_1ded1e30-8be",
+      "workflow": "plano",
+      "fecha": "2026-11-17",
+      "inicio": "2026-11-17T14:39:19.672000+00:00",
+      "fin": "2026-11-17T14:42:43.329000+00:00",
+      "minutos": 3.4,
+      "agentes": 3,
+      "completados": 3,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 60,
+        "output": 21261,
+        "cache_read": 1280360,
+        "cache_create": 160871,
+        "total": 1462552
+      },
+      "herramientas": 32,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-realizador": {
+          "agentes": 2,
+          "tokens": 1368455,
+          "salida": 16067,
+          "minutos": 2.8
+        },
+        "historia-oyente": {
+          "agentes": 1,
+          "tokens": 94097,
+          "salida": 5194,
+          "minutos": 0.5
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 2,
+          "tokens": 1368455,
+          "salida": 16067
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 1,
+          "tokens": 94097,
+          "salida": 5194
+        }
+      },
+      "entrega": "historias/2026-11-16-cementos-progreso",
+      "minutos_pieza": 548.7,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "2026-11-16-los-cebollines",
+      "flujo": "historia",
+      "run": "wf_943d6601-608",
+      "workflow": "plano",
+      "fecha": "2026-11-17",
+      "inicio": "2026-11-17T14:40:05.525000+00:00",
+      "fin": "2026-11-17T14:44:44.107000+00:00",
+      "minutos": 4.6,
+      "agentes": 3,
+      "completados": 3,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 62,
+        "output": 27725,
+        "cache_read": 1525832,
+        "cache_create": 167346,
+        "total": 1720965
+      },
+      "herramientas": 34,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-realizador": {
+          "agentes": 2,
+          "tokens": 1627453,
+          "salida": 22191,
+          "minutos": 4.0
+        },
+        "historia-oyente": {
+          "agentes": 1,
+          "tokens": 93512,
+          "salida": 5534,
+          "minutos": 0.6
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 2,
+          "tokens": 1627453,
+          "salida": 22191
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 1,
+          "tokens": 93512,
+          "salida": 5534
+        }
+      },
+      "entrega": "historias/2026-11-16-los-cebollines",
+      "minutos_pieza": 575.5,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "2026-11-17-litegua",
+      "flujo": "historia",
+      "run": "wf_4c700d1f-567",
+      "workflow": "historia",
+      "fecha": "2026-11-17",
+      "inicio": "2026-11-17T14:42:16.504000+00:00",
+      "fin": "2026-11-17T15:18:59.828000+00:00",
+      "minutos": 36.7,
+      "agentes": 22,
+      "completados": 22,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 474,
+        "output": 231772,
+        "cache_read": 11163302,
+        "cache_create": 1214556,
+        "total": 12610104
+      },
+      "herramientas": 272,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-editor": {
+          "agentes": 2,
+          "tokens": 354900,
+          "salida": 6745,
+          "minutos": 1.4
+        },
+        "historia-investigador": {
+          "agentes": 3,
+          "tokens": 4013155,
+          "salida": 42791,
+          "minutos": 9.9
+        },
+        "historia-verificador": {
+          "agentes": 3,
+          "tokens": 3358333,
+          "salida": 42123,
+          "minutos": 13.1
+        },
+        "video-gancho": {
+          "agentes": 1,
+          "tokens": 287135,
+          "salida": 5835,
+          "minutos": 1.0
+        },
+        "video-critico": {
+          "agentes": 3,
+          "tokens": 2080447,
+          "salida": 62680,
+          "minutos": 9.0
+        },
+        "historia-guionista": {
+          "agentes": 5,
+          "tokens": 1882875,
+          "salida": 46453,
+          "minutos": 7.1
+        },
+        "historia-oyente": {
+          "agentes": 4,
+          "tokens": 361042,
+          "salida": 18335,
+          "minutos": 2.0
+        },
+        "video-animador": {
+          "agentes": 1,
+          "tokens": 272217,
+          "salida": 6810,
+          "minutos": 1.7
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 12,
+          "tokens": 4877574,
+          "salida": 128523
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 10,
+          "tokens": 7732530,
+          "salida": 103249
+        }
+      },
+      "entrega": "historias/2026-11-17-litegua",
+      "minutos_pieza": 89.4,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "video3d-avenida-reforma",
+      "flujo": "video3d",
+      "run": "wf_63ca6842-321",
+      "workflow": "video3d",
+      "fecha": "2026-11-17",
+      "inicio": "2026-11-17T14:51:04.075000+00:00",
+      "fin": "2026-11-17T16:37:06.869000+00:00",
+      "minutos": 106.0,
+      "agentes": 20,
+      "completados": 20,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 1058,
+        "output": 514858,
+        "cache_read": 46572273,
+        "cache_create": 2057969,
+        "total": 49146158
+      },
+      "herramientas": 538,
+      "pico_alto": 4,
+      "por_rol": {
+        "video3d-director": {
+          "agentes": 10,
+          "tokens": 32046600,
+          "salida": 243375,
+          "minutos": 71.5
+        },
+        "historia-verificador": {
+          "agentes": 2,
+          "tokens": 1506946,
+          "salida": 20931,
+          "minutos": 2.9
+        },
+        "maqueta-constructor": {
+          "agentes": 5,
+          "tokens": 13532022,
+          "salida": 220612,
+          "minutos": 41.4
+        },
+        "video-critico": {
+          "agentes": 3,
+          "tokens": 2060590,
+          "salida": 29940,
+          "minutos": 5.5
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 18,
+          "tokens": 47639212,
+          "salida": 493927
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 2,
+          "tokens": 1506946,
+          "salida": 20931
+        }
+      },
+      "entrega": "videos3d/2026-11-17-avenida-reforma",
+      "minutos_pieza": 130.1,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "video3d-fuego-antes-despues-2018",
+      "flujo": "video3d",
+      "run": "wf_7dc3f45d-64e",
+      "workflow": "video3d",
+      "fecha": "2026-11-17",
+      "inicio": "2026-11-17T15:00:30.825000+00:00",
+      "fin": "2026-11-17T16:38:38.318000+00:00",
+      "minutos": 98.1,
+      "agentes": 15,
+      "completados": 15,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 730,
+        "output": 427401,
+        "cache_read": 30541581,
+        "cache_create": 1591731,
+        "total": 32561443
+      },
+      "herramientas": 375,
+      "pico_alto": 3,
+      "por_rol": {
+        "video3d-director": {
+          "agentes": 6,
+          "tokens": 17837838,
+          "salida": 149307,
+          "minutos": 36.5
+        },
+        "historia-verificador": {
+          "agentes": 1,
+          "tokens": 1401943,
+          "salida": 21653,
+          "minutos": 3.1
+        },
+        "maqueta-constructor": {
+          "agentes": 5,
+          "tokens": 11569086,
+          "salida": 228162,
+          "minutos": 42.7
+        },
+        "video-critico": {
+          "agentes": 3,
+          "tokens": 1752576,
+          "salida": 28279,
+          "minutos": 4.8
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 14,
+          "tokens": 31159500,
+          "salida": 405748
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 1,
+          "tokens": 1401943,
+          "salida": 21653
+        }
+      },
+      "entrega": "videos3d/2026-11-17-fuego-antes-despues-2018",
+      "minutos_pieza": 143.3,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "2026-11-17-banco-industrial",
+      "flujo": "historia",
+      "run": "wf_1cda0efc-a9c",
+      "workflow": "historia",
+      "fecha": "2026-11-17",
+      "inicio": "2026-11-17T15:01:20.765000+00:00",
+      "fin": "2026-11-17T15:32:31.576000+00:00",
+      "minutos": 31.2,
+      "agentes": 24,
+      "completados": 24,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 486,
+        "output": 233851,
+        "cache_read": 11326639,
+        "cache_create": 1296794,
+        "total": 12857770
+      },
+      "herramientas": 284,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-editor": {
+          "agentes": 2,
+          "tokens": 288297,
+          "salida": 7876,
+          "minutos": 1.3
+        },
+        "historia-investigador": {
+          "agentes": 3,
+          "tokens": 2409263,
+          "salida": 39420,
+          "minutos": 8.5
+        },
+        "historia-verificador": {
+          "agentes": 3,
+          "tokens": 3969785,
+          "salida": 41965,
+          "minutos": 6.6
+        },
+        "video-gancho": {
+          "agentes": 1,
+          "tokens": 304297,
+          "salida": 8417,
+          "minutos": 1.3
+        },
+        "video-critico": {
+          "agentes": 5,
+          "tokens": 3032847,
+          "salida": 73937,
+          "minutos": 11.4
+        },
+        "historia-guionista": {
+          "agentes": 6,
+          "tokens": 2529749,
+          "salida": 44654,
+          "minutos": 7.2
+        },
+        "historia-oyente": {
+          "agentes": 4,
+          "tokens": 323532,
+          "salida": 17582,
+          "minutos": 1.9
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 14,
+          "tokens": 6155190,
+          "salida": 134884
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 10,
+          "tokens": 6702580,
+          "salida": 98967
+        }
+      },
+      "entrega": "historias/2026-11-17-banco-industrial",
+      "minutos_pieza": 92.6,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "video3d-atitlan-antes-de-los-hoteles",
+      "flujo": "video3d",
+      "run": "wf_29768c56-e9b",
+      "workflow": "video3d",
+      "fecha": "2026-11-17",
+      "inicio": "2026-11-17T15:16:15.212000+00:00",
+      "fin": "2026-11-17T16:29:52.128000+00:00",
+      "minutos": 73.6,
+      "agentes": 14,
+      "completados": 13,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 740,
+        "output": 530798,
+        "cache_read": 39092588,
+        "cache_create": 1795027,
+        "total": 41419153
+      },
+      "herramientas": 400,
+      "pico_alto": 6,
+      "por_rol": {
+        "video3d-director": {
+          "agentes": 4,
+          "tokens": 18975438,
+          "salida": 147207,
+          "minutos": 37.5
+        },
+        "historia-verificador": {
+          "agentes": 4,
+          "tokens": 3012500,
+          "salida": 44384,
+          "minutos": 8.1
+        },
+        "maqueta-constructor": {
+          "agentes": 5,
+          "tokens": 19020299,
+          "salida": 329465,
+          "minutos": 57.3
+        },
+        "video-critico": {
+          "agentes": 1,
+          "tokens": 410916,
+          "salida": 9742,
+          "minutos": 1.6
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 10,
+          "tokens": 38406653,
+          "salida": 486414
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 4,
+          "tokens": 3012500,
+          "salida": 44384
+        }
+      },
+      "entrega": "videos3d/2026-11-17-atitlan-antes-de-los-hoteles",
+      "minutos_pieza": 73.6,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "2026-11-17-litegua",
+      "flujo": "historia",
+      "run": "wf_49875a74-666",
+      "workflow": "plano",
+      "fecha": "2026-11-17",
+      "inicio": "2026-11-17T15:25:44.226000+00:00",
+      "fin": "2026-11-17T15:33:48.845000+00:00",
+      "minutos": 8.1,
+      "agentes": 3,
+      "completados": 3,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 98,
+        "output": 46383,
+        "cache_read": 2628233,
+        "cache_create": 212043,
+        "total": 2886757
+      },
+      "herramientas": 49,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-realizador": {
+          "agentes": 3,
+          "tokens": 2886757,
+          "salida": 46383,
+          "minutos": 8.0
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 3,
+          "tokens": 2886757,
+          "salida": 46383
+        }
+      },
+      "entrega": "historias/2026-11-17-litegua",
+      "minutos_pieza": 89.4,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "video3d-biosfera-maya-satelite",
+      "flujo": "video3d",
+      "run": "wf_12dd5388-177",
+      "workflow": "video3d",
+      "fecha": "2026-11-17",
+      "inicio": "2026-11-17T15:30:23.498000+00:00",
+      "fin": "2026-11-17T16:16:10.522000+00:00",
+      "minutos": 45.8,
+      "agentes": 12,
+      "completados": 12,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 500,
+        "output": 238052,
+        "cache_read": 17443470,
+        "cache_create": 1089380,
+        "total": 18771402
+      },
+      "herramientas": 261,
+      "pico_alto": 1,
+      "por_rol": {
+        "video3d-director": {
+          "agentes": 5,
+          "tokens": 8827357,
+          "salida": 100527,
+          "minutos": 27.0
+        },
+        "historia-verificador": {
+          "agentes": 1,
+          "tokens": 1093950,
+          "salida": 13982,
+          "minutos": 2.2
+        },
+        "maqueta-constructor": {
+          "agentes": 4,
+          "tokens": 7910919,
+          "salida": 103730,
+          "minutos": 21.9
+        },
+        "video-critico": {
+          "agentes": 2,
+          "tokens": 939176,
+          "salida": 19813,
+          "minutos": 3.2
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 11,
+          "tokens": 17677452,
+          "salida": 224070
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 1,
+          "tokens": 1093950,
+          "salida": 13982
+        }
+      },
+      "entrega": "videos3d/2026-11-17-biosfera-maya-satelite",
+      "minutos_pieza": 111.6,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "2026-11-17-litegua",
+      "flujo": "historia",
+      "run": "wf_08ba059a-585",
+      "workflow": "plano",
+      "fecha": "2026-11-17",
+      "inicio": "2026-11-17T15:34:16.605000+00:00",
+      "fin": "2026-11-17T15:37:35.581000+00:00",
+      "minutos": 3.3,
+      "agentes": 3,
+      "completados": 3,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 68,
+        "output": 17845,
+        "cache_read": 1019355,
+        "cache_create": 99484,
+        "total": 1136752
+      },
+      "herramientas": 35,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-realizador": {
+          "agentes": 3,
+          "tokens": 1136752,
+          "salida": 17845,
+          "minutos": 3.3
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 3,
+          "tokens": 1136752,
+          "salida": 17845
+        }
+      },
+      "entrega": "historias/2026-11-17-litegua",
+      "minutos_pieza": 89.4,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "2026-11-17-litegua",
+      "flujo": "historia",
+      "run": "wf_71ff3d5f-9da",
+      "workflow": "plano",
+      "fecha": "2026-11-17",
+      "inicio": "2026-11-17T15:38:24.875000+00:00",
+      "fin": "2026-11-17T15:39:31.339000+00:00",
+      "minutos": 1.1,
+      "agentes": 3,
+      "completados": 3,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 28,
+        "output": 6931,
+        "cache_read": 357345,
+        "cache_create": 100851,
+        "total": 465155
+      },
+      "herramientas": 16,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-realizador": {
+          "agentes": 2,
+          "tokens": 374345,
+          "salida": 3859,
+          "minutos": 0.8
+        },
+        "historia-oyente": {
+          "agentes": 1,
+          "tokens": 90810,
+          "salida": 3072,
+          "minutos": 0.4
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 2,
+          "tokens": 374345,
+          "salida": 3859
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 1,
+          "tokens": 90810,
+          "salida": 3072
+        }
+      },
+      "entrega": "historias/2026-11-17-litegua",
+      "minutos_pieza": 89.4,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "2026-11-17-banco-industrial",
+      "flujo": "historia",
+      "run": "wf_365f43d6-a7b",
+      "workflow": "plano",
+      "fecha": "2026-11-17",
+      "inicio": "2026-11-17T15:40:22.882000+00:00",
+      "fin": "2026-11-17T15:49:29.607000+00:00",
+      "minutos": 9.1,
+      "agentes": 3,
+      "completados": 3,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 114,
+        "output": 51461,
+        "cache_read": 2992699,
+        "cache_create": 177583,
+        "total": 3221857
+      },
+      "herramientas": 57,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-realizador": {
+          "agentes": 3,
+          "tokens": 3221857,
+          "salida": 51461,
+          "minutos": 9.1
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 3,
+          "tokens": 3221857,
+          "salida": 51461
+        }
+      },
+      "entrega": "historias/2026-11-17-banco-industrial",
+      "minutos_pieza": 92.6,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "2026-11-17-litegua",
+      "flujo": "historia",
+      "run": "wf_35ba3160-cb9",
+      "workflow": "plano",
+      "fecha": "2026-11-17",
+      "inicio": "2026-11-17T15:51:58.774000+00:00",
+      "fin": "2026-11-17T15:56:38.520000+00:00",
+      "minutos": 4.7,
+      "agentes": 3,
+      "completados": 3,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 108,
+        "output": 25229,
+        "cache_read": 3034266,
+        "cache_create": 168702,
+        "total": 3228305
+      },
+      "herramientas": 59,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-realizador": {
+          "agentes": 2,
+          "tokens": 3136755,
+          "salida": 21504,
+          "minutos": 4.3
+        },
+        "historia-oyente": {
+          "agentes": 1,
+          "tokens": 91550,
+          "salida": 3725,
+          "minutos": 0.4
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 2,
+          "tokens": 3136755,
+          "salida": 21504
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 1,
+          "tokens": 91550,
+          "salida": 3725
+        }
+      },
+      "entrega": "historias/2026-11-17-litegua",
+      "minutos_pieza": 89.4,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "2026-11-17-banco-industrial",
+      "flujo": "historia",
+      "run": "wf_b68c8b5f-fc2",
+      "workflow": "historia",
+      "fecha": "2026-11-17",
+      "inicio": "2026-11-17T16:08:38.592000+00:00",
+      "fin": "2026-11-17T16:11:15.800000+00:00",
+      "minutos": 2.6,
+      "agentes": 4,
+      "completados": 4,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 42,
+        "output": 18575,
+        "cache_read": 622573,
+        "cache_create": 147854,
+        "total": 789044
+      },
+      "herramientas": 22,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-guionista": {
+          "agentes": 2,
+          "tokens": 296754,
+          "salida": 4317,
+          "minutos": 0.6
+        },
+        "historia-oyente": {
+          "agentes": 1,
+          "tokens": 89511,
+          "salida": 4554,
+          "minutos": 0.5
+        },
+        "video-critico": {
+          "agentes": 1,
+          "tokens": 402779,
+          "salida": 9704,
+          "minutos": 1.4
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 3,
+          "tokens": 699533,
+          "salida": 14021
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 1,
+          "tokens": 89511,
+          "salida": 4554
+        }
+      },
+      "entrega": "historias/2026-11-17-banco-industrial",
+      "minutos_pieza": 92.6,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "2026-11-17-banco-industrial",
+      "flujo": "historia",
+      "run": "wf_6ebc1f8d-03f",
+      "workflow": "plano",
+      "fecha": "2026-11-17",
+      "inicio": "2026-11-17T16:12:20.152000+00:00",
+      "fin": "2026-11-17T16:17:09.448000+00:00",
+      "minutos": 4.8,
+      "agentes": 3,
+      "completados": 3,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 58,
+        "output": 28443,
+        "cache_read": 1127327,
+        "cache_create": 157407,
+        "total": 1313235
+      },
+      "herramientas": 31,
+      "pico_alto": 0,
+      "por_rol": {
+        "video-realizador": {
+          "agentes": 2,
+          "tokens": 1220442,
+          "salida": 23758,
+          "minutos": 4.4
+        },
+        "historia-oyente": {
+          "agentes": 1,
+          "tokens": 92793,
+          "salida": 4685,
+          "minutos": 0.5
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 2,
+          "tokens": 1220442,
+          "salida": 23758
+        },
+        "claude-sonnet-5-5": {
+          "agentes": 1,
+          "tokens": 92793,
+          "salida": 4685
+        }
+      },
+      "entrega": "historias/2026-11-17-banco-industrial",
+      "minutos_pieza": 92.6,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "video3d-avenida-reforma",
+      "flujo": "video3d",
+      "run": "wf_0b7b0fe3-68d",
+      "workflow": "historia",
+      "fecha": "2026-11-17",
+      "inicio": "2026-11-17T16:48:16.119000+00:00",
+      "fin": "2026-11-17T17:01:14.972000+00:00",
+      "minutos": 13.0,
+      "agentes": 4,
+      "completados": 3,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 132,
+        "output": 76126,
+        "cache_read": 4681420,
+        "cache_create": 355433,
+        "total": 5113111
+      },
+      "herramientas": 70,
+      "pico_alto": 1,
+      "por_rol": {
+        "video-gancho": {
+          "agentes": 1,
+          "tokens": 494800,
+          "salida": 8029,
+          "minutos": 1.3
+        },
+        "video-critico": {
+          "agentes": 1,
+          "tokens": 445650,
+          "salida": 9160,
+          "minutos": 1.5
+        },
+        "historia-guionista": {
+          "agentes": 2,
+          "tokens": 4172661,
+          "salida": 58937,
+          "minutos": 9.5
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 4,
+          "tokens": 5113111,
+          "salida": 76126
+        }
+      },
+      "entrega": "videos3d/2026-11-17-avenida-reforma",
+      "minutos_pieza": 12.9,
+      "registrado": "2026-11-17"
+    },
+    {
+      "pieza": "video3d-fuego-antes-despues-2018",
+      "flujo": "video3d",
+      "run": "wf_848f6965-2c0",
+      "workflow": null,
+      "fecha": "2026-11-17",
+      "inicio": "2026-11-17T17:19:00.111000+00:00",
+      "fin": "2026-11-17T17:23:45.967000+00:00",
+      "minutos": 4.8,
+      "agentes": 1,
+      "completados": 0,
+      "fallbacks": 0,
+      "tokens": {
+        "input": 40,
+        "output": 29799,
+        "cache_read": 1108986,
+        "cache_create": 89591,
+        "total": 1228416
+      },
+      "herramientas": 20,
+      "pico_alto": 0,
+      "por_rol": {
+        "historia-guionista": {
+          "agentes": 1,
+          "tokens": 1228416,
+          "salida": 29799,
+          "minutos": 4.8
+        }
+      },
+      "por_modelo": {
+        "claude-opus-5-5": {
+          "agentes": 1,
+          "tokens": 1228416,
+          "salida": 29799
+        }
+      },
+      "entrega": "videos3d/2026-11-17-fuego-antes-despues-2018",
+      "minutos_pieza": 4.8,
+      "registrado": "2026-11-17"
     }
   ]
 }

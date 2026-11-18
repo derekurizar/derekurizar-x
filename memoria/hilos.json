@@ -312,6 +312,19 @@
       "estado": "listo",
       "hook_tipo": "antes_despues",
       "modo": "hilo"
+    },
+    {
+      "id": "2026-11-17-presupuesto-2027-partidas-sospechosas",
+      "fecha": "2026-11-17",
+      "slug": "presupuesto-2027-partidas-sospechosas",
+      "tema": "Proyecto de Presupuesto 2027 de Guatemala (iniciativa 6841, Q192,045.1 millones): las partidas de alto impacto, raras u opacas — consejos de desarrollo (CODEDES) y obras del listado geográfico en año electoral, fideicomisos y transferencias a ONG/asociaciones, Obligaciones del Estado a cargo del Tesoro, deuda e intereses, y entidades con historial de baja ejecución o malos manejos que reciben más.",
+      "tesis": "El proyecto de Presupuesto 2027 casi duplica la deuda en bonos (de Q23,278 a Q42,750 millones) mientras sube el dinero para los consejos de desarrollo y Comunicaciones, que dejan sin ejecutar buena parte de lo que ya reciben y reparten con poco sustento técnico.",
+      "paleta": "obsidiana",
+      "n_tuits": 20,
+      "ruta": "hilos/2026-11-17-presupuesto-2027-partidas-sospechosas",
+      "estado": "listo",
+      "hook_tipo": "curiosity_gap",
+      "modo": "hilo"
     }
   ]
 }

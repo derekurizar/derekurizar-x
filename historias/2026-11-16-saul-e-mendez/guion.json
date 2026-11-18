@@ -1,0 +1,390 @@
+{
+ "id": "2026-11-16-saul-e-mendez",
+ "tipo": "historia",
+ "slug": "saul-e-mendez",
+ "tema": "Saúl E. Méndez",
+ "fecha": "2026-11-16",
+ "pregunta": "¿Cómo una tienda de casimires en el garaje de una casa se volvió la marca que viste a los ejecutivos de Guatemala y además les sirve el café?",
+ "arco": "origen y reinvención familiar: del garaje y la tijera al estilo de vida",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "1988",
+   "titulo": "Un café entre trajes",
+   "escena": 5
+  },
+  {
+   "numero": 3,
+   "anio": "2015",
+   "titulo": "Vestir y servir",
+   "escena": 10
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "El sastre Saúl Méndez dejó Patulul a los 13 años. Buscaba trabajo en Guatemala. ¿Dónde se cortan hoy los trajes que empezaron en un garaje? En 1953, don Saúl abrió una tienda de casimires en el garaje de su casa, en la capital. Antes, cuenta su hijo menor, Emilio Méndez, don Saúl vendía casimir inglés de puerta en puerta; en la tienda lo ayudaban sus cinco hijos. Años después, Emilio lo resumió así: Mi papá era un emprendedor que tenía la convicción de cambiar las condiciones en las que había crecido. Don Saúl murió en un año que nunca se publicó. Entonces, cuenta Emilio, sus cinco hijos tomaron la dirección."
+  },
+  {
+   "acto": 2,
+   "texto": "El menor, Emilio, tomó otro camino: dejó Administración de Empresas en la Francisco Marroquín para estudiar sastrería y diseño en el London College of Fashion, la escuela de moda de Londres. Emilio dice que volvió en 1988, y con él nació la fábrica de la marca, que entonces se llamó Industrias Británicas. Pero Emilio no quería una tienda que solo vendiera trajes. En un bar había visto algo que nadie en la sastrería imaginaba. Emilio cuenta que vio a unos italianos tomar capuchino, y de ahí salió la idea: un café de 12 metros cuadrados en una esquina de la boutique principal. Entonces, en 1995, la marca de don Saúl cruzó la frontera: abrió en San José, Costa Rica."
+  },
+  {
+   "acto": 3,
+   "texto": "Para 2015, el nombre de Saúl ya estaba en 4 bistrós, 7 cafés y 7 quioscos de café exprés en Guatemala. Los trajes, en cambio, se cortan hoy en una fábrica propia en San Lucas Sacatepéquez. En 2017, la empresa dijo que ahí trabajaban 250 operarios y salían cerca de 10 mil prendas al mes. Emilio no se queda con el mérito; en 2013 lo dijo así: La marca Saúl E. Méndez, que creó mi papá, no se debe solo a mi trabajo, sino al de toda la familia. Diez años después, la marca dijo que celebraba sus 70 años con la colección Reserva 53. Setenta años con su nombre en la marca, y qué significa la E. de su nombre, ninguna fuente lo dice. Todo empezó con casimir inglés en el garaje de una casa. Hoy, sus clientes piden café con el nombre de un sastre."
+  }
+ ],
+ "hilos": [
+  {
+   "id": "h1",
+   "sin_respuesta": "qué significa la E. de su nombre, ninguna fuente lo dice"
+  },
+  {
+   "id": "h2",
+   "escena": 8
+  },
+  {
+   "id": "h3",
+   "escena": 4
+  },
+  {
+   "id": "h4",
+   "escena": 11
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3,
+   4
+  ],
+  [
+   5,
+   6,
+   7
+  ],
+  [
+   8,
+   9
+  ],
+  [
+   10,
+   11,
+   12,
+   13,
+   14
+  ]
+ ],
+ "paleta": "cacao",
+ "musica": "cacao-1",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2199,
+ "duracion_s": 147.5,
+ "critica": {
+  "veredicto": "corregir",
+  "vuelta": 2,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 4,
+   "claridad": 3,
+   "flujo": 4,
+   "precision": 3,
+   "cierre": 4,
+   "recompensa": 4
+  }
+ },
+ "gancho": {
+  "familia": "personaje",
+  "visual": "foto",
+  "pantalla": "El sastre de Patulul",
+  "linea": "Saúl E. Méndez dejó Patulul a los 13",
+  "id": "g1",
+  "elegido_por": "usuario",
+  "recomendado": "g1"
+ },
+ "promesa": {
+  "pregunta": "¿Dónde corta hoy Saúl sus trajes?",
+  "texto": "¿Dónde se cortan hoy los trajes que empezaron en un garaje?",
+  "forma": "pregunta",
+  "en": 2,
+  "pago": 11,
+  "revela": 4
+ },
+ "bisagra": {
+  "texto": "En un bar había visto algo que nadie en la sastrería imaginaba.",
+  "forma": "presagio",
+  "en": 7,
+  "pago": 8
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "El sastre Saúl Méndez dejó Patulul a los 13 años. Buscaba trabajo en Guatemala.",
+   "voz": "El sastre Saúl Méndez dejó Patulul a los trece años. Buscaba trabajo en Guatemala.",
+   "dur": 6.36,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "¿Dónde se cortan hoy los trajes que empezaron en un garaje? En 1953, don Saúl abrió una tienda de casimires en el garaje de su casa, en la capital.",
+   "voz": "¿Dónde se cortan hoy los trajes que empezaron en un garaje? En mil novecientos cincuenta y tres, don Saúl abrió una tienda de casimires en el garaje de su casa, en la capital.",
+   "dur": 11.144,
+   "hechos": [
+    "exp-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "cita",
+   "pantalla": "Antes, cuenta su hijo menor, Emilio Méndez, don Saúl vendía casimir inglés de puerta en puerta; en la tienda lo ayudaban sus cinco hijos. Años después, Emilio lo resumió así: Mi papá era un emprendedor que tenía la convicción de cambiar las condiciones en las que había crecido.",
+   "voz": "Antes, cuenta su hijo menor, Emilio Méndez, don Saúl vendía casimir inglés de puerta en puerta; en la tienda lo ayudaban sus cinco hijos. Años después, Emilio lo resumió así: Mi papá era un emprendedor que tenía la convicción de cambiar las condiciones en las que había crecido.",
+   "dur": 17.814,
+   "hechos": [
+    "ori-h02",
+    "exp-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "golpe",
+   "pantalla": "Don Saúl murió en un año que nunca se publicó. Entonces, cuenta Emilio, sus cinco hijos tomaron la dirección.",
+   "voz": "Don Saúl murió en un año que nunca se publicó. Entonces, cuenta Emilio, sus cinco hijos tomaron la dirección.",
+   "dur": 7.619,
+   "hechos": [
+    "ori-h04"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "foto",
+   "pantalla": "El menor, Emilio, tomó otro camino: dejó Administración de Empresas en la Francisco Marroquín para estudiar sastrería y diseño en el London College of Fashion, la escuela de moda de Londres.",
+   "voz": "El menor, Emilio, tomó otro camino: dejó Administración de Empresas en la Francisco Marroquín para estudiar sastrería y diseño en el London College of Fashion, la escuela de moda de Londres.",
+   "dur": 12.247,
+   "hechos": [
+    "exp-h03",
+    "ori-h05"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "foto",
+   "pantalla": "Emilio dice que volvió en 1988, y con él nació la fábrica de la marca, que entonces se llamó Industrias Británicas.",
+   "voz": "Emilio dice que volvió en mil novecientos ochenta y ocho, y con él nació la fábrica de la marca, que entonces se llamó Industrias Británicas.",
+   "dur": 9.252,
+   "hechos": [
+    "exp-h05",
+    "ori-h06"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "golpe",
+   "pantalla": "Pero Emilio no quería una tienda que solo vendiera trajes. En un bar había visto algo que nadie en la sastrería imaginaba.",
+   "voz": "Pero Emilio no quería una tienda que solo vendiera trajes. En un bar había visto algo que nadie en la sastrería imaginaba.",
+   "dur": 8.49,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "foto",
+   "pantalla": "Emilio cuenta que vio a unos italianos tomar capuchino, y de ahí salió la idea: un café de 12 metros cuadrados en una esquina de la boutique principal.",
+   "voz": "Emilio cuenta que vio a unos italianos tomar capuchino, y de ahí salió la idea: un café de doce metros cuadrados en una esquina de la boutique principal.",
+   "dur": 10.061,
+   "hechos": [
+    "ori-h07"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: PDCC / News in America",
+     "origen": "medio",
+     "licencia": "© PDCC / News in America (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "golpe",
+   "pantalla": "Entonces, en 1995, la marca de don Saúl cruzó la frontera: abrió en San José, Costa Rica.",
+   "voz": "Entonces, en mil novecientos noventa y cinco, la marca de don Saúl cruzó la frontera: abrió en San José, Costa Rica.",
+   "dur": 9.669,
+   "hechos": [
+    "exp-h08"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "tarjeta",
+   "pantalla": "Para 2015, el nombre de Saúl ya estaba en 4 bistrós, 7 cafés y 7 quioscos de café exprés en Guatemala.",
+   "voz": "Para dos mil quince, el nombre de Saúl ya estaba en cuatro bistrós, siete cafés y siete quioscos de café exprés en Guatemala.",
+   "dur": 8.378,
+   "hechos": [
+    "exp-h10"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "deptos",
+   "pantalla": "Los trajes, en cambio, se cortan hoy en una fábrica propia en San Lucas Sacatepéquez. En 2017, la empresa dijo que ahí trabajaban 250 operarios y salían cerca de 10 mil prendas al mes.",
+   "voz": "Los trajes, en cambio, se cortan hoy en una fábrica propia en San Lucas Sacatepéquez. En dos mil diecisiete, la empresa dijo que ahí trabajaban doscientos cincuenta operarios y salían cerca de diez mil prendas al mes.",
+   "dur": 13.552,
+   "hechos": [
+    "ori-h11",
+    "exp-h14"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "cita",
+   "pantalla": "Emilio no se queda con el mérito; en 2013 lo dijo así: La marca Saúl E. Méndez, que creó mi papá, no se debe solo a mi trabajo, sino al de toda la familia.",
+   "voz": "Emilio no se queda con el mérito; en dos mil trece lo dijo así: La marca Saúl E. Méndez, que creó mi papá, no se debe solo a mi trabajo, sino al de toda la familia.",
+   "dur": 12.222,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "foto",
+   "pantalla": "Diez años después, la marca dijo que celebraba sus 70 años con la colección Reserva 53.",
+   "voz": "Diez años después, la marca dijo que celebraba sus setenta años con la colección Reserva cincuenta y tres.",
+   "dur": 6.777,
+   "hechos": [
+    "ori-h09"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "golpe",
+   "pantalla": "Setenta años con su nombre en la marca, y qué significa la E. de su nombre, ninguna fuente lo dice.",
+   "voz": "Setenta años con su nombre en la marca, y qué significa la E. de su nombre, ninguna fuente lo dice.",
+   "dur": 7.446,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 15,
+   "tipo": "cierre",
+   "pantalla": "Todo empezó con casimir inglés en el garaje de una casa. Hoy, sus clientes piden café con el nombre de un sastre.",
+   "voz": "Todo empezó con casimir inglés en el garaje de una casa. Hoy, sus clientes piden café con el nombre de un sastre.",
+   "dur": 10.063,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que dejó",
+  "resumen": [
+   "1953: casimir en un garaje",
+   "Un café en la boutique",
+   "Hoy: trajes y café"
+  ],
+  "texto": "Todo empezó con casimir inglés en el garaje de una casa. Hoy, sus clientes piden café con el nombre de un sastre.",
+  "tipo": "remate",
+  "forma": "legado",
+  "final": "Hoy, sus clientes piden café con el nombre de un sastre.",
+  "consecuencia": {
+   "quien": "clientes",
+   "verbo": "piden"
+  },
+  "id": "c1",
+  "elegido_por": "usuario",
+  "recomendado": "c1"
+ },
+ "caption": {
+  "tiktok": "Saúl Méndez dejó Patulul a los 13 años. En 1953 abrió una tienda de casimires en su garaje; su hijo Emilio volvió de Londres y le puso un café. #Guatemala #historia #SaulEMendez",
+  "instagram": "De un garaje con casimir inglés a una marca de trajes y cafés: la historia de Saúl E. Méndez, el sastre de Patulul, y de su hijo Emilio. #Guatemala #SaulEMendez #historia",
+  "facebook": "Saúl Méndez salió de Patulul a los 13 años y en 1953 abrió una tienda de casimires en el garaje de su casa. Así llegó su apellido a los trajes y al café. Fuentes en el primer comentario.",
+  "shorts": "Del garaje de un sastre de Patulul al café que lleva su nombre #Shorts\nLa historia de Saúl E. Méndez, en Guatemala. #Guatemala"
+ }
+}

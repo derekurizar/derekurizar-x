@@ -6,7 +6,7 @@ Un solo video para las cuatro apps: **video.mp4** (9:16). Para el feed de Facebo
 El 3 de junio de 2018, el volcán de Fuego sepultó San Miguel Los Lotes. Hubo alertas, nadie ordenó evacuar y el caso sigue sin sentencia. #Guatemala #VolcanDeFuego #Historia
 
 ## Instagram Reels (y feed con video_4x5.mp4)
-Volcán de Fuego, 2018: las alertas, la evacuación que no llegó a Los Lotes, el caso sin sentencia y la vida en La Dignidad. #Guatemala #VolcanDeFuego
+Volcán de Fuego, 2018: las alertas, la evacuación que no llegó a Los Lotes, el caso sin sentencia y la vida en La Dignidad. #Guatemala #VolcanDeFuego #historia
 
 ## Facebook Reels (y feed con video_4x5.mp4)
 El volcán de Fuego sepultó San Miguel Los Lotes el 3 de junio de 2018. ¿Por qué nadie ordenó evacuar? Fuentes en el primer comentario.
@@ -14,6 +14,6 @@ El volcán de Fuego sepultó San Miguel Los Lotes el 3 de junio de 2018. ¿Por q
 ## YouTube Shorts
 Título (primera línea, ≤ 100 caracteres) y descripción.
 Volcán de Fuego 2018: la orden que no llegó a Los Lotes #Shorts
-Alertas, culpas cruzadas y un caso sin sentencia.
+Alertas, culpas cruzadas y un caso sin sentencia. #Guatemala
 
 Sígueme: TikTok @derekurizargt · Instagram @derekurizargt · Facebook Derek Urizar · YouTube @derekurizar · X @DerekUrizar

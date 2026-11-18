@@ -345,15 +345,15 @@
       "luces": "#FFD79A"
      },
      "tinte": [
-      0.09,
-      0.13,
-      0.27
+      0.14,
+      0.19,
+      0.34
      ],
      "luz": {
       "azimut": 320,
       "elevacion": 58,
-      "fuerza": 0.5,
-      "ambiente": 0.5
+      "fuerza": 0.55,
+      "ambiente": 0.56
      },
      "sombra_contacto": 0.12,
      "noche": true,

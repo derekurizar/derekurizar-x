@@ -1,0 +1,144 @@
+{
+ "tipo": "aldeabarranca",
+ "clase": "pieza",
+ "cuando": "aldea rural al pie de un volcán con una barranca ancha de arena gris al lado y una carretera que la cruza por un puente: por donde baja lo del volcán",
+ "parametros": {
+  "lugar": {
+   "tipo": "lugar",
+   "requerido": true,
+   "descripcion": "el centro de la aldea (un lugar del mundo o [x, y] en metros en un esquema). Va mejor en la receta campo con horizonte llano (el volcán lo pone la pieza), mundo de ≥ 3200 m y sin otra pieza en 1 km a la redonda"
+  },
+  "rumbo": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    360
+   ],
+   "defecto": 0,
+   "descripcion": "hacia dónde queda el volcán desde la aldea (grados; 0 = este, 90 = norte); la cumbre queda a ≈ 830 m × tamano y la barranca corre a la IZQUIERDA de quien mira al volcán (con rumbo 0, al norte), del cono hacia abajo. La carretera cruza de derecha a izquierda entre la aldea y el volcán. La aldea con el volcán detrás: mira «aldea», azimut ≈ rumbo − 90, dist_m 250–450, elevación 10–22°; todo el lugar: mira «puente», dist_m 1200–1700, elevación 12–18°"
+  },
+  "tamano": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0.6,
+    2
+   ],
+   "defecto": 1,
+   "descripcion": "escala de todo (1 = casas de 3–8 m, carretera de 7.2 m, cono de 480 m de alto y 1.3 km de base sobre una meseta de 22 m: una maqueta, no a escala)"
+  },
+  "casas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    10,
+    80
+   ],
+   "defecto": 40,
+   "descripcion": "cuántas casas con su lote hay a lo largo de las calles y sueltas alrededor (las que caben sin encimarse ni pisar la barranca, la carretera o el cafetal): mezcladas, champas de lámina sobre postes, block y ladrillo. Ilustrativo: no cuenta casas reales"
+  },
+  "personas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    12
+   ],
+   "defecto": 8,
+   "descripcion": "vecinos: de cada cuatro, dos caminan por las calles y dos platican de pie en pareja (en la calle o junto a la cisterna); de noche, la mitad"
+  },
+  "vehiculos": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    4
+   ],
+   "defecto": 1,
+   "descripcion": "vehículos en la carretera, en este orden: carro, camión, bus, carro; los pares van hacia la barranca y los impares vienen de ella, por el puente, en un tramo de ≈ 600 m junto a la aldea (de noche con faros)"
+  },
+  "ancho_barranca_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    20,
+    200
+   ],
+   "defecto": 80,
+   "descripcion": "el ancho de la barranca en el llano (m de orilla a orilla; más angosta arriba, en el cono). Su fondo plano de arena gris queda unos 20 m bajo la meseta; la aldea se corre para dejarle sitio"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "el azar fijo: la curva de la barranca y de la carretera, dónde caen las casas, de qué son y su techo (alguno oxidado), los árboles, las piedras y el color de los vehículos"
+  }
+ },
+ "escalas": [
+  "esquema"
+ ],
+ "motores": [
+  "three"
+ ],
+ "usa": [
+  "persona",
+  "carro",
+  "camion",
+  "bus"
+ ],
+ "ejemplo": {
+  "id": "aldea",
+  "tipo": "aldeabarranca",
+  "lugar": [
+   0,
+   0
+  ],
+  "rumbo": 0,
+  "tamano": 1,
+  "casas": 40,
+  "personas": 8,
+  "vehiculos": 2,
+  "ancho_barranca_m": 80,
+  "semilla": 1
+ },
+ "nivel": "escenario",
+ "contiene": [
+  "el cono del volcán al fondo con su cráter, costillas, ceniza y roca arriba, zacatal y bosque de pinos y latifoliadas en la falda",
+  "la barranca ancha: fondo plano de arena gris con regueros, piedras y bloques, paredes de roca con vetas y árboles en la orilla",
+  "la carretera asfaltada de dos carriles con raya central discontinua, orillas pintadas a ras y hombros de grava",
+  "el puente de concreto: losa, bordillos, barandas con postes, pilas dobles con cabezal sobre el fondo y estribos",
+  "postes de luz junto a la carretera, a la altura de la aldea",
+  "calles de tierra: una que sale de la carretera, otra paralela y tres que bajan hacia la barranca",
+  "lotes con patio de tierra y cerca de postes y alambre o muro bajo de block (el frente abierto a la calle)",
+  "casas sencillas y mezcladas: champas de lámina acanalada sobre postes, casas de block con juntas y de ladrillo, techos de lámina (alguno oxidado), puerta, ventana con reja",
+  "patios con árbol, leña apilada y tendedero con ropa",
+  "la escuela de ladrillo con tres aulas, corredor de columnas y su cancha de concreto con líneas y dos tableros",
+  "el salón comunal de block con techo a dos aguas",
+  "la cisterna de concreto con su tapa, escalera y tubo",
+  "cafetales en hileras en la loma del sur, con árboles de sombra",
+  "vecinos que caminan y otros que platican de pie en pareja",
+  "vehículos que van y vienen por la carretera y cruzan el puente",
+  "humo de fogón que sale de algunas casas",
+  "de noche: ventanas, el salón, los postes de luz y los faros encendidos"
+ ],
+ "animado": "los vecinos caminan por las calles y los que platican se quedan de pie (posición = función de t), los vehículos van y vienen por la carretera y cruzan el puente, el humo de los fogones sube y se lo lleva el viento y, de noche, las ventanas tiemblan",
+ "gente": true,
+ "poses": [
+  "caminar",
+  "de_pie"
+ ],
+ "distancia_m": [
+  40,
+  1800
+ ],
+ "caja_m": [
+  2500,
+  1720,
+  500
+ ]
+}

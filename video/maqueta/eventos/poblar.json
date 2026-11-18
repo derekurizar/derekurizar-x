@@ -1,0 +1,175 @@
+{
+ "tipo": "poblar",
+ "clase": "evento",
+ "cuando": "la orilla de un lago que se llena de casas de verano y hoteles: brotan lote a lote con su sombra (ilustrativo, no cuenta edificios)",
+ "parametros": {
+  "pieza": {
+   "tipo": "pieza",
+   "piezas": [
+    "orillalago"
+   ],
+   "requerido": true,
+   "descripcion": "la orillalago cuya franja de lotes (entre la playa y el camino) se llena; pon su `construcciones` en 0 para que los lotes de poblar no se encimen con los suyos"
+  },
+  "de": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "descripcion": "fracción de los lotes ya ocupados antes del evento (se ven desde el cuadro 0); sin `de`, sigue donde dejó el poblar anterior de la misma pieza (0 el primero)"
+  },
+  "a": {
+   "tipo": "numero",
+   "requerido": true,
+   "rango": [
+    0,
+    1
+   ],
+   "descripcion": "fracción de los lotes ocupados al terminar (ilustrativa: la densidad no es un dato)"
+  },
+  "orden": {
+   "tipo": "texto",
+   "requerido": false,
+   "valores": [
+    "izquierda-derecha",
+    "centro-afuera",
+    "azar"
+   ],
+   "defecto": "izquierda-derecha",
+   "descripcion": "en qué orden brotan los lotes: de izquierda a derecha mirando desde el agua, del centro hacia los lados o en un azar fijo por `semilla`"
+  },
+  "lotes": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    4,
+    40
+   ],
+   "defecto": 16,
+   "descripcion": "cuántos lotes caben en la franja (los del paso al muelle se saltan); ilustrativo"
+  },
+  "largo_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    60,
+    1200
+   ],
+   "defecto": 300,
+   "descripcion": "largo de la franja a lo largo de la orilla (metros × tamano de la pieza); lotes de menos de 15 m no llevan hotel"
+  },
+  "playa_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    4,
+    60
+   ],
+   "defecto": 16,
+   "descripcion": "distancia de la línea del agua al frente de los lotes (metros × tamano)"
+  },
+  "fondo_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    20,
+    90
+   ],
+   "defecto": 34,
+   "descripcion": "fondo de cada lote hacia tierra (metros × tamano); nunca pisa el camino de la pieza"
+  },
+  "hoteles": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0.35,
+   "descripcion": "parte de los lotes que son hotel (dos plantas, balcón, terraza con sombrillas); el resto, casas de una planta con corredor y tapia"
+  },
+  "epoca": {
+   "tipo": "texto",
+   "requerido": false,
+   "valores": [
+    "antes",
+    "hoy"
+   ],
+   "descripcion": "antes: techos de teja; hoy: losas con pretil, vidrio y alguna teja. Sin ella, la `epoca` de la pieza (hoy si no tiene)"
+  },
+  "lugar": {
+   "tipo": "lugar",
+   "requerido": false,
+   "descripcion": "otro punto de la línea del agua para el centro de la franja (sin él, el lugar de la pieza)"
+  },
+  "rumbo": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    360
+   ],
+   "descripcion": "hacia dónde queda la tierra desde el agua (sin él, el contrario del rumbo de la orillalago)"
+  },
+  "personas": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "al terminar de brotar, alguien sale a caminar frente al lote (de noche, la mitad)"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "variación de cada lote (hotel o casa, tamaño, techo, árboles) y el orden «azar»"
+  }
+ },
+ "escalas": [
+  "esquema"
+ ],
+ "motores": [
+  "three"
+ ],
+ "adelanto": {
+  "s": 0.15
+ },
+ "nivel": "evento",
+ "contiene": [
+  "solar de césped con andén hacia el agua",
+  "tapia baja con remate, pilares y portón hacia el camino",
+  "casa de una planta con zócalo, puerta, ventanas con marco, corredor de horcones y alero, chimenea",
+  "hotel de dos plantas con cornisa, balcón corrido con baranda y pilares, ventanas por planta",
+  "terraza del hotel con sombrillas y mesas",
+  "techos de teja a dos o cuatro aguas (antes) o losas con pretil y vidrio (hoy)",
+  "árboles del jardín",
+  "sombra de contacto, polvo al brotar y lámparas del corredor de noche",
+  "gente que camina frente a los lotes poblados"
+ ],
+ "animado": "cada lote brota en su turno: el solar se abre desde el centro con polvo, el edificio sube desde el suelo, rebota apenas y se asienta con su sombra; luego alguien sale a caminar frente al lote; de noche se encienden ventanas y lámparas",
+ "gente": "una persona caminando frente a la mayoría de los lotes poblados (muñeco sin rostro)",
+ "distancia_m": 220,
+ "caja_m": [
+  300,
+  60,
+  14
+ ],
+ "usa": [
+  "persona"
+ ],
+ "ejemplo": {
+  "t": 0.6,
+  "dur": 6.0,
+  "tipo": "poblar",
+  "pieza": "orilla",
+  "de": 0.1,
+  "a": 0.8,
+  "orden": "izquierda-derecha",
+  "semilla": 1
+ }
+}

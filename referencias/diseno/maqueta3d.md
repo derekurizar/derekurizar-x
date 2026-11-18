@@ -318,9 +318,14 @@ ni `Math.random`, ni reloj: `ctx.hash(i, k)` da el azar fijo). Sin colores escri
 `camino(nombre)`, `enCamino(nombre, s)`, `lugares`, `puntoEnS`, `distCadena`, `proyectar(x, y, z)`; superficies de mundo:
 `malla` (`nueva`, `banda`, `poligono`, `geometria`, `material`, `poner`), `tonos`, `sombra(nx, ny, nz)`; líneas:
 `cinta(pts, color, ancho_px, alfa, orden, {raya, oculta})`, `pegar(polilínea, paso_km, lev)`, `geoCinta`, `VERT_CINTA`,
-`linea(id, cinta)` (una línea que «resaltar» aviva por el id de su pieza); la superficie (el shader del relieve):
+`registrarCinta(mat, ancho_px)` (una cinta con su propio fragmentShader sobre `VERT_CINTA`: el núcleo le ajusta el ancho a la
+distancia como a las suyas; no se copia la fórmula), `linea(id, cinta)` (una línea que «resaltar» aviva por el id de su
+pieza); el suelo que se VE en un mundo pais (la malla toma una celda de cada dos; en voxel, columnas): `sueloVisto(x, y)`
+(sin el relieve de pieza: donde se posan conos y lagos) y `superficieVista(base)` (esa superficie sobre otra altura, p. ej.
+`ctx.altura`: ríos, carreteras, lagos); la superficie (el shader del relieve):
 `superficie` (sus uniformes: `uCad`, `cPieza`, `uBrillo`, `uOnda`…), `uRuptura`, `uComun()`, `GLSL_COMUN`,
-`GLSL_RUPTURA`, `NR`, `NC`, `NO`; lo que publican otros módulos: `fallas`, `idxFalla(id)`, `fallas3d`, `luces`; y
+`GLSL_RUPTURA`, `NR`, `NC`, `NO`; lo que publican otros módulos: `fallas`, `idxFalla(id)`, `fallas3d`, `luces` (cada
+una con `pieza`, el índice, y `pieza_id`, el id de su pieza: un evento filtra por `pieza_id`); y
 lo que se mueve (Fase 2): `tray` (evaluar una trayectoria T/S suavizada: `tray.nueva(T, S)`, `tray.suave(r, h, t)` → [s, v]),
 `moviles` (id → (t, n) → {x, y, dx, dy, v, vis}: lo registran actor y flujo), `ancla(A, t)` (un ancla resuelta → dónde está),
 `flota(tipo, n, {tamano, lev, luces, color, orden})` (n objetos de un tipo en una malla instanciada: `poner(i, x, y, dx, dy, k,
@@ -328,6 +333,15 @@ freno)` y `listo()`), `tonos.bien|medio|mal` y `tonos.vehiculos`;
 `cuadro` = `{t, k, pxKm, dist, dist_km, brillo, elementos, ondas, rupturas}` (lo de este cuadro: `brillo[id]` y
 `elementos[id] = [{i, k}]` los pone `resaltar`, `ondas` las pone `onda`). Lo propio del relieve nacional (`superficie`,
 `uRuptura`, `GLSL_RUPTURA`, `NR`, `NC`, `NO`) lo publica el mundo `pais`: una pieza que lo usa es de escala pais.
+
+**Uniformes reservados.** `uComun()` trae `cFondo`, `cFondo2`, `uRes`, `uGrano`, `uNiebla`, `uHora`, `uT` (el segundo
+del cuadro: no hace falta uno propio) y los de la sombra (`tSombra`, `uSombraM`, `uSombraK`, `uLuzW`, `uSombraTx`,
+`uSombraTxW`, `uVolumen`), y `GLSL_COMUN` ya los declara. Un material que esparce `...ctx.uComun()` y declara uno de esos
+nombres lo pisa sin aviso (un `uRes` propio rompe el ancho de las cintas): `maqueta_modulo.py check` lo rechaza (lee la
+lista de `motor.js`).
+
+**Lo que un módulo publica para otro del mismo tema** va en `MAQ` con un nombre propio, nunca copiado: `MAQ.FALDA`
+(`alto(u, v, ph)`, `fase`, sus constantes) lo publica `piezas/faldavolcan.js` y lo usa `eventos/alud.js`.
 
 **La ficha** (`<tipo>.json`):
 
@@ -361,7 +375,8 @@ parámetros pasan tal cual con los lugares en km; lo que una pieza PUBLICA para 
 al motor con ella: `_caminos` ({nombre: cadena}: caminos que un actor o un flujo pueden seguir), `_lugares` ({id: {x, y,
 nombre, peso}} en unidades de la escena: quedan como lugares del mundo con su id y siempre como «<id de la pieza>.<id>»;
 uno del mismo id en `mundo.lugares` manda; sirve en esquema y en ciudad) y `_alturas` (su relieve, § «El relieve de
-pieza»)), `cerrar(lista, X)` (reglas sobre todas las de su tipo: el tope de 4
+pieza»)); y `_cosas` (sus partes con volumen para M3D15–M3D16, con `maqueta_escena.cosas_pieza` y `agrupar`: lo pide una pieza
+que se arma sobre un trazo, sin `x`/`y` ni `poligono`, como `bulevar1890` y `avenidareforma`; sin él la escena mide 0 %), `cerrar(lista, X)` (reglas sobre todas las de su tipo: el tope de 4
 rupturas, la simplificación de las fallas), y para los gates `tramos(pieza)` (es una línea: vale para `separada_de`,
 M3D11), `centro(pieza, G)`, `puntos(evento, u, G)` (M3D6) y `origen(evento, G)` (M3D9).
 
@@ -382,7 +397,8 @@ Atajo para los pasos 2 y 3 (lo usa el agente `maqueta-constructor`, que escribe 
 algo que el catálogo no tiene): `python3 scripts/maqueta_modulo.py check <clase>/<tipo>` (lint más estricto, la ficha,
 una maqueta mínima armada con el `ejemplo`, la **pureza** —el mismo segundo dibujado directo y tras recorrer otros da el
 mismo cuadro—, el tiempo por cuadro y las hojas 9:16 y 4:5) y `registrar <clase>/<tipo>` (el check y luego `catalogo
---registrar`).
+--registrar --ignorar-a-medias`: lo que otra sesión dejó a medio hacer —un módulo sin ficha, una ficha sin módulo, unas
+reglas sueltas— avisa y queda fuera en vez de bloquear el registro; una ficha con errores sigue fallando).
 
 Ninguna entrada nueva toca `motor.js`, `maqueta3d.py` ni otra entrada: el núcleo no conoce ningún tipo. El motor
 Blender (`maqueta_blender.py`) no usa módulos: dibuja los tipos de hoy con sus propias ramas; una entrada nueva declara

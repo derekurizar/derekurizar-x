@@ -14,13 +14,18 @@ mismos comandos de scripts/video.py (locucion.json tiene su misma forma). Guía:
 Subcomandos (TRABAJO = sesiones/video3d-<slug>):
   preparar SLUG --tema "…" [--desde CARPETA] [--paleta P] [--musica-tema T] [--duracion S]
         crea TRABAJO; --desde copia las cifras verificadas (base/datos.json) de un trabajo o una entrega anterior
-  datos TRABAJO --sumar ARCHIVO      añade a base/datos.json las cifras verificadas de un verificacion_*.json
+  datos TRABAJO --sumar ARCHIVO      añade a base/datos.json las cifras verificadas de un verificacion_*.json y el año
+                                     de cada hecho fechado (anio-AAAA, si una cita lo trae: lo que la voz dirá)
   digesto TRABAJO                    lo que necesita quien escribe: cifras, lugares, piezas, eventos, estilos, reglas
   ganchos TRABAJO --check [--cuadros] [--clips] | --usar ID
         ganchos.json (5 candidatos a escena 1): reglas del gancho; cuadros y clip mudo de cada candidato; copia el elegido;
         avisa si la familia repite la de los últimos 2 videos 3D (rotación)
   guion TRABAJO --check              gates C3D1–C3D11 (concordancia) + V2–V5 (un caption por plataforma) → locucion.json
                                      y maqueta.json (estimado)
+  aplicar TRABAJO --escena N --elemento CLASE:I --set CLAVE=VALOR [--quitar CLAVE] [--por "…"]
+                                     ajusta lo que se ve en una escena (marca, cámara, cifra, evento, anotación, titular)
+                                     sin tocar la voz; rastro en guion.ajustes; corre guion --check (y tiempos, con voz
+                                     real) y deshace si fallan
   storyboard TRABAJO                 un cuadro por clave de cámara y por evento → storyboard/hoja.jpg (antes de la voz)
   voz | voz-falsa | descargar | partir | escuchar TRABAJO […]    → scripts/video.py (los mismos comandos de /video;
                                      escuchar = V11, la escucha independiente con whisper)
@@ -964,12 +969,44 @@ def cmd_preparar(a):
     return 0
 
 
+RE_ANIO_HECHO = re.compile(r"^(1[0-9]{3}|20[0-9]{2})")
+
+
+def anios_de_hechos(verif):
+    """m301: los años que la voz va a decir («en 1541») necesitan una cifra verificada (V2/C3D5), y la investigación los
+    trae como FECHAS de hechos, no como cifras. Cada hecho publicable con fecha da una cifra `anio-AAAA` si una cita
+    literal de sus fuentes trae el año: confirmado o una_fuente con una; en_disputa (el día, no el año) con dos que
+    coinciden. → [cifra]"""
+    out = {}
+    for h in verif.get("hechos") or []:
+        m = RE_ANIO_HECHO.match(str(h.get("fecha") or ""))
+        est = h.get("estado")
+        if not m or est not in ("confirmado", "una_fuente", "en_disputa"):
+            continue
+        anio = m.group(1)
+        fuentes = [f for f in h.get("fuentes") or h.get("evidencia") or []
+                   if f.get("url") and anio in (f.get("cita") or "")]
+        if not fuentes or (est == "en_disputa" and len({f["url"] for f in fuentes}) < 2):
+            continue
+        cid = "anio-%s" % anio
+        if cid in out:
+            continue
+        f0 = fuentes[0]
+        out[cid] = {"id": cid, "concepto": "año (%s)" % h.get("id"), "texto": anio, "valor": int(anio), "unidad": "año",
+                    "periodo": anio, "url": f0["url"], "cita": f0["cita"], "archivo": f0.get("archivo"), "fuentes": fuentes,
+                    "evidencia": fuentes, "veredicto": "verificada", "valor_final": int(anio), "tipo_hecho": "acto",
+                    "una_fuente": len({f["url"] for f in fuentes}) < 2, "estado": "confirmado" if est == "confirmado" else est,
+                    "nota": "año de la fecha del hecho %s (%s): video3d.py datos --sumar (m301)" % (h.get("id"), est)}
+    return list(out.values())
+
+
 def cmd_datos(a):
     trabajo = os.path.abspath(a.trabajo)
     ruta = os.path.join(trabajo, "base", "datos.json")
     datos, nuevo = leer(ruta), leer(a.sumar)
     ids, n = {c["id"] for c in datos["cifras"]}, 0
-    for c in nuevo.get("cifras") or []:
+    anios = [c for c in anios_de_hechos(nuevo) if c["id"] not in ids]
+    for c in (nuevo.get("cifras") or []) + anios:
         if c.get("veredicto") not in ("verificada", "ajustada") or c["id"] in ids:
             continue
         if not (c.get("url") and c.get("cita")):
@@ -978,7 +1015,8 @@ def cmd_datos(a):
         datos["cifras"].append(c)
         n += 1
     escribir(ruta, datos)
-    print("%d cifra(s) añadidas a %s (%d en total)" % (n, rel(ruta), len(datos["cifras"])))
+    print("%d cifra(s) añadidas a %s (%d en total)%s" % (n, rel(ruta), len(datos["cifras"]),
+                                                        " · años de las fechas: %s" % ", ".join(c["texto"] for c in anios) if anios else ""))
     return 0
 
 
@@ -1384,6 +1422,104 @@ def cmd_entregar(a):
     return 0
 
 
+CLASES_APLICAR = ("camara", "eventos", "marcas", "cifras", "anotaciones", "titular")
+
+
+def valor_de(texto):
+    """--set CLAVE=VALOR: el VALOR como JSON si se puede (2.0, true, [1, 2], {"a": 1}); si no, texto."""
+    try:
+        return json.loads(texto)
+    except ValueError:
+        return texto
+
+
+def cmd_aplicar(a):
+    """m303: un ajuste de lo que se VE en un guion que ya tiene voz (la ventana de una marca, una clave de cámara, la
+    duración de un titular) sin editar guion.json a mano ni lanzar un retoque del Workflow por un campo. Solo toca los
+    elementos de una escena (nunca su voz), deja el rastro en guion.ajustes y vuelve a correr los gates (guion --check y,
+    con voz real, tiempos); si fallan, deshace el cambio."""
+    trabajo = os.path.abspath(a.trabajo)
+    ruta = os.path.join(trabajo, "guion.json")
+    original = open(ruta, encoding="utf-8").read()
+    g = json.loads(original)
+    esc = next((e for e in g.get("escenas") or [] if e.get("n") == a.escena), None)
+    if not esc:
+        return falla("el guion no tiene la escena %s" % a.escena)
+    clase, _, idx = a.elemento.partition(":")
+    if clase not in CLASES_APLICAR:
+        return falla("--elemento va CLASE:I con CLASE en %s (titular, sin índice)" % ", ".join(CLASES_APLICAR))
+    if clase == "titular":
+        obj = esc.get("titular")
+    else:
+        lista = esc.get(clase) or []
+        try:
+            obj = lista[int(idx)]
+        except (ValueError, IndexError):
+            return falla("la escena %d no tiene %s:%s (hay %d)" % (a.escena, clase, idx, len(lista)))
+    if not isinstance(obj, dict):
+        return falla("la escena %d no tiene %s" % (a.escena, a.elemento))
+    def elemento_de(nombre):
+        c, _, i = nombre.partition(":")
+        if c not in CLASES_APLICAR:
+            return None
+        if c == "titular":
+            o = esc.get("titular")
+        else:
+            try:
+                o = (esc.get(c) or [])[int(i)]
+            except (ValueError, IndexError):
+                return None
+        return o if isinstance(o, dict) else None
+
+    # --set CLAVE=VALOR va al --elemento; ELEMENTO@CLAVE=VALOR, a otro de la misma escena en el mismo ajuste (dos claves
+    # de cámara que solo pasan juntas: cada una sola rompe el paneo con su vecina)
+    por_elemento = {a.elemento: {}}
+    for par in a.set or []:
+        clave, igual, val = par.partition("=")
+        if not igual or not clave.strip():
+            return falla("--set va CLAVE=VALOR o ELEMENTO@CLAVE=VALOR («%s»)" % par)
+        el, arroba, clave = clave.strip().rpartition("@") if "@" in clave else ("", "", clave.strip())
+        el = el if arroba else a.elemento
+        if elemento_de(el) is None:
+            return falla("la escena %d no tiene %s" % (a.escena, el))
+        por_elemento.setdefault(el, {})[clave] = valor_de(val)
+    cambios = por_elemento[a.elemento]
+    if not any(por_elemento.values()) and not a.quitar:
+        return falla("nada que aplicar: --set CLAVE=VALOR o --quitar CLAVE")
+    for el, cam in por_elemento.items():
+        o = elemento_de(el)
+        quita = list(a.quitar or []) if el == a.elemento else []
+        if not cam and not quita:
+            continue
+        antes = {k: o.get(k) for k in list(cam) + quita}
+        o.update(cam)
+        for k in quita:
+            o.pop(k, None)
+        g.setdefault("ajustes", []).append({"fecha": datetime.date.today().isoformat(), "escena": a.escena, "elemento": el,
+                                            "antes": antes, "cambios": cam, "quita": quita, "por": a.por or ""})
+    escribir(ruta, g)
+    con_voz = os.path.exists(os.path.join(trabajo, "tiempos.json"))
+    pasos = [["guion", trabajo, "--check"]] + ([["tiempos", trabajo]] if con_voz else [])
+    for paso in pasos:
+        r = subprocess.run([sys.executable, os.path.abspath(__file__)] + paso, cwd=RAIZ, capture_output=True, text=True)
+        fallas = [l for l in (r.stdout + r.stderr).splitlines() if re.search(r"\b(FALLA|ERROR)\b", l)]
+        # con voz real, los gates M3D que valen son los de `tiempos` (los segundos reales); los de `guion --check` miden
+        # con los estimados y pueden rechazar un ajuste que con la voz real pasa (avenida-reforma, 2026-11-17)
+        if r.returncode and con_voz and paso[0] == "guion" and fallas and all(re.search(r"FALLA M3D\d+|maqueta\.json: \d+ falla", l) for l in fallas):
+            continue
+        if r.returncode:
+            print("\n".join(l.strip() for l in (r.stdout + r.stderr).splitlines() if re.search(r"\b(FALLA|ERROR)\b", l))[:3000])
+            with open(ruta, "w", encoding="utf-8") as f:
+                f.write(original)
+            for p_ in pasos:   # deja locucion.json y maqueta.json como estaban
+                subprocess.run([sys.executable, os.path.abspath(__file__)] + p_, cwd=RAIZ, capture_output=True)
+            return falla("`%s` falla con el ajuste: deshecho (guion.json como estaba)" % " ".join(paso[:1] + paso[2:] or paso[:1]))
+    print("ajuste aplicado · escena %d · %s · %s%s · %s ok" % (a.escena, a.elemento, json.dumps({k: v for k, v in por_elemento.items() if v}, ensure_ascii=False),
+                                                         " · quita %s" % ", ".join(a.quitar) if a.quitar else "",
+                                                         " + ".join(p_[0] for p_ in pasos)))
+    return 0
+
+
 def main():
     if len(sys.argv) > 1 and sys.argv[1] == "producir":   # la cadena de producción común y reanudable (scripts/producir.py)
         return subprocess.run([sys.executable, os.path.join(RAIZ, "scripts", "producir.py")] + sys.argv[2:], cwd=RAIZ).returncode
@@ -1420,6 +1556,13 @@ def main():
     s.add_argument("--usar")
     s.add_argument("--por", default="usuario")
     s.add_argument("--formato", default="9:16")
+    s = sub.add_parser("aplicar", help="ajusta un elemento visual de una escena (no la voz) y vuelve a correr los gates")
+    s.add_argument("trabajo")
+    s.add_argument("--escena", type=int, required=True)
+    s.add_argument("--elemento", required=True, help="CLASE:I (camara:1, marcas:0, cifras:0, eventos:2, anotaciones:0) o titular")
+    s.add_argument("--set", action="append", help="CLAVE=VALOR (VALOR en JSON si se puede); se repite; ELEMENTO@CLAVE=VALOR toca otro elemento de la escena en el mismo ajuste (dos claves de cámara que solo pasan juntas)")
+    s.add_argument("--quitar", action="append", help="CLAVE que se quita del elemento; se repite")
+    s.add_argument("--por", help="por qué (la falla del gate que lo pide: «M3D4 marca Ladera alta 76 %%»)")
     s = sub.add_parser("storyboard")
     s.add_argument("--sin-escenas", action="store_true", help="solo la hoja del storyboard, sin la hoja ni la medida de cada mundo")
     s.add_argument("trabajo")
@@ -1438,7 +1581,7 @@ def main():
         return 2
     return {"preparar": cmd_preparar, "datos": cmd_datos, "digesto": cmd_digesto, "guion": cmd_guion, "ganchos": cmd_ganchos,
             "storyboard": cmd_storyboard, "tiempos": cmd_tiempos, "render": cmd_render, "montar": cmd_montar,
-            "portada": cmd_portada, "entregar": cmd_entregar}[a.cmd](a)
+            "portada": cmd_portada, "entregar": cmd_entregar, "aplicar": cmd_aplicar}[a.cmd](a)
 
 
 if __name__ == "__main__":

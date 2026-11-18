@@ -250,17 +250,20 @@ def encadenar(partes, fps, destino):
     cmd = ["ffmpeg", "-v", "error", "-y"]
     for p, _ in partes:
         cmd += ["-i", p]
-    fc, cur, largo = [], "[0:v]", partes[0][1]["dur"]
+    # todas las entradas a la misma base de tiempo (AVTB): concat la cambia a 1/1000000 y xfade exige que sus dos
+    # entradas coincidan, así que un corte seguido de un fundido fallaba con «Invalid argument» (-22)
+    fc = ["[%d:v]settb=AVTB[s%d]" % (i, i) for i in range(len(partes))] if len(partes) > 1 else []
+    cur, largo = "[s0]", partes[0][1]["dur"]
     for i in range(1, len(partes)):
         info = partes[i][1]
         sal = "[v%d]" % i
         tr = TRANSICIONES.get(info["transicion"])
         if tr:
             d = info["fundido"]
-            fc.append("%s[%d:v]xfade=transition=%s:duration=%.4f:offset=%.4f%s" % (cur, i, tr, d, largo - d, sal))
+            fc.append("%s[s%d]xfade=transition=%s:duration=%.4f:offset=%.4f%s" % (cur, i, tr, d, largo - d, sal))
             largo += info["dur"] - d
         else:
-            fc.append("%s[%d:v]concat=n=2:v=1:a=0%s" % (cur, i, sal))
+            fc.append("%s[s%d]concat=n=2:v=1:a=0%s" % (cur, i, sal))
             largo += info["dur"]
         cur = sal
     if fc:

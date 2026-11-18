@@ -1,0 +1,47 @@
+{
+ "tipo": "carruaje",
+ "clase": "objeto",
+ "cuando": "carruaje de caballos de fines del siglo XIX (calesa, cochero sin rostro, ruedas que giran): el paseo y la calzada de carruajes antes del carro",
+ "parametros": {},
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "medidas": {
+  "largo_m": 7.2,
+  "ancho_m": 2.0,
+  "alto_m": 2.8
+ },
+ "ejemplo": {
+  "objeto": "carruaje"
+ },
+ "nivel": "objeto",
+ "contiene": [
+  "caja lacada con molduras, puertas y asientos tapizados",
+  "capota plegable alzada con sus arcos",
+  "cuatro ruedas de rayos con llanta de hierro y ballestas",
+  "uno o dos caballos con collera, riendas y tirantes",
+  "cochero sin rostro con levita, sombrero de copa y fusta",
+  "faroles a los lados del pescante (de noche, encendidos)"
+ ],
+ "animado": "los caballos trotan (diagonales a la vez, la zancada según la velocidad) o van al paso en cuatro tiempos, cabecean y el cuerpo sube y baja; las ruedas giran según la marcha (recorrido / radio); la caja se mece sobre las ballestas y el cochero rebota; quieto, los caballos respiran y bajan la cabeza",
+ "gente": true,
+ "distancia_m": [
+  8,
+  90
+ ],
+ "caja_m": [
+  7.2,
+  2.0,
+  2.8
+ ],
+ "poses": [
+  "trote",
+  "paso",
+  "quieto"
+ ],
+ "notas": "Genérico (no afirma el tipo de carruaje ni cuántos circulaban). La `variante` elige la laca de la caja; el pelaje de los caballos sale de la semilla, y ≈ 30 % de las semillas llevan un solo caballo al centro. Sin pose: trota a ≥ 2.2 m/s o si nadie da la velocidad, va al paso por debajo y queda quieto a ≤ 0.3 m/s. En flujo, `vel_kmh` 8–15 da un trote creíble."
+}

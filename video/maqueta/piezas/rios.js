@@ -5,29 +5,7 @@
   // La altura de lo que se VE. mundos/pais.js arma la malla del relieve con una celda de cada dos (y, en voxel, columnas de
   // 6 × 6 celdas): un cauce angosto cae entre dos vértices y con ctx.altura quedaría debajo de la malla. Aquí se calcula
   // esa misma superficie con ctx.altura en los centros de celda (allí es exacta).
-  function suelo(ctx) {
-    const R = ctx.M.relieve, P = R.proyeccion, C = R.caja, { clamp, EXAG } = ctx;
-    const X0 = (C.lon_min - P.lon0) * P.km_lon, X1 = (C.lon_max - P.lon0) * P.km_lon, Y0 = (C.lat_min - P.lat0) * P.km_lat, Y1 = (C.lat_max - P.lat0) * P.km_lat;
-    const CX = (X1 - X0) / R.ancho, CY = (Y1 - Y0) / R.alto;
-    const celda = (ci, cj) => ctx.altura(X0 + (ci + 0.5) * CX, Y1 - (cj + 0.5) * CY);
-    if (ctx.ES.cubos) {   // voxel: el tope de la columna (la media del bloque en escalones de 300 m)
-      const B = 6, paso = 0.3 * EXAG, memo = new Map(), nbx = Math.floor(R.ancho / B), nby = Math.floor(R.alto / B);
-      return (x, y) => {
-        const bi = clamp(Math.floor((x - X0) / CX / B), 0, nbx - 1), bj = clamp(Math.floor((Y1 - y) / CY / B), 0, nby - 1), k = bj * nbx + bi;
-        if (!memo.has(k)) { let s = 0, n = 0;
-          for (let b = 0; b < B; b++) for (let a = 0; a < B; a++) { const h = celda(bi * B + a, bj * B + b); s += h; if (h > 0) n++; }
-          memo.set(k, n > B * B / 2 ? Math.max(1, Math.round(s / (B * B) / paso)) * paso : paso * 0.35); }
-        return memo.get(k);
-      };
-    }
-    const PASO = 2, nx = Math.floor((R.ancho - 1) / PASO) + 1, ny = Math.floor((R.alto - 1) / PASO) + 1;
-    return (x, y) => {   // el triángulo de la malla que pisa (x, y): a–b arriba, c–d abajo, diagonal b–c
-      const fi = clamp(((x - X0) / CX - 0.5) / PASO, 0, nx - 1.0001), fj = clamp(((Y1 - y) / CY - 0.5) / PASO, 0, ny - 1.0001);
-      const i = Math.floor(fi), j = Math.floor(fj), u = fi - i, v = fj - j;
-      const a = celda(i * PASO, j * PASO), b = celda((i + 1) * PASO, j * PASO), c = celda(i * PASO, (j + 1) * PASO), d = celda((i + 1) * PASO, (j + 1) * PASO);
-      return u + v <= 1 ? a + (b - a) * u + (c - a) * v : d + (c - d) * (1 - u) + (b - d) * (1 - v);
-    };
-  }
+  const suelo = (ctx) => ctx.superficieVista(ctx.altura);   // la malla que se ve (motor.js, m305)
   // líneas [[clase, x0, y0, x1, y1, …], …] de una clase → UNA cadena con saltos, densificada (ctx.pegar) y posada en lo que se ve
   function cadena(ctx, S, lineas, clase, paso, lev) {
     const cad = []; let s = 0;

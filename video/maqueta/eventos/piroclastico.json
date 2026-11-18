@@ -1,0 +1,143 @@
+{
+ "tipo": "piroclastico",
+ "clase": "evento",
+ "cuando": "flujo piroclástico de cerca: pulsos de nube gris bajan por la barranca, el último se desborda junto al puente y entierra la aldea hasta el techo",
+ "parametros": {
+  "pieza": {
+   "tipo": "pieza",
+   "piezas": [
+    "aldeabarranca",
+    "faldavolcan"
+   ],
+   "requerido": true,
+   "descripcion": "la aldea por cuya barranca baja (en una faldavolcan, por su cauce; se desborda al pie del cono). Ponle personas: 0 y vehiculos: 0: la gente que sale la pone este evento"
+  },
+  "pulsos": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    1,
+    6
+   ],
+   "defecto": 3,
+   "descripcion": "cuántas lenguas con su nube bajan una tras otra; cada una llega más lejos y solo la última se desborda (ilustra, no cuenta pulsos medidos)"
+  },
+  "desborde": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0.8,
+   "descripcion": "cuánto sube el último pulso sobre la orilla junto al puente (aguas arriba: el puente queda entero a la vista) y el espesor del depósito en la aldea (2.4–3 m: hasta el techo, sin cifra). Menos de 0.15: no se desborda, se queda en el cauce"
+  },
+  "cubre": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0.6,
+   "descripcion": "qué fracción de la aldea (calles y lotes) queda enterrada, contada desde el lado de la barranca y el puente; lo demás queda en pie"
+  },
+  "bloques": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    40
+   ],
+   "defecto": 15,
+   "descripcion": "bloques de piedra (algunos rojizos y unos grandes) que ruedan en el frente y quedan medio enterrados; dos de cada tres en la aldea, el resto en el cauce"
+  },
+  "humo": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "el depósito echa humo después de que llega (hasta el final del tramo)"
+  },
+  "vacia": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "true: la gente sale antes de que llegue y no vuelve (pueblo fantasma); false: al final dos personas miran desde fuera del depósito"
+  },
+  "gente": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    12
+   ],
+   "defecto": 8,
+   "descripcion": "vecinos que pone el evento en las calles (en una aldeabarranca, la principal y las tres que la cruzan): caminan y, con margen antes del desborde, caminan de prisa lejos de la barranca y dejan la calle; nadie queda alcanzado"
+  },
+  "queda": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "true: el depósito (y lo enterrado) queda el resto del tramo; false: se va al terminar"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "el azar fijo: la nube, los bloques, los escombros y dónde camina la gente"
+  }
+ },
+ "escalas": [
+  "esquema"
+ ],
+ "motores": [
+  "three"
+ ],
+ "adelanto": {
+  "dur": 0.3
+ },
+ "usa": [
+  "persona"
+ ],
+ "nivel": "evento",
+ "contiene": [
+  "pulsos que bajan por la barranca y rellenan su fondo",
+  "nube gris turbulenta con la base densa sobre cada frente",
+  "desborde junto al puente (el puente queda entero) que cruza la carretera",
+  "lóbulo de ceniza gris que entierra las casas hasta el techo desde el lado de la barranca",
+  "bloques de piedra rodando, algunos rojizos y unos grandes",
+  "láminas y vigas que asoman del depósito",
+  "humo que sale del depósito",
+  "vecinos que dejan la calle antes de que llegue"
+ ],
+ "animado": "los pulsos bajan uno tras otro (salen rápido y frenan) con su nube que se enrosca, sube y se deshace; el último sube sobre la orilla y el lóbulo avanza por la aldea con la cabeza abultada y más clara, bloques que ruedan y la nube del frente; después el depósito se oscurece y humea; la gente camina por las calles y se va antes del desborde",
+ "gente": "los vecinos los pone el evento (`gente`); la pieza va con personas: 0",
+ "distancia_m": [
+  250,
+  1600
+ ],
+ "caja_m": [
+  1500,
+  700,
+  60
+ ],
+ "ejemplo": {
+  "t": 0.6,
+  "dur": 8.0,
+  "tipo": "piroclastico",
+  "pieza": "aldea",
+  "pulsos": 3,
+  "desborde": 0.8,
+  "cubre": 0.6,
+  "bloques": 15,
+  "humo": true,
+  "vacia": true,
+  "gente": 8,
+  "queda": true,
+  "semilla": 1
+ }
+}

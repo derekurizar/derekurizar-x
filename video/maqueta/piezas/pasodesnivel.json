@@ -1,0 +1,119 @@
+{
+ "tipo": "pasodesnivel",
+ "clase": "pieza",
+ "cuando": "un paso a desnivel sobre un cruce real de OSM: la vía sube en puente o baja en trinchera y los carros pasan sin detenerse",
+ "parametros": {
+  "lugar": {
+   "tipo": "lugar",
+   "requerido": true,
+   "descripcion": "junto al cruce (hasta 450 m): sin `rumbo`, la pieza toma la vía de la traza cuyo nombre dice «desnivel» más cercana y la usa de eje; si no la hay, una recta por el punto de la red vial más cercano"
+  },
+  "rumbo": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    360
+   ],
+   "descripcion": "hacia dónde corre el eje en recta (grados; 0 = este, 90 = norte); con él no se busca la vía «desnivel» de la traza. Sin él ni vía en la traza, perpendicular a la calle más cercana. Para verlo de lado: azimut = 90 − rumbo ± 90"
+  },
+  "forma": {
+   "tipo": "texto",
+   "requerido": false,
+   "valores": [
+    "bajo",
+    "sobre"
+   ],
+   "defecto": "bajo",
+   "descripcion": "sobre: puente elevado (tablero sobre pilas con viga cabezal, vigas, pretiles y rampas que bajan a nivel) · bajo: trinchera con muros y la calle que cruza pasa encima en una losa. La altura y el número de pilas son ilustrativos"
+  },
+  "largo_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    100,
+    800
+   ],
+   "descripcion": "largo del eje de punta a punta, SOLO si está verificado (recorta o alarga la traza desde su medio); sin él, el de la traza (o 360 m en recta). Ningún largo se rotula en el 3D"
+  },
+  "carros": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    20
+   ],
+   "defecto": 10,
+   "descripcion": "carros genéricos (ilustrativos: ni cuántos ni qué modelo): la mitad sube y baja por el paso sin detenerse, la otra corre por las calles que cruza"
+  },
+  "personas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    12
+   ],
+   "defecto": 4,
+   "descripcion": "gente que camina por las aceras de la calle que cruza (sin cifra: ilustrativa)"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "el azar fijo: dónde va cada carro, cada persona y el tono de cada tramo"
+  }
+ },
+ "escalas": [
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "capas": [
+  "calles"
+ ],
+ "usa": [
+  "carro",
+  "persona"
+ ],
+ "ejemplo": {
+  "id": "desnivel",
+  "tipo": "pasodesnivel",
+  "lugar": [
+   -90.541909,
+   14.617636
+  ],
+  "forma": "sobre",
+  "carros": 10,
+  "personas": 4,
+  "semilla": 1
+ },
+ "nivel": "escenario",
+ "contiene": [
+  "el eje del paso sobre su traza de OpenStreetMap, con su calzada de asfalto, rayas de orilla y raya central discontinua",
+  "sobre: tablero de concreto sobre pilas con viga cabezal, vigas bajo la losa y juntas entre tramos (altura y número ilustrativos)",
+  "rampas de entrada y salida que bajan a nivel, con pretiles y baranda metálica",
+  "bajo: trinchera con muros de concreto, pretiles arriba y la losa por donde la calle que cruza pasa encima",
+  "las calles que cruza a nivel (las de la traza: con su ancho, rayas y aceras) y jardineras con arbustos bajo el puente",
+  "postes de luz sobre el paso y postes de señal sin texto en las rampas",
+  "carros que suben y bajan sin detenerse y gente que camina por las aceras"
+ ],
+ "animado": "los carros suben por la rampa, cruzan y bajan sin detenerse mientras otros corren por la calle que cruza (posición = función de t); la gente camina por las aceras; «resaltar» la pieza (o cualquiera de sus lugares) enciende el paso entero en el acento; de noche, postes de luz con su charco y faros en la calle a nivel",
+ "gente": true,
+ "distancia_m": [
+  90,
+  900
+ ],
+ "caja_m": [
+  360,
+  60,
+  12
+ ],
+ "poses": [
+  "caminar"
+ ]
+}

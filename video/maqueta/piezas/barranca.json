@@ -1,0 +1,110 @@
+{
+ "tipo": "barranca",
+ "clase": "pieza",
+ "cuando": "el cauce de una barranca que baja de una cumbre: se dibuja cuesta abajo al resaltarla y publica el cauce como camino para un flujo",
+ "parametros": {
+  "puntos": {
+   "tipo": "puntos",
+   "requerido": true,
+   "min": 2,
+   "descripcion": "la traza [[lon, lat], …] EN ORDEN de la cumbre hacia abajo (el último punto, al pie); geodatos verificados como una cifra"
+  },
+  "nombre": {
+   "tipo": "texto",
+   "requerido": false,
+   "defecto": "Barranca",
+   "descripcion": "el nombre de la barranca (no se dibuja: nombra sus lugares «<id>.cumbre», «<id>.medio» y «<id>.pie»; el rótulo va en la capa 2D)"
+  },
+  "ancho_km": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0.05,
+    2
+   ],
+   "defecto": 0.3,
+   "descripcion": "el ancho del cauce de labio a labio, al pie (junto a la cumbre nace a la mitad); ilustrativo si la fuente no lo da"
+  },
+  "profundidad_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    200
+   ],
+   "defecto": 40,
+   "descripcion": "cuánto sube el labio sobre el lecho (exagerado como el relieve); ilustrativo, no es una cifra en pantalla"
+  },
+  "esquematica": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "suaviza entre los puntos (una curva que pasa por cada uno) y declara la traza esquemática; false = tramos rectos entre los puntos dados"
+  }
+ },
+ "escalas": [
+  "pais"
+ ],
+ "motores": [
+  "three"
+ ],
+ "ejemplo": {
+  "id": "laslajas",
+  "tipo": "barranca",
+  "nombre": "Las Lajas",
+  "puntos": [
+   [
+    -90.88,
+    14.473
+   ],
+   [
+    -90.868,
+    14.46
+   ],
+   [
+    -90.857,
+    14.446
+   ],
+   [
+    -90.847,
+    14.43
+   ],
+   [
+    -90.838,
+    14.414
+   ],
+   [
+    -90.829,
+    14.4
+   ]
+  ],
+  "ancho_km": 0.3,
+  "profundidad_m": 40,
+  "esquematica": true
+ },
+ "nivel": "fondo",
+ "contiene": [
+  "lecho claro de arena y piedra volcánica",
+  "piedras sueltas en el lecho",
+  "dos paredes sombreadas con la luz del estilo",
+  "labio y hombros que se funden con la ladera",
+  "halo del acento y punta que brilla mientras se dibuja",
+  "vetas de arena que bajan despacio"
+ ],
+ "animado": "vetas de arena que bajan despacio por el lecho (ilustrativo); con «resaltar» se dibuja de la cumbre hacia abajo y queda en el acento",
+ "gente": false,
+ "distancia_m": [
+  8000,
+  50000
+ ],
+ "caja_m": [
+  12000,
+  600,
+  200
+ ],
+ "publica": [
+  "cumbre",
+  "medio",
+  "pie"
+ ]
+}

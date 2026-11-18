@@ -1,0 +1,122 @@
+{
+ "tipo": "drenajeorilla",
+ "clase": "pieza",
+ "cuando": "drenaje de un pueblo de orilla: tubos de las casas al lago, una parte por una planta de tratamiento y el resto crudo a la orilla con mancha turbia",
+ "parametros": {
+  "lugar": {
+   "tipo": "lugar",
+   "requerido": true,
+   "descripcion": "la línea del agua frente al pueblo (un lugar del mundo, o [x, y] en metros en un esquema): el lago queda hacia `rumbo` (≈ 170 m de agua) y la tierra a la espalda (playa 12 m, casas del frente a 40 m, calle con el colector a 60 m, casas de atrás a 82 m, árboles hasta 150 m). El pueblo ocupa v −100…45 (a la derecha, mirando al lago) y la planta cercada v 50…114 (a la izquierda). Publica los lugares pueblo, planta, desague (el primer desagüe crudo), desague-2/-3, salida-planta, mancha, orilla, lago y calle, y el camino «<id>.calle»"
+  },
+  "rumbo": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    360
+   ],
+   "defecto": 0,
+   "descripcion": "hacia dónde queda el lago visto desde la orilla (grados; 0 = este, 90 = norte). Para ver el pueblo desde el agua: mira = <id>.calle, azimut = 270 − rumbo, elevación 20–35°, dist_m 200–280; una boca de cerca: mira = <id>.desague, dist_m 50–80, elevación 12–25°"
+  },
+  "tamano": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0.6,
+    2
+   ],
+   "defecto": 1,
+   "descripcion": "escala de todo (1 = medidas reales: casas de 7–9 m de frente, tubos de 0.6–1.2 m de diámetro agrandados para leerse, sedimentadores de 11 m; la gente va ×1.25)"
+  },
+  "a_planta": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0.3,
+   "descripcion": "qué parte del pueblo (desde el lado de la planta) va por el colector a la planta; el resto baja crudo por 1–3 desagües. Es ilustrativo: mueve el corte entre las casas, no dibuja una cifra (la cifra va en la capa 2D con su respaldo)"
+  },
+  "sin_drenaje": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0.35,
+   "descripcion": "qué parte de las 20 casas no tiene conexión: sin tubo, con una fosa en el patio (lo que se infiltra no se ve). Ilustrativo"
+  },
+  "personas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    4
+   ],
+   "defecto": 2,
+   "descripcion": "1 = quien opera la planta, de pie entre el tanque y los sedimentadores; 2 = y quien camina por la calle; 3 = y quien mira el agua en la orilla junto al primer desagüe; 4 = y otra persona por la calle. Muñecos sin rostro"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "el azar fijo: tamaño, color, pisos y techo de cada casa, cuáles no tienen conexión, árboles, forma de la mancha, fase de los pulsos y de los puentes"
+  }
+ },
+ "escalas": [
+  "esquema"
+ ],
+ "motores": [
+  "three"
+ ],
+ "usa": [
+  "persona"
+ ],
+ "ejemplo": {
+  "id": "drenaje",
+  "tipo": "drenajeorilla",
+  "lugar": [
+   0,
+   0
+  ],
+  "rumbo": 90,
+  "tamano": 1,
+  "a_planta": 0.3,
+  "sin_drenaje": 0.35,
+  "personas": 3,
+  "semilla": 1
+ },
+ "nivel": "escenario",
+ "contiene": [
+  "lago con su playa en rampa",
+  "dos filas de casas genéricas (un piso con teja o dos con losa y tinaco) con patios, muros, puertas y ventanas con reja",
+  "calle con cunetas, faroles y tapas de pozo",
+  "acometidas con caja de registro y fosas con respiradero en las casas sin conexión",
+  "colector crudo y colector a la planta",
+  "1–3 desagües que bajan a la playa con su cabezal, chorro y mancha turbia en el agua",
+  "planta de tratamiento cercada: canal de rejas, tanque con pasarela y burbujas, dos sedimentadores con puente giratorio, lechos de secado, edificio bajo y lámparas",
+  "salida del efluente a la orilla, sin mancha",
+  "árboles y gente"
+ ],
+ "animado": "el agua corre por los tubos en pulsos (turbia a los desagües y a la planta, menos turbia a la salida), los chorros caen de las bocas, la mancha respira y suelta anillos, burbujas en el tanque, los puentes de los sedimentadores giran, destellos del lago, gente que camina por la calle",
+ "gente": true,
+ "poses": [
+  "de_pie",
+  "caminar"
+ ],
+ "distancia_m": [
+  50,
+  280
+ ],
+ "caja_m": [
+  320,
+  300,
+  8
+ ]
+}

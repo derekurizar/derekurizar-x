@@ -1,0 +1,60 @@
+{
+ "tipo": "mudar",
+ "clase": "evento",
+ "cuando": "algo que se muda de un lugar a otro (una capital, una sede): un arco de luz salta sobre el relieve y enciende el destino; no es un camino",
+ "parametros": {
+  "desde": {
+   "tipo": "lugar",
+   "requerido": true,
+   "descripcion": "de dónde sale (un lugar: id del set o de mundo.lugares, o [lon, lat]); ahí queda una brasa tenue"
+  },
+  "hacia": {
+   "tipo": "lugar",
+   "requerido": true,
+   "descripcion": "dónde cae y se enciende el núcleo (un lugar: id del set o de mundo.lugares, o [lon, lat])"
+  },
+  "pieza": {
+   "tipo": "pieza",
+   "piezas": [
+    "luces"
+   ],
+   "requerido": false,
+   "descripcion": "una pieza luces: además aviva la luz de `hacia` y deja tenue la de `desde` (si son ids de sus luces)"
+  },
+  "altura_km": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    1,
+    60
+   ],
+   "defecto": 12,
+   "descripcion": "alto del arco sobre la recta entre los dos lugares (sube solo si un cerro lo tocaría)"
+  },
+  "queda": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "true: el núcleo de `hacia` y la brasa de `desde` se quedan hasta el final (o hasta el siguiente salto); false: se apagan al terminar"
+  }
+ },
+ "escalas": [
+  "pais"
+ ],
+ "motores": [
+  "three"
+ ],
+ "adelanto": {
+  "dur": 0.3
+ },
+ "animado": "el arco crece de `desde` a `hacia` con una cabeza brillante, se recoge al caer; el núcleo destella y abre anillos; la brasa respira",
+ "ejemplo": {
+  "t": 0.6,
+  "dur": 2.6,
+  "tipo": "mudar",
+  "desde": "antigua-guatemala",
+  "hacia": "guatemala",
+  "pieza": "pueblos",
+  "altura_km": 12
+ }
+}

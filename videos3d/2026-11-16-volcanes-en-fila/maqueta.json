@@ -1,0 +1,2188 @@
+{
+  "version": 1,
+  "video": true,
+  "estilo": "noche",
+  "paleta": "obsidiana",
+  "fps": 30,
+  "duracion_s": 83.6333,
+  "protagonista": "frente",
+  "capa": {
+    "titulares": [
+      {
+        "t": 0.0,
+        "kicker": "VOLCANES DE GUATEMALA",
+        "texto": "¿Por qué están en fila?",
+        "hasta": 3.5
+      },
+      {
+        "t": 24.7333,
+        "kicker": "OCÉANO PACÍFICO",
+        "texto": "Una fosa frente a la costa",
+        "hasta": 27.9333
+      },
+      {
+        "t": 35.6,
+        "kicker": "ESQUEMA",
+        "texto": "La Tierra cortada bajo la fila",
+        "hasta": 39.0
+      },
+      {
+        "t": 60.2667,
+        "kicker": "ORIENTE DE GUATEMALA",
+        "texto": "Detrás de la fila",
+        "hasta": 63.2667
+      }
+    ],
+    "cifras": [
+      {
+        "valor": "100 km",
+        "rotulo": "de profundidad de la placa bajo los volcanes",
+        "fuente": "USGS",
+        "t": 51.7667,
+        "hasta": 55.3667
+      }
+    ],
+    "palabras": [
+      {
+        "text": "Casi",
+        "start": 0.0,
+        "end": 0.275
+      },
+      {
+        "text": "todos",
+        "start": 0.327,
+        "end": 0.559
+      },
+      {
+        "text": "los",
+        "start": 0.602,
+        "end": 0.696
+      },
+      {
+        "text": "volcanes",
+        "start": 0.749,
+        "end": 1.161
+      },
+      {
+        "text": "de",
+        "start": 1.193,
+        "end": 1.245
+      },
+      {
+        "text": "Guatemala",
+        "start": 1.277,
+        "end": 1.784
+      },
+      {
+        "text": "están",
+        "start": 1.826,
+        "end": 2.058
+      },
+      {
+        "text": "en",
+        "start": 2.122,
+        "end": 2.164
+      },
+      {
+        "text": "una",
+        "start": 2.269,
+        "end": 2.427
+      },
+      {
+        "text": "sola",
+        "start": 2.512,
+        "end": 2.786
+      },
+      {
+        "text": "fila.",
+        "start": 2.86,
+        "end": 3.315
+      },
+      {
+        "text": "Van",
+        "start": 3.675,
+        "end": 3.917
+      },
+      {
+        "text": "del",
+        "start": 3.991,
+        "end": 4.181
+      },
+      {
+        "text": "Tacaná,",
+        "start": 4.286,
+        "end": 4.909
+      },
+      {
+        "text": "en",
+        "start": 4.962,
+        "end": 5.067
+      },
+      {
+        "text": "el",
+        "start": 5.11,
+        "end": 5.163
+      },
+      {
+        "text": "occidente,",
+        "start": 5.215,
+        "end": 5.965
+      },
+      {
+        "text": "hasta",
+        "start": 6.07,
+        "end": 6.303
+      },
+      {
+        "text": "el",
+        "start": 6.334,
+        "end": 6.397
+      },
+      {
+        "text": "Chingo,",
+        "start": 6.482,
+        "end": 7.084
+      },
+      {
+        "text": "en",
+        "start": 7.242,
+        "end": 7.347
+      },
+      {
+        "text": "el",
+        "start": 7.4,
+        "end": 7.453
+      },
+      {
+        "text": "oriente,",
+        "start": 7.516,
+        "end": 8.171
+      },
+      {
+        "text": "paralelos",
+        "start": 8.245,
+        "end": 8.73
+      },
+      {
+        "text": "a",
+        "start": 8.794,
+        "end": 8.815
+      },
+      {
+        "text": "la",
+        "start": 8.856,
+        "end": 8.92
+      },
+      {
+        "text": "costa",
+        "start": 9.005,
+        "end": 9.31
+      },
+      {
+        "text": "del",
+        "start": 9.353,
+        "end": 9.447
+      },
+      {
+        "text": "Pacífico.",
+        "start": 9.511,
+        "end": 10.228
+      },
+      {
+        "text": "En",
+        "start": 10.575,
+        "end": 10.701
+      },
+      {
+        "text": "esa",
+        "start": 10.743,
+        "end": 10.891
+      },
+      {
+        "text": "fila",
+        "start": 10.955,
+        "end": 11.218
+      },
+      {
+        "text": "están",
+        "start": 11.26,
+        "end": 11.503
+      },
+      {
+        "text": "el",
+        "start": 11.566,
+        "end": 11.63
+      },
+      {
+        "text": "Tajumulco,",
+        "start": 11.735,
+        "end": 12.664
+      },
+      {
+        "text": "el",
+        "start": 12.801,
+        "end": 12.938
+      },
+      {
+        "text": "más",
+        "start": 12.991,
+        "end": 13.171
+      },
+      {
+        "text": "alto",
+        "start": 13.255,
+        "end": 13.476
+      },
+      {
+        "text": "de",
+        "start": 13.529,
+        "end": 13.582
+      },
+      {
+        "text": "Centroamérica,",
+        "start": 13.625,
+        "end": 14.554
+      },
+      {
+        "text": "y",
+        "start": 14.744,
+        "end": 14.806
+      },
+      {
+        "text": "el",
+        "start": 14.912,
+        "end": 14.986
+      },
+      {
+        "text": "Fuego,",
+        "start": 15.07,
+        "end": 15.683
+      },
+      {
+        "text": "el",
+        "start": 15.82,
+        "end": 15.925
+      },
+      {
+        "text": "Pacaya",
+        "start": 15.989,
+        "end": 16.569
+      },
+      {
+        "text": "y",
+        "start": 16.823,
+        "end": 16.885
+      },
+      {
+        "text": "el",
+        "start": 16.949,
+        "end": 17.002
+      },
+      {
+        "text": "Santiaguito,",
+        "start": 17.055,
+        "end": 17.91
+      },
+      {
+        "text": "que",
+        "start": 18.025,
+        "end": 18.131
+      },
+      {
+        "text": "no",
+        "start": 18.268,
+        "end": 18.437
+      },
+      {
+        "text": "paran",
+        "start": 18.522,
+        "end": 18.828
+      },
+      {
+        "text": "de",
+        "start": 18.881,
+        "end": 18.934
+      },
+      {
+        "text": "hacer",
+        "start": 18.965,
+        "end": 19.261
+      },
+      {
+        "text": "erupción.",
+        "start": 19.303,
+        "end": 20.147
+      },
+      {
+        "text": "La",
+        "start": 20.6,
+        "end": 20.737
+      },
+      {
+        "text": "razón",
+        "start": 20.779,
+        "end": 21.106
+      },
+      {
+        "text": "está",
+        "start": 21.17,
+        "end": 21.36
+      },
+      {
+        "text": "mar",
+        "start": 21.424,
+        "end": 21.55
+      },
+      {
+        "text": "adentro:",
+        "start": 21.592,
+        "end": 22.183
+      },
+      {
+        "text": "frente",
+        "start": 22.585,
+        "end": 22.88
+      },
+      {
+        "text": "a",
+        "start": 22.922,
+        "end": 22.943
+      },
+      {
+        "text": "Guatemala,",
+        "start": 22.975,
+        "end": 23.565
+      },
+      {
+        "text": "en",
+        "start": 23.608,
+        "end": 23.682
+      },
+      {
+        "text": "el",
+        "start": 23.735,
+        "end": 23.798
+      },
+      {
+        "text": "fondo",
+        "start": 23.883,
+        "end": 24.241
+      },
+      {
+        "text": "del",
+        "start": 24.294,
+        "end": 24.4
+      },
+      {
+        "text": "océano,",
+        "start": 24.463,
+        "end": 24.938
+      },
+      {
+        "text": "corre",
+        "start": 24.98,
+        "end": 25.307
+      },
+      {
+        "text": "una",
+        "start": 25.36,
+        "end": 25.508
+      },
+      {
+        "text": "fosa.",
+        "start": 25.561,
+        "end": 26.088
+      },
+      {
+        "text": "Ahí,",
+        "start": 26.553,
+        "end": 26.965
+      },
+      {
+        "text": "la",
+        "start": 27.038,
+        "end": 27.123
+      },
+      {
+        "text": "placa",
+        "start": 27.165,
+        "end": 27.407
+      },
+      {
+        "text": "de",
+        "start": 27.45,
+        "end": 27.503
+      },
+      {
+        "text": "Cocos",
+        "start": 27.555,
+        "end": 27.872
+      },
+      {
+        "text": "se",
+        "start": 27.904,
+        "end": 27.999
+      },
+      {
+        "text": "hunde",
+        "start": 28.041,
+        "end": 28.336
+      },
+      {
+        "text": "bajo",
+        "start": 28.379,
+        "end": 28.6
+      },
+      {
+        "text": "la",
+        "start": 28.643,
+        "end": 28.695
+      },
+      {
+        "text": "del",
+        "start": 28.727,
+        "end": 28.833
+      },
+      {
+        "text": "Caribe,",
+        "start": 28.895,
+        "end": 29.307
+      },
+      {
+        "text": "hacia",
+        "start": 29.328,
+        "end": 29.614
+      },
+      {
+        "text": "el",
+        "start": 29.645,
+        "end": 29.698
+      },
+      {
+        "text": "noreste.",
+        "start": 29.761,
+        "end": 30.353
+      },
+      {
+        "text": "Y",
+        "start": 30.626,
+        "end": 30.711
+      },
+      {
+        "text": "la",
+        "start": 30.816,
+        "end": 30.88
+      },
+      {
+        "text": "fila",
+        "start": 30.933,
+        "end": 31.155
+      },
+      {
+        "text": "de",
+        "start": 31.196,
+        "end": 31.249
+      },
+      {
+        "text": "volcanes",
+        "start": 31.281,
+        "end": 31.787
+      },
+      {
+        "text": "queda",
+        "start": 31.84,
+        "end": 32.041
+      },
+      {
+        "text": "tierra",
+        "start": 32.115,
+        "end": 32.515
+      },
+      {
+        "text": "adentro,",
+        "start": 32.558,
+        "end": 33.17
+      },
+      {
+        "text": "paralela",
+        "start": 33.36,
+        "end": 33.909
+      },
+      {
+        "text": "a",
+        "start": 33.994,
+        "end": 34.099
+      },
+      {
+        "text": "esa",
+        "start": 34.163,
+        "end": 34.384
+      },
+      {
+        "text": "fosa.",
+        "start": 34.436,
+        "end": 35.144
+      },
+      {
+        "text": "Para",
+        "start": 35.6,
+        "end": 35.801
+      },
+      {
+        "text": "ver",
+        "start": 35.832,
+        "end": 35.938
+      },
+      {
+        "text": "por",
+        "start": 36.001,
+        "end": 36.127
+      },
+      {
+        "text": "qué,",
+        "start": 36.212,
+        "end": 36.55
+      },
+      {
+        "text": "hay",
+        "start": 36.571,
+        "end": 36.708
+      },
+      {
+        "text": "que",
+        "start": 36.793,
+        "end": 36.898
+      },
+      {
+        "text": "cortar",
+        "start": 36.962,
+        "end": 37.395
+      },
+      {
+        "text": "la",
+        "start": 37.457,
+        "end": 37.542
+      },
+      {
+        "text": "Tierra.",
+        "start": 37.595,
+        "end": 38.185
+      },
+      {
+        "text": "La",
+        "start": 38.482,
+        "end": 38.576
+      },
+      {
+        "text": "placa",
+        "start": 38.618,
+        "end": 38.945
+      },
+      {
+        "text": "baja",
+        "start": 39.02,
+        "end": 39.315
+      },
+      {
+        "text": "hacia",
+        "start": 39.336,
+        "end": 39.579
+      },
+      {
+        "text": "el",
+        "start": 39.6,
+        "end": 39.653
+      },
+      {
+        "text": "manto",
+        "start": 39.716,
+        "end": 39.98
+      },
+      {
+        "text": "caliente,",
+        "start": 40.023,
+        "end": 40.761
+      },
+      {
+        "text": "se",
+        "start": 40.919,
+        "end": 41.035
+      },
+      {
+        "text": "calienta",
+        "start": 41.078,
+        "end": 41.616
+      },
+      {
+        "text": "y",
+        "start": 41.658,
+        "end": 41.69
+      },
+      {
+        "text": "suelta",
+        "start": 41.775,
+        "end": 42.134
+      },
+      {
+        "text": "el",
+        "start": 42.165,
+        "end": 42.228
+      },
+      {
+        "text": "agua",
+        "start": 42.334,
+        "end": 42.555
+      },
+      {
+        "text": "que",
+        "start": 42.597,
+        "end": 42.661
+      },
+      {
+        "text": "traía.",
+        "start": 42.704,
+        "end": 43.305
+      },
+      {
+        "text": "Esa",
+        "start": 43.641,
+        "end": 43.959
+      },
+      {
+        "text": "agua",
+        "start": 44.0,
+        "end": 44.254
+      },
+      {
+        "text": "funde",
+        "start": 44.307,
+        "end": 44.57
+      },
+      {
+        "text": "un",
+        "start": 44.623,
+        "end": 44.666
+      },
+      {
+        "text": "poco",
+        "start": 44.729,
+        "end": 44.961
+      },
+      {
+        "text": "el",
+        "start": 44.992,
+        "end": 45.046
+      },
+      {
+        "text": "manto",
+        "start": 45.109,
+        "end": 45.372
+      },
+      {
+        "text": "de",
+        "start": 45.415,
+        "end": 45.479
+      },
+      {
+        "text": "encima,",
+        "start": 45.52,
+        "end": 46.122
+      },
+      {
+        "text": "y",
+        "start": 46.312,
+        "end": 46.375
+      },
+      {
+        "text": "ese",
+        "start": 46.48,
+        "end": 46.692
+      },
+      {
+        "text": "magma",
+        "start": 46.777,
+        "end": 47.178
+      },
+      {
+        "text": "sube.",
+        "start": 47.23,
+        "end": 47.737
+      },
+      {
+        "text": "Los",
+        "start": 48.133,
+        "end": 48.281
+      },
+      {
+        "text": "volcanes",
+        "start": 48.334,
+        "end": 48.841
+      },
+      {
+        "text": "se",
+        "start": 48.861,
+        "end": 48.946
+      },
+      {
+        "text": "alinean",
+        "start": 48.989,
+        "end": 49.411
+      },
+      {
+        "text": "justo",
+        "start": 49.474,
+        "end": 49.822
+      },
+      {
+        "text": "encima",
+        "start": 49.864,
+        "end": 50.319
+      },
+      {
+        "text": "de",
+        "start": 50.371,
+        "end": 50.424
+      },
+      {
+        "text": "donde",
+        "start": 50.466,
+        "end": 50.656
+      },
+      {
+        "text": "la",
+        "start": 50.699,
+        "end": 50.761
+      },
+      {
+        "text": "placa",
+        "start": 50.804,
+        "end": 51.184
+      },
+      {
+        "text": "pasa",
+        "start": 51.374,
+        "end": 51.617
+      },
+      {
+        "text": "por",
+        "start": 51.659,
+        "end": 51.764
+      },
+      {
+        "text": "unos",
+        "start": 51.817,
+        "end": 52.007
+      },
+      {
+        "text": "100",
+        "start": 52.029,
+        "end": 52.271
+      },
+      {
+        "text": "kilómetros",
+        "start": 52.334,
+        "end": 52.904
+      },
+      {
+        "text": "de",
+        "start": 52.936,
+        "end": 52.989
+      },
+      {
+        "text": "profundidad.",
+        "start": 53.031,
+        "end": 53.833
+      },
+      {
+        "text": "Como",
+        "start": 54.298,
+        "end": 54.498
+      },
+      {
+        "text": "la",
+        "start": 54.541,
+        "end": 54.603
+      },
+      {
+        "text": "fosa",
+        "start": 54.656,
+        "end": 54.931
+      },
+      {
+        "text": "es",
+        "start": 54.994,
+        "end": 55.068
+      },
+      {
+        "text": "una",
+        "start": 55.141,
+        "end": 55.269
+      },
+      {
+        "text": "línea,",
+        "start": 55.321,
+        "end": 55.818
+      },
+      {
+        "text": "esa",
+        "start": 55.933,
+        "end": 56.155
+      },
+      {
+        "text": "profundidad",
+        "start": 56.197,
+        "end": 56.894
+      },
+      {
+        "text": "también",
+        "start": 56.979,
+        "end": 57.369
+      },
+      {
+        "text": "lo",
+        "start": 57.421,
+        "end": 57.527
+      },
+      {
+        "text": "es:",
+        "start": 57.601,
+        "end": 57.929
+      },
+      {
+        "text": "por",
+        "start": 58.224,
+        "end": 58.382
+      },
+      {
+        "text": "eso",
+        "start": 58.435,
+        "end": 58.604
+      },
+      {
+        "text": "salen",
+        "start": 58.667,
+        "end": 58.994
+      },
+      {
+        "text": "en",
+        "start": 59.047,
+        "end": 59.1
+      },
+      {
+        "text": "fila.",
+        "start": 59.173,
+        "end": 59.818
+      },
+      {
+        "text": "¿Y",
+        "start": 60.267,
+        "end": 60.446
+      },
+      {
+        "text": "el",
+        "start": 60.509,
+        "end": 60.583
+      },
+      {
+        "text": "casi?",
+        "start": 60.658,
+        "end": 61.238
+      },
+      {
+        "text": "Unos",
+        "start": 61.459,
+        "end": 61.723
+      },
+      {
+        "text": "pocos",
+        "start": 61.776,
+        "end": 62.05
+      },
+      {
+        "text": "conos",
+        "start": 62.103,
+        "end": 62.336
+      },
+      {
+        "text": "del",
+        "start": 62.367,
+        "end": 62.462
+      },
+      {
+        "text": "oriente",
+        "start": 62.504,
+        "end": 62.905
+      },
+      {
+        "text": "quedan",
+        "start": 62.979,
+        "end": 63.222
+      },
+      {
+        "text": "detrás",
+        "start": 63.264,
+        "end": 63.591
+      },
+      {
+        "text": "de",
+        "start": 63.623,
+        "end": 63.665
+      },
+      {
+        "text": "la",
+        "start": 63.708,
+        "end": 63.771
+      },
+      {
+        "text": "fila:",
+        "start": 63.834,
+        "end": 64.34
+      },
+      {
+        "text": "Ipala,",
+        "start": 64.689,
+        "end": 65.365
+      },
+      {
+        "text": "Suchitán,",
+        "start": 65.523,
+        "end": 66.368
+      },
+      {
+        "text": "Ixtepeque,",
+        "start": 66.526,
+        "end": 67.433
+      },
+      {
+        "text": "Flores",
+        "start": 67.591,
+        "end": 68.024
+      },
+      {
+        "text": "y",
+        "start": 68.129,
+        "end": 68.182
+      },
+      {
+        "text": "Cerro",
+        "start": 68.289,
+        "end": 68.562
+      },
+      {
+        "text": "Santiago.",
+        "start": 68.615,
+        "end": 69.344
+      },
+      {
+        "text": "Según",
+        "start": 69.639,
+        "end": 69.903
+      },
+      {
+        "text": "un",
+        "start": 69.967,
+        "end": 70.009
+      },
+      {
+        "text": "estudio",
+        "start": 70.061,
+        "end": 70.452
+      },
+      {
+        "text": "geológico,",
+        "start": 70.505,
+        "end": 71.169
+      },
+      {
+        "text": "brotaron",
+        "start": 71.19,
+        "end": 71.602
+      },
+      {
+        "text": "donde",
+        "start": 71.645,
+        "end": 71.898
+      },
+      {
+        "text": "el",
+        "start": 71.919,
+        "end": 71.982
+      },
+      {
+        "text": "suelo",
+        "start": 72.067,
+        "end": 72.373
+      },
+      {
+        "text": "se",
+        "start": 72.426,
+        "end": 72.52
+      },
+      {
+        "text": "estira:",
+        "start": 72.573,
+        "end": 73.207
+      },
+      {
+        "text": "el",
+        "start": 73.502,
+        "end": 73.671
+      },
+      {
+        "text": "graben",
+        "start": 73.745,
+        "end": 74.146
+      },
+      {
+        "text": "de",
+        "start": 74.209,
+        "end": 74.294
+      },
+      {
+        "text": "Ipala.",
+        "start": 74.336,
+        "end": 75.297
+      },
+      {
+        "text": "Esa",
+        "start": 75.767,
+        "end": 75.999
+      },
+      {
+        "text": "fila",
+        "start": 76.062,
+        "end": 76.379
+      },
+      {
+        "text": "es",
+        "start": 76.453,
+        "end": 76.559
+      },
+      {
+        "text": "la",
+        "start": 76.632,
+        "end": 76.706
+      },
+      {
+        "text": "huella,",
+        "start": 76.749,
+        "end": 77.139
+      },
+      {
+        "text": "en",
+        "start": 77.181,
+        "end": 77.255
+      },
+      {
+        "text": "la",
+        "start": 77.297,
+        "end": 77.349
+      },
+      {
+        "text": "superficie,",
+        "start": 77.392,
+        "end": 78.173
+      },
+      {
+        "text": "de",
+        "start": 78.395,
+        "end": 78.469
+      },
+      {
+        "text": "una",
+        "start": 78.542,
+        "end": 78.701
+      },
+      {
+        "text": "placa",
+        "start": 78.754,
+        "end": 79.081
+      },
+      {
+        "text": "que",
+        "start": 79.134,
+        "end": 79.208
+      },
+      {
+        "text": "se",
+        "start": 79.26,
+        "end": 79.355
+      },
+      {
+        "text": "hunde",
+        "start": 79.387,
+        "end": 79.65
+      },
+      {
+        "text": "bajo",
+        "start": 79.693,
+        "end": 79.915
+      },
+      {
+        "text": "Guatemala.",
+        "start": 79.957,
+        "end": 80.833
+      }
+    ],
+    "progreso": {
+      "actos": [
+        0.0,
+        20.6,
+        47.9333
+      ]
+    },
+    "seguir": {
+      "t": 41.8,
+      "dur": 3.0
+    },
+    "pie": "Relieve: Mapzen · Volcanes: Smithsonian GVP · Fosa: DSDP 499 (traza esquemática) · Frontera y lagos: Natural Earth · © OpenStreetMap",
+    "handle": "@DerekUrizar",
+    "aviso": "Fosa esquemática · corte no a escala",
+    "cierre": {
+      "t": 76.9667,
+      "frase": "La fila es la huella de una placa que se hunde.",
+      "redes": [
+        {
+          "nombre": "TikTok",
+          "handle": "@derekurizargt"
+        },
+        {
+          "nombre": "Instagram",
+          "handle": "@derekurizargt"
+        },
+        {
+          "nombre": "Facebook",
+          "handle": "Derek Urizar"
+        },
+        {
+          "nombre": "YouTube",
+          "handle": "@derekurizar"
+        },
+        {
+          "nombre": "X",
+          "handle": "@DerekUrizar"
+        }
+      ]
+    }
+  },
+  "mundos": {
+    "fila": {
+      "escala": "pais",
+      "set": "guatemala",
+      "exageracion": 5,
+      "protagonista": "frente",
+      "lugares": {
+        "v-tacana": {
+          "lon": -92.1,
+          "lat": 15.13,
+          "nombre": "Tacaná"
+        },
+        "v-tajumulco": {
+          "lon": -91.903,
+          "lat": 15.043,
+          "nombre": "Tajumulco"
+        },
+        "v-santa-maria": {
+          "lon": -91.552,
+          "lat": 14.757,
+          "nombre": "Santa María"
+        },
+        "v-cerro-quemado": {
+          "lon": -91.519,
+          "lat": 14.797,
+          "nombre": "Cerro Quemado (Almolonga)"
+        },
+        "v-atitlan": {
+          "lon": -91.186,
+          "lat": 14.583,
+          "nombre": "Atitlán"
+        },
+        "v-toliman": {
+          "lon": -91.189,
+          "lat": 14.612,
+          "nombre": "Tolimán"
+        },
+        "v-acatenango": {
+          "lon": -90.876,
+          "lat": 14.501,
+          "nombre": "Acatenango"
+        },
+        "v-fuego": {
+          "lon": -90.8806,
+          "lat": 14.4748,
+          "nombre": "Fuego"
+        },
+        "v-agua": {
+          "lon": -90.743,
+          "lat": 14.465,
+          "nombre": "Agua"
+        },
+        "v-pacaya": {
+          "lon": -90.601,
+          "lat": 14.382,
+          "nombre": "Pacaya"
+        },
+        "v-tecuamburro": {
+          "lon": -90.407,
+          "lat": 14.156,
+          "nombre": "Tecuamburro"
+        },
+        "v-moyuta": {
+          "lon": -90.1,
+          "lat": 14.03,
+          "nombre": "Moyuta"
+        },
+        "v-chingo": {
+          "lon": -89.73,
+          "lat": 14.12,
+          "nombre": "Chingo"
+        },
+        "fosa-499": {
+          "lon": -90.9448,
+          "lat": 12.671,
+          "nombre": "Fosa Mesoamericana (sitio DSDP 499)"
+        },
+        "placa-oceanica": {
+          "lon": -91.3,
+          "lat": 12.5,
+          "nombre": "Placa de Cocos (posición ilustrativa)"
+        },
+        "placa-continental": {
+          "lon": -90.3,
+          "lat": 14.5,
+          "nombre": "Placa del Caribe (posición ilustrativa)"
+        }
+      },
+      "piezas": [
+        {
+          "id": "frontera",
+          "tipo": "frontera",
+          "vecinos": true
+        },
+        {
+          "id": "lagos",
+          "tipo": "lagos",
+          "nombres": [
+            "Atitlán"
+          ]
+        },
+        {
+          "id": "frente",
+          "tipo": "volcanes",
+          "lugares": [
+            "v-tacana",
+            "v-tajumulco",
+            "v-santa-maria",
+            "v-cerro-quemado",
+            "v-atitlan",
+            "v-toliman",
+            "v-acatenango",
+            "v-fuego",
+            "v-agua",
+            "v-pacaya",
+            "v-tecuamburro",
+            "v-moyuta",
+            "v-chingo"
+          ],
+          "radio_km": 6
+        },
+        {
+          "id": "fosa",
+          "tipo": "fosa",
+          "por": "fosa-499",
+          "paralela_a": [
+            "v-tacana",
+            "v-tajumulco",
+            "v-santa-maria",
+            "v-cerro-quemado",
+            "v-atitlan",
+            "v-toliman",
+            "v-acatenango",
+            "v-fuego",
+            "v-agua",
+            "v-pacaya",
+            "v-tecuamburro",
+            "v-moyuta",
+            "v-chingo"
+          ],
+          "largo_km": 500,
+          "flechas": true,
+          "desvio_grados": 0,
+          "esquematica": true
+        }
+      ]
+    },
+    "corte": {
+      "escala": "esquema",
+      "receta": "campo",
+      "horizonte": "llano",
+      "tamano_m": 3200,
+      "protagonista": "corte",
+      "piezas": [
+        {
+          "id": "corte",
+          "tipo": "subduccion",
+          "lugar": [
+            0,
+            0
+          ],
+          "rumbo": 0,
+          "tamano": 1,
+          "conos": 9,
+          "angulo_grados": 35,
+          "flechas": true,
+          "magma": false,
+          "semilla": 1,
+          "fondo": "liso",
+          "manto_brillo": 0.2
+        }
+      ],
+      "escena": {
+        "que_pasa": "Una placa oceánica se hunde bajo otra desde la fosa; al bajar hacia el manto caliente se calienta y suelta el agua que traía; esa agua funde un poco el manto de encima y ese magma sube; los volcanes salen sobre donde la placa pasa por unos 100 km, en una fila paralela a la fosa.",
+        "quien": "nadie",
+        "con_que": "nada humano: dos placas, el manto, el agua que suelta la placa, el magma y los conos",
+        "se_mueve": "chevrones que corren por la placa oceánica hacia la fosa y hacia abajo, gotas de agua que salen de la placa, el manto de encima que se enciende, el magma que sube a un cono y los cráteres de la fila que se encienden uno tras otro",
+        "sostiene": [
+          {
+            "que": "placa oceánica fría que se hunde desde la fosa, apagada, sin derretirse",
+            "hecho": "visual-corte-h01"
+          },
+          {
+            "que": "la fosa como valle submarino paralelo al margen",
+            "hecho": "visual-corte-h02"
+          },
+          {
+            "que": "gotas de agua de la placa, manto vecino que se enciende y magma que sube",
+            "hecho": "visual-corte-h03"
+          },
+          {
+            "que": "línea de volcanes sobre donde la placa pasa por unos 100 km (nivel sin número)",
+            "hecho": "visual-corte-h04"
+          },
+          {
+            "que": "conos altos y empinados en fila, sin altura medida",
+            "hecho": "visual-corte-h05"
+          },
+          {
+            "que": "la placa avanza hacia la fosa, perpendicular a ella (chevrones)",
+            "hecho": "mec-h14"
+          },
+          {
+            "que": "ángulo de la placa, espesores y número de conos",
+            "generico": true
+          }
+        ],
+        "ilustrativa": "Es un mecanismo: el corte es genérico (aviso «Esquema · no a escala»); ni el ángulo ni la escala son medidas de Guatemala."
+      },
+      "lugares": {
+        "corte.fosa": {
+          "x": -350.0,
+          "y": 0.0,
+          "nombre": "Fosa"
+        },
+        "corte.placa-oceanica": {
+          "x": -650.0,
+          "y": 0.0,
+          "nombre": "Placa oceánica"
+        },
+        "corte.placa-continental": {
+          "x": 402.03,
+          "y": 0.0,
+          "nombre": "Placa continental"
+        },
+        "corte.manto": {
+          "x": 52.03,
+          "y": -454.0,
+          "nombre": "Manto"
+        },
+        "corte.placa-100": {
+          "x": 122.03,
+          "y": -454.0,
+          "nombre": "La placa bajo la fila"
+        },
+        "corte.cono": {
+          "x": 122.03,
+          "y": -431.4,
+          "nombre": "Cono"
+        },
+        "corte.fila": {
+          "x": 122.03,
+          "y": 0.0,
+          "nombre": "Fila de volcanes"
+        },
+        "corte.placa": {
+          "x": -113.99,
+          "y": -454.0,
+          "nombre": "La placa que baja"
+        }
+      }
+    },
+    "oriente": {
+      "escala": "pais",
+      "set": "guatemala",
+      "exageracion": 6,
+      "protagonista": "trasarco",
+      "lugares": {
+        "v-pacaya": {
+          "lon": -90.601,
+          "lat": 14.382,
+          "nombre": "Pacaya"
+        },
+        "v-tecuamburro": {
+          "lon": -90.407,
+          "lat": 14.156,
+          "nombre": "Tecuamburro"
+        },
+        "v-moyuta": {
+          "lon": -90.1,
+          "lat": 14.03,
+          "nombre": "Moyuta"
+        },
+        "v-chingo": {
+          "lon": -89.73,
+          "lat": 14.12,
+          "nombre": "Chingo"
+        },
+        "v-ipala": {
+          "lon": -89.6398,
+          "lat": 14.5574,
+          "nombre": "Ipala"
+        },
+        "v-suchitan": {
+          "lon": -89.78,
+          "lat": 14.4,
+          "nombre": "Suchitán"
+        },
+        "v-ixtepeque": {
+          "lon": -89.68,
+          "lat": 14.42,
+          "nombre": "Ixtepeque"
+        },
+        "v-flores": {
+          "lon": -89.992,
+          "lat": 14.308,
+          "nombre": "Flores (Amayo)"
+        },
+        "v-cerro-santiago": {
+          "lon": -89.87,
+          "lat": 14.33,
+          "nombre": "Cerro Santiago"
+        },
+        "graben-ipala": {
+          "lon": -89.66,
+          "lat": 14.489,
+          "nombre": "Graben de Ipala (entre sus conos Ipala e Ixtepeque; posición ilustrativa, sin contorno)"
+        }
+      },
+      "piezas": [
+        {
+          "id": "frontera",
+          "tipo": "frontera",
+          "vecinos": true
+        },
+        {
+          "id": "frente-oriente",
+          "tipo": "volcanes",
+          "lugares": [
+            "v-pacaya",
+            "v-tecuamburro",
+            "v-moyuta",
+            "v-chingo"
+          ],
+          "radio_km": 5,
+          "tono": "atenuado"
+        },
+        {
+          "id": "trasarco",
+          "tipo": "volcanes",
+          "lugares": [
+            "v-ipala",
+            "v-suchitan",
+            "v-ixtepeque",
+            "v-flores",
+            "v-cerro-santiago"
+          ],
+          "radio_km": 5,
+          "tono": "acento",
+          "forma": "cono",
+          "reposo": 0.5,
+          "encendido": "solo"
+        }
+      ]
+    }
+  },
+  "tramos": [
+    {
+      "id": "fila-1",
+      "mundo": "fila",
+      "desde": 0.0,
+      "hasta": 35.6,
+      "camara": [
+        {
+          "mira": [
+            -90.6,
+            14.6
+          ],
+          "azimut": 0,
+          "elevacion": 80,
+          "dist_km": 900,
+          "dist_m": 2900,
+          "t": 0.0
+        },
+        {
+          "mira": [
+            -90.9,
+            14.5
+          ],
+          "dist_km": 330,
+          "azimut": 0,
+          "elevacion": 55,
+          "t": 3.3
+        },
+        {
+          "mira": [
+            -91.4,
+            14.7
+          ],
+          "dist_km": 480,
+          "azimut": 0,
+          "elevacion": 60,
+          "t": 4.9667
+        },
+        {
+          "mira": [
+            -90.5,
+            14.5
+          ],
+          "dist_km": 500,
+          "azimut": 2,
+          "elevacion": 60,
+          "t": 7.2333
+        },
+        {
+          "mira": [
+            -90.9,
+            14.5
+          ],
+          "dist_km": 600,
+          "azimut": 3,
+          "elevacion": 62,
+          "t": 10.2333
+        },
+        {
+          "mira": [
+            -91.3,
+            14.7
+          ],
+          "dist_km": 380,
+          "azimut": 0,
+          "elevacion": 55,
+          "t": 11.5667
+        },
+        {
+          "mira": [
+            -91.25,
+            14.65
+          ],
+          "dist_km": 370,
+          "azimut": 4,
+          "elevacion": 56,
+          "t": 20.1333
+        },
+        {
+          "mira": [
+            -90.9,
+            13.3
+          ],
+          "dist_km": 640,
+          "azimut": 0,
+          "elevacion": 58,
+          "t": 21.4333
+        },
+        {
+          "mira": [
+            -90.9,
+            13.3
+          ],
+          "dist_km": 620,
+          "azimut": 5,
+          "elevacion": 60,
+          "t": 26.5667
+        },
+        {
+          "mira": [
+            -90.9,
+            13.3
+          ],
+          "dist_km": 610,
+          "azimut": 7,
+          "elevacion": 61,
+          "t": 30.3667
+        },
+        {
+          "mira": [
+            -90.9,
+            13.6
+          ],
+          "dist_km": 700,
+          "azimut": 2,
+          "elevacion": 76,
+          "t": 32.1
+        },
+        {
+          "mira": [
+            -90.9,
+            13.6
+          ],
+          "dist_km": 690,
+          "azimut": 2,
+          "elevacion": 78,
+          "t": 35.1333
+        }
+      ],
+      "eventos": [
+        {
+          "t": 0.0,
+          "tipo": "cumbres",
+          "pieza": "frente",
+          "orden": "oeste-este",
+          "dur": 3,
+          "sfx": "pulso"
+        },
+        {
+          "tipo": "resaltar",
+          "lugar": "v-tacana",
+          "dur": 1.4,
+          "t": 4.9667
+        },
+        {
+          "tipo": "resaltar",
+          "lugar": "v-chingo",
+          "dur": 1.6,
+          "t": 6.4667
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "frente",
+          "dur": 2.4,
+          "t": 8.2333
+        },
+        {
+          "tipo": "resaltar",
+          "lugar": "v-tajumulco",
+          "dur": 2.6,
+          "t": 11.5667
+        },
+        {
+          "tipo": "resaltar",
+          "lugar": "v-fuego",
+          "dur": 2.6,
+          "t": 14.7333
+        },
+        {
+          "tipo": "resaltar",
+          "lugar": "v-pacaya",
+          "dur": 2.4,
+          "t": 15.8333
+        },
+        {
+          "tipo": "resaltar",
+          "lugar": "v-santa-maria",
+          "dur": 2.4,
+          "t": 16.9333
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "fosa",
+          "dur": 3.0,
+          "sfx": "pulso",
+          "t": 24.9667
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "fosa",
+          "dur": 2.0,
+          "t": 29.3333
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "frente",
+          "dur": 2.6,
+          "t": 30.8
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "fosa",
+          "dur": 1.4,
+          "t": 33.3667
+        }
+      ],
+      "marcas": [
+        {
+          "lugar": "v-tacana",
+          "texto": "Tacaná",
+          "t": 4.7,
+          "hasta": 6.1
+        },
+        {
+          "lugar": "v-chingo",
+          "texto": "Chingo",
+          "sub": "En el oriente",
+          "t": 6.2333,
+          "hasta": 8.0333
+        },
+        {
+          "lugar": "v-tajumulco",
+          "texto": "Tajumulco",
+          "sub": "El más alto de Centroamérica",
+          "alto": 110,
+          "t": 11.3,
+          "hasta": 16.0667
+        },
+        {
+          "lugar": "v-fuego",
+          "texto": "Fuego",
+          "sub": "En erupción",
+          "alto": 270,
+          "t": 14.5,
+          "hasta": 15.9
+        },
+        {
+          "lugar": "v-pacaya",
+          "texto": "Pacaya",
+          "sub": "En erupción",
+          "alto": 110,
+          "t": 15.5667,
+          "hasta": 20.6
+        },
+        {
+          "lugar": "v-santa-maria",
+          "texto": "Santiaguito",
+          "sub": "Domos de la Santa María",
+          "alto": 110,
+          "t": 16.7,
+          "hasta": 20.6
+        },
+        {
+          "lugar": "fosa-499",
+          "texto": "Fosa Mesoamericana",
+          "sub": "Fondo del océano",
+          "alto": 260,
+          "t": 24.7333,
+          "hasta": 27.8
+        },
+        {
+          "lugar": "placa-oceanica",
+          "texto": "Placa de Cocos",
+          "t": 26.8,
+          "hasta": 30.5
+        },
+        {
+          "lugar": "placa-continental",
+          "texto": "Placa del Caribe",
+          "alto": 150,
+          "t": 28.1333,
+          "hasta": 30.5
+        }
+      ]
+    },
+    {
+      "id": "corte-2",
+      "mundo": "corte",
+      "desde": 35.6,
+      "hasta": 60.2667,
+      "camara": [
+        {
+          "mira": [
+            0,
+            0
+          ],
+          "mira_lev_m": 420,
+          "dist_m": 2900,
+          "azimut": 20,
+          "elevacion": 22,
+          "t": 35.6
+        },
+        {
+          "mira": [
+            0,
+            -454
+          ],
+          "mira_lev_m": 260,
+          "dist_m": 2100,
+          "azimut": 4,
+          "elevacion": 12,
+          "t": 38.4667
+        },
+        {
+          "mira": [
+            40,
+            -454
+          ],
+          "mira_lev_m": 240,
+          "dist_m": 2000,
+          "azimut": 5,
+          "elevacion": 11,
+          "t": 43.3
+        },
+        {
+          "mira": [
+            90,
+            -454
+          ],
+          "mira_lev_m": 200,
+          "dist_m": 1700,
+          "azimut": 4,
+          "elevacion": 10,
+          "t": 44.3
+        },
+        {
+          "mira": [
+            110,
+            -454
+          ],
+          "mira_lev_m": 210,
+          "dist_m": 1650,
+          "azimut": 6,
+          "elevacion": 11,
+          "t": 47.7333
+        },
+        {
+          "mira": [
+            110,
+            -454
+          ],
+          "mira_lev_m": 260,
+          "dist_m": 1900,
+          "azimut": 2,
+          "elevacion": 12,
+          "t": 49.4667
+        },
+        {
+          "mira": [
+            110,
+            -350
+          ],
+          "mira_lev_m": 220,
+          "dist_m": 2300,
+          "azimut": 10,
+          "elevacion": 14,
+          "t": 55.9333
+        },
+        {
+          "mira": [
+            110,
+            -150
+          ],
+          "mira_lev_m": 250,
+          "dist_m": 2600,
+          "azimut": 18,
+          "elevacion": 20,
+          "t": 58.2333
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "hundir",
+          "pieza": "corte",
+          "agua": true,
+          "vel": 1,
+          "dur": 6.0,
+          "t": 38.4667
+        },
+        {
+          "tipo": "magma",
+          "pieza": "corte",
+          "fila": false,
+          "dur": 4.5,
+          "t": 43.6333
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "corte",
+          "elemento": "corte.placa-100",
+          "dur": 2.0,
+          "t": 50.7
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "corte",
+          "elemento": "corte.fosa",
+          "dur": 2.2,
+          "t": 54.3
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "corte",
+          "elemento": "corte.fila",
+          "dur": 1.8,
+          "t": 58.2333
+        }
+      ],
+      "marcas": [
+        {
+          "lugar": "corte.placa",
+          "texto": "Placa oceánica",
+          "sub": "Entra por la fosa",
+          "alto": 110,
+          "t": 39.1,
+          "hasta": 42.9667
+        },
+        {
+          "lugar": "corte.manto",
+          "texto": "Manto",
+          "alto": 150,
+          "t": 39.3333,
+          "hasta": 43.4667
+        },
+        {
+          "lugar": "corte.manto",
+          "texto": "Manto",
+          "sub": "Se funde un poco",
+          "alto": 150,
+          "t": 43.4667,
+          "hasta": 47.9333
+        },
+        {
+          "lugar": "corte.cono",
+          "texto": "Volcán",
+          "alto": 60,
+          "t": 49.2333,
+          "hasta": 52.0333
+        },
+        {
+          "lugar": "corte.fosa",
+          "texto": "Fosa",
+          "sub": "Una línea",
+          "alto": 110,
+          "t": 54.0333,
+          "hasta": 59.4
+        },
+        {
+          "lugar": "corte.fila",
+          "texto": "Fila de volcanes",
+          "alto": 280,
+          "t": 57.9667,
+          "hasta": 60.2667
+        }
+      ],
+      "transicion": "fundido",
+      "fundido_s": 0.6
+    },
+    {
+      "id": "oriente-3",
+      "mundo": "oriente",
+      "desde": 60.2667,
+      "hasta": 75.7667,
+      "camara": [
+        {
+          "mira": [
+            -90.15,
+            14.35
+          ],
+          "dist_km": 280,
+          "azimut": 0,
+          "elevacion": 48,
+          "t": 60.2667
+        },
+        {
+          "mira": [
+            -89.84,
+            14.41
+          ],
+          "dist_km": 215,
+          "azimut": 0,
+          "elevacion": 48,
+          "t": 64.7
+        },
+        {
+          "mira": [
+            -89.84,
+            14.41
+          ],
+          "dist_km": 215,
+          "azimut": 0,
+          "elevacion": 48,
+          "t": 68.3
+        },
+        {
+          "mira": [
+            -89.76,
+            14.36
+          ],
+          "dist_km": 180,
+          "azimut": 0,
+          "elevacion": 52,
+          "t": 69.6333
+        },
+        {
+          "mira": [
+            -89.76,
+            14.36
+          ],
+          "dist_km": 165,
+          "azimut": 4,
+          "elevacion": 52,
+          "t": 75.3
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "cumbres",
+          "pieza": "frente-oriente",
+          "orden": "oeste-este",
+          "dur": 1.8,
+          "t": 60.2667
+        },
+        {
+          "tipo": "cumbres",
+          "pieza": "trasarco",
+          "lugares": [
+            "v-ipala"
+          ],
+          "dur": 0.8,
+          "queda": false,
+          "t": 64.7
+        },
+        {
+          "tipo": "cumbres",
+          "pieza": "trasarco",
+          "lugares": [
+            "v-suchitan"
+          ],
+          "dur": 1.0,
+          "queda": false,
+          "t": 65.5333
+        },
+        {
+          "tipo": "cumbres",
+          "pieza": "trasarco",
+          "lugares": [
+            "v-ixtepeque"
+          ],
+          "dur": 1.1,
+          "queda": false,
+          "t": 66.5333
+        },
+        {
+          "tipo": "cumbres",
+          "pieza": "trasarco",
+          "lugares": [
+            "v-flores"
+          ],
+          "dur": 0.7,
+          "queda": false,
+          "t": 67.6
+        },
+        {
+          "tipo": "cumbres",
+          "pieza": "trasarco",
+          "lugares": [
+            "v-cerro-santiago"
+          ],
+          "dur": 1.5,
+          "queda": true,
+          "t": 68.3
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "trasarco",
+          "dur": 1.6,
+          "t": 71.6333
+        }
+      ],
+      "marcas": [
+        {
+          "lugar": "v-ipala",
+          "texto": "Ipala",
+          "alto": 60,
+          "t": 64.4333,
+          "hasta": 66.0333
+        },
+        {
+          "lugar": "v-suchitan",
+          "texto": "Suchitán",
+          "alto": 300,
+          "t": 65.2667,
+          "hasta": 66.8667
+        },
+        {
+          "lugar": "v-ixtepeque",
+          "texto": "Ixtepeque",
+          "alto": 40,
+          "t": 66.2667,
+          "hasta": 67.8667
+        },
+        {
+          "lugar": "v-flores",
+          "texto": "Flores",
+          "alto": 300,
+          "t": 67.3333,
+          "hasta": 68.9333
+        },
+        {
+          "lugar": "v-cerro-santiago",
+          "texto": "Cerro Santiago",
+          "alto": 110,
+          "t": 68.0333,
+          "hasta": 69.6333
+        },
+        {
+          "lugar": "graben-ipala",
+          "texto": "Graben de Ipala",
+          "sub": "Según Rapprich et al. (2005)",
+          "alto": 200,
+          "t": 70.9333,
+          "hasta": 75.7667
+        }
+      ],
+      "transicion": "fundido",
+      "fundido_s": 0.6
+    },
+    {
+      "id": "fila-4",
+      "mundo": "fila",
+      "desde": 75.7667,
+      "hasta": 83.6333,
+      "camara": [
+        {
+          "mira": [
+            -90.6,
+            14.6
+          ],
+          "dist_km": 900,
+          "azimut": 0,
+          "elevacion": 80,
+          "t": 75.7667
+        },
+        {
+          "mira": [
+            -90.6,
+            14.6
+          ],
+          "dist_km": 900,
+          "azimut": 0,
+          "elevacion": 80,
+          "t": 80.8333
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "cumbres",
+          "pieza": "frente",
+          "orden": "oeste-este",
+          "dur": 2.4,
+          "t": 75.7667
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "fosa",
+          "dur": 2.4,
+          "t": 78.5333
+        }
+      ],
+      "transicion": "fundido",
+      "fundido_s": 0.6
+    }
+  ]
+}

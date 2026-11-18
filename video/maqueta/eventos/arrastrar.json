@@ -1,0 +1,55 @@
+{
+ "tipo": "arrastrar",
+ "clase": "evento",
+ "cuando": "una crecida arrastra basura por el cauce de un río y la abre en abanico en su boca, sobre un lago, donde queda flotando",
+ "parametros": {
+  "pieza": {
+   "tipo": "pieza",
+   "piezas": ["afluente", "rios"],
+   "requerido": false,
+   "descripcion": "el río por donde baja la crecida: una pieza afluente (su cauce, de la fuente a la boca) o rios (con ella, `puntos` es obligatorio); se aviva mientras baja"
+  },
+  "puntos": {
+   "tipo": "puntos",
+   "requerido": false,
+   "min": 2,
+   "descripcion": "el cauce [[lon, lat], …] de la fuente a la boca (el último punto es la boca, en la orilla o dentro del lago); manda sobre el de la pieza"
+  },
+  "intensidad": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [0, 1],
+   "defecto": 0.7,
+   "descripcion": "cuánta basura y cuánta corriente: de unas 260 partículas (0) a unas 900 (1); también abre el abanico y aviva las estelas (ilustra, no mide)"
+  },
+  "abanico_km": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [0.2, 5],
+   "defecto": 1.2,
+   "descripcion": "hasta dónde llega la mancha desde la boca; si hay una pieza lagos junto a la boca, la mancha queda dentro del agua"
+  },
+  "barda": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": false,
+   "descripcion": "true: una hilera de boyas en arco a abanico_km de la boca y la basura queda atrapada contra ella (una barda de retención genérica)"
+  },
+  "queda": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "true: la mancha queda flotando hasta el final; false: se desvanece al terminar"
+  }
+ },
+ "escalas": ["pais"],
+ "motores": ["three"],
+ "usa": ["lagos"],
+ "adelanto": {"dur": 0.3},
+ "animado": "el agua turbia baja por el cauce, la corriente se acelera (estelas que corren cada vez más rápido), la basura de las orillas se suelta, baja y se abre en abanico en la boca; luego flota y se mece apenas",
+ "nivel": "evento",
+ "contiene": ["agua turbia que baja con la crecida", "estelas de la corriente", "basura mezclada (piezas chicas de tonos y formas variadas)", "abanico en la boca, dentro del lago", "barda de boyas opcional"],
+ "distancia_m": 30000,
+ "caja_m": [6000, 15000, 300],
+ "ejemplo": {"t": 0.6, "dur": 4.0, "tipo": "arrastrar", "pieza": "rios", "puntos": [[-90.553, 14.548], [-90.566, 14.528], [-90.572, 14.512], [-90.58, 14.497], [-90.586, 14.481]], "intensidad": 0.7, "abanico_km": 1.2}
+}

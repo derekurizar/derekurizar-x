@@ -1,0 +1,242 @@
+{
+ "tipo": "orillalago",
+ "clase": "pieza",
+ "cuando": "orilla de lago de montaña de cerca: tular, muelle, hoteles y casas (en fila o dispersas), camino, pueblito, cargadores y vendedoras; antes u hoy",
+ "parametros": {
+  "lugar": {
+   "tipo": "lugar",
+   "requerido": true,
+   "descripcion": "la línea del agua con el lago lleno, al pie del muelle (un lugar del mundo, o [x, y] en metros en un esquema): el lago queda hacia `rumbo` y la tierra a la espalda (playa 10 m, lotes hasta 80 m, camino a 95 m, huertos y pueblito hasta ≈ 240 m; volcanes a 1.5 km)"
+  },
+  "rumbo": {
+   "tipo": "numero",
+   "requerido": false,
+   "descripcion": "hacia dónde queda el lago visto desde la orilla (grados; 0 = este, 90 = norte). Para ver la orilla desde el agua: mira = <id>.orilla, azimut = 270 − rumbo, elevación 6–20°; a ras del agua, elevación 2–5° y dist_m 40–120",
+   "rango": [
+    0,
+    360
+   ],
+   "defecto": 0
+  },
+  "tamano": {
+   "tipo": "numero",
+   "requerido": false,
+   "descripcion": "escala de todo (1 = medidas reales: casas de 3 m por piso, muelle de 54 m, lancha de 7.5 m, cayuco de 5.2 m; la gente va ×1.25)",
+   "rango": [
+    0.6,
+    2
+   ],
+   "defecto": 1
+  },
+  "tul": {
+   "tipo": "numero",
+   "requerido": false,
+   "descripcion": "cuánto tular: 0 = sin tul; 1 = manchas densas de tul y enea (con su espiga) de 5 a 39 m mar adentro, a los dos lados del muelle; también cuántos manojos de tul cortado se secan en la playa",
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0.7
+  },
+  "seco": {
+   "tipo": "numero",
+   "requerido": false,
+   "descripcion": "cuánto se retiró el agua (ilustrativo, sin medida): 0 = lleno; 1 = el agua 24 m más allá, con un lecho de lodo al aire y el tul en seco (amarillento)",
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0
+  },
+  "construcciones": {
+   "tipo": "numero",
+   "requerido": false,
+   "descripcion": "qué parte de las 10 ranuras de lotes está ocupada (en orden: los dos hoteles junto al muelle primero, luego casas de campo hacia los lados); lo demás, pasto con árboles. La densidad es ilustrativa",
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0.6
+  },
+  "epoca": {
+   "tipo": "texto",
+   "requerido": false,
+   "descripcion": "antes = hoteles bajos de 1–2 pisos, setos, camino sin faroles; hoy = más hoteles (3 pisos), casas de 1–2 pisos, muros, faroles en el camino y más carros",
+   "valores": [
+    "antes",
+    "hoy"
+   ],
+   "defecto": "antes"
+  },
+  "camino": {
+   "tipo": "texto",
+   "requerido": false,
+   "descripcion": "el camino de atrás: tierra (con huellas) o asfalto (con su raya y sus orillas de tierra); el acceso al muelle es siempre de tierra",
+   "valores": [
+    "tierra",
+    "asfalto"
+   ],
+   "defecto": "tierra"
+  },
+  "personas": {
+   "tipo": "entero",
+   "requerido": false,
+   "descripcion": "gente en tierra (en este orden): 1 vendedora en el muelle, 2 alguien que camina por el camino, 3 un cargador con su carga a la espalda sujeta por la frente, 4 alguien en la playa, 5 un huésped en el corredor del hotel, 6 quien corta tul de pie en el agua baja, 7 otro cargador, 8 otra vendedora junto al muelle, 9–10 más gente a pie y en la playa. Muñecos sin rostro ni traje de un pueblo. Con `cargadores` o `vendedoras` esos dos los cuentan aparte (los de `personas` de ese tipo se quitan)",
+   "rango": [
+    0,
+    10
+   ],
+   "defecto": 5
+  },
+  "cargadores": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    6
+   ],
+   "descripcion": "cargadores con su carga a la espalda sujeta por la frente (mecapal) que caminan en grupo por el camino de tierra, espaciados 16–21 m, la mitad en cada sentido, cerca del acceso al muelle al empezar (sin sacos ni canastos concretos). Sin él, los de `personas`"
+  },
+  "vendedoras": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    6
+   ],
+   "descripcion": "vendedoras en la playa: de pie junto a un petate con montones de cebolla, ajo, fruta y verdura (genéricos) o caminando por la playa, todas con un bulto de tela al frente; solo mujeres, sin traje de un pueblo. Sin él, las de `personas`"
+  },
+  "dispersion": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0,
+   "descripcion": "0 = las casas de campo en sus ranuras y las casas del camino en fila; 1 = dispersas y desiguales: corridas hacia atrás y a los lados, de tamaños, giros y techos distintos, sin lindero continuo, algún lote vacío, menos casas junto al camino y el adoquín solo en el centro. Los hoteles quedan en su ranura"
+  },
+  "gente_escala": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    1,
+    2.2
+   ],
+   "defecto": 1.25,
+   "descripcion": "cuánto se agranda la gente (y su carga) para leerse de lejos: 1.25 = como siempre; 1.6–1.8 se lee a 55–60 m en 9:16 (maqueta, no a escala)"
+  },
+  "cayucos": {
+   "tipo": "entero",
+   "requerido": false,
+   "descripcion": "cayucos (tronco excavado) que cruzan despacio cerca de la orilla, cada uno con su remero de pie y su remo; transporte, no pesca",
+   "rango": [
+    0,
+    4
+   ],
+   "defecto": 1
+  },
+  "lanchas": {
+   "tipo": "entero",
+   "requerido": false,
+   "descripcion": "lanchas genéricas de madera con toldo y motor: la mitad (redondeada abajo) amarradas al muelle; las demás cruzan el lago a 70–160 m con su estela",
+   "rango": [
+    0,
+    4
+   ],
+   "defecto": 2
+  },
+  "aves": {
+   "tipo": "entero",
+   "requerido": false,
+   "descripcion": "zambullidores oscuros junto al tul (pico claro): nadan 10 s, se sumergen ≈ 20 s y salen un poco más allá, con su anillo en el agua. Ilustrativo: no cuenta una población",
+   "rango": [
+    0,
+    6
+   ],
+   "defecto": 0
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "descripcion": "el azar fijo: manchas del tul, árboles, tonos de muros y techos, ranchos del pueblito, fase de cada lancha, cayuco, ave y peatón",
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1
+  }
+ },
+ "escalas": [
+  "esquema"
+ ],
+ "motores": [
+  "three"
+ ],
+ "usa": [
+  "persona",
+  "carro",
+  "bus",
+  "camion"
+ ],
+ "ejemplo": {
+  "id": "orilla",
+  "tipo": "orillalago",
+  "lugar": [
+   0,
+   0
+  ],
+  "rumbo": 90,
+  "tamano": 1,
+  "tul": 0.7,
+  "seco": 0,
+  "construcciones": 0.6,
+  "epoca": "antes",
+  "camino": "tierra",
+  "personas": 7,
+  "cargadores": 4,
+  "vendedoras": 4,
+  "dispersion": 0.8,
+  "gente_escala": 1.7,
+  "cayucos": 2,
+  "lanchas": 3,
+  "aves": 2,
+  "semilla": 1
+ },
+ "nivel": "escenario",
+ "contiene": [
+  "el lago: agua quieta con su tono por hondura y destellos que titilan",
+  "la playa angosta con piedras y, con seco, el lecho de lodo al aire",
+  "el tular: manchas de tul y de enea con su espiga en el agua baja, y manojos de tul cortado secándose en la playa",
+  "el muelle público de madera sobre pilotes con largueros, tablones, bitas, farol y escalera a la playa",
+  "lanchas de madera con toldo y motor (amarradas y cruzando con su estela)",
+  "cayucos de tronco con su remero de pie y el remo que entra al agua",
+  "hoteles bajos genéricos con ala de atrás y corredor de columnas hacia el lago, mesas y bancas",
+  "casas de campo con corredor, jardín de césped, arriates con flores, setos (o muros hoy) y árboles",
+  "el camino de tierra con huellas (o de asfalto) y el acceso al muelle",
+  "huertos con sus surcos y cercas de palos",
+  "casas de adobe encalado con teja y ventanas con reja junto al camino, con su adoquín",
+  "ranchos de caña y adobe con techo de paja entre cafetales, con humo de fogón",
+  "tres volcanes genéricos al fondo, tierra adentro",
+  "gente: vendedoras con su bulto y su petate de cebolla, ajo y fruta en la playa, cargadores con mecapal en grupo por el camino, quien corta tul, paseantes y un huésped",
+  "un camión-bus, un carro y un camión genéricos por el camino",
+  "aves zambullidoras junto al tul",
+  "de noche: ventanas, farol del muelle, faroles del camino (hoy) y luces de las lanchas",
+  "con dispersion: casas de campo y casas del camino sueltas y desiguales en vez de fila (lotificación)"
+ ],
+ "animado": "las lanchas cruzan con su estela y las amarradas se mecen, los cayucos avanzan con su remo, la gente camina por el camino (los cargadores en grupo con su carga) y las vendedoras por la playa, los vehículos pasan, el agua destella, el humo sube de los ranchos y las aves se zambullen y salen",
+ "gente": true,
+ "poses": [
+  "de_pie",
+  "caminar"
+ ],
+ "distancia_m": [
+  30,
+  600
+ ],
+ "caja_m": [
+  1000,
+  1400,
+  60
+ ]
+}

@@ -1,0 +1,65 @@
+{
+ "tipo": "florecer",
+ "clase": "evento",
+ "cuando": "un lago se pone verde (cianobacteria, algas): manchas verde vivo nacen en focos y se extienden en vetas sobre el agua; sin porcentaje",
+ "parametros": {
+  "pieza": {
+   "tipo": "pieza",
+   "piezas": [
+    "lagos"
+   ],
+   "requerido": true,
+   "descripcion": "la pieza lagos que dibuja el lago (tiene que incluirlo en sus `nombres`, o dibujarlos todos)"
+  },
+  "lago": {
+   "tipo": "texto",
+   "requerido": true,
+   "descripcion": "qué lago florece, por id o por nombre («atitlan», «Lago de Amatitlán»; ids en design/sets3d/<set>/lagos.json)"
+  },
+  "cobertura": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0.6,
+   "descripcion": "la fracción del lago que queda verde al terminar (ilustrativa, no es una medida ni se rotula): 0.3 = unas vetas; 1 = todo el lago"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "el azar fijo: dónde están los focos, hacia dónde se estiran las vetas y su dibujo"
+  }
+ },
+ "escalas": [
+  "pais"
+ ],
+ "motores": [
+  "three"
+ ],
+ "adelanto": {
+  "s": 0.35
+ },
+ "animado": "las manchas nacen en 3–5 focos, se extienden en vetas estiradas por el viento hasta la cobertura pedida y, al quedar, sus hebras finas derivan despacio sobre el agua",
+ "contiene": [
+  "los focos donde nace el verde",
+  "las vetas largas estiradas en un sentido",
+  "el núcleo denso verde vivo y el borde ralo mezclado con el agua",
+  "hebras finas más claras que derivan despacio",
+  "el lago que se aviva apenas mientras florece"
+ ],
+ "ejemplo": {
+  "t": 0.6,
+  "dur": 4.0,
+  "tipo": "florecer",
+  "pieza": "lagos",
+  "lago": "atitlan",
+  "cobertura": 0.6
+ }
+}

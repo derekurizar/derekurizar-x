@@ -14,8 +14,10 @@ Guía completa: `referencias/flujo-video3d.md` (léela antes de empezar). Contra
    [--desde <trabajo o entrega ya investigada>] [--duracion 45]` (de 20 a 180 s: hasta 3 min, como los demás videos; elige la duración por lo que hay que recorrer, y un estilo de Blender en un video largo tarda más de una hora por formato). Con `desde:` se reutilizan las cifras verificadas.
 3. **Investigación.** Lo que falte se investiga y verifica con los agentes de /historia (`historia-investigador` ⇢
    `historia-verificador`, cita literal guardada con `historia.py leer`). **Los geodatos también se verifican**: qué
-   tramo, de dónde a dónde, hacia dónde. Suma lo verificado con `video3d.py datos <TRABAJO> --sumar <archivo>` y
-   anota en el guion lo que NO se puede dibujar (`no_afirmar`).
+   tramo, de dónde a dónde, hacia dónde. Los agentes usan `historia.py digesto <TRABAJO> --para investigador|verificador
+   --eje <eje>` y `hechos --check` también en un TRABAJO 3D (sin fotos: H7 y H12 no aplican; el brief del eje va en el
+   prompt). Suma lo verificado con `video3d.py datos <TRABAJO> --sumar <archivo>` (suma también el año de cada hecho
+   fechado como cifra `anio-AAAA`: lo que la voz dirá) y anota en el guion lo que NO se puede dibujar (`no_afirmar`).
 4. **Workflow `video3d`** (0 créditos; `.claude/workflows/video3d.js`): `{trabajo: <TRABAJO>, tema: "<tema>", angulo?}`.
    La sesión ya no escribe a mano la dirección, los ganchos, el guion ni el `maqueta.json`: el agente `video3d-director`
    escribe la **dirección visual por frase** (`direccion.json`: idea visual, criterio, escala `pais|ciudad|esquema`,
@@ -37,7 +39,10 @@ Guía completa: `referencias/flujo-video3d.md` (léela antes de empezar). Contra
    `args.auto` deja la recomendación del crítico (solo si el usuario lo pide).
 7. **El cierre** (`veredicto: "elegir_cierre"`, `cierres`): el usuario elige uno de los 5 o dicta el suyo; ponlo en la
    escena de cierre de `guion.json` y vuelve a correr `video3d.py guion <TRABAJO> --check` y `storyboard`. Con
-   `veredicto: "corregir"`, decide con el usuario las `faltas_pendientes`; con `"no_es_3d"`, propón el flujo de la `nota`.
+   `veredicto: "corregir"`, decide con el usuario las `faltas_pendientes`; con `"no_es_3d"`, propón el flujo de la `nota`;
+   con `"faltan_datos"` (al guion le falta una cifra en `base/datos.json`, que el director no escribe), revisa las de
+   `faltan` (y su `archivo_datos`, si lo trae), súmalas con `datos --sumar` y reanuda con `resumeFromRunId` y
+   `args.datos` = lo que sumaste.
    Los avisos `NÚCLEO` del Workflow son cambios que el constructor no pudo hacer en `motor.js`: anótalos en «Mejoras al
    framework».
 8. **Voz.** Sigue `referencias/fragmentos/voz-mcp.md` con `<script>` = `video3d.py` y el flow «Video 3D · <slug>».
@@ -46,7 +51,10 @@ Guía completa: `referencias/flujo-video3d.md` (léela antes de empezar). Contra
 9. **Tiempos, render y montaje.** En un comando: `python3 scripts/video3d.py producir <TRABAJO>` (`tiempos` → `escuchar` →
    `render` → `montar`, reanudable; `referencias/fragmentos/producir.md`). Paso a paso: `video3d.py tiempos` → `render` → `montar` (9:16 y 4:5). `montar` deja también
    `salida/subtitulos.srt` y `salida/portada.png` (el cuadro cero sin subtítulos). Mira el resultado (una hoja de
-   cuadros del mp4) y la portada antes de entregar.
+   cuadros del mp4) y la portada antes de entregar. Si un gate M3D falla con la voz real (una marca que pisa el titular,
+   una clave de cámara), se ajusta lo que se VE con `video3d.py aplicar <TRABAJO> --escena N --elemento marcas:0 --set
+   dura=2.0 --por "<la falla>"` (rastro en `guion.ajustes`; corre `guion --check` y `tiempos` y deshace si fallan), nunca
+   editando `guion.json` a mano; luego `producir` reanuda.
 10. **Entrega.** `video3d.py entregar <TRABAJO>` → `videos3d/<fecha>-<slug>/` (video, 4:5, portada, `caption.md`,
     `.srt`, `tiempos.json`, fuentes) y `python3 scripts/memoria.py --video3d <entrega>`; `make validate` sale 0; costo medido: `python3 scripts/costo.py
     --registrar --pieza <id> --flujo video3d --entrega <entrega>`. Sin

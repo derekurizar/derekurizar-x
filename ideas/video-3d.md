@@ -255,7 +255,7 @@ nostalgia o indignación, las dos emociones que más se comparten.
 - [ ] La Laguna del Tigre: de selva a potreros.
 - [ ] El bosque de Petén en 2000 y hoy.
 - [ ] La Sierra del Lacandón.
-- [ ] El lago de Atitlán antes de los hoteles.
+- [x] El lago de Atitlán antes de los hoteles. (`videos3d/2026-11-17-atitlan-antes-de-los-hoteles`)
 - [ ] El nivel del lago de Atitlán: los muelles bajo el agua.
 - [ ] Los manglares de la costa sur.
 - [ ] El río Motagua antes de la basura.

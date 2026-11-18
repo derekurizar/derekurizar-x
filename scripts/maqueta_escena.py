@@ -115,6 +115,12 @@ def cosas(M3, R, t):
             for e in pz.get("edificios") or []:
                 xs, ys = e[1::2], e[2::2]
                 cosa("edificios", fi, (min(xs) + max(xs)) / 2, (min(ys) + max(ys)) / 2, max(xs) - min(xs), max(ys) - min(ys), float(e[0]) * um)
+        elif pz.get("_cosas"):       # una pieza que se arma sobre un trazo (bulevar1890, avenidareforma): sus partes con volumen
+            for k in pz["_cosas"]:   # {clave, x, y (escena), l_m, a_m, h_m, dx, dy, nivel?, contiene?, gente?} (cosas_pieza)
+                sub = dict(fi, tipo=k["clave"], nivel=k.get("nivel") or fi.get("nivel"), contiene=k.get("contiene") or [],
+                           gente=bool(k.get("gente")), animado=k.get("animado", False))
+                cosa(k["clave"], sub, k["x"], k["y"], k["l_m"] * um, k["a_m"] * um, k["h_m"] * um, k.get("dx", 1.0), k.get("dy", 0.0),
+                     base=bool(pz.get("relieve")))
         elif pz.get("poligono"):     # una pieza sobre un polígono (el cafetal): su caja y la altura de su ficha
             xs, ys = pz["poligono"][0::2], pz["poligono"][1::2]
             if xs and isinstance(xs[0], (list, tuple)):
@@ -127,6 +133,28 @@ def cosas(M3, R, t):
             cosa(tipo, fi, pz["x"], pz["y"], l, a, h, math.cos(r), math.sin(r), base=bool(pz.get("relieve")))
         elif tipo in PLANAS:
             cosa(tipo, fi, 0.0, 0.0, 0.0, 0.0, 0.0)
+    return out
+
+
+def cosas_pieza(clave, x, y, l_m, a_m, h_m, dx=1.0, dy=0.0, **extra):
+    """Una parte con volumen que publica una pieza en `_cosas` (la escribe su maqueta_tipos/<tipo>.py; la mide cosas())."""
+    return dict({"clave": clave, "x": round(x, 2), "y": round(y, 2), "l_m": round(l_m, 2), "a_m": round(a_m, 2), "h_m": round(h_m, 2),
+                 "dx": round(dx, 4), "dy": round(dy, 4)}, **extra)
+
+
+def agrupar(puntos, celda, clave_de, alto_m, copa_m, um=1.0):
+    """Muchos objetos instanciados (árboles) → una parte por celda de `celda` unidades de escena: la caja que los encierra
+    con su copa. clave_de(punto) → la clave de cada uno; la celda toma la más frecuente. Así una fila de 400 árboles cuenta
+    como lo que se ve (arboledas), sin medir cada copa."""
+    grupos = {}
+    for q in puntos:
+        grupos.setdefault((int(q[0] // celda), int(q[1] // celda)), []).append(q)
+    out = []
+    for qs in grupos.values():
+        xs, ys = [q[0] for q in qs], [q[1] for q in qs]
+        claves = [clave_de(q) for q in qs]
+        out.append(cosas_pieza(max(set(claves), key=claves.count), (min(xs) + max(xs)) / 2, (min(ys) + max(ys)) / 2,
+                               (max(xs) - min(xs)) * um + copa_m, (max(ys) - min(ys)) * um + copa_m, alto_m))
     return out
 
 

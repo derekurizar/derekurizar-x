@@ -1,0 +1,391 @@
+{
+ "id": "2026-11-16-los-cebollines",
+ "tipo": "historia",
+ "slug": "los-cebollines",
+ "tema": "Los Cebollines",
+ "fecha": "2026-11-16",
+ "pregunta": "¿Cómo un restaurante de comida mexicana abierto en la Plazuela España se volvió una cadena de dos países y el Restaurante del Año de Guatemala?",
+ "arco": "origen y ascenso de una marca: de un local a una cadena regional",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "2025",
+   "titulo": "De uno a muchos",
+   "escena": 5
+  },
+  {
+   "numero": 3,
+   "anio": "2025",
+   "titulo": "Restaurante del Año",
+   "escena": 9
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "Los Cebollines sirve mole y chilaquiles. Pero no nació en México: nació en Guatemala. Su primer local no sabía que un día su nombre cruzaría una frontera. Todo empezó en 1983, en la Plazuela España, en la Ciudad de Guatemala. Ahí, la cocina mexicana de Los Cebollines puso sus primeras mesas. Cuatro años después, en 1987, ya era lo bastante grande para tener su propio departamento de Recursos Humanos, cuenta Emisoras Unidas."
+  },
+  {
+   "acto": 2,
+   "texto": "De las décadas siguientes no hay fechas publicadas: hoy Los Cebollines forma parte de GALA, el Grupo Alimenticio Latinoamericano. Suchef, Top Catering y Eco Catering, otras marcas de comida, también son de GALA. La empresa dice que el grupo suma más de 1,000 colaboradores y dos plantas de producción. Para entonces ya había cruzado a El Salvador, pero nadie ha publicado cuándo. En septiembre de 2025, Los Cebollines anunció allá un restaurante nuevo, en Soyapango, con una inversión de alrededor de US$1 millón. Cosette Figueroa, gerente de Comercialización de GALA, lo celebró así: Estamos muy emocionados de abrir este nuevo restaurante en Soyapango, conocida por ser la segunda ciudad más poblada del área de San Salvador."
+  },
+  {
+   "acto": 3,
+   "texto": "Ese mismo mes, la Gremial de Restaurantes de Guatemala, que reúne a los restaurantes del país, le entregó el Tenedor de Oro 2025 como Restaurante del Año. Lo recibió Carlos Villa, ejecutivo de Los Cebollines, en la Feria Alimentaria, por una trayectoria de más de cuatro décadas: las que van desde aquella plazuela. Para entonces, según las notas del premio, la cadena sumaba 20 restaurantes en Guatemala y 6 en El Salvador. En cualquiera de esos restaurantes, el guacamol y las salsas se preparan frente al cliente, y quien cumple años se pone un sombrero de charro. Su propia historia, en cambio, tiene huecos: nunca se ha publicado quién fundó Los Cebollines, de dónde sale su nombre, cuándo entró a GALA ni cómo pasó de un local a una cadena. Tampoco se sabe si el local de la Plazuela España sigue abierto. Empezó en una plazuela de la capital y cruzó la frontera. Hoy, en Los Cebollines, sus clientes todavía celebran cumpleaños con ese sombrero."
+  }
+ ],
+ "hilos": [
+  {
+   "id": "h1",
+   "sin_respuesta": "Quién lo fundó nunca se ha publicado"
+  },
+  {
+   "id": "h2",
+   "sin_respuesta": "De dónde sale su nombre nunca se ha publicado"
+  },
+  {
+   "id": "h3",
+   "sin_respuesta": "Cuándo entró a GALA nunca se ha publicado"
+  },
+  {
+   "id": "h4",
+   "sin_respuesta": "Cuándo abrió su primer local en El Salvador nunca se ha publicado"
+  },
+  {
+   "id": "h5",
+   "sin_respuesta": "Tampoco se sabe si el local de la Plazuela España sigue abierto"
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3,
+   4
+  ],
+  [
+   5,
+   6
+  ],
+  [
+   7,
+   8
+  ],
+  [
+   9,
+   10,
+   11
+  ],
+  [
+   12,
+   13
+  ]
+ ],
+ "paleta": "jade",
+ "musica": "cacao-2",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2199,
+ "duracion_s": 144.9,
+ "critica": {
+  "veredicto": "pasa",
+  "vuelta": 1,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 3,
+   "claridad": 3,
+   "flujo": 3,
+   "precision": 4,
+   "cierre": 4,
+   "recompensa": 3
+  }
+ },
+ "gancho": {
+  "familia": "paradoja",
+  "visual": "foto",
+  "pantalla": "Cebollines, no de México",
+  "linea": "Sirve mole y chilaquiles",
+  "id": "g3",
+  "elegido_por": "usuario",
+  "recomendado": "g3"
+ },
+ "promesa": {
+  "pregunta": "¿Hasta dónde llegó Los Cebollines?",
+  "texto": "Su primer local no sabía que un día su nombre cruzaría una frontera.",
+  "forma": "presagio",
+  "en": 2,
+  "pago": 11,
+  "revela": 2
+ },
+ "bisagra": {
+  "texto": "Para entonces ya había cruzado a El Salvador, pero nadie ha publicado cuándo.",
+  "forma": "secreto",
+  "en": 7,
+  "pago": 7
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "Los Cebollines sirve mole y chilaquiles. Pero no nació en México: nació en Guatemala.",
+   "voz": "Los Cebollines sirve mole y chilaquiles. Pero no nació en México: nació en Guatemala.",
+   "dur": 6.879,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: seperezu · CC BY-SA 3.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 3.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Su primer local no sabía que un día su nombre cruzaría una frontera. Todo empezó en 1983, en la Plazuela España, en la Ciudad de Guatemala.",
+   "voz": "Su primer local no sabía que un día su nombre cruzaría una frontera. Todo empezó en mil novecientos ochenta y tres, en la Plazuela España, en la Ciudad de Guatemala.",
+   "dur": 11.195,
+   "hechos": [
+    "exp-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Anamix257 · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "golpe",
+   "pantalla": "Ahí, la cocina mexicana de Los Cebollines puso sus primeras mesas.",
+   "voz": "Ahí, la cocina mexicana de Los Cebollines puso sus primeras mesas.",
+   "dur": 4.752,
+   "hechos": [
+    "exp-h01"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "foto",
+   "pantalla": "Cuatro años después, en 1987, ya era lo bastante grande para tener su propio departamento de Recursos Humanos, cuenta Emisoras Unidas.",
+   "voz": "Cuatro años después, en mil novecientos ochenta y siete, ya era lo bastante grande para tener su propio departamento de Recursos Humanos, cuenta Emisoras Unidas.",
+   "dur": 10.377,
+   "hechos": [
+    "ori-h04"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: seperezu · CC BY-SA 3.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 3.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "golpe",
+   "pantalla": "De las décadas siguientes no hay fechas publicadas: hoy Los Cebollines forma parte de GALA, el Grupo Alimenticio Latinoamericano.",
+   "voz": "De las décadas siguientes no hay fechas publicadas: hoy Los Cebollines forma parte de GALA, el Grupo Alimenticio Latinoamericano.",
+   "dur": 8.655,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 6,
+   "tipo": "foto",
+   "pantalla": "Suchef, Top Catering y Eco Catering, otras marcas de comida, también son de GALA. La empresa dice que el grupo suma más de 1,000 colaboradores y dos plantas de producción.",
+   "voz": "Suchef, Top Catering y Eco Catering, otras marcas de comida, también son de GALA. La empresa dice que el grupo suma más de mil colaboradores y dos plantas de producción.",
+   "dur": 12.175,
+   "hechos": [
+    "ori-h06",
+    "hoy-h07"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "foto",
+   "pantalla": "Para entonces ya había cruzado a El Salvador, pero nadie ha publicado cuándo. En septiembre de 2025, Los Cebollines anunció allá un restaurante nuevo, en Soyapango, con una inversión de alrededor de US$1 millón.",
+   "voz": "Para entonces ya había cruzado a El Salvador, pero nadie ha publicado cuándo. En septiembre de dos mil veinticinco, Los Cebollines anunció allá un restaurante nuevo, en Soyapango, con una inversión de alrededor de un millón de dólares.",
+   "dur": 15.239,
+   "hechos": [
+    "exp-h04"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "cita",
+   "pantalla": "Cosette Figueroa, gerente de Comercialización de GALA, lo celebró así: Estamos muy emocionados de abrir este nuevo restaurante en Soyapango, conocida por ser la segunda ciudad más poblada del área de San Salvador.",
+   "voz": "Cosette Figueroa, gerente de Comercialización de GALA, lo celebró así: Estamos muy emocionados de abrir este nuevo restaurante en Soyapango, conocida por ser la segunda ciudad más poblada del área de San Salvador.",
+   "dur": 14.649,
+   "hechos": [
+    "exp-h04"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "foto",
+   "pantalla": "Ese mismo mes, la Gremial de Restaurantes de Guatemala, que reúne a los restaurantes del país, le entregó el Tenedor de Oro 2025 como Restaurante del Año.",
+   "voz": "Ese mismo mes, la Gremial de Restaurantes de Guatemala, que reúne a los restaurantes del país, le entregó el Tenedor de Oro dos mil veinticinco como Restaurante del Año.",
+   "dur": 10.046,
+   "hechos": [
+    "hoy-h01",
+    "exp-h05"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "foto",
+   "pantalla": "Lo recibió Carlos Villa, ejecutivo de Los Cebollines, en la Feria Alimentaria, por una trayectoria de más de cuatro décadas: las que van desde aquella plazuela.",
+   "voz": "Lo recibió Carlos Villa, ejecutivo de Los Cebollines, en la Feria Alimentaria, por una trayectoria de más de cuatro décadas: las que van desde aquella plazuela.",
+   "dur": 10.3,
+   "hechos": [
+    "ori-h08",
+    "hoy-h03"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Prensa Libre",
+     "origen": "medio",
+     "licencia": "© Prensa Libre (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "golpe",
+   "pantalla": "Para entonces, según las notas del premio, la cadena sumaba 20 restaurantes en Guatemala y 6 en El Salvador.",
+   "voz": "Para entonces, según las notas del premio, la cadena sumaba veinte restaurantes en Guatemala y seis en El Salvador.",
+   "dur": 7.823,
+   "hechos": [
+    "exp-h03"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "foto",
+   "pantalla": "En cualquiera de esos restaurantes, el guacamol y las salsas se preparan frente al cliente, y quien cumple años se pone un sombrero de charro.",
+   "voz": "En cualquiera de esos restaurantes, el guacamol y las salsas se preparan frente al cliente, y quien cumple años se pone un sombrero de charro.",
+   "dur": 8.939,
+   "hechos": [
+    "hoy-h08"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: Estrategia & Negocios",
+     "origen": "medio",
+     "licencia": "© Estrategia & Negocios (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "foto",
+   "pantalla": "Su propia historia, en cambio, tiene huecos: nunca se ha publicado quién fundó Los Cebollines, de dónde sale su nombre, cuándo entró a GALA ni cómo pasó de un local a una cadena. Tampoco se sabe si el local de la Plazuela España sigue abierto.",
+   "voz": "Su propia historia, en cambio, tiene huecos: nunca se ha publicado quién fundó Los Cebollines, de dónde sale su nombre, cuándo entró a GALA ni cómo pasó de un local a una cadena. Tampoco se sabe si el local de la Plazuela España sigue abierto.",
+   "dur": 16.353,
+   "hechos": [
+    "exp-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Anamix257 · Public domain",
+     "origen": "commons",
+     "licencia": "Public domain"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "cierre",
+   "pantalla": "Empezó en una plazuela de la capital y cruzó la frontera. Hoy, en Los Cebollines, sus clientes todavía celebran cumpleaños con ese sombrero.",
+   "voz": "Empezó en una plazuela de la capital y cruzó la frontera. Hoy, en Los Cebollines, sus clientes todavía celebran cumpleaños con ese sombrero.",
+   "dur": 10.825,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que dejó",
+  "resumen": [
+   "Nació en 1983 en una plazuela",
+   "Cruzó a El Salvador",
+   "Restaurante del Año 2025"
+  ],
+  "texto": "Empezó en una plazuela de la capital y cruzó la frontera. Hoy, en Los Cebollines, sus clientes todavía celebran cumpleaños con ese sombrero.",
+  "tipo": "remate",
+  "forma": "legado",
+  "final": "Hoy, en Los Cebollines, sus clientes todavía celebran cumpleaños con ese sombrero.",
+  "consecuencia": {
+   "quien": "clientes",
+   "verbo": "celebran"
+  },
+  "id": "c1",
+  "elegido_por": "usuario",
+  "recomendado": "c1"
+ },
+ "caption": {
+  "tiktok": "Los Cebollines sirve mole y chilaquiles, pero nació en 1983 en la Plazuela España de la capital. Hoy está en Guatemala y El Salvador, y en 2025 fue Restaurante del Año. #Guatemala #historia #LosCebollines",
+  "instagram": "De una plazuela de la capital a dos países: la historia de Los Cebollines, Restaurante del Año 2025 en Guatemala. Lo que nadie ha publicado: quién lo fundó y de dónde sale su nombre. #Guatemala #LosCebollines #historia",
+  "facebook": "Los Cebollines nació en 1983 en la Plazuela España. En 2025, la Gremial de Restaurantes le dio el Tenedor de Oro como Restaurante del Año. Fuentes en el primer comentario.",
+  "shorts": "Los Cebollines no nació en México: nació en Guatemala #Shorts\nDe la Plazuela España en 1983 al Tenedor de Oro 2025. #Guatemala"
+ }
+}

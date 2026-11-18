@@ -1,0 +1,126 @@
+{
+ "tipo": "ciudadcolonial",
+ "clase": "pieza",
+ "cuando": "ciudad colonial genérica en damero con su plaza mayor (catedral, palacio, cabildo, fuente, mercado) y un volcán al fondo: la capital que se vive o se pierde",
+ "parametros": {
+  "lugar": {
+   "tipo": "lugar",
+   "requerido": true,
+   "descripcion": "el centro de la plaza mayor, donde está la fuente (un lugar del mundo o [x, y] en metros en un esquema). Va mejor en la receta campo con horizonte llano o colinas (el volcán lo pone la pieza) y sin `ambiente` en 300 m a la redonda"
+  },
+  "rumbo": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    360
+   ],
+   "defecto": 0,
+   "descripcion": "hacia dónde queda el volcán de fondo desde la plaza (grados; 0 = este, 90 = norte, 270 = sur); el damero va a escuadra con ese rumbo. Lados de la plaza (orden relativo, no brújula): el palacio hacia el volcán, el cabildo enfrente de él, la catedral a la izquierda mirando al volcán y las casas con balcones a la derecha. La plaza con el volcán detrás: mira «<id>.plaza», azimut = rumbo − 90, elevación 10–20°, dist_m 140–320; la ciudad entera con el volcán: dist_m 700–1300"
+  },
+  "tamano": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0.6,
+    2
+   ],
+   "defecto": 1,
+   "descripcion": "escala de todo (1 = manzanas de 64 m, calles de 9 m, casas de 4–5.4 m de alto, catedral de 60 m de fondo; el volcán a 1.75 km y 560 m de alto: una maqueta, no a escala)"
+  },
+  "manzanas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    4,
+    25
+   ],
+   "defecto": 12,
+   "descripcion": "cuántas manzanas hay alrededor de la plaza, de adentro hacia afuera (las cuatro primeras son las de los edificios de la plaza); desde 7, una iglesia de barrio, y otra cada 7 más (hasta 3)"
+  },
+  "personas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    30
+   ],
+   "defecto": 14,
+   "descripcion": "gente: vendedores en los puestos (≈ 30 %), un cargador que baja sacos de la carreta, quien jala un carretón alrededor de la plaza (desde 6), dos que platican junto a la fuente (desde 10) y los demás caminando por la plaza, los portales y las calles (de noche, la mitad). Figuras genéricas, sin vestimenta de un pueblo"
+  },
+  "volcan_fondo": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "un volcán genérico de forma piramidal al fondo, por `rumbo` (sin humo ni lava; no es la forma real de ninguno)"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "el azar fijo: qué manzanas salen primero, el largo, alto, color y techo de cada casa, sus ventanas y patios, las iglesias de barrio y su espadaña o torre, la mercancía de los puestos"
+  }
+ },
+ "escalas": [
+  "esquema"
+ ],
+ "motores": [
+  "three"
+ ],
+ "usa": [
+  "persona"
+ ],
+ "ejemplo": {
+  "id": "ciudad",
+  "tipo": "ciudadcolonial",
+  "lugar": [
+   0,
+   0
+  ],
+  "rumbo": 270,
+  "tamano": 1,
+  "manzanas": 12,
+  "personas": 14,
+  "volcan_fondo": true,
+  "semilla": 1
+ },
+ "nivel": "escenario",
+ "contiene": [
+  "la plaza mayor empedrada, casi cuadrada, con su bordillo de piedra",
+  "la fuente al centro: pila ochavada con grada, pedestal, taza y remate, con el agua que cae de la taza a la pila",
+  "puestos de mercado: mesas con montones de fruta y verdura, canastos y toldos de lona sobre horcones; de noche, un farol",
+  "la catedral de tres naves: fachada con pilastras, cornisas, puerta en arco y nichos, dos torres bajas con campanario y cupulino, bóveda en la nave mayor, cupulitas en las laterales, cúpula con tambor y linterna en el crucero, contrafuertes",
+  "la galería del arzobispado junto a la catedral, con dos pisos de arquería",
+  "el palacio y el cabildo: dos pisos de arquería de piedra (pilares con basa y capitel, arcos con su rosca, antepecho arriba) con tiendas al fondo del portal",
+  "enfrente de la catedral, casas con balcones de madera sobre un portal de comercio, cada una de su color",
+  "mercancía en los portales: sacos, canastos con fruta",
+  "manzanas de casas de un piso de muros gruesos: zócalo, cornisa, portón de madera con marco de piedra, ventanas con reja al ras o voladiza, techo de teja a dos aguas o azotea con pretil y gárgolas",
+  "patios con árbol o pila y a veces una segunda crujía con chimenea; huertos con árboles al centro de la manzana",
+  "iglesias de barrio de muros gruesos con contrafuertes, atrio con tapia y cruz, bóveda y cúpula o techo de teja, espadaña o torre baja",
+  "calles empedradas en damero con su canal de piedra al centro",
+  "una carreta de dos ruedas con sacos y un carretón de mano",
+  "un volcán genérico piramidal al fondo, con barrancas y bosque",
+  "gente que camina, vende, carga y platica"
+ ],
+ "animado": "la gente camina por la plaza, los portales y las calles (posición = función de t); los vendedores atienden; el cargador baja sacos de la carreta; un carretón de mano da la vuelta a la plaza con las ruedas girando; el agua de la fuente cae de la taza a la pila; el humo de las cocinas sube; de noche tiembla la luz de puertas de tienda, ventanas, faroles de los puestos y la puerta de los templos",
+ "gente": true,
+ "distancia_m": [
+  40,
+  1500
+ ],
+ "caja_m": [
+  2960,
+  1900,
+  560
+ ],
+ "poses": [
+  "atender",
+  "descargar",
+  "caminar",
+  "de_pie"
+ ]
+}

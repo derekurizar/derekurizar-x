@@ -1,0 +1,722 @@
+{
+ "version": 7,
+ "slug": "el-caso-rosenberg",
+ "tema": "el caso Rosenberg",
+ "motor": "historia",
+ "fecha": "2026-11-16",
+ "carpeta": "series/2026-11-16-el-caso-rosenberg",
+ "trabajo": "sesiones/serie-el-caso-rosenberg",
+ "n_partes": 5,
+ "paleta": "obsidiana",
+ "musica": "corrupcion-judicial",
+ "plan_aprobado": true,
+ "estado": "en_produccion",
+ "partes": [
+  {
+   "n": 1,
+   "titulo": "El muerto que acusó al presidente",
+   "pregunta": "¿Por qué un abogado grabó un video acusando al presidente de su propio asesinato?",
+   "periodo": {
+    "desde": "2009-05",
+    "hasta": "2009-05"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": "¿Quiénes eran los dos clientes cuya muerte, según Rosenberg, lo explicaba todo?",
+   "hilos": [
+    "p1h1",
+    "p1h2"
+   ],
+   "revelaciones": [
+    "El video culpa a Álvaro Colom, Sandra Torres, Gustavo Alejos y Gregorio Valdez si Rosenberg moría asesinado."
+   ],
+   "tema": "el video",
+   "hechos": [
+    "vid-h01",
+    "inv-h01",
+    "vid-c06",
+    "vid-h02",
+    "inv-h02",
+    "vid-h03",
+    "vid-h04",
+    "vid-h07",
+    "inv-h03",
+    "vid-h05",
+    "vid-h16",
+    "vid-c01",
+    "vid-q03",
+    "vid-h06",
+    "vid-h17",
+    "vid-q01"
+   ],
+   "obligatorio": [
+    "vid-h01",
+    "vid-h07",
+    "vid-q01",
+    "vid-h05",
+    "vid-h16"
+   ],
+   "en_juego": "la vida de un abogado y la palabra de un presidente",
+   "estado": "guion",
+   "trabajo": "sesiones/serie-el-caso-rosenberg/parte-1"
+  },
+  {
+   "n": 2,
+   "titulo": "Los Musa y el banco",
+   "pregunta": "¿Quiénes eran los dos clientes cuya muerte, según Rosenberg, lo explicaba todo?",
+   "periodo": {
+    "desde": "2008",
+    "hasta": "2009-04"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": "Con un muerto acusando al presidente, ¿iba a caer el gobierno?",
+   "hilos": [
+    "p2h1",
+    "p2h2"
+   ],
+   "revelaciones": [
+    "Rosenberg era el abogado de Khalil Musa, asesinado con su hija Marjorie en abril de 2009."
+   ],
+   "tema": "Rosenberg y los Musa",
+   "hechos": [
+    "inv-h04",
+    "mus-h01",
+    "inv-q01",
+    "mus-q01",
+    "vid-h08",
+    "mus-h04",
+    "mus-h08",
+    "mus-c05",
+    "inv-h24",
+    "inv-h23",
+    "mus-h05",
+    "mus-q02",
+    "mus-h06",
+    "mus-h02",
+    "mus-c01",
+    "mus-c02",
+    "mus-c03"
+   ],
+   "obligatorio": [
+    "inv-h04",
+    "mus-q01",
+    "vid-h08",
+    "mus-q02",
+    "mus-h02"
+   ],
+   "en_juego": "una familia y los ahorros de un banco del Estado",
+   "estado": "guion",
+   "trabajo": "sesiones/serie-el-caso-rosenberg/parte-2"
+  },
+  {
+   "n": 3,
+   "titulo": "Un gobierno contra las cuerdas",
+   "pregunta": "Con un muerto acusando al presidente, ¿iba a caer el gobierno?",
+   "periodo": {
+    "desde": "2009-05",
+    "hasta": "2009-09"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": "Si ya estaban presos los que dispararon, ¿quién les pagó?",
+   "hilos": [
+    "p3h1",
+    "p3h2"
+   ],
+   "revelaciones": [
+    "La CICIG asumió el caso y capturó a la banda que disparó."
+   ],
+   "tema": "la crisis",
+   "hechos": [
+    "vid-h11",
+    "vid-q02",
+    "mus-h07",
+    "mus-q03",
+    "vid-h12",
+    "vid-h21",
+    "vid-h13",
+    "vid-h18",
+    "vid-c05",
+    "vid-q04",
+    "vid-h09",
+    "vid-h10",
+    "inv-h05",
+    "jui-h16",
+    "inv-h25",
+    "inv-c03",
+    "inv-c04",
+    "inv-h09"
+   ],
+   "obligatorio": [
+    "vid-q02",
+    "vid-h12",
+    "vid-h09",
+    "inv-h05",
+    "inv-h09"
+   ],
+   "en_juego": "un gobierno electo y la calle",
+   "estado": "guion",
+   "trabajo": "sesiones/serie-el-caso-rosenberg/parte-3"
+  },
+  {
+   "n": 4,
+   "titulo": "La tesis de la CICIG",
+   "pregunta": "Si ya estaban presos los que dispararon, ¿quién les pagó?",
+   "periodo": {
+    "desde": "2009-06",
+    "hasta": "2010-01"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": "¿Pagó alguien en un tribunal por la muerte de Rosenberg?",
+   "hilos": [
+    "p4h1",
+    "p4h2"
+   ],
+   "revelaciones": [
+    "La CICIG concluyó en enero de 2010 que Rosenberg organizó su propio asesinato.",
+    "Según la acusación, los sicarios los contrataron sus primos, los hermanos Valdés Paiz, a pedido del propio Rosenberg."
+   ],
+   "tema": "la investigación",
+   "hechos": [
+    "inv-h06",
+    "inv-h07",
+    "inv-h08",
+    "inv-h10",
+    "inv-c01",
+    "inv-h11",
+    "inv-c05",
+    "jui-h06",
+    "inv-h12",
+    "inv-q03",
+    "inv-q04",
+    "inv-h13",
+    "vid-h14",
+    "inv-c07",
+    "inv-h14",
+    "inv-c06",
+    "inv-h16",
+    "inv-q05"
+   ],
+   "obligatorio": [
+    "inv-h06",
+    "inv-h08",
+    "inv-h11",
+    "inv-h13",
+    "inv-q03",
+    "inv-h14"
+   ],
+   "en_juego": "la verdad sobre un presidente y la credibilidad de la CICIG",
+   "estado": "guion",
+   "trabajo": "sesiones/serie-el-caso-rosenberg/parte-4"
+  },
+  {
+   "n": 5,
+   "titulo": "Lo que dijeron los tribunales",
+   "pregunta": "¿Pagó alguien en un tribunal por la muerte de Rosenberg?",
+   "periodo": {
+    "desde": "2010-02",
+    "hasta": "2026"
+   },
+   "mecanismo": null,
+   "ejes": null,
+   "puente": null,
+   "hilos": [
+    "p5h1",
+    "p5h2"
+   ],
+   "revelaciones": [
+    "Los autores materiales fueron condenados y la condena se confirmó en apelación.",
+    "En 2017 el juez Mynor Moto cerró el proceso contra los hermanos Valdés Paiz.",
+    "Ni Álvaro Colom, ni Sandra Torres, ni Gustavo Alejos fueron acusados por la muerte que el video les atribuía."
+   ],
+   "tema": "el juicio y lo que quedó",
+   "hechos": [
+    "inv-h18",
+    "jui-h01",
+    "inv-c08",
+    "inv-c09",
+    "inv-c12",
+    "inv-q07",
+    "inv-h20",
+    "jui-h03",
+    "jui-h07",
+    "jui-q02",
+    "jui-h08",
+    "inv-h26",
+    "jui-h09",
+    "inv-h27",
+    "jui-h11",
+    "jui-q01",
+    "jui-h12",
+    "jui-h14",
+    "mus-h10",
+    "nov-c01",
+    "nov-c02",
+    "nov-h01",
+    "nov-h02",
+    "nov-h03",
+    "nov-h04",
+    "nov-h05",
+    "nov-h06",
+    "nov-h07",
+    "nov-h08",
+    "nov-q01",
+    "nov-q02"
+   ],
+   "obligatorio": [
+    "inv-h18",
+    "inv-h20",
+    "inv-h27",
+    "jui-h07",
+    "jui-h12",
+    "mus-h10",
+    "nov-h02",
+    "nov-h06"
+   ],
+   "en_juego": "la confianza del país en su justicia",
+   "estado": "lista",
+   "trabajo": "sesiones/serie-el-caso-rosenberg/parte-5"
+  }
+ ],
+ "historial": [
+  {
+   "version": 1,
+   "fecha": "2026-11-17",
+   "nota": "plan nuevo",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "El muerto que acusó al presidente",
+     "pregunta": "¿Por qué un abogado grabó un video acusando al presidente de su propio asesinato?",
+     "periodo": {
+      "desde": "2009-05",
+      "hasta": "2009-05"
+     },
+     "mecanismo": null,
+     "puente": "¿Quiénes eran los dos clientes cuya muerte, según Rosenberg, lo explicaba todo?"
+    },
+    {
+     "n": 2,
+     "titulo": "Los Musa y el banco",
+     "pregunta": "¿Quiénes eran los dos clientes cuya muerte, según Rosenberg, lo explicaba todo?",
+     "periodo": {
+      "desde": "2008",
+      "hasta": "2009-04"
+     },
+     "mecanismo": null,
+     "puente": "Con un muerto acusando al presidente, ¿iba a caer el gobierno?"
+    },
+    {
+     "n": 3,
+     "titulo": "Un gobierno contra las cuerdas",
+     "pregunta": "Con un muerto acusando al presidente, ¿iba a caer el gobierno?",
+     "periodo": {
+      "desde": "2009-05",
+      "hasta": "2009-09"
+     },
+     "mecanismo": null,
+     "puente": "Si ya estaban presos los que dispararon, ¿quién les pagó?"
+    },
+    {
+     "n": 4,
+     "titulo": "La tesis de la CICIG",
+     "pregunta": "Si ya estaban presos los que dispararon, ¿quién les pagó?",
+     "periodo": {
+      "desde": "2009-06",
+      "hasta": "2010-01"
+     },
+     "mecanismo": null,
+     "puente": "¿Pagó alguien en un tribunal por la muerte de Rosenberg?"
+    },
+    {
+     "n": 5,
+     "titulo": "Lo que dijeron los tribunales",
+     "pregunta": "¿Pagó alguien en un tribunal por la muerte de Rosenberg?",
+     "periodo": {
+      "desde": "2010-02",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 2,
+   "fecha": "2026-11-17",
+   "nota": "plan aprobado por el usuario",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "El muerto que acusó al presidente",
+     "pregunta": "¿Por qué un abogado grabó un video acusando al presidente de su propio asesinato?",
+     "periodo": {
+      "desde": "2009-05",
+      "hasta": "2009-05"
+     },
+     "mecanismo": null,
+     "puente": "¿Quiénes eran los dos clientes cuya muerte, según Rosenberg, lo explicaba todo?"
+    },
+    {
+     "n": 2,
+     "titulo": "Los Musa y el banco",
+     "pregunta": "¿Quiénes eran los dos clientes cuya muerte, según Rosenberg, lo explicaba todo?",
+     "periodo": {
+      "desde": "2008",
+      "hasta": "2009-04"
+     },
+     "mecanismo": null,
+     "puente": "Con un muerto acusando al presidente, ¿iba a caer el gobierno?"
+    },
+    {
+     "n": 3,
+     "titulo": "Un gobierno contra las cuerdas",
+     "pregunta": "Con un muerto acusando al presidente, ¿iba a caer el gobierno?",
+     "periodo": {
+      "desde": "2009-05",
+      "hasta": "2009-09"
+     },
+     "mecanismo": null,
+     "puente": "Si ya estaban presos los que dispararon, ¿quién les pagó?"
+    },
+    {
+     "n": 4,
+     "titulo": "La tesis de la CICIG",
+     "pregunta": "Si ya estaban presos los que dispararon, ¿quién les pagó?",
+     "periodo": {
+      "desde": "2009-06",
+      "hasta": "2010-01"
+     },
+     "mecanismo": null,
+     "puente": "¿Pagó alguien en un tribunal por la muerte de Rosenberg?"
+    },
+    {
+     "n": 5,
+     "titulo": "Lo que dijeron los tribunales",
+     "pregunta": "¿Pagó alguien en un tribunal por la muerte de Rosenberg?",
+     "periodo": {
+      "desde": "2010-02",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 3,
+   "fecha": "2026-11-17",
+   "nota": "plan aprobado por el usuario",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "El muerto que acusó al presidente",
+     "pregunta": "¿Por qué un abogado grabó un video acusando al presidente de su propio asesinato?",
+     "periodo": {
+      "desde": "2009-05",
+      "hasta": "2009-05"
+     },
+     "mecanismo": null,
+     "puente": "¿Quiénes eran los dos clientes cuya muerte, según Rosenberg, lo explicaba todo?"
+    },
+    {
+     "n": 2,
+     "titulo": "Los Musa y el banco",
+     "pregunta": "¿Quiénes eran los dos clientes cuya muerte, según Rosenberg, lo explicaba todo?",
+     "periodo": {
+      "desde": "2008",
+      "hasta": "2009-04"
+     },
+     "mecanismo": null,
+     "puente": "Con un muerto acusando al presidente, ¿iba a caer el gobierno?"
+    },
+    {
+     "n": 3,
+     "titulo": "Un gobierno contra las cuerdas",
+     "pregunta": "Con un muerto acusando al presidente, ¿iba a caer el gobierno?",
+     "periodo": {
+      "desde": "2009-05",
+      "hasta": "2009-09"
+     },
+     "mecanismo": null,
+     "puente": "Si ya estaban presos los que dispararon, ¿quién les pagó?"
+    },
+    {
+     "n": 4,
+     "titulo": "La tesis de la CICIG",
+     "pregunta": "Si ya estaban presos los que dispararon, ¿quién les pagó?",
+     "periodo": {
+      "desde": "2009-06",
+      "hasta": "2010-01"
+     },
+     "mecanismo": null,
+     "puente": "¿Pagó alguien en un tribunal por la muerte de Rosenberg?"
+    },
+    {
+     "n": 5,
+     "titulo": "Lo que dijeron los tribunales",
+     "pregunta": "¿Pagó alguien en un tribunal por la muerte de Rosenberg?",
+     "periodo": {
+      "desde": "2010-02",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 4,
+   "fecha": "2026-11-17",
+   "nota": "plan aprobado por el usuario",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "El muerto que acusó al presidente",
+     "pregunta": "¿Por qué un abogado grabó un video acusando al presidente de su propio asesinato?",
+     "periodo": {
+      "desde": "2009-05",
+      "hasta": "2009-05"
+     },
+     "mecanismo": null,
+     "puente": "¿Quiénes eran los dos clientes cuya muerte, según Rosenberg, lo explicaba todo?"
+    },
+    {
+     "n": 2,
+     "titulo": "Los Musa y el banco",
+     "pregunta": "¿Quiénes eran los dos clientes cuya muerte, según Rosenberg, lo explicaba todo?",
+     "periodo": {
+      "desde": "2008",
+      "hasta": "2009-04"
+     },
+     "mecanismo": null,
+     "puente": "Con un muerto acusando al presidente, ¿iba a caer el gobierno?"
+    },
+    {
+     "n": 3,
+     "titulo": "Un gobierno contra las cuerdas",
+     "pregunta": "Con un muerto acusando al presidente, ¿iba a caer el gobierno?",
+     "periodo": {
+      "desde": "2009-05",
+      "hasta": "2009-09"
+     },
+     "mecanismo": null,
+     "puente": "Si ya estaban presos los que dispararon, ¿quién les pagó?"
+    },
+    {
+     "n": 4,
+     "titulo": "La tesis de la CICIG",
+     "pregunta": "Si ya estaban presos los que dispararon, ¿quién les pagó?",
+     "periodo": {
+      "desde": "2009-06",
+      "hasta": "2010-01"
+     },
+     "mecanismo": null,
+     "puente": "¿Pagó alguien en un tribunal por la muerte de Rosenberg?"
+    },
+    {
+     "n": 5,
+     "titulo": "Lo que dijeron los tribunales",
+     "pregunta": "¿Pagó alguien en un tribunal por la muerte de Rosenberg?",
+     "periodo": {
+      "desde": "2010-02",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 5,
+   "fecha": "2026-11-17",
+   "nota": "plan aprobado por el usuario",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "El muerto que acusó al presidente",
+     "pregunta": "¿Por qué un abogado grabó un video acusando al presidente de su propio asesinato?",
+     "periodo": {
+      "desde": "2009-05",
+      "hasta": "2009-05"
+     },
+     "mecanismo": null,
+     "puente": "¿Quiénes eran los dos clientes cuya muerte, según Rosenberg, lo explicaba todo?"
+    },
+    {
+     "n": 2,
+     "titulo": "Los Musa y el banco",
+     "pregunta": "¿Quiénes eran los dos clientes cuya muerte, según Rosenberg, lo explicaba todo?",
+     "periodo": {
+      "desde": "2008",
+      "hasta": "2009-04"
+     },
+     "mecanismo": null,
+     "puente": "Con un muerto acusando al presidente, ¿iba a caer el gobierno?"
+    },
+    {
+     "n": 3,
+     "titulo": "Un gobierno contra las cuerdas",
+     "pregunta": "Con un muerto acusando al presidente, ¿iba a caer el gobierno?",
+     "periodo": {
+      "desde": "2009-05",
+      "hasta": "2009-09"
+     },
+     "mecanismo": null,
+     "puente": "Si ya estaban presos los que dispararon, ¿quién les pagó?"
+    },
+    {
+     "n": 4,
+     "titulo": "La tesis de la CICIG",
+     "pregunta": "Si ya estaban presos los que dispararon, ¿quién les pagó?",
+     "periodo": {
+      "desde": "2009-06",
+      "hasta": "2010-01"
+     },
+     "mecanismo": null,
+     "puente": "¿Pagó alguien en un tribunal por la muerte de Rosenberg?"
+    },
+    {
+     "n": 5,
+     "titulo": "Lo que dijeron los tribunales",
+     "pregunta": "¿Pagó alguien en un tribunal por la muerte de Rosenberg?",
+     "periodo": {
+      "desde": "2010-02",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 6,
+   "fecha": "2026-11-17",
+   "nota": "plan aprobado por el usuario",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "El muerto que acusó al presidente",
+     "pregunta": "¿Por qué un abogado grabó un video acusando al presidente de su propio asesinato?",
+     "periodo": {
+      "desde": "2009-05",
+      "hasta": "2009-05"
+     },
+     "mecanismo": null,
+     "puente": "¿Quiénes eran los dos clientes cuya muerte, según Rosenberg, lo explicaba todo?"
+    },
+    {
+     "n": 2,
+     "titulo": "Los Musa y el banco",
+     "pregunta": "¿Quiénes eran los dos clientes cuya muerte, según Rosenberg, lo explicaba todo?",
+     "periodo": {
+      "desde": "2008",
+      "hasta": "2009-04"
+     },
+     "mecanismo": null,
+     "puente": "Con un muerto acusando al presidente, ¿iba a caer el gobierno?"
+    },
+    {
+     "n": 3,
+     "titulo": "Un gobierno contra las cuerdas",
+     "pregunta": "Con un muerto acusando al presidente, ¿iba a caer el gobierno?",
+     "periodo": {
+      "desde": "2009-05",
+      "hasta": "2009-09"
+     },
+     "mecanismo": null,
+     "puente": "Si ya estaban presos los que dispararon, ¿quién les pagó?"
+    },
+    {
+     "n": 4,
+     "titulo": "La tesis de la CICIG",
+     "pregunta": "Si ya estaban presos los que dispararon, ¿quién les pagó?",
+     "periodo": {
+      "desde": "2009-06",
+      "hasta": "2010-01"
+     },
+     "mecanismo": null,
+     "puente": "¿Pagó alguien en un tribunal por la muerte de Rosenberg?"
+    },
+    {
+     "n": 5,
+     "titulo": "Lo que dijeron los tribunales",
+     "pregunta": "¿Pagó alguien en un tribunal por la muerte de Rosenberg?",
+     "periodo": {
+      "desde": "2010-02",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  },
+  {
+   "version": 7,
+   "fecha": "2026-11-17",
+   "nota": "plan aprobado por el usuario",
+   "partes": [
+    {
+     "n": 1,
+     "titulo": "El muerto que acusó al presidente",
+     "pregunta": "¿Por qué un abogado grabó un video acusando al presidente de su propio asesinato?",
+     "periodo": {
+      "desde": "2009-05",
+      "hasta": "2009-05"
+     },
+     "mecanismo": null,
+     "puente": "¿Quiénes eran los dos clientes cuya muerte, según Rosenberg, lo explicaba todo?"
+    },
+    {
+     "n": 2,
+     "titulo": "Los Musa y el banco",
+     "pregunta": "¿Quiénes eran los dos clientes cuya muerte, según Rosenberg, lo explicaba todo?",
+     "periodo": {
+      "desde": "2008",
+      "hasta": "2009-04"
+     },
+     "mecanismo": null,
+     "puente": "Con un muerto acusando al presidente, ¿iba a caer el gobierno?"
+    },
+    {
+     "n": 3,
+     "titulo": "Un gobierno contra las cuerdas",
+     "pregunta": "Con un muerto acusando al presidente, ¿iba a caer el gobierno?",
+     "periodo": {
+      "desde": "2009-05",
+      "hasta": "2009-09"
+     },
+     "mecanismo": null,
+     "puente": "Si ya estaban presos los que dispararon, ¿quién les pagó?"
+    },
+    {
+     "n": 4,
+     "titulo": "La tesis de la CICIG",
+     "pregunta": "Si ya estaban presos los que dispararon, ¿quién les pagó?",
+     "periodo": {
+      "desde": "2009-06",
+      "hasta": "2010-01"
+     },
+     "mecanismo": null,
+     "puente": "¿Pagó alguien en un tribunal por la muerte de Rosenberg?"
+    },
+    {
+     "n": 5,
+     "titulo": "Lo que dijeron los tribunales",
+     "pregunta": "¿Pagó alguien en un tribunal por la muerte de Rosenberg?",
+     "periodo": {
+      "desde": "2010-02",
+      "hasta": "2026"
+     },
+     "mecanismo": null,
+     "puente": null
+    }
+   ]
+  }
+ ],
+ "fixture": false,
+ "modo": "caso",
+ "promesa": "¿Quién mató de verdad a Rodrigo Rosenberg?"
+}

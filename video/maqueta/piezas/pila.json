@@ -1,0 +1,136 @@
+{
+ "tipo": "pila",
+ "clase": "pieza",
+ "cuando": "«¿cuánto es eso?»: un volumen de basura (o tierra, o agua) apilado en capas sobre un lugar conocido, con su planta y su alto; sube con crecer",
+ "parametros": {
+  "lugar": {
+   "tipo": "lugar",
+   "requerido": false,
+   "descripcion": "el centro de la pila (un lugar del mundo, [lon, lat] en una ciudad o [x, y] en metros en un esquema), con `largo_m` y `ancho_m`; o usa `puntos`"
+  },
+  "largo_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    1,
+    2000
+   ],
+   "descripcion": "el largo de la planta en metros, a lo largo de `rumbo` (con `lugar`)"
+  },
+  "ancho_m": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    1,
+    2000
+   ],
+   "descripcion": "el ancho de la planta en metros, de través (con `lugar`)"
+  },
+  "puntos": {
+   "tipo": "puntos",
+   "requerido": false,
+   "min": 3,
+   "descripcion": "o la planta como polígono: [lon, lat] en una ciudad, [x, y] en metros en un esquema (en vez de lugar, largo y ancho)"
+  },
+  "rumbo": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    360
+   ],
+   "defecto": 0,
+   "descripcion": "hacia dónde corre el largo (grados; 0 = este, 90 = norte). Para verla de frente por su largo: azimut ≈ 90 − rumbo"
+  },
+  "alto_m": {
+   "tipo": "numero",
+   "requerido": true,
+   "rango": [
+    0.1,
+    500
+   ],
+   "descripcion": "el alto final en metros (con f = 1): el que sale de la cuenta (volumen ÷ área), con su respaldo"
+  },
+  "inicio": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0,
+   "descripcion": "la fracción del alto con que arranca (0 = el lugar vacío; 1 = ya llena). El evento `crecer` la mueve; sin él, la pila se queda en `inicio`"
+  },
+  "material": {
+   "tipo": "texto",
+   "requerido": false,
+   "valores": [
+    "basura",
+    "tierra",
+    "agua"
+   ],
+   "defecto": "basura",
+   "descripcion": "basura: mezclada (plásticos y orgánicos: arriba, bultos de alto desigual con su pliegue oscuro y encima bolsas negras y blancas sobre todo, alguna gris o de color, botellas tendidas, cajas y láminas de cartón y restos orgánicos, cada una con su volumen; sin marcas, texto ni animales); tierra: terrones y piedras; agua: lisa, sin cosas"
+  },
+  "acento": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": false,
+   "descripcion": "true cuando la pila es la protagonista: un filo en el acento rodea su borde de arriba y sube con ella"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "el azar fijo: el dentado de las capas, las manchas de arriba y dónde cae cada cosa"
+  }
+ },
+ "escalas": [
+  "ciudad",
+  "esquema"
+ ],
+ "motores": [
+  "three"
+ ],
+ "ejemplo": {
+  "id": "pila",
+  "tipo": "pila",
+  "lugar": [
+   -90.5130674,
+   14.642919
+  ],
+  "largo_m": 127,
+  "ancho_m": 70,
+  "rumbo": 0,
+  "alto_m": 5.06,
+  "inicio": 1,
+  "material": "basura",
+  "acento": true
+ },
+ "nivel": "objeto",
+ "contiene": [
+  "lados en capas de ≈ 1 m (panza, junta hundida y tonos que se alternan)",
+  "arriba (basura): bultos de ≈ 2.4 m de alto desigual, con el pliegue oscuro entre uno y otro (nada de baldosas planas)",
+  "bolsas negras y blancas (y alguna gris o de color) como volúmenes sueltos, con su nudo",
+  "botellas plásticas tendidas",
+  "cajas de cartón aplastadas y láminas, restos orgánicos",
+  "faldón de cosas rodadas al pie",
+  "sombra de contacto",
+  "filo en el acento (opcional)"
+ ],
+ "animado": "sube con f (lo fija el evento crecer: los lados se descubren y la superficie de arriba sube con su talud); bolsas sueltas arriba se mecen e inflan con el viento y las botellas destellan, más de noche",
+ "gente": false,
+ "distancia_m": [
+  40,
+  600
+ ],
+ "caja_m": [
+  127,
+  70,
+  5.06
+ ]
+}

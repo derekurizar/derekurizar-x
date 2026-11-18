@@ -1,0 +1,188 @@
+{
+ "tipo": "cabildoranchos",
+ "clase": "pieza",
+ "cuando": "un llano modesto donde UN rancho de paja abierto hace de cabildo (mesa, escribano), entre ranchos y gente que llega: un gobierno en sitio provisional",
+ "parametros": {
+  "lugar": {
+   "tipo": "lugar",
+   "requerido": true,
+   "descripcion": "la mesa bajo el rancho del cabildo (un lugar del mundo o [x, y] en metros en un esquema). Va mejor en la receta campo con horizonte llano o colinas y sin `ambiente` en 90 m a la redonda"
+  },
+  "rumbo": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    360
+   ],
+   "defecto": 0,
+   "descripcion": "hacia dónde queda la ermita desde el rancho (grados; 0 = este, 90 = norte); el frente abierto del rancho y el camino de llegada quedan del lado contrario. El rancho de frente con la ermita al fondo: mira «rancho», azimut ≈ rumbo − 90, elevación 8–20°, dist_m 25–60; la mesa de cerca: mira «mesa», dist_m 8–14 y elevación 4–9° (más alto, el techo la tapa); todo el llano: dist_m 150–260"
+  },
+  "tamano": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0.6,
+    2
+   ],
+   "defecto": 1,
+   "descripcion": "escala de todo (1 = rancho de 9.2 × 6.2 m con alero a 2.45 m, ranchos de 5–7 m, llano de 180 m: una maqueta, no a escala)"
+  },
+  "ranchos": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    1,
+    8
+   ],
+   "defecto": 5,
+   "descripcion": "cuántos ranchos de alojamiento hay alrededor (paredes de caña, tabla o bajareque, techo de paja), cada uno con su fogón; el del cabildo es siempre uno solo y aparte"
+  },
+  "enlucidas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    3
+   ],
+   "defecto": 1,
+   "descripcion": "cuántos de esos ranchos son casas enlucidas con techo de teja (unas pocas)"
+  },
+  "cabildantes": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    2,
+    8
+   ],
+   "defecto": 5,
+   "descripcion": "cuántos capitulares están sentados a la mesa (figuras genéricas, sin ropa ni rostro de nadie; el número no es un dato: no atribuir cuántos asistieron); el escribano va aparte, de pie en la cabecera"
+  },
+  "llegan": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    3
+   ],
+   "defecto": 2,
+   "descripcion": "capitulares que caminan sin prisa desde su rancho y llegan al frente del rancho del cabildo (el primero en `llegada_s`, los demás cada 2.2 s)"
+  },
+  "vecinos": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    12
+   ],
+   "defecto": 6,
+   "descripcion": "vecinos que van y vienen por las veredas (la mitad con un bulto a la espalda) y alguno de pie junto a un fogón; de noche, la mitad. Ambientación genérica"
+  },
+  "mulas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    4
+   ],
+   "defecto": 1,
+   "descripcion": "mulas con carga (aparejo, dos bultos y un fardo) y su arriero que entran por el camino y se detienen en `llegada_s`. Ambientación genérica: ninguna fuente las describe (no atribuir)"
+  },
+  "carretas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    3
+   ],
+   "defecto": 1,
+   "descripcion": "carretas de bueyes (ruedas macizas que giran, sacos y un petate) con su boyero, detrás de las mulas; se detienen en `llegada_s`. Ambientación genérica: ninguna fuente las describe (no atribuir)"
+  },
+  "iglesia": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "una ermita sencilla y pequeña sobre una loma al fondo, hacia `rumbo` (a 60 m, no frente al rancho): nave enlucida, espadaña, techo de teja; genérica, no un templo identificado"
+  },
+  "llegada_s": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    60
+   ],
+   "defecto": 8,
+   "descripcion": "el segundo en que se detiene lo que llega por el camino y llega el primer capitular (antes van entrando, a paso de bestia y sin prisa; que caiga en la frase que lo nombra)"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "el azar fijo: qué rancho es de caña, tabla o bajareque, sus medidas y su giro, dónde caen las matas y los árboles, y el andar de cada quien"
+  }
+ },
+ "escalas": [
+  "esquema"
+ ],
+ "motores": [
+  "three"
+ ],
+ "usa": [
+  "persona"
+ ],
+ "ejemplo": {
+  "id": "cabildo",
+  "tipo": "cabildoranchos",
+  "lugar": [
+   0,
+   0
+  ],
+  "rumbo": 180,
+  "tamano": 1,
+  "ranchos": 5,
+  "enlucidas": 1,
+  "cabildantes": 5,
+  "llegan": 2,
+  "vecinos": 6,
+  "mulas": 1,
+  "carretas": 1,
+  "iglesia": true,
+  "llegada_s": 8,
+  "semilla": 1
+ },
+ "nivel": "escenario",
+ "contiene": [
+  "UN rancho del cabildo abierto: seis horcones con horqueta, soleras y tirantes, techo de paja a dos aguas en tres hiladas con fleco, alfardas a la vista y cumbrera",
+  "bajo el rancho: piso apisonado, mesa de tablas con papeles, tintero, pluma y vela; dos bancas; un cofre",
+  "cabildantes sentados a la mesa y el escribano de pie en la cabecera, con las manos sobre el papel",
+  "ranchos de alojamiento de caña, tabla o bajareque con techo de paja (y unas pocas casas enlucidas con teja), puerta con su marco, alguno con corredor de horcones",
+  "fogón de tres piedras con comal, ceniza y leña frente a cada rancho, cántaros y leña apilada",
+  "llano de tierra apisonada que se vuelve zacate, matas y árboles sueltos",
+  "camino de llegada con sus rodadas y veredas a cada rancho",
+  "bultos, sacos y un petate al costado del rancho del cabildo",
+  "mulas con aparejo y carga y carreta de bueyes con ruedas macizas, sacos y petate, con su arriero y su boyero",
+  "ermita sencilla sobre una loma al fondo: nave enlucida con contrafuertes, espadaña con su campana y una cruz chica, techo de teja",
+  "de noche: la vela, los fogones, algunas puertas y la puerta de la ermita encendidas"
+ ],
+ "animado": "el escribano mueve las manos sobre el papel; capitulares que caminan sin prisa y llegan al rancho; vecinos que van y vienen (la mitad con bulto); mulas y carreta que entran por el camino y frenan hasta detenerse en llegada_s, con las patas al paso y las ruedas girando según lo recorrido; humo de los fogones; de noche, la luz de la vela y de los fogones tiembla",
+ "gente": true,
+ "distancia_m": [
+  8,
+  260
+ ],
+ "caja_m": [
+  180,
+  180,
+  14
+ ],
+ "poses": [
+  "sentado",
+  "clasificar",
+  "caminar",
+  "de_pie"
+ ]
+}

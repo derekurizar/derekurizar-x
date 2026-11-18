@@ -1,0 +1,81 @@
+{
+ "tipo": "fosa",
+ "clase": "pieza",
+ "cuando": "la fosa oceánica mar adentro, rayada y paralela a una fila de lugares; con flechas, la placa que avanza y se mete bajo la costa",
+ "parametros": {
+  "por": {
+   "tipo": "lugar",
+   "requerido": true,
+   "descripcion": "un punto citado por el que pasa la fosa (id o [lon, lat], mar adentro)"
+  },
+  "paralela_a": {
+   "tipo": "lugares",
+   "requerido": true,
+   "min": 2,
+   "descripcion": "los lugares en tierra a los que corre paralela (su eje principal); también dicen de qué lado está la tierra",
+   "capa": "lugares"
+  },
+  "largo_km": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    100,
+    1500
+   ],
+   "defecto": 500,
+   "descripcion": "cuánto se dibuja, centrado en `por` (se recorta a la caja del set)"
+  },
+  "flechas": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": false,
+   "descripcion": "flechas de convergencia: galones que avanzan hacia la fosa y se hunden bajo la costa (el número de flechas y su paso son ilustrativos)"
+  },
+  "desvio_grados": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    -30,
+    30
+   ],
+   "defecto": 0,
+   "descripcion": "giro de las flechas respecto de la perpendicular a la fosa (positivo = antihorario)"
+  },
+  "esquematica": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "línea rayada (esquema) o continua"
+  }
+ },
+ "escalas": [
+  "pais"
+ ],
+ "motores": [
+  "three"
+ ],
+ "ejemplo": {
+  "id": "fosa",
+  "tipo": "fosa",
+  "por": [
+   -90.9448,
+   12.671
+  ],
+  "paralela_a": [
+   "quetzaltenango",
+   "antigua-guatemala",
+   "jutiapa"
+  ],
+  "largo_km": 500,
+  "flechas": true
+ },
+ "nivel": "fondo",
+ "contiene": [],
+ "animado": "con flechas: los galones avanzan hacia la fosa y se hunden bajo la costa",
+ "gente": false,
+ "publica": [
+  "fosa",
+  "placa-oceanica",
+  "placa-continental"
+ ]
+}

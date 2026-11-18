@@ -1,0 +1,114 @@
+{
+ "tipo": "trebol",
+ "clase": "pieza",
+ "cuando": "El Trébol sobre su traza real: tableros sobre pilas, rampas y lazos, en cuatro épocas (callecitas, obra, 1959, hoy)",
+ "parametros": {
+  "lugar": {
+   "tipo": "lugar",
+   "requerido": true,
+   "descripcion": "cerca de dónde está el nudo (hasta 900 m): la pieza busca el punto donde convergen las calzadas en la traza de OSM y centra ahí el nudo (radio 240 m)"
+  },
+  "epoca": {
+   "tipo": "texto",
+   "requerido": false,
+   "valores": [
+    "callecitas",
+    "obra",
+    "1959",
+    "hoy"
+   ],
+   "defecto": "hoy",
+   "descripcion": "callecitas: sin nudo, callecitas genéricas por las calzadas que convergen, casas bajas y una nave industrial genérica · obra: tierra removida, pilas a medio hacer con varillas, tableros por tramos, cimbras genéricas y obreros · 1959: tableros nuevos sin los lazos (construidos después) y pocos carros · hoy: asfalto con rayas, barandas y postes de luz, sin rótulos de destino"
+  },
+  "fabrica": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "la nave industrial genérica (dientes de sierra, chimenea que humea; forma, tamaño y lugar ilustrativos) en las épocas callecitas y obra"
+  },
+  "obreros": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    12
+   ],
+   "defecto": 6,
+   "descripcion": "en obra, obreros genéricos junto a las pilas (cargan, rastrillan, caminan, esperan); en callecitas, la gente que camina por las callecitas. Sin cifra: ilustrativos"
+  },
+  "carros": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    12
+   ],
+   "defecto": 4,
+   "descripcion": "en 1959 y hoy, carros genéricos que corren por las vías y suben a los tableros (ilustrativos: ni cuántos ni qué modelo)"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "el azar fijo: casas, montículos, qué tramo de cada puente ya tiene tablero en obra, carros y gente"
+  }
+ },
+ "escalas": [
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "capas": [
+  "calles"
+ ],
+ "usa": [
+  "carro",
+  "persona",
+  "casa"
+ ],
+ "ejemplo": {
+  "id": "trebol",
+  "tipo": "trebol",
+  "lugar": [
+   -90.5384,
+   14.6158
+  ],
+  "epoca": "hoy",
+  "fabrica": true,
+  "obreros": 6,
+  "carros": 6,
+  "semilla": 1
+ },
+ "nivel": "escenario",
+ "contiene": [
+  "las vías del nudo sobre su traza de OpenStreetMap (autopistas, rampas y lazos a 240 m del centro), con su ancho",
+  "tableros de concreto sobre pilas redondas con viga cabezal donde una vía pasa sobre otra (altura y número ilustrativos)",
+  "rampas macizas que bajan del tablero al suelo y los lazos del trébol (en 1959 sin los lazos)",
+  "hoy: asfalto con rayas de orilla y de carril, pretiles con baranda y postes de luz; 1959: concreto nuevo y pretil bajo",
+  "obra: tierra removida, rampas de tierra, pilas a medio hacer con varillas, cimbras de madera bajo los tramos sin tablero, montículos y tablones, focos de obra",
+  "callecitas: calles angostas por donde convergen las calzadas, casas bajas y una nave industrial genérica con dientes de sierra, ventanas, chimenea y patio",
+  "carros, obreros y gente que camina"
+ ],
+ "animado": "los carros corren por las vías y suben a los tableros (posición = función de t); los obreros cargan, rastrillan o van y vienen; la gente camina por las callecitas; la chimenea de la nave humea; «resaltar» enciende el nudo entero, con `elemento` «<id>.puentes» los tableros (sin decir cuál es cuál) y con «<id>.fabrica» la nave; de noche, postes de luz con su charco, ventanas de la nave y focos de obra",
+ "gente": true,
+ "distancia_m": [
+  150,
+  1400
+ ],
+ "caja_m": [
+  480,
+  480,
+  25
+ ],
+ "poses": [
+  "caminar",
+  "de_pie",
+  "descargar",
+  "rastrillar"
+ ]
+}

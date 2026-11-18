@@ -1,0 +1,404 @@
+{
+ "id": "2026-11-16-quetzalteca",
+ "tipo": "historia",
+ "slug": "quetzalteca",
+ "tema": "Quetzalteca",
+ "fecha": "2026-11-16",
+ "pregunta": "¿Cómo un aguardiente nacido en Xela se volvió el trago de todo el país y qué cargó en el camino su etiqueta?",
+ "arco": "origen y ascenso de una marca, con la etiqueta como hilo",
+ "actos": [
+  {
+   "numero": 2,
+   "anio": "1947",
+   "titulo": "Cuatro licoreras",
+   "escena": 6
+  },
+  {
+   "numero": 3,
+   "anio": "2017",
+   "titulo": "Lejos de Xela",
+   "escena": 10
+  }
+ ],
+ "capitulos": [],
+ "narracion": [
+  {
+   "acto": 1,
+   "texto": "Quezalteca, el trago de tienda, fue premiada. Ganó Exportador del Año en Guatemala. Es un aguardiente de Xela, pero hoy su planta está en otro municipio. Todo empezó en 1940, en una casa cerca del parque Central de Xela. Allí arrancaron cinco hermanos Botrán, inmigrantes de Burgos, España. Ese mismo año, el Estado les concedió la Licorera Quezalteca. Ojo al nombre: se escribe sin la t de Quetzaltenango, el nombre oficial de Xela. En esos años, todas las licoreras eran propiedad del Estado, y la concesión había que renovarla cada año. Por eso, cada año, los Botrán tenían que volver a pedirla."
+  },
+  {
+   "acto": 2,
+   "texto": "Siete años después, la Quezalteca se asoció con otras tres licoreras. Eran la Guatemalteca, la Euzkadi y la Zacapaneca. Con los años, y según fuentes que no coinciden en la fecha, esas casas quedaron en un solo grupo: Industrias Licoreras de Guatemala, el grupo que hoy produce Quezalteca. Pero Licoreras de Guatemala, la del trago de tienda, guardaba otra botella, muy distinta. En 1976 la sacó: el Ron Zacapa Centenario, el ron de lujo de la misma casa, para los cien años de la ciudad de Zacapa."
+  },
+  {
+   "acto": 3,
+   "texto": "Y la Quezalteca se fue de Xela, aunque nadie publicó cuándo ni por qué: en 2017 ya se hacía en el Centro de Producción Mixco, junto a la Zacapaneca y la Guatemalteca. Pero la casa no se olvidó de su ciudad: en 2018 abrió el museo Casa Botrán en La Esperanza, Quetzaltenango. El presidente de Industrias Licoreras de Guatemala, Jaime Botrán, lo dijo así: Creemos y tenemos la esperanza que Casa Botrán atraerá al turista nacional e internacional a Quetzaltenango. Tres años después, en 2021, llegó el premio del principio, y María Mercedes Sánchez, gerente de la Quezalteca, lo ató a un compromiso: nos refuerza ese compromiso que hemos tenido durante 20 años en representar a Guatemala en más de 123 países. Y aquel nombre sin la t sigue sin explicación: nadie ha dicho por qué la marca se escribe así. Empezó con una licencia del Estado que vencía cada año, en una casa de Xela. Hoy, los guatemaltecos la siguen comprando en la tienda."
+  }
+ ],
+ "hilos": [
+  {
+   "id": "h1",
+   "sin_respuesta": "Nadie explica por qué Quezalteca va sin la t"
+  },
+  {
+   "id": "h2",
+   "escena": 5
+  },
+  {
+   "id": "h3",
+   "sin_respuesta": "Cuándo y por qué se fue de su ciudad, nadie lo publicó"
+  },
+  {
+   "id": "h4",
+   "sin_respuesta": "Nadie lo ha explicado (descartado por la verificación; no va en la voz)"
+  },
+  {
+   "id": "h5",
+   "sin_respuesta": "Nadie lo ha explicado (descartado por la verificación; no va en la voz)"
+  }
+ ],
+ "secuencias": [
+  [
+   2,
+   3
+  ],
+  [
+   4,
+   5
+  ],
+  [
+   6,
+   7
+  ],
+  [
+   8,
+   9
+  ],
+  [
+   10,
+   11
+  ],
+  [
+   12,
+   13,
+   14
+  ]
+ ],
+ "paleta": "jade",
+ "musica": "cacao-2",
+ "voz": {
+  "voice_id": "8mBRP99B2Ng2QwsJMFQl",
+  "nombre": "El Faraon 4",
+  "modelo": "eleven_multilingual_v2",
+  "idioma": "es"
+ },
+ "velocidad": 1.1,
+ "creditos_voz": 2130.79,
+ "duracion_s": 145.8,
+ "critica": {
+  "veredicto": "corregir",
+  "vuelta": 2,
+  "puntajes": {
+   "gancho": 4,
+   "tension": 3,
+   "claridad": 3,
+   "flujo": 3,
+   "precision": 4,
+   "cierre": 4,
+   "recompensa": 4
+  }
+ },
+ "gancho": {
+  "familia": "paradoja",
+  "visual": "foto",
+  "pantalla": "Quezalteca premiada",
+  "linea": "Exportador del Año 2020",
+  "id": "g3",
+  "elegido_por": "usuario",
+  "recomendado": "g3"
+ },
+ "promesa": {
+  "pregunta": "¿Dónde se hace hoy la Quezalteca?",
+  "texto": "Es un aguardiente de Xela, pero hoy su planta está en otro municipio.",
+  "forma": "contradiccion",
+  "en": 2,
+  "pago": 10,
+  "revela": 3
+ },
+ "bisagra": {
+  "texto": "Pero Licoreras de Guatemala, la del trago de tienda, guardaba otra botella, muy distinta.",
+  "forma": "presagio",
+  "en": 8,
+  "pago": 9
+ },
+ "escenas": [
+  {
+   "n": 1,
+   "tipo": "gancho",
+   "pantalla": "Quezalteca, el trago de tienda, fue premiada. Ganó Exportador del Año en Guatemala.",
+   "voz": "Quezalteca, el trago de tienda, fue premiada. Ganó Exportador del Año en Guatemala.",
+   "dur": 6.105,
+   "hechos": [],
+   "fotos": [
+    {
+     "credito": "Foto: AGN",
+     "origen": "oficial",
+     "licencia": "© AGN (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 2,
+   "tipo": "foto",
+   "pantalla": "Es un aguardiente de Xela, pero hoy su planta está en otro municipio. Todo empezó en 1940, en una casa cerca del parque Central de Xela.",
+   "voz": "Es un aguardiente de Xela, pero hoy su planta está en otro municipio. Todo empezó en mil novecientos cuarenta, en una casa cerca del parque Central de Xela.",
+   "dur": 10.627,
+   "hechos": [
+    "ori-h03",
+    "ori-h09"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Harry Diaz 93 · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 3,
+   "tipo": "golpe",
+   "pantalla": "Allí arrancaron cinco hermanos Botrán, inmigrantes de Burgos, España.",
+   "voz": "Allí arrancaron cinco hermanos Botrán, inmigrantes de Burgos, España.",
+   "dur": 6.059,
+   "hechos": [
+    "ori-h02",
+    "exp-h02"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 4,
+   "tipo": "foto",
+   "pantalla": "Ese mismo año, el Estado les concedió la Licorera Quezalteca. Ojo al nombre: se escribe sin la t de Quetzaltenango, el nombre oficial de Xela.",
+   "voz": "Ese mismo año, el Estado les concedió la Licorera Quezalteca. Ojo al nombre: se escribe sin la t de Quetzaltenango, el nombre oficial de Xela.",
+   "dur": 10.237,
+   "hechos": [
+    "ori-h01",
+    "exp-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Harry Diaz 93 · CC BY-SA 4.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 4.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 5,
+   "tipo": "explica",
+   "pantalla": "En esos años, todas las licoreras eran propiedad del Estado, y la concesión había que renovarla cada año. Por eso, cada año, los Botrán tenían que volver a pedirla.",
+   "voz": "En esos años, todas las licoreras eran propiedad del Estado, y la concesión había que renovarla cada año. Por eso, cada año, los Botrán tenían que volver a pedirla.",
+   "dur": 11.471,
+   "hechos": [
+    "exp-h09"
+   ],
+   "fotos": [],
+   "animacion": "aro-renovacion",
+   "mecanismo": "ciclo"
+  },
+  {
+   "n": 6,
+   "tipo": "golpe",
+   "pantalla": "Siete años después, la Quezalteca se asoció con otras tres licoreras.",
+   "voz": "Siete años después, la Quezalteca se asoció con otras tres licoreras.",
+   "dur": 4.498,
+   "hechos": [
+    "exp-h10"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 7,
+   "tipo": "foto",
+   "pantalla": "Eran la Guatemalteca, la Euzkadi y la Zacapaneca. Con los años, y según fuentes que no coinciden en la fecha, esas casas quedaron en un solo grupo: Industrias Licoreras de Guatemala, el grupo que hoy produce Quezalteca.",
+   "voz": "Eran la Guatemalteca, la Euzkadi y la Zacapaneca. Con los años, y según fuentes que no coinciden en la fecha, esas casas quedaron en un solo grupo: Industrias Licoreras de Guatemala, el grupo que hoy produce Quezalteca.",
+   "dur": 15.937,
+   "hechos": [
+    "exp-h10",
+    "exp-h06"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Emisoras Unidas",
+     "origen": "medio",
+     "licencia": "© Emisoras Unidas (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 8,
+   "tipo": "golpe",
+   "pantalla": "Pero Licoreras de Guatemala, la del trago de tienda, guardaba otra botella, muy distinta.",
+   "voz": "Pero Licoreras de Guatemala, la del trago de tienda, guardaba otra botella, muy distinta.",
+   "dur": 5.453,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 9,
+   "tipo": "foto",
+   "pantalla": "En 1976 la sacó: el Ron Zacapa Centenario, el ron de lujo de la misma casa, para los cien años de la ciudad de Zacapa.",
+   "voz": "En mil novecientos setenta y seis la sacó: el Ron Zacapa Centenario, el ron de lujo de la misma casa, para los cien años de la ciudad de Zacapa.",
+   "dur": 10.169,
+   "hechos": [
+    "exp-h07"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: Tuxyso · CC BY-SA 3.0",
+     "origen": "commons",
+     "licencia": "CC BY-SA 3.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 10,
+   "tipo": "foto",
+   "pantalla": "Y la Quezalteca se fue de Xela, aunque nadie publicó cuándo ni por qué: en 2017 ya se hacía en el Centro de Producción Mixco, junto a la Zacapaneca y la Guatemalteca.",
+   "voz": "Y la Quezalteca se fue de Xela, aunque nadie publicó cuándo ni por qué: en dos mil diecisiete ya se hacía en el Centro de Producción Mixco, junto a la Zacapaneca y la Guatemalteca.",
+   "dur": 12.413,
+   "hechos": [
+    "exp-h05"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto de referencia: mardoqueo sagastume · CC BY 3.0",
+     "origen": "commons",
+     "licencia": "CC BY 3.0"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 11,
+   "tipo": "foto",
+   "pantalla": "Pero la casa no se olvidó de su ciudad: en 2018 abrió el museo Casa Botrán en La Esperanza, Quetzaltenango.",
+   "voz": "Pero la casa no se olvidó de su ciudad: en dos mil dieciocho abrió el museo Casa Botrán en La Esperanza, Quetzaltenango.",
+   "dur": 8.134,
+   "hechos": [
+    "exp-h08",
+    "ori-h08"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: La Hora",
+     "origen": "medio",
+     "licencia": "© La Hora (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 12,
+   "tipo": "cita",
+   "pantalla": "El presidente de Industrias Licoreras de Guatemala, Jaime Botrán, lo dijo así: Creemos y tenemos la esperanza que Casa Botrán atraerá al turista nacional e internacional a Quetzaltenango.",
+   "voz": "El presidente de Industrias Licoreras de Guatemala, Jaime Botrán, lo dijo así: Creemos y tenemos la esperanza que Casa Botrán atraerá al turista nacional e internacional a Quetzaltenango.",
+   "dur": 12.515,
+   "hechos": [
+    "ori-h08"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 13,
+   "tipo": "cita",
+   "pantalla": "Tres años después, en 2021, llegó el premio del principio, y María Mercedes Sánchez, gerente de la Quezalteca, lo ató a un compromiso: nos refuerza ese compromiso que hemos tenido durante 20 años en representar a Guatemala en más de 123 países.",
+   "voz": "Tres años después, en dos mil veintiuno, llegó el premio del principio, y María Mercedes Sánchez, gerente de la Quezalteca, lo ató a un compromiso: nos refuerza ese compromiso que hemos tenido durante veinte años en representar a Guatemala en más de ciento veintitrés países.",
+   "dur": 17.751,
+   "hechos": [
+    "eti-h01",
+    "ori-h07"
+   ],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 14,
+   "tipo": "foto",
+   "pantalla": "Y aquel nombre sin la t sigue sin explicación: nadie ha dicho por qué la marca se escribe así.",
+   "voz": "Y aquel nombre sin la t sigue sin explicación: nadie ha dicho por qué la marca se escribe así.",
+   "dur": 7.023,
+   "hechos": [
+    "eti-h01"
+   ],
+   "fotos": [
+    {
+     "credito": "Foto: AGN",
+     "origen": "oficial",
+     "licencia": "© AGN (crédito en pantalla)"
+    }
+   ],
+   "animacion": null,
+   "mecanismo": null
+  },
+  {
+   "n": 15,
+   "tipo": "cierre",
+   "pantalla": "Empezó con una licencia del Estado que vencía cada año, en una casa de Xela. Hoy, los guatemaltecos la siguen comprando en la tienda.",
+   "voz": "Empezó con una licencia del Estado que vencía cada año, en una casa de Xela. Hoy, los guatemaltecos la siguen comprando en la tienda.",
+   "dur": 10.99,
+   "hechos": [],
+   "fotos": [],
+   "animacion": null,
+   "mecanismo": null
+  }
+ ],
+ "cierre": {
+  "rotulo": "Lo que dejó",
+  "resumen": [
+   "Nació en 1940 en una casa de Xela",
+   "Hoy se hace en Mixco",
+   "Exportador del Año en 2021"
+  ],
+  "texto": "Empezó con una licencia del Estado que vencía cada año, en una casa de Xela. Hoy, los guatemaltecos la siguen comprando en la tienda.",
+  "tipo": "remate",
+  "forma": "legado",
+  "final": "Hoy, los guatemaltecos la siguen comprando en la tienda.",
+  "consecuencia": {
+   "quien": "guatemaltecos",
+   "verbo": "siguen"
+  },
+  "id": "c1",
+  "elegido_por": "usuario",
+  "recomendado": "c1"
+ },
+ "caption": {
+  "tiktok": "Quezalteca empezó en 1940 en una casa cerca del parque Central de Xela, con una licencia del Estado que vencía cada año. Hoy su planta está en Mixco. #Guatemala #Xela #historia #Quezalteca",
+  "instagram": "De una casa en Xela a Exportador del Año: la historia de Quezalteca, de los hermanos Botrán al Centro de Producción Mixco. #Guatemala #Quetzaltenango #Quezalteca #historia",
+  "facebook": "Quezalteca nació en 1940 en Quetzaltenango, con una concesión del Estado que había que renovar cada año. Esta es su historia. Fuentes en el primer comentario.",
+  "shorts": "Quezalteca: de una casa en Xela a Exportador del Año #Shorts\nCinco hermanos de Burgos, una licencia del Estado y una planta en Mixco. #Guatemala"
+ }
+}

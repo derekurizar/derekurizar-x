@@ -205,10 +205,15 @@ OTROS_OFICIALES = {"cicig.org": "CICIG", "un.org": "ONU", "oas.org": "OEA", "wor
                    "treasury.gov": "Tesoro (EE. UU.)", "corteidh.or.cr": "Corte IDH",
                    # agencias científicas: la fuente primaria de sismos, volcanes, clima y relieve (m186: /video-3d,
                    # 2026-11-14: pubs.usgs.gov y earthquake.usgs.gov salían «NO CUENTA» y eran la fuente del video)
-                   "usgs.gov": "Servicio Geológico de EE. UU. (USGS)", "noaa.gov": "NOAA", "nasa.gov": "NASA"}
+                   "usgs.gov": "Servicio Geológico de EE. UU. (USGS)", "noaa.gov": "NOAA", "nasa.gov": "NASA",
+                   # m302 (/video-3d, cuatro capitales, 2026-11-16): la ficha del Patrimonio Mundial (whc.unesco.org) es la
+                   # fuente de Antigua y salía «NO CUENTA»
+                   "unesco.org": "UNESCO"}
 ACADEMICAS = {"scielo.org", "jstor.org", "redalyc.org", "dialnet.unirioja.es", "persee.fr", "openedition.org",
               "flacso.edu.gt", "asies.org.gt", "icefi.org", "avancso.org.gt", "cirma.org.gt", "academia.edu",
-              "britannica.com", "copernicus.org"}
+              "britannica.com", "copernicus.org",
+              # m302: revistas universitarias fuera de .edu (Ería, Universidad de Oviedo: reunido.uniovi.es)
+              "uniovi.es"}
 # archivos, hemerotecas y museos (instituciones, no sitios de aficionados)
 ARCHIVOS = {"archive.org", "hemeroteca.prensalibre.com", "elpais.com/hemeroteca", "newspapers.com", "loc.gov",
             "archivohistoricopn.org", "nsarchive.gwu.edu", "nsarchive2.gwu.edu", "thehenryford.org", "si.edu",
@@ -890,6 +895,12 @@ def encuadre(trabajo):
     return leer(ruta) if os.path.exists(ruta) else {}
 
 
+def es_video3d(trabajo):
+    """Un TRABAJO de /video-3d (video3d.json, sin video.json): sus ejes los investigan y verifican los agentes de
+    /historia, pero no lleva fotos ni encuadre de /historia; lo que se dibuja se verifica como `lugares` (m300)."""
+    return os.path.exists(os.path.join(trabajo, "video3d.json")) and not os.path.exists(os.path.join(trabajo, "video.json"))
+
+
 def revisar_fuentes(item, propios, fallas, avisos, etiqueta):
     """Cada fuente con su texto guardado y la cita literal dentro → [(clase, grupo, fecha)] de las que cuentan y el
     texto de todas."""
@@ -1006,6 +1017,10 @@ def revisar_eje(v, trabajo, propios):
         nums = [(round(float(m.group().replace(",", "")), 6), None) for _, _, f in validas for m in RE_NUMERO.finditer(f.get("cita") or "")]
         if VM.sueltos_prensa(c.get("texto") or "", [(round(float(c["valor"]), 6), VM.factor_unidad(c.get("unidad"))), (round(float(c["valor"]), 6), None)]):
             fallas.append("H2 %s: «%s» no es su valor %s" % (cid, c.get("texto"), c["valor"]))
+        elif (c.get("calculo") or "").strip():
+            # regla de oro 1: una cifra derivada (una distancia calculada desde coordenadas verificadas) no está en
+            # ninguna cita; la respalda su `calculo` y las fuentes de sus insumos
+            avisos.append("H2 %s: derivada («%s»): %s" % (cid, c.get("texto"), c["calculo"][:120]))
         elif VM.sueltos_prensa(c.get("texto") or "", nums):
             fallas.append("H2 %s: ninguna cita trae el número «%s»" % (cid, c.get("texto")))
     for q in v.get("citas") or []:
@@ -1098,6 +1113,7 @@ def cmd_hechos(a):
     if not a.check:
         return falla("hechos: --check o --reclasificar")
     enc = encuadre(trabajo)
+    es3d = es_video3d(trabajo)   # m300: /video-3d no lleva fotos (H7, H12) y su verificacion_anios.json no tiene hechos
     propios = enc.get("dominios_propios") or []
     rutas = [os.path.join(trabajo, "verificacion_%s.json" % a.eje)] if a.eje else sorted(glob.glob(os.path.join(trabajo, "verificacion_*.json")))
     fallas, avisos, n, casos, vs = [], [], 0, 0, []
@@ -1106,13 +1122,15 @@ def cmd_hechos(a):
             fallas.append("H1 falta %s" % VD.rel(r))
             continue
         v = leer(r)
+        if es3d and not v.get("hechos") and not v.get("eje"):
+            continue   # /video-3d: un archivo solo de cifras (los años sumados a mano antes de m301) no es un eje
         vs.append(v)
         f, av = revisar_eje(v, trabajo, propios)
         fallas += f
         avisos += av
         casos += len(v.get("casos") or [])
         n += sum(1 for h in v.get("hechos") or [] if h.get("estado") in PUBLICABLES)
-        if len(set(v.get("fotos") or [])) < FOTOS_POR_EJE:
+        if not es3d and len(set(v.get("fotos") or [])) < FOTOS_POR_EJE:
             fallas.append("H7 eje %s: %d foto(s); cada eje trae ≥ %d (la del hecho o, si no hay, una de referencia del lugar, "
                           "la institución, la persona, el producto o la época: historia.py foto … --referencia)"
                           % (v.get("eje") or os.path.basename(r)[13:-5], len(set(v.get("fotos") or [])), FOTOS_POR_EJE))
@@ -2191,6 +2209,28 @@ def revisar_verdad(g, H, valores):
         f.append("H4 caption: el año %s no está en ningún hecho verificado" % y)
     if VETADAS.search(cap):
         f.append("H3 caption: «%s» sin sentencia firme" % VETADAS.search(cap).group())
+    f += revisar_hashtags(g.get("caption") or {})
+    return f
+
+
+# H35 (usuario, 2026-11-17): los captions de /historia perdieron los hashtags porque la regla solo vivía en /video
+RE_HASHTAG = re.compile(r"(?<![\w&])#\w+")
+HASHTAGS = {"tiktok": (3, 5), "instagram": (3, 5), "shorts": (2, 3), "facebook": (0, 2)}
+
+
+def revisar_hashtags(cap):
+    """H35: TikTok e Instagram con 3–5 hashtags (#Guatemala, el sujeto y #historia); Shorts con #Shorts y #Guatemala;
+    Facebook 0–2. #Guatemala no falta en TikTok, Instagram ni Shorts."""
+    f = []
+    for k, (lo, hi) in HASHTAGS.items():
+        tags = RE_HASHTAG.findall(cap.get(k) or "")
+        bajos = [t.lower() for t in tags]
+        if not lo <= len(tags) <= hi:
+            f.append("H35 caption.%s: %d hashtags, van %d–%d (%s)" % (
+                k, len(tags), lo, hi, "#Guatemala, el sujeto y #historia" if k in ("tiktok", "instagram") else
+                "#Shorts y #Guatemala" if k == "shorts" else "opcionales"))
+        if k != "facebook" and "#guatemala" not in bajos:
+            f.append("H35 caption.%s sin #Guatemala" % k)
     return f
 
 
@@ -4390,7 +4430,10 @@ def lineas_encuadre(H, enc):
 
 def cmd_digesto(a):
     trabajo = os.path.abspath(a.trabajo)
-    st = VD.estado(trabajo)
+    es3d = es_video3d(trabajo)
+    if es3d and a.para not in ("investigador", "verificador"):
+        return falla("un TRABAJO de /video-3d solo usa el digesto de investigador y verificador; lo demás: video3d.py digesto")
+    st = leer(os.path.join(trabajo, "video3d.json")) if es3d else VD.estado(trabajo)
     enc = encuadre(trabajo)
     if a.para == "editor":
         H = historia_de(trabajo)
@@ -4410,6 +4453,10 @@ def cmd_digesto(a):
         return 0
     if a.para in ("investigador", "verificador"):
         eje = next((x for x in enc.get("ejes") or [] if x.get("id") == a.eje), None)
+        if not eje and es3d:
+            # /video-3d no tiene encuadre: el eje y lo que busca vienen en el brief de la sesión (o en un encuadre.json
+            # mínimo {pregunta, ejes: [{id, nombre, preguntas, fuentes}], no_afirma})
+            eje = {"id": a.eje, "nombre": a.eje, "preguntas": ["las del brief de la sesión"]}
         if not eje:
             return falla("el encuadre no tiene el eje «%s»" % a.eje)
         periodos = enc.get("periodos") or enc.get("capitulos") or []
@@ -4426,11 +4473,17 @@ def cmd_digesto(a):
                "- Qué buscar: %s" % "; ".join(eje.get("preguntas") or []),
                "- Fuentes sugeridas: %s" % "; ".join(eje.get("fuentes") or []),
                "- Dominios de la empresa o institución protagonista (cuentan como fuente propia): %s" % ", ".join(enc.get("dominios_propios") or []) or "—",
+               ] + ([
+               "- Video 3D: SIN fotos (`fotos: []`; H7 y H12 no aplican). Lo que se dibuja también se afirma: cada punto va en "
+               "`lugares` {id: <eje>-lugar-<x>, nombre, coords: [lon, lat], precision, evidencia: [{url, medio, archivo, cita, fecha}]} "
+               "(Nominatim de OpenStreetMap vale como «aproximada»), y cada distancia, altura o dirección es un hecho o una cifra con "
+               "su cita (una distancia calculada desde coordenadas lleva `calculo`). Los AÑOS que la voz va a decir salen de las "
+               "fechas de los hechos: que la cita de cada fecha contenga el año."] if es3d else [
                "- Protagonista: %s" % (" / ".join(enc.get("protagonista") or []) or "FALTA en el encuadre"),
                "- Fotos que hacen falta (encuadre.fotos_clave; la PRIMERA es la del protagonista y es obligatoria, H12): %s"
                % ("; ".join(enc.get("fotos_clave") or []) or "la imagen del protagonista (%s)" % " / ".join(enc.get("protagonista") or [])),
                "- Candidatas de foto: la og:image de las notas que leas (leer la imprime con el comando foto --de-fuente listo), Commons por el "
-               "nombre del protagonista, la prensa de la empresa; nunca un icono en lugar de una foto",
+               "nombre del protagonista, la prensa de la empresa; nunca un icono en lugar de una foto"]) + [
                "- No afirma: %s" % "; ".join(enc.get("no_afirma") or []),
                "- Sensible: %s" % json.dumps(enc.get("sensibles") or {}, ensure_ascii=False), ""]
         if a.para == "verificador":
@@ -4445,8 +4498,11 @@ def cmd_digesto(a):
                                " | ".join("%s «%s»" % (ev.get("url"), (ev.get("cita") or "")[:140]) for ev in x.get("evidencia") or x.get("fuentes") or [])))
             out += ["- foto candidata %s · %s · %s%s" % (x.get("id"), x.get("descripcion"), x.get("commons") or x.get("url"),
                                                      " · PROTAGONISTA" if x.get("protagonista") else "") for x in hz.get("fotos") or []]
+            out += ["- lugar %s · %s · %s · %s" % (x.get("id"), x.get("nombre"), x.get("coords"), " | ".join(
+                "%s «%s»" % (ev.get("url"), (ev.get("cita") or "")[:140]) for ev in x.get("evidencia") or x.get("fuentes") or []))
+                    for x in hz.get("lugares") or []]
             urls = {ev.get("url") for k in ("hechos", "cifras", "citas") for x in hz.get(k) or [] for ev in x.get("evidencia") or x.get("fuentes") or []}
-            cands = og_candidatas(trabajo, urls)
+            cands = [] if es3d else og_candidatas(trabajo, urls)
             if cands:
                 out += ["", "## og:image de las fuentes leídas en este eje (* = nombra al protagonista: bájala con --protagonista, H12)"]
                 for m, clase, pr in cands:

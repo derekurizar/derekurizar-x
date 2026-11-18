@@ -1,0 +1,39 @@
+{
+ "tipo": "cumbres",
+ "clase": "evento",
+ "cuando": "los cráteres de una pieza volcanes se encienden uno tras otro y quedan encendidos: una fila de volcanes, cuáles son, en qué orden; sin humo ni lava",
+ "parametros": {
+  "pieza": {
+   "tipo": "pieza",
+   "piezas": ["volcanes"],
+   "requerido": true,
+   "descripcion": "la pieza volcanes cuyas bocas se encienden (en el acento si es la protagonista; en crema si no)"
+  },
+  "lugares": {
+   "tipo": "lugares",
+   "todos": true,
+   "requerido": false,
+   "defecto": "todos",
+   "descripcion": "un subconjunto de sus cumbres: el id con que la pieza nombró la cumbre, su lugar «volcan-<id>»/«volcan-<n>» o [lon, lat] (a menos de un radio de la cumbre); «todos» por defecto"
+  },
+  "orden": {
+   "tipo": "texto",
+   "requerido": false,
+   "valores": ["lista", "oeste-este", "este-oeste"],
+   "defecto": "lista",
+   "descripcion": "en qué orden se encienden: el de la lista (o el de la pieza) o de oeste a este / de este a oeste"
+  },
+  "queda": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "true: las bocas quedan encendidas hasta el final; false: se apagan al terminar"
+  }
+ },
+ "escalas": ["pais"],
+ "motores": ["three"],
+ "usa": ["volcanes"],
+ "adelanto": {"dur": 0.2},
+ "animado": "cada boca se enciende con un destello y un anillo que se abre una vez; luego queda con su núcleo, su halo y un aro fino que respiran",
+ "ejemplo": {"t": 0.6, "dur": 3.0, "tipo": "cumbres", "pieza": "volcanes", "orden": "oeste-este"}
+}

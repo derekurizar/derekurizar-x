@@ -1,0 +1,133 @@
+{
+ "tipo": "avenidareforma",
+ "clase": "pieza",
+ "cuando": "la Avenida La Reforma entera sobre su trazo real: dos sentidos, auxiliares, arriate con jacarandas, semáforos y el Obelisco; se resalta como una sola calle",
+ "parametros": {
+  "arboles": {
+   "tipo": "texto",
+   "requerido": false,
+   "valores": [
+    "ralo",
+    "denso"
+   ],
+   "defecto": "denso",
+   "descripcion": "cuántos árboles en el arriate y los separadores (ilustrativo: la fuente dice 26 especies sin una dominante, no cuántos): denso ≈ uno cada 9 m por fila, ralo ≈ uno cada 16 m"
+  },
+  "jacarandas": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    0,
+    1
+   ],
+   "defecto": 0.2,
+   "descripcion": "fracción ilustrativa de jacarandas entre los árboles del arriate (no se afirma cuántas hay ni dónde); los cipreses (≈ 14 %, los más altos) y los manzanotes (≈ 10 %) van aparte"
+  },
+  "jacaranda_flor": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "las jacarandas en flor lila (solo marzo y abril); false = copa verde. Con «resaltar» y `elemento` «<id>.jacarandas» se encienden en lila de todos modos"
+  },
+  "semaforos": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "semáforos en los cruces (dos en las puntas del arriate y dos en las orillas; ubicación genérica: la fuente no dice dónde van): la avenida en verde 7 s, ámbar 2 y rojo 5, la calle al revés"
+  },
+  "obelisco": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "la plaza del Obelisco en el extremo sur (en el centro del anillo «Plaza Obelisco» del set): obelisco de forma genérica con placas de escudo arriba, la llama en un pebetero de cobre y cuatro pérgolas"
+  },
+  "auxiliares": {
+   "tipo": "bool",
+   "requerido": false,
+   "defecto": true,
+   "descripcion": "los carriles auxiliares a los lados (los del set: «Carril Auxiliar Avenida Reforma»), con su separador verde y su acera"
+  },
+  "personas": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    40
+   ],
+   "defecto": 16,
+   "descripcion": "gente genérica en el camino del arriate: caminan y corren en los dos sentidos (posición = función de t) y una de cada cinco sentada en una banca"
+  },
+  "gente_tamano": {
+   "tipo": "numero",
+   "requerido": false,
+   "rango": [
+    1,
+    2
+   ],
+   "defecto": 1,
+   "descripcion": "escala de la gente (1 = 1.75 m reales); con la cámara a más de 250 m súbela a 1.5–2 para que se vea en el teléfono"
+  },
+  "semilla": {
+   "tipo": "entero",
+   "requerido": false,
+   "rango": [
+    0,
+    100000
+   ],
+   "defecto": 1,
+   "descripcion": "el azar fijo: dónde va cada árbol y de qué especie, las bancas, los monumentos, los recorridos y las camisas de la gente, la fase de los semáforos"
+  }
+ },
+ "escalas": [
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "capas": [
+  "calles"
+ ],
+ "usa": [
+  "persona"
+ ],
+ "ejemplo": {
+  "id": "reforma",
+  "tipo": "avenidareforma",
+  "arboles": "denso",
+  "jacarandas": 0.2,
+  "jacaranda_flor": true,
+  "semaforos": true,
+  "obelisco": true,
+  "auxiliares": true,
+  "personas": 16,
+  "gente_tamano": 1.4,
+  "semilla": 1
+ },
+ "nivel": "escenario",
+ "contiene": [
+  "la vía principal en los dos sentidos sobre su trazo de OpenStreetMap, con sus orillas y rayas de carril (3 por sentido, ilustrativos)",
+  "los carriles auxiliares a los lados con su separador verde arbolado y su acera",
+  "el arriate central con pasto, bordillos y un camino al medio",
+  "árboles de varias especies sin una dominante: frondosos, cipreses altos, manzanotes y jacarandas (lila en flor)",
+  "bancas y farolas a lo largo del camino del arriate",
+  "monumentos genéricos en glorietas del camino (columna, figura sin rostro, busto) y un depósito de agua redondo",
+  "los cruces con el arriate abierto, pasos de cebra y semáforos que cambian",
+  "la plaza del Obelisco: losas en anillo, jardinera, plataforma con gradas, obelisco genérico con placas de escudo, pebetero de cobre con su llama y cuatro pérgolas con bancas",
+  "gente que camina y corre por el arriate y alguna sentada en las bancas"
+ ],
+ "animado": "la gente camina y corre por el camino del arriate (posición = función de t); los semáforos cambian de verde a ámbar a rojo (la avenida y la calle en fases opuestas); la llama del pebetero tiembla; «resaltar» enciende la avenida entera en el acento (o, con `elemento`, las jacarandas en lila, el Obelisco, los semáforos o el arriate); de noche, farolas con su charco de luz, la llama que alumbra y los semáforos encendidos",
+ "gente": true,
+ "distancia_m": [
+  120,
+  2600
+ ],
+ "caja_m": [
+  2300,
+  90,
+  22
+ ],
+ "poses": [
+  "caminar",
+  "sentado"
+ ]
+}

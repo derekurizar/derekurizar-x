@@ -1,0 +1,1673 @@
+{
+  "version": 1,
+  "video": true,
+  "estilo": "dia",
+  "paleta": "jacaranda",
+  "fps": 30,
+  "duracion_s": 64.5333,
+  "protagonista": "reforma",
+  "capa": {
+    "titulares": [
+      {
+        "t": 0.0,
+        "kicker": "EL BULEVAR DE REYNA BARRIOS",
+        "texto": "Carruajes en la Reforma",
+        "hasta": 4.9333
+      },
+      {
+        "t": 4.9333,
+        "kicker": "JOSÉ MARÍA REYNA BARRIOS",
+        "texto": "Un paseo a la manera de París",
+        "hasta": 12.3
+      },
+      {
+        "t": 21.7333,
+        "kicker": "1917",
+        "texto": "Los terremotos",
+        "hasta": 30.3333
+      },
+      {
+        "t": 30.3333,
+        "kicker": "1935",
+        "texto": "Donde estuvo el palacio",
+        "hasta": 36.6667
+      }
+    ],
+    "cifras": [
+      {
+        "valor": "30",
+        "rotulo": "estatuas de mármol traídas de Italia",
+        "t": 18.5,
+        "hasta": 21.7333
+      },
+      {
+        "valor": "461",
+        "rotulo": "árboles en el arriate (2003)",
+        "t": 42.8333,
+        "hasta": 45.4333
+      },
+      {
+        "valor": "92",
+        "rotulo": "eran jacarandas",
+        "t": 46.7333,
+        "hasta": 49.1333
+      }
+    ],
+    "palabras": [
+      {
+        "text": "Por",
+        "start": 0.0,
+        "end": 0.179
+      },
+      {
+        "text": "la",
+        "start": 0.232,
+        "end": 0.285
+      },
+      {
+        "text": "Reforma",
+        "start": 0.338,
+        "end": 0.728
+      },
+      {
+        "text": "de",
+        "start": 0.76,
+        "end": 0.824
+      },
+      {
+        "text": "Guatemala",
+        "start": 0.855,
+        "end": 1.383
+      },
+      {
+        "text": "no",
+        "start": 1.52,
+        "end": 1.646
+      },
+      {
+        "text": "pasaban",
+        "start": 1.71,
+        "end": 2.216
+      },
+      {
+        "text": "carros:",
+        "start": 2.28,
+        "end": 2.882
+      },
+      {
+        "text": "pasaban",
+        "start": 3.283,
+        "end": 3.81
+      },
+      {
+        "text": "carruajes.",
+        "start": 3.884,
+        "end": 4.644
+      },
+      {
+        "text": "Al",
+        "start": 5.208,
+        "end": 5.334
+      },
+      {
+        "text": "sur",
+        "start": 5.387,
+        "end": 5.514
+      },
+      {
+        "text": "de",
+        "start": 5.556,
+        "end": 5.609
+      },
+      {
+        "text": "la",
+        "start": 5.651,
+        "end": 5.714
+      },
+      {
+        "text": "ciudad,",
+        "start": 5.746,
+        "end": 6.252
+      },
+      {
+        "text": "el",
+        "start": 6.306,
+        "end": 6.421
+      },
+      {
+        "text": "presidente",
+        "start": 6.474,
+        "end": 7.044
+      },
+      {
+        "text": "José",
+        "start": 7.097,
+        "end": 7.308
+      },
+      {
+        "text": "María",
+        "start": 7.361,
+        "end": 7.699
+      },
+      {
+        "text": "Reyna",
+        "start": 7.804,
+        "end": 8.079
+      },
+      {
+        "text": "Barrios",
+        "start": 8.131,
+        "end": 8.585
+      },
+      {
+        "text": "trazó",
+        "start": 8.807,
+        "end": 9.113
+      },
+      {
+        "text": "un",
+        "start": 9.166,
+        "end": 9.219
+      },
+      {
+        "text": "bulevar",
+        "start": 9.261,
+        "end": 9.588
+      },
+      {
+        "text": "inspirado",
+        "start": 9.641,
+        "end": 10.179
+      },
+      {
+        "text": "en",
+        "start": 10.221,
+        "end": 10.263
+      },
+      {
+        "text": "los",
+        "start": 10.306,
+        "end": 10.411
+      },
+      {
+        "text": "Campos",
+        "start": 10.474,
+        "end": 10.801
+      },
+      {
+        "text": "Elíseos",
+        "start": 10.886,
+        "end": 11.361
+      },
+      {
+        "text": "de",
+        "start": 11.403,
+        "end": 11.456
+      },
+      {
+        "text": "París.",
+        "start": 11.509,
+        "end": 12.047
+      },
+      {
+        "text": "Dos",
+        "start": 12.532,
+        "end": 12.733
+      },
+      {
+        "text": "calzadas",
+        "start": 12.785,
+        "end": 13.303
+      },
+      {
+        "text": "al",
+        "start": 13.355,
+        "end": 13.45
+      },
+      {
+        "text": "centro",
+        "start": 13.514,
+        "end": 13.894
+      },
+      {
+        "text": "para",
+        "start": 13.935,
+        "end": 14.073
+      },
+      {
+        "text": "los",
+        "start": 14.105,
+        "end": 14.21
+      },
+      {
+        "text": "carruajes,",
+        "start": 14.253,
+        "end": 14.97
+      },
+      {
+        "text": "dos",
+        "start": 15.128,
+        "end": 15.371
+      },
+      {
+        "text": "a",
+        "start": 15.445,
+        "end": 15.466
+      },
+      {
+        "text": "los",
+        "start": 15.508,
+        "end": 15.625
+      },
+      {
+        "text": "lados",
+        "start": 15.698,
+        "end": 16.015
+      },
+      {
+        "text": "para",
+        "start": 16.068,
+        "end": 16.215
+      },
+      {
+        "text": "la",
+        "start": 16.258,
+        "end": 16.332
+      },
+      {
+        "text": "gente",
+        "start": 16.385,
+        "end": 16.701
+      },
+      {
+        "text": "a",
+        "start": 16.744,
+        "end": 16.765
+      },
+      {
+        "text": "pie.",
+        "start": 16.806,
+        "end": 17.239
+      },
+      {
+        "text": "En",
+        "start": 17.808,
+        "end": 17.924
+      },
+      {
+        "text": "sus",
+        "start": 17.956,
+        "end": 18.092
+      },
+      {
+        "text": "jardines,",
+        "start": 18.124,
+        "end": 18.684
+      },
+      {
+        "text": "30",
+        "start": 18.747,
+        "end": 19.138
+      },
+      {
+        "text": "estatuas",
+        "start": 19.18,
+        "end": 19.644
+      },
+      {
+        "text": "de",
+        "start": 19.687,
+        "end": 19.75
+      },
+      {
+        "text": "mármol",
+        "start": 19.813,
+        "end": 20.214
+      },
+      {
+        "text": "traídas",
+        "start": 20.256,
+        "end": 20.711
+      },
+      {
+        "text": "de",
+        "start": 20.752,
+        "end": 20.816
+      },
+      {
+        "text": "Italia.",
+        "start": 20.858,
+        "end": 21.512
+      },
+      {
+        "text": "Al",
+        "start": 21.933,
+        "end": 22.05
+      },
+      {
+        "text": "final",
+        "start": 22.091,
+        "end": 22.303
+      },
+      {
+        "text": "del",
+        "start": 22.345,
+        "end": 22.441
+      },
+      {
+        "text": "paseo",
+        "start": 22.493,
+        "end": 22.947
+      },
+      {
+        "text": "se",
+        "start": 23.01,
+        "end": 23.084
+      },
+      {
+        "text": "alzaba",
+        "start": 23.137,
+        "end": 23.527
+      },
+      {
+        "text": "el",
+        "start": 23.549,
+        "end": 23.601
+      },
+      {
+        "text": "Palacio",
+        "start": 23.664,
+        "end": 24.129
+      },
+      {
+        "text": "de",
+        "start": 24.161,
+        "end": 24.213
+      },
+      {
+        "text": "la",
+        "start": 24.255,
+        "end": 24.319
+      },
+      {
+        "text": "Reforma.",
+        "start": 24.382,
+        "end": 25.047
+      },
+      {
+        "text": "Los",
+        "start": 25.342,
+        "end": 25.491
+      },
+      {
+        "text": "terremotos",
+        "start": 25.522,
+        "end": 26.081
+      },
+      {
+        "text": "de",
+        "start": 26.134,
+        "end": 26.198
+      },
+      {
+        "text": "1917",
+        "start": 26.271,
+        "end": 28.013
+      },
+      {
+        "text": "lo",
+        "start": 28.203,
+        "end": 28.298
+      },
+      {
+        "text": "hicieron",
+        "start": 28.319,
+        "end": 28.773
+      },
+      {
+        "text": "desaparecer.",
+        "start": 28.826,
+        "end": 29.881
+      },
+      {
+        "text": "En",
+        "start": 30.333,
+        "end": 30.555
+      },
+      {
+        "text": "su",
+        "start": 30.597,
+        "end": 30.671
+      },
+      {
+        "text": "lugar,",
+        "start": 30.713,
+        "end": 31.061
+      },
+      {
+        "text": "desde",
+        "start": 31.082,
+        "end": 31.304
+      },
+      {
+        "text": "1935,",
+        "start": 31.378,
+        "end": 33.289
+      },
+      {
+        "text": "está",
+        "start": 33.394,
+        "end": 33.742
+      },
+      {
+        "text": "el",
+        "start": 33.806,
+        "end": 33.869
+      },
+      {
+        "text": "Obelisco.",
+        "start": 33.932,
+        "end": 34.64
+      },
+      {
+        "text": "Hoy",
+        "start": 35.104,
+        "end": 35.4
+      },
+      {
+        "text": "es",
+        "start": 35.505,
+        "end": 35.652
+      },
+      {
+        "text": "la",
+        "start": 35.727,
+        "end": 35.811
+      },
+      {
+        "text": "avenida",
+        "start": 35.842,
+        "end": 36.265
+      },
+      {
+        "text": "La",
+        "start": 36.371,
+        "end": 36.444
+      },
+      {
+        "text": "Reforma:",
+        "start": 36.529,
+        "end": 37.204
+      },
+      {
+        "text": "más",
+        "start": 37.605,
+        "end": 37.88
+      },
+      {
+        "text": "de",
+        "start": 37.922,
+        "end": 37.996
+      },
+      {
+        "text": "dos",
+        "start": 38.101,
+        "end": 38.323
+      },
+      {
+        "text": "kilómetros",
+        "start": 38.386,
+        "end": 38.903
+      },
+      {
+        "text": "entre",
+        "start": 38.956,
+        "end": 39.146
+      },
+      {
+        "text": "las",
+        "start": 39.189,
+        "end": 39.315
+      },
+      {
+        "text": "zonas",
+        "start": 39.347,
+        "end": 39.642
+      },
+      {
+        "text": "9",
+        "start": 39.706,
+        "end": 40.001
+      },
+      {
+        "text": "y",
+        "start": 40.022,
+        "end": 40.043
+      },
+      {
+        "text": "10.",
+        "start": 40.107,
+        "end": 40.592
+      },
+      {
+        "text": "En",
+        "start": 41.0,
+        "end": 41.126
+      },
+      {
+        "text": "2003",
+        "start": 41.169,
+        "end": 41.792
+      },
+      {
+        "text": "se",
+        "start": 41.824,
+        "end": 41.908
+      },
+      {
+        "text": "contaron",
+        "start": 41.95,
+        "end": 42.319
+      },
+      {
+        "text": "en",
+        "start": 42.372,
+        "end": 42.415
+      },
+      {
+        "text": "su",
+        "start": 42.456,
+        "end": 42.552
+      },
+      {
+        "text": "arriate",
+        "start": 42.605,
+        "end": 43.037
+      },
+      {
+        "text": "461",
+        "start": 43.079,
+        "end": 44.462
+      },
+      {
+        "text": "árboles",
+        "start": 44.505,
+        "end": 44.936
+      },
+      {
+        "text": "de",
+        "start": 45.126,
+        "end": 45.232
+      },
+      {
+        "text": "26",
+        "start": 45.275,
+        "end": 45.886
+      },
+      {
+        "text": "especies;",
+        "start": 45.95,
+        "end": 46.699
+      },
+      {
+        "text": "92",
+        "start": 46.995,
+        "end": 47.755
+      },
+      {
+        "text": "eran",
+        "start": 47.839,
+        "end": 48.061
+      },
+      {
+        "text": "jacarandas.",
+        "start": 48.103,
+        "end": 48.895
+      },
+      {
+        "text": "Entre",
+        "start": 49.365,
+        "end": 49.65
+      },
+      {
+        "text": "semana",
+        "start": 49.692,
+        "end": 50.03
+      },
+      {
+        "text": "la",
+        "start": 50.072,
+        "end": 50.125
+      },
+      {
+        "text": "ordenan",
+        "start": 50.167,
+        "end": 50.505
+      },
+      {
+        "text": "semáforos",
+        "start": 50.568,
+        "end": 51.106
+      },
+      {
+        "text": "inteligentes.",
+        "start": 51.17,
+        "end": 52.088
+      },
+      {
+        "text": "Pero",
+        "start": 52.383,
+        "end": 52.573
+      },
+      {
+        "text": "cada",
+        "start": 52.626,
+        "end": 52.816
+      },
+      {
+        "text": "domingo",
+        "start": 52.859,
+        "end": 53.217
+      },
+      {
+        "text": "se",
+        "start": 53.26,
+        "end": 53.344
+      },
+      {
+        "text": "cierra",
+        "start": 53.386,
+        "end": 53.713
+      },
+      {
+        "text": "a",
+        "start": 53.734,
+        "end": 53.755
+      },
+      {
+        "text": "los",
+        "start": 53.787,
+        "end": 53.924
+      },
+      {
+        "text": "carros,",
+        "start": 53.977,
+        "end": 54.484
+      },
+      {
+        "text": "y",
+        "start": 54.59,
+        "end": 54.642
+      },
+      {
+        "text": "la",
+        "start": 54.705,
+        "end": 54.769
+      },
+      {
+        "text": "toman",
+        "start": 54.801,
+        "end": 55.001
+      },
+      {
+        "text": "quienes",
+        "start": 55.043,
+        "end": 55.254
+      },
+      {
+        "text": "caminan,",
+        "start": 55.307,
+        "end": 56.003
+      },
+      {
+        "text": "corren",
+        "start": 56.141,
+        "end": 56.648
+      },
+      {
+        "text": "y",
+        "start": 56.838,
+        "end": 56.943
+      },
+      {
+        "text": "pedalean.",
+        "start": 57.017,
+        "end": 57.766
+      },
+      {
+        "text": "La",
+        "start": 58.416,
+        "end": 58.522
+      },
+      {
+        "text": "calle",
+        "start": 58.564,
+        "end": 58.765
+      },
+      {
+        "text": "de",
+        "start": 58.806,
+        "end": 58.859
+      },
+      {
+        "text": "los",
+        "start": 58.891,
+        "end": 58.996
+      },
+      {
+        "text": "carruajes",
+        "start": 59.039,
+        "end": 59.525
+      },
+      {
+        "text": "vuelve",
+        "start": 59.598,
+        "end": 59.957
+      },
+      {
+        "text": "a",
+        "start": 59.999,
+        "end": 60.031
+      },
+      {
+        "text": "ser",
+        "start": 60.095,
+        "end": 60.295
+      },
+      {
+        "text": "de",
+        "start": 60.369,
+        "end": 60.432
+      },
+      {
+        "text": "quien",
+        "start": 60.485,
+        "end": 60.633
+      },
+      {
+        "text": "camina.",
+        "start": 60.685,
+        "end": 61.73
+      }
+    ],
+    "progreso": {
+      "actos": [
+        0.0,
+        4.9333,
+        21.7333,
+        49.1333
+      ]
+    },
+    "seguir": {
+      "t": 36.8,
+      "dur": 3.0
+    },
+    "pie": "Relieve: Mapzen Terrain Tiles · Calles, edificios, zonas verdes y lugares: © OpenStreetMap",
+    "handle": "@DerekUrizar",
+    "aviso": "Maqueta · formas ilustrativas",
+    "cierre": {
+      "t": 59.3,
+      "frase": "La calle de los carruajes vuelve a ser de quien camina.",
+      "redes": [
+        {
+          "nombre": "TikTok",
+          "handle": "@derekurizargt"
+        },
+        {
+          "nombre": "Instagram",
+          "handle": "@derekurizargt"
+        },
+        {
+          "nombre": "Facebook",
+          "handle": "Derek Urizar"
+        },
+        {
+          "nombre": "YouTube",
+          "handle": "@derekurizar"
+        },
+        {
+          "nombre": "X",
+          "handle": "@DerekUrizar"
+        }
+      ]
+    }
+  },
+  "mundos": {
+    "bulevar": {
+      "escala": "ciudad",
+      "set": "capital",
+      "exageracion": 1.5,
+      "estilo": "contorno",
+      "lugares": {
+        "inicio": {
+          "lon": -90.5135586,
+          "lat": 14.6153387,
+          "nombre": "Inicio del bulevar",
+          "hecho": "antes-h11"
+        },
+        "palacio": {
+          "lon": -90.5166536,
+          "lat": 14.5950971,
+          "nombre": "Palacio de la Reforma",
+          "hecho": "antes-h08"
+        },
+        "jardin": {
+          "lon": -90.5151,
+          "lat": 14.6052,
+          "nombre": "Jardines del bulevar",
+          "hecho": "antes-h14"
+        },
+        "estatuas": {
+          "lon": -90.5153213,
+          "lat": 14.6065788,
+          "nombre": "Estatuas del bulevar",
+          "hecho": "antes-h14"
+        },
+        "reforma.inicio": {
+          "lon": -90.5139408,
+          "lat": 14.6150713,
+          "nombre": "Inicio del paseo",
+          "de_pieza": "reforma"
+        },
+        "reforma.jardin": {
+          "lon": -90.5157387,
+          "lat": 14.6049524,
+          "nombre": "Jardín central",
+          "de_pieza": "reforma"
+        },
+        "reforma.estatuas": {
+          "lon": -90.5157091,
+          "lat": 14.6051125,
+          "nombre": "Estatuas",
+          "de_pieza": "reforma"
+        },
+        "reforma.palacio": {
+          "lon": -90.5174038,
+          "lat": 14.594585,
+          "nombre": "Palacio",
+          "de_pieza": "reforma"
+        },
+        "reforma.plaza": {
+          "lon": -90.5174343,
+          "lat": 14.5949094,
+          "nombre": "Explanada",
+          "de_pieza": "reforma"
+        },
+        "tramo-sur": {
+          "lon": -90.5167378,
+          "lat": 14.598732,
+          "nombre": "Tramo sur",
+          "de_pieza": "reforma"
+        },
+        "estatua-27": {
+          "lon": -90.5173006,
+          "lat": 14.5969027,
+          "nombre": "Estatuas",
+          "de_pieza": "reforma"
+        },
+        "estatua-28": {
+          "lon": -90.5173705,
+          "lat": 14.5962362,
+          "nombre": "Estatuas",
+          "de_pieza": "reforma"
+        },
+        "estatua-29": {
+          "lon": -90.5174962,
+          "lat": 14.5955769,
+          "nombre": "Estatuas",
+          "de_pieza": "reforma"
+        }
+      },
+      "piezas": [
+        {
+          "id": "reforma",
+          "tipo": "bulevar1890",
+          "desde": "inicio",
+          "hacia": "palacio",
+          "estatuas": 30,
+          "carruajes": 6,
+          "paseantes": 20,
+          "quintas": 6,
+          "palacio": true,
+          "semilla": 1
+        },
+        {
+          "id": "coche",
+          "tipo": "actor",
+          "objeto": "carruaje",
+          "camino": "reforma.carruajes-1",
+          "claves": [
+            {
+              "t": 0,
+              "s": "93%",
+              "vel_kmh": 12
+            }
+          ]
+        },
+        {
+          "id": "ambiente",
+          "tipo": "ambiente",
+          "ambiente": "campo",
+          "densidad": 0.4,
+          "radio_m": 1400
+        },
+        {
+          "id": "paseante-1",
+          "tipo": "actor",
+          "objeto": "persona",
+          "camino": "reforma.peatones-este",
+          "claves": [
+            {
+              "t": 0,
+              "s": "94.6%",
+              "vel_kmh": 4
+            }
+          ]
+        },
+        {
+          "id": "paseante-2",
+          "tipo": "actor",
+          "objeto": "persona",
+          "camino": "reforma.peatones-este",
+          "claves": [
+            {
+              "t": 0,
+              "s": "95.2%",
+              "vel_kmh": 4
+            }
+          ],
+          "variante": 1
+        },
+        {
+          "id": "paseante-3",
+          "tipo": "actor",
+          "objeto": "persona",
+          "camino": "reforma.peatones-este",
+          "claves": [
+            {
+              "t": 0,
+              "s": "94.2%",
+              "vel_kmh": 4.5
+            }
+          ],
+          "variante": 2
+        },
+        {
+          "id": "coche-2",
+          "tipo": "actor",
+          "objeto": "carruaje",
+          "camino": "reforma.carruajes-2",
+          "claves": [
+            {
+              "t": 0,
+              "s": "96%",
+              "vel_kmh": 6
+            },
+            {
+              "t": 20,
+              "s": "98.6%",
+              "vel_kmh": 5
+            }
+          ],
+          "variante": 1
+        },
+        {
+          "id": "paseante-4",
+          "tipo": "actor",
+          "objeto": "persona",
+          "camino": "reforma.peatones-oeste",
+          "claves": [
+            {
+              "t": 0,
+              "s": "97.5%",
+              "vel_kmh": 3.5
+            }
+          ]
+        },
+        {
+          "id": "paseante-5",
+          "tipo": "actor",
+          "objeto": "persona",
+          "camino": "reforma.peatones-oeste",
+          "claves": [
+            {
+              "t": 0,
+              "s": "98%",
+              "vel_kmh": 3.5
+            }
+          ],
+          "variante": 2
+        },
+        {
+          "id": "paseante-6",
+          "tipo": "actor",
+          "objeto": "persona",
+          "camino": "reforma.peatones-este",
+          "claves": [
+            {
+              "t": 0,
+              "s": "98.5%",
+              "vel_kmh": 3
+            }
+          ],
+          "variante": 1
+        }
+      ],
+      "protagonista": "reforma",
+      "escena": {
+        "que_pasa": "Un paseo nuevo al sur de la ciudad: carruajes por las calzadas centrales, gente a pie por las laterales, jardines con estatuas de mármol y el Palacio de la Reforma cerrando el paseo; en 1917 los terremotos lo hacen desaparecer.",
+        "quien": "paseantes a pie y cocheros de carruajes",
+        "con_que": "carruajes de caballos, estatuas de mármol en sus pedestales, jardines, el palacio",
+        "se_mueve": "carruajes que avanzan por las calzadas centrales, paseantes que caminan por las laterales; las estatuas se encienden una tras otra; el palacio tiembla y desaparece entre polvo",
+        "sostiene": [
+          {
+            "que": "dos calzadas centrales para carruajes y dos laterales para peatones",
+            "hecho": "antes-h13"
+          },
+          {
+            "que": "30 estatuas de mármol traídas de Italia en los jardines",
+            "hecho": "antes-h14"
+          },
+          {
+            "que": "el Palacio de la Reforma al final del paseo, donde hoy está el Obelisco",
+            "hecho": "antes-h08"
+          },
+          {
+            "que": "el bulevar llegaba hasta el sitio del Obelisco",
+            "hecho": "antes-h12"
+          },
+          {
+            "que": "empezaba donde hoy está el Monumento al Ejército",
+            "hecho": "antes-h11"
+          },
+          {
+            "que": "trazado al sur de la ciudad, con jardín público",
+            "hecho": "cambio-h13"
+          },
+          {
+            "que": "residencias de esparcimiento de familias pudientes en las actuales zonas 9 y 10",
+            "hecho": "cambio-h08"
+          },
+          {
+            "que": "el palacio desapareció por los terremotos de 1917",
+            "hecho": "antes-h09"
+          },
+          {
+            "que": "campo y arboleda alrededor del paseo",
+            "generico": true
+          },
+          {
+            "que": "la forma de los carruajes y de las estatuas",
+            "generico": true
+          },
+          {
+            "que": "cuatro calzadas: dos centrales de carruajes y dos laterales de peatones",
+            "hecho": "visual-bulevar-h04"
+          },
+          {
+            "que": "30 estatuas de mármol genéricas en los jardines",
+            "hecho": "visual-bulevar-h03"
+          },
+          {
+            "que": "el palacio como volumen genérico al final del paseo",
+            "hecho": "visual-bulevar-h06"
+          },
+          {
+            "que": "jardines con fuentes genéricas dentro del paseo",
+            "hecho": "visual-bulevar-h01"
+          },
+          {
+            "que": "el palacio que desaparece con el temblor de 1917",
+            "hecho": "visual-bulevar-h08"
+          },
+          {
+            "que": "el ancho del paseo (40 m) y la forma del palacio",
+            "generico": true
+          }
+        ]
+      }
+    },
+    "avenida": {
+      "escala": "ciudad",
+      "set": "capital",
+      "exageracion": 1.5,
+      "estilo": "dia",
+      "hora": "dia",
+      "lugares": {
+        "obelisco": {
+          "lon": -90.5166536,
+          "lat": 14.5950971,
+          "nombre": "Obelisco",
+          "hecho": "hoy-h16"
+        },
+        "reforma": {
+          "lon": -90.5153213,
+          "lat": 14.6065788,
+          "nombre": "Avenida La Reforma",
+          "hecho": "hoy-h01"
+        },
+        "reforma.obelisco": {
+          "lon": -90.517707,
+          "lat": 14.5943481,
+          "nombre": "Obelisco",
+          "de_pieza": "reforma"
+        },
+        "reforma.arriate": {
+          "lon": -90.5157016,
+          "lat": 14.6051541,
+          "nombre": "Arriate central",
+          "de_pieza": "reforma"
+        },
+        "reforma.norte": {
+          "lon": -90.5138849,
+          "lat": 14.6151848,
+          "nombre": "Extremo norte",
+          "de_pieza": "reforma"
+        },
+        "reforma.sur": {
+          "lon": -90.5176014,
+          "lat": 14.5951258,
+          "nombre": "Extremo sur",
+          "de_pieza": "reforma"
+        },
+        "reforma.jacarandas": {
+          "lon": -90.5160689,
+          "lat": 14.6030249,
+          "nombre": "Jacarandas",
+          "de_pieza": "reforma"
+        },
+        "reforma.semaforos": {
+          "lon": -90.515748,
+          "lat": 14.6049065,
+          "nombre": "Semáforos",
+          "de_pieza": "reforma"
+        },
+        "reforma-tramo": {
+          "lon": -90.51684,
+          "lat": 14.59908,
+          "nombre": "Avenida La Reforma, tramo sur",
+          "hecho": "hoy-h01"
+        },
+        "reforma-tramo-1": {
+          "lon": -90.51722,
+          "lat": 14.5971,
+          "nombre": "Avenida La Reforma, inicio sur",
+          "hecho": "hoy-h01"
+        },
+        "reforma-medio": {
+          "lon": -90.51645,
+          "lat": 14.60105,
+          "nombre": "Avenida La Reforma, tramo medio",
+          "hecho": "hoy-h01"
+        }
+      },
+      "piezas": [
+        {
+          "id": "parques",
+          "tipo": "zona",
+          "area": "parques",
+          "tono": "verde",
+          "opacidad": 0.5,
+          "borde": false
+        },
+        {
+          "id": "calles",
+          "tipo": "calles"
+        },
+        {
+          "id": "edificios",
+          "tipo": "edificios"
+        },
+        {
+          "id": "reforma",
+          "tipo": "avenidareforma",
+          "arboles": "denso",
+          "jacarandas": 0.2,
+          "jacaranda_flor": true,
+          "semaforos": true,
+          "obelisco": true,
+          "auxiliares": true,
+          "personas": 16,
+          "gente_tamano": 1.4,
+          "semilla": 1
+        },
+        {
+          "id": "trafico",
+          "tipo": "flujo",
+          "carriles": [
+            "reforma.norte-1",
+            "reforma.norte-2",
+            "reforma.norte-3",
+            "reforma.sur-1",
+            "reforma.sur-2",
+            "reforma.sur-3"
+          ],
+          "tipos": {
+            "carro": 0.85,
+            "bus": 0.1,
+            "moto": 0.05
+          },
+          "densidad": 14,
+          "vel_kmh": 45
+        },
+        {
+          "id": "ambiente",
+          "tipo": "ambiente",
+          "ambiente": "ciudad",
+          "densidad": 0.5,
+          "radio_m": 1200
+        }
+      ],
+      "protagonista": "reforma",
+      "escena": {
+        "que_pasa": "La avenida de hoy como límite entre las zonas 9 y 10: tráfico entre semana con semáforos inteligentes, un arriate central arbolado con jacarandas, el Obelisco al sur; el domingo se cierra a los carros y la toma la gente.",
+        "quien": "conductores entre semana; el domingo gente que camina, corre, patina y pedalea",
+        "con_que": "carros, buses y motos; semáforos; árboles del arriate; bicicletas",
+        "se_mueve": "el tráfico que frena y arranca con los semáforos; las jacarandas que se encienden en lila; el domingo los carros salen y entra la gente",
+        "sostiene": [
+          {
+            "que": "la avenida como límite entre las zonas 9 y 10",
+            "hecho": "hoy-h01"
+          },
+          {
+            "que": "el Obelisco en el extremo sur",
+            "hecho": "hoy-h16"
+          },
+          {
+            "que": "el Obelisco inaugurado en 1935 en el extremo sur",
+            "hecho": "cambio-h07"
+          },
+          {
+            "que": "va del Monumento al Ferrocarril, al norte, al Obelisco, al sur",
+            "hecho": "cambio-h14"
+          },
+          {
+            "que": "arriate central con 461 árboles de 26 especies, 92 jacarandas (2003)",
+            "hecho": "hoy-h06"
+          },
+          {
+            "que": "carriles auxiliares a los lados de la vía principal",
+            "hecho": "hoy-h10"
+          },
+          {
+            "que": "semáforos inteligentes en la avenida",
+            "hecho": "hoy-h19"
+          },
+          {
+            "que": "los domingos cerrada a los carros: caminar, correr, patinar o pedalear",
+            "hecho": "hoy-h18"
+          },
+          {
+            "que": "el número de carriles, la densidad del tráfico y las torres de los lados",
+            "generico": true
+          },
+          {
+            "que": "camellón central con caminos y jardín",
+            "hecho": "visual-avenida-h01"
+          },
+          {
+            "que": "árboles de varias especies, algunas jacarandas en lila (marzo y abril)",
+            "hecho": "visual-avenida-h11"
+          },
+          {
+            "que": "arteria de mucho tráfico, cantidad ilustrativa",
+            "hecho": "visual-avenida-h05"
+          },
+          {
+            "que": "plaza del Obelisco, forma genérica",
+            "hecho": "visual-avenida-h06"
+          },
+          {
+            "que": "cierre dominical a los carros, sin vallas ni tramos precisos",
+            "hecho": "visual-avenida-h07"
+          },
+          {
+            "que": "carriles auxiliares a los lados",
+            "hecho": "visual-avenida-h08"
+          },
+          {
+            "que": "semáforos inteligentes sin ubicación exacta",
+            "hecho": "visual-avenida-h09"
+          }
+        ]
+      }
+    }
+  },
+  "tramos": [
+    {
+      "id": "bulevar-1",
+      "mundo": "bulevar",
+      "desde": 0.0,
+      "hasta": 30.3333,
+      "camara": [
+        {
+          "mira": {
+            "actor": "coche"
+          },
+          "dist_m": 40,
+          "azimut": 150,
+          "elevacion": 18,
+          "t": 0.0
+        },
+        {
+          "mira": {
+            "actor": "coche"
+          },
+          "dist_m": 60,
+          "azimut": 170,
+          "elevacion": 22,
+          "t": 4.6333
+        },
+        {
+          "mira": "estatua-28",
+          "dist_m": 110,
+          "azimut": 165,
+          "elevacion": 13,
+          "t": 6.4667
+        },
+        {
+          "mira": "estatua-28",
+          "dist_m": 85,
+          "azimut": 140,
+          "elevacion": 12,
+          "t": 12.0333
+        },
+        {
+          "mira": {
+            "actor": "coche"
+          },
+          "dist_m": 80,
+          "azimut": 170,
+          "elevacion": 16,
+          "t": 13.9333
+        },
+        {
+          "mira": {
+            "actor": "paseante-3"
+          },
+          "dist_m": 45,
+          "azimut": 172,
+          "elevacion": 16,
+          "t": 16.2667
+        },
+        {
+          "mira": "estatua-28",
+          "dist_m": 60,
+          "azimut": 178,
+          "elevacion": 18,
+          "t": 17.5333
+        },
+        {
+          "mira": {
+            "actor": "coche"
+          },
+          "dist_m": 75,
+          "azimut": 188,
+          "elevacion": 18,
+          "t": 23.6667
+        },
+        {
+          "mira": {
+            "actor": "coche"
+          },
+          "dist_m": 85,
+          "azimut": 198,
+          "elevacion": 20,
+          "t": 26.0667
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "resaltar",
+          "pieza": "coche",
+          "dur": 2.4,
+          "t": 0.0
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "coche",
+          "dur": 3.6,
+          "t": 5.2
+        },
+        {
+          "tipo": "aparecer",
+          "pieza": "paseante-3",
+          "dur": 0.6,
+          "t": 16.2667
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "reforma",
+          "elemento": "estatua-28",
+          "dur": 1.8,
+          "t": 18.7333
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "reforma",
+          "elemento": "estatua-29",
+          "dur": 1.4,
+          "t": 20.2667
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "reforma",
+          "elemento": "reforma.palacio",
+          "dur": 2.4,
+          "t": 23.0
+        },
+        {
+          "tipo": "terremoto",
+          "pieza": "reforma",
+          "lugares": [
+            "reforma.palacio"
+          ],
+          "centro": "reforma.palacio",
+          "radio_m": 70,
+          "intensidad": 0.8,
+          "danos": 0.7,
+          "personas": 6,
+          "dur": 4.5,
+          "sfx": "grave",
+          "t": 25.3333
+        }
+      ],
+      "marcas": [
+        {
+          "lugar": "estatua-28",
+          "texto": "Bulevar 30 de Junio",
+          "sub": "Al sur de la ciudad",
+          "alto": 230,
+          "t": 9.4,
+          "hasta": 12.8
+        },
+        {
+          "lugar": "reforma.palacio",
+          "texto": "Palacio de la Reforma",
+          "sub": "Forma ilustrativa",
+          "alto": 0,
+          "t": 23.4,
+          "hasta": 26.4667
+        }
+      ]
+    },
+    {
+      "id": "avenida-2",
+      "mundo": "avenida",
+      "desde": 30.3333,
+      "hasta": 64.5333,
+      "camara": [
+        {
+          "mira": "reforma.obelisco",
+          "dist_m": 95,
+          "azimut": 18,
+          "elevacion": 28,
+          "t": 30.3333
+        },
+        {
+          "mira": "reforma.obelisco",
+          "dist_m": 90,
+          "azimut": 14,
+          "elevacion": 30,
+          "t": 33.4
+        },
+        {
+          "mira": "reforma.obelisco",
+          "dist_m": 110,
+          "azimut": 14,
+          "elevacion": 44,
+          "t": 35.1
+        },
+        {
+          "mira": "reforma-tramo-1",
+          "dist_m": 150,
+          "azimut": 14,
+          "elevacion": 56,
+          "t": 40.6
+        },
+        {
+          "mira": [
+            -90.516863,
+            14.598937
+          ],
+          "dist_m": 175,
+          "azimut": 16,
+          "elevacion": 46,
+          "t": 43.0667
+        },
+        {
+          "mira": [
+            -90.516518,
+            14.600714
+          ],
+          "dist_m": 180,
+          "azimut": 16,
+          "elevacion": 36,
+          "t": 45.2667
+        },
+        {
+          "mira": "reforma.jacarandas",
+          "dist_m": 165,
+          "azimut": 18,
+          "elevacion": 30,
+          "t": 48.1
+        },
+        {
+          "mira": "reforma.semaforos",
+          "dist_m": 140,
+          "azimut": 20,
+          "elevacion": 26,
+          "t": 51.1667
+        },
+        {
+          "mira": "reforma.arriate",
+          "dist_m": 110,
+          "azimut": 15,
+          "elevacion": 24,
+          "t": 53.2667
+        },
+        {
+          "mira": "reforma.arriate",
+          "dist_m": 95,
+          "azimut": 12,
+          "elevacion": 24,
+          "t": 55.3
+        },
+        {
+          "mira": "reforma.arriate",
+          "dist_m": 60,
+          "azimut": 5,
+          "elevacion": 14,
+          "t": 61.7333
+        }
+      ],
+      "eventos": [
+        {
+          "tipo": "resaltar",
+          "pieza": "reforma",
+          "elemento": "reforma.obelisco",
+          "dur": 2.2,
+          "t": 33.4
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "reforma",
+          "elemento": "reforma.jacarandas",
+          "dur": 2.4,
+          "t": 47.0
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "reforma",
+          "elemento": "reforma.semaforos",
+          "dur": 2,
+          "t": 50.5667
+        },
+        {
+          "tipo": "frenar",
+          "flujo": "trafico",
+          "en": "50%",
+          "vel_kmh": 0,
+          "longitud_m": 120,
+          "dur": 1.2,
+          "t": 50.5667
+        },
+        {
+          "tipo": "acelerar",
+          "flujo": "trafico",
+          "en": "50%",
+          "vel_kmh": 45,
+          "longitud_m": 120,
+          "dur": 0.8,
+          "t": 52.3667
+        },
+        {
+          "tipo": "cerrarcalle",
+          "pieza": "reforma",
+          "flujo": "trafico",
+          "lugar": "reforma.arriate",
+          "personas": 30,
+          "bicicletas": 8,
+          "vallas": false,
+          "gente_tamano": 1.6,
+          "largo_m": 160,
+          "semilla": 1,
+          "dur": 6,
+          "t": 52.3667
+        },
+        {
+          "tipo": "resaltar",
+          "pieza": "reforma",
+          "dur": 2.0,
+          "t": 59.6
+        }
+      ],
+      "marcas": [
+        {
+          "lugar": "reforma.obelisco",
+          "texto": "Obelisco",
+          "alto": 8,
+          "t": 33.1333,
+          "hasta": 36.6667
+        },
+        {
+          "lugar": "reforma-tramo-1",
+          "texto": "Avenida La Reforma",
+          "sub": "Hoy",
+          "alto": 0,
+          "t": 39.1,
+          "hasta": 40.9
+        },
+        {
+          "lugar": "reforma.arriate",
+          "texto": "Domingo",
+          "sub": "Sin carros",
+          "t": 52.3667,
+          "hasta": 58.1
+        }
+      ],
+      "transicion": "oscuro",
+      "fundido_s": 0.8
+    }
+  ]
+}

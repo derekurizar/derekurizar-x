@@ -1,0 +1,46 @@
+{
+ "tipo": "lobina",
+ "clase": "objeto",
+ "cuando": "lobina negra genérica (pez oscuro de ≈ 0.56 m) que nada a flor de agua entre el tul y da tirones con salpicadura: el pez sembrado en el lago",
+ "parametros": {},
+ "escalas": [
+  "esquema",
+  "ciudad"
+ ],
+ "motores": [
+  "three"
+ ],
+ "medidas": {
+  "largo_m": 0.68,
+  "ancho_m": 0.12,
+  "alto_m": 0.26
+ },
+ "ejemplo": {
+  "objeto": "lobina"
+ },
+ "nivel": "objeto",
+ "contiene": [
+  "cuerpo alargado y robusto por secciones (lomo arqueado, pedúnculo angosto, hocico romo)",
+  "lomo oscuro, flanco oliva, banda oscura irregular a lo largo y vientre claro",
+  "boca grande con la mandíbula de abajo saliente, opérculo y ojo con su anillo",
+  "aletas de membrana: dorsal espinosa con escotadura y blanda, anal, pélvicas, pectorales y caudal con radios",
+  "estela en V y anillos en el agua",
+  "salpicadura (corona y gotas) en cada tirón"
+ ],
+ "animado": "nada ondulando (cuerpo, cola y caudal en fase, ≈ 1.6 Hz) y abanica las pectorales; cada 3–4.5 s da un tirón de ≈ 0.7 s: la cola azota rápido, avanza ≈ 0.2 m, sube y asoma el flanco, cabecea y salpica; la estela crece con la marcha. Pose `quieto`: cernido, sin tirones",
+ "gente": false,
+ "distancia_m": [
+  2,
+  25
+ ],
+ "caja_m": [
+  0.68,
+  0.12,
+  0.26
+ ],
+ "poses": [
+  "nadar",
+  "quieto"
+ ],
+ "notas": "Va en el agua: actor con `puntos` o `desde`/`hacia` sobre el lago; el origen es la línea del agua (sobre `orillalago` usa `lev_m` 0.08, la altura del agua de esa pieza). El agua de la maqueta es opaca: se ve el lomo, la dorsal y la estela, y en el tirón el flanco con su banda. A tamaño real (0.56 m) se lee hasta ≈ 25 m; para leerlo desde más lejos, `tamano` 2–3 (ilustrativo). Lo verificado es «pez alargado, oscuro, grande» (siete libras no eran raras): color y banda son genéricos. Sin luces de noche. Sin texto."
+}
